@@ -1,0 +1,17 @@
+1. NEJ统一名字空间缩写
+------------------------------
+	_		NEJ.P
+	_f		NEJ.F
+	_o		NEJ.O
+	_r		NEJ.R
+	_e		nej.e
+	_v		nej.v
+	_u		nej.u
+	_j		nej.j
+	_i		nej.ui
+	_t		nej.ut
+
+
+
+
+

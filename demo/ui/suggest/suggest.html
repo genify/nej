@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>建议提示控件 - 前端实例</title>
+<link href="../../css/template.css" rel="stylesheet" type="text/css"/>
+<style type="text/css">
+	.m-cnt .m-cmp{top:24px;left:0;}
+	.m-cnt .m-cmp .zitm{height:22px;line-height:22px;padding:0 5px;}
+</style>
+</head>
+<body>
+<div class="g-doc">
+	<div class="g-hd">
+        <h1 class="m-logo">网易-杭研院-前端技术组-实例库</h1>
+        <h2 class="m-title">建议提示控件</h2>
+    </div>
+    <div class="g-bd">
+    	<div class="g-mn">
+    		<div class="m-cnt">
+    			<div id="box" class="box">
+    				<input id="testInput" class="w-txt w-txt-1"/>
+    			</div>
+    		</div>
+			<div class="m-event">
+				<h2>事件日志</h2>
+				<div class="panel">
+					<div class="client" id="log">
+					</div>
+				</div>
+			</div>
+        </div>
+        <div class="g-sd" id="side">
+		</div>
+    </div>
+</div>
+<div class="g-bd">
+    <div class="m-foot">
+    	如有任何问题，请联系：魏文庆(<a href="mailto:wqwei@corp.netease.com">wqwei@corp.netease.com</a>)
+    </div>
+</div>
+<div class="g-ft">
+    <div class="m-foot">
+    	&nbsp;&copy;&nbsp;网易-杭研院-前端技术组
+    </div>
+</div>
+<script src="../../../src/define.js?pro=../../"></script>
+<script>
+	var f = function(){
+		var _ = NEJ.P;
+		var e = _('nej.e');
+		var v = _('nej.v');
+		var i = _('nej.ui');
+		var u = _('nej.u');
+		var tu = _('t.u');
+		var cmp, input;
+		/**
+		 * 输入变化的回调函数
+		 * @param	{String}	_value	输入
+		 */
+		function onChange(_value){
+			tu._$log('onchange', _value);
+			cmp._$setList(getList(_value));
+		}
+		/**
+		 * 根据输入获取提示列表
+		 * @param {String} _value	输入
+		 */
+		var getList = (function(){
+			var postfixList = ['163.com', '126.com', '188.com', 'yeah.net'];
+			return function(_value){
+				if(!u._$isString(_value)||!_value) return;
+				var _result, _m0, _m1, _m2;
+				var _arr = _value.match(/(.*)@(.*)/);
+				if(!_arr||!_arr[2]){
+					_m1 = _arr&&_arr[1]||_value;
+					_result = postfixList.map(function(_postfix){
+						return _m1 + '@' + _postfix;
+					});
+				}else{
+					_m1 = _arr[1];
+					_m2 = _arr[2];
+					u._$forEach(postfixList, function(_postfix){
+						if(_postfix.indexOf(_m2)!==-1){
+							_result = _result||[];
+							_result.push(_m1 + '@' + _postfix);
+						}
+					});
+				}
+				return _result;
+			};
+		})();
+		/**
+		 * 选中一项的回调函数
+		 * @param	{String}	_value	输入
+		 */
+		function onSelect(_value){
+			tu._$log('onselect', _value);
+			input.value = _value;
+		}
+		/**
+		 * 更新控件
+		 */
+		function update(){
+			 i._$$Suggest._$recycle(cmp);
+			 cmp = i._$$Suggest._$allocate({
+					parent: 'box',
+					clazz: 'm-cmp',
+					input: input,
+					onchange: onChange,
+					onselect: onSelect
+				});
+		}
+		/**
+		 * 显示控件
+		 */
+		function show(){
+			cmp&&cmp._$show();
+		}
+		/**
+		 * 设置提示列表
+		 * @param {String} _list	提示列表值
+		 */
+		function setList(_list){
+			cmp&&cmp._$setList(_list);
+		}
+		/**
+		 * 隐藏控件
+		 */
+		function hide(){
+			cmp&&cmp._$hide();
+		}
+		/**
+		 * 页面初始化函数
+		 */
+		function init(){
+			input = e._$get('testInput');
+			update();
+		}
+		init();
+	};
+	define(['{lib}base/event.js', '{lib}ui/suggest/suggest.js', '{pro}js/extend.js'], f);
+</script>
+</body>
+</html>

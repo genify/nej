@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>event.js测试页面</title>
+  		<link rel="stylesheet" href="../../qunit/base/qunit.css" type="text/css" media="screen" />
+		<script type="text/javascript" src="../../qunit/base/qunit.js"></script>
+		<script src="../../src/define.js?pro=/qunit/javascript/"></script>
+		<style type="text/css">
+			.node{width:100px;height:50px;-webkit-transition:3s;-moz-transition:3s;}
+			.box{width:950px;height:950px;background:green;}
+		</style>
+	</head>
+	<body>
+		<h1 id="qunit-header">nej event.js test</h1>
+		<h2 id="qunit-banner"></h2>
+		<div id="qunit-testrunner-toolbar"></div>
+		<h2 id="qunit-userAgent"></h2>
+		<ol id="qunit-tests"></ol>
+ 		<div id="qunit-fixture"></div>
+		<div class="node" id="js-node">
+			<span>点击我</span>
+		</div>
+		<div id='js-box' class='box'>touch测试</div>
+		<input id='js-input' type='text' />
+		<textarea id='js-textarea'></textarea>
+		<iframe id='js-iframe'></iframe>
+		<script type="text/javascript" src="../javascript/eventTest.js"></script>
+	</body>
+</html>

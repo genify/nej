@@ -1,0 +1,18 @@
+<html><body>
+<!-- 将上传结果序列化为JSON串后填入result中即可 -->
+<script>
+    window.result = '{"url":"http://192.168.146.84:1122/xhr/3.jpg"}';
+</script>
+<script>
+    var _result = 'NEJ-UPLOAD-RESULT:{\
+            "key":"'+window.name+'",\
+            "result":"'+encodeURIComponent(result)+'"\
+        }';
+    if (window.postMessage){
+        parent.postMessage(_result,'*');
+    }else{
+        _result = '"'+_result.replace(/"/g,'\\"')+'"';
+        parent.name = escape('MSG|data='+encodeURIComponent(_result));
+    }
+</script>
+</body></html>

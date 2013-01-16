@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>表单逻辑 - 前端实例</title>
+<link href="../../css/template.css" rel="stylesheet" type="text/css"/>
+<style type="text/css">
+	.w-form .w-btn{margin:10px;}
+	.w-form fieldset{width:200px;padding:5px;border:1px solid #999;}
+	.w-form fieldset label{margin-right:10px;}
+	.w-required{border-color:red;}
+</style>
+</head>
+<body>
+<div class="g-doc">
+	<div class="g-hd">
+        <h1 class="m-logo">网易-杭研院-前端技术组-实例库</h1>
+        <h2 class="m-title">表单逻辑</h2>
+    </div>
+    <div class="g-bd">
+    	<form class="w-form" method="post">
+    		<input type="hidden" value="abc"/>
+    		<div><label for="address">地址：</label><input name="address" id="address" class="w-txt w-txt-1"/></div>
+			<div><label for="mobile">手机：</label><input name="mobile" id="mobile" class="w-txt w-txt-1"/></div>
+			<div><label for="express">快递：</label><select name="express"id="express"><option value="0">顺丰</option><option value="1">申通</option></select></div>
+			<fieldset>
+				<legend>规格</legend>
+				<div><span>大小：</span><input name="size" id="size0" type="radio"/><label for="size0">6寸</label><input name="size" id="size1" type="radio"/><label for="size1">10寸</label></div>
+				<div><span>颜色：</span><input name="color" id="color0" type="checkbox"/><label for="color0">红色</label><input name="color" id="color1" type="checkbox"/><label for="color1">蓝色</label></div>
+			</fieldset>
+			<div><input type="submit" name="submit" value="提交" class="w-btn"/><input type="reset" value="重置" class="w-btn"/></div>
+    	</form>
+    </div>
+</div>
+<div class="g-bd">
+    <div class="m-foot">
+    	如有任何问题，请联系：魏文庆(<a href="mailto:wqwei@corp.netease.com">wqwei@corp.netease.com</a>)
+    </div>
+</div>
+<div class="g-ft">
+    <div class="m-foot">
+    	&nbsp;&copy;&nbsp;网易-杭研院-前端技术组
+    </div>
+</div>
+<script src="../../../src/define.js?pro=../../"></script>
+<script>
+	var f = function(){
+		var _ = NEJ.P;
+		var e = _('nej.e');
+		var v = _('nej.v');
+		var i = _('nej.ui');
+		var u = _('nej.u');
+		var utf = _('nej.ut.form');
+		var tu = _('t.u');
+		
+		window.page = {
+			/**
+			 * 页面初始化函数
+			 */
+			_$init: function(){
+				this.__requires = ['mobile', 'color'];
+				this.__name = {
+					mobile: '手机',
+					color: '颜色'
+				}
+				this.__form = document.forms[0];
+				this.__formUtil = utf._$attach(this.__form);
+				this.__formUtil._$focus();
+				v._$addEvent(this.__form, 'submit', this.__onSubmit._$bind(this));
+			},
+			/**
+			 * 表单提交的响应函数
+			 * @param {Object} _event	事件对象
+			 */
+			__onSubmit: function(_event){
+				this.__data = this.__formUtil._$getData();
+				if(!this.__checkRequired()||!this.__validate()){
+					v._$stopDefault(_event);
+					return;
+				}
+				this.__formUtil._$get('submit').disabled = true;
+			},
+			/**
+			 * 检查必填项是否填写
+			 * @return	{Boolean}	是否通过
+			 */
+			__checkRequired: function(){
+				if (this.__data) {
+					for (var i = 0, _name, _value, _requires = this.__requires, _data = this.__data; _name = _requires[i]; i++) {
+						_value = _data[_name];
+						if(!_value||(u._$isArray(_value)&&!_value.length)){
+							this.__showRequired(_name);
+							return false;
+						}
+					}
+					return true;
+				}
+			},
+			/**
+			 * 显示必填项为空信息
+			 * @param {String} _name	表单元素名
+			 */
+			__showRequired: function(_name){
+				alert(this.__name[_name] + '不能为空！');
+			},
+			/**
+			 * 检测输入是否合法
+			 */
+			__validate: function(){
+				// 检测手机号码
+				if (!/1\d{10}/.test(this.__data.mobile)) {
+					this.__showError('mobile');
+					return false;
+				};
+				return true;
+			},
+			/**
+			 * 显示输入信息不合法信息
+			 * @param {String} _name	表单元素名
+			 */
+			__showError: function(_name){
+				alert(this.__name[_name] + '格式错误！');
+			}
+		};
+		page._$init();
+	};
+	define(['{lib}base/event.js', '{lib}util/form/util.js', '{pro}js/extend.js'], f);
+</script>
+</body>
+</html>

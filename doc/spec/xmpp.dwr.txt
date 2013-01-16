@@ -1,0 +1,7 @@
+1. 请求的消息体格式
+	<dwr xmlns="netease:ajax:dwr">
+	  <url>编码(encodeURIComponent)过的请求地址</url>
+	  <params>根据DWR格式定义序列化后的参数字符串</params>
+	</dwr>
+2. 返回的消息体格式
+	<dwr xmlns="netease:ajax:dwr">服务器端根据DWR格式定义返回的回调内容</dwr>

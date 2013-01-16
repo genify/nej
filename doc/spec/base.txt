@@ -1,0 +1,5 @@
+<script type="text/javascript" src="${MWF_ROOT}base/global.js" charset="utf-8"></script>
+<script type="text/javascript" src="${MWF_ROOT}base/platform.js" charset="utf-8"></script>
+<script type="text/javascript" src="${MWF_ROOT}base/util.js" charset="utf-8"></script>
+<script type="text/javascript" src="${MWF_ROOT}base/event.js" charset="utf-8"></script>
+<script type="text/javascript" src="${MWF_ROOT}base/element.js" charset="utf-8"></script>

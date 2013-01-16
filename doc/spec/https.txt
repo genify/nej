@@ -1,0 +1,18 @@
+NEJ框架对于http页面中的https请求使用Flash代理的方式处理
+Flash接口定义
+× request
+  描述：发起一个请求
+  输入：{
+           key:'xxxxxx',			// 请求标识，回调时返回给JS
+		   url:'https://xxx',		// 请求地址
+		   method:'POST',			// 请求方式
+		   headers:{'Content-Type':'text/plain'},
+									// 请求头信息
+		   data:'a=aaaa&b=bbbb',	// 请求体携带数据
+		   onloaded:'nej.j.rcb',		// 请求成功回调函数名称，回调时带上key参数，如nej.j.rcb(key,data);
+		   onerror:'nej.j.ecb'		// 请求异常回调函数名称，同onload
+		}
+  输出：无
+
+
+

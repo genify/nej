@@ -1,0 +1,244 @@
+<html>
+  <head>
+    <title>NEJ AJAX PROXY</title>
+    <meta charset="utf-8"/>
+    <script>window.whitelist = [/.*/i];</script>
+    <script>
+      // for post message and onmessage event
+      (function(){
+          var _listeners = [];
+          window.addMsgListener = function(_hanlder){
+              _listeners.push(_hanlder);
+          };
+          var _onMessage = function(_event){
+              for(var i=0,l=_listeners.length;i<l;i++)
+                  try{_listeners[i].call(null,_event);}catch(e){}
+          };
+          if (!!window.postMessage){
+              window.doPostMessage = function(_window,_options){
+                  _options = _options||{};
+                  _window.postMessage(''+_options.data,_options.origin||'*');
+              };
+              if (!!window.addEventListener){
+                  window.addEventListener('message',_onMessage,!1);
+              }else{
+                  window.attachEvent('onmessage',_onMessage);
+              }
+              return;
+          }
+          var _key = 'MSG|',
+              _queue = [];
+          /*
+           * 检测window.name变化情况
+           * @return {Void}
+           */
+          var _doCheckWindowName = (function(){
+              var _doStringObject = function(_string){
+                  var _result = {},
+                      _arr = _string.split('|');
+                  for(var i=0,l=_arr.length,_brr;i<l;i++){
+                      _brr = _arr[i].split('=');
+                      _result[decodeURIComponent(_brr.shift())]
+                            = decodeURIComponent(_brr.join('='));
+                  }
+                  return _result;
+              };
+              return function(){
+                  // check name
+                  var _name = unescape(window.name||'');
+                  if (!_name||_name.indexOf(_key)!=0) return;
+                  // clear name
+                  window.name = '';
+                  _name = _name.replace(_key,'');
+                  // onmessage trigger
+                  var _options = _doStringObject(_name),
+                      _origin = (_options.origin||'').toLowerCase();
+                  // check origin
+                  if (!!_origin&&_origin!='*'&&
+                      location.href.toLowerCase().indexOf(_origin)!=0)
+                      return;
+                  _onMessage({
+                      data:_options.data,
+                      origin:document.referrer
+                  });
+              };
+          })();
+          /*
+           * 检查待设置消息
+           * @return {Void}
+           */
+          var _doCheckNameQueue = (function(){
+              var _check;
+              var _hasItem = function(_list,_item){
+                  for(var i=0,l=_list.length;i<l;i++)
+                      if (_list[i]==_item)
+                          return !0;
+                  return !1;
+              };
+              return function(){
+                  if (!_queue.length) return;
+                  _check = [];
+                  for(var i=_queue.length-1,_map;i>=0;i--){
+                      _map = _queue[i];
+                      if (!_hasItem(_check,_map.w)){
+                          _check.push(_map.w);
+                          _queue.splice(i,1);
+                          _map.w.name = _map.d;
+                      }
+                  }
+                  _check = null;
+              };
+          })();
+          /**
+           * 发送消息
+           * @param  {Window} 窗体对象
+           * @param  {Object} 配置信息
+           * @config {String} data   消息内容，只支持字符串
+           * @config {String} origin 目标Origin，只有指定的页面可以收到消息，默认所有页面可收到消息，如http://a.b.com
+           * @return {Void}
+           */
+          window.doPostMessage = (function(){
+              // object to query
+              var _doQueryObject = function(_object){
+                  var _arr = [];
+                  for(var x in _object)
+                      _arr.push(encodeURIComponent(x)+'='+
+                                encodeURIComponent(_object[x]));
+                  return _arr.join('|');
+              };
+              // serialize send data
+              var _doSerialize = function(_data){
+                  var _result = {};
+                  _data = _data||{};
+                  _result.origin = _data.origin||'*';
+                  _result.ref  = location.href;
+                  _result.data = ''+_data.data;
+                  return _key+_doQueryObject(_result);
+              };
+              return function(_window,_options){
+                  _queue.unshift({w:_window,d:escape(_doSerialize(_options))});
+              };
+          })();
+          // init checker
+          window.setInterval(_doCheckNameQueue,100);
+          window.setInterval(_doCheckWindowName,50);
+      })();
+      // for ajax request
+      (function(){
+          // access control
+          var _hasPermission = function(){
+              var _ref = document.referrer||'';
+              if (!_ref||!whitelist.length) 
+                  return !1;
+              for(var i=0,l=whitelist.length,_item;i<l;i++){
+                  _item = whitelist[i];
+                  if (!!_item.test&&
+                      _item.test(_ref)||_ref==_item)
+                      return !0;
+              }
+              return !1;
+          }
+          if (!_hasPermission()) return;
+          // ajax request implementation
+          var f = function(){};
+          /*
+           * 发送请求
+           * @param  {Object} 请求信息
+           * @config {String} key     请求标识，回调时传回
+           * @config {String} url     请求地址
+           * @config {String} method  请求方式，默认GET
+           * @config {Number} timeout 超时时间，默认不做超时检测
+           * @config {Object} headers 头信息
+           * @config {String} data    发送数据，字符串格式
+           * @return {Void}
+           */
+          var _doSendRequest = (function(){
+              var _reg0  = /"/gi,
+                  _msxml = ['Msxml2.XMLHTTP.6.0'
+                           ,'Msxml2.XMLHTTP.3.0'];
+              var _getXHR = function(){
+                  if (window.XMLHttpRequest)
+                      return new XMLHttpRequest();
+                  try{
+                      for(var i=0,l=_msxml.length;i<l;i++)
+                          return new ActiveXObject(_msxml[i]);
+                  }catch(ex){
+                      return null;
+                  }
+              };
+              var _doCallback = function(_options){
+                  var _data = 'NEJ-AJAX-DATA:{\
+                          "key":"'+_options.key+'",\
+                          "status":"'+_options.status+'",\
+                          "result":"'+encodeURIComponent(_options.result)+'"\
+                      }';
+                  if (!window.postMessage)
+                      _data = '"'+_data.replace(_reg0,'\\"')+'"';
+                  window.doPostMessage(parent,{data:_data});
+              };
+              return function(_options){
+                  if (!_options||!_options.url) return;
+                  var _xhr = _getXHR(),
+                      _key = _options.key;
+                  // set timeout
+                  var _timer,
+                      _timeout = parseInt(_options.timeout)||0;
+                  if (!!_timeout){
+                      _timer = window.setTimeout(function(){
+                          _xhr.onreadystatechange = f;
+                          _xhr.abort();
+                          _doCallback({key:_key,status:-1});
+                      },_timeout);
+                  }
+                  // set callback
+                  _xhr.onreadystatechange = function(){
+                      if (_xhr.readyState!=4) return;
+                      window.clearTimeout(_timer);
+                      _doCallback({
+                          key:_key,
+                          status:_xhr.status,
+                          result:_xhr.responseText||''
+                      });
+                  };
+                  _xhr.open(_options.method||'GET',_options.url,!0);
+                  // set headers
+                  var _headers = _options.headers||{};
+                  for(var x in _headers)
+                      _xhr.setRequestHeader(x,_headers[x]);
+                  _xhr.send(_options.data);
+              };
+          })();
+          /*
+           * 解析JSON
+           * @param  {String}   JSON串
+           * @return {Variable} JSON值
+           */
+          var _doParseJSON = (function(){
+              var _doEvalScript = function(_content){
+                  try{
+                      return (new Function('return '+_content))();
+                  }catch(e){
+                      return null;
+                  }
+              };
+              return function(_content){
+                  if (typeof(_content)!='string')
+                      return _content;
+                  try{
+                      if (!!window.JSON&&!!JSON.parse)
+                          return JSON.parse(_content);
+                  }catch(e){
+                      return _content;
+                  }
+                  return _doEvalScript(_content);
+              };
+          })();
+          // listen ajax request
+          window.addMsgListener(function(_event){
+              _doSendRequest(_doParseJSON(_event.data));
+          });
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>

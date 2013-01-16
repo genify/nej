@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>取测试结果</title>
+        <script src="../../src/define.js?pro=/qunit/javascript/">
+        </script>
+		<style type='text/css'>
+			.error-div{color:red;margin-bottom:100px;}
+			.error-div p{border:solid 1px #ccc;}
+			.error-div .p0{color:red;}
+			.error-div .p1{color:orange;}
+			.error-div .p2{color:black;}
+			.error-div .p3{color:green;}
+			.error-div .p6{color:cyanine;}
+			.error-div .p4{color:blue;}
+			.error-div .p5{color:purple;}
+			#ok, #allOk{width:180px;margin-top:20px;border:solid 1px #ccc;padding:5px;cursor:pointer;}
+		</style>
+    </head>
+    <body>
+    	<div id="result"></div>
+        <div>
+            根据字段:<select id="param0">
+            	<option>module</option>
+				<option>test</option>
+             </select>	
+	字段值：<input id="param1" type="text" />
+	指定当前平台：<input id="param2" type="checkbox" />
+			<div id="ok">根据指定字段查询结果</div>
+			<div id="allOk">查询此平台下所有结果</div>
+        </div>
+		<div id="flash">
+		</div>
+        <script type="text/javascript" src="../javascript/getResult.js">
+        </script>
+    </body>
+</html>

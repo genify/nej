@@ -1,0 +1,174 @@
+interface HTMLMediaElement : HTMLElement {
+
+  // error state
+  readonly attribute MediaError error;
+
+  // network state
+		   attribute DOMString src;
+  readonly attribute DOMString currentSrc;
+  const unsigned short NETWORK_EMPTY = 0;
+  const unsigned short NETWORK_IDLE = 1;
+  const unsigned short NETWORK_LOADING = 2;
+  const unsigned short NETWORK_NO_SOURCE = 3;
+  readonly attribute unsigned short networkState;
+           attribute DOMString preload;
+  readonly attribute TimeRanges buffered;
+  void load();
+  DOMString canPlayType(in DOMString type);
+
+  // ready state
+  const unsigned short HAVE_NOTHING = 0;
+  const unsigned short HAVE_METADATA = 1;
+  const unsigned short HAVE_CURRENT_DATA = 2;
+  const unsigned short HAVE_FUTURE_DATA = 3;
+  const unsigned short HAVE_ENOUGH_DATA = 4;
+  readonly attribute unsigned short readyState;
+  readonly attribute boolean seeking;
+
+  // playback state
+           attribute double currentTime;
+  readonly attribute double initialTime;
+  readonly attribute double duration;
+  readonly attribute Date startOffsetTime;
+  readonly attribute boolean paused;
+           attribute double defaultPlaybackRate;
+           attribute double playbackRate;
+  readonly attribute TimeRanges played;
+  readonly attribute TimeRanges seekable;
+  readonly attribute boolean ended;
+           attribute boolean autoplay;
+           attribute boolean loop;
+  void play();
+  void pause();
+
+  // media controller
+           attribute DOMString mediaGroup;
+           attribute MediaController controller;
+
+  // controls
+           attribute boolean controls;
+           attribute double volume;
+           attribute boolean muted;
+           attribute boolean defaultMuted;
+
+  // tracks
+  readonly attribute MultipleTrackList audioTracks;
+  readonly attribute ExclusiveTrackList videoTracks;
+  readonly attribute TextTrack[] textTracks;
+  MutableTextTrack addTextTrack(in DOMString kind, in optional DOMString label, in optional DOMString language);
+};
+
+interface MediaError {
+  const unsigned short MEDIA_ERR_ABORTED = 1;
+  const unsigned short MEDIA_ERR_NETWORK = 2;
+  const unsigned short MEDIA_ERR_DECODE = 3;
+  const unsigned short MEDIA_ERR_SRC_NOT_SUPPORTED = 4;
+  readonly attribute unsigned short code;
+};
+
+interface HTMLVideoElement : HTMLMediaElement {
+           attribute unsigned long width;
+           attribute unsigned long height;
+  readonly attribute unsigned long videoWidth;
+  readonly attribute unsigned long videoHeight;
+           attribute DOMString poster;
+};
+
+interface HTMLAudioElement : HTMLMediaElement {};
+
+interface HTMLSourceElement : HTMLElement {
+           attribute DOMString src;
+           attribute DOMString type;
+           attribute DOMString media;
+};
+
+interface HTMLTrackElement : HTMLElement {
+           attribute DOMString kind;
+           attribute DOMString src;
+           attribute DOMString srclang;
+           attribute DOMString label;
+           attribute boolean default;
+
+  readonly attribute TextTrack track;
+};
+
+interface TrackList {
+  readonly attribute unsigned long length;
+  DOMString getID(in unsigned long index);
+  DOMString getKind(in unsigned long index);
+  DOMString getLabel(in unsigned long index);
+  DOMString getLanguage(in unsigned long index);
+
+           attribute Function onchange;
+};
+
+interface MultipleTrackList : TrackList {
+  boolean isEnabled(in unsigned long index);
+  void enable(in unsigned long index);
+  void disable(in unsigned long index);
+};
+
+interface ExclusiveTrackList : TrackList {
+  readonly attribute unsigned long selectedIndex;
+  void select(in unsigned long index);
+};
+
+interface MediaController {
+  readonly attribute TimeRanges buffered;
+  readonly attribute TimeRanges seekable;
+  readonly attribute double duration;
+           attribute double currentTime;
+
+  readonly attribute boolean paused;
+  readonly attribute TimeRanges played;
+  void play();
+  void pause();
+
+           attribute double defaultPlaybackRate;
+           attribute double playbackRate;
+
+           attribute double volume;
+           attribute boolean muted;
+
+           attribute Function onemptied;
+           attribute Function onloadedmetadata;
+           attribute Function onloadeddata;
+           attribute Function oncanplay;
+           attribute Function oncanplaythrough;
+           attribute Function onplaying;
+           attribute Function onwaiting;
+
+           attribute Function ondurationchange;
+           attribute Function ontimeupdate;
+           attribute Function onplay;
+           attribute Function onpause;
+           attribute Function onratechange;
+           attribute Function onvolumechange;
+};
+
+interface TextTrack {
+  readonly attribute DOMString kind;
+  readonly attribute DOMString label;
+  readonly attribute DOMString language;
+
+  const unsigned short NONE = 0;
+  const unsigned short LOADING = 1;
+  const unsigned short LOADED = 2;
+  const unsigned short ERROR = 3;
+  readonly attribute unsigned short readyState;
+           attribute Function onload;
+           attribute Function onerror;
+
+  const unsigned short OFF = 0;
+  const unsigned short HIDDEN = 1;
+  const unsigned short SHOWING = 2;
+           attribute unsigned short mode;
+
+  readonly attribute TextTrackCueList cues;
+  readonly attribute TextTrackCueList activeCues;
+
+           attribute Function oncuechange;
+};
+TextTrack implements EventTarget;
+
+

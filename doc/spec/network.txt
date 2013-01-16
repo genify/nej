@@ -1,0 +1,25 @@
+1. HTML5中关于网络状况相关的规范包括三个方面
+   - navigator.onLine 
+     这个属性用来记录当期网络状况（true-在线 false-离线）
+   - ononline/onoffline事件 
+     这两个事件会在window/document/document.body上触发
+     当网络从离线变成在线时触发 ononline 事件
+     当网络从在线变成离线时触发 onoffline 事件
+
+NATIVE <-> MWF
+1. MWF框架关于网络状况相关接口事件针对Native的封装
+   - 首先检查平台是否支持HTML5原生属性，如果是 则使用原生支持
+   - 如果不是则调用native的 开关接口 表示使用native的实现
+   - 当网络状况发生变化时 native直接调用js的 window.ononline 或者 window.onoffline 方法
+2. 总结
+   - native给js提供的支持
+     × 开关接口（默认关闭）【Network.enableNetworkMonitor/Network.disableNetworkMonitor】
+     × 网络变化事件，在这个事件里根据相应网络状况调js的接口
+   - JS给native提供的支持
+     × window.ononline
+     × window.onoffline
+
+MWF <-> APP
+1. MWF框架关于网络状况相关接口事件针对应用的封装
+   - 应用通过mwf.v._$addEvent接口向window添加online/offline事件
+   - 应用通过navigator.onLine查询当前网络状况

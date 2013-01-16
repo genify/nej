@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>颜色选择控件 - 前端实例</title>
+<link href="../../css/template.css" rel="stylesheet" type="text/css"/>
+<style type="text/css">
+	/* 你自定义的样式 */
+	.m-cmp{width:165px;}
+</style>
+</head>
+<body>
+<div class="g-doc">
+	<div class="g-hd">
+        <h1 class="m-logo">网易-杭研院-前端技术组-实例库</h1>
+        <h2 class="m-title">颜色选择控件</h2>
+    </div>
+    <div class="g-bd">
+    	<div class="g-mn">
+    		<div id="box" class="m-cnt"></div>
+			<div class="m-event">
+				<h2>事件日志</h2>
+				<div class="panel">
+					<div class="client" id="log">
+					</div>
+				</div>
+			</div>
+        </div>
+        <div class="g-sd" id="side">
+        	<form class="w-form" onsubmit="return false;" name="param">
+    			<h2>PARAM</h2>
+				<div>默认颜色值：<input class="w-txt" value="#ffffff" name="default"/></div>
+				<div>初始颜色值：<input class="w-txt" value="" name="color"/></div>
+				<div><input type="button" class="w-btn" name="update" value="更新"/></div>
+        	</form>
+			<form class="w-form" onsubmit="return false;" name="api">
+    			<h2>API</h2>
+				<div><input type="button" class="w-btn" name="show" value="显示控件"/></div>
+				<div><input type="button" class="w-btn" name="hide" value="隐藏控件"/></div>
+				<div><input type="button" class="w-btn" name="setcolor" value="设置颜色"/></div>
+        	</form>
+		</div>
+    </div>
+</div>
+<div class="g-bd">
+    <div class="m-foot">
+    	如有任何问题，请联系：魏文庆(<a href="mailto:wqwei@corp.netease.com">wqwei@corp.netease.com</a>)
+    </div>
+</div>
+<div class="g-ft">
+    <div class="m-foot">
+    	&nbsp;&copy;&nbsp;网易-杭研院-前端技术组
+    </div>
+</div>
+<script src="../../../src/define.js?pro=../../"></script>
+<script>
+	var f = function(){
+		var _ = NEJ.P;
+		var e = _('nej.e');
+		var v = _('nej.v');
+		var i = _('nej.ui');
+		var u = _('nej.u')
+		var ut = _('nej.ut');
+		var tu = _('t.u');
+		var paramForm, apiform, cmp;
+		/**
+		 * 颜色变化的回调函数
+		 * @param	{String}	_color	颜色
+		 */
+		function onChange(_color){
+			tu._$log('onchange', {color:_color});
+		}
+		/**
+		 * 选中颜色的回调函数
+		 * @param {String} _color	颜色
+		 */
+		function onSelect(_color){
+			tu._$log('onselect', {color:_color});
+		}
+		/**
+		 * 更新控件
+		 */
+		function update(){
+			 i._$$ColorPick._$recycle(cmp);
+			 var _data = paramForm._$getData();
+			 cmp = i._$$ColorPick._$allocate({
+					parent: 'box',
+					clazz: 'm-cmp',
+					'default': _data['default'],
+					color: _data.color,
+					onchange: onChange,
+					onselect: onSelect
+				});
+		}
+		/**
+		 * 显示控件
+		 */
+		function show(){
+			cmp&&cmp._$show();
+		}
+		/**
+		 * 设置颜色
+		 * @param {String} _color	颜色值
+		 */
+		function setColor(_color){
+			cmp&&cmp._$setColor(_color);
+		}
+		/**
+		 * 隐藏控件
+		 */
+		function hide(){
+			cmp&&cmp._$hide();
+		}
+		/**
+		 * 页面初始化函数
+		 */
+		function init(){
+			paramForm = tu.form._$getInstance('param');
+			apiForm = tu.form._$getInstance('api');
+			paramForm._$focus();
+			v._$addEvent(paramForm._$get('update'), 'click', function(){
+				update();
+			});
+			v._$addEvent(apiForm._$get('show'), 'click', function(){
+				show();
+			});
+			v._$addEvent(apiForm._$get('hide'), 'click', function(){
+				hide();
+			});
+			v._$addEvent(apiForm._$get('setcolor'), 'click', function(){
+				setColor(window.prompt('请按#ffab33格式输入你要设置的颜色：'));
+			});
+			update();
+		}
+		init();
+	};
+	define(['{lib}base/event.js', '{pro}js/extend.js', '{pro}js/form.js', '{lib}ui/colorpick/colorpick.js'], f);
+</script>
+</body>
+</html>

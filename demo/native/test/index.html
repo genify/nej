@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>音频播放器 - 前端实例</title>
+<link href="../../css/template.css" rel="stylesheet" type="text/css"/>
+<style type="text/css">
+/* 你自定义的样式 */
+	*{margin:0;padding}
+	body{width:600px;height:400px;overflow:hidden}
+	.m-box{margin:30px;height:200px;}
+	.m-box .act{margin-bottom:20px;}
+	.m-box input{margin-right:10px;width:50px;height:25px;}
+</style>
+</head>
+<body>
+<div class="g-doc">
+    <div class="g-hd">
+        <h1 class="m-logo">网易-杭研院-前端技术组-实例库-控件</h1>
+        <h2 class="m-title">窗体框架控件</h2>
+    </div>
+    <div class="g-bd">
+    	<div id="box" class="m-box" style="position:relative">
+    	</div>
+    </div>
+    <div class="g-bd">
+        <div class="m-foot">
+        	如有任何问题，请联系：魏文庆(<a href="mailto:wqwei@corp.netease.com">wqwei@corp.netease.com</a>)
+        </div>
+    </div>
+    <div class="g-ft">
+        <div class="m-foot">
+        	&nbsp;&copy;&nbsp;网易-杭研院-前端技术组
+        </div>
+    </div>
+</div>
+<script src="orpheus://native/core.js"></script>
+<script src="http://192.168.144.11/libs/nej/src/define.js"></script>
+<script>
+	var f = function(){
+		var _ = NEJ.P;
+		var i = _('nej.cef.ui');
+		var ut = _('nej.cef.ut');
+		var _n = _('nej.n');
+		var _v = _('nej.v');
+		var _c = _('nej.c'); 
+		var _size ={width:600,height:400}
+		var _pos = _n._$getWindowPos(_size);
+		_n._$setPosition({x:_pos.x,y:_pos.y,width:_size.width, height:_size.height,topmost:false,sizeLimit:{min:{width:300,height:200},max:{width:800,height:800}}});
+		var _frame = i._$$Frame._$allocate({parent:document.body,canResize:true,isclose:false,taskIcon:{url:location.protocol+location.host+_c._$get('root')+ 'ntes.ico',title:'测试窗体'}});
+		_v._$addEvent(document.body,'contextmenu',onContextMenu);
+		//ut._$$Tray._$allocate({tooltip：'aaa',icon:'../../../res/ntes.ico',onclick:onClick,onrightclick:onRightClick})
+		_v._$addEvent('open','click',onOpenNewWindow);
+		_v._$addEvent('openforce','click',onOpenNewWindowForce);
+		_v._$addEvent('openinnavigator','click',onOpenNewWindowInNavigator);
+		
+		function onOpenNewWindow(){
+			_n._$open('../test/index.html',{center:true,width:300,height:200},{visible:true,resizable:false,taskbarButton:true}) 	
+		};
+		function onOpenNewWindowForce(){
+			_n._$open('../test/index.html',{center:true,width:300,height:200},{visible:true,resizable:false,taskbarButton:true},true)
+		};
+		function onOpenNewWindowInNavigator(){
+			_n._$openInNavigate('http://www.163.com');
+		};
+		function onContextMenu(){
+			ut._$$Menu._$allocate({
+				items: [{
+					'text': '退出',
+					onclick: menuClick,
+					enable:true,
+					data: {
+						id: 5
+					}
+				}, {
+					'separator': true
+				}, {
+					'text': '有二级菜单的',
+					onclick: menuClick,
+					data: {
+						id: 5
+					},
+					children: [{
+						'text': '退出',
+						onclick: menuClick,
+						enable:true,
+						data: {
+							id: 5
+						}
+					}]
+				}]
+			})
+		}
+		function onClick(){
+			//_n._$showWindow();
+			_n._$bringToTop();
+		};
+		function onRightClick(){
+			onContextMenu();
+        };
+		function menuClick(_data){
+			_n._$appExit();
+			//debugger;
+		};
+	};
+	define(['{patch}config.js','{lib}native/cef/ui/frame.js','{lib}native/cef/api.js','{lib}native/cef/util/tray.js','{lib}native/cef/util/menu.js'], f);
+</script>
+</body>
+</html>

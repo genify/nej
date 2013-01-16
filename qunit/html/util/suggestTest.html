@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>suggest测试页</title>
+        <link rel="stylesheet" href="../../../qunit/base/qunit.css" type="text/css" media="screen" />
+        <script type="text/javascript" src="../../../qunit/base/qunit.js"></script>
+        <script src="../../../src/define.js?pro=/qunit/javascript/"></script>
+		<style type="text/css">
+			.box{position:relative;width:100px;}
+			.xuanzhong{background:pink;}
+			#suggest-input{height:24px;line-height:24px;padding:0;margin:0;border:solid 2px #ccc;}
+			#card0{position:absolute;top:28px;left:0;width:100%;height:auto;background:#ccc;}
+		</style>
+    </head>
+    <body onselectstart="return false">
+        <h1 id="qunit-header">Qunit suggest test</h1>
+        <h2 id="qunit-banner"></h2>
+        <div id="qunit-testrunner-toolbar"></div>
+        <h2 id="qunit-userAgent"></h2>
+        <ol id="qunit-tests"></ol>
+        <div id="qunit-fixture"></div>
+		<div class="box">
+			<input id="suggest-input"  type="text" />
+			<div id="card0"></div>
+		</div>
+        <script type="text/javascript" src="../../javascript/util/suggestTest.js"></script>
+    </body>
+</html>
