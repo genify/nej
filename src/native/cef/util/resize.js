@@ -64,4 +64,4 @@ var f = function() {
         }
     };
 };
-define('{lib}native/cef/util/resize.js', ['{lib}util/event.js'], f);
+NEJ.define('{lib}native/cef/util/resize.js', ['{lib}util/event.js'], f);

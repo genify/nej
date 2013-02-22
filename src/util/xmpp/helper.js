@@ -279,7 +279,7 @@ var f = function(){
         this.__proxy._$send('presence',_presence);
     };
 };
-define('{lib}util/xmpp/helper.js',
+NEJ.define('{lib}util/xmpp/helper.js',
       ['{lib}base/element.js'
       ,'{lib}util/event.js'
       ,'{lib}util/xmpp/core/stream.js'

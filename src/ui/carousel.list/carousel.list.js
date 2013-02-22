@@ -178,6 +178,6 @@ var f = function(){
         this._$clearEvent();
     };
 };
-define('{lib}ui/carousel.list/carousel.list.js',
+NEJ.define('{lib}ui/carousel.list/carousel.list.js',
       ['{lib}ui/loading/loading.js'
       ,'{lib}ui/carousel/carousel.x.js'],f);

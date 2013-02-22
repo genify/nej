@@ -8,6 +8,6 @@
 var f = function(){
     
 };
-define('{lib}ui/sorter/sorter.js',
+NEJ.define('{lib}ui/sorter/sorter.js',
       ['{lib}ui/base.js'
       ,'{lib}util/sorter/sorter.js'],f);

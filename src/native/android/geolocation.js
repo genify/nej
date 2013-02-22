@@ -64,5 +64,5 @@ var f = function(){
         }
     };
 };
-define('{lib}native/android/geolocation.js',
+NEJ.define('{lib}native/android/geolocation.js',
       ['{lib}native/android/phonegap.js'],f);

@@ -56,5 +56,5 @@ var f = function(){
     // instance
     _p._$$Touch._$allocate();
 };
-define('{lib}util/gesture/touch.js',
+NEJ.define('{lib}util/gesture/touch.js',
       ['{lib}util/gesture/gesture.js'],f);

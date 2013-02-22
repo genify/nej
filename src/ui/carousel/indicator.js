@@ -87,5 +87,5 @@ var f = function(){
         }
     };
 };
-define('{lib}ui/carousel/indicator.js',
+NEJ.define('{lib}ui/carousel/indicator.js',
       ['{lib}base/event.js','{lib}util/event.js'],f);

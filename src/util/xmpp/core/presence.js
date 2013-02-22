@@ -75,5 +75,5 @@ var f = function(){
     // do regist plugin
     p._$$CORE_PRESENCE._$regist();
 };
-define('{lib}util/xmpp/core/presence.js',
+NEJ.define('{lib}util/xmpp/core/presence.js',
       ['{lib}util/xmpp/plugin.js'],f);

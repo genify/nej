@@ -24,5 +24,5 @@ var f = function(){
     // regist command implemention
     _p._$$Bold._$regist();
 };
-define('{lib}util/editor/command/bold.js',
+NEJ.define('{lib}util/editor/command/bold.js',
       ['{lib}util/editor/command/simple.js'],f);

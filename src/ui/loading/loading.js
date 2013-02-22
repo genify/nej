@@ -83,4 +83,4 @@ var f = function(){
         this.__seed_html= _seed_html;
     };
 };
-define('{lib}ui/loading/loading.js',['{lib}ui/base.js'],f);
+NEJ.define('{lib}ui/loading/loading.js',['{lib}ui/base.js'],f);

@@ -75,5 +75,5 @@ var f = function(){
             }
         });
 };
-define('{lib}util/history/history.override.js',
+NEJ.define('{lib}util/history/history.override.js',
       ['{lib}util/history/history.js'],f);

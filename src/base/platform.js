@@ -147,5 +147,5 @@ var f = function(){
        ,trident  : _notd||_kernel.release>='6.0'
     };
 };
-define('{lib}base/platform.js',
+NEJ.define('{lib}base/platform.js',
       ['{lib}base/global.js'],f);

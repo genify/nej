@@ -439,5 +439,5 @@ var f = function(){
          }
      };
 };
-define('{lib}util/data/region/zh.js',
+NEJ.define('{lib}util/data/region/zh.js',
       ['{lib}util/cache/cache.list.base.js'],f);

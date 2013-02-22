@@ -60,4 +60,4 @@ var f = function(){
         return this;
     };
 };
-define('{lib}util/module/validator.js',['{lib}util/event.js'],f);
+NEJ.define('{lib}util/module/validator.js',['{lib}util/event.js'],f);

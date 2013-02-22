@@ -200,6 +200,6 @@ var f = function(){
     //     return NUtils.isNetworkAvailable();
     // };
 };
-define('{lib}native/android/util.js',
+NEJ.define('{lib}native/android/util.js',
       ['{lib}base/element.js'
       ,'{lib}native/android/phonegap.js'],f);

@@ -41,5 +41,5 @@ var f = function(){
                });
     })();
 };
-define('{lib}patched/trident-0/ajax.js',
+NEJ.define('{lib}patched/trident-0/ajax.js',
       ['{lib}patched/ajax.js'],f);

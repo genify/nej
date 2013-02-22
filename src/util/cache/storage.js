@@ -165,6 +165,6 @@ var f = function(){
     // init storage
     _h.__initStorage();
 };
-define('{lib}util/cache/storage.js',
+NEJ.define('{lib}util/cache/storage.js',
       ['{patch}storage.js'
       ,'{lib}util/event/event.js'],f);

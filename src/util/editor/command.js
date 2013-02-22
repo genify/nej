@@ -107,5 +107,5 @@ var f = function(){
         return null;
     };
 };
-define('{lib}util/editor/command.js',
+NEJ.define('{lib}util/editor/command.js',
       ['{lib}util/event.js'],f);

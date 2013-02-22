@@ -199,7 +199,7 @@ var f = function(){
                :this.__copt.area._$getTextContent();
     };
 };
-define('{lib}util/editor/editor.js',
+NEJ.define('{lib}util/editor/editor.js',
       ['{lib}util/editor/area.js'
       ,'{lib}util/editor/toolbar.js'
       ,'{lib}util/editor/command.js'],f);

@@ -133,5 +133,5 @@ var f = function(){
     // do regist plugin
     p._$$XEP_NONSASL._$regist();
 };
-define('{lib}util/xmpp/xep/nonsasl.js',
+NEJ.define('{lib}util/xmpp/xep/nonsasl.js',
       ['{lib}util/xmpp/plugin.js'],f);

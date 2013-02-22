@@ -126,5 +126,5 @@ var f = function(){
         return this;
     };
 };
-define('{lib}util/ajax/proxy/xhr.js',
+NEJ.define('{lib}util/ajax/proxy/xhr.js',
       ['{lib}util/ajax/proxy/proxy.js'],f);

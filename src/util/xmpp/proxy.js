@@ -382,5 +382,5 @@ var f = function(){
         this.__timer = window.setTimeout(this._$sendFragment._$bind(this,' '),25000);
     };
 };
-define('{lib}util/xmpp/proxy.js',
+NEJ.define('{lib}util/xmpp/proxy.js',
       ['{lib}base/element.js','{lib}util/event.js'],f);

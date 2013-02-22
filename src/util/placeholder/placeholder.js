@@ -8,7 +8,8 @@
 var f = function(){
     var _  = NEJ.P,
         _h = _('nej.h'),
-        _e = _('nej.e');
+        _e = _('nej.e'),
+        _x = _('nej.x');
     /**
      * 输入框占位行为，高版本用placeholder属性和样式处理<br/>
      * 
@@ -41,7 +42,8 @@ var f = function(){
      * @param  {String}      占位样式名称，默认为js-placeholder
      * @return {nej.e}
      */
-    _e._$placeholder = function(_element,_clazz){
+    _e._$placeholder = 
+    _x._$placeholder = function(_element,_clazz){
         _h.__setPlaceholder(_element,
             _e._$dataset(_element,'holder')
                 ||_clazz||'js-placeholder');
@@ -57,5 +59,5 @@ var f = function(){
 //        return this;
 //    };
 };
-define('{lib}util/placeholder/placeholder.js',
+NEJ.define('{lib}util/placeholder/placeholder.js',
       ['{patch}holder.js'],f);

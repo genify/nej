@@ -181,6 +181,6 @@ var f = function(){
         return this;
     };
 };
-define('{lib}util/animation/animation.js',
+NEJ.define('{lib}util/animation/animation.js',
       ['{lib}util/event.js'
       ,'{lib}util/timer/animation.js'],f);

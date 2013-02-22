@@ -184,7 +184,7 @@ var f = function(){
         return this;
     };
 };
-define('{lib}util/ajax/tag.js',
+NEJ.define('{lib}util/ajax/tag.js',
       ['{lib}util/ajax/loader/html.js',
        '{lib}util/ajax/loader/style.js',
        '{lib}util/ajax/loader/script.js'],f);

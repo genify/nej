@@ -78,8 +78,8 @@ var f = function(){
         this.__cache._$setEvent('onlistload',
              this.__onListLoad._$bind(this));
         this.__doClearSelect(_nmap.province);
-        this.__cache._$getList({key:'province'});
         this._$setRegion(_options.data);
+        this.__cache._$getList({key:'province'});
     };
     /**
      * 控件销毁
@@ -199,5 +199,5 @@ var f = function(){
         return this;
     };
 };
-define('{lib}util/region/region.zh.js',
+NEJ.define('{lib}util/region/region.zh.js',
       ['{lib}util/event.js'],f);

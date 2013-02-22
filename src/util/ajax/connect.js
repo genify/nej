@@ -108,5 +108,5 @@ var f = function(){
         return this;
     };
 };
-define('{lib}util/ajax/connect.js',
+NEJ.define('{lib}util/ajax/connect.js',
       ['{lib}base/global.js'],f);

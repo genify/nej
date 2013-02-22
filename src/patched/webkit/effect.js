@@ -13,5 +13,5 @@ var f = function(){
     if (_p._$NOT_PATCH.webkit) return;
 
 };
-define('{lib}patched/webkit/effect.js',
+NEJ.define('{lib}patched/webkit/effect.js',
       ['{lib}patched/effect.js'],f);

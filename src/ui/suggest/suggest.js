@@ -172,6 +172,6 @@ var f = function(){
         return this;
     };
 };
-define('{lib}ui/suggest/suggest.js',
+NEJ.define('{lib}ui/suggest/suggest.js',
       ['{lib}ui/base.js'
       ,'{lib}util/suggest/suggest.js'],f);

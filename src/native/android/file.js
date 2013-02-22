@@ -117,5 +117,5 @@ var f = function(){
         };
     })();
 };
-define('{lib}native/android/file.js',
+NEJ.define('{lib}native/android/file.js',
       ['{lib}native/android/phonegap.js'],f);

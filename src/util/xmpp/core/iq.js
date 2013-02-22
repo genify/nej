@@ -81,5 +81,5 @@ var f = function(){
     // do regist plugin
     p._$$CORE_IQ._$regist();
 };
-define('{lib}util/xmpp/core/iq.js',
+NEJ.define('{lib}util/xmpp/core/iq.js',
       ['{lib}util/xmpp/plugin.js'],f);

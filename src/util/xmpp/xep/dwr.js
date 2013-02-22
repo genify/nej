@@ -58,5 +58,5 @@ var f = function(){
     // do regist plugin
     p._$$XEP_DWR._$regist();
 };
-define('{lib}util/xmpp/xep/dwr.js',
+NEJ.define('{lib}util/xmpp/xep/dwr.js',
       ['{lib}util/xmpp/plugin.js'],f);

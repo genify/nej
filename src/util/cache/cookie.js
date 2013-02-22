@@ -70,4 +70,4 @@ var f = function(){
         };
     })();
 };
-define('{lib}util/cache/cookie.js',['{lib}base/util.js'],f);
+NEJ.define('{lib}util/cache/cookie.js',['{lib}base/util.js'],f);

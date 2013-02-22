@@ -512,4 +512,4 @@ var f = function(){
         return __bin2hex(__str2bin(_data,!0),!0);
     };
 };
-define('{lib}util/encode/sha.md5.js',['{lib}base/global.js'],f);
+NEJ.define('{lib}util/encode/sha.md5.js',['{lib}base/global.js'],f);

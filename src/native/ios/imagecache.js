@@ -123,5 +123,5 @@ var f = function(){
                         {param:['navigator.n2j.'+_sn]});
     };
 };
-define('{lib}native/ios/imagecache.js',
+NEJ.define('{lib}native/ios/imagecache.js',
       ['{lib}native/ios/phonegap.js'],f);

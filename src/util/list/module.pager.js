@@ -274,6 +274,6 @@ var f = function(){
         this.__doChangePage({index:_index});
     };
 };
-define('{lib}util/list/module.pager.js',
+NEJ.define('{lib}util/list/module.pager.js',
       ['{lib}util/list/module.js'
       ,'{lib}ui/pager/pager.js'],f);

@@ -223,5 +223,5 @@ var f = function(){
         this.__manager = new (p._$$Manager)(this.__mopt);
     };
 };
-define('{lib}util/module/module.js',
+NEJ.define('{lib}util/module/module.js',
       ['{lib}base/element.js','{lib}util/event.js'],f);

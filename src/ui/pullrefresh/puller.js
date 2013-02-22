@@ -113,4 +113,4 @@ var f = function(){
         return this.__state;
     };
 };
-define('{lib}ui/pullrefresh/puller.js',['{lib}ui/base.js'],f);
+NEJ.define('{lib}ui/pullrefresh/puller.js',['{lib}ui/base.js'],f);

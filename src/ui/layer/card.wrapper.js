@@ -201,6 +201,6 @@ var f = function(){
         return this;
     };
 };
-define('{lib}ui/layer/card.wrapper.js',
+NEJ.define('{lib}ui/layer/card.wrapper.js',
       ['{lib}ui/layer/layer.wrapper.js'
       ,'{lib}ui/layer/card.js'],f);

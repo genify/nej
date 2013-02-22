@@ -106,5 +106,5 @@ var f = function(){
                        {param:[this.__ncb,_url]});
     };
 };
-define('{lib}native/ios/socket.js',
+NEJ.define('{lib}native/ios/socket.js',
       ['{lib}base/platform.js','{lib}native/ios/phonegap.js'],f);

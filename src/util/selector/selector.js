@@ -177,7 +177,7 @@ var f = function(){
      */
     __proMultiSelector.__doItemClear = function(_id){
         for(var x in this.__selection){
-            if (x==_id) continue;
+            if (x==_id||x=='length'||x=='list') continue;
             this.__doItemDelFromSelection(x,this.__selection[x]);
         }
     };
@@ -313,5 +313,5 @@ var f = function(){
         return this.__selection;
     };
 };
-define('{lib}util/selector/selector.js',
+NEJ.define('{lib}util/selector/selector.js',
       ['{lib}util/event.js'],f);

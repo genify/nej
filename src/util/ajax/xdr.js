@@ -303,7 +303,7 @@ var f = function(){
         return _j._$request(_form.action,_option);
     };
 };
-define('{lib}util/ajax/xdr.js',
+NEJ.define('{lib}util/ajax/xdr.js',
       ['{lib}base/constant.js'
       ,'{lib}base/util.js'
       ,'{patch}ajax.js'],f);

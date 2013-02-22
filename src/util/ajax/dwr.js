@@ -445,7 +445,7 @@ var f = function(){
     w['_remoteHandleException'] = __onError;
     w['_remoteHandleBatchException'] = __onErrorAll;
 };
-define('{lib}util/ajax/dwr.js',
+NEJ.define('{lib}util/ajax/dwr.js',
       ['{lib}base/constant.js'
       ,'{lib}base/util.js'
       ,'{lib}util/ajax/xdr.js'

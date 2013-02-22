@@ -108,5 +108,5 @@ var f = function(){
         return this;
     };
 };
-define('{lib}util/animation/bounce.js',
+NEJ.define('{lib}util/animation/bounce.js',
       ['{lib}util/animation/animation.js'],f);

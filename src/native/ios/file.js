@@ -105,5 +105,5 @@ var f = function(){
         PhoneGap._$exec('ProgressView.show',{param:['navigator.n2j.'+_key,_ratio,_message]});
     };
 };
-define('{lib}native/ios/file.js',
+NEJ.define('{lib}native/ios/file.js',
       ['{lib}native/ios/phonegap.js'],f);

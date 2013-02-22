@@ -27,5 +27,5 @@ var f = function(){
 //        // do nothing
 //    };
 };
-define('{lib}patched/holder.js',
+NEJ.define('{lib}patched/holder.js',
       ['{lib}base/element.js'],f);

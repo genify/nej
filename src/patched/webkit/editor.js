@@ -30,5 +30,5 @@ var f = function(){
         return _html.replace(__reg_nwrd,'');
     };
 };
-define('{lib}patched/webkit/editor.js',
+NEJ.define('{lib}patched/webkit/editor.js',
       ['{lib}patched/editor.js'],f);

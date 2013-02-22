@@ -689,7 +689,7 @@ var f = function(){
         return this;
     };
 };
-define('{lib}util/dispatcher/v1/dispatcher.js',
+NEJ.define('{lib}util/dispatcher/v1/dispatcher.js',
       ['{lib}util/ajax/tag.js'
       ,'{lib}util/template/tpl.js'
       ,'{lib}util/history/history.js'

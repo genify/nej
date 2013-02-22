@@ -11,6 +11,7 @@ var f = function(){
         _o = NEJ.O,
         _e = _('nej.e'),
         _u = _('nej.u'),
+        _x = _('nej.x'),
         _p = _('nej.ut'),
         _proPage;
     if (!!_p._$$Page) return;
@@ -198,7 +199,8 @@ var f = function(){
      * @config  {String}         clazz       需要做Page控件封装的节点标识，如没有此参数则选取父节点下的所有子节点
      * @return  {Function}                   控件实例
      */
-    _e._$page = function(_parent,_options){
+    _e._$page = 
+    _x._$page = function(_parent,_options){
         var _id = _e._$id(_parent);
         if (!_id) return null;
         if (!_p._$api(_id,_p._$$Page)){
@@ -214,5 +216,5 @@ var f = function(){
         return _p._$api(_id,_p._$$Page,_options||_o);
     };
 };
-define('{lib}util/page/page.js',
+NEJ.define('{lib}util/page/page.js',
       ['{lib}util/page/page.base.js'],f);

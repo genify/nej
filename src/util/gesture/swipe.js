@@ -76,5 +76,5 @@ var f = function(){
     // instance
     _p._$$Swipe._$allocate();
 };
-define('{lib}util/gesture/swipe.js',
+NEJ.define('{lib}util/gesture/swipe.js',
       ['{lib}util/gesture/gesture.js'],f);

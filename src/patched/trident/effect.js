@@ -151,7 +151,7 @@ var f = function(){
     };*/
 
 };
-define('{lib}patched/trident/effect.js',
+NEJ.define('{lib}patched/trident/effect.js',
       ['{lib}patched/effect.js'
       ,'{lib}util/animation/linear.js'
       ,'{lib}util/animation/easein.js'

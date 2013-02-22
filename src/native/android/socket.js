@@ -100,5 +100,5 @@ var f = function(){
         this.onmessage({data:decodeURIComponent(_data)});
     };
 };
-define('{lib}native/android/socket.js',
+NEJ.define('{lib}native/android/socket.js',
       ['{lib}native/android/phonegap.js'],f);

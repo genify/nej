@@ -149,6 +149,6 @@ var f = function(){
         return _e._$getHtmlTemplate(_seed_page,_data);
     };
 };
-define('{lib}ui/pager/pager.js',
+NEJ.define('{lib}ui/pager/pager.js',
       ['{lib}ui/pager/pager.base.js'
       ,'{lib}util/page/page.js'],f);

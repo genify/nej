@@ -36,19 +36,19 @@ var f = function(){
         this.__number = 1;
         _v._$addEvent(
             document,'touchcancel',
-            this.__onTouchCancel._$bind(this)
+            this.__onTouchCancel._$bind(this),!0
         );
         _v._$addEvent(
             document,'touchstart',
-            this.__onTouchStart._$bind(this)
+            this.__onTouchStart._$bind(this),!0
         );
         _v._$addEvent(
             document,'touchmove',
-            this.__onTouchMove._$bind(this)
+            this.__onTouchMove._$bind(this),!0
         );
         _v._$addEvent(
             document,'touchend',
-            this.__onTouchEnd._$bind(this)
+            this.__onTouchEnd._$bind(this),!0
         );
     };
     /**
@@ -277,7 +277,7 @@ var f = function(){
                 _touch),_type,_options);
     };
 };
-define('{lib}util/gesture/gesture.js',
+NEJ.define('{lib}util/gesture/gesture.js',
       ['{lib}base/event.js'
       ,'{lib}base/element.js'
       ,'{lib}util/event.js'],f);

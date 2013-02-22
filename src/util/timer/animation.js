@@ -58,5 +58,5 @@ var f = function(){
         return this;
     };
 };
-define('{lib}util/timer/animation.js',
+NEJ.define('{lib}util/timer/animation.js',
       ['{lib}base/platform.js'],f);

@@ -118,6 +118,6 @@ var f = function(){
 
     _e._$g = nes._get;
 };
-define('{lib}util/query/query.js',
+NEJ.define('{lib}util/query/query.js',
       ['{lib}base/global.js'
       ,'{lib}util/query/nes.js'],f);

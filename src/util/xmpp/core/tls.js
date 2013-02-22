@@ -59,5 +59,5 @@ var f = function(){
     // do regist plugin
     p._$$CORE_TLS._$regist();
 };
-define('{lib}util/xmpp/core/tls.js',
+NEJ.define('{lib}util/xmpp/core/tls.js',
       ['{lib}util/xmpp/plugin.js'],f);

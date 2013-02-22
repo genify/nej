@@ -69,5 +69,5 @@ var f = function(){
         });
     };
 };
-define('{lib}ui/item/list.js',
+NEJ.define('{lib}ui/item/list.js',
       ['{lib}ui/item/item.js'],f);

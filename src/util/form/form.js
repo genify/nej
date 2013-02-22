@@ -20,7 +20,7 @@ var f = function(){
      * [ntb]
      *   data-focus-mode | 0/1                   | 聚焦模式，仅在form节点上设置，见{#nej.e._$focus}
      *   data-auto-focus | true/false            | 自动聚焦项，多个表单项设置了该属性仅第一项有效
-     *   data-counter     | true/false             | 是否需要显示计数信息，必须同时设置data-max-length或者maxlength
+     *   data-counter    | true/false             | 是否需要显示计数信息，必须同时设置data-max-length或者maxlength
      *   data-message    | String                | 验证出错提示信息，多个提示信息可以通过配置或者回调事件定制提示内容
      *   data-tip        | String                | 默认提示信息，正常输入状态时的提示信息
      *   data-required   | true/false            | 必填项，对于checkbox/radio的required表示必须选中
@@ -254,6 +254,7 @@ var f = function(){
         this.__form = document.forms[_options.form]||
                      _e._$get(_options.form);
         this.__message = _options.message||{};
+        this.__message.pass = this.__message.pass||'&nbsp;';
         // focus options
         var _mode = this.__dataset(
                     this.__form,'focusMode',1);
@@ -338,6 +339,23 @@ var f = function(){
             var _type = _node.type;
             return !!_node.name&&
                     !_reg1.test(_node.type||'');
+        };
+    })();
+    /**
+     * 判断节点是否需要验证
+     * @protected
+     * @method {__isValidElement}
+     * @param  {Node}    节点
+     * @return {Boolean} 是否需要验证
+     */
+    _proWebForm.__isValueElement = (function(){
+        var _reg1 = /^hidden$/i;
+        return function(_node){
+            if (this.__isValidElement(_node))
+                return !0;
+            _node = this._$get(_node)||_node;
+            var _type = _node.type||'';
+            return _reg1.test(_type);
         };
     })();
     /**
@@ -669,8 +687,7 @@ var f = function(){
         // check node validate
         _node = this._$get(_node)||_node;
         var _info = this.__vinfo[_e._$id(_node)];
-        if (!_node||!_info||
-            !this.__isValidElement(_node)) 
+        if (!_node||!_info||!this.__isValidElement(_node)) 
             return !0;
         var _result;
         // check condition
@@ -681,12 +698,12 @@ var f = function(){
             },this);
         // check custom validate
         if (_result==null){
-            var _event = {target:_node};
+            var _event = {target:_node,form:this.__form};
             this._$dispatchEvent('oncheck',_event);
             _result = _event.value;
         }
         // dispatch validate event
-        var _event = {target:_node};
+        var _event = {target:_node,form:this.__form};
         if (_result!=null){
             _event.code = _result;
             this._$dispatchEvent('oninvalid',_event);
@@ -712,14 +729,20 @@ var f = function(){
      */
     _proWebForm.__doShowMessage = (function(){
         var _getVisible = function(_type1,_type2){
-            return _type1==_type2?'visible':'hidden';
+            return _type1==_type2?'block':'none';
         };
-        var _getHolder = function(_node,_type){
+        var _getHolder = function(_node,_type,_message){
+            var _holder = _getHolderNode.call(this,_node,_type);
+            if (!_holder&&!!_message)
+                _holder = _e._$wrapInline(_node,this.__wopt[_type]);
+            return _holder;
+        };
+        var _getHolderNode = function(_node,_type){
             var _holder;
             if (_type=='tp')
                 _holder = _e._$get(_node.name+'-tip');
             if (!_holder)
-                _holder = _e._$wrapInline(_node,this.__wopt[_type]);
+                _holder = _e._$getByClassName(_node.parentNode,this.__wopt[_type].nid)[0];
             return _holder;
         };
         return function(_node,_message,_type){
@@ -728,15 +751,14 @@ var f = function(){
             _type=='er' ? _e._$addClassName(_node,this.__invalid)
                         : _e._$delClassName(_node,this.__invalid);
             // set message content
-            if (!!_message)
-                _getHolder.call(this,_node,_type).innerHTML = _message;
+            var _holder = _getHolder.call(this,_node,_type,_message);
+            if (!!_holder&&!!_message) _holder.innerHTML = _message;
             // show message node
             _u._$forIn(this.__wopt,
                 function(_value,_key){
                     _e._$setStyle(
-                        _getHolder.call(this,_node,_key),
-                        'visibility',
-                        _getVisible(_type,_key)
+                        _getHolderNode.call(this,_node,_key),
+                        'display',_getVisible(_type,_key)
                     );
                 },this);
         };
@@ -804,7 +826,7 @@ var f = function(){
         return function(_name,_value){
             var _node = this._$get(_name);
             if (!_node) return this;
-            if (!_node.length){
+            if (_node.tagName=='SELECT'||!_node.length){
                 // for node
                 _doSetValue(_value,_node);
             }else{
@@ -871,7 +893,7 @@ var f = function(){
             _u._$forEach(
                 this.__form.elements,
                 function(_node){
-                    if (this.__isValidElement(_node))
+                    if (this.__isValueElement(_node))
                         _doParseValue.call(this,_result,_node);
                 },this);
             return _result;
@@ -882,10 +904,20 @@ var f = function(){
      * @method {_$reset}
      * @return {nej.ut._$$WebForm}
      */
-    _proWebForm._$reset = function(){
-        this.__form.reset();
-        return this;
-    };
+    _proWebForm._$reset = (function(){
+        var _doShowTip = function(_node){
+            if (this.__isValidElement(_node))
+                this._$showTip(_node);
+        };
+        return function(){
+            this.__form.reset();
+            _u._$forEach(
+                this.__form.elements,
+                _doShowTip,this
+            );
+            return this;
+        };
+    })();
     /**
      * 提交表单
      * @method {_$submit}
@@ -937,7 +969,7 @@ var f = function(){
         return _result;
     };
 };
-define('{lib}util/form/form.js',
+NEJ.define('{lib}util/form/form.js',
       ['{lib}base/util.js'
       ,'{lib}util/event.js'
       ,'{lib}util/counter/counter.js'

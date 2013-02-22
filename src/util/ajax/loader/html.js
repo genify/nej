@@ -60,5 +60,5 @@ var f = function(){
         _e._$remove(_iframe);
     };
 };
-define('{lib}util/ajax/loader/html.js',
+NEJ.define('{lib}util/ajax/loader/html.js',
       ['{lib}util/ajax/loader/loader.js'],f);

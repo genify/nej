@@ -234,5 +234,5 @@ var f = function(){
         this.__page._$updatePage(_index,_total);
     };
 };
-define('{lib}ui/pager/pager.base.js',
+NEJ.define('{lib}ui/pager/pager.base.js',
       ['{lib}ui/base.js'],f);

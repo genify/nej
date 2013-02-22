@@ -117,4 +117,4 @@ var f = function(){
      */
     __proConfiguration.__getModule = f;
 };
-define('{lib}util/module/config.js',['{lib}util/event.js'],f);
+NEJ.define('{lib}util/module/config.js',['{lib}util/event.js'],f);

@@ -445,6 +445,6 @@ var f = function(){
         return this;
     };
 };
-define('{lib}ui/scroller.list/scroller.list.js',
+NEJ.define('{lib}ui/scroller.list/scroller.list.js',
       ['{lib}ui/scroller/scroller.y.js'
       ,'{lib}ui/pullrefresh/puller.js'],f);

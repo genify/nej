@@ -83,5 +83,5 @@ var f = function(){
     // init patch
     _doInit();
 };
-define('{lib}patched/gecko/api.js',
+NEJ.define('{lib}patched/gecko/api.js',
       ['{lib}patched/api.js'],f);

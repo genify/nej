@@ -332,4 +332,4 @@ var f = function() {
         return _info;
     };
 };
-define('{lib}native/cef/api.js', ['{lib}native/command.js','{lib}base/util.js','{lib}base/element.js'], f);
+NEJ.define('{lib}native/cef/api.js', ['{lib}native/command.js','{lib}base/util.js','{lib}base/element.js'], f);

@@ -93,5 +93,5 @@ var f = function(){
         return this;
     };
 };
-define('{lib}ui/mask/mask.js',
+NEJ.define('{lib}ui/mask/mask.js',
       ['{lib}ui/base.js'],f);

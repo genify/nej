@@ -321,7 +321,7 @@ var f = function(){
         return this;
     };
 };
-define('{lib}ui/layer/window.js',
+NEJ.define('{lib}ui/layer/window.js',
       ['{lib}ui/layer/layer.js'
       ,'{lib}ui/mask/mask.js'
       ,'{lib}util/dragger/dragger.js'],f);

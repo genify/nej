@@ -13,5 +13,5 @@ var f = function(){
     if (_p._$NOT_PATCH.gecko) return;
 
 };
-define('{lib}patched/gecko/effect.js',
+NEJ.define('{lib}patched/gecko/effect.js',
       ['{lib}patched/effect.js'],f);

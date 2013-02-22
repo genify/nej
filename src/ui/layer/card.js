@@ -77,6 +77,7 @@ var f = function(){
     _proCard.__destroy = function(){
         delete this.__fbox;
         delete this.__align;
+        delete this.__fitable;
         delete this.__position;
         this.__supDestroy();
     };
@@ -292,5 +293,5 @@ var f = function(){
         };
     })();
 };
-define('{lib}ui/layer/card.js',
+NEJ.define('{lib}ui/layer/card.js',
       ['{lib}ui/layer/layer.js'],f);

@@ -120,5 +120,5 @@ var f = function(){
     // instance
     _p._$$Tap._$allocate();
 };
-define('{lib}util/gesture/tap.js',
+NEJ.define('{lib}util/gesture/tap.js',
       ['{lib}util/gesture/gesture.js'],f);

@@ -81,7 +81,7 @@ var f = function() {
         this.__dragNodes = _e._$getByClassName(this.__body,_seed_css+'-dtag');
     };
 };
-define('{lib}native/cef/ui/resize.js', ['{patch}config.js'
+NEJ.define('{lib}native/cef/ui/resize.js', ['{patch}config.js'
                                        ,'{lib}ui/base.js'
                                        ,'{lib}native/cef/util/resize.js'
                                        ,'{lib}util/template/tpl.js'

@@ -11,6 +11,7 @@ var f = function(){
         _f = NEJ.F,
         _e = _('nej.e'),
         _v = _('nej.v'),
+        _x = _('nej.x'),
         _h = _('nej.h'),
         _class = _e._$pushCSSText('.#<class>{position:absolute;top:0;left:0;width:0;height:0;overflow:hidden;}');
     /**
@@ -47,7 +48,8 @@ var f = function(){
      *                                - form 文件选择控件封装表单对象
      *                                - id   当前变化的文件选择控件的ID
      */
-    _e._$file = (function(){
+    _e._$file = 
+    _x._$file = (function(){
         var _seed = +new Date,
             _cache = {}; // {id:{lab:'label',pid:'parent'}}
         // init cache
@@ -116,6 +118,6 @@ var f = function(){
         };
     })();
 };
-define('{lib}util/file/select.js',
+NEJ.define('{lib}util/file/select.js',
       ['{lib}base/element.js'
       ,'{lib}base/event.js'],f);

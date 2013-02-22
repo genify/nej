@@ -161,5 +161,5 @@ var f = function(){
                });
     })();
 };
-define('{lib}patched/trident-0/api.js',
+NEJ.define('{lib}patched/trident-0/api.js',
       ['{lib}patched/api.js'],f);

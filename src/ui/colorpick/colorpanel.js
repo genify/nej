@@ -210,7 +210,7 @@ var f = function(){
         return this;
     };
 };
-define('{lib}ui/colorpick/colorpanel.js',
+NEJ.define('{lib}ui/colorpick/colorpanel.js',
       ['{lib}ui/base.js'
       ,'{lib}util/slider/slider.y.js'
       ,'{lib}util/slider/slider.xy.js'

@@ -463,6 +463,29 @@ var f = function(){
         return this;
     };
     /**
+     * 删除事件
+     * @method {_$delEvent}
+     * @param  {String}   事件类型
+     * @param  {Function} 事件处理函数
+     * @return {nej.ut}
+     */
+    _proEvent._$delEvent = function(_type,_event){
+        var _type = (_type||'').toLowerCase(),
+            _events = this.__events[_type];
+        if (!_u._$isArray(_events)){
+            if (_events==_event)
+                delete this.__events[_type];
+            return;
+        }
+        _u._$reverseEach(
+            _events,
+            function(_func,_index,_list){
+                if (_func==_event)
+                    _list.splice(_index,1);
+            }
+        );
+    };
+    /**
      * 重置事件，覆盖原有事件
      * [code]
      *   // 分配实例
@@ -662,6 +685,6 @@ var f = function(){
         };
     })();
 };
-define('{lib}util/event.js',
+NEJ.define('{lib}util/event.js',
       ['{lib}base/event.js'
       ,'{lib}base/util.js'],f);

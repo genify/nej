@@ -172,5 +172,5 @@ var f = function(){
      */
     __proPLUGIN._$send = f;
 };
-define('{lib}util/xmpp/plugin.js',
+NEJ.define('{lib}util/xmpp/plugin.js',
       ['{lib}util/template/jst.js','{lib}util/xmpp/proxy.js'],f);

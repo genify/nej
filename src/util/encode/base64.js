@@ -182,4 +182,4 @@ var f = function(){
         }
     };
 };
-define('{lib}util/encode/base64.js',['{lib}base/global.js'],f);
+NEJ.define('{lib}util/encode/base64.js',['{lib}base/global.js'],f);

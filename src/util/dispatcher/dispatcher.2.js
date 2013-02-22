@@ -110,8 +110,9 @@ var f = function(){
      * @uses     {nej.ut.p._$$SingleGroupManager}
      * 
      * @param    {Object} 可选配置参数，已处理的参数列表如下
-     * @config   {Object} modules 模块配置
-     * @config   {Object} rules   规则配置
+     * @config   {Object}  modules 模块配置
+     * @config   {Object}  rules   规则配置
+     * @config   {Boolean} rest    是否支持REST风格的UMI解析
      * 
      * [hr]
      * 地址变换之前触发事件
@@ -141,25 +142,29 @@ var f = function(){
      * @return {Void}
      */
     _proDispatcher.__reset = function(_options){
+        this.__rest = !!_options.rest;
         this.__root = _d._$$Node._$allocate();
         // config map
         // - m   config for module, umi:{title:'xxx' ... }
         // - mg  umi to group id map, umi:gid
         // - r   config for rewrite, [{umi:regexp or string}]
         // - rr  build-in rewrite
-        this.__config = {m:{},mg:{},r:[],rr:{}};
+        // - al  alias map
+        this.__config = {m:{},mg:{},r:[],rr:{},al:{}};
         this.__groups = {};
         // for public module umi manager
         this.__doBuildGroup(this.__pbseed);
         // for private module umi manager
         this.__groups[this.__pvseed] = 
              _d._$$GroupManager._$allocate({
-                 root:this.__root
+                 root:this.__root,
+                 dispatcher:this
              });
         // listen urlchange
-        this.__doInitDomEvent([
-            [location,'urlchange',this.__onURLChange._$bind(this)]
-        ]);
+        this.__doInitDomEvent([[
+            location,'urlchange',
+            this.__onURLChange._$bind(this)
+        ]]);
         this.__supReset(_options);
         // init config
         this._$rule(_options.rules);
@@ -224,6 +229,7 @@ var f = function(){
         if (!_group){
             _group = _d._$$SingleGroupManager._$allocate({
                          root:this.__root,
+                         dispatcher:this,
                          classed:_gid==this.__pbseed
                      });
             this.__groups[_gid] = _group;
@@ -288,7 +294,8 @@ var f = function(){
      * @return {Void}
      */
     _proDispatcher.__onURLChange = (function(){
-        var _trim = /(?:^\/+)|(?:\/+$)/gi;
+        var _trim = /(?:^\/+)|(?:\/+$)/gi,
+            _reg0 = /#(\$.*?)$/;
         var _doParseRestParam = function(_umi,_node){
             var _path = _node._$getPath(),
                 _umi = _umi.replace(_path,'')
@@ -311,11 +318,13 @@ var f = function(){
             return '';
         };
         return function(_location){
+            // ignore if hash start with $
+            if (_location.path.indexOf('$')==0) return;
             this._$dispatchEvent('onbeforechange',_location);
             var _umi = this.__doRewriteUMI(_location.path),
                 _gid = this.__config.mg[_umi];
             // try umi from rest path
-            if (!_gid)
+            if (!_gid&&this.__rest)
                 _gid = _doTryGroupId(
                        _umi,this.__config.mg);
             // public umi not registed
@@ -324,23 +333,30 @@ var f = function(){
                 _gid = this.__config.mg[_umi];
             }
             // try umi from rest path
-            if (!_gid)
+            if (!_gid&&this.__rest)
                 _gid = _doTryGroupId(
                        _umi,this.__config.mg);
             if (!_gid) return;
             // save dispatch event
             var _node = _d._$getNodeByUMI(this.__root,_umi),
+                _prst = null;
+            if (this.__rest)
                 _prst = _doParseRestParam(_umi,_node);
             // fix umi for module
+            var _source = _umi;
             _umi = _node._$getPath();
             _node._$getData().event = {
                 target:_umi,
+                source:_source,
                 href:_location.href,
                 param:_location.query,
                 prest:_prst,
-                clazz:this.__getModuleConf(_umi,'clazz')
+                clazz:this.__getModuleConf(_umi,'clazz'),
+                pos:_reg0.test(_location.href)?RegExp.$1:''
             };
             // dispatch module
+            var _title = this.__getModuleConf(_source,'title');
+            if (!!_title) document.title = _title;
             this.__groups[_gid]._$dispatchUMI(_umi);
         };
     })();
@@ -374,6 +390,13 @@ var f = function(){
      *       '/m/c':'模块标题'
      *   });
      *   
+     *   // 配置别名
+     *   dispatcher._$rule('alias',{
+     *       'a':'/m/a',
+     *       'b':['/m/b','/m/bb'],
+     *       'c':'/m/c'
+     *   });
+     * 
      *   // 配置与匹配顺序无关重写规则
      *   // 重写规则配置结构：{ 目标UMI:重写规则 }
      *   // 重写规则可以是字符串（全字符匹配）或者正则表达式
@@ -393,14 +416,19 @@ var f = function(){
      *  
      *   // 批量配置标题和重写规则
      *   dispatcher._$rule({
-     *          'title':{
-     *              '/m/a':'模块标题',
+     *       'title':{
+     *           '/m/a':'模块标题',
      *           '/m/b':'模块标题',
      *           '/m/c':'模块标题'
      *       },
      *       'rewrite':{
-     *              '/m/b':/^\/m\/b.*$/i,
+     *           '/m/b':/^\/m\/b.*$/i,
      *           '/m/c':'/m/d'
+     *       },
+     *       'alias':{
+     *           'a':'/m/a',
+     *           'b':['/m/b','/m/bb'],
+     *           'c':'/m/c'
      *       }
      *   });
      * 
@@ -420,6 +448,10 @@ var f = function(){
         // regist title
         var _doRegistTitle = function(_title,_umi){
             this.__setModuleConf(_umi,'title',_title);
+        };
+        // regist alias map
+        var _doRegistAlias = function(_umi,_alias){
+            this.__config.al[_alias] = _umi;
         };
         // regist rewrite
         var _doRegistRewrite = function(_config){
@@ -443,9 +475,17 @@ var f = function(){
                 if (!_u._$isArray(_config)){
                     _doRegistRewrite.call(this,_config);
                 }else{
-                    _u._$forEach(_config,
-                       _doRegistRewrite,this);
+                    _u._$forEach(
+                        _config,
+                        _doRegistRewrite,this
+                    );
                 }
+            },
+            alias:function(_config){
+                _u._$forIn(
+                    _config,
+                    _doRegistAlias,this
+                );
             }
         };
         return function(_key,_config){
@@ -634,6 +674,81 @@ var f = function(){
         };
     })();
     /**
+     * 发布消息<br/>
+     * 
+     * 脚本举例：
+     * [code]
+     *   dispatcher._$publish(
+     *       'onchange',{
+     *           from:'/m/login/',
+     *           data:{action:'delete',value:'xxxxxx'}
+     *       }
+     *   );
+     * [/code]
+     * @method {_$publish}
+     * @param  {String} 消息类型
+     * @param  {Object} 消息相关信息
+     * @config {String} from 消息来源UMI
+     * @config {Object} data 消息数据
+     * @return {Void}
+     */
+    _proDispatcher._$publish = function(_type,_message){
+        var _message = NEJ.X({},_message);
+        _message.type = _type||'';
+        this._$dispatchEvent(
+            (_message.from||'')+':'
+            +_message.type,_message
+        );
+    };
+    /**
+     * 订阅消息<br/>
+     * 
+     * 脚本举例：
+     * [code]
+     *   dispatcher._$subscribe(
+     *       '/m/login/','onchange',
+     *       function(_event){
+     *           // _event.type
+     *           // _event.from
+     *           // _event.data
+     *       }
+     *   );
+     * [/code]
+     * @method {_$subscribe}
+     * @param  {String}   目标模块的UMI
+     * @param  {String}   消息类型
+     * @param  {Function} 消息处理回调
+     * @return {Void}
+     */
+    _proDispatcher._$subscribe = function(_umi,_type,_callback){
+        this._$pushEvent(
+            (_umi||'')+':'+(_type||''),_callback
+        );
+    };
+    /**
+     * 取消订阅消息<br/>
+     * 
+     * 脚本举例：
+     * [code]
+     *   dispatcher._$unsubscribe(
+     *       '/m/login/','onchange',
+     *       function(_event){
+     *           // 必须同添加的事件一致
+     *       }
+     *   );
+     * [/code]
+     * @method {_$unsubscribe}
+     * @param  {String}   目标模块的UMI
+     * @param  {String}   消息类型
+     * @param  {Function} 消息处理回调
+     * @return {Void}
+     */
+    _proDispatcher._$unsubscribe = function(_umi,_type,_callback){
+        this._$delEvent(
+            (_umi||'')+':'+(_type||''),_callback
+        );
+    };
+    /**
      * 应用私有模块
      * @deprecated
      * @method {_$apply}
@@ -767,8 +882,16 @@ var f = function(){
      * @return {nej.ut._$$Dispatcher}
      */
     _proDispatcher._$loaded = function(_umi,_module){
-        this._$regist(_umi,_module);
-        this.__groups[this.__config.mg[_umi]]._$loadedUMI(_umi);
+        _umi = this.__config.al[_umi]||_umi;
+        if (!_u._$isArray(_umi)){
+            this._$regist(_umi,_module);
+            this.__groups[this.__config.mg[_umi]]._$loadedUMI(_umi);
+        }else{
+            _u._$forEach(_umi,
+                function(_key){
+                    this._$loaded(_key,_module);
+                },this);
+        }
         return this;
     };
     /**
@@ -820,7 +943,7 @@ var f = function(){
         return window.dispatcher;
     };
 };
-define('{lib}util/dispatcher/dispatcher.2.js',
+NEJ.define('{lib}util/dispatcher/dispatcher.2.js',
       ['{lib}util/dispatcher/dsp/group.single.js'
       ,'{lib}util/history/history.js'
       ,'{lib}util/template/tpl.js'],f);

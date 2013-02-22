@@ -109,5 +109,5 @@ var f = function(){
             },this);
     };
 };
-define('{lib}util/page/page.simple.js',
+NEJ.define('{lib}util/page/page.simple.js',
       ['{lib}util/page/page.base.js'],f);

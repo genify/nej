@@ -46,5 +46,5 @@ var f = function(){
                 ob:'offsetWidth',sb:'scrollWidth',dx:'m41'};
     };
 };
-define('{lib}ui/scroller/scroller.x.js',
+NEJ.define('{lib}ui/scroller/scroller.x.js',
       ['{lib}ui/scroller/scroller.js'],f);

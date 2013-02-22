@@ -536,7 +536,7 @@ var f = function(){
         this._$scrollTo(_offset[this.__config.of],_refresh);
     };
 };
-define('{lib}ui/scroller/scroller.js',
+NEJ.define('{lib}ui/scroller/scroller.js',
       ['{lib}ui/base.js'
       ,'{lib}util/gesture/tap.js'
       ,'{lib}util/gesture/drag.js'

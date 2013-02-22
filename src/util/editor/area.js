@@ -101,9 +101,6 @@ var f = function(){
             [_document,'click',this.__onDocumentClick._$bind(this)]
            ,[_document,'selectionchange',this.__onSelectionChange._$bind(this)]
            ,[_document,'beforedeactivate',this.__doSaveRange._$bind(this)]
-           ,[_document.body,'paste',this.__doPaste._$bind(this)]
-           ,[_document.body,'dragover',_v._$stop._$bind(this)]
-           ,[_document.body,'drop',_v._$stop._$bind(this)]
         ]);
         // init content and focus
         if (!!this.__initcnt){
@@ -114,26 +111,6 @@ var f = function(){
             this._$focus();
             delete this.__focus;
         }
-    };
-    /**
-     * 鼠标黏贴
-     * @protected
-     * @method {__doPaste}
-     * @param  {Event} 事件对象
-     * @return {Void}
-     */
-    _proEditorArea.__doPaste = function(_event){
-        this.__stm = window.setTimeout(this.__doFilter._$bind(this),100);
-    };
-    /**
-     * FF需要过滤复制黏贴的内容
-     * @return {[type]} [description]
-     */
-    _proEditorArea.__doFilter = function(){
-        this.__stm = window.clearTimeout(this.__stm);
-        var _cnt = this._$getContent();
-        this._$setContent(_cnt);
-        this._$focus();
     };
     /**
      * 文档点击事件
@@ -222,7 +199,7 @@ var f = function(){
         if (!_document) return this;
         _h.__execCommand(_document,'styleWithCSS',false);
         _h.__execCommand(_document,_command,_value);
-        this.__onSelectionChange();
+        this._$focus(2);
         return this;
     };
     /**
@@ -256,6 +233,6 @@ var f = function(){
         return _h.__getSelectHtml(this._$getDocument());
     };
 };
-define('{lib}util/editor/area.js',
+NEJ.define('{lib}util/editor/area.js',
       ['{lib}util/event.js'
       ,'{patch}editor.js'],f);

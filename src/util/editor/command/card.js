@@ -29,8 +29,11 @@ var f = function(){
      * @return {Void}
      */
     _proCardCommand.__init = function(){
-        this.__fopt = {parent:document.body,destroyable:!0
-                      ,onchange:this.__onChange._$bind(this)};
+        this.__fopt = {
+            destroyable:!0,
+            parent:document.body,
+            onchange:this.__onChange._$bind(this)
+        };
         this.__supInit();
     };
     /**
@@ -63,5 +66,5 @@ var f = function(){
         return this;
     };
 };
-define('{lib}util/editor/command/card.js',
+NEJ.define('{lib}util/editor/command/card.js',
       ['{lib}util/editor/command.js'],f);

@@ -36,5 +36,5 @@ var f = function(){
     // regist command implemention
     _p._$$ForeColor._$regist();
 };
-define('{lib}util/editor/command/forecolor.js',
+NEJ.define('{lib}util/editor/command/forecolor.js',
       ['{lib}util/editor/command/color.js'],f);

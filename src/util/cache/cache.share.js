@@ -126,5 +126,5 @@ var f = function(){
         event:'cachechange'
     });
 };
-define('{lib}util/cache/cache.share.js',
+NEJ.define('{lib}util/cache/cache.share.js',
       ['{lib}util/event/event.js'],f);

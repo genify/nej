@@ -223,5 +223,5 @@ var f = function(){
         return this;
     };
 };
-define('{lib}ui/layer/layer.js',
+NEJ.define('{lib}ui/layer/layer.js',
       ['{lib}ui/base.js'],f);

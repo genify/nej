@@ -49,5 +49,5 @@ var f = function(){
         return _c._$get(_key)||(_key+'/res/nej_xdomain.html');
     };
 };
-define('{lib}patched/trident/config.js',
+NEJ.define('{lib}patched/trident/config.js',
       ['{lib}patched/config.js'],f);

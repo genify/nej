@@ -188,5 +188,5 @@ var f = function(){
         this._$dispatchEvent('onafterchange');
     };
 };
-define('{lib}util/range/range.js',
+NEJ.define('{lib}util/range/range.js',
       ['{lib}util/event.js'],f);

@@ -191,5 +191,5 @@ var f = function(){
         });
     };
 };
-define('{lib}util/slider/slider.js',
+NEJ.define('{lib}util/slider/slider.js',
       ['{lib}util/dragger/dragger.js'],f);

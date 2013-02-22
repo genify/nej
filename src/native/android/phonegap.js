@@ -65,5 +65,5 @@ var f = function(){
         if (!_args.keepCallback) delete __cache[_cid];
     };
 };
-define('{lib}native/android/phonegap.js',
+NEJ.define('{lib}native/android/phonegap.js',
       ['{lib}base/util.js','{lib}native/command.js'],f);

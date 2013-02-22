@@ -377,5 +377,5 @@ var f = function(){
         return this;
     };
 };
-define('{lib}util/page/page.base.js',
+NEJ.define('{lib}util/page/page.base.js',
       ['{lib}util/event.js'],f);

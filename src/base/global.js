@@ -16,6 +16,7 @@
  *  nej.e  - 节点接口名字空间
  *  nej.v  - 事件接口名字空间
  *  nej.j  - 请求接口名字空间
+ *  nej.x  - 用于链式调用扩展名字空间
  *  
  *  nej.ui - UI控件名字空间
  *  nej.ut - 通用控件名字空间
@@ -26,28 +27,26 @@
  * --------------------------------------------
  */
 var f = function(){
-    if (window.NEJ!=null)
-        return;
-    window.NEJ = {
-        /**
-         * 空对象实例，使用过程中不允许对其做设置操作<br/>
-         * @const {NEJ.O}
-         * @type  {Object}
-         */
-        O : {}
-        /**
-         * 空数组实例，使用过程中不允许对其做设置操作<br/>
-         * @const {NEJ.R}
-         * @type  {Array}
-         */
-       ,R : []
-        /**
-         * 空函数实例<br/>
-         * @const {NEJ.F}
-         * @type  {Function}
-         */
-       ,F : function(){return !1;}
-    };
+    // NEJ namespace
+    window.NEJ = window.NEJ||{};
+    /**
+     * 空对象实例，使用过程中不允许对其做设置操作<br/>
+     * @const {NEJ.O}
+     * @type  {Object}
+     */
+    NEJ.O = {};
+    /**
+     * 空数组实例，使用过程中不允许对其做设置操作<br/>
+     * @const {NEJ.R}
+     * @type  {Array}
+     */
+    NEJ.R = [];
+    /**
+     * 空函数实例<br/>
+     * @const {NEJ.F}
+     * @type  {Function}
+     */
+    NEJ.F = function(){return !1;};
     /**
      * 返回指定的命名空间，如果不存在则新建一个命名空间<br/>
      * 注意：命名空间不要使用浏览器保留的关键字
@@ -364,4 +363,4 @@ var f = function(){
     if (!window.MWF) window.MWF = NEJ;
     if (!window.mwf) window.mwf = NEJ.P('nej');
 };
-define('{lib}base/global.js',f);
+NEJ.define('{lib}base/global.js',f);

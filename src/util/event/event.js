@@ -265,7 +265,7 @@ var f = function(){
         }._$bind(this));
     };
 };
-define('{lib}util/event/event.js',
+NEJ.define('{lib}util/event/event.js',
       ['{lib}base/util.js'
       ,'{lib}base/event.js'
       ,'{lib}base/element.js'

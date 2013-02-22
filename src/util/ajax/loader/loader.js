@@ -355,7 +355,7 @@ var f = function(){
         return this;
     };
 };
-define('{lib}util/ajax/loader/loader.js',
+NEJ.define('{lib}util/ajax/loader/loader.js',
       ['{lib}base/constant.js'
       ,'{lib}base/event.js'
       ,'{lib}util/event.js'],f);

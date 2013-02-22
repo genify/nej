@@ -26,5 +26,5 @@ var f = function(){
         return p.xmpp._$$SocketProxy._$allocate(this.__mopt);
     };
 };
-define('{lib}util/xmpp/helper.socket.js',
+NEJ.define('{lib}util/xmpp/helper.socket.js',
       ['{lib}util/xmpp/proxy.socket.js','{lib}util/xmpp/helper.js'],f);

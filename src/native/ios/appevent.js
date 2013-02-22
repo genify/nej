@@ -10,5 +10,5 @@ var f = function(){
         event:'appevent'
     });
 };
-define('{lib}native/ios/appevent.js',
+NEJ.define('{lib}native/ios/appevent.js',
       ['{lib}util/event/event.js'],f);

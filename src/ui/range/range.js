@@ -128,6 +128,6 @@ var f = function(){
         this._$dispatchEvent('onafterchange');
     };
 };
-define('{lib}ui/range/range.js',
+NEJ.define('{lib}ui/range/range.js',
       ['{lib}ui/base.js'
       ,'{lib}util/range/range.js'],f);

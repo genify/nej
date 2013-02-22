@@ -185,5 +185,5 @@ var f = function(){
      */
     _proAbstractListCache.__doUpdateItem = _f;
 };
-define('{lib}util/cache/cache.list.base.js',
+NEJ.define('{lib}util/cache/cache.list.base.js',
       ['{lib}util/cache/cache.list.js'],f);

@@ -54,5 +54,5 @@ var f = function(){
         // TODO capture audio
     };
 };
-define('{lib}native/ios/capture.js',
+NEJ.define('{lib}native/ios/capture.js',
       ['{lib}native/ios/phonegap.js'],f);

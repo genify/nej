@@ -206,6 +206,6 @@ var f = function(){
         u._$forEach(this.__list,this.__doAdjustLastItem,this);
     };
 };
-define('{lib}util/selector/selector.range.js',
+NEJ.define('{lib}util/selector/selector.range.js',
       ['{lib}util/selector/selector.js'
       ,'{lib}util/range/range.js'],f);

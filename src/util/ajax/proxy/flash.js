@@ -110,6 +110,6 @@ var f = function(){
         return this;
     };
 };
-define('{lib}util/ajax/proxy/flash.js',
+NEJ.define('{lib}util/ajax/proxy/flash.js',
       ['{lib}util/flash/flash.js'
       ,'{lib}util/ajax/proxy/proxy.js'],f);

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>test list module</title>
+    <meta charset="utf-8"/>
+    <style>
+      .fl{float:left;width:40%;padding-bottom:50px;}
+      .fr{float:right;}
+      .itm{margin:10px 0;overflow:hidden;}
+      .itm p{margin:0 150px 0 0;}
+      .itm a{margin-right:15px;font-size:12px;}
+    </style>
+  </head>
+  <body>
+    <div class="fl xx">
+      <h1>JST模版</h1>
+      <div id="list-box-0"></div>
+      <div id="more-btn-0"> load more </div>
+    </div>
+    <div class="fl xx">
+      <h1>ITEM模版</h1>
+      <div id="list-box-1"></div>
+      <div id="more-btn-1"> load more </div>
+    </div>
+    <div style="display:none;" id="template-box">
+      <textarea name="jst" id="jst-list">
+        {list beg..end as y}
+          {var x=xlist[y]}
+          <div class="itm" id="${x.id|seed}">
+            <a class="fr" href="#" data-id="${x.id}" data-action="delete">[删除]</a>
+            <a class="fr" href="#" data-id="${x.id}" data-action="update">[更新]</a>
+            <p>${beg+y_index}. ${x.name}：${x.loginTime|format:'yyyy-MM-dd HH:mm:ss'}</p>
+          </div>
+        {/list}
+      </textarea>
+      <textarea name="ntp" id="ntp-item">
+        <div class="itm">
+          <a class="fr js-flag" href="#">[删除]</a>
+          <a class="fr js-flag" href="#">[更新]</a>
+          <p class="js-flag"></p>
+        </div>
+      </textarea>
+    </div>
+    <script src="../../../src/define.js?pro=./"></script>
+    <script>
+      define(['{lib}util/template/tpl.js'
+             ,'{lib}util/list/module.waterfall.js'
+             ,'{pro}cache.js','{pro}item.js'],
+      function(){
+          var _  = NEJ.P,
+              _e = _('nej.e'),
+              _t = _('nej.ut'),
+              _x = _('tst.ut');
+          
+          _e._$parseTemplate('template-box');
+          
+          _t._$$ListModuleWF._$allocate({
+              parent:'list-box-0',
+              more:'more-btn-0',
+              item:'jst-list',
+              cache:{klass:_x._$$CustomCache},
+              onupdate:function(_event){
+                  console.log('update from jst -> '+_event.data.id);
+                  this._$update({
+                      id:_event.data.id,
+                      name:'xxx-'+(+new Date),
+                      loginTime:+new Date
+                  });
+              },
+              ondelete:function(_event){
+                  console.log('delete from jst -> '+_event.data.id);
+                  this._$delete(_event.data);
+              }
+          });
+
+          _t._$$ListModuleWF._$allocate({
+              parent:'list-box-1',
+              more:'more-btn-1',
+              item:{klass:_x._$$Item},
+              cache:{klass:_x._$$CustomCache},
+              onupdate:function(_event){
+                  console.log('update from item -> '+_event.data.id);
+                  this._$update({
+                      id:_event.data.id,
+                      name:'xxx-'+(+new Date),
+                      loginTime:+new Date
+                  });
+              },
+              ondelete:function(_event){
+                  console.log('delete from item -> '+_event.data.id);
+                  this._$delete(_event.data);
+              }
+          });
+          
+      });
+    </script>
+  </body>
+</html>

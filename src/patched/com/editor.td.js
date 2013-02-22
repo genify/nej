@@ -74,5 +74,5 @@ var f = function(){
         delete _rcache[_id];
     });
 };
-define('{lib}patched/com/editor.td.js',
+NEJ.define('{lib}patched/com/editor.td.js',
       ['{lib}patched/editor.js'],f);

@@ -13,5 +13,5 @@ var f = function(){
     if (_p._$NOT_PATCH.trident1) return;
 
 };
-define('{lib}patched/trident-1/effect.js',
+NEJ.define('{lib}patched/trident-1/effect.js',
       ['{lib}patched/effect.js'],f);

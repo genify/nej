@@ -61,5 +61,5 @@ var f = function(){
         this.__supReset(_options);
     };
 };
-define('{lib}util/animation/linear.js',
+NEJ.define('{lib}util/animation/linear.js',
       ['{lib}util/animation/bezier.js'],f)

@@ -1,5 +1,5 @@
 (function(d,p){
-var __config = {root:{/*lib,pro*/}/*patch,native,charset*/},
+var __config = {root:{/*lib,pro*/}/*patch,native,charset,global*/},
     __queue  = [], // item:{n:'filename',d:[],f:function}
     __cache  = {}, // uri:STATE   0-loading  1-waiting  2-defined
     __stack  = []; // for define stack
@@ -42,8 +42,8 @@ var _doLog = (function(){
  * @return {Void}
  */
 var _doInit = function(){
-    if (!window.console)
-        window.console = {log:_doLog};
+    if (!p.console)
+        p.console = {log:_doLog};
     // do init add loaded script and remove node
     var _list = d.getElementsByTagName('script');
     if (!_list||!_list.length) return;
@@ -55,6 +55,8 @@ var _doInit = function(){
             ? _doParseConfig(_script.src)
             : _doScriptLoaded(_script,!0);
     }
+    if (!__config.global)
+        p.define = NEJ.define;
 };
 /**
  * 解析地址
@@ -68,7 +70,9 @@ var _doParseConfig = function(_uri){
     __config.root.lib = _arr[0].replace(/define(?:\.cmp)?\.js/,'');
     var _obj = _doStr2Obj(_arr[1]);
     __config.charset = _obj.c||'utf-8';
+    __config.global = _obj.g=='true';
     delete _obj.c;
+    delete _obj.g;
     _doParsePlatform(_obj.p);
     delete _obj.p;
     var _root = __config.root;
@@ -481,12 +485,13 @@ var _doDefine = (function(){
  *  });
  * [/code]
  * 
- * @api    {window.define}
+ * @api    {NEJ.define}
  * @param  {String}   当前所在文件，确定文件中模块不会被其他文件依赖时可以不用传此参数，比如入口文件
  * @param  {Array}    模块依赖的其他模块文件，没有依赖其他文件可不传此参数
  * @param  {Function} 模块定义回调【必须】
  */
-p.define = function(_uri,_deps,_callback){
+window.NEJ = {};
+NEJ.define = function(_uri,_deps,_callback){
     // has uri
     if (_isTypeOf(_uri,'String'))
         return _doDefine.apply(null,arguments);

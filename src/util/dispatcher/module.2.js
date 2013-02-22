@@ -43,6 +43,7 @@ var f = function(){
     _proModule.__reset = function(_options){
         this.__supReset(_options);
         this.__umi = _options.umi||'';
+        this.__dispatcher = _options.dispatcher;
         // void rewrite
         this._$batEvent({
              onshow:this.__onShow._$bind(this)
@@ -128,7 +129,6 @@ var f = function(){
      * @param  {Variable} 消息内容
      * @param  {Number}   消息模式
      * @return {Object}   消息对象
-     */
     _proModule.__doWrapMessage = function(_to,_message,_mode){
         return {
                     to:_to,
@@ -136,6 +136,50 @@ var f = function(){
                     data:_message,
                     from:this.__umi
                };
+    };
+     */
+    /**
+     * 向目标模块发送消息
+     * @protected
+     * @method {__doSendMessage}
+     * @param  {String}   目标模块UMI
+     * @param  {Variable} 消息内容
+     * @param  {Number}   消息模式
+     * @return {Void}
+     */
+    _proModule.__doSendMessage = function(_to,_message,_mode){
+        this.__dispatcher._$message({
+            to:_to,
+            mode:_mode||0,
+            data:_message,
+            from:this.__umi
+        });
+    };
+    /**
+     * 发布消息
+     * @protected
+     * @method {__doPublish}
+     * @param  {String} 消息类型
+     * @param  {Object} 消息信息
+     * @return {Void}
+     */
+    _proModule.__doPublishMessage = function(_type,_data){
+        this.__dispatcher._$publish(
+            _type,{
+                from:this.__umi,
+                data:_data
+            }
+        );
+    };
+    /**
+     * 订阅消息
+     * @param  {String}   目标模块的UMI
+     * @param  {String}   消息类型
+     * @param  {Function} 消息处理回调
+     * @return {Void}
+     */
+    _proModule.__doSubscribeMessage = function(){
+        this.__dispatcher._$subscribe.apply(this.__dispatcher,arguments);
     };
     /**
      * 取模块对外开放的数据信息，依赖此模块的子模块可以访问到此信息
@@ -146,5 +190,5 @@ var f = function(){
         return this.__export;
     };
 };
-define('{lib}util/dispatcher/module.2.js'
+NEJ.define('{lib}util/dispatcher/module.2.js'
      ,['{lib}util/event.js'],f);

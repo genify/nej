@@ -24,6 +24,7 @@ var f = function(){
         .#<uispace> .zact .zbtn{padding:0 5px;cursor:pointer;}\
         .#<uispace> .zact .ztxt{margin-left:10px;}\
         .#<uispace> .zday{table-layout:fixed;border-collapse:collapse;width:100%;}\
+        .#<uispace> .zday th{font-weight:normal;}\
         .#<uispace> .zday a{display:block;height:22px;line-height:22px;color:#333;text-decoration:none;}\
         .#<uispace> .zday a:hover{background:#eee;}\
         .#<uispace> .zday a.js-extended{color:#aaa;}\
@@ -34,7 +35,7 @@ var f = function(){
     // ui date html
     var _seed_date = _e._$addHtmlTemplate('\
         <table class="zday">\
-          <tr>{list ["日","一","二","三","四","五","六"] as x}<td>${x}</td>{/list}</tr>\
+          <tr>{list ["日","一","二","三","四","五","六"] as x}<th>${x}</th>{/list}</tr>\
         {list 1..6 as x}\
           <tr>{list 1..7 as y}<td><a href="#" class="js-ztag"></a></td>{/list}</tr>\
         {/list}\
@@ -214,6 +215,6 @@ var f = function(){
         return this.__calendar._$getDate();
     };
 };
-define('{lib}ui/datepick/datepick.js',
+NEJ.define('{lib}ui/datepick/datepick.js',
       ['{lib}ui/layer/card.wrapper.js'
       ,'{lib}util/calendar/calendar.js'],f);

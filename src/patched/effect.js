@@ -75,5 +75,5 @@ var f = function(){
         return this;
     };*/
 };
-define('{lib}patched/effect.js',
+NEJ.define('{lib}patched/effect.js',
       ['{lib}base/platform.js','{patch}effect.js'],f);

@@ -39,5 +39,5 @@ var f = function(){
         return this.__editor._$queryCommand(this.__name,'State');
     };
 };
-define('{lib}util/editor/command/simple.js',
+NEJ.define('{lib}util/editor/command/simple.js',
       ['{lib}util/editor/command.js'],f);

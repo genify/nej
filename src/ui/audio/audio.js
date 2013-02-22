@@ -163,6 +163,6 @@ var f = function(){
         return this;
     };
 };
-define('{lib}ui/audio/audio.js',
+NEJ.define('{lib}ui/audio/audio.js',
       ['{lib}ui/base.js'
       ,'{lib}util/media/audio.js'],f);

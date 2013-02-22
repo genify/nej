@@ -117,7 +117,7 @@ var f = function(){
         _event.value = !!_localStorage;
     });
 };
-define('{lib}patched/trident/storage.js',
+NEJ.define('{lib}patched/trident/storage.js',
       ['{lib}patched/trident/config.js'
       ,'{lib}patched/storage.js'
       ,'{lib}util/encode/json.js'],f);

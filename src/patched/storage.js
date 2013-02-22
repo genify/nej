@@ -66,5 +66,5 @@ var f = function(){
         return !0;
     };
 };
-define('{lib}patched/storage.js',
+NEJ.define('{lib}patched/storage.js',
       ['{lib}base/platform.js'],f);

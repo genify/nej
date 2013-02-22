@@ -48,4 +48,4 @@ var f = function(){
     };
 };
 
-define('{lib}util/chart/chart.js',['{patch}config.js','{lib}base/event.js','{lib}util/flash/flash.js'],f);
+NEJ.define('{lib}util/chart/chart.js',['{patch}config.js','{lib}base/event.js','{lib}util/flash/flash.js'],f);

@@ -170,4 +170,4 @@ var f = function(){
     // do regist plugin
     p._$$XEP_REGISTER._$regist();
 };
-define('{lib}util/xmpp/xep/register.js',['{lib}util/xmpp/plugin.js'],f);
+NEJ.define('{lib}util/xmpp/xep/register.js',['{lib}util/xmpp/plugin.js'],f);

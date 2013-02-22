@@ -12,6 +12,7 @@ var f = function(){
         _e = _('nej.e'),
         _u = _('nej.u'),
         _v = _('nej.v'),
+        _x = _('nej.x'),
         // {id:{type:[{type:'click',func:function,sfun:function,capt:true},...]}}
         // id   - element id
         // type - event name, no on prefix
@@ -54,7 +55,8 @@ var f = function(){
      * @param  {Boolean}     是否捕获阶段事件，IE低版本浏览器忽略此参数
      * @return {nej.v}
      */
-    _v._$addEvent = (function(){
+    _v._$addEvent = 
+    _x._$addEvent = (function(){
         // add event to cache
         var _doAddEventInCache = function(){
             var _args = _h.__checkEvent
@@ -127,7 +129,8 @@ var f = function(){
      * @param  {Boolean}     是否捕获阶段事件
      * @return {nej.v}
      */
-    _v._$delEvent = (function(){
+    _v._$delEvent = 
+    _x._$delEvent = (function(){
         // delete event in cache
         var _doDelEventInCache = function(){
             var _argc = arguments,
@@ -208,7 +211,8 @@ var f = function(){
      * @param  {String}      事件类型，不带on前缀，不区分大小写
      * @return {nej.v}
      */
-    _v._$clearEvent = (function(){
+    _v._$clearEvent = 
+    _x._$clearEvent = (function(){
         // clear by type
         var _doClearByType = function(){
             var _argc = arguments,
@@ -639,7 +643,8 @@ var f = function(){
      * @param  {String}          鼠标事件类型，不区分大小写
      * @return {nej.v}
      */
-    _v._$dispatchEvent = function(_element,_type,_options){
+    _v._$dispatchEvent = 
+    _x._$dispatchEvent = function(_element,_type,_options){
         var _args = _h.__checkEvent(
                         _element,_type);
         if (!!_args)
@@ -648,7 +653,7 @@ var f = function(){
         return this;
     };
 };
-define('{lib}base/event.js',
+NEJ.define('{lib}base/event.js',
       ['{lib}base/element.js'
       ,'{lib}base/util.js'
       ,'{patch}api.js'],f);

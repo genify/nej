@@ -102,5 +102,5 @@ var f = function(){
                         _element.className||'');
     });
 };
-define('{lib}patched/com/api.js',
+NEJ.define('{lib}patched/com/api.js',
       ['{lib}patched/api.js'],f);

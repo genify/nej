@@ -8,5 +8,5 @@
 var f = function(){
     
 };
-define('{lib}patched/trident-0/config.js',
+NEJ.define('{lib}patched/trident-0/config.js',
       ['{lib}patched/config.js'],f);

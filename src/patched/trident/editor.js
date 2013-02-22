@@ -57,5 +57,5 @@ var f = function(){
         return _html.replace(__reg_nwrd,'').replace(__reg_cxml,'');
     };
 };
-define('{lib}patched/trident/editor.js',
+NEJ.define('{lib}patched/trident/editor.js',
       ['{lib}patched/com/editor.td.js'],f);

@@ -105,5 +105,5 @@ var f = function(){
         NNotification.CancelNotification();
     };
 };
-define('{lib}native/android/notification.js',
+NEJ.define('{lib}native/android/notification.js',
       ['{lib}native/android/phonegap.js'],f);

@@ -158,5 +158,5 @@ var f = function(){
      */
     _proSingleGroupManager._$hideUMI = _f;
 };
-define('{lib}util/dispatcher/dsp/group.single.js',
+NEJ.define('{lib}util/dispatcher/dsp/group.single.js',
       ['{lib}util/dispatcher/dsp/group.js'],f);

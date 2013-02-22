@@ -374,5 +374,5 @@ var f = function(){
                         this.__date);
     };
 };
-define('{lib}util/calendar/calendar.js',
+NEJ.define('{lib}util/calendar/calendar.js',
       ['{lib}util/event.js'],f);

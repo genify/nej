@@ -249,4 +249,4 @@ var f = function(){
         return this;
     };
 };
-define('{lib}util/media/media.js',['{lib}util/event.js'],f);
+NEJ.define('{lib}util/media/media.js',['{lib}util/event.js'],f);

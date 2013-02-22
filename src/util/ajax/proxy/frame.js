@@ -111,6 +111,6 @@ var f = function(){
         return this;
     };
 };
-define('{lib}util/ajax/proxy/frame.js',
+NEJ.define('{lib}util/ajax/proxy/frame.js',
       ['{lib}util/ajax/message.js'
       ,'{lib}util/ajax/proxy/proxy.js'],f);

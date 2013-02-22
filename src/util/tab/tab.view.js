@@ -103,5 +103,5 @@ var f = function(){
         return _element;
     };
 };
-define('{lib}util/tab/tab.view.js',
+NEJ.define('{lib}util/tab/tab.view.js',
       ['{lib}util/event.js'],f);

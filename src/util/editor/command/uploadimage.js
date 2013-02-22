@@ -59,13 +59,25 @@ var f = function(){
     _proUploadImage.__onChange = function(_commend,_photoObj){
         this.__editor._$focus();
         this.__id = 0;
-        this.__url = _photoObj.userDef2Url;
-        if(!!_photoObj.photoGarbageIds){
-            var _ids = _photoObj.photoGarbageIds.split(',');
-            _u._$forEach(_ids,function(_item,_index){
-                if(_item.search('userdef2url') >= 0)
-                    this.__id = _item.split(':')[1];
-            },this);
+        if(!!_photoObj.ourl && _photoObj.ourl.indexOf('.gif') > 0){
+            //gif图片
+            this.__url= _photoObj.ourl;
+            if(!!_photoObj.photoGarbageIds){
+                var _ids = _photoObj.photoGarbageIds.split(',');
+                _u._$forEach(_ids,function(_item,_index){
+                    if(_item.search('ourl') >= 0)
+                        this.__id = _item.split(':')[1];
+                },this);
+            }
+        }else{
+            this.__url = _photoObj.userDef2Url;
+            if(!!_photoObj.photoGarbageIds){
+                var _ids = _photoObj.photoGarbageIds.split(',');
+                _u._$forEach(_ids,function(_item,_index){
+                    if(_item.search('userdef2url') >= 0)
+                        this.__id = _item.split(':')[1];
+                },this);
+            }
         }
         var _html = '<img style="max-width:520px;" src=' + this.__url + ' id='+ this.__id +' />';
         this.__editor._$execCommand(_commend,_html);
@@ -74,5 +86,5 @@ var f = function(){
     // regist command implemention
     _p._$$UploadImage._$regist();
 };
-define('{lib}util/editor/command/uploadimage.js',
+NEJ.define('{lib}util/editor/command/uploadimage.js',
       ['{lib}util/editor/command/card.js','{lib}ui/editor/command/uploadimage.js'],f);

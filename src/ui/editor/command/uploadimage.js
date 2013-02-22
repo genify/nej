@@ -131,6 +131,7 @@ var f = function(){
         _options.title = _options.title || '选择图片';
         _options.mask  = true;
         this.__supReset(_options);
+        this.__showErrorTips('');
     };
     
     /**
@@ -202,9 +203,9 @@ var f = function(){
         this.__saveorigin     = 'false';
         this.__responsetype   = 'xml';
         this.__rotatedegree   = '0';
-         this.__stamptype      = '';
-         this.__stampstring    = '';
-         this.__sitefrom       = 'study';
+        this.__stamptype      = '';
+        this.__stampstring    = '';
+        this.__sitefrom       = 'study';
     };
     
     /**
@@ -356,5 +357,5 @@ var f = function(){
         }
     };
 };
-define('{lib}ui/editor/command/uploadimage.js',
+NEJ.define('{lib}ui/editor/command/uploadimage.js',
       ['{lib}ui/layer/window.wrapper.js','{lib}util/tab/tab.js','{lib}util/flash/flash.js'],f);

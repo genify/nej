@@ -116,5 +116,5 @@ var f = function(){
     // do regist plugin
     p._$$CORE_STREAM._$regist();
 };
-define('{lib}util/xmpp/core/stream.js',
+NEJ.define('{lib}util/xmpp/core/stream.js',
       ['{lib}util/xmpp/plugin.js'],f);

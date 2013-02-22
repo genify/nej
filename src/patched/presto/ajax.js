@@ -1,5 +1,5 @@
 var f = function(){
     
 };
-define('{lib}patched/presto/ajax.js',
+NEJ.define('{lib}patched/presto/ajax.js',
       ['{lib}patched/ajax.js'],f);

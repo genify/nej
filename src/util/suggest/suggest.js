@@ -289,5 +289,5 @@ var f = function(){
         
     };
 };
-define('{lib}util/suggest/suggest.js',
+NEJ.define('{lib}util/suggest/suggest.js',
       ['{lib}util/event.js'],f);

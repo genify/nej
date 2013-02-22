@@ -48,8 +48,6 @@ var f = function(){
         var _reg = /-([a-z])/g;
         return function(_name){
             _name = _name||'';
-            if (!_reg.test(_name))
-                return _name;
             return _name.replace(_reg,
                    function($1,$2){
                         return $2.toUpperCase();
@@ -328,10 +326,12 @@ var f = function(){
                 touchend:'mouseup'
             },
             // need prefix
-            _emap = {transitionend:'TransitionEnd',
-                     animationend:'AnimationEnd',
-                     animationstart:'AnimationStart',
-                     animationiteration:'AnimationIteration'};
+            _emap = {
+                transitionend:'TransitionEnd',
+                animationend:'AnimationEnd',
+                animationstart:'AnimationStart',
+                animationiteration:'AnimationIteration'
+            };
         // complete event name prefix
         var _doCompletePrefix = function(_type){
             return (_prefix.evt||_prefix.pro)+_type;
@@ -560,5 +560,5 @@ var f = function(){
     // init
     _doInit();
 };
-define('{lib}patched/api.js',
+NEJ.define('{lib}patched/api.js',
       ['{lib}base/platform.js'],f);

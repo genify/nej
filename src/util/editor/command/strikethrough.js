@@ -24,5 +24,5 @@ var f = function(){
     // regist command implemention
     _p._$$StrikeThrough._$regist();
 };
-define('{lib}util/editor/command/strikethrough.js',
+NEJ.define('{lib}util/editor/command/strikethrough.js',
       ['{lib}util/editor/command/simple.js'],f);

@@ -258,5 +258,5 @@ var f = function(){
         return !_range?null:_list.slice(_range[0]+1,_range[1]);
     };
 };
-define('{lib}util/profile/profile.js',
+NEJ.define('{lib}util/profile/profile.js',
       ['{lib}base/element.js','{lib}util/event.js'],f);

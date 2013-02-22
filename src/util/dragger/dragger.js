@@ -206,5 +206,5 @@ var f = function(){
         };
     };
 };
-define('{lib}util/dragger/dragger.js',
+NEJ.define('{lib}util/dragger/dragger.js',
       ['{lib}util/event.js'],f);

@@ -503,7 +503,7 @@ var f = function(){
         return _key;
     };
 };
-define('{lib}util/oauth/oauth.js',
+NEJ.define('{lib}util/oauth/oauth.js',
       ['{lib}util/ajax/xdr.js'
       ,'{lib}util/oauth/util.js'
       ,'{lib}util/cache/cache.js'],f);

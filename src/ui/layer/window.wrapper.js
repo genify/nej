@@ -68,6 +68,6 @@ var f = function(){
         this.__lopt.onclose = null;
     };
 };
-define('{lib}ui/layer/window.wrapper.js',
+NEJ.define('{lib}ui/layer/window.wrapper.js',
       ['{lib}ui/layer/layer.wrapper.js'
       ,'{lib}ui/layer/window.js'],f);

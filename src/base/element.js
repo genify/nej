@@ -14,6 +14,7 @@ var f = function(){
         _u = _('nej.u'),
         _v = _('nej.v'),
         _h = _('nej.h'),
+        _x = _('nej.x'),
         _cspol,       // css text pool
         _empol = {},  // id:instance for elements not append to page
         _cache = document.createDocumentFragment();
@@ -32,11 +33,13 @@ var f = function(){
      *   var _id = _e._$id(_node||"abc");
      * [/code]
      * 
+     * @chainable
      * @api    {nej.e._$id}
      * @param  {String|Node}    节点ID或者对象
      * @return {String}         节点ID
      */
-    _e._$id = function(_element){
+    _e._$id = 
+    _x._$id = function(_element){
         _element = _e._$get(_element);
         if (!_element) return;
         var _id = !!_element.id ? _element.id
@@ -60,20 +63,19 @@ var f = function(){
      *   var _node = _e._$get("abc");
      * [/code]
      * 
+     * @chainable
      * @api    {nej.e._$get}
      * @param  {String|Node}    节点ID或者对象
      * @return {Node}           节点对象
      */
-    _e._$get = function(_element){
+    _e._$get = 
+    _x._$get = function(_element){
         var _node = _empol[''+_element];
         if (!!_node) return _node;
         if (!_u._$isString(_element)&&
             !_u._$isNumber(_element))
             return _element;
-        var _node = document.getElementById(_element);
-        if (!_node&&!!_e._$one)
-            _node = _e._$one(_element);
-        return _node;
+        return document.getElementById(_element);
     };
     /**
      * 取节点的子节点列表<br/>
@@ -93,12 +95,14 @@ var f = function(){
      *   var _childs = _e._$getChildren(_e._$get("abc"));
      * [/code]
      * 
+     * @chainable
      * @api    {nej.e._$getChildren}
      * @param  {String|Node}    节点ID或者对象
      * @param  {String}         样式标识
      * @return {Array}          子节点列表
      */
-    _e._$getChildren = function(_element,_clazz){
+    _e._$getChildren = 
+    _x._$getChildren = function(_element,_clazz){
         _element = _e._$get(_element);
         if (!_element) return null;
         var _list = _h.__getChildren(_element);
@@ -129,12 +133,14 @@ var f = function(){
      *   _e._$getByClassName(_parent,"item");
      * [/code]
      * 
+     * @chainable
      * @api    {nej.e._$getByClassName}
      * @param  {String|Node}    节点ID或者对象
      * @param  {String}         类名
      * @return {Array}          节点列表
      */
-    _e._$getByClassName = function(_element,_class){
+    _e._$getByClassName = 
+    _x._$getByClassName = function(_element,_class){
         _element = _e._$get(_element);
         return !_element?null:_h.
                __getElementsByClassName(_element,_class.trim());
@@ -155,11 +161,13 @@ var f = function(){
      *   _e._$getScrollViewPort();
      * [/code]
      * 
+     * @chainable
      * @api    {nej.e._$getScrollViewPort}
      * @param  {String|Node}    节点ID或者对象
      * @return {Node}           视窗节点
      */
-    _e._$getScrollViewPort = function(_element){
+    _e._$getScrollViewPort = 
+    _x._$getScrollViewPort = function(_element){
         _element = _e._$get(_element);
         if (!!_element){
             _element = _element.parentNode;
@@ -263,23 +271,28 @@ var f = function(){
      *    nej.e._$hover('abc','js-hover');
      * [/code]
      * 
+     * @chainable
      * @api    {nej.e._$hover}
      * @param  {String|Node} 节点
      * @param  {String}      样式，默认为js-hover
      * @return {nej.e}
      */
-    _e._$hover = function(_element,_clazz){
+    _e._$hover = 
+    _x._$hover = function(_element,_clazz){
         _h.__hoverElement(_element,_clazz||
             _e._$dataset(_element,'hover')||'js-hover');
         return this;
     };
     /**
      * 固定定位节点
+     * 
+     * @chainable
      * @api    {nej.e._$fixed}
      * @param  {Object} 节点
      * @return {nej.e}  名字空间
      */
-    _e._$fixed = function(_element){
+    _e._$fixed = 
+    _x._$fixed = function(_element){
         _element = _e._$get(_element);
         if (!_element) return;
         _h.__fixedElement(_element);
@@ -304,12 +317,14 @@ var f = function(){
      *    nej.e._$highlight('abc','js-highlight');
      * [/code]
      * 
+     * @chainable
      * @api    {nej.e._$highlight}
      * @param  {String|Node} 节点
      * @param  {String}      样式，默认为js-highlight
      * @return {nej.e}
      */
-    _e._$highlight = (function(){
+    _e._$highlight = 
+    _x._$highlight = (function(){
         var _cache = {},
             _distance = 2;
         // touch start event
@@ -410,6 +425,7 @@ var f = function(){
      *   });
      * [/code]
      * 
+     * @chainable
      * @api    {nej.e._$toggle}
      * @param  {String|Node}         触发切换节点
      * @param  {String|Object}       切换配置信息，输入字符串表示样式或者节点
@@ -417,7 +433,8 @@ var f = function(){
      * @config {String|Node} element 切换样式的节点，默认为父节点
      * @return {nej.e}
      */
-    _e._$toggle = (function(){
+    _e._$toggle = 
+    _x._$toggle = (function(){
         // click event
         var _doClick = function(_id,_clazz){
             var _element = _e._$get(_id);
@@ -482,6 +499,7 @@ var f = function(){
      *   nej.e._$focus('yyy',{clazz:'js-focus-2',mode:1});
      * [/code]
      * 
+     * @chainable
      * @api    {nej.e._$focus}
      * @param  {String|Node}  节点
      * @param  {Object}       配置参数
@@ -489,7 +507,8 @@ var f = function(){
      * @config {String} clazz 聚焦样式，默认js-focus
      * @return {nej.e}
      */
-    _e._$focus = function(_element,_options){
+    _e._$focus = 
+    _x._$focus = function(_element,_options){
         _element = _e._$get(_element);
         if (!_element) return;
         var _mode = 0,
@@ -647,13 +666,15 @@ var f = function(){
      *     _e._$remove(_ele,true);
      * [/code]
      * 
+     * @chainable
      * @see    {#_$removeByEC}
      * @api    {nej.e._$remove}
      * @param  {String|Node} 节点ID或者对象
      * @param  {Boolean}     是否不需要事件清理
      * @return {nej.e}
      */
-    _e._$remove = (function(){
+    _e._$remove = 
+    _x._$remove = (function(){
         var _clearImage = function(_image){
             _image.src = _g._$BLANK_IMAGE;
         };
@@ -699,12 +720,14 @@ var f = function(){
      *   e._$getByClassName(document.body,'js-div');
      * [/code]
      * 
+     * @chainable
      * @see    {#_$remove}
      * @api    {nej.e._$removeByEC}
      * @param  {String|Node} 节点ID或者对象
      * @return {nej.e}
      */
-    _e._$removeByEC = function(_element){
+    _e._$removeByEC = 
+    _x._$removeByEC = function(_element){
         _element = _e._$get(_element);
         if (!!_element) _cache.appendChild(_element);
         return this;
@@ -740,6 +763,7 @@ var f = function(){
      *     node.innerHTML = '<span>aaa</span><span>aaa</span>';
      * [/code]
      * 
+     * @chainable
      * @api    {nej.e._$wrapInline}
      * @param  {String|Node}  内联节点
      * @param  {Object}       据对定位节点配置信息
@@ -748,7 +772,8 @@ var f = function(){
      * @config {String} nid   节点识别样式名，这个会被添加到样式中作为标识
      * @return {Node}         绝对定位的节点
      */
-    _e._$wrapInline = (function(){
+    _e._$wrapInline = 
+    _x._$wrapInline = (function(){
         var _clazz,
             _reg0 = /\s+/;
         var _doInitStyle = function(){
@@ -806,13 +831,15 @@ var f = function(){
      *   var _a = e._$dataset(_ele,'img','image-src');
      * [/code]
      * 
+     * @chainable
      * @see    {#_$attr}
      * @api    {nej.e._$dataset}
      * @param  {String}     数据标识
      * @param  {String}     数据值
      * @return {String}     数据值
      */
-    _e._$dataset = (function(){
+    _e._$dataset = 
+    _x._$dataset = (function(){
         var _dataset = {},
             _tag = 'data-',
             _reg = /\-(.{1})/gi;
@@ -864,6 +891,7 @@ var f = function(){
      *   var _attr = _e._$attr(_e._$get("abc"),"img");
      * [/code]
      * 
+     * @chainable
      * @see    {#_$dataset}
      * @api    {nej.e._$attr}
      * @param  {String|Node} 节点ID或者对象
@@ -871,7 +899,8 @@ var f = function(){
      * @param  {String}      属性值，如果没有设置此参数则表示取值
      * @return {String}      属性值
      */
-    _e._$attr = function(_element,_name,_value){
+    _e._$attr = 
+    _x._$attr = function(_element,_name,_value){
         _element = _e._$get(_element);
         if (!_element) return '';
         if (_value!==undefined&&
@@ -928,12 +957,14 @@ var f = function(){
      *   var _xml = _e._$dom2xml(_e._$get("abc"));
      * [/code]
      * 
+     * @chainable
      * @see    {#_$xml2dom}
      * @api    {nej.e._$dom2xml}
      * @param  {String|Node}    节点
      * @return {String}         xml串
      */
-    _e._$dom2xml = function(_element){
+    _e._$dom2xml = 
+    _x._$dom2xml = function(_element){
         _element = _e._$get(_element);
         return !_element?'':_h.__serializeDOM2XML(_element);
     };
@@ -1004,12 +1035,14 @@ var f = function(){
      *   var _result = _e._$offset(_e._$get("b"),_e._$get("a"));
      * [/code]
      * 
+     * @chainable
      * @api    {nej.e._$offset}
      * @param  {String|Node}    起始节点
      * @param  {String|Node}    结束节点，没有该参数则计算到根节点
      * @return {Object}         偏移量，如{x:234,y:987}
      */
-    _e._$offset = (function(){
+    _e._$offset = 
+    _x._$offset = (function(){
         var _isRoot = function(_element){
             return _element==document.body||
                    _element==document.documentElement;
@@ -1048,35 +1081,16 @@ var f = function(){
      *    _e._$scrollTo(_e_$get("a"));
      * [/code]
      * 
+     * @chainable
      * @api    {nej.e._$scrollTo}
      * @param  {Node|String} 节点
      * @return {nej.e}
      */
-    _e._$scrollTo = function(_element){
+    _e._$scrollTo = 
+    _x._$scrollTo = function(_element){
         var _offset = _e._$offset(_element);
         window.scrollTo(_offset.x,_offset.y);
         return this;
-    };
-    /**
-     * CSS动画特效
-     * 
-     * @api    {nej.e._$effect}
-     * @param  {String|Node}     节点
-     * @param  {Object}          可选参数
-     * @config {Object} from     起始样式
-     * @config {Object} to       目标样式
-     * @config {Number} duration 持续时间，单位毫秒
-     * @return {nej.e}
-     * 
-     * [hr]
-     * 
-     * @event  {onfinish} 动画结束回调
-     * 
-     */
-    _e._$effect = function(_element,_options){
-        _element = _e._$get(_element);
-        if (!_element||!_options) return;
-        
     };
     /**
      * 取样式变换矩阵对象<br/>
@@ -1116,13 +1130,15 @@ var f = function(){
      *   e._$css3d(_css3d,'rotate',{x:2,y:1,z:1,a:'-75deg'});
      * [/code]
      * 
+     * @chainable
      * @api    {nej.e._$css3d}
      * @param  {String|Node}     节点ID或者对象
      * @param  {String}          变换类型，matrix/translate/scale/rotate
      * @param  {Object}          变换值，{x:1,y:2,z:3,a:'30deg'}
      * @return {nej.e}
      */ 
-    _e._$css3d = function(_element,_name,_map){
+    _e._$css3d = 
+    _x._$css3d = function(_element,_name,_map){
         _element = _e._$get(_element);
         if (!_element) return this;
         var _value = _h.__getTransformValue(_name,_map);
@@ -1147,12 +1163,14 @@ var f = function(){
      *   <div id="abc" style="color:red;width:100px;">123</div>
      * [/code]
      * 
+     * @chainable
      * @api    {nej.e._$style}
      * @param  {String|Node}    节点
      * @param  {Object}         样式信息{color:'red',width:'100px'}
      * @return {nej.e}
      */
-    _e._$style = function(_element,_map){
+    _e._$style = 
+    _x._$style = function(_element,_map){
         _element = _e._$get(_element);
         if (!!_element)
             _u._$forIn(_map,function(_value,_name){
@@ -1177,6 +1195,7 @@ var f = function(){
      *   <div id="abc" style="color:red;">123</div>
      * [/code]
      * 
+     * @chainable
      * @see    {#_$getStyle}
      * @api    {nej.e._$setStyle}
      * @param  {String|Node}    节点
@@ -1184,7 +1203,8 @@ var f = function(){
      * @param  {String}         样式值
      * @return {nej.e}
      */
-    _e._$setStyle = function(_element,_name,_value){
+    _e._$setStyle = 
+    _x._$setStyle = function(_element,_name,_value){
         _element = _e._$get(_element);
         if (!!_element)
             _h.__applyStyle(
@@ -1205,12 +1225,14 @@ var f = function(){
      *   var _value = _e._$getStyle(_e._$get("abc"),"color");
      * [/code]
      * 
+     * @chainable
      * @api    {nej.e._$getStyle}
      * @param  {String|Node}    节点
      * @param  {String}         样式名称
      * @return {String}         样式值
      */
-    _e._$getStyle = function(_element,_name){
+    _e._$getStyle = 
+    _x._$getStyle = function(_element,_name){
         _element = _e._$get(_element);
         if (!_element) return '';
         var _current = !window.getComputedStyle
@@ -1364,15 +1386,16 @@ var f = function(){
      *   <div id="abc" class="fc01 fc03">123</div>
      * [/code]
      * 
+     * @chainable
      * @see    {#_$delClassName}
      * @api    {nej.e._$addClassName}
      * @param  {String|Node}    要操作的节点ID或者节点对象
      * @param  {String}         要新增的样式类名称
      * @return {nej.e}
      */
-    _e._$addClassName = function(){
-        _h.__addClassName
-          .apply(_h,arguments);
+    _e._$addClassName = 
+    _x._$addClassName = function(){
+        _h.__addClassName.apply(_h,arguments);
         return this;
     };
     /**
@@ -1393,15 +1416,16 @@ var f = function(){
      *   <div id="abc" class="fc01">123</div>
      * [/code]
      * 
+     * @chainable
      * @see    {#_$addClassName}
      * @api    {nej.e._$delClassName}
      * @param  {String|Node}    要操作的节点ID或者节点对象
      * @param  {String}         要删除的样式类名称
      * @return {nej.e}
      */
-    _e._$delClassName = function(){
-        _h.__delClassName
-          .apply(_h,arguments);
+    _e._$delClassName = 
+    _x._$delClassName = function(){
+        _h.__delClassName.apply(_h,arguments);
         return this;
     };
     /**
@@ -1422,15 +1446,16 @@ var f = function(){
      *   <div id="abc" class="fc01 fc05">123</div>
      * [/code]
      * 
+     * @chainable
      * @api    {nej.e._$replaceClassName}
      * @param  {String|Node}    要操作的节点ID或者节点对象
      * @param  {String}         要删除的样式类名称
      * @param  {String}         要新增的样式类名称
      * @return {nej.e}
      */
-    _e._$replaceClassName = function(){
-        _h.__replaceClassName
-          .apply(_h,arguments);
+    _e._$replaceClassName = 
+    _x._$replaceClassName = function(){
+        _h.__replaceClassName.apply(_h,arguments);
         return this;
     };
     /**
@@ -1448,20 +1473,21 @@ var f = function(){
      *   _e._$hasClassName(_node,"fc01");
      * [/code]
      * 
+     * @chainable
      * @api    {nej.e._$hasClassName}
      * @param  {String|Node}    节点ID或者对象
      * @param  {String}          样式串
      * @return {Boolean}        是否含指定样式
      */
-    _e._$hasClassName = function(){
-        return _h.__hasClassName
-                 .apply(_h,arguments);
+    _e._$hasClassName = 
+    _x._$hasClassName = function(){
+        return _h.__hasClassName.apply(_h,arguments);
     };
     // init
     if (!document.head)
          document.head = document.getElementsByTagName('head')[0]||document.body;
 };
-define('{lib}base/element.js',
+NEJ.define('{lib}base/element.js',
       ['{lib}base/constant.js'
       ,'{lib}base/event.js'
       ,'{lib}base/util.js'

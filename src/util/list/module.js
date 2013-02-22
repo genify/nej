@@ -24,7 +24,7 @@ var f = function(){
      * @config  {String|Node}   parent 列表容器节点
      * @config  {Number}        limit  每页显示数量，默认10项
      * @config  {Number}        total  列表项总数量，默认通过第一个列表请求载入总数
-     * @config  {String|Object} item   列表JST模版标识或者Item配置，{clazz:'xxx',klass:_$$Item}
+     * @config  {String|Object} item   列表JST模版标识或者Item配置，{clazz:'xxx',klass:_$$Item||'jst key'}
      * @config  {Object}        cache  缓存配置信息，{key:'primary key',lkey:'list key',data:{},klass:_$$ListCache}
      * 
      * [hr]
@@ -50,6 +50,16 @@ var f = function(){
      * @config {Node}    parent  容器节点
      * @config {String}  value   设置此参数返回用以显示的html代码
      * @config {Boolean} stopped 设置此参数用以表明已处理，后续逻辑忽略处理状态
+     * 
+     * [hr]
+     * 列表显示之前处理业务逻辑，此事件确保列表有数据
+     * @event  {onbeforelistrender}
+     * @param  {Object}          事件信息
+     * @config {Node}    parent  容器节点
+     * 
+     * [hr]
+     * 列表清除之前处理业务逻辑
+     * @event  {onbeforelistclear}
      * 
      * [hr]
      * 请求更新列表项数据，主要用于处理删除之前的确认，
@@ -124,9 +134,9 @@ var f = function(){
      * @return {Void}
      */
     _proListModule.__reset = function(_options){
-        this.__iopt = {};
         this.__supReset(_options);
         this.__lbox = _e._$get(_options.parent);
+        this.__iopt = {parent:this.__lbox};
         this.__ropt.limit = parseInt(_options.limit)||10;
         this.__doResetTemplate(_options.item);
         this.__doResetCache(_options.cache||_o);
@@ -138,9 +148,10 @@ var f = function(){
      * @return {Void}
      */
     _proListModule.__destroy = function(){
+        this._$dispatchEvent('onbeforerecycle');
+        this.__doClearListBox();
         this.__supDestroy();
         this.__cache._$recycle();
-        this.__doClearListBox();
         delete this.__cache;
         delete this.__lbox;
         delete this.__ikls;
@@ -157,28 +168,46 @@ var f = function(){
         return _id+''+_e._$getHtmlTemplateSeed();
     };
     /**
+     * 重置JST模版
+     * @protected
+     * @method {__doResetJSTTemplate}
+     * @param  {String} JST标识
+     * @return {Void}
+     */
+    _proListModule.__doResetJSTTemplate = function(_key){
+        delete this.__ikls;
+        this.__ikey = _key;
+        this.__doInitDomEvent([[
+            this.__lbox,'click',
+            this.__onCheckAction._$bind(this)
+        ]]);
+    };
+    /**
      * 重置列表项模版配置
      * @param  {String|Object} 列表项模版配置
      * @return {Void}
      */
     _proListModule.__doResetTemplate = function(_item){
+        // if item is jst-key
         if (_u._$isString(_item)){
-            this.__ikey = _item;
-            this.__doInitDomEvent([[
-                this.__lbox,'click',
-                this.__onCheckAction._$bind(this)
-            ]]);
+            this.__doResetJSTTemplate(_item);
             return;
         }
-        delete this.__ikey;
+        // if item is jst with options
         NEJ.X(this.__iopt,_item);
-        this.__ikls = this.__iopt.klass;
+        var _klass = this.__iopt.klass;
         delete this.__iopt.klass;
+        if (_u._$isString(_klass)){
+            this.__doResetJSTTemplate(_klass);
+            return;
+        }
+        // if item is Item template
+        delete this.__ikey;
+        this.__ikls = _klass;
         this.__iopt.ondelete = this
             ._$dispatchEvent._$bind(this,'ondelete');
         this.__iopt.onupdate = this
             ._$dispatchEvent._$bind(this,'onupdate');
-        this.__iopt.parent = this.__lbox;
     };
     /**
      * 重置缓存信息配置
@@ -214,7 +243,8 @@ var f = function(){
      * @return {Void}
      */
     _proListModule.__doClearListBox = function(){
-        if (!!this.__items){
+        this._$dispatchEvent('onbeforelistclear');
+        if (!!this.__items&&this.__items.length>0){
             this.__items = this.__ikls
                 ._$recycle(this.__items);
             delete this.__items;
@@ -278,12 +308,15 @@ var f = function(){
         if (this.__doBeforeListRender(
                   _list,_offset,_limit))
             return;
+        this._$dispatchEvent('onbeforelistrender',{
+            parent:this.__lbox
+        });
         if (!!this.__ikey){
             // render by jst
-            var _html = _e._$getHtmlTemplate(this.__ikey,{
-                    beg:_offset,xlist:_list,
-                    end:Math.min(_list.length,_offset+_limit)-1
-                });
+            this.__iopt.xlist = _list;
+            this.__iopt.beg = _offset;
+            this.__iopt.end = Math.min(_list.length,_offset+_limit)-1;
+            var _html = _e._$getHtmlTemplate(this.__ikey,this.__iopt);
             this.__doShowListByJST(_html);
         }else{
             // render by item
@@ -469,6 +502,6 @@ var f = function(){
      */
     _proListModule._$refresh = _f;
 };
-define('{lib}util/list/module.js',
+NEJ.define('{lib}util/list/module.js',
       ['{lib}ui/item/list.js'
       ,'{lib}util/cache/cache.list.base.js'],f);

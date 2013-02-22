@@ -63,7 +63,7 @@ var f = function(){
         };
     })();
 };
-define('{lib}ui/editor/custom.js',
+NEJ.define('{lib}ui/editor/custom.js',
       ['{lib}ui/editor/editor.js'
       ,'{lib}util/editor/command/fontsize.js'
       ,'{lib}util/editor/command/fontname.js'

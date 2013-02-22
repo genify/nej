@@ -160,5 +160,5 @@ var f = function(){
         this.__doRefresh(this.__data);
     };
 };
-define('{lib}ui/item/item.js',
+NEJ.define('{lib}ui/item/item.js',
       ['{lib}ui/base.js'],f);

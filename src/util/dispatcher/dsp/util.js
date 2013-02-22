@@ -36,7 +36,7 @@ var f = function(){
      * 根据UMI取对应的节点
      * @api    {nej.ut.p._$getNodeByUMI}
      * @param  {nej.ut.p._$Node} 根节点
-     * @param  {String}            UMI值
+     * @param  {String}          UMI值
      * @return {nej.ut.p._$Node} UMI对应的节点
      */
     _p._$getNodeByUMI = (function(){
@@ -194,7 +194,7 @@ var f = function(){
         };
     })();
 };
-define('{lib}util/dispatcher/dsp/util.js',
+NEJ.define('{lib}util/dispatcher/dsp/util.js',
       ['{lib}base/util.js'
       ,'{lib}util/dispatcher/module.2.js'
       ,'{lib}util/dispatcher/dsp/node.js'],f);

@@ -40,6 +40,7 @@ var f = function(){
     _proGroupManager.__reset = function(_options){
         this.__supReset(_options);
         this.__root = _options.root;
+        this.__dispatcher = _options.dispatcher;
         this.__mpool = {}; // umi in this group
     };
     /**
@@ -157,7 +158,10 @@ var f = function(){
            (!!_action&&_action!='onhide')){
             // check node stopped
             if (this.__isStopped(_node)) return;
-            var _options = {umi:_node._$getPath()};
+            var _options = {
+                umi:_node._$getPath(),
+                dispatcher:this.__dispatcher
+            };
             _module = _module._$allocate(_options);
             if (_p._$isModule(_module)){
                 _data.module = _module;
@@ -214,6 +218,11 @@ var f = function(){
                 _data.xname = _name;
                 // do dispatch event
                 _module._$dispatchEvent(_name,_event);
+                // position to element
+                if (_nothide&&!!_event&&!!_event.pos&&
+                    _event.umi==_event.target){
+                    _e._$scrollTo(_event.pos);
+                }
                 // check stopped flag
                 if (_nothide&&!!_event){
                     _data.stopped = _event.stopped;
@@ -305,7 +314,7 @@ var f = function(){
         return this;
     };
 };
-define('{lib}util/dispatcher/dsp/group.js',
+NEJ.define('{lib}util/dispatcher/dsp/group.js',
       ['{lib}base/constant.js'
       ,'{lib}util/event.js'
       ,'{lib}util/template/tpl.js'

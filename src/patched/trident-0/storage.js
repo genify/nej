@@ -8,5 +8,5 @@
 var f = function(){
     
 };
-define('{lib}patched/trident-0/storage.js',
+NEJ.define('{lib}patched/trident-0/storage.js',
       ['{lib}patched/storage.js'],f);

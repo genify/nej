@@ -151,5 +151,5 @@ var f = function(){
     // do regist plugin
     p._$$CORE_MESSAGE._$regist();
 };
-define('{lib}util/xmpp/core/message.js',
+NEJ.define('{lib}util/xmpp/core/message.js',
       ['{lib}util/xmpp/plugin.js'],f);

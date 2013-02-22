@@ -652,7 +652,7 @@ var f = function(){
         e._$remove(_node);
     };
 };
-define('{lib}ui/carousel/carousel.js',
+NEJ.define('{lib}ui/carousel/carousel.js',
       ['{lib}base/platform.js'
       ,'{lib}ui/base.js'
       ,'{lib}util/gesture/drag.js'

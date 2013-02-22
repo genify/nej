@@ -8,14 +8,13 @@
 var f = function(){
     var _  = NEJ.P,
         _e = _('nej.e'),
+        _u = _('nej.u'),
         _h = _('nej.h');
     var __empty    = /(?:<(p|div)>(?:\&nbsp\;|<br\/?>)<\/\1>|<br\/?>|\&nbsp\;|\s)+$/gi, // empty content
-        __reg_flb  = /<\/?(abbr|acronym|address|applet|area|base|basefont|bdo|big|body|br|button|caption|center|cite|code|col|colgroup|dd|del|dir|dfn|dl|dt|em|fieldset|font|form|frame|frameset|h1|h2|h3|h4|h5|h6|head|hr|html|iframe|input|ins|isindex|kbd|label|legend|link|map|menu|meta|noframes|noscript|object|optgroup|option|param|pre|q|s|samp|script|select|small|strike|style|sub|table|tbody|td|textarea|tfoot|th|thead|title|tr|tt|var|xmp)[^>]*>/gi,
         __rnwln    = /(?:\r\n)|\n|\r/gi,  // new line for getContent
-        __reg_cls0 = /(?:class|lang|style)="(mso)?[^"]*"/gi,
-        __reg_cls1 = /(?:class|lang|style)='(mso)?[^']*'/gi;//clear class,lang,style
-
-       
+        __reg_cls0 = /(?:class|lang)="(mso)?[^"]*"/gi,
+        __reg_cls1 = /(?:class|lang)='(mso)?[^']*'/gi,
+        __reg_ccm  = /(?:<!--)[^>]*(?:-->)/gi;//clear class,lang
         
     /**
      * 取节点所在的窗体对象
@@ -72,7 +71,7 @@ var f = function(){
     _h.__getSelectText = function(_document){
         var _range = this.__getRange(_document);
         if (!_range) return '';
-        return !!document.selection?_range.text:_range.toString();
+        return !!document.selection?_range.text:_range.toString()||_range.cloneContents().textContent;
     };
     /**
      * 获取选中内容的html,并删除原来内容
@@ -168,12 +167,11 @@ var f = function(){
      * @param {Object} _html
      */
     _h.__filterContent = function(_html){
-        var _html = (_html||'').replace(__rnwln,'<br/>').replace(__empty,'');
-        _html = _html.replace(__reg_flb,'').replace(__reg_cls0,'').replace(__reg_cls1,'');
+        var _html = (_html||'').replace(__rnwln,'<br/>').replace(__empty,'').replace(__reg_cls0,'').replace(__reg_cls1,'').replace(__reg_ccm,'');
         _html = !_h.__filterContentPath?_html:_h.__filterContentPath(_html);
         return _html;
     };
 };
-define('{lib}patched/editor.js',
+NEJ.define('{lib}patched/editor.js',
       ['{lib}base/platform.js'
       ,'{lib}base/element.js'],f);

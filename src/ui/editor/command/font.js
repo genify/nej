@@ -120,5 +120,5 @@ var f = function(){
         };
     })();
 };
-define('{lib}ui/editor/command/font.js',
+NEJ.define('{lib}ui/editor/command/font.js',
       ['{lib}ui/layer/card.wrapper.js'],f);

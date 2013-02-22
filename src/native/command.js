@@ -43,5 +43,5 @@ var f = function(){
     };
     NEJ.P('nej').mb = _n;
 };
-define('{lib}native/command.js',
+NEJ.define('{lib}native/command.js',
       ['{lib}base/global.js'],f);

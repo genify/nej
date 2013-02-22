@@ -64,4 +64,4 @@ var f = function() {
         this._$dispatchEvent('onrightclick');
     };
 };
-define('{lib}native/cef/util/tray.js', ['{lib}util/event.js','{lib}native/command.js','{lib}base/util.js','{lib}native/cef/api.js'], f);
+NEJ.define('{lib}native/cef/util/tray.js', ['{lib}util/event.js','{lib}native/command.js','{lib}base/util.js','{lib}native/cef/api.js'], f);

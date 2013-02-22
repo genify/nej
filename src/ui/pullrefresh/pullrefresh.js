@@ -125,7 +125,7 @@ var f = function(){
         };
     })();
 };
-define('{lib}ui/pullrefresh/pullrefresh.js',
+NEJ.define('{lib}ui/pullrefresh/pullrefresh.js',
       ['{lib}ui/pullrefresh/puller.js'
       ,'{lib}ui/loading/loading.js'
       ,'{lib}ui/arrows/arrows.y.js'],f);

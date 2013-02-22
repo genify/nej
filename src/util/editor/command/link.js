@@ -68,6 +68,6 @@ var f = function(){
     // regist command implemention
     _p._$$Link._$regist();
 };
-define('{lib}util/editor/command/link.js',
+NEJ.define('{lib}util/editor/command/link.js',
       ['{lib}util/editor/command/card.js'
       ,'{lib}ui/editor/command/link.js'],f);

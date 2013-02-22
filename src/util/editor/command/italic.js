@@ -24,5 +24,5 @@ var f = function(){
     // regist command implemention
     _p._$$Italic._$regist();
 };
-define('{lib}util/editor/command/italic.js',
+NEJ.define('{lib}util/editor/command/italic.js',
       ['{lib}util/editor/command/simple.js'],f);

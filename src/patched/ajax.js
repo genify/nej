@@ -35,7 +35,7 @@ var f = function(){
         return (_map[_mode]||_p._$$XHRProxy)._$allocate(_options);
     };
 };
-define('{lib}patched/ajax.js',
+NEJ.define('{lib}patched/ajax.js',
       ['{lib}base/platform.js'
       ,'{lib}base/constant.js'
       ,'{lib}util/ajax/proxy/xhr.js'

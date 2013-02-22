@@ -93,5 +93,5 @@ var f = function(){
     // instance
     _p._$$Pinch._$allocate();
 };
-define('{lib}util/gesture/pinch.js',
+NEJ.define('{lib}util/gesture/pinch.js',
       ['{lib}base/event.js','{lib}util/gesture/gesture.js'],f);

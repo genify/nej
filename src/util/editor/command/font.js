@@ -55,5 +55,5 @@ var f = function(){
         return this;
     };
 };
-define('{lib}util/editor/command/font.js',
+NEJ.define('{lib}util/editor/command/font.js',
       ['{lib}util/editor/command/card.js'],f);

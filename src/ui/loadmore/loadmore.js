@@ -123,6 +123,6 @@ var f = function(){
         return this;
     };
 };
-define('{lib}ui/loadmore/loadmore.js',
+NEJ.define('{lib}ui/loadmore/loadmore.js',
       ['{lib}ui/loading/loading.js'
       ,'{lib}util/gesture/tap.js'],f);

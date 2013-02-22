@@ -108,5 +108,5 @@ var f = function(){
                        {param:[_milliseconds]});
     };
 };
-define('{lib}native/ios/notification.js',
+NEJ.define('{lib}native/ios/notification.js',
       ['{lib}native/ios/phonegap.js'],f);

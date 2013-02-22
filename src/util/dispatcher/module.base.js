@@ -47,5 +47,5 @@ var f = function(){
         _e._$removeByEC(this.__body);
     };
 };
-define('{lib}util/dispatcher/module.base.js'
+NEJ.define('{lib}util/dispatcher/module.base.js'
      ,['{lib}util/dispatcher/module.2.js'],f);

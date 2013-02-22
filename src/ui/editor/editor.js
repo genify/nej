@@ -107,7 +107,7 @@ var f = function(){
      */
     _proEditor.__reset = function(_options){
         this.__supReset(_options);
-        this.__aopt.focus = !!_options.focus;
+        this.__aopt.focus = _options.hasOwnProperty('focus')?_options.focus:true;
         this.__aopt.content = _options.content;
         this.__editor = _t._$$Editor._$allocate({
             area:_t._$$EditorArea._$allocate(this.__aopt)
@@ -268,7 +268,7 @@ var f = function(){
         return this;
     };
 };
-define('{lib}ui/editor/editor.js',
+NEJ.define('{lib}ui/editor/editor.js',
       ['{patch}config.js'
       ,'{lib}ui/base.js'
       ,'{lib}util/editor/editor.js'],f);

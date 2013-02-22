@@ -35,5 +35,5 @@ var f = function(){
         };
     };
 };
-define('{lib}ui/carousel/carousel.y.js',
+NEJ.define('{lib}ui/carousel/carousel.y.js',
       ['{lib}ui/carousel/carousel.js'],f);

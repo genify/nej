@@ -183,5 +183,5 @@ var f = function(){
         };
     })();
 };
-define('{lib}util/cycler/cycler.js',
+NEJ.define('{lib}util/cycler/cycler.js',
       ['{lib}util/page/page.simple.js'],f);

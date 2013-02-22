@@ -46,6 +46,6 @@ var f = function(){
     // regist command implemention
     _p._$$FontSize._$regist();
 };
-define('{lib}util/editor/command/fontsize.js',
+NEJ.define('{lib}util/editor/command/fontsize.js',
       ['{lib}util/editor/command/font.js'
       ,'{lib}ui/editor/command/fontsize.js'],f);

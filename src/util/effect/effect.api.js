@@ -315,5 +315,5 @@ var f = function() {
     })();
 
 };
-define('{lib}util/effect/effect.api.js',
+NEJ.define('{lib}util/effect/effect.api.js',
       ['{lib}util/effect/effect.js'],f);

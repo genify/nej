@@ -61,5 +61,5 @@ var f = function(){
         this.__supReset(_options);
     };
 };
-define('{lib}util/animation/easeinout.js',
+NEJ.define('{lib}util/animation/easeinout.js',
       ['{lib}util/animation/bezier.js'],f)

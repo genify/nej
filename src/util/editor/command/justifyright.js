@@ -24,5 +24,5 @@ var f = function(){
     // regist command implemention
     _p._$$JustifyRight._$regist();
 };
-define('{lib}util/editor/command/justifyright.js',
+NEJ.define('{lib}util/editor/command/justifyright.js',
       ['{lib}util/editor/command/simple.js'],f);

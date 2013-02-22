@@ -11,6 +11,7 @@ var f = function(){
     {/list}');
     
     test('multiSelector test',function(){
+        expect(0);
 		_e._$get('box').innerHTML = _e._$getHtmlTemplate(_html_seed);
 		var _ms = _p._$$MultiSelector._$allocate({
 			parent:'box',

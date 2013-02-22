@@ -128,5 +128,5 @@ var f = function(){
     // instance
     _p._$$Drag._$allocate();
 };
-define('{lib}util/gesture/drag.js',
+NEJ.define('{lib}util/gesture/drag.js',
       ['{lib}util/gesture/gesture.js'],f);

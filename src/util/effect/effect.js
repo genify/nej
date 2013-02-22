@@ -265,7 +265,7 @@ var f = function(){
         return this;
     };*/
 };
-define('{lib}util/effect/effect.js',
+NEJ.define('{lib}util/effect/effect.js',
       ['{lib}base/element.js'
       ,'{lib}patched/effect.js'
       ,'{lib}util/event.js'],f);

@@ -35,5 +35,5 @@ var f = function(){
         return p._$exec('NPreferences.delSettingItem',_key);
     };
 };
-define('{lib}native/android/preference.js',
+NEJ.define('{lib}native/android/preference.js',
       ['{lib}native/android/phonegap.js'],f);

@@ -6,15 +6,15 @@
  * ------------------------------------------
  */
 var f = function(){
-    var o = NEJ.O,
-        f = NEJ.F,
-        e = NEJ.P('nej.e'),
-        v = NEJ.P('nej.v'),
-        u = NEJ.P('nej.u'),
-        p = NEJ.P('nej.ut'),
+    var _o = NEJ.O,
+        _f = NEJ.F,
+        _e = NEJ.P('nej.e'),
+        _v = NEJ.P('nej.v'),
+        _u = NEJ.P('nej.u'),
+        _p = NEJ.P('nej.ut'),
         __proSorter,
         __supSorter;
-    if (!!p._$$Sorter) return;
+    if (!!_p._$$Sorter) return;
     /**
      * 拖拽排序器控件
      * [code type="html"]
@@ -51,9 +51,9 @@ var f = function(){
      * @config {Number} y 节点纵坐标
      * 
      */
-    p._$$Sorter = NEJ.C();
-    __proSorter = p._$$Sorter._$extend(p._$$Event);
-    __supSorter = p._$$Sorter._$supro;
+    _p._$$Sorter = NEJ.C();
+    __proSorter = _p._$$Sorter._$extend(_p._$$Event);
+    __supSorter = _p._$$Sorter._$supro;
     /**
      * 控件初始化
      * @protected
@@ -77,8 +77,8 @@ var f = function(){
     __proSorter.__reset = function(_options){
         this.__supReset(_options);
         this.__selector = _options.selector;
-        this.__holder = e._$get(_options.holder);
-        this.__mover = e._$get(_options.mover);
+        this.__holder = _e._$get(_options.holder);
+        this.__mover = _e._$get(_options.mover);
         if (!!this.__selector)
             this.__selector._$setEvent('onchange',
                    this.__onSortFlag._$bind(this));
@@ -100,6 +100,8 @@ var f = function(){
         delete this.__mover;
         delete this.__holder;
         delete this.__selector;
+        delete this.__from;
+        delete this.__to;
     };
     /**
      * 计算排序项网格
@@ -109,7 +111,7 @@ var f = function(){
      */
     __proSorter.__doCalculateGrid = (function(){
         var _docalculate = function(_node){
-            var _offset = e._$offset(_node);
+            var _offset = _e._$offset(_node);
             _node.rng = {
                 top:_offset.y
                ,left:_offset.x
@@ -118,8 +120,8 @@ var f = function(){
             };
         };
         return function(){
-            u._$forEach(this.__selector
-             ._$getList(),_docalculate);
+            this.__list = this.__selector._$getList();
+            _u._$forEach(this.__list,_docalculate);
         };
     })();
     /**
@@ -138,13 +140,15 @@ var f = function(){
                    _pointer.y<=_range.bottom;
         };
         return function(_offset){
-            var _index = 0,
+            var _index = 0,_inner = false,
                 _list = this.__selector._$getList();
             for(var l=_list.length;_index<l;_index++){
-                if (_inrange(_offset,_list[_index].rng))
+                if (_inrange(_offset,_list[_index].rng)){
+                    _inner = true;
                     break;
+                }
             }
-            
+            return _inner?_index:-1;
         };
     })();
     /**
@@ -182,9 +186,10 @@ var f = function(){
      */
     __proSorter.__onSortStart = function(_event){
         this.__flag = !0;
-        var _options = {mover:this.__mover
-                       ,count:this.__selector
-                             ._$getSelection().length};
+        var _list = this.__selector._$getSelection(true).list,
+            _options = {mover:this.__mover
+                       ,count:_list.length};
+        this.__from = _list[0];
         this.__doCalculateGrid();
         document.body.appendChild(this.__mover);
         this._$dispatchEvent('onbeforesort',_options);
@@ -197,14 +202,16 @@ var f = function(){
      * @return {Void}
      */
     __proSorter.__onSorting = function(_event){
-        var _offset  = {x:v._$pageX(_event)
-                       ,y:v._$pageY(_event)},
+        var _offset  = {x:_v._$pageX(_event)
+                       ,y:_v._$pageY(_event)},
             _options = {x:_offset.x,y:_offset.y},
             _style   = this.__mover.style;
         this._$dispatchEvent('onsort',_options);
-        _style.top = _options.y+'px';
-        _style.left = _options.x+'px';
-        this.__doCalculateHolderPosition(_offset);
+        _style.top = (_options.y-3)+'px';
+        _style.left = (_options.x-3)+'px';
+        this.__to = this.__doCalculateHolderPosition(_offset);
+        _style.cursor = (this.__to < 0) ? 'not-allowed' : 'move';
+
     };
     /**
      * 结束排序
@@ -213,12 +220,36 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    __proSorter.__onSortEnd = function(_event){
-        if (!this.__flag) return;
-        delete this.__flag;
-        delete this.__drag;
-        this.__selector._$clear();
-    };
+    __proSorter.__onSortEnd =(function(){
+        // 检查顺序有没有改变
+        var _doCheckSort = function(){
+            _u._$forEach(this.__list,function(_item,_i){
+                if(this.__from == _item)
+                    this.__from = _i;
+            }._$bind(this));
+            if(this.__from == this.__to)
+                return true;
+        };
+        // 排序
+        var _doSort = function(){
+            var _item = this.__list[this.__from];
+            this.__list.splice(this.__from,1);
+            this.__list.splice(this.__to,0,_item);
+            this._$dispatchEvent('onaftersort',{
+                list:this.__list
+            });
+        };
+        return function(_event){
+            if (!this.__flag) return;
+            delete this.__flag;
+            delete this.__drag;
+            this.__selector._$clear();
+            _e._$remove(this.__mover);
+            if(this.__to < 0) return;
+            if(_doCheckSort.call(this)) return;
+            _doSort.call(this);
+        }
+    })();
 };
-define('{lib}util/sorter/sorter.js',
+NEJ.define('{lib}util/sorter/sorter.js',
       ['{lib}util/event.js'],f);

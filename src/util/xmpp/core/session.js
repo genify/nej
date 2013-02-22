@@ -46,5 +46,5 @@ var f = function(){
     // do regist plugin
     p._$$CORE_SESSION._$regist();
 };
-define('{lib}util/xmpp/core/session.js',
+NEJ.define('{lib}util/xmpp/core/session.js',
       ['{lib}util/xmpp/plugin.js'],f);

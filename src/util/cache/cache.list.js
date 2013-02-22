@@ -618,5 +618,5 @@ var f = function(){
         return _event;
     };
 };
-define('{lib}util/cache/cache.list.js',
+NEJ.define('{lib}util/cache/cache.list.js',
       ['{lib}util/cache/cache.js'],f);

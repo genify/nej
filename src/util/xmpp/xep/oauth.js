@@ -112,7 +112,7 @@ var f = function(){
     // do regist plugin
     p._$$XEP_OAuth._$regist();
 };
-define('{lib}util/xmpp/xep/oauth.js',
+NEJ.define('{lib}util/xmpp/xep/oauth.js',
       ['{lib}util/oauth/util.js'
       ,'{lib}util/encode/base64.js'
       ,'{lib}util/xmpp/plugin.js'],f);

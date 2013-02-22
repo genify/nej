@@ -33,6 +33,6 @@ var f = function(){
                });
     })();
 };
-define('{lib}patched/trident/ajax.js',
+NEJ.define('{lib}patched/trident/ajax.js',
       ['{lib}patched/ajax.js'
       ,'{lib}util/encode/json.js'],f);

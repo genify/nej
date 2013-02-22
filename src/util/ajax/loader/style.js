@@ -42,5 +42,5 @@ var f = function(){
         document.head.appendChild(_request);
     };
 };
-define('{lib}util/ajax/loader/style.js',
+NEJ.define('{lib}util/ajax/loader/style.js',
       ['{lib}util/ajax/loader/loader.js'],f);

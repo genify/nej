@@ -58,5 +58,5 @@ var f = function(){
         this.__dopt.direction = 1;
     };
 };
-define('{lib}util/slider/slider.x.js',
+NEJ.define('{lib}util/slider/slider.x.js',
       ['{lib}util/slider/slider.js'],f);

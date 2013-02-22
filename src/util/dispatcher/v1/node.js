@@ -210,5 +210,5 @@ var f = function(){
         return this;
     };
 };
-define('{lib}util/dispatcher/v1/node.js'
+NEJ.define('{lib}util/dispatcher/v1/node.js'
      ,['{lib}util/event.js'],f);

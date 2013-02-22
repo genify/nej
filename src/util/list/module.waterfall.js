@@ -307,5 +307,5 @@ var f = function(){
         this._$next();
     };
 };
-define('{lib}util/list/module.waterfall.js',
+NEJ.define('{lib}util/list/module.waterfall.js',
       ['{lib}util/list/module.js'],f);

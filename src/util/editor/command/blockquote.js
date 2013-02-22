@@ -40,5 +40,5 @@ var f = function(){
     // regist command implemention
     _p._$$Blockquote._$regist();
 };
-define('{lib}util/editor/command/blockquote.js',
+NEJ.define('{lib}util/editor/command/blockquote.js',
       ['{lib}util/editor/command.js'],f);

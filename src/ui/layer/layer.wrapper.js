@@ -178,5 +178,5 @@ var f = function(){
         return this;
     };
 };
-define('{lib}ui/layer/layer.wrapper.js',
+NEJ.define('{lib}ui/layer/layer.wrapper.js',
       ['{lib}ui/layer/layer.js'],f);

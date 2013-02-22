@@ -24,6 +24,6 @@ var f = function(){
         }
     });
 };
-define('{lib}native/ios/network.js',
+NEJ.define('{lib}native/ios/network.js',
       ['{lib}util/event/event.js'
       ,'{lib}native/ios/phonegap.js'],f);

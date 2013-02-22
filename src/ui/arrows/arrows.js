@@ -61,4 +61,4 @@ var f = function(){
                      : e._$addClassName(this.__body,_class);
     };
 };
-define('{lib}ui/arrows/arrows.js',['{lib}ui/base.js'],f);
+NEJ.define('{lib}ui/arrows/arrows.js',['{lib}ui/base.js'],f);

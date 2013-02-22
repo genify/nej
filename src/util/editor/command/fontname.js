@@ -44,6 +44,8 @@ var f = function(){
     _proFontName.__getFontText = (function(){
         var _reg = /['"]/g;
         return function(_value){
+            if(!_value)
+                return;
             return _i._$$FontNameCard._$getText(
                       _value.replace(_reg,''))||_value;
         };
@@ -51,6 +53,6 @@ var f = function(){
     // regist command implemention
     _p._$$FontName._$regist();
 };
-define('{lib}util/editor/command/fontname.js',
+NEJ.define('{lib}util/editor/command/fontname.js',
       ['{lib}util/editor/command/font.js'
       ,'{lib}ui/editor/command/fontname.js'],f);

@@ -48,5 +48,5 @@ var f = function(){
         return _html.replace(__opspc,'&nbsp;');
     }
 };
-define('{lib}patched/presto/editor.js',
+NEJ.define('{lib}patched/presto/editor.js',
       ['{lib}patched/editor.js'],f);

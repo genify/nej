@@ -160,6 +160,6 @@ var f = function(){
         };
     })();
 };
-define('{lib}util/ajax/proxy/upload.js',
+NEJ.define('{lib}util/ajax/proxy/upload.js',
       ['{lib}util/ajax/message.js'
       ,'{lib}util/ajax/proxy/proxy.js'],f);

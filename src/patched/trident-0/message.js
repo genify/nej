@@ -8,5 +8,5 @@
 var f = function(){
     
 };
-define('{lib}patched/trident-0/message.js',
+NEJ.define('{lib}patched/trident-0/message.js',
       ['{lib}patched/message.js'],f);

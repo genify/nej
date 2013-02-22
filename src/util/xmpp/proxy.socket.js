@@ -129,4 +129,4 @@ var f = function(){
         };
     })();
 };
-define('{lib}util/xmpp/proxy.socket.js',['{lib}util/xmpp/proxy.js'],f);
+NEJ.define('{lib}util/xmpp/proxy.socket.js',['{lib}util/xmpp/proxy.js'],f);

@@ -24,5 +24,5 @@ var f = function(){
     // regist command implemention
     _p._$$InsertUnorderedList._$regist();
 };
-define('{lib}util/editor/command/insertunorderedlist.js',
+NEJ.define('{lib}util/editor/command/insertunorderedlist.js',
       ['{lib}util/editor/command/simple.js'],f);

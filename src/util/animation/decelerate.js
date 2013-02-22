@@ -84,5 +84,5 @@ var f = function(){
         return _stop;
     };
 };
-define('{lib}util/animation/decelerate.js',
+NEJ.define('{lib}util/animation/decelerate.js',
       ['{lib}util/animation/animation.js'],f);

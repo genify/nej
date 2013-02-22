@@ -36,4 +36,4 @@ var f = function(){
         this.__seed_css = _seed_css;
     };
 };
-define('{lib}ui/arrows/arrows.y.js',['{lib}ui/arrows/arrows.js'],f);
+NEJ.define('{lib}ui/arrows/arrows.y.js',['{lib}ui/arrows/arrows.js'],f);

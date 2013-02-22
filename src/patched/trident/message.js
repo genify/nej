@@ -104,7 +104,7 @@ var f = function(){
     window.setInterval(_doCheckNameQueue,100);
     window.setInterval(_doCheckWindowName,20);
 };
-define('{lib}patched/trident/message.js',
+NEJ.define('{lib}patched/trident/message.js',
       ['{lib}patched/message.js'
       ,'{lib}base/util.js'
       ,'{lib}util/event/event.js'

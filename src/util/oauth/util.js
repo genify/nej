@@ -271,7 +271,7 @@ var f = function(){
         return this;
     };
 };
-define('{lib}util/oauth/util.js',
+NEJ.define('{lib}util/oauth/util.js',
       ['{lib}base/constant.js'
       ,'{lib}base/util.js'
       ,'{lib}util/cache/storage.js'

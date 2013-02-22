@@ -69,5 +69,5 @@ var f = function(){
         PhoneGap._$exec('Properties.flush');
     }
 };
-define('{lib}native/ios/preference.js',
+NEJ.define('{lib}native/ios/preference.js',
       ['{lib}native/ios/phonegap.js'],f);

@@ -1,5 +1,5 @@
 var f = function(){
     
 };
-define('{lib}patched/presto/holder.js',
+NEJ.define('{lib}patched/presto/holder.js',
       ['{lib}patched/holder.js'],f);

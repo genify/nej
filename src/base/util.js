@@ -913,6 +913,6 @@ var f = function(){
         return _u._$randNumber(_min,_max).toString();
     };
 };
-define('{lib}base/util.js',
+NEJ.define('{lib}base/util.js',
       ['{lib}base/global.js'
       ,'{lib}base/element.js'],f);

@@ -106,7 +106,7 @@ var f = function() {
         this.__close = _ntmp[2];
     };
 };
-define('{lib}native/cef/ui/frame.js', ['{patch}config.js'
+NEJ.define('{lib}native/cef/ui/frame.js', ['{patch}config.js'
                                        ,'{lib}ui/base.js'
                                        ,'{lib}native/cef/ui/resize.js'
                                        ,'{lib}native/cef/util/frame.js'

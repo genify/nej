@@ -151,7 +151,7 @@ var f = function(){
         return this;
     };
 };
-define('{lib}util/clipboard/clipboard.js',
+NEJ.define('{lib}util/clipboard/clipboard.js',
       ['{patch}config.js'
       ,'{lib}base/util.js'
       ,'{lib}base/event.js'

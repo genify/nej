@@ -99,5 +99,5 @@ var f = function(){
             __timer = window.setInterval(__checkCmdQueue,10);
     };
 };
-define('{lib}native/ios/phonegap.js',
+NEJ.define('{lib}native/ios/phonegap.js',
       ['{lib}base/element.js','{lib}native/command.js'],f);

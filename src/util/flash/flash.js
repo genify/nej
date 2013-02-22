@@ -48,15 +48,19 @@ var f = function(){
      *   }
      *   // 生成flash对象，可以设置宽高，地址，父节点，flash参数在params中设置
      *   // flash需要提供inited接口，返回falsh已经准备好的状态
-     *   _e._$flash({src:_swf
-     *              ,hidden:false
-     *              ,parent:_e._$get('flash')
-     *              ,width:900
-     *              ,height:600
-     *              ,params:{flashvars:''
-     *                      ,allowscriptaccess:'always'
-     *                      ,wmode:'transparent'}
-     *              ,onready:_onFlashReady._$bind(this)});
+     *   _e._$flash({
+     *       src:_swf,
+     *       hidden:false,
+     *       parent:'flash',
+     *       width:900,
+     *       height:600,
+     *       params:{
+     *           flashvars:'',
+     *           wmode:'transparent',
+     *           allowscriptaccess:'always'
+     *       },
+     *       onready:_onFlashReady._$bind(this)
+     *   });
      * [/code]
      * @api    {nej.e._$flash}
      * @param  {Object} 可选配置参数，已处理参数列表如下
@@ -66,7 +70,7 @@ var f = function(){
      * @config {Number}      height  Flash显示高度，设为不可见时可以不设此参数
      * @config {String|Node} parent  容器节点，默认为document.body
      * @conifg {Object}      params  设置参数
-     * @return {Flash}                  flash对象
+     * @return {Flash}               flash对象
      * 
      * [hr]
      * 
@@ -140,5 +144,5 @@ var f = function(){
         };
     })();
 };
-define('{lib}util/flash/flash.js',
+NEJ.define('{lib}util/flash/flash.js',
       ['{lib}util/template/jst.js'],f);

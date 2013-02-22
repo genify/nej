@@ -220,5 +220,5 @@ var f = function(){
     };
 })();
 };
-define('{lib}native/ios/util.js',
+NEJ.define('{lib}native/ios/util.js',
       ['{lib}native/ios/phonegap.js'],f);

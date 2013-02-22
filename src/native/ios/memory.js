@@ -10,5 +10,5 @@ var f = function(){
         event:'memorywarning'
     });
 };
-define('{lib}native/ios/memory.js',
+NEJ.define('{lib}native/ios/memory.js',
       ['{lib}util/event/event.js'],f);

@@ -651,18 +651,23 @@
       }
       return siblingCheck(ap[i], bp[i]);
     };
+
   function siblingCheck(a, b) {
-      if (a && b) {
-        var cur = a.nextSibling;
-        while (cur) {
-          if (cur === b) {
-            return -1;
-          }
-          cur = cur.nextSibling;
+    if (a && b) {
+      var cur = a.nextSibling;
+      while (cur) {
+        if (cur === b) {
+          return -1;
         }
+        cur = cur.nextSibling;
       }
-      return a ? 1 : -1;
-    };
+    }
+    return a ? 1 : -1;
+  };
+
+  function uniqueSort(nodeList){
+    return distinct(nodeList.sort(sortor))
+  };
 
   // ### nth position Cache 部分
   // 对于nth类型的查找，有时候一次节点查找会遍历到多次相同节点，
@@ -1069,16 +1074,14 @@
         var data = datas[i],
           dlen = data.length,
           last = data[dlen - 1],
-          result = getTargets(data, context)
-          if(result&&result.length) notNullResult++
+          result = getTargets(data, context);
+
+          if(result && result.length) notNullResult++
           results = results.concat(result)
       }
       clearNthPositionCache()
       if (!results.length) return results
-      if (notNullResult > 1){
-        results.sort(sortor)
-        distinct(results)
-      }
+      if(notNullResult) uniqueSort(results)
       return results
     }
     // API : 测试用get相当于all (private)
@@ -1117,7 +1120,7 @@
       var nodeList
       if (supportQuerySelector && !nes.debug) {
         try {
-          nodeList = (context || doc).querySelectorAll(sl);
+          nodeList = toArray((context || doc).querySelectorAll(sl));
         } catch (e) {
           nodeList = get(sl, context);
         }
@@ -1135,6 +1138,7 @@
     //
     // 注: 由于:not与:matches依赖于这个函数 ,所以同样支持复杂选择器
   function matches(node, sl) {
+      if(!node || node.nodeType !== 1) return false
       var datas = parse(sl),
         len = datas.length
       if (!datas[len - 1][0]) return false
@@ -1230,6 +1234,11 @@
   // 2. `operators`
   // 3. `combos`
 
+  nes._uniqueSort = uniqueSort;
+  nes._cleanSelector = clean;
+  nes._getUid= getUid;
+
+
   //          5.Exports
   // ----------------------------------------------------------------------
   // 暴露API:  amd || commonjs  || global 
@@ -1238,7 +1247,7 @@
     module.exports = nes;
     // 支持amd
   } else if (typeof define === 'function' && define.amd) {
-    define(function() {return nes });
+    NEJ.define(function() {return nes });
   } else {
     // 直接暴露到全局
     win.nes = nes;

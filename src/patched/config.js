@@ -119,5 +119,5 @@ var f = function(){
     // init
     _doInit(window.NEJ_CONF||NEJ.O);
 };
-define('{lib}patched/config.js',
+NEJ.define('{lib}patched/config.js',
       ['{lib}base/platform.js'],f);

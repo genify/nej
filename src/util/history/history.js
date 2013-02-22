@@ -1,4 +1,4 @@
-/*
+﻿/*
  * ------------------------------------------
  * HTML5 - History API封装实现文件
  * @version  1.0
@@ -81,11 +81,11 @@ var f = function(){
                 _v._$dispatchEvent(location,'urlchange',_event);
                 _h.__pushHistory(_event.href);
             }
+            _timer = requestAnimationFrame(_doCheckLocation);
         };
         return function(){
             if (!_timer)
-                 _timer = window.setInterval(
-                         _doCheckLocation,150);
+                 _timer = requestAnimationFrame(_doCheckLocation);
             return this;
         };
     })();
@@ -135,6 +135,7 @@ var f = function(){
        ,event:'urlchange'
     });
 };
-define('{lib}util/history/history.js',
+NEJ.define('{lib}util/history/history.js',
       ['{lib}util/event/event.js'
+      ,'{lib}util/timer/animation.js'
       ,'{patch}api.js'],f);

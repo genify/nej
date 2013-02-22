@@ -19,5 +19,5 @@ var f = function(){
     };
 
 };
-define('{lib}patched/storage.js',
+NEJ.define('{lib}patched/storage.js',
       ['{lib}base/platform.js'],f);

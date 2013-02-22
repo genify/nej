@@ -13,5 +13,5 @@ var f = function(){
     if (_p._$NOT_PATCH.presto) return;
 
 };
-define('{lib}patched/presto/effect.js',
+NEJ.define('{lib}patched/presto/effect.js',
       ['{lib}patched/effect.js'],f);

@@ -24,5 +24,5 @@ var f = function(){
     // regist command implemention
     _p._$$InsertOrderedList._$regist();
 };
-define('{lib}util/editor/command/insertorderedlist.js',
+NEJ.define('{lib}util/editor/command/insertorderedlist.js',
       ['{lib}util/editor/command/simple.js'],f);

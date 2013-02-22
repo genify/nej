@@ -106,4 +106,4 @@ var f = function() {
             _n._$exec('winhelper.showWindow', 'hide');
     };
 };
-define('{lib}native/cef/util/frame.js', ['{lib}util/event.js','{lib}native/command.js'], f);
+NEJ.define('{lib}native/cef/util/frame.js', ['{lib}util/event.js','{lib}native/command.js'], f);

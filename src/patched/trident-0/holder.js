@@ -8,5 +8,5 @@
 var f = function(){
     
 };
-define('{lib}patched/trident-0/holder.js',
+NEJ.define('{lib}patched/trident-0/holder.js',
       ['{lib}patched/holder.js'],f);

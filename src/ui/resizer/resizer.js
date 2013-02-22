@@ -138,6 +138,6 @@ var f = function(){
         this.__ropt.body = this.__body;
     };
 };
-define('{lib}ui/resizer/resizer.js',
+NEJ.define('{lib}ui/resizer/resizer.js',
       ['{lib}ui/base.js'
       ,'{lib}util/resize/resize.js'],f);

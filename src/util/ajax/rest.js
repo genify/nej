@@ -130,13 +130,12 @@ var f = function(){
             var _exist = {},
                 _param = _options.param||o;
             // parse uri template
-            if (_url.search(_reg0)>=0)
-                _url = _url.replace(_reg0,function($1,$2){
-                           var _value = _param[$2];
-                           if (_value!=null) 
-                               _exist[$2] = !0;
-                           return encodeURIComponent(_value||'')||$1;
-                       });
+            _url = _url.replace(_reg0,function($1,$2){
+                       var _value = _param[$2];
+                       if (_value!=null) 
+                           _exist[$2] = !0;
+                       return encodeURIComponent(_value||'')||$1;
+                   });
             // parse remain param 
             var _arr = [];
             for(var x in _param)
@@ -262,5 +261,5 @@ var f = function(){
             }
     };
 };
-define('{lib}util/ajax/rest.js',
+NEJ.define('{lib}util/ajax/rest.js',
       ['{lib}util/ajax/xdr.js'],f);

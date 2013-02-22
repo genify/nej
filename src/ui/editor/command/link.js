@@ -191,5 +191,5 @@ var f = function(){
         this.__inputs[1].value = 'http://';
     };
 };
-define('{lib}ui/editor/command/link.js',
+NEJ.define('{lib}ui/editor/command/link.js',
       ['{lib}ui/layer/window.wrapper.js'],f);

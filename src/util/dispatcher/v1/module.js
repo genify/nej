@@ -116,5 +116,5 @@ var f = function(){
      */
     _proModule._$getExportData = _f;
 };
-define('{lib}util/dispatcher/v1/module.js'
+NEJ.define('{lib}util/dispatcher/v1/module.js'
      ,['{lib}util/event.js'],f);

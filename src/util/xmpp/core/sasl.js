@@ -124,5 +124,5 @@ var f = function(){
     // do regist plugin
     p._$$CORE_SASL._$regist();
 };
-define('{lib}util/xmpp/core/sasl.js',
+NEJ.define('{lib}util/xmpp/core/sasl.js',
       ['{lib}util/encode/base64.js','{lib}util/xmpp/plugin.js'],f);

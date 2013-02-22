@@ -157,5 +157,5 @@ var f = function(){
         this._$dispatchEvent('ontimeupdate',this.__getMedia());
     };
 };
-define('{lib}util/media/audio.js',
+NEJ.define('{lib}util/media/audio.js',
       ['{lib}base/event.js','{lib}util/media/media.js'],f);

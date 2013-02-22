@@ -216,7 +216,7 @@ var f = function(){
         return this;
     };
 };
-define('{lib}ui/base.js',
-      ['{lib}base/element.js'
-      ,'{lib}util/event.js'
-      ,'{lib}util/template/tpl.js'],f);
+NEJ.define('{lib}ui/base.js',
+          ['{lib}base/element.js'
+          ,'{lib}util/event.js'
+          ,'{lib}util/template/tpl.js'],f);

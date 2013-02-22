@@ -59,5 +59,5 @@ var f = function(){
         this.__seed_html = _seed_html;
     };
 };
-define('{lib}ui/editor/command/fontsize.js',
+NEJ.define('{lib}ui/editor/command/fontsize.js',
       ['{lib}ui/editor/command/font.js'],f);

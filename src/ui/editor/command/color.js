@@ -85,6 +85,6 @@ var f = function(){
         this._$hide();
     };
 };
-define('{lib}ui/editor/command/color.js',
+NEJ.define('{lib}ui/editor/command/color.js',
       ['{lib}ui/layer/card.wrapper.js'
       ,'{lib}ui/colorpick/colorpick.js'],f);

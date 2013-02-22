@@ -421,7 +421,7 @@ var f = function(){
         );
     };
 };
-define('{lib}util/template/tpl.js',
+NEJ.define('{lib}util/template/tpl.js',
       ['{lib}util/template/jst.js'
       ,'{lib}util/event/event.js'
       ,'{lib}util/ajax/tag.js'

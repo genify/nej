@@ -99,6 +99,6 @@ var f = function(){
         };
     })();
 };
-define('{lib}util/counter/counter.js',
+NEJ.define('{lib}util/counter/counter.js',
       ['{lib}base/element.js'
       ,'{lib}base/event.js'],f);

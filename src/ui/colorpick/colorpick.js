@@ -203,5 +203,5 @@ var f = function(){
         return this;
     };
 };
-define('{lib}ui/colorpick/colorpick.js',
+NEJ.define('{lib}ui/colorpick/colorpick.js',
       ['{lib}ui/colorpick/colorpanel.js'],f);

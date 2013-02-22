@@ -44,5 +44,5 @@ var f = function(){
         return !0;
     };
 };
-define('{lib}patched/trident-1/api.js',
+NEJ.define('{lib}patched/trident-1/api.js',
       ['{lib}patched/api.js'],f);

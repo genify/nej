@@ -61,5 +61,5 @@ var f = function(){
         _e._$remove(_request);
     };
 };
-define('{lib}util/ajax/loader/script.js',
+NEJ.define('{lib}util/ajax/loader/script.js',
       ['{lib}util/ajax/loader/loader.js'],f);

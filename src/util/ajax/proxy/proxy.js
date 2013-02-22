@@ -168,7 +168,7 @@ var f = function(){
      */
     _proProxy._$abort = _f;
 };
-define('{lib}util/ajax/proxy/proxy.js',
+NEJ.define('{lib}util/ajax/proxy/proxy.js',
       ['{patch}config.js'
       ,'{lib}base/util.js'
       ,'{lib}base/event.js'

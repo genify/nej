@@ -58,5 +58,5 @@ var f = function(){
         return _html.replace(__ffurl,'$1=$2'+__ffpth);
     }
 };
-define('{lib}patched/gecko/editor.js',
+NEJ.define('{lib}patched/gecko/editor.js',
       ['{lib}patched/editor.js'],f);

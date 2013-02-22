@@ -89,5 +89,5 @@ var f = function(){
     // do regist plugin
     p._$$CORE_BIND._$regist();
 };
-define('{lib}util/xmpp/core/bind.js',
+NEJ.define('{lib}util/xmpp/core/bind.js',
       ['{lib}util/xmpp/plugin.js'],f);

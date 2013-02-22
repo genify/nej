@@ -85,5 +85,5 @@ var f = function(){
         return this;
     };
 };
-define('{lib}util/timer/interval.js',
+NEJ.define('{lib}util/timer/interval.js',
       ['{lib}base/util.js'],f);

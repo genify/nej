@@ -154,7 +154,7 @@ var f = function(){
                         if (_element.readyState=='loaded'||
                             _element.readyState=='complete'){
                             _event.target = _element;
-                            _handler(_event);
+                            _handler.call(_element,_event);
                         }
                     };
                 break;
@@ -184,6 +184,14 @@ var f = function(){
                 }
                 _event.value = _args;
             }
+        },function(_event){
+            var _args = _event.value;
+            if (!_args[0]||
+                !_u._$isFunction(_args[2]))
+                return;
+            if (!_u._$isFunction(_args[5]))
+                _args[5] = _args[2];
+            _args[2] = _args[2]._$bind(_args[0]);
         });
     })();
     /**
@@ -336,5 +344,5 @@ var f = function(){
     // cache background image
     try{document.execCommand('BackgroundImageCache',!1,!0);}catch(e){}
 };
-define('{lib}patched/trident/api.js',
+NEJ.define('{lib}patched/trident/api.js',
       ['{lib}patched/api.js'],f);

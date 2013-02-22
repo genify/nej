@@ -24,5 +24,5 @@ var f = function(){
     // regist command implemention
     _p._$$UnderLine._$regist();
 };
-define('{lib}util/editor/command/underline.js',
+NEJ.define('{lib}util/editor/command/underline.js',
       ['{lib}util/editor/command/simple.js'],f);

@@ -11,6 +11,7 @@ var f = function(){
         _e = _('nej.e'),
         _u = _('nej.u'),
         _v = _('nej.v'),
+        _x = _('nej.x'),
         _p = _('nej.ut'),
         _proTab;
     if (!!_p._$$Tab) return;
@@ -207,13 +208,15 @@ var f = function(){
      *    // 回收tab控件
      *    nej.e._$tab('abc')._$recycle();
      * [/code]
+     * @chainable
      * @api    {nej.e._$tab}
      * @param  {String|Node}  TAB控件父容器
      * @param  {Object}       可选配置参数，参见nej.ut._$$Tab控件的可选配置参数
      * @config {String} clazz 需要做TAB控件的节点标识，如没有此参数则选取父节点下的所有子节点
      * @return {nej.ut._$$Tab}
      */
-    _e._$tab = function(_parent,_options){
+    _e._$tab = 
+    _x._$tab = function(_parent,_options){
         var _id = _e._$id(_parent);
         if (!_id) return null;
         if (!_p._$api(_id,_p._$$Tab)){
@@ -226,7 +229,7 @@ var f = function(){
         return _p._$api(_id,_p._$$Tab,_options||_o);
     };
 };
-define('{lib}util/tab/tab.js',
+NEJ.define('{lib}util/tab/tab.js',
       ['{lib}base/event.js'
       ,'{lib}base/element.js'
       ,'{lib}util/event.js'],f);

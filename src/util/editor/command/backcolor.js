@@ -36,5 +36,5 @@ var f = function(){
     // regist command implemention
     _p._$$BackColor._$regist();
 };
-define('{lib}util/editor/command/backcolor.js',
+NEJ.define('{lib}util/editor/command/backcolor.js',
       ['{lib}util/editor/command/color.js'],f);

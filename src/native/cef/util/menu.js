@@ -92,4 +92,4 @@ var f = function() {
         return _menus;
     };
 };
-define('{lib}native/cef/util/menu.js', ['{lib}util/event.js','{lib}native/command.js','{lib}base/util.js'], f);
+NEJ.define('{lib}native/cef/util/menu.js', ['{lib}util/event.js','{lib}native/command.js','{lib}base/util.js'], f);

@@ -442,5 +442,5 @@ var f = function(){
         return !1;
     };
 };
-define('{lib}util/module/manager.js',
+NEJ.define('{lib}util/module/manager.js',
       ['{lib}base/event.js','{lib}util/event.js'],f);

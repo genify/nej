@@ -90,5 +90,5 @@ var f = function(){
 //        delete _cache[_input.id];
 //    });
 };
-define('{lib}patched/trident/holder.js',
+NEJ.define('{lib}patched/trident/holder.js',
       ['{lib}patched/holder.js'],f);

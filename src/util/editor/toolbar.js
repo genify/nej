@@ -140,5 +140,5 @@ var f = function(){
         return this;
     };
 };
-define('{lib}util/editor/toolbar.js',
+NEJ.define('{lib}util/editor/toolbar.js',
       ['{lib}util/event.js'],f);

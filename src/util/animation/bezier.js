@@ -212,5 +212,5 @@ var f = function(){
         return this;
     };
 };
-define('{lib}util/animation/bezier.js',
+NEJ.define('{lib}util/animation/bezier.js',
       ['{lib}util/animation/animation.js'],f);

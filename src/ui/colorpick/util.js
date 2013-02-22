@@ -150,5 +150,5 @@ var f = function(){
         return _p._$rgb2hsl(_p._$color2rgb(_color));
     };
 };
-define('{lib}ui/colorpick/util.js',
+NEJ.define('{lib}ui/colorpick/util.js',
       ['{lib}base/util.js'],f);

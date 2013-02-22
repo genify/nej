@@ -219,5 +219,5 @@ var f = function(){
         return _child;
     };
 };
-define('{lib}util/dispatcher/dsp/node.js'
+NEJ.define('{lib}util/dispatcher/dsp/node.js'
      ,['{lib}util/event.js'],f);

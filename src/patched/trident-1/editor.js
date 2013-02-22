@@ -25,5 +25,5 @@ var f = function(){
         return _html.replace(__reg_nwrd,'');
     };
 };
-define('{lib}patched/trident-1/editor.js',
+NEJ.define('{lib}patched/trident-1/editor.js',
       ['{lib}patched/com/editor.td.js'],f);

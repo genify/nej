@@ -13,5 +13,5 @@ var f = function(){
         return !0;
     };
 };
-define('{lib}patched/webkit/api.js',
+NEJ.define('{lib}patched/webkit/api.js',
       ['{lib}patched/com/api.js'],f);

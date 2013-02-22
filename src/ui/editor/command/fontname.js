@@ -68,5 +68,5 @@ var f = function(){
         this.__seed_html = _seed_html;
     };
 };
-define('{lib}ui/editor/command/fontname.js',
+NEJ.define('{lib}ui/editor/command/fontname.js',
       ['{lib}ui/editor/command/font.js'],f);
