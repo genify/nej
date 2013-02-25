@@ -31,8 +31,11 @@ var f = function(){
      * @return {nej.j}
      */
     _j._$setDataInStorage = function(_key,_value){
-        _cache[_key] = _value;
-        _h.__setItemToStorage(_key,JSON.stringify(_value));
+        var _sval = JSON.stringify(_value);
+        _h.__setItemToStorage(_key,_sval);
+        // set failed
+        if (_sval!=_h.__getItemInStorage(_key))
+            _cache[_key] = _value;
         return this;
     };
     /**
