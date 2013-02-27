@@ -9,6 +9,7 @@ var f = function(){
     var _  = NEJ.P,
         _o = NEJ.O,
         _e = _('nej.e'),
+        _u = _('nej.u'),
         _v = _('nej.v'),
         _i = _('nej.ui'),
         _p = _('nej.ui.cmd'),
@@ -22,8 +23,8 @@ var f = function(){
                         <div class="f-cb"><div class="u-edit f-cb"><div class="f-fl u-title">链接</div><input class="f-fl ipt" type="text" value="http://" /></div></div>\
                         <div class="u-error j-error"></div>\
                         <div class="btn f-cb">\
-                            <a class="f-fr slave j-btn" href="javascript:void(0);"><span>取消 </span></a>\
-                            <a class="f-fr main right j-btn" href="javascript:void(0);"><span>确定 </span></a>\
+                            <a class="f-fr slave j-btn"><span>取消 </span></a>\
+                            <a class="f-fr main right j-btn"><span>确定 </span></a>\
                         </div>\
                     </div>');
     // ui css seed
@@ -117,7 +118,7 @@ var f = function(){
      */
     _proLinkCard.__onOK = function(){
         var _link = {};
-        _link.name = this.__inputs[0].value;
+        _link.name = _u._$escape(this.__inputs[0].value);
         _link.href = this.__inputs[1].value;
         var _reg = /^(?:http(s)?:\/\/)[^\s].?/,_reg2 = /^(?:http(s)?:\/\/).*/;
         var _flag = _link.href.search(_reg),_flag2= _link.href.search(_reg2);

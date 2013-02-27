@@ -25,7 +25,7 @@ var f = function(){
     // ui font size list
     var _seed_fnt = _e._$addHtmlTemplate('\
         {list xlist as x}\
-        <a class="zitm" href="#" hidefocus="true" style="${style}:${x.style|default:x.name};" data-index="${x_index}">\
+        <a class="zitm" hidefocus="true" style="${style}:${x.style|default:x.name};" data-index="${x_index}">\
           ${x.name}\
           {if !!x.tip}<span class="ztip">${x.tip}</span>{/if}\
         </a>\
