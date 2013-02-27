@@ -215,7 +215,7 @@ var f = function(){
         if (!_item) return null;
         var _key = _item[this.__key];
         if (!!_key)
-            this.__lspl.hash[_key] = _item;
+            this.__getHash()[_key] = _item;
         return _item;
     };
     /**
@@ -235,8 +235,8 @@ var f = function(){
      * @return {Object} 删除的列表项
      */
     _proListCache.__doRemoveItemInCache = function(_id){
-        var _item = this.__lspl.hash[_id];
-        delete this.__lspl.hash[_id];
+        var _item = this.__getHash()[_id];
+        delete this.__getHash()[_id];
         return _item;
     };
     /**
@@ -324,6 +324,18 @@ var f = function(){
             return _list;
         };
     })();
+    /**
+     * 取Hash映射表
+     * @return {Object} 映射表
+     */
+    _proListCache.__getHash = function(){
+        var _hash = this.__lspl.hash;
+        if (!_hash){
+            _hash = {};
+            this.__lspl.hash = _hash;
+        }
+        return _hash;
+    };
     /**
      * 取列表<br/>
      * 脚本举例
@@ -426,7 +438,7 @@ var f = function(){
      * @return {Variable} 列表项
      */
     _proListCache._$getItemInCache = function(_id){
-        return this.__lspl.hash[_id];
+        return this.__getHash()[_id];
     };
     /**
      * 取列表项项<br/>

@@ -119,5 +119,5 @@ var f = function(){
     })();
 };
 NEJ.define('{lib}util/file/select.js',
-      ['{lib}base/element.js'
-      ,'{lib}base/event.js'],f);
+          ['{lib}base/element.js'
+          ,'{lib}base/event.js'],f);

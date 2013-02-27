@@ -309,6 +309,8 @@ var f = function(){
                   _list,_offset,_limit))
             return;
         this._$dispatchEvent('onbeforelistrender',{
+            list:_list,
+            offset:_offset,
             parent:this.__lbox
         });
         if (!!this.__ikey){

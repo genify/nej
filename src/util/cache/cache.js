@@ -190,8 +190,7 @@ var f = function(){
         }
         _u._$forIn(this.__cache,
             function(_item,_key){
-                if (_key==(_ckey+'-v')||
-                    _key==(_ckey+'-l')) return;
+                if (_key==(_ckey+'-l')) return;
                 this.__delDataInCache(_key);
             },this);
     };
@@ -203,7 +202,8 @@ var f = function(){
      * @return {String} 存储数据
      */
     _proCache.__getDataInStorage = function(_key){
-        return _j._$getDataInStorage(_key);
+        if (!!_j._$getDataInStorage)
+            return _j._$getDataInStorage(_key);
     };
     /**
      * 数据存入本地缓存
@@ -214,7 +214,8 @@ var f = function(){
      * @return {Void}
      */
     _proCache.__setDataInStorage = function(_key,_value){
-        _j._$setDataInStorage(_key,_value);
+        if (!!_j._$setDataInStorage)
+            _j._$setDataInStorage(_key,_value);
     };
     /**
      * 带默认值取本地数据
@@ -269,13 +270,13 @@ var f = function(){
     _proCache.__delDataLocal = function(_key){
         if (_key!=null){
             delete this.__cache[_key];
-            _j._$delDataInStorage(_key);
+            if (!!_j._$delDataInStorage)
+                _j._$delDataInStorage(_key);
             return;
         }
         _u._$forIn(this.__cache,
             function(_item,_key){
-                if (_key==(_ckey+'-v')||
-                    _key==(_ckey+'-l')) return;
+                if (_key==(_ckey+'-l')) return;
                 this.__delDataLocal(_key);
             },this);
     };
