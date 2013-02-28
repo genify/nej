@@ -46,6 +46,13 @@ var f = function(){
      * 日期选择控件<br />
      * 页面结构举例
      * [code type="html"]
+     *   <style>
+     *       // 注意，样式的优先级
+     *       // 扩展 < 当前 < 禁止
+     *       #datepick-box .js-extended{background:green;}
+     *       #datepick-box .js-selected{background:yellow;}
+     *       #datepick-box .js-disabled{background:red;}
+     *   </style>
      *   <div id="datepick-box"></div>
      * [/code]
      * 脚本举例
