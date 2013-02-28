@@ -43,6 +43,7 @@ var f = function(){
      * @param  {String|Node} 绑定选择文件的节点，必须为label节点，且未设置for属性
      * @param  {Object}      配置参数
      * @config {String|Node} form     文件选择控件所在的表单，默认全新生成一个
+     * @config {String}      name     单个文件选择支持指定提交时文件名称
      * @config {Boolean}     multiple 是否允许多选，默认单选
      * @config {Function}    onchange 文件选择变化触发回调，{form:form,id:'xxx'}
      *                                - form 文件选择控件封装表单对象
@@ -95,9 +96,12 @@ var f = function(){
                 id:_id,
                 form:_element.form
             })
-            if (_cch.multiple)
+            if (_cch.multiple){
                 _e._$get(_cch.lab)
                   .htmlFor = _doAppendFile(_arr[0]);
+            }else if(!!_cch.name){
+                _element.name = _cch.name;
+            }
         };
         return function(_element,_options){
             _element = _e._$get(_element);
@@ -110,6 +114,7 @@ var f = function(){
             _options = _options||_o;
             _doBuildParent(_id,_options.form);
             _cch.nmb = 0;
+            _cch.name = _options.name;
             _cch.lab = _e._$id(_element);
             _cch.multiple = !!_options.multiple;
             _cch.onchange = _options.onchange||_f;
