@@ -383,16 +383,27 @@ var f = function(){
      * 取列表回调
      * @protected
      * @method {__getList}
-     * @param  {Object} 请求信息
-     * @param  {Array}  数据列表
+     * @param  {Object}        请求信息
+     * @param  {Array|Object}  数据列表，或者带总数信息列表
      * @return {Void}
      */
-    _proListCache.__getList = function(_options,_list){
+    _proListCache.__getList = function(_options,_result){
         _options = _options||_o;
         // save list to cache
         var _key = _options.key,
             _offset = _options.offset,
             _chlist = this._$getListInCache(_key);
+        // list with total
+        // {total:12,result:[]} 或者 {total:13,list:[]}
+        var _list = _result;
+        if (!_u._$isArray(_list)){
+            _list = _result.result||_result.list||[];
+            var _total = parseInt(_result.total)||0;
+            if (_total>_list.length){
+                this._$setTotal(_key,_total);
+            }
+        }
+        // merge list
         _u._$forEach(_list,
             function(_item,_index){
                 _chlist[_offset+_index] = this.
