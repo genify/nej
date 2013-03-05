@@ -527,6 +527,13 @@ var f = function(){
      * @return {Void}
      */
     _proListModule._$refresh = _f;
+    /**
+     * 取缓存实例
+     * @return {nej.ut._$$ListCache}
+     */
+    _proListModule._$cache = function(){
+        return this.__cache;
+    }
 };
 NEJ.define('{lib}util/list/module.js',
       ['{lib}ui/item/list.js'
