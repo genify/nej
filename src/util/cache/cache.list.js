@@ -531,19 +531,28 @@ var f = function(){
         var _key = _options.key;
         _item = this.__doSaveItemToCache(_item,_key);
         if (!!_item){
-            var _list = this._$getListInCache(_key);
+            var _flag = 0,
+                _list = this._$getListInCache(_key);
             if (!_options.push){
+                _flag = -1;
                 _list.unshift(_item);
             }else if(_list.loaded){
+                _flag = 1;
                 _list.push(_item);
             }else{
                 // add total
                 _list.length++;
             }
         }
-        this._$dispatchEvent('onitemadd',{
-            item:_item,key:_key
-        });
+        var _event = {
+                key:_key,
+                flag:_flag,
+                data:_item,
+                action:'add',
+                ext:_options.ext
+            };
+        this._$dispatchEvent('onitemadd',_event);
+        return _event;
     };
     /**
      * 删除列表项<br />
@@ -586,8 +595,8 @@ var f = function(){
         var _event = {
                 key:_key,
                 data:_item,
-                ext:_options.ext,
-                action:'delete'
+                action:'delete',
+                ext:_options.ext
             };
         this._$dispatchEvent('onitemdelete',_event);
         return _event;
@@ -634,8 +643,8 @@ var f = function(){
         var _event = {
                 key:_key,
                 data:_item,
-                ext:_options.ext,
-                action:'update'
+                action:'update',
+                ext:_options.ext
             };
         this._$dispatchEvent('onitemupdate',_event);
         return _event;

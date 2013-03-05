@@ -218,8 +218,8 @@ var f = function(){
      * @method {__doShowListByJST}
      * @return {Void}
      */
-    _proListModuleWF.__doShowListByJST = function(_html){
-        this.__lbox.insertAdjacentHTML('beforeEnd',_html);
+    _proListModuleWF.__doShowListByJST = function(_html,_before){
+        this.__lbox.insertAdjacentHTML(!_before?'beforeEnd':'afterBegin',_html);
     };
     /**
      * 以item模版方式绘制列表
@@ -229,7 +229,48 @@ var f = function(){
      */
     _proListModuleWF.__doShowListByItem = function(_items){
         this.__items = this.__items||[];
-        _r.push.apply(this.__items,_items);
+        if (_u._$isArray(_items)){
+            _r.push.apply(this.__items,_items);
+        }else{
+            this.__items.push(_items);
+        }
+    };
+    /**
+     * 添加列表项回调
+     * @protected
+     * @method {__cbItemAdd}
+     * @return {Void}
+     */
+    _proListModuleWF.__cbItemAdd = function(_event){
+        this.__doCheckResult(_event,'onafteradd');
+        if (_event.stopped||!_event.flag) return;
+        this.__offset += 1;
+        var _list = [_event.data];
+        if (!!this.__ikey){
+            // by jst
+            this.__iopt.list = _list;
+            this.__iopt.beg  = 0;
+            this.__iopt.end  = 0;
+            this.__doShowListByJST(
+                _e._$getHtmlTemplate(
+                    this.__ikey,this.__iopt),
+                _event.flag==-1
+            );
+        }else{
+            // by item
+            this.__iopt.limit = 1;
+            this.__iopt.offset = 0;
+            var _parent = this.__iopt.parent;
+            if (_event.flag==-1){
+                this.__iopt.parent = function(_body){
+                    _parent.insertAdjacentElement('afterBegin',_body);
+                };
+            }
+            var _items = _e._$getItemTemplate(
+                         _list,this.__ikls,this.__iopt);
+            this.__iopt.parent = _parent;
+            this.__doShowListByItem(_items);
+        }
     };
     /**
      * 删除列表项回调，子类按需实现具体业务逻辑
@@ -277,9 +318,11 @@ var f = function(){
             var _list = this.__cache._$getListInCache(_event.key),
                 _index = _u._$indexOf(_list,_event.data);
             if (_index<0) return;
-            var _html = _e._$getHtmlTemplate(this.__ikey,{
-                    beg:_index,end:_index,xlist:_list
-                });
+            this.__iopt.list = _list;
+            this.__iopt.beg  = _index;
+            this.__iopt.end  = _index;
+            var _html = _e._$getHtmlTemplate(
+                        this.__ikey,this.__iopt);
             _node.insertAdjacentHTML('afterEnd',_html);
             _e._$remove(_node);
         }
