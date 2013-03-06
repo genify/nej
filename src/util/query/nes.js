@@ -593,7 +593,6 @@
   };
   // 获得节点node的key属性的值, 修改自from sizzle...蛋疼啊各浏览器的属性获取
 
-
   function getAttribute(node, key) {
     var map = attrMap[key]
     if (map) return typeof map === "function" ? map(node) : node[map]
@@ -1302,10 +1301,10 @@
         start = params.start,
         position = 0;
 
+        if(!nes.matches(node, sl)) return false;
         if (step === null) return false; //means always false
         do {
           if (testNode.nodeType === 1 && nes.matches(testNode, sl)) position++
-          if (testNode === node) break;
         } while (testNode = testNode[next])
         
         if (step === 0) return position === start;
@@ -1320,6 +1319,4 @@
       if(param) param = parseInt(param);
     }
   })
-
-
 }(window, document, undefined)

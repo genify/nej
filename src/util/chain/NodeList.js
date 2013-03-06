@@ -120,6 +120,7 @@ var f = function() {
         this._context = _context || _doc;
         if(!_selector) return 
         if(typeof _selector === "string"){
+            if(_context && _context instanceof _$$NodeList) _context = _context[0];
             this._$add(_e._$all(_selector, _context));
         }else if(_selector instanceof _$$NodeList || _isAcceptedNode(_selector) ||
             _selector.length){ // _$$NodeList 或者 是单节点、或者是类数组(如childNodes)

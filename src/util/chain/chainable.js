@@ -58,7 +58,7 @@ var f = function() {
     })(_acceptList);
 
     $.toString = (function(){
-        var _str = "支持列表:";
+        var _str = "NEJ原始支持列表:";
         _u._$forIn(_acceptList,function(_list, _name){
             _str += [""].concat(_list).join("\nnej."+_name+"._$");
         });

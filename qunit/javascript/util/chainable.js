@@ -345,7 +345,8 @@ var f = function() {
     module("链式操作")
     test("基本操作:UI", function(){
         // 获取 奇数行的代码 设置样式
-        deepEqual($("#chainable li:nth-child(odd)")._$style({
+        deepEqual(
+        $("#chainable li:nth-child(odd)")._$style({
             "background": "#cca",
             "cursor": "pointer"
         })
@@ -383,10 +384,11 @@ var f = function() {
             }
         // 获得样式值
         })._$off("click li:nth-child(odd)")//这个无法触发
-        ._$style(["width", "left"]),{width: "800px", left: "300px"}, " 链式操作成功，并且getter返回值成功")
+        ._$style(["width", "left"]), {width: "800px", left: "300px"}, " 链式操作成功，并且getter返回值成功")
         
-        $("body")._$on("mousedown",function(_e){
+        $("li")._$on("contextmenu",function(_e){
             alert(_e.which)
+            alert("contextmenu")
         })
 
     })
