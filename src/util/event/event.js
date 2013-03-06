@@ -7,11 +7,12 @@
  */
 var f = function(){
     // variable declaration
-    var _f = NEJ.F,
-        _e = NEJ.P('nej.e'),
-        _v = NEJ.P('nej.v'),
-        _u = NEJ.P('nej.u'),
-        _p = NEJ.P('nej.ut'),
+    var _  = NEJ.P
+        _f = NEJ.F,
+        _e = _('nej.e'),
+        _v = _('nej.v'),
+        _u = _('nej.u'),
+        _p = _('nej.ut'),
         _proCustomEvent;
     if (!!_p._$$CustomEvent) return;
     /**
