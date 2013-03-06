@@ -78,8 +78,8 @@ var f = function(){
         this.__cache._$setEvent('onlistload',
              this.__onListLoad._$bind(this));
         this.__doClearSelect(_nmap.province);
+        this._$setRegion(_options.data,!0);
         this.__cache._$getList({key:'province'});
-        this._$setRegion(_options.data);
     };
     /**
      * 控件销毁
@@ -193,9 +193,10 @@ var f = function(){
      * @config {String} area     区
      * @return {nej.ut._$$RegionSelector}
      */
-    _proRegionSelector._$setRegion = function(_data){
+    _proRegionSelector._$setRegion = function(_data,_nochange){
         this.__data = _data||_o;
-        this.__doSetValue('province');
+        if (!_nochange)
+            this.__doSetValue('province');
         return this;
     };
 };

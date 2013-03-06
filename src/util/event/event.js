@@ -7,7 +7,7 @@
  */
 var f = function(){
     // variable declaration
-    var _  = NEJ.P
+    var _  = NEJ.P,
         _f = NEJ.F,
         _e = _('nej.e'),
         _v = _('nej.v'),
