@@ -33,14 +33,14 @@ var f = function(){
     // ui html code
     var _seed_html = _e._$addNodeTemplate('<div>\
             <div class="tab">\
-                <a class="u-btn f-ib upload j-tab f-fl" href="javascript:;" name="upload"><span class="img-upload">上传图片</span></a>\
-                <a class="u-btn f-ib extern j-tab" href="javascript:;" name="extern"><span class="img-extern">引用站外图片</span></a>\
+                <a class="u-btn f-ib upload j-tab f-fl" name="upload"><span class="img-upload">上传图片</span></a>\
+                <a class="u-btn f-ib extern j-tab" name="extern"><span class="img-extern">引用站外图片</span></a>\
                 <image class="j-image u-image" />\
             </div>\
             <div class="cnt">\
-                <div class="choose_file" href="javascript:;" name="select_image">\
+                <div class="choose_file" name="select_image">\
                     <div class="btn2">\
-                        <a class="main middle" href="javascript:void(0);"><span>选择图片</span></a>\
+                        <a class="main middle"><span>选择图片</span></a>\
                     </div>\
                 </div>\
                 <p class="u-desc j-desc"></p>\
@@ -49,7 +49,7 @@ var f = function(){
                 <div class="f-cb web_img">\
                     <div class="f-fl u-edit"><input class="ipt ipt-url" type="text" /></div>\
                     <div class="btn2 f-fl smt-url">\
-                            <a class="main small" href="javascript:void(0);"><span>确定</span></a>\
+                            <a class="main small"><span>确定</span></a>\
                     </div>\
                 </div>\
                 <p class="u-desc j-desc"></p>\

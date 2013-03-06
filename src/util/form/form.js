@@ -19,8 +19,9 @@ var f = function(){
      * WEB表单验证封装对象，HTML代码中支持以下属性配置：
      * [ntb]
      *   data-focus-mode | 0/1                   | 聚焦模式，仅在form节点上设置，见{#nej.e._$focus}
+     *   data-focus      | true/false            | 聚焦时检测提示信息，对于需验证的表单控件默认已支持此属性
      *   data-auto-focus | true/false            | 自动聚焦项，多个表单项设置了该属性仅第一项有效
-     *   data-counter    | true/false             | 是否需要显示计数信息，必须同时设置data-max-length或者maxlength
+     *   data-counter    | true/false            | 是否需要显示计数信息，必须同时设置data-max-length或者maxlength
      *   data-message    | String                | 验证出错提示信息，多个提示信息可以通过配置或者回调事件定制提示内容
      *   data-tip        | String                | 默认提示信息，正常输入状态时的提示信息
      *   data-required   | true/false            | 必填项，对于checkbox/radio的required表示必须选中
@@ -540,13 +541,17 @@ var f = function(){
                 _data = (_info||_o).data,
                 _need = this.__dataset(_node,'counter',2);
             if (_need&&(_data.maxlength||_data.maxLength)){
-                _e._$counter(_id,{nid:this.__wopt.tp.nid});
+                _e._$counter(_id,{nid:this.__wopt.tp.nid,clazz:'js-counter'});
             }
             // node need validate
             if (!!_info&&_reg0.test(_node.tagName)){
                 this.__doInitDomEvent([
                     [_node,'focus',_onFocus._$bind(this)],
                     [_node,'blur',_onBlur._$bind(this)]
+                ]);
+            }else if(this.__dataset(_node,'focus',2)){
+                this.__doInitDomEvent([
+                    [_node,'focus',_onFocus._$bind(this)],
                 ]);
             }
         };

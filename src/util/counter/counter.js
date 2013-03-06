@@ -15,7 +15,7 @@ var f = function(){
      * 输入框计数器，使用属性设置输入的总长度限制，
      * 以下两个属性只能同时设置一个，maxlength优先级高于data-max-length
      * [ntb]
-     *   属性名             | 描述
+     *   属性名                                 | 描述
      *   data-max-length | 输入长度必须小于此设置，一个中文算两个字符，适用于text/textarea
      *   maxlength       | 输入长度必须小于此设置，一个中文算一个字符，适用于text/textarea
      * [/ntb]
@@ -53,10 +53,11 @@ var f = function(){
      * @return {Void}
      */
     _e._$counter = (function(){
-        var _cache = {}; // {id:{max:123,id:'xxx',onchange:function,onlength:function}}
+        var _reg0 = /[\r\n]/gi,
+            _cache = {}; // {id:{max:123,id:'xxx',onchange:function,onlength:function}}
         // calculate string length
         var _doLength = function(_str){
-            return (_str||'').length;
+            return (_str||'').replace(_reg0,'aa').length;
         };
         // input change
         var _onChange = function(_id){

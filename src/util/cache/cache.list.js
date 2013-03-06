@@ -215,7 +215,7 @@ var f = function(){
         if (!_item) return null;
         var _key = _item[this.__key];
         if (!!_key)
-            this.__lspl.hash[_key] = _item;
+            this.__getHash()[_key] = _item;
         return _item;
     };
     /**
@@ -235,8 +235,8 @@ var f = function(){
      * @return {Object} 删除的列表项
      */
     _proListCache.__doRemoveItemInCache = function(_id){
-        var _item = this.__lspl.hash[_id];
-        delete this.__lspl.hash[_id];
+        var _item = this.__getHash()[_id];
+        delete this.__getHash()[_id];
         return _item;
     };
     /**
@@ -325,6 +325,18 @@ var f = function(){
         };
     })();
     /**
+     * 取Hash映射表
+     * @return {Object} 映射表
+     */
+    _proListCache.__getHash = function(){
+        var _hash = this.__lspl.hash;
+        if (!_hash){
+            _hash = {};
+            this.__lspl.hash = _hash;
+        }
+        return _hash;
+    };
+    /**
      * 取列表<br/>
      * 脚本举例
      * [code]
@@ -371,16 +383,27 @@ var f = function(){
      * 取列表回调
      * @protected
      * @method {__getList}
-     * @param  {Object} 请求信息
-     * @param  {Array}  数据列表
+     * @param  {Object}        请求信息
+     * @param  {Array|Object}  数据列表，或者带总数信息列表
      * @return {Void}
      */
-    _proListCache.__getList = function(_options,_list){
+    _proListCache.__getList = function(_options,_result){
         _options = _options||_o;
         // save list to cache
         var _key = _options.key,
             _offset = _options.offset,
             _chlist = this._$getListInCache(_key);
+        // list with total
+        // {total:12,result:[]} 或者 {total:13,list:[]}
+        var _list = _result;
+        if (!_u._$isArray(_list)){
+            _list = _result.result||_result.list||[];
+            var _total = parseInt(_result.total)||0;
+            if (_total>_list.length){
+                this._$setTotal(_key,_total);
+            }
+        }
+        // merge list
         _u._$forEach(_list,
             function(_item,_index){
                 _chlist[_offset+_index] = this.
@@ -426,7 +449,7 @@ var f = function(){
      * @return {Variable} 列表项
      */
     _proListCache._$getItemInCache = function(_id){
-        return this.__lspl.hash[_id];
+        return this.__getHash()[_id];
     };
     /**
      * 取列表项项<br/>
@@ -508,19 +531,28 @@ var f = function(){
         var _key = _options.key;
         _item = this.__doSaveItemToCache(_item,_key);
         if (!!_item){
-            var _list = this._$getListInCache(_key);
+            var _flag = 0,
+                _list = this._$getListInCache(_key);
             if (!_options.push){
+                _flag = -1;
                 _list.unshift(_item);
             }else if(_list.loaded){
+                _flag = 1;
                 _list.push(_item);
             }else{
                 // add total
                 _list.length++;
             }
         }
-        this._$dispatchEvent('onitemadd',{
-            item:_item,key:_key
-        });
+        var _event = {
+                key:_key,
+                flag:_flag,
+                data:_item,
+                action:'add',
+                ext:_options.ext
+            };
+        this._$dispatchEvent('onitemadd',_event);
+        return _event;
     };
     /**
      * 删除列表项<br />
@@ -563,8 +595,8 @@ var f = function(){
         var _event = {
                 key:_key,
                 data:_item,
-                ext:_options.ext,
-                action:'delete'
+                action:'delete',
+                ext:_options.ext
             };
         this._$dispatchEvent('onitemdelete',_event);
         return _event;
@@ -611,8 +643,8 @@ var f = function(){
         var _event = {
                 key:_key,
                 data:_item,
-                ext:_options.ext,
-                action:'update'
+                action:'update',
+                ext:_options.ext
             };
         this._$dispatchEvent('onitemupdate',_event);
         return _event;
