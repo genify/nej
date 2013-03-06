@@ -1301,10 +1301,11 @@
         start = params.start,
         position = 0;
 
-        if(!nes.matches(node, sl)) return false;
+        if(!matches(node, sl)) return false;
         if (step === null) return false; //means always false
         do {
           if (testNode.nodeType === 1 && nes.matches(testNode, sl)) position++
+          if (testNode === node) break
         } while (testNode = testNode[next])
         
         if (step === 0) return position === start;
