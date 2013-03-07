@@ -137,9 +137,10 @@
     //前向引用 如\1 \12 等在TRUNK合并时要做处理
     refIndexReg = /\\(\d+)/g,
     extractRefIndex = function(regStr, curIndex) {
-      return regStr.replace(refIndexReg, function(a, b) {
-        return "\\" + (parseInt(b, 10) + curIndex);
-      });
+      return regStr;
+      // .replace(refIndexReg, function(a, b) {
+      //   return "\\" + (parseInt(b, 10) + curIndex);
+      // });
     },
     // // 生成默认的action，这个会将匹配到的参数推入一个同名的数组内
     // createAction = function(name) {
@@ -1304,8 +1305,8 @@
         if(!matches(node, sl)) return false;
         if (step === null) return false; //means always false
         do {
-          if (testNode.nodeType === 1 && nes.matches(testNode, sl)) position++
-          if (testNode === node) break
+          if (testNode.nodeType === 1 && nes.matches(testNode, sl)) position++;
+          if (testNode === node) break;
         } while (testNode = testNode[next])
         
         if (step === 0) return position === start;
