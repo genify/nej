@@ -185,7 +185,7 @@ var f = function(){
                    (_cache[_type]||_f)(_event.result);
             }catch(ex){
                 // ignore
-                console.error(e);
+                console.error(ex);
             }
         };
         // onload callback
