@@ -378,7 +378,12 @@ var f = function(){
         if (!_batch||__filter(_error)) return;
         var _handler = _batch.h[_cid];
         if (!_handler) return;
-        try{(_handler.e||f)(_error);}catch(ex){}
+        try{
+            (_handler.e||f)(_error);
+        }catch(ex){
+            // ignore
+            console.error(e);
+        }
     };
     /*
      * 整个请求出错处理

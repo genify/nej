@@ -207,7 +207,12 @@ var f = function(){
         var _list = this.__cache[_type];
         if (!_list||!_list.length) return;
         for(var i=0,l=_list.length;i<l;i++)
-            try{_list[i](_event);}catch(ex){}
+            try{
+                _list[i](_event);
+            }catch(ex){
+                // ignore
+                console.error(e);
+            }
     };
     /**
      * 增强事件操作API

@@ -640,7 +640,12 @@ var f = function(){
         // event list
         _u._$forEach(_event,
             function(_handler){
-                try{_handler.apply(this,_args);}catch(e){}
+                try{
+                    _handler.apply(this,_args);
+                }catch(e){
+                    // ignore
+                    console.error(e);
+                }
             },this);
         return this;
     };

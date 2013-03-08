@@ -245,6 +245,7 @@ var f = function(){
                 _args[0].fireEvent('on'+_args[1],_eobj);
             }catch(e){
                 // ignore unrecognized event name
+                console.error(e);
             }
         }
     });

@@ -324,7 +324,12 @@ var f = function(){
             _args = _r.slice.call(arguments,1);
         _u._$forEach(_data[_key],
             function(_callback){
-                try{_callback.apply(null,_args)}catch(ex){}
+                try{
+                    _callback.apply(null,_args);
+                }catch(ex){
+                    // ignore
+                    console.error(e);
+                }
             });
         delete _data[_key];
     };

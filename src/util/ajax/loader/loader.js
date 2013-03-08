@@ -166,6 +166,7 @@ var f = function(){
                     _instance._$dispatchEvent(_name,arguments[1]);
                 }catch(ex){
                     // ignore
+                    console.error(e);
                 }
                 _instance._$recycle();
             }
@@ -286,6 +287,7 @@ var f = function(){
                 this._$dispatchEvent('onloaded');
             }catch(ex){
                 // ignore
+                console.error(e);
             }
             this._$recycle();
             return this;

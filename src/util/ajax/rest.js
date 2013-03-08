@@ -38,7 +38,12 @@ var f = function(){
         if (!_request) return;
         var _callback = _request[_type],
             _args = r.slice.call(arguments,2);
-        try{(_callback||f).apply(null,_args)}catch(ex){}
+        try{
+            (_callback||f).apply(null,_args)
+        }catch(ex){
+            // ignore
+            console.error(e);
+        }
         this.__clear(_key);
     };
     /*
@@ -68,7 +73,12 @@ var f = function(){
         // do error filter
         // set error attr stopped=!0 will stop request error callback
         for(var i=0,l=__filter.length;i<l;i++)
-            try{__filter[i](_error);}catch(ex){}
+            try{
+                __filter[i](_error);
+            }catch(ex){
+                // ignore
+                console.error(e);
+            }
         if (!!_error.stopped){
             this.__clear(_key);
             return;
