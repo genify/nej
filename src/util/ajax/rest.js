@@ -42,7 +42,7 @@ var f = function(){
             (_callback||f).apply(null,_args)
         }catch(ex){
             // ignore
-            console.error(e);
+            console.error(ex);
         }
         this.__clear(_key);
     };
@@ -77,7 +77,7 @@ var f = function(){
                 __filter[i](_error);
             }catch(ex){
                 // ignore
-                console.error(e);
+                console.error(ex);
             }
         if (!!_error.stopped){
             this.__clear(_key);

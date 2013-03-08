@@ -328,7 +328,7 @@ var f = function(){
                     _callback.apply(null,_args);
                 }catch(ex){
                     // ignore
-                    console.error(e);
+                    console.error(ex);
                 }
             });
         delete _data[_key];

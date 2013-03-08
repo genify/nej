@@ -1307,9 +1307,9 @@ var f = function(){
             _script = _script.trim();
             if (!!_script)
                 return (new Function(_script))();
-        }catch(e){
+        }catch(ex){
             // ignore
-            console.error(e);
+            console.error(ex);
         }
     };
     /**

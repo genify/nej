@@ -382,7 +382,7 @@ var f = function(){
             (_handler.e||f)(_error);
         }catch(ex){
             // ignore
-            console.error(e);
+            console.error(ex);
         }
     };
     /*

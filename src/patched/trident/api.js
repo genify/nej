@@ -243,9 +243,9 @@ var f = function(){
             NEJ.X(_eobj,_args[2]);
             try{
                 _args[0].fireEvent('on'+_args[1],_eobj);
-            }catch(e){
+            }catch(ex){
                 // ignore unrecognized event name
-                console.error(e);
+                console.error(ex);
             }
         }
     });

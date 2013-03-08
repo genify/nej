@@ -642,9 +642,9 @@ var f = function(){
             function(_handler){
                 try{
                     _handler.apply(this,_args);
-                }catch(e){
+                }catch(ex){
                     // ignore
-                    console.error(e);
+                    console.error(ex);
                 }
             },this);
         return this;

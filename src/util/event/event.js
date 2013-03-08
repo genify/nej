@@ -211,7 +211,7 @@ var f = function(){
                 _list[i](_event);
             }catch(ex){
                 // ignore
-                console.error(e);
+                console.error(ex);
             }
     };
     /**
