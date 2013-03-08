@@ -10,9 +10,9 @@ var f = function(){
     var _b = NEJ.P('nej.p'),
         _p = window,
         _is = _b._$IS,
-        // ipad not fire 
+        // ipad/iphone not fire 
         // requestAnimationFrame when html page change
-        _es = _is.ipad;
+        _es = _is.ipad||_is.iphone;
     // implement animation frame interface
     if (!_es&&!!_p.requestAnimationFrame&&
         !!_p.cancelRequestAnimationFrame)
