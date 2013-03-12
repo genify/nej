@@ -136,7 +136,7 @@ var f = function(){
             _jsn = /json/i,
             _xml = /xml/i;
         return function(_url,_options){
-            _options = _options||o;
+            _options = NEJ.X({},_options);
             var _exist = {},
                 _param = _options.param||o;
             // parse uri template
@@ -174,22 +174,19 @@ var f = function(){
             var _key = u._$randNumberString();
             __cache[_key] = {s:_options.onload||f
                             ,f:_options.onerror||f};
-            var _option = {sync:!1,method:'GET',timeout:null};
-            NEJ.EX(_option,_options);
             // add params to url with GET/HEAD/DELETE method
-            if (_reg1.test(_option.method.trim())){
-                _option.query = _data;
+            if (_reg1.test(_options.method.trim())){
+                _options.query = _data;
                 _data = null;
             }else if (_jsn.test(_content)){
                 _data = JSON.stringify(_data);
             }
-            _option.type    = _type;
-            _option.data    = _data;
-            _option.headers = _headers;
-            _option.onload  = _onLoad._$bind(null,_key);
-            _option.onerror = _onError._$bind(null,_key);
-            _option.onbeforerequest = _option.onbeforerequest;
-            j._$request(_url,_option);
+            _options.type    = _type;
+            _options.data    = _data;
+            _options.headers = _headers;
+            _options.onload  = _onLoad._$bind(null,_key);
+            _options.onerror = _onError._$bind(null,_key);
+            j._$request(_url,_options);
             return this;
         };
     })();
