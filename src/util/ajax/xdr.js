@@ -199,13 +199,6 @@ var f = function(){
         // function body
         return function(_url,_options){
             _options = _options||{};
-            // format url template
-            if (_url.indexOf('{')>=0){
-                var _data = _options.data||_options.query||_o;
-                _url = _url.replace(/\{(.*?)\}/gi,function($1,$2){
-                    return _data[$2]||$1;
-                });
-            }
             // cache request callback
             var _sn = _u._$randNumberString(),
                 _cache = {onload:_options.onload||_f,
