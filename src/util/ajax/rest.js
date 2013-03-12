@@ -175,6 +175,7 @@ var f = function(){
             __cache[_key] = {s:_options.onload||f
                             ,f:_options.onerror||f};
             // add params to url with GET/HEAD/DELETE method
+            _options.method = _options.method||'GET';
             if (_reg1.test(_options.method.trim())){
                 _options.query = _data;
                 _data = null;

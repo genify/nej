@@ -416,6 +416,23 @@ var f = function(){
         this.__doCallbackRequest(_options.rkey,_options);
     };
     /**
+     * 前向追加列表项至列表
+     * @param  {String} 列表标识
+     * @param  {Object|Array} 列表项或者列表
+     * @return {Void}
+     */
+    _proListCache.__shiftToList = function(_key,_item){
+        if (!_u._$isArray(_item)){
+            var _list = this._$getListInCache(_key);
+            _list.shift(this.__doSaveItemToCache(_item,_key));
+            return;
+        }
+        _u._$reverseEach(
+            _item,this.
+            __shiftToList._$bind(this,_key)
+        );
+    };
+    /**
      * 清除缓存列表<br/>
      * 脚本举例
      * [code]
