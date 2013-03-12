@@ -199,18 +199,27 @@ var f = function(){
         // function body
         return function(_url,_options){
             _options = _options||{};
+            // format url template
             if (_url.indexOf('{')>=0){
                 var _data = _options.data||_options.query||_o;
                 _url = _url.replace(/\{(.*?)\}/gi,function($1,$2){
                     return _data[$2]||$1;
                 });
             }
+            // cache request callback
             var _sn = _u._$randNumberString(),
                 _cache = {onload:_options.onload||_f,
                           onerror:_options.onerror||_f};
             _xcache[_sn] = _cache;
             _options.onload = _onLoad._$bind(null,_sn);
             _options.onerror = _onError._$bind(null,_sn);
+            // check request type
+            if (_options.type=='GET'&&
+               (!!_options.query||!!_options.data)){
+                _options.query = NEJ.X(_options.query||{},_options.data);
+                _options.data = null;
+            }
+            // append request query
             if (!!_options.query){
                 var _sep = _url.indexOf('?')<0?'?':'&',
                     _query = _options.query;
