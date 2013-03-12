@@ -147,16 +147,12 @@ var f = function(){
                        return encodeURIComponent(_value||'')||$1;
                    });
             // parse remain param 
-            var _arr = [];
+            var _data = _options.data||{};
             for(var x in _param)
                 if (!_exist[x]) 
-                    _arr.push(encodeURIComponent(x)+'='+
-                              encodeURIComponent(_param[x]));
-            if (_arr.length>0)
-                _url += (_url.indexOf('?')<0?'?':'&')+_arr.join('&');
+                    _data[x] = _param[x];
             // parse headers
             var _type = 'text',
-                _data = _options.data,
                 _headers = _options.headers||{},
                 _accept  = _headers['Accept']||_headers['accept'],
                 _content = _headers['Content-Type']||_headers['content-type'];
