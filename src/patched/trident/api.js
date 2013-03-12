@@ -293,6 +293,24 @@ var f = function(){
                });
     })();
     /**
+     * 追加CSS规则
+     * @param  {Node}    样式节点
+     * @param  {String}  单条样式规则
+     * @return {CSSRule} 样式规则对象
+     */
+    _h.__appendCSSText = 
+    _h.__appendCSSText._$aop(function(_event){
+        var _args = _event.args,
+            _sheet = _args[0].sheet;
+        if (!!_sheet) return;
+        _event.stopped = !0;
+        var _sheet = _args[0].styleSheet,
+            _length = _sheet.rules.length,
+            _arr = _args[1].split(/[\{\}]/);
+        _sheet.addRule(_arr[0],_arr[1],_length);
+        _event.value = _sheet.rules[_length];
+    });
+    /**
      * 节点focus行为
      * @param  {String|Node} 节点
      * @param  {Number}      模式

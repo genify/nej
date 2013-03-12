@@ -99,7 +99,7 @@ var f = function(){
     _proCard.__initNode = function(){
         this.__supInitNode();
         this.__ncnt = this.__body;
-        _v._$addEvent(this.__body,'click',_v._$stop);
+        _v._$addEvent(this.__body,'click',_v._$stopBubble);
     };
     /**
      * 设置对齐方式
