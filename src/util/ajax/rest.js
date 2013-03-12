@@ -20,7 +20,7 @@ var f = function(){
      * @param  {String} _key 请求标识
      * @return {Void}
      */
-    var __clear = function(_key){
+    var _doClear = function(_key){
         var _request = __cache[_key];
         if (!_request) return;
         delete _request.s;
@@ -33,13 +33,18 @@ var f = function(){
      * @param  {String} _type 回调类型
      * @return {Void}
      */
-    var __callback = function(_key,_type){
+    var _doCallback = function(_key,_type){
         var _request = __cache[_key];
         if (!_request) return;
         var _callback = _request[_type],
             _args = r.slice.call(arguments,2);
-        try{(_callback||f).apply(null,_args)}catch(ex){}
-        this.__clear(_key);
+        try{
+            (_callback||f).apply(null,_args)
+        }catch(ex){
+            // ignore
+            console.error(ex);
+        }
+        _doClear(_key);
     };
     /*
      * 请求成功回调
@@ -47,8 +52,8 @@ var f = function(){
      * @param  {Variable} _data 返回数据
      * @return {Void}
      */
-    var __onLoad = function(_key,_data){
-        __callback(_key,'s',_data);
+    var _onLoad = function(_key,_data){
+        _doCallback(_key,'s',_data);
     };
     /*
      * 请求出错回调
@@ -56,25 +61,30 @@ var f = function(){
      * @param  {Object} _error 错误信息
      * @return {Void}
      */
-    var __onError = function(_key,_error){
+    var _onError = function(_key,_error){
         _error = _error||{};
         // status 204 is ok
         if (_error.code==g.
             _$CODE_ERRSERV&&
             _error.data==204){
-            __onLoad(_key,null);
+            _onLoad(_key,null);
             return;
         }
         // do error filter
         // set error attr stopped=!0 will stop request error callback
         for(var i=0,l=__filter.length;i<l;i++)
-            try{__filter[i](_error);}catch(ex){}
+            try{
+                __filter[i](_error);
+            }catch(ex){
+                // ignore
+                console.error(ex);
+            }
         if (!!_error.stopped){
-            this.__clear(_key);
+            _doClear(_key);
             return;
         }
         // do request fail callback
-        __callback(_key,'f',_error);
+        _doCallback(_key,'f',_error);
     };
     /**
      * 使用REST风格进行数据交互接口<br/>
@@ -126,7 +136,7 @@ var f = function(){
             _jsn = /json/i,
             _xml = /xml/i;
         return function(_url,_options){
-            _options = _options||o;
+            _options = NEJ.X({},_options);
             var _exist = {},
                 _param = _options.param||o;
             // parse uri template
@@ -137,16 +147,12 @@ var f = function(){
                        return encodeURIComponent(_value||'')||$1;
                    });
             // parse remain param 
-            var _arr = [];
+            var _data = _options.data||{};
             for(var x in _param)
                 if (!_exist[x]) 
-                    _arr.push(encodeURIComponent(x)+'='+
-                              encodeURIComponent(_param[x]));
-            if (_arr.length>0)
-                _url += (_url.indexOf('?')<0?'?':'&')+_arr.join('&');
+                    _data[x] = _param[x];
             // parse headers
             var _type = 'text',
-                _data = _options.data,
                 _headers = _options.headers||{},
                 _accept  = _headers['Accept']||_headers['accept'],
                 _content = _headers['Content-Type']||_headers['content-type'];
@@ -168,22 +174,19 @@ var f = function(){
             var _key = u._$randNumberString();
             __cache[_key] = {s:_options.onload||f
                             ,f:_options.onerror||f};
-            var _option = {sync:!1,method:'GET',timeout:null};
-            NEJ.EX(_option,_options);
             // add params to url with GET/HEAD/DELETE method
-            if (_reg1.test(_option.method.trim())){
-                _option.query = _data;
+            if (_reg1.test(_options.method.trim())){
+                _options.query = _data;
                 _data = null;
             }else if (_jsn.test(_content)){
                 _data = JSON.stringify(_data);
             }
-            _option.type    = _type;
-            _option.data    = _data;
-            _option.headers = _headers;
-            _option.onload  = __onLoad._$bind(null,_key);
-            _option.onerror = __onError._$bind(null,_key);
-            _option.onbeforerequest = _option.onbeforerequest;
-            j._$request(_url,_option);
+            _options.type    = _type;
+            _options.data    = _data;
+            _options.headers = _headers;
+            _options.onload  = _onLoad._$bind(null,_key);
+            _options.onerror = _onError._$bind(null,_key);
+            j._$request(_url,_options);
             return this;
         };
     })();

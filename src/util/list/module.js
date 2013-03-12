@@ -228,10 +228,12 @@ var f = function(){
                 this.__cbListChange._$bind(this)
             ]]);
         }else{
-            _copt.onitemdelete = 
-                this.__cbItemDelete._$bind(this);
-            _copt.onitemupdate = 
-                this.__cbItemUpdate._$bind(this);
+            _copt.onitemadd = this.
+                __cbItemAdd._$bind(this);
+            _copt.onitemdelete = this.
+                __cbItemDelete._$bind(this);
+            _copt.onitemupdate = this.
+                __cbItemUpdate._$bind(this);
         }
         this.__cache = _klass._$allocate(_copt);
         if (_cache.total!=null)
@@ -396,6 +398,13 @@ var f = function(){
         };
     })();
     /**
+     * 添加列表项回调，子类按需实现具体业务逻辑
+     * @protected
+     * @method {__cbItemAdd}
+     * @return {Void}
+     */
+    _proListModule.__cbItemAdd = _f;
+    /**
      * 删除列表项
      * @protected
      * @method {__doDeleteItem}
@@ -470,6 +479,9 @@ var f = function(){
      */
     _proListModule.__cbListChange = function(_event){
         switch(_event.action){
+            case 'add':
+                this.__cbItemAdd(_event);
+            break;
             case 'delete':
                 this.__cbItemDelete(_event);
             break;
@@ -497,12 +509,31 @@ var f = function(){
         this.__doDeleteItem({data:_item});
     };
     /**
+     * 添加一项数据
+     * @method {_$add}
+     * @param  {Object} 需要添加的数据
+     * @return {Void}
+     */
+    _proListModule._$add = function(_item){
+        this.__cache._$addItem({
+            data:_item,
+            key:this.__ropt.key
+        });
+    };
+    /**
      * 刷新模块，子类实现具体业务逻辑
      * @method {_$refresh}
      * @param  {Number} 刷新到的页码
      * @return {Void}
      */
     _proListModule._$refresh = _f;
+    /**
+     * 取缓存实例
+     * @return {nej.ut._$$ListCache}
+     */
+    _proListModule._$cache = function(){
+        return this.__cache;
+    }
 };
 NEJ.define('{lib}util/list/module.js',
       ['{lib}ui/item/list.js'

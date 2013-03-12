@@ -362,5 +362,9 @@ var f = function(){
     // mwf adaptation
     if (!window.MWF) window.MWF = NEJ;
     if (!window.mwf) window.mwf = NEJ.P('nej');
+    if (!window.console){
+        NEJ.P('console').log = NEJ.F;
+        NEJ.P('console').error = NEJ.F;
+    }
 };
 NEJ.define('{lib}base/global.js',f);

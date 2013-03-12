@@ -151,6 +151,7 @@ var f = function(){
                 this._$dispatchEvent('onbeforerequest',_event);
             }catch(ex){
                 // ignore exception
+                console.error(ex);
             }
             this.__doSendRequest(_event);
         }catch(e){

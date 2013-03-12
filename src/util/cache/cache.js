@@ -177,6 +177,22 @@ var f = function(){
         this.__cache[_key] = _value;
     };
     /**
+     * 带默认值取本地数据
+     * @protected
+     * @method {__getDataInCacheWithDefault}
+     * @param  {String}   键值
+     * @param  {Variable} 默认值
+     * @return {Void}
+     */
+    _proCache.__getDataInCacheWithDefault = function(_key,_default){
+        var _data = this.__getDataInCache(_key);
+        if (_data==null){
+            _data = _default;
+            this.__setDataInCache(_key,_data);
+        }
+        return _data;
+    };
+    /**
      * 删除缓存数据，不传键值则清除所有缓存
      * @protected
      * @method {__delDataInCache}
@@ -308,7 +324,12 @@ var f = function(){
             _args = _r.slice.call(arguments,1);
         _u._$forEach(_data[_key],
             function(_callback){
-                try{_callback.apply(null,_args)}catch(ex){}
+                try{
+                    _callback.apply(null,_args);
+                }catch(ex){
+                    // ignore
+                    console.error(ex);
+                }
             });
         delete _data[_key];
     };

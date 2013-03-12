@@ -245,6 +245,16 @@ var f = function(){
         this.__items = _items;
     };
     /**
+     * 添加列表项回调
+     * @protected
+     * @method {__cbItemAdd}
+     * @return {Void}
+     */
+    _proListModulePG.__cbItemAdd = function(_event){
+        this.__doCheckResult(_event,'onafteradd');
+        if (!_event.stopped) this._$refresh();
+    };
+    /**
      * 删除列表项回调
      * @protected
      * @method {__cbItemDelete}

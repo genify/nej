@@ -75,9 +75,11 @@ var f = function(){
      * @return {Void}
      */
     _proCard.__destroy = function(){
+        delete this.__pbox;
         delete this.__fbox;
         delete this.__align;
         delete this.__fitable;
+        delete this.__byPoint;
         delete this.__position;
         this.__supDestroy();
     };
@@ -99,7 +101,7 @@ var f = function(){
     _proCard.__initNode = function(){
         this.__supInitNode();
         this.__ncnt = this.__body;
-        _v._$addEvent(this.__body,'click',_v._$stop);
+        _v._$addEvent(this.__body,'click',_v._$stopBubble);
     };
     /**
      * 设置对齐方式

@@ -8,22 +8,25 @@
 var f = function(){
     // variable declaration
     var _b = NEJ.P('nej.p'),
-        _p = window;
+        _p = window,
+        _is = _b._$IS,
+        // ipad/iphone not fire 
+        // requestAnimationFrame when html page change
+        _es = _is.ipad||_is.iphone;
     // implement animation frame interface
-    if (!!_p.requestAnimationFrame&&
+    if (!_es&&!!_p.requestAnimationFrame&&
         !!_p.cancelRequestAnimationFrame)
         return;
     // use browser implementation
     var _prefix = _b._$KERNEL.prefix.pro;
-    if (!!_p[_prefix+'RequestAnimationFrame']&&
+    if (!_es&&!!_p[_prefix+'RequestAnimationFrame']&&
         !!_p[_prefix+'CancelRequestAnimationFrame']){
         _p.requestAnimationFrame = _p[_prefix+'RequestAnimationFrame'];
         _p.cancelRequestAnimationFrame = _p[_prefix+'CancelRequestAnimationFrame'];
         return;
     }
     // requestAnimationFrame/cancelRequestAnimationFrame implementation
-    var _is = _b._$IS,
-        _fps = _is.desktop?80:(_is.ios?50:30);
+    var _fps = _is.desktop?80:(_is.ios?50:30);
     /**
      * 请求动画<br />
      * 脚本举例
