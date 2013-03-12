@@ -75,9 +75,11 @@ var f = function(){
      * @return {Void}
      */
     _proCard.__destroy = function(){
+        delete this.__pbox;
         delete this.__fbox;
         delete this.__align;
         delete this.__fitable;
+        delete this.__byPoint;
         delete this.__position;
         this.__supDestroy();
     };
