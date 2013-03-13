@@ -24,7 +24,7 @@ var f = function(){
      *           offset: 100,
      *           velocity: 10
      *       },
-     *       to{
+     *       to:{
      *           offset:200
      *       },
      *       duration:1000,
