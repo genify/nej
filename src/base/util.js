@@ -516,7 +516,8 @@ var f = function(){
      * @return {String}              指定格式的时间串
      */
     _u._$format = (function(){
-        var _map = {i:!0,r:/\byyyy|yy|MM|M|dd|d|HH|H|mm|ms|ss|m|s\b/g};
+        var _map = {i:!0,r:/\byyyy|yy|MM|M|dd|d|HH|H|mm|ms|ss|m|s|w\b/g},
+            _week = ['日','一','二','三','四','五','六'];
         var _fmtnmb = function(_number){
             _number = parseInt(_number)||0;
             return (_number<10?'0':'')+_number;
@@ -525,19 +526,20 @@ var f = function(){
             if (!_time||!_format) 
                 return '';
             _time = _u._$var2date(_time);
-            _map['yyyy'] = _time.getFullYear();
-            _map['yy']   = (''+_map['yyyy']).substr(2);
-            _map['M']    = _time.getMonth()+1;
-            _map['MM']   = _fmtnmb(_map['M']);
-            _map['d']    = _time.getDate();
-            _map['dd']   = _fmtnmb(_map['d']);
-            _map['H']    = _time.getHours();
-            _map['HH']   = _fmtnmb(_map['H']);
-            _map['m']    = _time.getMinutes();
-            _map['mm']   = _fmtnmb(_map['m']);
-            _map['s']    = _time.getSeconds();
-            _map['ss']   = _fmtnmb(_map['s']);
-            _map['ms']   = _time.getMilliseconds();
+            _map.yyyy = _time.getFullYear();
+            _map.yy   = (''+_map.yyyy).substr(2);
+            _map.M    = _time.getMonth()+1;
+            _map.MM   = _fmtnmb(_map.M);
+            _map.d    = _time.getDate();
+            _map.dd   = _fmtnmb(_map.d);
+            _map.H    = _time.getHours();
+            _map.HH   = _fmtnmb(_map.H);
+            _map.m    = _time.getMinutes();
+            _map.mm   = _fmtnmb(_map.m);
+            _map.s    = _time.getSeconds();
+            _map.ss   = _fmtnmb(_map.s);
+            _map.ms   = _time.getMilliseconds();
+            _map.w    = _week[_time.getDay()];
             return _u._$encode(_map,_format);
         }
     })();
