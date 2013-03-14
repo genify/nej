@@ -8,7 +8,7 @@
 var f = function(){
     var _  = NEJ.P,
         _p = _('nej.ut'),
-        _proGridX;
+        _proTBResizeX;
     /**
      * 可调整宽度网格控件<br/>
      *
@@ -37,40 +37,40 @@ var f = function(){
      *        _p = _('nej.ut');
      * 
      *    // init grid-0
-     *    _p._$$GridX._$allocate({
+     *    _p._$$TBResizeX._$allocate({
      *        grid:'grid-0',
      *        clazz:'js-grid-0',
      *        style:'grid-style'
      *    });
      * 
      *    // init grid-1
-     *    _p._$$GridX._$allocate({
+     *    _p._$$TBResizeX._$allocate({
      *        grid:'grid-1',
      *        clazz:'js-grid-1',
      *        style:'grid-style'
      *    });
      * [/code]
      * 
-     * @class   {nej.ut._$$GridX}
-     * @extends {nej.ut._$$Grid}
+     * @class   {nej.ut._$$TBResizeX}
+     * @extends {nej.ut._$$TBResize}
      * 
      * @param   {Object} 配置参数
      * 
      */
-    _p._$$GridX = NEJ.C();
-      _proGridX = _p._$$GridX._$extend(_p._$$Grid);
+    _p._$$TBResizeX = NEJ.C();
+      _proTBResizeX = _p._$$TBResizeX._$extend(_p._$$TBResize);
     /**
      * 取配置信息
      * @return {Object} 配置信息
      */
-    _proGridX.__getConfig = function(){
+    _proTBResizeX.__getConfig = function(){
         return {
             n:'width',
-            b:'clientWidth',
+            b:'offsetWidth',
             c:'col-resize',
             p:'clientX'
         };
     };
 };
-NEJ.define('{lib}util/grid/grid.x.js',
-          ['{lib}util/grid/grid.js'],f);
+NEJ.define('{lib}util/tb.resize/resize.x.js',
+          ['{lib}util/tb.resize/resize.js'],f);
