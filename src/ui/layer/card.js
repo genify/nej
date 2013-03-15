@@ -101,7 +101,17 @@ var f = function(){
     _proCard.__initNode = function(){
         this.__supInitNode();
         this.__ncnt = this.__body;
-        _v._$addEvent(this.__body,'click',_v._$stopBubble);
+        _v._$addEvent(this.__body,'click',this.__doCheckStop._$bind(this));
+    };
+    /**
+     * 检查点击节点默认事件
+     * @return {Void}
+     */
+    _proCard.__doCheckStop = function(_event){
+        _v._$stopBubble(_event);
+        var _element = _v._$getElement(_event);
+        if (_element.tagName=='A')
+            _v._$stopDefault(_event);
     };
     /**
      * 设置对齐方式
