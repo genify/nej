@@ -346,6 +346,7 @@ var f = function(){
                 _data['dirty-data'] = !0;
                 _data[this.__iopt.pkey] = 'dirty-'+_seed++;
             }
+            return _data;
         };
     })();
     /**
