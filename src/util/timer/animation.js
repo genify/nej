@@ -62,4 +62,4 @@ var f = function(){
     };
 };
 NEJ.define('{lib}util/timer/animation.js',
-      ['{lib}base/platform.js'],f);
+          ['{lib}base/platform.js'],f);
