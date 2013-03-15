@@ -136,6 +136,6 @@ var f = function(){
     });
 };
 NEJ.define('{lib}util/history/history.js',
-      ['{lib}util/event/event.js'
-      ,'{lib}util/timer/animation.js'
-      ,'{patch}api.js'],f);
+          ['{lib}util/event/event.js'
+          ,'{lib}util/timer/animation.js'
+          ,'{patch}api.js'],f);

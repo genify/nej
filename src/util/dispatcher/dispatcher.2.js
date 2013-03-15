@@ -142,6 +142,9 @@ var f = function(){
      * @return {Void}
      */
     _proDispatcher.__reset = function(_options){
+        // temporary params
+        // umi - input params
+        this.__dtmp = {};
         this.__rest = !!_options.rest;
         this.__root = _d._$$Node._$allocate();
         // config map
@@ -320,6 +323,8 @@ var f = function(){
         return function(_location){
             // ignore if hash start with $
             if (_location.path.indexOf('$')==0) return;
+            var _input = this.__dtmp[_location.path];
+            delete this.__dtmp[_location.path];
             this._$dispatchEvent('onbeforechange',_location);
             var _umi = this.__doRewriteUMI(_location.path),
                 _gid = this.__config.mg[_umi];
@@ -350,6 +355,7 @@ var f = function(){
                 source:_source,
                 href:_location.href,
                 param:_location.query,
+                input:_input,
                 prest:_prst,
                 clazz:this.__getModuleConf(_umi,'clazz'),
                 pos:_reg0.test(_location.href)?RegExp.$1:''
@@ -380,6 +386,14 @@ var f = function(){
             }
         };
     })();
+    /**
+     * 模块调度回调
+     * @param  {Object} 模块调度信息
+     * @return {Void}
+     */
+    _proDispatcher.__onModuleDispatch = function(_event){
+        delete this.__dtmp[_event.umi];
+    };
     /**
      * 添加调度规则
      * [code]
@@ -812,13 +826,18 @@ var f = function(){
      * [/code]
      * 
      * @method {_$redirect}
-     * @param  {String}  模块UMI，可以带查询参数
-     * @param  {Boolean} 是否替换当前历史
+     * @param  {String}   模块UMI，可以带查询参数
+     * @param  {Object}   配置信息
+     * @config {Boolean}  replace 是否替换当前历史
+     * @config {Boolean}  force   是否强制刷新
+     * @config {Variable} input   输入数据
      * @return {nej.ut._$$Dispatcher} 调度器实例
      */
-    _proDispatcher._$redirect = function(_url,_replaced,_force){
+    _proDispatcher._$redirect = function(_url,_options){
+        _options = _options||_o;
         var _umi = _d._$path2umi(_url),
             _location = location.parse(_url);
+        this.__dtmp[_location.path] = _options.input;
         if (_d._$isUMIPrivate(_umi)){
             // dispatch private module
             this.__onURLChange(_location);
@@ -828,10 +847,10 @@ var f = function(){
                          this.__pbseed],
                 _event = {target:_location,umi:_umi};
             if (!!_group._$exitable(_event)){
-                if (location.same(_url)&&!!_force){
+                if (location.same(_url)&&!!_options.force){
                     this.__onURLChange(_location);
                 }else{
-                    location.redirect(_url,_replaced);
+                    location.redirect(_url,!!_options.replace);
                 }
             }
         }
@@ -845,7 +864,9 @@ var f = function(){
      */
     _proDispatcher._$refresh = function(_url){
         if (!!_url){
-            this._$redirect(_url,!0,!0);
+            this._$redirect(_url,{
+                replace:!0,force:!0
+            });
         }else{
             this.__groups[this.__pbseed]._$refresh();
         }

@@ -195,6 +195,6 @@ var f = function(){
     })();
 };
 NEJ.define('{lib}util/dispatcher/dsp/util.js',
-      ['{lib}base/util.js'
-      ,'{lib}util/dispatcher/module.2.js'
-      ,'{lib}util/dispatcher/dsp/node.js'],f);
+          ['{lib}base/util.js'
+          ,'{lib}util/dispatcher/module.2.js'
+          ,'{lib}util/dispatcher/dsp/node.js'],f);

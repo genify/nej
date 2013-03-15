@@ -315,7 +315,7 @@ var f = function(){
     };
 };
 NEJ.define('{lib}util/dispatcher/dsp/group.js',
-      ['{lib}base/constant.js'
-      ,'{lib}util/event.js'
-      ,'{lib}util/template/tpl.js'
-      ,'{lib}util/dispatcher/dsp/util.js'],f);
+          ['{lib}base/constant.js'
+          ,'{lib}util/event.js'
+          ,'{lib}util/template/tpl.js'
+          ,'{lib}util/dispatcher/dsp/util.js'],f);
