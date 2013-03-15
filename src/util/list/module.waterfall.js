@@ -158,11 +158,15 @@ var f = function(){
      */
     _proListModuleWF.__doBeforeListShow = function(){
         var _event = {
-            parent:this.__lbox
+            parent:this.__lbox,
+            pulling:this.__dirty
         };
         this._$dispatchEvent('onafterlistload',_event);
         if (!_event.stopped){
             _e._$removeByEC(this.__ntip);
+        }
+        if (!!this.__dirty){
+            this.__doClearListBox();
         }
     };
     /**
@@ -197,7 +201,8 @@ var f = function(){
      */
     _proListModuleWF.__doShowMessage = function(_name,_default){
         var _event = {
-            parent:this.__lbox
+            parent:this.__lbox,
+            pulling:this.__dirty
         };
         this._$dispatchEvent(_name,_event);
         if (!_event.stopped){
@@ -209,7 +214,10 @@ var f = function(){
             }else{
                 this.__ntip = _msg;
             }
-            this.__lbox.appendChild(this.__ntip);
+            this.__lbox.insertAdjacentElement(
+                this.__dirty?'afterBegin':'beforeEnd',
+                this.__ntip
+            );
         }
     };
     /**
@@ -310,6 +318,7 @@ var f = function(){
      * @return {Void}
      */
     _proListModuleWF._$next = function(){
+        if (!!this.__dirty) return;
         // update offset first for 
         // offset adjust after list loaded
         var _offset = this.__offset;
@@ -323,6 +332,18 @@ var f = function(){
      */
     _proListModuleWF._$refresh = function(){
         this.__doClearListBox();
+        this.__offset = 0;
+        this._$next();
+    };
+    /**
+     * 模块刷新最新信息
+     * @method {_$pullRefresh}
+     * @return {Void}
+     */
+    _proListModuleWF._$pullRefresh = function(){
+        // flag pull refresh
+        this.__dirty = !0;
+        this.__cache._$clearListInCache(this.__ropt.key);
         this.__offset = 0;
         this._$next();
     };

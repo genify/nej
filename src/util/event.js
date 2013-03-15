@@ -644,6 +644,7 @@ var f = function(){
                     _handler.apply(this,_args);
                 }catch(ex){
                     // ignore
+                    console.error(ex.message);
                     console.error(ex);
                 }
             },this);

@@ -211,6 +211,7 @@ var f = function(){
                 _list[i](_event);
             }catch(ex){
                 // ignore
+                console.error(ex.message);
                 console.error(ex);
             }
     };

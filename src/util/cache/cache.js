@@ -328,6 +328,7 @@ var f = function(){
                     _callback.apply(null,_args);
                 }catch(ex){
                     // ignore
+                    console.error(ex.message);
                     console.error(ex);
                 }
             });

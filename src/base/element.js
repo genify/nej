@@ -1309,6 +1309,7 @@ var f = function(){
                 return (new Function(_script))();
         }catch(ex){
             // ignore
+            console.error(ex.message);
             console.error(ex);
         }
     };

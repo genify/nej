@@ -42,6 +42,7 @@ var f = function(){
             (_callback||f).apply(null,_args)
         }catch(ex){
             // ignore
+            console.error(ex.message);
             console.error(ex);
         }
         _doClear(_key);
@@ -77,6 +78,7 @@ var f = function(){
                 __filter[i](_error);
             }catch(ex){
                 // ignore
+                console.error(ex.message);
                 console.error(ex);
             }
         if (!!_error.stopped){
