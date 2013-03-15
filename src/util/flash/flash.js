@@ -145,4 +145,4 @@ var f = function(){
     })();
 };
 NEJ.define('{lib}util/flash/flash.js',
-      ['{lib}util/template/jst.js'],f);
+          ['{lib}util/template/jst.js'],f);

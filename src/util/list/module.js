@@ -332,6 +332,69 @@ var f = function(){
         }
     };
     /**
+     * 格式化数据
+     * @param  {Object} 数据信息
+     * @return {Void}
+     */
+    _proListModule.__doFormatData = (function(){
+        var _seed = +new Date;
+        return function(_data){
+            var _id = _data[this.__iopt.pkey];
+            if (!_id){
+                _data['dirty-data'] = !0;
+                _data[this.__iopt.pkey] = 'dirty-'+_seed++;
+            }
+        };
+    })();
+    /**
+     * 分离脏数据
+     * @param  {Object} 数据信息
+     * @return {String} 数据标识
+     */
+    _proListModule.__doSplitDirty = function(_data){
+        var _id = _data[this.__iopt.pkey];
+        if (!!_data['dirty-data']){
+            delete _data['dirty-data'];
+            delete _data[this.__iopt.pkey];
+        }
+        return _id;
+    };
+    /**
+     * 插入单项
+     * @param  {String} 插入位置
+     * @param  {Object} 数据对象
+     * @return {Void}
+     */
+    _proListModule.__doInsertOneItem = (function(){
+        var _doInsert = function(_pos,_body){
+            this.__lbox.insertAdjacentElement(_pos,_body);
+        };
+        return function(_pos,_data){
+            var _xlist = [_data];
+            if (!!this.__ikey){
+                // render by jst
+                this.__iopt.xlist = _xlist;
+                this.__iopt.beg = 0;
+                this.__iopt.end = 0;
+                this.__doShowListByJST(
+                    _e._$getHtmlTemplate(
+                        this.__ikey,this.__iopt
+                    ),_pos
+                );
+            }else{
+                // render by item
+                this.__iopt.limit = 1;
+                this.__iopt.offset = 0;
+                this.__iopt.parent = 
+                      _doInsert._$bind(this,_pos);
+                var _items = _e._$getItemTemplate(
+                             _xlist,this.__ikls,this.__iopt);
+                this.__iopt.parent = this.__lbox;
+                this.__doShowListByItem(_items);
+            }
+        };
+    })();
+    /**
      * 加载数据之前处理逻辑，子类实现具体业务逻辑
      * @protected
      * @method {__doBeforeListLoad}
@@ -533,7 +596,31 @@ var f = function(){
      */
     _proListModule._$cache = function(){
         return this.__cache;
-    }
+    };
+    /**
+     * 往前追加列表项
+     * @param  {Object} 数据信息
+     * @return {Number} 插入项标识
+     */
+    _proListModule._$unshift = function(_data){
+        this.__doInsertOneItem(
+            'afterBegin',
+            this.__doFormatData(_data)
+        );
+        return this.__doSplitDirty(_data);
+    };
+    /**
+     * 往后追加列表项
+     * @param  {Object} 数据信息
+     * @return {Number} 插入项标识
+     */
+    _proListModule._$append = function(_data){
+        this.__doInsertOneItem(
+            'beforeEnd',
+            this.__doFormatData(_data)
+        );
+        return this.__doSplitDirty(_data);
+    };
 };
 NEJ.define('{lib}util/list/module.js',
       ['{lib}ui/item/list.js'

@@ -504,6 +504,7 @@ var f = function(){
      * 格式化时间，yyyy|yy|MM|M|dd|d|HH|H|mm|ms|ss|m|s|w<br/>
      * [ntb]
      *   标识         |  名称
+     * ----------------------------
      *   yyyy  |  四位年份，如2001
      *   yy    |  两位年费，如01
      *   MM    |  两位月份，如08
@@ -520,6 +521,8 @@ var f = function(){
      *   w     |  中文星期几，如一
      *   ct    |  12小时制中文后缀，上午/下午
      *   et    |  12小时制英文后缀，A.M./P.M.
+     *   cm    |  中文月份，如三
+     *   em    |  英文月份，如Mar
      * [/ntb]
      * 脚本举例
      * [code]
@@ -534,10 +537,12 @@ var f = function(){
      * @return {String}              指定格式的时间串
      */
     _u._$format = (function(){
-        var _map = {i:!0,r:/\byyyy|yy|MM|M|dd|d|HH|H|mm|ms|ss|m|s|w|ct|et\b/g},
+        var _map = {i:!0,r:/\byyyy|yy|MM|cM|eM|M|dd|d|HH|H|mm|ms|ss|m|s|w|ct|et\b/g},
             _12cc = ['上午','下午'],
             _12ec = ['A.M.','P.M.'],
-            _week = ['日','一','二','三','四','五','六'];
+            _week = ['日','一','二','三','四','五','六'],
+            _cmon = ['一','二','三','四','五','六','七','八','九','十','十一','十二'],
+            _emon = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'];
         var _fmtnmb = function(_number){
             _number = parseInt(_number)||0;
             return (_number<10?'0':'')+_number;
@@ -553,6 +558,8 @@ var f = function(){
             _map.yy   = (''+_map.yyyy).substr(2);
             _map.M    = _time.getMonth()+1;
             _map.MM   = _fmtnmb(_map.M);
+            _map.eM   = _emon[_map.M-1];
+            _map.cM   = _cmon[_map.M-1];
             _map.d    = _time.getDate();
             _map.dd   = _fmtnmb(_map.d);
             _map.H    = _time.getHours();

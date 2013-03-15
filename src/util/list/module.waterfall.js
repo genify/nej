@@ -218,8 +218,8 @@ var f = function(){
      * @method {__doShowListByJST}
      * @return {Void}
      */
-    _proListModuleWF.__doShowListByJST = function(_html,_before){
-        this.__lbox.insertAdjacentHTML(!_before?'beforeEnd':'afterBegin',_html);
+    _proListModuleWF.__doShowListByJST = function(_html,_pos){
+        this.__lbox.insertAdjacentHTML(_pos||'beforeEnd',_html);
     };
     /**
      * 以item模版方式绘制列表
@@ -243,34 +243,11 @@ var f = function(){
      */
     _proListModuleWF.__cbItemAdd = function(_event){
         this.__doCheckResult(_event,'onafteradd');
-        if (_event.stopped||!_event.flag) return;
+        var _flag = _event.flag;
+        if (_event.stopped||!_flag) return;
         this.__offset += 1;
-        var _list = [_event.data];
-        if (!!this.__ikey){
-            // by jst
-            this.__iopt.list = _list;
-            this.__iopt.beg  = 0;
-            this.__iopt.end  = 0;
-            this.__doShowListByJST(
-                _e._$getHtmlTemplate(
-                    this.__ikey,this.__iopt),
-                _event.flag==-1
-            );
-        }else{
-            // by item
-            this.__iopt.limit = 1;
-            this.__iopt.offset = 0;
-            var _parent = this.__iopt.parent;
-            if (_event.flag==-1){
-                this.__iopt.parent = function(_body){
-                    _parent.insertAdjacentElement('afterBegin',_body);
-                };
-            }
-            var _items = _e._$getItemTemplate(
-                         _list,this.__ikls,this.__iopt);
-            this.__iopt.parent = _parent;
-            this.__doShowListByItem(_items);
-        }
+        _flag==-1 ? this._$unshift(_event.data)
+                  : this._$append(_event.data);
     };
     /**
      * 删除列表项回调，子类按需实现具体业务逻辑
