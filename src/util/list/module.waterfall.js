@@ -166,6 +166,7 @@ var f = function(){
             _e._$removeByEC(this.__ntip);
         }
         if (!!this.__dirty){
+            delete this.__dirty;
             this.__doClearListBox();
         }
     };

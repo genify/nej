@@ -32,6 +32,7 @@ var f = function(){
      * @event  {onbeforelistload}
      * @param  {Object}          事件信息
      * @config {Node}    parent  容器节点
+     * @config {Boolean} pulling 是否正在下拉刷新
      * @config {String}  value   设置此参数返回用以显示loading的html代码或者节点
      * @config {Boolean} stopped 设置此参数用以表明loading已处理，后续逻辑忽略处理loading状态
      * 
@@ -40,6 +41,7 @@ var f = function(){
      * @event  {onafterlistload}
      * @param  {Object}          事件信息
      * @config {Node}    parent  容器节点
+     * @config {Boolean} pulling 是否正在下拉刷新
      * @config {String}  value   设置此参数返回用以显示loading的html代码
      * @config {Boolean} stopped 设置此参数用以表明loading已处理，后续逻辑忽略处理loading状态
      * 
