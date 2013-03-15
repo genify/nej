@@ -73,19 +73,26 @@ var f = function(){
      */
     location.active = (function(){
         var _timer,_url;
+        // parse location change
+        var _onLocationChange = function(_href){
+            _url = _href;
+            var _event = _getLocation();
+            _v._$dispatchEvent(location,'urlchange',_event);
+            _h.__pushHistory(_event.href);
+        };
         // check location
         var _doCheckLocation = function(){
-            if (_url!=location.href){
-                _url = location.href;
-                var _event = _getLocation();
-                _v._$dispatchEvent(location,'urlchange',_event);
-                _h.__pushHistory(_event.href);
-            }
+            if (_url!=location.href)
+                _onLocationChange(location.href);
             _timer = requestAnimationFrame(_doCheckLocation);
         };
         return function(){
-            if (!_timer)
-                 _timer = requestAnimationFrame(_doCheckLocation);
+            if (_hack&&('onhashchange' in window)){
+                _v._$addEvent(window,'hashchange',_onLocationChange);
+                _onLocationChange(location.href);
+            }else if(!_timer){
+                _timer = requestAnimationFrame(_doCheckLocation);
+            }
             return this;
         };
     })();
