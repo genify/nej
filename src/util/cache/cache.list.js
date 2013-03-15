@@ -421,15 +421,15 @@ var f = function(){
      * @param  {Object|Array} 列表项或者列表
      * @return {Void}
      */
-    _proListCache.__shiftToList = function(_key,_item){
+    _proListCache.__unshiftToList = function(_key,_item){
         if (!_u._$isArray(_item)){
             var _list = this._$getListInCache(_key);
-            _list.shift(this.__doSaveItemToCache(_item,_key));
+            _list.unshift(this.__doSaveItemToCache(_item,_key));
             return;
         }
         _u._$reverseEach(
             _item,this.
-            __shiftToList._$bind(this,_key)
+            __unshiftToList._$bind(this,_key)
         );
     };
     /**
