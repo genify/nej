@@ -323,8 +323,10 @@ var f = function(){
         return function(_location){
             // ignore if hash start with $
             if (_location.path.indexOf('$')==0) return;
+            // check input param
             var _input = this.__dtmp[_location.path];
             delete this.__dtmp[_location.path];
+            // check outer logic
             this._$dispatchEvent('onbeforechange',_location);
             var _umi = this.__doRewriteUMI(_location.path),
                 _gid = this.__config.mg[_umi];
@@ -386,14 +388,6 @@ var f = function(){
             }
         };
     })();
-    /**
-     * 模块调度回调
-     * @param  {Object} 模块调度信息
-     * @return {Void}
-     */
-    _proDispatcher.__onModuleDispatch = function(_event){
-        delete this.__dtmp[_event.umi];
-    };
     /**
      * 添加调度规则
      * [code]
