@@ -318,9 +318,11 @@ var f = function(){
      * @method {_$next}
      * @return {Void}
      */
-    _proListModuleWF._$next = function(){
+    _proListModuleWF._$next = function(_dirty){
+        // flag dirty
         if (!!this.__dirty) return;
-        // update offset first for 
+        this.__dirty = !!_dirty;
+        // update offset first for
         // offset adjust after list loaded
         var _offset = this.__offset;
         this.__offset += this.__ropt.limit;
@@ -342,12 +344,10 @@ var f = function(){
      * @return {Void}
      */
     _proListModuleWF._$pullRefresh = function(){
-        // flag pull refresh
-        this.__dirty = !0;
         this.__cache._$clearListInCache(this.__ropt.key);
         this.__offset = 0;
-        this._$next();
+        this._$next(!0);
     };
 };
 NEJ.define('{lib}util/list/module.waterfall.js',
-      ['{lib}util/list/module.js'],f);
+          ['{lib}util/list/module.js'],f);
