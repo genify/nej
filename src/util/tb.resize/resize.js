@@ -22,8 +22,8 @@ var f = function(){
      * @extends {nej.ut._$$Event}
      * 
      * @param   {Object} 配置参数
-     * @config  {String|Node} grid   网格节点
-     * @config  {Number}      min    保留最小大小，默认50px
+     * @config  {String|Node} grid  网格节点
+     * @config  {Number}      min   保留最小大小，默认50px
      * 
      * [hr]
      * 宽度高度变化事件
@@ -67,7 +67,7 @@ var f = function(){
             this.__onResizeStop._$bind(this)
         ]]);
         _e._$setStyle(this.__nhold,'cursor',this.__conf.c);
-        this._$resize(this.__ngrid[this.__conf.b]);
+        this._$update(this.__ngrid[this.__conf.b]);
     };
     /**
      * 控件销毁
@@ -128,16 +128,32 @@ var f = function(){
      * @return {Void}
      */
     _proTBResize._$resize = function(_size){
-        try{
-            this.__size = Math.max(this.__minbx,_size);
-            _e._$setStyle(this.__ngrid,this.__conf.n,this.__size+'px');
-            this._$dispatchEvent('onresize',{
-                value:this.__size
-            });
-        }catch(ex){
-            // ignore
-            throw ex;
-        }
+        _size = Math.max(this.__minbx,_size);
+        var _event = {
+                value:_size,
+                delta:_size-this.__size,
+                data:_e._$dataset(this.__ngrid,'value')
+            };
+        this._$dispatchEvent('onbeforeresize',_event);
+        if (_event.result!=null)
+            _size = this.__size+_event.delta-_event.result;
+        this._$update(_size);
+    };
+    /**
+     * 更新大小
+     * @param  {Number} 大小值
+     * @return {Number} 实际使用大小值
+     */
+    _proTBResize._$update = function(_size){
+        this.__size = Math.max(this.__minbx,_size);
+        _e._$setStyle(this.__ngrid,this.__conf.n,this.__size+'px');
+        return this.__size-_size;
+    };
+    /**
+     * 
+     */
+    _proTBResize._$updateByDelta = function(_delta){
+        return this._$update(this.__size+_delta);
     };
 };
 NEJ.define('{lib}util/tb.resize/resize.js',
