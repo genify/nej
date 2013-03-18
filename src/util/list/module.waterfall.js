@@ -151,26 +151,6 @@ var f = function(){
         _e._$setStyle(this.__nmore,'visibility','hidden');
     };
     /**
-     * 数据载入之后处理逻辑
-     * @protected
-     * @method {__doBeforeListShow}
-     * @return {Void}
-     */
-    _proListModuleWF.__doBeforeListShow = function(){
-        var _event = {
-            parent:this.__lbox,
-            pulling:this.__dirty
-        };
-        this._$dispatchEvent('onafterlistload',_event);
-        if (!_event.stopped){
-            _e._$removeByEC(this.__ntip);
-        }
-        if (!!this.__dirty){
-            delete this.__dirty;
-            this.__doClearListBox();
-        }
-    };
-    /**
      * 列表绘制之前处理逻辑
      * @protected
      * @method {__doBeforeListRender}
@@ -190,36 +170,6 @@ var f = function(){
      */
     _proListModuleWF.__doShowEmpty = function(){
         this.__doShowMessage('onemptylist','没有列表数据！');
-    };
-    /**
-     * 通过事件回调检测显示信息
-     * @protected
-     * @method {__doShowMessage}
-     * @param  {String} 事件名称
-     * @param  {String} 默认显示内容
-     * @param  {Object} 扩展信息
-     * @return {Void} 
-     */
-    _proListModuleWF.__doShowMessage = function(_name,_default){
-        var _event = {
-            parent:this.__lbox,
-            pulling:this.__dirty
-        };
-        this._$dispatchEvent(_name,_event);
-        if (!_event.stopped){
-            var _msg = _event.value||_default;
-            if (_u._$isString(_msg)){
-                if (!this.__ntip)
-                    this.__ntip = _e._$create('div');
-                this.__ntip.innerHTML = _msg;
-            }else{
-                this.__ntip = _msg;
-            }
-            this.__lbox.insertAdjacentElement(
-                this.__dirty?'afterBegin':'beforeEnd',
-                this.__ntip
-            );
-        }
     };
     /**
      * 以jst模版方式绘制列表
@@ -318,10 +268,7 @@ var f = function(){
      * @method {_$next}
      * @return {Void}
      */
-    _proListModuleWF._$next = function(_dirty){
-        // flag dirty
-        if (!!this.__dirty) return;
-        this.__dirty = !!_dirty;
+    _proListModuleWF._$next = function(_pulling){
         // update offset first for
         // offset adjust after list loaded
         var _offset = this.__offset;
@@ -337,16 +284,6 @@ var f = function(){
         this.__doClearListBox();
         this.__offset = 0;
         this._$next();
-    };
-    /**
-     * 模块刷新最新信息
-     * @method {_$pullRefresh}
-     * @return {Void}
-     */
-    _proListModuleWF._$pullRefresh = function(){
-        this.__cache._$clearListInCache(this.__ropt.key);
-        this.__offset = 0;
-        this._$next(!0);
     };
 };
 NEJ.define('{lib}util/list/module.waterfall.js',

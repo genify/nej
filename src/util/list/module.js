@@ -28,11 +28,26 @@ var f = function(){
      * @config  {Object}        cache  缓存配置信息，{key:'primary key',lkey:'list key',data:{},klass:_$$ListCache}
      * 
      * [hr]
+     * 下拉刷新列表之前处理业务逻辑，可用于处理loading状态的显示
+     * @event  {onbeforepullrefresh}
+     * @param  {Object}          事件信息
+     * @config {Node}    parent  容器节点
+     * @config {String}  value   设置此参数返回用以显示loading的html代码或者节点
+     * @config {Boolean} stopped 设置此参数用以表明loading已处理，后续逻辑忽略处理loading状态
+     * 
+     * [hr]
+     * 下拉刷新列表载入之后处理业务逻辑，可用于处理loading状态的隐藏
+     * @event  {onafterpullrefresh}
+     * @param  {Object}          事件信息
+     * @config {Node}    parent  容器节点
+     * @config {String}  value   设置此参数返回用以显示loading的html代码
+     * @config {Boolean} stopped 设置此参数用以表明loading已处理，后续逻辑忽略处理loading状态
+     * 
+     * [hr]
      * 加载列表之前处理业务逻辑，可用于处理loading状态的显示
      * @event  {onbeforelistload}
      * @param  {Object}          事件信息
      * @config {Node}    parent  容器节点
-     * @config {Boolean} pulling 是否正在下拉刷新
      * @config {String}  value   设置此参数返回用以显示loading的html代码或者节点
      * @config {Boolean} stopped 设置此参数用以表明loading已处理，后续逻辑忽略处理loading状态
      * 
@@ -41,7 +56,6 @@ var f = function(){
      * @event  {onafterlistload}
      * @param  {Object}          事件信息
      * @config {Node}    parent  容器节点
-     * @config {Boolean} pulling 是否正在下拉刷新
      * @config {String}  value   设置此参数返回用以显示loading的html代码
      * @config {Boolean} stopped 设置此参数用以表明loading已处理，后续逻辑忽略处理loading状态
      * 
@@ -154,6 +168,7 @@ var f = function(){
         this.__doClearListBox();
         this.__supDestroy();
         this.__cache._$recycle();
+        delete this.__pulling;
         delete this.__cache;
         delete this.__lbox;
         delete this.__ikls;
@@ -224,6 +239,8 @@ var f = function(){
         this.__iopt.pkey = _copt.key||'id';
         _copt.onlistload = 
             this.__cbListLoad._$bind(this);
+        _copt.onpullrefresh = 
+            this.__cbPullRefresh._$bind(this);
         if ('onlistchange' in _klass){
             this.__doInitDomEvent([[
                 _klass,'listchange',
@@ -334,6 +351,20 @@ var f = function(){
         }
     };
     /**
+     * 前向刷新数据列表载入完成回调
+     * @param  {Object} 请求信息
+     * @return {Void}
+     */
+    _proListModule.__cbPullRefresh = function(_options){
+        // unlock pulling
+        if (!this.__pulling) 
+            return;
+        delete this.__pulling;
+        // recycle loading
+        this.__doBeforeListShow('onafterpullrefresh');
+        this._$refresh();
+    };
+    /**
      * 格式化数据
      * @param  {Object} 数据信息
      * @return {Void}
@@ -410,7 +441,15 @@ var f = function(){
      * @method {__doBeforeListShow}
      * @return {Void}
      */
-    _proListModule.__doBeforeListShow = _f;
+    _proListModule.__doBeforeListShow = function(_name){
+        var _event = {
+            parent:this.__lbox
+        };
+        this._$dispatchEvent(_name||'onafterlistload',_event);
+        if (!_event.stopped){
+            _e._$removeByEC(this.__ntip);
+        }
+    };;
     /**
      * 列表绘制之前处理逻辑，子类实现具体业务逻辑
      * @protected
@@ -418,6 +457,45 @@ var f = function(){
      * @return {Void}
      */
     _proListModule.__doBeforeListRender = _f;
+    /**
+     * 呈现提示信息
+     * @protected
+     * @method {__doRenderMessage}
+     * @param  {String} 消息内容
+     * @param  {String} 位置信息
+     * @return {Void}
+     */
+    _proListModule.__doRenderMessage = function(_message,_pos){
+        if (_u._$isString(_message)){
+            if (!this.__ntip)
+                 this.__ntip = _e._$create('div');
+            this.__ntip.innerHTML = _message;
+        }else{
+            this.__ntip = _message;
+        }
+        this.__lbox.insertAdjacentElement(
+            _pos||'beforeEnd',this.__ntip
+        );
+    };
+    /**
+     * 通过事件回调检测显示信息
+     * @protected
+     * @method {__doShowMessage}
+     * @param  {String} 事件名称
+     * @param  {String} 默认显示内容
+     * @return {Void} 
+     */
+    _proListModule.__doShowMessage = function(_name,_default,_pos){
+        var _event = {
+            parent:this.__lbox
+        };
+        this._$dispatchEvent(_name,_event);
+        if (!_event.stopped){
+            this.__doRenderMessage(
+                _event.value||_default,_pos
+            );
+        }
+    };
     /**
      * 列表为空时处理逻辑，子类实现具体业务逻辑
      * @protected
@@ -587,13 +665,6 @@ var f = function(){
         });
     };
     /**
-     * 刷新模块，子类实现具体业务逻辑
-     * @method {_$refresh}
-     * @param  {Number} 刷新到的页码
-     * @return {Void}
-     */
-    _proListModule._$refresh = _f;
-    /**
      * 取缓存实例
      * @return {nej.ut._$$ListCache}
      */
@@ -624,7 +695,34 @@ var f = function(){
         );
         return this.__doSplitDirty(_data);
     };
+    /**
+     * 刷新模块，子类实现具体业务逻辑
+     * @method {_$refresh}
+     * @param  {Number} 刷新到的页码
+     * @return {Void}
+     */
+    _proListModule._$refresh = _f;
+    /**
+     * 前向刷新列表，子类实现具体业务逻辑
+     * @method {_$pullRefresh}
+     * @return {Void}
+     */
+    _proListModule._$pullRefresh = function(){
+        // lock pulling
+        if (!!this.__pulling) 
+            return;
+        this.__pulling = !0;
+        // show loading
+        this.__doShowMessage(
+            'onbeforepullrefresh',
+            '列表刷新中...','afterBegin'
+        );
+        // refresh data
+        this.__cache._$pullRefresh({
+            key:this.__ropt.key,data:{}
+        });
+    };
 };
 NEJ.define('{lib}util/list/module.js',
-      ['{lib}ui/item/list.js'
-      ,'{lib}util/cache/cache.list.base.js'],f);
+          ['{lib}ui/item/list.js'
+          ,'{lib}util/cache/cache.list.base.js'],f);

@@ -32,6 +32,7 @@ var f = function(){
      *           ,doadditem:this.__doAddItem._$bind(this)
      *           ,dodeleteitem:this.__doDeleteItem._$bind(this)
      *           ,doupdateitem:this.__doUpdateItem._$bind(this)
+     *           ,dopullrefresh:this.__doPullRefresh._$bind(this)
      *       });
      *   };
      *   // 实现取列表的方法
@@ -335,6 +336,43 @@ var f = function(){
             this.__lspl.hash = _hash;
         }
         return _hash;
+    };
+    /**
+     * 前向刷新列表
+     * @method {_$pullRefresh}
+     * @param  {Object} 可选配置参数
+     * @config {String} key   列表标识
+     * @config {Number} data  发送到服务器数据信息
+     * @return {nej.ut._$$ListCache}
+     */
+    _proListCache._$pullRefresh = (function(){
+        var _doFormatKey = function(_options){
+            return 'r-'+_options.key;
+        };
+        return function(_options){
+            var _ropt = NEJ.X({},_options),
+                _rkey = _doFormatKey(_ropt);
+            if (!this.__doQueueRequest(_rkey,
+                 this._$dispatchEvent._$bind(this,'onpullrefresh'))){
+                _ropt.rkey = _rkey;
+                _ropt.onload = this.__pullRefresh._$bind(this,_ropt);
+                this._$dispatchEvent('dopullrefresh',_ropt);
+            }
+            return this;
+        };
+    })();
+    /**
+     * 前向取列表回调
+     * @protected
+     * @method {__pullRefresh}
+     * @param  {Object} 请求信息
+     * @param  {Array}  数据列表
+     * @return {Void}
+     */
+    _proListCache.__pullRefresh = function(_options,_list){
+        if (!!_list&&_list.length>0)
+            this._$clearListInCache(_options.key);
+        this.__doCallbackRequest(_options.rkey,_options);
     };
     /**
      * 取列表<br/>

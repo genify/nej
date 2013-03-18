@@ -13,7 +13,8 @@ var f = function(){
         _e = _('nej.e'),
         _i = _('nej.ui'),
         _p = _('nej.ut'),
-        _proListModulePG;
+        _proListModulePG,
+        _supListModulePG;
     if (!!_p._$$ListModulePG) return;
     /**
      * 分页式列表模块
@@ -108,6 +109,7 @@ var f = function(){
      */
     _p._$$ListModulePG = NEJ.C();
       _proListModulePG = _p._$$ListModulePG._$extend(_p._$$ListModule);
+      _supListModulePG = _p._$$ListModulePG._$supro;
     /**
      * 控件重置
      * @protected
@@ -163,7 +165,7 @@ var f = function(){
      * @return {Void}
      */
     _proListModulePG.__doBeforeListShow = function(){
-        this.__doShowMessage('onafterlistload','');
+        _supListModulePG.__doBeforeListShow.apply(this,arguments);
         this.__doClearListBox();
     };
     /**
@@ -217,14 +219,12 @@ var f = function(){
      * @param  {Object} 扩展信息
      * @return {Void} 
      */
-    _proListModulePG.__doShowMessage = function(_name,_default){
-        var _event = {
-            parent:this.__lbox
-        };
-        this._$dispatchEvent(_name,_event);
-        if (!_event.stopped){
-            this.__lbox.innerHTML = _event.value||_default;
+    _proListModulePG.__doRenderMessage = function(_message,_pos){
+        if (!_pos){
+            this.__lbox.innerHTML = _message;
+            return;
         }
+        _supListModulePG.__doRenderMessage.apply(this,arguments);
     };
     /**
      * 以jst模版方式绘制列表
@@ -276,6 +276,9 @@ var f = function(){
     };
     /**
      * 刷新列表
+     * @method {_$refresh}
+     * @param  {Number} 刷新到的页码
+     * @return {Void}
      */
     _proListModulePG._$refresh = function(){
         this.__doClearListBox();
