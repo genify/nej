@@ -241,6 +241,25 @@ var f = function(){
         return _item;
     };
     /**
+     * 前向追加列表项至列表
+     * @param  {String} 列表标识
+     * @param  {Object|Array} 列表项或者列表
+     * @return {Void}
+     */
+    _proListCache.__doUnshiftToList = function(_key,_item){
+        if (!_item) return;
+        if (!_u._$isArray(_item)){
+            var _list = this._$getListInCache(_key),
+                _item = this.__doSaveItemToCache(_item,_key);
+            if (!!_item) _list.unshift(_item);
+            return;
+        }
+        _u._$reverseEach(
+            _item,this.
+            __doUnshiftToList._$bind(this,_key)
+        );
+    };
+    /**
      * 设置列表总数<br/>
      * 脚本举例
      * [code]
@@ -370,8 +389,7 @@ var f = function(){
      * @return {Void}
      */
     _proListCache.__pullRefresh = function(_options,_list){
-        if (!!_list&&_list.length>0)
-            this._$clearListInCache(_options.key);
+        this.__doUnshiftToList(_options.key,_list);
         this.__doCallbackRequest(_options.rkey,_options);
     };
     /**
@@ -452,23 +470,6 @@ var f = function(){
             this._$setLoaded(_key);
         // do callback
         this.__doCallbackRequest(_options.rkey,_options);
-    };
-    /**
-     * 前向追加列表项至列表
-     * @param  {String} 列表标识
-     * @param  {Object|Array} 列表项或者列表
-     * @return {Void}
-     */
-    _proListCache.__unshiftToList = function(_key,_item){
-        if (!_u._$isArray(_item)){
-            var _list = this._$getListInCache(_key);
-            _list.unshift(this.__doSaveItemToCache(_item,_key));
-            return;
-        }
-        _u._$reverseEach(
-            _item,this.
-            __unshiftToList._$bind(this,_key)
-        );
     };
     /**
      * 清除缓存列表<br/>
