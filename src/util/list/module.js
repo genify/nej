@@ -719,7 +719,8 @@ var f = function(){
         );
         // refresh data
         this.__cache._$pullRefresh({
-            key:this.__ropt.key,data:{}
+            key:this.__ropt.key,
+            data:this.__ropt.data
         });
     };
 };

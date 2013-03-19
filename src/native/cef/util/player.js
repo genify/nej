@@ -181,8 +181,6 @@ var f = function() {
             return;
         }
     };
-    
-    
 };
 NEJ.define('{lib}native/cef/util/player.js',
           ['{lib}util/event.js'
