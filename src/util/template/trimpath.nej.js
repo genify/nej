@@ -62,11 +62,15 @@
         var _reg0 = /^\s*[\[\{'"].*?[\]\}'"]\s*$/,
             _reg1 = /[\&\|\<\>\+\-\*\/\%\,\(\)\[\]\?\:\!\=\;]/,
             // keyword extend later
-            _reg2 = /^(?:defined|null|undefined|true|false|instanceof|new|this|typeof|\$v|[\d]+)$/i;
+            _reg2 = /^(?:defined|null|undefined|true|false|instanceof|new|this|typeof|\$v|[\d]+)$/i,
+            // statement extend later
+            // new XX
+            _reg3 = /^new\s+/;
         var _doParseSimple = function(_value){
             if (_reg0.test(_value)) return;
             _value = _value.split('.')[0].trim();
             if (!_value) return;
+            _value = _value.replace(_reg3,'');
             try{
                 if (_reg2.test(_value))
                     return;
