@@ -61,7 +61,7 @@ var f = function(){
     _proCard.__reset = function(_options){
         this.__supReset(_options);
         this.__doInitDomEvent([
-            [document,'click',this._$hide._$bind(this)]
+            [document,'click',this.__onDocClick._$bind(this)]
         ]);
         this.__position = {
             top:_options.top,
@@ -102,6 +102,14 @@ var f = function(){
         this.__supInitNode();
         this.__ncnt = this.__body;
         _v._$addEvent(this.__body,'click',this.__doCheckStop._$bind(this));
+    };
+    /**
+     * 文档点击事件
+     * @return {Void}
+     */
+    _proCard.__onDocClick = function(_event){
+        // fix firefox fire click when right button click
+        if (_event.button!=2) this._$hide();
     };
     /**
      * 检查点击节点默认事件
