@@ -217,7 +217,7 @@ var f = function(){
                     _name = 'onshow';
                 _data.xname = _name;
                 // do dispatch event
-                _module._$dispatchEvent(_name,_event);
+                _module._$dispatchEvent(_name,_event||{});
                 // position to element
                 if (_nothide&&!!_event&&!!_event.pos&&
                     _event.umi==_event.target){
