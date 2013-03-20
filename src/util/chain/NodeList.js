@@ -10,6 +10,7 @@ var f = function() {
         _e = _("nej.e"),
         _v = _("nej.v"),
         _u = _("nej.u"),
+        _x = _("nej.x")
 
         // local vals
         _slice = [].slice,
@@ -108,6 +109,10 @@ var f = function() {
 
     // name space  _("nej.$")    
     var $ = nej.$ = function(_selector, _context){
+        if(_x.isChange){
+            $._$implement(nej.x, {static: true});
+            _x.isChange = false;
+        }
         return new _$$NodeList(_selector, _context);
     };
     /**
