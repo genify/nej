@@ -215,6 +215,7 @@ var f = function(){
         }
         return _p._$api(_id,_p._$$Page,_options||_o);
     };
+    _x.isChange = !0;
 };
 NEJ.define('{lib}util/page/page.js',
       ['{lib}util/page/page.base.js'],f);

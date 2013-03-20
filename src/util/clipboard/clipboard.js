@@ -12,6 +12,7 @@ var f = function(){
         _e = _('nej.e'),
         _v = _('nej.v'),
         _u = _('nej.u'),
+        _x = _('nej.x'),
         _b = _('nej.e.cb');
     /*
      * 覆盖剪切操作功能按钮
@@ -68,7 +69,8 @@ var f = function(){
      * @param  {String|Function} 要复制的内容，或者动态生成要复制的内容
      * @return {nej.e}
      */
-    _e._$bindCopyAction = function(_element,_content){
+    _e._$bindCopyAction = 
+    _x._$bindCopyAction = function(_element,_content){
         _element = _e._$get(_element);
         if (!_element) return;
         // bind callback
@@ -142,12 +144,14 @@ var f = function(){
      * @param  {String|Node} 操作节点
      * @return {nej.e}
      */
-    _e._$bindClearAction = function(_element){
+    _e._$bindClearAction = 
+    _x._$bindClearAction =  function(_element){
         _element = _e._$get(_element);
         if (!_element) return this;
         _doCoverClipboard(_element,'op=2');
         return this;
     };
+    _x.isChange = !0;
 };
 NEJ.define('{lib}util/clipboard/clipboard.js',
       ['{patch}config.js'

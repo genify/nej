@@ -1498,6 +1498,7 @@ var f = function(){
     // init
     if (!document.head)
          document.head = document.getElementsByTagName('head')[0]||document.body;
+    _x.isChange = !0;
 };
 NEJ.define('{lib}base/element.js',
       ['{lib}base/constant.js'

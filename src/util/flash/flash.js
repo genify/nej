@@ -12,6 +12,7 @@ var f = function(){
         _e = _('nej.e'),
         _v = _('nej.v'),
         _h = _('nej.h'),
+        _x = _('nej.x'),
         _w = _('nej.ut.j.cb');
     var _seed_html = _e._$addHtmlTemplate('\
         {var hide  = defined("hidden")&&!!hidden}\
@@ -79,7 +80,8 @@ var f = function(){
      * @param  {Flash}   Flash对象
      * 
      */
-    _e._$flash = (function(){
+    _e._$flash = 
+    _x._$flash = (function(){
         var _cache = {},
             _seed = +new Date;
         // append flash element
@@ -147,6 +149,7 @@ var f = function(){
             _doCheckFlash(_id);
         };
     })();
+    _x.isChange = !0;
 };
 NEJ.define('{lib}util/flash/flash.js',
           ['{lib}util/template/jst.js'

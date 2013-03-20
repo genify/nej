@@ -26,8 +26,7 @@ var f = function(){
         .#<uispace> .zntl{top:-1px;left:-1px;cursor:nw-resize;}\
         .#<uispace> .zntr{top:-1px;right:-1px;cursor:ne-resize;}\
         .#<uispace> .znbr{bottom:-1px;right:-1px;cursor:se-resize;}\
-        .#<uispace> .znbl{bottom:-1px;left:-1px;cursor:sw-resize;}\
-        ');
+        .#<uispace> .znbl{bottom:-1px;left:-1px;cursor:sw-resize;}');
     // html code
     var _seed_point = _e._$addHtmlTemplate('\
         {list 1..8 as x}\
@@ -37,44 +36,14 @@ var f = function(){
     /**
      * 范围裁剪控件封装
      * 
-     * 
-     * 
      * @class   {nej.ui._$$Range}
      * @extends {nej.ui._$$Abstract}
      * @param   {Object}  可选配置参数，其他参数见nej.ut._$$Resize控件所示
      * 
      * 
-     * [hr]
-     * 大小开始变化触发事件
-     * @event  {onresizestart}
-     * @param  {Object} 事件信息
-     * @config {}
-     * 
-     * [hr]
-     * 大小变化过程触发事件
-     * @event  {onresize}
-     * 
-     * [hr]
-     * 大小变化结束触发事件
-     * @event  {onresizeend}
-     * 
      */
     _p._$$Resizer = NEJ.C();
       _proResizer = _p._$$Resizer._$extend(_p._$$Abstract);
-    /**
-     * 控件初始化
-     * @protected
-     * @method {__init}
-     * @return {Void}
-     */
-    _proResizer.__init = function(){
-        this.__ropt = {
-            onresize:this._$dispatchEvent._$bind(this,'onresize'),
-            onresizeend:this._$dispatchEvent._$bind(this,'onresizeend'),
-            onresizestart:this._$dispatchEvent._$bind(this,'onresizestart')
-        };
-        this.__supInit();
-    };
     /**
      * 控件重置
      * @protected
@@ -85,7 +54,6 @@ var f = function(){
     _proResizer.__reset = function(_options){
         this.__supReset(_options);
         _options = NEJ.X({},_options);
-        _options = NEJ.X(_options,this.__ropt);
         _options.view = this.__parent;
         delete _options.clazz;
         this.__resize = _t._$$Resize._$allocate(_options);

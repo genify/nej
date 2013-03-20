@@ -228,6 +228,7 @@ var f = function(){
         }
         return _p._$api(_id,_p._$$Tab,_options||_o);
     };
+    _x.isChange = !0;
 };
 NEJ.define('{lib}util/tab/tab.js',
       ['{lib}base/event.js'
