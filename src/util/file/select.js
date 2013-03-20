@@ -122,6 +122,7 @@ var f = function(){
             _h.__handleFileLabelClick(_element);
         };
     })();
+    _x.isChange = !0;
 };
 NEJ.define('{lib}util/file/select.js',
           ['{lib}base/element.js'

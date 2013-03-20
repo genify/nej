@@ -58,6 +58,7 @@ var f = function(){
 //        _h.__clearPlaceHolder(_element);
 //        return this;
 //    };
+    _x.isChange = !0;
 };
 NEJ.define('{lib}util/placeholder/placeholder.js',
       ['{patch}holder.js'],f);

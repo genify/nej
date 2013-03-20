@@ -652,6 +652,7 @@ var f = function(){
                 _args[0],_args[1],_options);
         return this;
     };
+    _x.isChange = !0;
 };
 NEJ.define('{lib}base/event.js',
       ['{lib}base/element.js'
