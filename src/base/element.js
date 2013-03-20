@@ -9,6 +9,7 @@ var f = function(){
     // variable declaration
     var _  = NEJ.P,
         _o = NEJ.O,
+        _f = NEJ.F,
         _g = _('nej.g'),
         _e = _('nej.e'),
         _u = _('nej.u'),
@@ -427,20 +428,30 @@ var f = function(){
      * 
      * @chainable
      * @api    {nej.e._$toggle}
-     * @param  {String|Node}         触发切换节点
-     * @param  {String|Object}       切换配置信息，输入字符串表示样式或者节点
-     * @config {String}      clazz   样式名称，默认为js-toggle
-     * @config {String|Node} element 切换样式的节点，默认为父节点
+     * @param  {String|Node}          触发切换节点
+     * @param  {String|Object}        切换配置信息，输入字符串表示样式或者节点
+     * @config {String}      clazz    样式名称，默认为js-toggle
+     * @config {String|Node} element  切换样式的节点，默认为父节点
+     * @config {Function}    ontoggle 节点样式切换触发事件
      * @return {nej.e}
      */
     _e._$toggle = 
     _x._$toggle = (function(){
         // click event
-        var _doClick = function(_id,_clazz){
-            var _element = _e._$get(_id);
-            _e._$hasClassName(_element,_clazz)
-            ? _e._$delClassName(_element,_clazz)
-            : _e._$addClassName(_element,_clazz);
+        var _doClick = function(_id,_clazz,_ontoggle){
+            var _element = _e._$get(_id),
+                _event = {
+                    clazz:_clazz,
+                    target:_element
+                };
+            if (_e._$hasClassName(_element,_clazz)){
+                _event.toggled = !1;
+                _e._$delClassName(_element,_clazz);
+            }else{
+                _event.toggled = !0;
+                _e._$addClassName(_element,_clazz);
+            }
+            _ontoggle.call(null,_event);
         };
         return function(_element,_options){
             _element = _e._$get(_element);
@@ -458,8 +469,13 @@ var f = function(){
                     _obj.element = _e._$get(_obj.element);
                 }
                 var _id = _e._$id(_obj.element);
-                _v._$addEvent(_element,'click',
-                    _doClick._$bind(null,_id,_obj.clazz));
+                _v._$addEvent(
+                    _element,'click',
+                    _doClick._$bind(
+                         null,_id,
+                        _obj.clazz,
+                        _obj.ontoggle||_f
+                ));
             }
             return this;
         };
