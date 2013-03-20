@@ -1,3 +1,5 @@
+
+
 var perfTest = function(fn, times){
     var date =  +new Date()
     times = times || 0;
@@ -13,7 +15,9 @@ var f = function() {
         _e = _('nej.e'),
         _u = _("nej.u"),
         _v = _("nej.v"),
-        $ = _('nej.$');
+        $ = _('nej.$'),
+        _x = _('nej.x');
+
 
     test('NodeList initialize', function() {
 
@@ -110,25 +114,38 @@ var f = function() {
 
     });
     test("nej方法merge", function(){
-         var _list =  [//class相关
-        "addClassName", "delClassName", "hasClassName", "replaceClassName", "toggle",// class相关
-        //css相关
-        "setStyle", "getStyle","css3d", "style", "offset", "getScrollViewPort", 
-        // 动画 特效 UI
-        "fixed", "effect", "fade", "focus", "highlight", "hover", "page", "placeholder", "tab", "wrapInline",
-        // 属性相关
-        "attr", "dataset",
-        // 节点
-        "remove", "removeByEC",
-        // // 杂项
-        "dom2xml","bindClearAction","bindCopyAction", "counter","addEvent", "clearEvent", "delEvent", "dispatchEvent"]
-        var _node = $("body"), num= 0;
-        _u._$forEach(_list, function(_name){
-            if(typeof _node["_$" + _name] === "function"){
-                num++
-            }
-        })
-        equal(num, _list.length, "全部方法merge")
+        _x._$title = function(_node, title){
+            if(title) _node.title = title
+            else return _node.title
+        }
+
+        _x.isChange = true;
+
+        $("body,div")._$title("haha")
+        equal($("body,div")._$title(), "haha", "get")
+        $("body,div")._$title("haha2")
+        equal($("body,div")._$title(), "haha2", "setter")
+
+
+        //  var _list =  [//class相关
+        // "addClassName", "delClassName", "hasClassName", "replaceClassName", "toggle",// class相关
+        // //css相关
+        // "setStyle", "getStyle","css3d", "style", "offset", "getScrollViewPort", 
+        // // 动画 特效 UI
+        // "fixed", "effect", "fade", "focus", "highlight", "hover", "page", "placeholder", "tab", "wrapInline",
+        // // 属性相关
+        // "attr", "dataset",
+        // // 节点
+        // "remove", "removeByEC",
+        // // // 杂项
+        // "dom2xml","bindClearAction","bindCopyAction", "counter","addEvent", "clearEvent", "delEvent", "dispatchEvent"]
+        // var _node = $("body"), num= 0;
+        // _u._$forEach(_list, function(_name){
+        //     if(typeof _node["_$" + _name] === "function"){
+        //         num++
+        //     }
+        // })
+        // equal(num, _list.length, "全部方法merge")
     })
 
     module("Base:过滤、逻辑")

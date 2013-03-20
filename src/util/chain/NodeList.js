@@ -10,7 +10,7 @@ var f = function() {
         _e = _("nej.e"),
         _v = _("nej.v"),
         _u = _("nej.u"),
-        _proEvent,
+        _x = _("nej.x"),
         // local vals
         _slice = [].slice,
         _doc = document,
@@ -22,6 +22,7 @@ var f = function() {
         _textHandle = _testNode.textContent == null? 'innerText' : 'textContent' ,
         _extend = function(_name, _value, _options) {
             _options = _options || {};
+            if (this[_name] == null || _options.override) console.log(_name)
             if (this[_name] == null || _options.override) this[_name] = _value;
             return this
         },
@@ -108,6 +109,10 @@ var f = function() {
 
     // name space  _("nej.$")    
     var $ = nej.$ = function(_selector, _context){
+        if(_x.isChange){
+            $._$implement(nej.x, {static: true});
+            _x.isChange = false;
+        }
         return new _$$NodeList(_selector, _context);
     };
     /**
