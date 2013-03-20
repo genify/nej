@@ -185,6 +185,8 @@ var f = function(){
                    (_cache[_type]||_f)(_event.result);
             }catch(ex){
                 // ignore
+                console.error(ex.message);
+                console.error(ex);
             }
         };
         // onload callback
@@ -198,12 +200,14 @@ var f = function(){
         // function body
         return function(_url,_options){
             _options = _options||{};
+            // cache request callback
             var _sn = _u._$randNumberString(),
                 _cache = {onload:_options.onload||_f,
                           onerror:_options.onerror||_f};
             _xcache[_sn] = _cache;
             _options.onload = _onLoad._$bind(null,_sn);
             _options.onerror = _onError._$bind(null,_sn);
+            // append request query
             if (!!_options.query){
                 var _sep = _url.indexOf('?')<0?'?':'&',
                     _query = _options.query;

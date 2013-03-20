@@ -69,5 +69,5 @@ var f = function(){
     };
 };
 NEJ.define('{lib}ui/layer/window.wrapper.js',
-      ['{lib}ui/layer/layer.wrapper.js'
-      ,'{lib}ui/layer/window.js'],f);
+          ['{lib}ui/layer/layer.wrapper.js'
+          ,'{lib}ui/layer/window.js'],f);

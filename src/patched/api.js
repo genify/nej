@@ -522,6 +522,18 @@ var f = function(){
         _style.textContent = _css;
     };
     /**
+     * 追加CSS规则
+     * @param  {Node}    样式节点
+     * @param  {String}  单条样式规则
+     * @return {CSSRule} 样式规则对象
+     */
+    _h.__appendCSSText = function(_style,_css){
+        var _sheet = _style.sheet,
+            _length = _sheet.cssRules.length;
+        _sheet.insertRule(_css,_length);
+        return _sheet.cssRules[_length];
+    };
+    /**
      * 应用CSS特效
      * @param  {Node}   _element 节点
      * @param  {Object} _options 配置参数

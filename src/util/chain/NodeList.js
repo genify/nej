@@ -10,8 +10,7 @@ var f = function() {
         _e = _("nej.e"),
         _v = _("nej.v"),
         _u = _("nej.u"),
-        _x = _("nej.x")
-
+        _x = _("nej.x"),
         // local vals
         _slice = [].slice,
         _doc = document,
@@ -23,6 +22,7 @@ var f = function() {
         _textHandle = _testNode.textContent == null? 'innerText' : 'textContent' ,
         _extend = function(_name, _value, _options) {
             _options = _options || {};
+            if (this[_name] == null || _options.override) console.log(_name)
             if (this[_name] == null || _options.override) this[_name] = _value;
             return this
         },
@@ -105,7 +105,7 @@ var f = function() {
         }
     });
 
-    // tmp set Function prototype
+    _extend = _extend.autoSet()
 
     // name space  _("nej.$")    
     var $ = nej.$ = function(_selector, _context){
@@ -119,12 +119,13 @@ var f = function() {
      * _nodelist的包装类
      * @param {String|Node} _node
      */
-    var _$$NodeList = function(_selector, _context){
+    function _$$NodeList(_selector, _context){
         this.length = 0;
         this._signs = {};//标示是否有了当前节点
         this._context = _context || _doc;
         if(!_selector) return 
         if(typeof _selector === "string"){
+            if(_context && _context instanceof _$$NodeList) _context = _context[0];
             this._$add(_e._$all(_selector, _context));
         }else if(_selector instanceof _$$NodeList || _isAcceptedNode(_selector) ||
             _selector.length){ // _$$NodeList 或者 是单节点、或者是类数组(如childNodes)
@@ -133,19 +134,20 @@ var f = function() {
     }
 
     // 扩展接口
-    $._$extend = _extend.autoSet()._$bind($)
+    $._$extend = _extend._$bind($)
 
 
     $._$extend({
         _$signal: "_uid",//会绑定在节点上的唯一标示
         _$instances:{},// 缓存对象
+        _$handlers:[], // 保存原始handler方法
         _$implement: function(_name, _fn, _options){
             _options = _options || {};
             _extend.call(_$$NodeList.prototype, _name, _options.static? this._transport(_fn): _fn);
         }.autoSet(),
         _transport: function(_fn){
             return function(){
-                if(!this.length) throw Error("内部节点集为空")
+                // if(!this.length) throw Error("内部节点集为空")
                 var _args = _slice.call(arguments)
                 _args.unshift(this[0]);
 
@@ -221,6 +223,7 @@ var f = function() {
     // proto function 扩展
     // ================================
     var _rclickEvents = /^(?:click|dblclick|contextmenu|DOMMouseScroll|mouse(?:\w+))$/,
+        _rkeyEvents = /^key(?:)/
         _definitions ={
         // for insert 
         // 这里统一视为_node2为插入点
@@ -239,6 +242,21 @@ var f = function() {
                 var _parent = _node.parentNode;
                 if(_parent) _parent.insertBefore(_node2, _node.nextSibling);
             }
+        },
+        "eventFn":{
+             preventDefault: function(){
+                 if (this.preventDefault) this.preventDefault();
+                 else this.returnValue = false;
+                 return this;
+             },
+             stopPropagation: function(){
+                 if (this.stopPropagation) this.__event.stopPropagation();
+                 else this.cancelBubble = true;
+                 return this;
+             },
+             stop: function(){
+                 this.preventDefault().stopPropagation();
+             }           
         },
         fixProps :{
             // 确保表单元素属性被正确设置 IE lt9
@@ -270,6 +288,31 @@ var f = function() {
                 _dest.removeAttribute($._$signal);
                 // 移除ID:  TODO? 是否允许有重复ID?
                 _dest.removeAttribute("id");
+            },
+            //patch event
+            "event":function(_e){
+                var _type = _e.type;
+                var _button = _e.button;
+                _e.__fixed = true; //标示被fix过
+                _e.target = _e.target || _e.srcElement || document; //for ie
+                _e.metaKey = !!_e.metaKey; //低版本ie会返回undefined 应该返回
+
+
+                if(_e.target.nodeType === 3) _e.target = _e.target.parentNode;
+                if(_rclickEvents.test(_type)){ //如果是鼠标事件 则初始化page相关
+                    _e.pageX = _v._$pageX(_e);
+                    _e.pageY = _v._$pageY(_e);
+                    if (_type === 'mouseover' || _type === 'mouseout'){//如果是鼠标事件中的mouseover与mouseout
+                        var related = event.relatedTarget || event[(_type == 'mouseover' ? 'from' : 'to') + 'Element'];
+                        while (related && related.nodeType == 3) related = related.parentNode;
+                        this.relatedTarget = related;
+                    }
+                }
+                if( !_e.which && _button !== undefined){
+                    // http://api.jquery.com/event.which/ use which
+                    _e.which = ( _button & 1 ? 1 : ( _button & 2 ? 3 : ( _button & 4 ? 2 : 0 ) ) );
+                }
+                _extend(_e, _definitions.eventFn);
             }
         }
     },
@@ -353,7 +396,8 @@ var f = function() {
         },
         _$add:function(_node){
             if(!_node) return;
-            if(typeof _node.length !== "number") _node = [_node];
+            // TODO: 把window 排除在外
+            if(typeof _node.length !== "number" || _node === window) _node = [_node];
             $._merge(this, _node, function(_nodum){
                 if(!_isAcceptedNode(_nodum)) return false;
                 var _uid = $._$uid(_nodum) 
@@ -524,8 +568,16 @@ var f = function() {
                 _selector = _event.slice(_index + 1);
                 _event = _event.slice(0, _index);
             }
-            if(!_handler) throw Error("缺少回调函数")
-
+            if(!_handler) throw Error("缺少回调函数");
+            // 创建一个realHandler
+            else {
+                var _raw = _handler;
+                var _handler = function(_e){
+                    _definitions.fixture.event(_e);
+                    _raw.apply(this, arguments);
+                };
+                _raw.real = _handler;//
+            }    
             if(_selector){ // on ("click", "li.clas1", handler)或 on("click", "li.class1")
                 return this._delegate(_event,_selector, _handler)
             }
@@ -534,6 +586,7 @@ var f = function() {
                 _v._$addEvent(_node, _event, _handler);
             });
         }.splitProcess().autoSet(),
+
         _$off:function(_event, _selector, _handler){
             if(typeof _selector === "function"){
                 _handler = _selector;
@@ -544,6 +597,7 @@ var f = function() {
                 _selector = _event.slice(_index + 1);
                 _event = _event.slice(0, _index);
             }
+            if(_handler) _handler = _handler.real || _handler;
             if(_selector){ // off("click", ".class")   off("click", ".class", handler)
                 return this._undelegate(_event, _selector, _handler)
             }
@@ -570,6 +624,7 @@ var f = function() {
                 }
             });
         }.splitProcess().autoSet(),
+
         _$trigger:function(_event, _options){
             if(typeof _event !== 'string') throw Error("事件类型参数错误")
             this._$forEach(function(_node){
@@ -600,8 +655,7 @@ var f = function() {
     // 添加类似 _$click的事件
     // ================================
     // TODO: 检查是否有遗漏的方法
-    var _beAttached = ("click dbclick blur change focus focusin focusout keydown keypress"+ 
-        "keyup mousedown mouseover mouseup mousemove mouseout scroll select submit").split(" ");
+    var _beAttached = "click dbclick blur change focus focusin focusout keydown keypress keyup mousedown mouseover mouseup mousemove mouseout scroll select submit".split(" ");
 
     _u._$forEach(_beAttached, function(_eventName){
         $._$implement("_$"+_eventName, function(){

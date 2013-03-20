@@ -70,6 +70,7 @@ var f = function(){
      * @config {Number}      height  Flash显示高度，设为不可见时可以不设此参数
      * @config {String|Node} parent  容器节点，默认为document.body
      * @conifg {Object}      params  设置参数
+     * @config {String|Node} target  触发事件的源节点
      * @return {Flash}               flash对象
      * 
      * [hr]
@@ -96,7 +97,8 @@ var f = function(){
                 _options.params = _params;
             }
             var _vars = _params.flashvars||'';
-            if (_h.__canFlashEventBubble(_params.wmode))
+            if (!!_options.target||
+                  _h.__canFlashEventBubble(_params.wmode))
                 _vars += (!_vars?'':'&')+('onevent=nej.ut.j.cb.'+_name);
             _params.flashvars = _vars;
         };
@@ -106,10 +108,10 @@ var f = function(){
         };
         // listen flash mouse event
         var _doListenFlashEvent = function(_id,_event){
-            var _element = _e._$get(_id);
-            if (!!_element)
-                _v._$dispatchEvent(
-                    _element.parentNode,_event.type);
+            var _type = _event.type.toLowerCase();
+            requestAnimationFrame(function(){
+                _v._$dispatchEvent(_id,_type);
+            });
         };
         var _doCheckFlash = function(_id){
             var _arr = [document.embeds[_id],
@@ -133,7 +135,9 @@ var f = function(){
             _options.id = _id;
             // delegate mouse event
             if (!_options.hidden){
-                _w['cb'+_seed] = _doListenFlashEvent._$bind(null,_id);
+                var _tid = _e._$id(_options.target)||
+                           _e._$id(_options.parent);
+                _w['cb'+_seed] = _doListenFlashEvent._$bind(null,_tid);
                 _doInitFlashVars(_options,'cb'+_seed);
             }
             _doInitDOM(_options);
@@ -145,4 +149,5 @@ var f = function(){
     })();
 };
 NEJ.define('{lib}util/flash/flash.js',
-      ['{lib}util/template/jst.js'],f);
+          ['{lib}util/template/jst.js'
+          ,'{lib}util/timer/animation.js'],f);

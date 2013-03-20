@@ -1,3 +1,5 @@
+
+
 var perfTest = function(fn, times){
     var date =  +new Date()
     times = times || 0;
@@ -13,7 +15,9 @@ var f = function() {
         _e = _('nej.e'),
         _u = _("nej.u"),
         _v = _("nej.v"),
-        $ = _('nej.$');
+        $ = _('nej.$'),
+        _x = _('nej.x');
+
 
     test('NodeList initialize', function() {
 
@@ -110,25 +114,38 @@ var f = function() {
 
     });
     test("nej方法merge", function(){
-         var _list =  [//class相关
-        "addClassName", "delClassName", "hasClassName", "replaceClassName", "toggle",// class相关
-        //css相关
-        "setStyle", "getStyle","css3d", "style", "offset", "getScrollViewPort", 
-        // 动画 特效 UI
-        "fixed", "effect", "fade", "focus", "highlight", "hover", "page", "placeholder", "tab", "wrapInline",
-        // 属性相关
-        "attr", "dataset",
-        // 节点
-        "remove", "removeByEC",
-        // // 杂项
-        "dom2xml","bindClearAction","bindCopyAction", "counter","addEvent", "clearEvent", "delEvent", "dispatchEvent"]
-        var _node = $("body"), num= 0;
-        _u._$forEach(_list, function(_name){
-            if(typeof _node["_$" + _name] === "function"){
-                num++
-            }
-        })
-        equal(num, _list.length, "全部方法merge")
+        _x._$title = function(_node, title){
+            if(title) _node.title = title
+            else return _node.title
+        }
+
+        _x.isChange = true;
+
+        $("body,div")._$title("haha")
+        equal($("body,div")._$title(), "haha", "get")
+        $("body,div")._$title("haha2")
+        equal($("body,div")._$title(), "haha2", "setter")
+
+
+        //  var _list =  [//class相关
+        // "addClassName", "delClassName", "hasClassName", "replaceClassName", "toggle",// class相关
+        // //css相关
+        // "setStyle", "getStyle","css3d", "style", "offset", "getScrollViewPort", 
+        // // 动画 特效 UI
+        // "fixed", "effect", "fade", "focus", "highlight", "hover", "page", "placeholder", "tab", "wrapInline",
+        // // 属性相关
+        // "attr", "dataset",
+        // // 节点
+        // "remove", "removeByEC",
+        // // // 杂项
+        // "dom2xml","bindClearAction","bindCopyAction", "counter","addEvent", "clearEvent", "delEvent", "dispatchEvent"]
+        // var _node = $("body"), num= 0;
+        // _u._$forEach(_list, function(_name){
+        //     if(typeof _node["_$" + _name] === "function"){
+        //         num++
+        //     }
+        // })
+        // equal(num, _list.length, "全部方法merge")
     })
 
     module("Base:过滤、逻辑")
@@ -199,51 +216,62 @@ var f = function() {
         _v._$addEvent($node[0],"click",_handle1)
         equal($._delegateHandlers[_uid], undefined, "不使用事件代理，不会保存handler");
         _v._$dispatchEvent($node[0],"click",{})
-        // $node._$trigger("click");
-        // equal(_locals[0],1, "被正确触发")
-        // $node._$off("click",_handle1);
+        equal(_locals[0],1, "被正确触发")
+        
+        $node._$trigger("click");
+        equal(_locals[0],2, "被正确触发")
+        $node._$off("click",_handle1);
+        $node._$trigger("click")
+        equal(_locals[0],2, "不再被触发，因为已经解除绑定")
+
+        var _prev = _locals[0]
+        $node._$on(["click","mouseover", "mouseout"], _handle1)
         // $node._$trigger("click")
-        // equal(_locals[0],1, "不再被触发，因为已经解除绑定")
+        $node._$trigger(["click", "mouseover"])
+        equal(_locals[0],_prev+2, "可以使用数组绑定多个事件, 并且可以trigger多个事件")
+        var _prev = _locals[0];
+        $node._$off(["click","mouseover"])
+        $node._$trigger(["click","mouseover"])
+        equal(_locals[0],_prev, "click, mouseover, 无法触发因为都被解绑了")
+        $node._$trigger("mouseout",{hello:1})
+        equal(_locals[0],_prev+1, "mouseout仍然存")
+        $node._$off()
+        $node._$trigger(["mouseout","click","mouseover"])
+        equal(_locals[0],_prev+1, "所有事件都被取消")
 
-        // var _prev = _locals[0]
-        // $node._$on(["click","mouseover", "mouseout"], _handle1)
-        // // $node._$trigger("click")
-        // $node._$trigger(["click", "mouseover"])
-        // equal(_locals[0],_prev+2, "可以使用数组绑定多个事件, 并且可以trigger多个事件")
-        // var _prev = _locals[0];
-        // $node._$off(["click","mouseover"])
-        // $node._$trigger(["click","mouseover"])
-        // equal(_locals[0],_prev, "click, mouseover, 无法触发因为都被解绑了")
-        // $node._$trigger("mouseout",{hello:1})
-        // equal(_locals[0],_prev+1, "mouseout仍然存")
-        // $node._$off()
-        // $node._$trigger(["mouseout","click","mouseover"])
-        // equal(_locals[0],_prev+1, "所有事件都被取消")
+        var _prev = _locals[0]
+        var _handle2 = function(e){_locals[0]+= e.step||1}
+        $node._$on(["mouseout","click","mouseover"], _handle2)
 
-        // var _prev = _locals[0]
-        // var _handle2 = function(e){_locals[0]+= e.step||1}
-        // $node._$on(["mouseout","click","mouseover"], _handle2)
+        $node._$trigger("mouseout", {step:2})
+        equal(_locals[0],_prev+2, "简单参数传入")
 
-        // $node._$trigger("mouseout", {step:2})
-        // equal(_locals[0],_prev+2, "简单参数传入")
+        var _prev = _locals[0];
+        $node._$trigger({
+            "mouseout":{step:3},
+            "mouseover":{step:2}
+        })
+        equal(_locals[0],_prev+5, "多重trigger并传入参数")
 
-        // var _prev = _locals[0];
-        // $node._$trigger({
-        //     "mouseout":{step:3},
-        //     "mouseover":{step:2}
-        // })
-        // equal(_locals[0],_prev+5, "多重trigger并传入参数")
+        var _prev = _locals[0];
+        $node._$trigger(["mouseout","click"],{step:3})
+        equal(_locals[0],_prev+6, "多个trigger并传入同一个参数")
 
-        // var _prev = _locals[0];
-        // $node._$trigger(["mouseout","click"],{step:3})
-        // equal(_locals[0],_prev+6, "多个trigger并传入同一个参数")
 
     })
+
+    test("_event fixtue", function(){
+        $node = $("#event-fixture");
+        $node._$on("click", function(_e){
+            ok(_e.__fixed, "有__fixed标示说明被patch")
+        })
+        $node._$trigger("click", {hello:1});
+    });
 
     test("_$click、_$dblclick....", function(){
         var $node = $("#event");
         var _locals = [0]
-        var _methods = ("click dbclick blur change focus focusin focusout keydown keypress"+ 
+        var _methods = ("click dbclick blur change focus focusin focusout keydown keypress "+ 
     "keyup mousedown mouseover mouseup mousemove mouseout scroll select submit").split(" ");
 
         _u._$forEach(_methods, function(_method, _index){
@@ -334,7 +362,8 @@ var f = function() {
     module("链式操作")
     test("基本操作:UI", function(){
         // 获取 奇数行的代码 设置样式
-        deepEqual($("#chainable li:nth-child(odd)")._$style({
+        deepEqual(
+        $("#chainable li:nth-child(odd)")._$style({
             "background": "#cca",
             "cursor": "pointer"
         })
@@ -362,12 +391,22 @@ var f = function() {
                 $(this)._$insert(div, "bottom");
             },
             "mouseover li:nth-child(odd)":function(_e){
+                if(!_e.__fixed) alert("delegate event object not fixed")
                 this._isLight = !this._isLight;
                 // 每次点击改变背景色
                 $(this)._$style("background-color", this._isLight? "#cca":"#331")
+            },
+            "click li:nth-child(odd)":function(_e){
+                alert("_e");
             }
         // 获得样式值
-        })._$style(["width", "left"]),{width: "800px", left: "300px"}, " 链式操作成功，并且getter返回值成功")
+        })._$off("click li:nth-child(odd)")//这个无法触发
+        ._$style(["width", "left"]), {width: "800px", left: "300px"}, " 链式操作成功，并且getter返回值成功")
+        
+        $("li")._$on("contextmenu",function(_e){
+            alert(_e.which)
+            alert("contextmenu")
+        })
 
     })
 

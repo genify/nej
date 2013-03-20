@@ -121,6 +121,7 @@ var f = function(){
            ,doadditem:this.__doAddItem._$bind(this)
            ,dodeleteitem:this.__doDeleteItem._$bind(this)
            ,doupdateitem:this.__doUpdateItem._$bind(this)
+           ,dopullrefresh:this.__doPullRefresh._$bind(this)
         });
     };
     /**
@@ -136,6 +137,17 @@ var f = function(){
      * @return {Void}
      */
     _proAbstractListCache.__doLoadList = _f;
+    /**
+     * 从服务器端前向刷新列表，子类实现具体逻辑
+     * @protected
+     * @method {__doPullRefresh}
+     * @param  {Object}   请求信息
+     * @config {String}   key      列表标识
+     * @config {String}   data     请求相关数据
+     * @config {Function} onload   列表项载入回调
+     * @return {Void}
+     */
+    _proAbstractListCache.__doPullRefresh = _f;
     /**
      * 从服务器端载入列表项，子类实现具体逻辑
      * @protected

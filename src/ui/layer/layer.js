@@ -115,6 +115,7 @@ var f = function(){
         this.__supDestroy();
         this.__doHide();
         this._$setContent('');
+        _e._$style(this.__body,{top:'',left:''});
     };
     /**
      * 初始化内容区域，子类实现具体逻辑

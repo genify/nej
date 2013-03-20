@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>test grid</title>
+    <meta charset="utf-8"/>
+    <style>
+      *{margin:0;padding:0;border:0;}
+      .box{position:relative;}
+      .box .hd{position:absolute;width:5px;height:30px;overflow:hidden;background:#f00;cursor:col-resize;}
+      .tb{table-layout:fixed;width:100%;}
+      th{position:relative;min-width:50px;}
+      th,td{overflow:hidden;}
+    </style>
+  </head>
+  <body>
+    <table id="xxx" class="tb" border="0" cellpadding="0" cellspacing="0">
+      <tr><th id="col-0">1111111</th>
+          <th id="col-1">2222222</th>
+          <th>3333333</th></tr>
+      <script>
+        (function(){
+            var a = [];
+            for(var i=0;i<1000;i++){
+                a.push('<tr>');
+                a.push('<td>zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz</td>');
+                a.push('<td>xxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyxzzzzzzzzzzzzzzzzzzzz</td>');
+                a.push('<td>yyyyyyyyyyyyyyyyyyyxxyyyyyyxxyyyyyyxxyyyyyy</td>');
+                a.push('</tr>');
+            }
+            document.write(a.join(''));
+        })();
+      </script>
+    </table>
+    
+    <script src="../../../src/define.js?pro=./"></script>
+    <script>
+      define(['{lib}util/tb.resize/resize.x.js'],
+      function(){
+          var _  = NEJ.P,
+              _e = _('nej.e'),
+              _t = _('nej.ut');
+          
+          _t._$$TBResizeX._$allocate({
+              grid:'col-0'
+          });
+          _t._$$TBResizeX._$allocate({
+              grid:'col-1'
+          });
+      });
+    </script>
+  </body>
+</html>

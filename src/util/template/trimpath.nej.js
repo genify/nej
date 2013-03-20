@@ -62,15 +62,22 @@
         var _reg0 = /^\s*[\[\{'"].*?[\]\}'"]\s*$/,
             _reg1 = /[\&\|\<\>\+\-\*\/\%\,\(\)\[\]\?\:\!\=\;]/,
             // keyword extend later
-            _reg2 = /^(?:defined|null|undefined|true|false|instanceof|new|this|typeof|\$v|[\d]+)$/i;
+            _reg2 = /^(?:defined|null|undefined|true|false|instanceof|new|this|typeof|\$v|[\d]+)$/i,
+            // statement extend later
+            // new XX
+            _reg3 = /^new\s+/,
+            _reg4 = /['"]/;
         var _doParseSimple = function(_value){
             if (_reg0.test(_value)) return;
             _value = _value.split('.')[0].trim();
-            if (!_value) return;
+            if (!_value||_reg4.test(_value)) return;
+            _value = _value.replace(_reg3,'');
+            //console.log('-->'+_value+'<--');
             try{
                 if (_reg2.test(_value))
                     return;
                 _vars[_value] = 1;
+                //console.log('=====>'+_value+'<====');
             }catch(e){
                 // ignore
             }
@@ -220,6 +227,7 @@
         var _rbrc = /\\([\{\}])/g;
         return function(_content,_out){
             _content = _content.replace(_rbrc,'$1');
+            //console.log('++++>'+_content);
             var _part = _content.slice(1, -1).split(_rspc),
                 _conf = _config.def[_part[0]];
             if (!_conf){_doParseSectionText(_content,_out);return;}
@@ -256,7 +264,8 @@
         if (_exps.length==1){
             var _var = _exps.pop();
             _doParseVars(_var);
-            _out.push(_var);
+            // fix error for ${}
+            _out.push(_var==''?'""':_var);
             return;
         }
         var _exp = _exps.pop().split(':');

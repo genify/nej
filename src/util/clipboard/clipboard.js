@@ -32,6 +32,7 @@ var f = function(){
         // cover flash
         _e._$flash({
             parent:_box,
+            target:_element,
             width:'100%',height:'100%',
             src:_c._$get('clipboard.swf'),
             params:{wmode:'transparent',flashvars:_vars}
@@ -70,9 +71,6 @@ var f = function(){
     _e._$bindCopyAction = function(_element,_content){
         _element = _e._$get(_element);
         if (!_element) return;
-        _v._$addEvent(_element,'click',function(){
-            alert('请使用Ctrl+C复制选中的内容！');
-        });
         // bind callback
         var _key = 'set_'+_u._$randNumberString();
         _b[_key] = function(){

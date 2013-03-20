@@ -30,7 +30,17 @@ var f = function(){
      * @return {Void}
      */
     _proAbstractModule.__onShow = function(_options){
-        var _parent = _e._$get((_options.data||_o).parent);
+        // try get parent
+        var _parent = _e._$get(_options.parent);
+        if (!_parent){
+            var _data = _options.data||_o;
+            _parent = _e._$get(_data.parent);
+        }
+        if (!_parent){
+            var _data = _options.input||_o;
+            _parent = _e._$get(_data.parent);
+        }
+        // show and refresh module
         if (!!_parent&&!!this.__body) 
             _parent.appendChild(this.__body);
         this.__supOnShow(_options);

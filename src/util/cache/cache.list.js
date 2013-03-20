@@ -32,6 +32,7 @@ var f = function(){
      *           ,doadditem:this.__doAddItem._$bind(this)
      *           ,dodeleteitem:this.__doDeleteItem._$bind(this)
      *           ,doupdateitem:this.__doUpdateItem._$bind(this)
+     *           ,dopullrefresh:this.__doPullRefresh._$bind(this)
      *       });
      *   };
      *   // 实现取列表的方法
@@ -240,6 +241,25 @@ var f = function(){
         return _item;
     };
     /**
+     * 前向追加列表项至列表
+     * @param  {String} 列表标识
+     * @param  {Object|Array} 列表项或者列表
+     * @return {Void}
+     */
+    _proListCache.__doUnshiftToList = function(_key,_item){
+        if (!_item) return;
+        if (!_u._$isArray(_item)){
+            var _list = this._$getListInCache(_key),
+                _item = this.__doSaveItemToCache(_item,_key);
+            if (!!_item) _list.unshift(_item);
+            return;
+        }
+        _u._$reverseEach(
+            _item,this.
+            __doUnshiftToList._$bind(this,_key)
+        );
+    };
+    /**
      * 设置列表总数<br/>
      * 脚本举例
      * [code]
@@ -337,6 +357,42 @@ var f = function(){
         return _hash;
     };
     /**
+     * 前向刷新列表
+     * @method {_$pullRefresh}
+     * @param  {Object} 可选配置参数
+     * @config {String} key   列表标识
+     * @config {Number} data  发送到服务器数据信息
+     * @return {nej.ut._$$ListCache}
+     */
+    _proListCache._$pullRefresh = (function(){
+        var _doFormatKey = function(_options){
+            return 'r-'+_options.key;
+        };
+        return function(_options){
+            var _ropt = NEJ.X({},_options),
+                _rkey = _doFormatKey(_ropt);
+            if (!this.__doQueueRequest(_rkey,
+                 this._$dispatchEvent._$bind(this,'onpullrefresh'))){
+                _ropt.rkey = _rkey;
+                _ropt.onload = this.__pullRefresh._$bind(this,_ropt);
+                this._$dispatchEvent('dopullrefresh',_ropt);
+            }
+            return this;
+        };
+    })();
+    /**
+     * 前向取列表回调
+     * @protected
+     * @method {__pullRefresh}
+     * @param  {Object} 请求信息
+     * @param  {Array}  数据列表
+     * @return {Void}
+     */
+    _proListCache.__pullRefresh = function(_options,_list){
+        this.__doUnshiftToList(_options.key,_list);
+        this.__doCallbackRequest(_options.rkey,_options);
+    };
+    /**
      * 取列表<br/>
      * 脚本举例
      * [code]
@@ -383,16 +439,27 @@ var f = function(){
      * 取列表回调
      * @protected
      * @method {__getList}
-     * @param  {Object} 请求信息
-     * @param  {Array}  数据列表
+     * @param  {Object}        请求信息
+     * @param  {Array|Object}  数据列表，或者带总数信息列表
      * @return {Void}
      */
-    _proListCache.__getList = function(_options,_list){
+    _proListCache.__getList = function(_options,_result){
         _options = _options||_o;
         // save list to cache
         var _key = _options.key,
             _offset = _options.offset,
             _chlist = this._$getListInCache(_key);
+        // list with total
+        // {total:12,result:[]} 或者 {total:13,list:[]}
+        var _list = _result;
+        if (!_u._$isArray(_list)){
+            _list = _result.result||_result.list||[];
+            var _total = parseInt(_result.total)||0;
+            if (_total>_list.length){
+                this._$setTotal(_key,_total);
+            }
+        }
+        // merge list
         _u._$forEach(_list,
             function(_item,_index){
                 _chlist[_offset+_index] = this.
@@ -520,19 +587,28 @@ var f = function(){
         var _key = _options.key;
         _item = this.__doSaveItemToCache(_item,_key);
         if (!!_item){
-            var _list = this._$getListInCache(_key);
+            var _flag = 0,
+                _list = this._$getListInCache(_key);
             if (!_options.push){
+                _flag = -1;
                 _list.unshift(_item);
             }else if(_list.loaded){
+                _flag = 1;
                 _list.push(_item);
             }else{
                 // add total
                 _list.length++;
             }
         }
-        this._$dispatchEvent('onitemadd',{
-            item:_item,key:_key
-        });
+        var _event = {
+                key:_key,
+                flag:_flag,
+                data:_item,
+                action:'add',
+                ext:_options.ext
+            };
+        this._$dispatchEvent('onitemadd',_event);
+        return _event;
     };
     /**
      * 删除列表项<br />
@@ -575,8 +651,8 @@ var f = function(){
         var _event = {
                 key:_key,
                 data:_item,
-                ext:_options.ext,
-                action:'delete'
+                action:'delete',
+                ext:_options.ext
             };
         this._$dispatchEvent('onitemdelete',_event);
         return _event;
@@ -623,8 +699,8 @@ var f = function(){
         var _event = {
                 key:_key,
                 data:_item,
-                ext:_options.ext,
-                action:'update'
+                action:'update',
+                ext:_options.ext
             };
         this._$dispatchEvent('onitemupdate',_event);
         return _event;

@@ -493,4 +493,4 @@ var f = function(){
     };
 };
 NEJ.define('{lib}util/resize/resize.js',
-      ['{lib}util/dragger/dragger.js'],f);
+          ['{lib}util/dragger/dragger.js'],f);

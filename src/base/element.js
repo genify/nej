@@ -1261,14 +1261,14 @@ var f = function(){
      *   <html>
      *    <head>
      *        <title>test</title>
-     *      <style>body{font-size:20px;}</style>
+     *        <style>body{font-size:20px;}</style>
      *    </head>
      *   </html>
      * [/code]
      * 
      * @api    {nej.e._$addStyle}
-     * @param  {String}        样式内容
-     * @return {nej.e}
+     * @param  {String} 样式内容
+     * @return {Node}   样式节点
      */
     _e._$addStyle = (function(){
         var _reg = /[\s\r\n]+/gi;
@@ -1279,7 +1279,7 @@ var f = function(){
             var _node = _e._$create('style');
             document.head.appendChild(_node);
             _h.__applyCSSText(_node,_h.__filterCSSText(_style));
-            return this;
+            return _node;
         };
     })();
     /**
@@ -1307,8 +1307,10 @@ var f = function(){
             _script = _script.trim();
             if (!!_script)
                 return (new Function(_script))();
-        }catch(e){
+        }catch(ex){
             // ignore
+            console.error(ex.message);
+            console.error(ex);
         }
     };
     /**
@@ -1367,6 +1369,16 @@ var f = function(){
             _cspol = null;
         }
         return this;
+    };
+    /**
+     * 追加CSS规则
+     * @param  {Node}    样式节点
+     * @param  {String}  单条样式规则
+     * @return {CSSRule} 样式规则对象
+     */
+    _e._$appendCSSText = function(_style,_css){
+        _style = _e._$get(_style);
+        return !_style?null:_h.__appendCSSText(_style,_css);
     };
     /**
      * 新增样式类，多个样式用空格分开<br/>

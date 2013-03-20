@@ -151,21 +151,6 @@ var f = function(){
         _e._$setStyle(this.__nmore,'visibility','hidden');
     };
     /**
-     * 数据载入之后处理逻辑
-     * @protected
-     * @method {__doBeforeListShow}
-     * @return {Void}
-     */
-    _proListModuleWF.__doBeforeListShow = function(){
-        var _event = {
-            parent:this.__lbox
-        };
-        this._$dispatchEvent('onafterlistload',_event);
-        if (!_event.stopped){
-            _e._$removeByEC(this.__ntip);
-        }
-    };
-    /**
      * 列表绘制之前处理逻辑
      * @protected
      * @method {__doBeforeListRender}
@@ -187,39 +172,13 @@ var f = function(){
         this.__doShowMessage('onemptylist','没有列表数据！');
     };
     /**
-     * 通过事件回调检测显示信息
-     * @protected
-     * @method {__doShowMessage}
-     * @param  {String} 事件名称
-     * @param  {String} 默认显示内容
-     * @param  {Object} 扩展信息
-     * @return {Void} 
-     */
-    _proListModuleWF.__doShowMessage = function(_name,_default){
-        var _event = {
-            parent:this.__lbox
-        };
-        this._$dispatchEvent(_name,_event);
-        if (!_event.stopped){
-            var _msg = _event.value||_default;
-            if (_u._$isString(_msg)){
-                if (!this.__ntip)
-                    this.__ntip = _e._$create('div');
-                this.__ntip.innerHTML = _msg;
-            }else{
-                this.__ntip = _msg;
-            }
-            this.__lbox.appendChild(this.__ntip);
-        }
-    };
-    /**
      * 以jst模版方式绘制列表
      * @protected
      * @method {__doShowListByJST}
      * @return {Void}
      */
-    _proListModuleWF.__doShowListByJST = function(_html){
-        this.__lbox.insertAdjacentHTML('beforeEnd',_html);
+    _proListModuleWF.__doShowListByJST = function(_html,_pos){
+        this.__lbox.insertAdjacentHTML(_pos||'beforeEnd',_html);
     };
     /**
      * 以item模版方式绘制列表
@@ -229,7 +188,25 @@ var f = function(){
      */
     _proListModuleWF.__doShowListByItem = function(_items){
         this.__items = this.__items||[];
-        _r.push.apply(this.__items,_items);
+        if (_u._$isArray(_items)){
+            _r.push.apply(this.__items,_items);
+        }else{
+            this.__items.push(_items);
+        }
+    };
+    /**
+     * 添加列表项回调
+     * @protected
+     * @method {__cbItemAdd}
+     * @return {Void}
+     */
+    _proListModuleWF.__cbItemAdd = function(_event){
+        this.__doCheckResult(_event,'onafteradd');
+        var _flag = _event.flag;
+        if (_event.stopped||!_flag) return;
+        this.__offset += 1;
+        _flag==-1 ? this._$unshift(_event.data)
+                  : this._$append(_event.data);
     };
     /**
      * 删除列表项回调，子类按需实现具体业务逻辑
@@ -277,9 +254,11 @@ var f = function(){
             var _list = this.__cache._$getListInCache(_event.key),
                 _index = _u._$indexOf(_list,_event.data);
             if (_index<0) return;
-            var _html = _e._$getHtmlTemplate(this.__ikey,{
-                    beg:_index,end:_index,xlist:_list
-                });
+            this.__iopt.list = _list;
+            this.__iopt.beg  = _index;
+            this.__iopt.end  = _index;
+            var _html = _e._$getHtmlTemplate(
+                        this.__ikey,this.__iopt);
             _node.insertAdjacentHTML('afterEnd',_html);
             _e._$remove(_node);
         }
@@ -289,8 +268,8 @@ var f = function(){
      * @method {_$next}
      * @return {Void}
      */
-    _proListModuleWF._$next = function(){
-        // update offset first for 
+    _proListModuleWF._$next = function(_pulling){
+        // update offset first for
         // offset adjust after list loaded
         var _offset = this.__offset;
         this.__offset += this.__ropt.limit;
@@ -308,4 +287,4 @@ var f = function(){
     };
 };
 NEJ.define('{lib}util/list/module.waterfall.js',
-      ['{lib}util/list/module.js'],f);
+          ['{lib}util/list/module.js'],f);
