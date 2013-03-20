@@ -264,7 +264,8 @@
         if (_exps.length==1){
             var _var = _exps.pop();
             _doParseVars(_var);
-            _out.push(_var);
+            // fix error for ${}
+            _out.push(_var==''?'""':_var);
             return;
         }
         var _exp = _exps.pop().split(':');
