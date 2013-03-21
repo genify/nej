@@ -153,7 +153,15 @@ var f = function() {
      * @return {Void}
      */
     _proPlayer._$setVolume = function(_volume){
+        console.log(_volume);
         _n._$exec('player.setVolume',_volume);
+    };
+    /**
+     * 获取音量
+     * @return {Float} 音量，范围：[0.0,1.0]
+     */
+    _proPlayer._$getVolume = function(){
+        return _n._$exec('player.getVolume');
     };
     /**
      * 设置播放位置
@@ -195,7 +203,10 @@ var f = function() {
                 });
             return;
             case 'volumechange':
-                
+                console.log('-->'+this._$getVolume())
+                this._$dispatchEvent('onvolumechange',{
+                    volume:this._$getVolume()
+                });
             return;
             case 'error':
                 
