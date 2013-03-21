@@ -109,7 +109,6 @@ var f = function() {
                 this.__nevt,_doAddEvent,this
             );
             // sync state
-            this.__onNativeEvent('timeupdate');
             this.__onNativeEvent('volumechange');
         };
     })();
