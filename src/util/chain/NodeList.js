@@ -222,7 +222,7 @@ var f = function() {
     // proto function 扩展
     // ================================
     var _rclickEvents = /^(?:click|dblclick|contextmenu|DOMMouseScroll|mouse(?:\w+))$/,
-        _rkeyEvents = /^key(?:)/
+        _rkeyEvents = /^key(?:)/,
         _definitions ={
         // for insert 
         // 这里统一视为_node2为插入点
