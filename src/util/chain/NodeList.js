@@ -222,7 +222,7 @@ var f = function() {
     // proto function 扩展
     // ================================
     var _rclickEvents = /^(?:click|dblclick|contextmenu|DOMMouseScroll|mouse(?:\w+))$/,
-        _rkeyEvents = /^key(?:)/
+        _rkeyEvents = /^key(?:)/,
         _definitions ={
         // for insert 
         // 这里统一视为_node2为插入点
@@ -636,41 +636,43 @@ var f = function() {
         // 让这个对象看起来像数组
         splice: function(){ throw Error("don't use the NodeList#splice")}
     });
+    // @ remove 无法被混淆的方法
+    // // 无奈 添加 _$before // _$before2   _$bottom _$bottom2等方法    
+    // _u._$forIn(_definitions.insertor, function(_value, _key){
+    //     $._$implement("_$" + _key, function(){
+    //        var _args = _slice.call(arguments);
+    //        _args.push(_key)
+    //        return this._$insert.apply(this, _args)
+    //     })
+    //     $._$implement("_$" + _key+"2", function(){
+    //        var _args = _slice.call(arguments);
+    //        _args.push(_key)
+    //        return this._$insert2.apply(this, _args)
+    //     })
+    // })
 
-    // 无奈 添加 _$before // _$before2   _$bottom _$bottom2等方法    
-    _u._$forIn(_definitions.insertor, function(_value, _key){
-        $._$implement("_$" + _key, function(){
-           var _args = _slice.call(arguments);
-           _args.push(_key)
-           return this._$insert.apply(this, _args)
-        })
-        $._$implement("_$" + _key+"2", function(){
-           var _args = _slice.call(arguments);
-           _args.push(_key)
-           return this._$insert2.apply(this, _args)
-        })
-    })
+    // // 添加类似 _$click的事件
+    // // ================================
+    // // TODO: 检查是否有遗漏的方法
+    //    @
+    // var _beAttached = "click dbclick blur change focus focusin focusout keydown keypress keyup mousedown mouseover mouseup mousemove mouseout scroll select submit".split(" ");
 
-    // 添加类似 _$click的事件
-    // ================================
-    // TODO: 检查是否有遗漏的方法
-    var _beAttached = "click dbclick blur change focus focusin focusout keydown keypress keyup mousedown mouseover mouseup mousemove mouseout scroll select submit".split(" ");
-
-    _u._$forEach(_beAttached, function(_eventName){
-        $._$implement("_$"+_eventName, function(){
-            var _type = typeof arguments[0];
-            var _args = _slice.call(arguments);
-            _args.unshift(_eventName);
-            // click("li", handler)   或者  click(handler)
-            if((_type == "function") || (_type === "string" && typeof arguments[1] === "function")){
-                this._$on.apply(this, _args);
-            }else{
-            // click(options) 或者 click()
-                this._$trigger.apply(this, _args);
-            }
-            return this;
-        }.autoSet())
-    });
+    // @ remove 无法被混淆 移除
+    // _u._$forEach(_beAttached, function(_eventName){
+    //     $._$implement("_$"+_eventName, function(){
+    //         var _type = typeof arguments[0];
+    //         var _args = _slice.call(arguments);
+    //         _args.unshift(_eventName);
+    //         // click("li", handler)   或者  click(handler)
+    //         if((_type == "function") || (_type === "string" && typeof arguments[1] === "function")){
+    //             this._$on.apply(this, _args);
+    //         }else{
+    //         // click(options) 或者 click()
+    //             this._$trigger.apply(this, _args);
+    //         }
+    //         return this;
+    //     }.autoSet())
+    // });
     // 把原型还回去, WARN:千万注意
     _fn.reset();
 }
