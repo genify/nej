@@ -28,28 +28,28 @@ var f = function() {
      *                                 
      */
     _p._$getWindowPos = function(_size,_align){
-        var _position = _n._$exec('os.getSystemInfo', 'desktop');
-        var _pos ={};
+        var _position = _n._$exec('os.getSystemInfo', 'desktop')||_o,
+            _wkarea = _position.workArea||_o,_pos ={};
         switch(_align){
             case 'topleft':
                 _pos.x =0;
                 _pos.y =0;
                 break;
             case 'topright':
-                _pos.x = _position.workArea.width - _size.width;
+                _pos.x = _wkarea.width - _size.width;
                 _pos.y = 0;
                 break;
             case 'bottomleft':
                 _pos.x = 0;
-                _pos.y = _position.workArea.height - _size.height;
+                _pos.y = _wkarea.height - _size.height;
                 break;
             case 'bottomright':
-                _pos.x = _position.workArea.width - _size.width;
-                _pos.y = _position.workArea.height - _size.height;
+                _pos.x = _wkarea.width - _size.width;
+                _pos.y = _wkarea.height - _size.height;
                 break;
             default:
-                _pos.x = Math.floor((_position.workArea.width - _size.width) / 2);
-                _pos.y = Math.floor((_position.workArea.height - _size.height) / 2);
+                _pos.x = Math.floor((_wkarea.width - _size.width) / 2);
+                _pos.y = Math.floor((_wkarea.height - _size.height) / 2);
                 break;
         }
         return _pos;
