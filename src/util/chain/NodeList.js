@@ -61,7 +61,11 @@ var f = function() {
                 },
                 reset: function(){
                     for(var _i in _list) if(_list.hasOwnProperty(_i)){
-                        _proto[_i] = _list[_i];
+                        if(_list[_i] === undefined){
+                            delete _proto[_i];
+                        }else{
+                            _proto[_i] = _list[_i];
+                        }
                     }
                 }
             }
