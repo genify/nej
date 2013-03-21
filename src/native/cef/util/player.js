@@ -66,7 +66,7 @@ var f = function() {
      */
     _proPlayer.__init = function(){
         this.__nevt = [
-            'play','pause','timeupdate',
+            'dataloaded','play','pause','timeupdate',
             'ended','volumechange','error','notify'
         ];
         this.__supInit();
@@ -111,6 +111,15 @@ var f = function() {
      */
     _proPlayer._$play = function(_url){
         _n._$exec('player.load',_url);
+        this._$dispatchEvent('onstatechange',{
+            state:0
+        });
+    };
+    /**
+     * 恢复状态
+     * @return {Void}
+     */
+    _proPlayer._$resume = function(){
         _n._$exec('player.play');
     };
     /**
@@ -133,7 +142,10 @@ var f = function() {
      * @return {Void}
      */
     _proPlayer._$setMute = function(_mute){
-        _n._$exec('player.mute',_mute);
+        _n._$exec('player.mute',!!_mute);
+        this._$dispatchEvent('onmutechange',{
+            mute:!!_mute
+        });
     };
     /**
      * 设置音量
@@ -145,11 +157,11 @@ var f = function() {
     };
     /**
      * 设置播放位置
-     * @param  {Float} 播放位置，单位秒
+     * @param  {Float} 播放位置，百分比
      * @return {Void}
      */
-    _proPlayer._$setPosition = function(_position){
-        _n._$exec('player.setCurrentTime',_position);
+    _proPlayer._$setPosition = function(_ratio){
+        _n._$exec('player.setCurrentTime',_ratio*_player.duration);
     };
     /**
      * native事件回调
@@ -158,17 +170,29 @@ var f = function() {
      */
     _proPlayer.__onNativeEvent = function(_name){
         switch(_name){
+            case 'dataloaded':
+                this._$resume();
+            return;
             case 'play':
-                
+                this._$dispatchEvent('onstatechange',{
+                    state:1
+                });
             return;
             case 'pause':
-                
+                this._$dispatchEvent('onstatechange',{
+                    state:2
+                });
             return;
             case 'ended':
-                
+                this._$dispatchEvent('onstatechange',{
+                    state:4
+                });
             return;
             case 'timeupdate':
-                
+                this._$dispatchEvent('onpositionchange',{
+                    current:_n._$exec('player.getCurrentTime'),
+                    duration:_player.duration
+                });
             return;
             case 'volumechange':
                 
