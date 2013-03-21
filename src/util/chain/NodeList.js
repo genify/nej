@@ -22,7 +22,6 @@ var f = function() {
         _textHandle = _testNode.textContent == null? 'innerText' : 'textContent' ,
         _extend = function(_name, _value, _options) {
             _options = _options || {};
-            if (this[_name] == null || _options.override) console.log(_name)
             if (this[_name] == null || _options.override) this[_name] = _value;
             return this
         },
