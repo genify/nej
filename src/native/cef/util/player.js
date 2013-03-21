@@ -33,6 +33,7 @@ var f = function() {
      *   2    |  暂停状态
      *   3    |  停止状态
      *   4    |  播放至结尾
+     *   5    |  播放异常
      * [/ntb]
      * @event  {onstatechange}
      * @param  {Object} 状态信息
@@ -57,6 +58,24 @@ var f = function() {
      * @param  {Object}  静音状态信息
      * @config {Boolean} mute 静音状态，true-静音，false-非静音
      * 
+     * [hr]
+     * 歌曲变化触发事件
+     * @event  {ontrackchange}
+     * @param  {Object}  静音状态信息
+     * @config {Boolean} flag 变化标识，-1-上一首，1-下一首
+     * 
+     * [hr]
+     * 播放模式变化触发事件，模式说明
+     * [ntb]
+     *   名称                       |  说明
+     *   -----------------------
+     *   playorder  |  顺序播放
+     *   playcycle  |  循环播放
+     *   playrandom |  随机播放
+     * [/ntb]
+     * @event  {onmodechange}
+     * @param  {Object}  静音状态信息
+     * @config {Boolean} mode 模式，见描述
      */
     _p._$$Player = NEJ.C();
       _proPlayer = _p._$$Player._$extend(_t._$$Event);
@@ -66,8 +85,10 @@ var f = function() {
      */
     _proPlayer.__init = function(){
         this.__nevt = [
-            'dataloaded','play','pause','timeupdate',
-            'ended','volumechange','error','notify'
+            'volumechange','notify',
+            'dataloaded','play','pause',
+            'ended',,'playmode','error',
+            'playpre','playnext','timeupdate'
         ];
         this.__supInit();
     };
@@ -87,6 +108,9 @@ var f = function() {
             _u._$forEach(
                 this.__nevt,_doAddEvent,this
             );
+            // sync state
+            this.__onNativeEvent('timeupdate');
+            this.__onNativeEvent('volumechange');
         };
     })();
     /**
@@ -148,20 +172,21 @@ var f = function() {
         });
     };
     /**
+     * 设置模式
+     * @param  {String} 播放模式
+     * @return {Void}
+     */
+    _proPlayer._$setMode = function(_mode){
+        _n._$exec('player.setPlayMode',_mode);
+        this.__onNativeEvent('playmode',_mode);
+    };
+    /**
      * 设置音量
      * @param  {Float} 音量，范围：[0.0,1.0]
      * @return {Void}
      */
     _proPlayer._$setVolume = function(_volume){
-        console.log(_volume);
         _n._$exec('player.setVolume',_volume);
-    };
-    /**
-     * 获取音量
-     * @return {Float} 音量，范围：[0.0,1.0]
-     */
-    _proPlayer._$getVolume = function(){
-        return _n._$exec('player.getVolume');
     };
     /**
      * 设置播放位置
@@ -169,7 +194,7 @@ var f = function() {
      * @return {Void}
      */
     _proPlayer._$setPosition = function(_ratio){
-        _n._$exec('player.setCurrentTime',_ratio*_player.duration);
+        _n._$exec('player.setCurrentTime',_ratio*(_player.duration||0));
     };
     /**
      * native事件回调
@@ -198,21 +223,33 @@ var f = function() {
             return;
             case 'timeupdate':
                 this._$dispatchEvent('onpositionchange',{
-                    current:_n._$exec('player.getCurrentTime'),
-                    duration:_player.duration
+                    current:_n._$exec('player.getCurrentTime')||0,
+                    duration:_player.duration||0
                 });
             return;
             case 'volumechange':
-                console.log('-->'+this._$getVolume())
                 this._$dispatchEvent('onvolumechange',{
-                    volume:this._$getVolume()
+                    volume:_n._$exec('player.getVolume')
                 });
             return;
             case 'error':
-                
+                this._$dispatchEvent('onstatechange',{
+                    state:5
+                });
             return;
             case 'notify':
                 
+            return;
+            case 'playpre':
+            case 'playnext':
+                this._$dispatchEvent('ontrackchange',{
+                    flag:_name=='playpre'?-1:1
+                });
+            return;
+            case 'playmode':
+                this._$dispatchEvent('onmodechange',{
+                    mode:arguments[1]
+                });
             return;
         }
     };
