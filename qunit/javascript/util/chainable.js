@@ -268,32 +268,32 @@ var f = function() {
         $node._$trigger("click", {hello:1});
     });
 
-    test("_$click、_$dblclick....", function(){
-        var $node = $("#event");
-        var _locals = [0]
-        var _methods = ("click dbclick blur change focus focusin focusout keydown keypress "+ 
-    "keyup mousedown mouseover mouseup mousemove mouseout scroll select submit").split(" ");
+    // test("_$click、_$dblclick....", function(){
+    // //     var $node = $("#event");
+    // //     var _locals = [0]
+    // //     var _methods = ("click dbclick blur change focus focusin focusout keydown keypress "+ 
+    // // "keyup mousedown mouseover mouseup mousemove mouseout scroll select submit").split(" ");
 
-        _u._$forEach(_methods, function(_method, _index){
-            ok(typeof $node["_$"+_method] === "function", _method+"方法存在");
-        })
+    // //     _u._$forEach(_methods, function(_method, _index){
+    // //         ok(typeof $node["_$"+_method] === "function", _method+"方法存在");
+    // //     })
 
-        $node._$click(function(){
-            _locals[0]++;
-        })
-        $node._$click()
+    // //     $node._$click(function(){
+    // //         _locals[0]++;
+    // //     })
+    // //     $node._$click()
 
-        equal(_locals[0],1, "可以通过_$click的方式绑定事件和触发事件")
+    // //     equal(_locals[0],1, "可以通过_$click的方式绑定事件和触发事件")
 
-        _locals[1] = 0;
+    // //     _locals[1] = 0;
 
-        $node._$click({ //暂时手动测试 事件代理 @UI
-            "li":function(e){
-                alert("li click")
-                console.log(e.hello)
-            }
-        })
-    })
+    // //     $node._$click({ //暂时手动测试 事件代理 @UI
+    // //         "li":function(e){
+    // //             alert("li click")
+    // //             console.log(e.hello)
+    // //         }
+    // //     })
+    // })
 
     module("节点操作")
     test("节点操作:_$clone等",function(){
@@ -313,35 +313,35 @@ var f = function() {
         ok(!$cmaniDl[0].getAttribute("id"), "子节点ID也被清空")
 
     });
-    test("_$insert、_$insert2、_$top2....", function(){
-        var $node = $("#chain2");            
-        var _methods = "bottom top before after bottom2 top2 before2 after2".split(" ");
+    // test("_$insert、_$insert2、_$top2....", function(){
+    //     var $node = $("#chain2");            
+    //     var _methods = "bottom top before after bottom2 top2 before2 after2".split(" ");
 
-        // 首先确定所有方法已经都存在了
-        _u._$forEach(_methods, function(_method){
-            ok(typeof $node["_$"+_method] === "function", _method+"方法存在")
-        })
+    //     // 首先确定所有方法已经都存在了
+    //     _u._$forEach(_methods, function(_method){
+    //         ok(typeof $node["_$"+_method] === "function", _method+"方法存在")
+    //     })
 
-        var $mani = $("#mani");
-        var $maniC = $("#mani-c div") //mani container
+    //     var $mani = $("#mani");
+    //     var $maniC = $("#mani-c div") //mani container
 
-        // 分别测试 bottom top before after
-        var $cmani = $mani._$clone(true);
-        var $cmani2 = $mani._$clone(true);
-        var $cmani3 = $mani._$clone(true);
-        var $cmani4 = $mani._$clone(true);
+    //     // 分别测试 bottom top before after
+    //     var $cmani = $mani._$clone(true);
+    //     var $cmani2 = $mani._$clone(true);
+    //     var $cmani3 = $mani._$clone(true);
+    //     var $cmani4 = $mani._$clone(true);
 
-        equal($cmani[0], $mani._$parent()._$bottom($cmani)._$children()._$last(), "复制的节点cmani被插入底部");
-        equal($cmani2[0], $mani._$parent()._$top($cmani2)._$children()._$first(), "复制的节点cmani2被插入顶部");
-        equal($cmani3[0], $mani._$before($cmani3)._$prev()._$first(), "复制的节点cmani3被插入cmani之前");
-        equal($cmani4[0], $mani._$after($cmani4)._$next()._$first(), "复制的节点cmani4被插入cmani之后");
+    //     equal($cmani[0], $mani._$parent()._$bottom($cmani)._$children()._$last(), "复制的节点cmani被插入底部");
+    //     equal($cmani2[0], $mani._$parent()._$top($cmani2)._$children()._$first(), "复制的节点cmani2被插入顶部");
+    //     equal($cmani3[0], $mani._$before($cmani3)._$prev()._$first(), "复制的节点cmani3被插入cmani之前");
+    //     equal($cmani4[0], $mani._$after($cmani4)._$next()._$first(), "复制的节点cmani4被插入cmani之后");
 
-        equal($maniC.length, 2, "要被插入的节点集有两个元素")
-        var $cmani = $mani._$clone(true);
-        $cmani._$insert2("#mani-c div")
-        equal($maniC._$children().length, 2, "两个元素分别被插入了两个节点")
+    //     equal($maniC.length, 2, "要被插入的节点集有两个元素")
+    //     var $cmani = $mani._$clone(true);
+    //     $cmani._$insert2("#mani-c div")
+    //     equal($maniC._$children().length, 2, "两个元素分别被插入了两个节点")
 
-    });
+    // });
     test("属性操作", function(){
         var $node = $("#html-text .content");
         equal($node._$text("haha"), $node, "$text可链式")
@@ -373,7 +373,7 @@ var f = function() {
             "cursor": "help"
         })
         // 过滤出其中是4倍数的行,并绑定click事件
-        ._$filter(":nth-child(4n)")._$click(function(_e) {
+        ._$filter(":nth-child(4n)")._$on('click', function(_e) {
             $(this)._$style("background", "#111");
         // 并给他们中的第一行设置边框
         })._$get(1, true)._$style("border", "3px solid #222")
