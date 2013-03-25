@@ -391,6 +391,7 @@ var f = function() {
                 $(this)._$insert(div, "bottom");
             },
             "mouseover li:nth-child(odd)":function(_e){
+                _e.preventDefault();
                 if(!_e.__fixed) alert("delegate event object not fixed")
                 this._isLight = !this._isLight;
                 // 每次点击改变背景色
