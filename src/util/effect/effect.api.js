@@ -233,19 +233,20 @@ var f = function() {
      * toggle效果
      * 页面结构举例
      * [code type="html"]
+     *   // overflow:hidden;visibility:hidden;display:none;
      *   <div id="box">123</div>
      * [/code]
      * 脚本举例
      * [code]
      *   var _e = NEJ.P("nej.e");
      *   var _node = _e._$get("box");
-     *   _e._$toggle(_box,'height',100,{timing:'ease-out',duration:'1.2'});
+     *   _e._$toggle(_box,'height',{value:100,timing:'ease-out',duration:'1.2'});
      * [/code]
      * @api    {nej.e._$toggle}
      * @param  {Node|String} 节点或者节点ID
-     * @param  {String}      需要改变的属性，可以是height或width
-     * @param  {Number}      目标值
+     * @param  {String}      需要改变的属性，height或width
      * @param  {Object}      配置参数
+     * @config {Number} value    属性值
      * @config {String} timing   运动曲线
      * @config {Number} delay    延迟时间
      * @config {String} duration 运动时间
@@ -253,18 +254,27 @@ var f = function() {
      */
     _e._$toggleEffect = (function(){
         var _doCheck = function(_node,_type){
-            return parseInt(_e._$getStyle(_node,_type));
+            // return parseInt(_e._$getStyle(_node,_type));
+            return _type == 'height' ? _node.clientHeight : _node.clientWidth;
         };
-        return function(_node,_type,_value,_options){
+        return function(_node,_type,_options){
             if(!_effectLock)
                 _effectLock = true;
             else
                 return !1;
             var _effect;
             _options = _e.__initOptions(_options);
-            var _flag = _doCheck(_node,_type);
-            if(!_flag){
-                _e._$setStyle(_node,'display','');
+            // set
+            var _value = _options.value||false;
+            if(!_value){
+                _e._$setStyle(_node,'display','block');
+                var _node = _e._$get(_node);
+                _value = _doCheck(_node,_type);
+            }
+            var _flag = _e._$getStyle(_node,'visibility');
+            if(_flag == 'hidden'){
+                _node.style.height = 0;
+                _e._$setStyle(_node,'visibility','inherit');
                 _effect = _p._$$Effect._$allocate(
                     {
                         node:_node,
@@ -278,6 +288,7 @@ var f = function() {
                         ],
                         styles:[_type + ':' + _value],
                         onstop:function(_state){
+                            _e._$setStyle(_node,_type,'auto');
                             _options.onstop.call(_state);
                             _effect = _p._$$Effect._$recycle(_effect);
                             _effectLock = !1;
@@ -287,6 +298,7 @@ var f = function() {
                     }
                 );
             }else{
+                _node.style.height = _value;
                 _effect = _p._$$Effect._$allocate(
                     {
                         node:_node,
@@ -301,6 +313,8 @@ var f = function() {
                         styles:[_type + ':' + 0],
                         onstop:function(_state){
                             _e._$setStyle(_node,'display','none');
+                            _e._$setStyle(_node,'visibility','hidden');
+                            _e._$setStyle(_node,_type,'auto');
                             _options.onstop.call(_state);
                             _effect = _p._$$Effect._$recycle(_effect);
                             _effectLock = !1;

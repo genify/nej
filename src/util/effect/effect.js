@@ -122,8 +122,10 @@ var f = function(){
      * 销毁对象
      * @return {Void}
      */
-    _proEffect.__destory = function(){
-        this.__supDestroy();
+    _proEffect.__destroy = function(){
+        if(!!this.__intvl){
+            this.__intvl = window.clearInterval(this.__intvl);
+        }
         // 这里回收关于此节点的动画信息
         delete this.__node;
         delete this.__styles;
@@ -132,6 +134,7 @@ var f = function(){
         delete this.__lastProp;
         delete this.__transition;
         delete this.__intvl;
+        this.__supDestroy();
     };
 
     /**
@@ -241,8 +244,8 @@ var f = function(){
         if(!this.__intvl)
             return;
         _h.__onStop(this.__node,this.__propMap);
-        this._$dispatchEvent('onstop',this.__state);
         this.__intvl = window.clearInterval(this.__intvl);
+        this._$dispatchEvent('onstop',this.__state);
         return this;
     };
 
