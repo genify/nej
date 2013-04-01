@@ -30,7 +30,7 @@ var f = function(){
      *   var _e = NEJ.P('nej.e');
      *   var _html_seed =  _e._$addHtmlTemplate('<div>${name}</div>');
      *   // 生成结构<div>jack</div>
-     *   _e._$getHtmlTemplate(_seed_html,{name:'jack'});
+     *   _e._$getHtmlTemplate(_html_seed,{name:'jack'});
      * [/code]
      * @api    {nej.e._$getHtmlTemplate}
      * @see    {#._$addHtmlTemplate}
