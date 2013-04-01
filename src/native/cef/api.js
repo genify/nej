@@ -77,10 +77,8 @@ var f = function() {
             var _aligns = (_options.align||'').trim().split(_reg0),
                 _position = NEJ.EX({width:0,height:0,topmost:!1},_options),
                 _wkarea = (_n._$exec('os.getSystemInfo','desktop')||_o).workArea||_o;
-            _position.x = (_fmap[_aligns[0]]||_fmap.center)
-                          (_position.width,_wkarea.width);
-            _position.y = (_fmap[_aligns[1]]||_fmap.center)
-                          (_position.height,_wkarea.height);
+            _position.x = (_fmap[_aligns[0]]||_fmap.center)(_position.width,_wkarea.width);
+            _position.y = (_fmap[_aligns[1]]||_fmap.center)(_position.height,_wkarea.height);
             _n._$exec('winhelper.setWindowPosition',_position);
         };
     })();
