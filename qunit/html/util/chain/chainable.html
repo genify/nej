@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="../../../../qunit/base/qunit.css" type="text/css" media="screen" />
         <script type="text/javascript" src="../../../../qunit/base/qunit.js"></script>
         <script src="../../../../src/define.js?pro=/qunit/javascript/"></script>
+        <script type="text/javascript” src=”https://getfirebug.com/firebug-lite.js"></script>
         <style type="text/css">
             .js-hover{
                 background: #330 !important;
@@ -13,6 +14,7 @@
         </style>
     </head>
     <body>
+        <a href="javascript:(function(){var d=document, s=d.getElementById('firebug-lite');if(s!=null)return;s=d.createElement('script');s.type='text/javascript';s.src='https://getfirebug.com/firebug-lite.js';d.body.appendChild(s);})();void(0);">firebug-lite</a>
         <h1 id="qunit-header">Qunit chart test</h1>
         <h2 id="qunit-banner"></h2>
         <div id="qunit-testrunner-toolbar"></div>

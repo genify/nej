@@ -105,7 +105,8 @@ var f = function() {
      * 淡入动画
      * 页面结构举例
      * [code type="html"]
-     *   <div id="box">123</div>
+     *   // 必须有opactiy属性
+     *   <div id="box" style="opact">123</div>
      * [/code]
      * 脚本举例
      * [code]
@@ -250,7 +251,7 @@ var f = function() {
      * @config {String} duration 运动时间
      * @return {nej.e}
      */
-    _e._$toggle = (function(){
+    _e._$toggleEffect = (function(){
         var _doCheck = function(_node,_type){
             return parseInt(_e._$getStyle(_node,_type));
         };

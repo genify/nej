@@ -246,21 +246,6 @@ var f = function() {
                 if(_parent) _parent.insertBefore(_node2, _node.nextSibling);
             }
         },
-        "eventFn":{
-             preventDefault: function(){
-                 if (this.preventDefault) this.preventDefault();
-                 else this.returnValue = false;
-                 return this;
-             },
-             stopPropagation: function(){
-                 if (this.stopPropagation) this.__event.stopPropagation();
-                 else this.cancelBubble = true;
-                 return this;
-             },
-             stop: function(){
-                 this.preventDefault().stopPropagation();
-             }           
-        },
         fixProps :{
             // 确保表单元素属性被正确设置 IE lt9
             input: 'checked', 
@@ -306,16 +291,24 @@ var f = function() {
                     _e.pageX = _v._$pageX(_e);
                     _e.pageY = _v._$pageY(_e);
                     if (_type === 'mouseover' || _type === 'mouseout'){//如果是鼠标事件中的mouseover与mouseout
-                        var related = event.relatedTarget || event[(_type == 'mouseover' ? 'from' : 'to') + 'Element'];
+                        var related = _e.relatedTarget || _e[(_type == 'mouseover' ? 'from' : 'to') + 'Element'];
                         while (related && related.nodeType == 3) related = related.parentNode;
-                        this.relatedTarget = related;
+                        _e.relatedTarget = related;
                     }
                 }
                 if( !_e.which && _button !== undefined){
                     // http://api.jquery.com/event.which/ use which
                     _e.which = ( _button & 1 ? 1 : ( _button & 2 ? 3 : ( _button & 4 ? 2 : 0 ) ) );
                 }
-                _extend(_e, _definitions.eventFn);
+                if(!_e.preventDefault) _e.preventDefault = function(){
+                    this.returnValue = false;
+                    return this;
+                }
+
+                if(!_e.stopPropagation) _e.stopPropagation = function(){
+                   this.cancelBubble = true; 
+                   return this;
+                }
             }
         }
     },
