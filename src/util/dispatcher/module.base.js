@@ -31,14 +31,18 @@ var f = function(){
      */
     _proAbstractModule.__onShow = function(_options){
         // try get parent
-        var _parent = _e._$get(_options.parent);
+        // check input first
+        var _parent;
+        if (!_parent){
+            var _data = _options.input||_o;
+            _parent = _e._$get(_data.parent);
+        }
         if (!_parent){
             var _data = _options.data||_o;
             _parent = _e._$get(_data.parent);
         }
         if (!_parent){
-            var _data = _options.input||_o;
-            _parent = _e._$get(_data.parent);
+            _parent = _e._$get(_options.parent);
         }
         // show and refresh module
         if (!!_parent&&!!this.__body) 
