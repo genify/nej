@@ -9,12 +9,25 @@ var f = function(){
     var _  = NEJ.P,
         _e = _('nej.e'),
         _v = _('nej.v'),
+        _u = _('nej.u'),
         _n = _('nej.n'),
         _t = _('nej.ut'),
         _p = _('nej.cef.ut'),
         _proWindow;
     /**
-     * 窗体基本行为封装对象
+     * 窗体基本行为封装对象，窗体调整区域大小节点集合标识： 
+     * [ntb]
+     *   名称                            |  描述
+     *   ------------------------------
+     *   left         |  左边框拉伸与收缩节点
+     *   right        |  右边框拉伸与收缩节点
+     *   top          |  上边框拉伸与收缩节点
+     *   bottom       |  下边框拉伸与收缩节点
+     *   topleft      |  左上角拉伸与收缩节点
+     *   topright     |  右上角拉伸与收缩节点
+     *   bottomleft   |  左下角拉伸与收缩节点
+     *   bottomright  |  右下角拉伸与收缩节点
+     * [/ntb]
      * 
      * @class   {nej.cef.ut._$$Window}
      * @extends {nej.ut._$$Event}
@@ -25,7 +38,7 @@ var f = function(){
      * @config  {String|Node} dbmax   双击最大化节点
      * @config  {String|Node} close   关闭按钮节点
      * @config  {String|Node} dragger 窗体拖拽节点
-     * @config  {String|Node} resizer 窗体调整大小节点
+     * @config  {Object}      resizes 窗体调整大小节点集合，格式如：{left:'left-node'}
      * @config  {String}      clazz   可最大化时按钮的样式，默认js-max
      * 
      * [hr]
@@ -71,7 +84,9 @@ var f = function(){
      */
     _proWindow.__reset = function(_options){
         this.__supReset(_options);
-        this.__doInitDomEvent([[
+        this.__maxcls = _options.clazz||'js-max';
+        // init action
+        var _arr = [[
             _options.min,'click',
             this.__onActionMin._$bind(this)
         ],[
@@ -84,11 +99,30 @@ var f = function(){
             _options.close,'click',
             this.__onActionClose._$bind(this)
         ],[
-            _options.dragger,'click',
+            _options.dragger,'mousedown',
             this.__onActionDragger._$bind(this)
-        ]]);
-        this.__maxcls = _options.clazz||'js-max';
-        
+        ]];
+        // init resizer
+        this.__nodes = _options.resizes||{};
+        _u._$forIn(
+            _options.resizes,
+            function(_node,_key){
+                _arr.push([
+                    _node,'mousedown',
+                    this.__onActionResize._$bind(this,_key)
+                ]);
+            },this
+        );
+        this.__doInitDomEvent(_arr);
+    };
+    /**
+     * 控件销毁
+     * @return {Void}
+     */
+    _proWindow.__destroy = function(){
+        this.__supDestroy();
+        delete this.__nodes;
+        delete this.__maxcls;
     };
     /**
      * 最小化行为事件
@@ -149,9 +183,21 @@ var f = function(){
      * @return {Void}
      */
     _proWindow.__onActionDragger = function(_event){
-        
+        var _node = _v._$getElement(_event,'d:draggable');
+        if (!!_node&&
+            _e._$dataset(_node,'draggable')=='false') return;
+        _n._$exec('winhelper.dragWindow');
     };
-    
+    /**
+     * 调整窗体大小行为事件
+     * @param  {Event} 事件对象
+     * @return {Void}
+     */
+    _proWindow.__onActionResize = function(_key,_event){
+        var _node = _v._$getElement(_event);
+        if (_node!=_e._$get(this.__nodes[_key])) return;
+        _n._$exec('winhelper.sizeWindow',_key);
+    };
 };
 NEJ.define('{lib}native/cef/util/window.js',
           ['{lib}util/event.js'

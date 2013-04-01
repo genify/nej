@@ -24,7 +24,8 @@ var f = function(){
             _space = _space[_arr[i]]||_o;
         var _handler = _space[_arr[_arr.length-1]];
         if (!_handler) return;
-        return _handler.apply(_space,_r.slice.call(arguments,1));
+        var _args = _r.slice.call(arguments,1);
+        return _handler.apply(_space,_args);
     };
     /**
      * 判断是否存在命令
