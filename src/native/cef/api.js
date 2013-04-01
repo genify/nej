@@ -18,7 +18,7 @@ var f = function() {
      * 配置窗体信息
      * @see    {nej.cef._$configWindowPosition}
      * @see    {nej.cef._$configWindowSizeLimit}
-     * @param  {Object} 配置信息，详情见@see指定接口配置信息
+     * @param  {Object} 配置信息，其他参数详情见@see指定接口配置信息
      * @return {Void}
      */
     _p._$configWindow = function(_options){
@@ -46,14 +46,11 @@ var f = function() {
      * [/ntb]
      * @api    {nej.cef._$configWindowPosition}
      * @param  {Object} 配置信息
-     * @config {Number}  width     窗体宽度
-     * @config {Number}  height    窗体高度
-     * @config {Number}  minWidth  窗体最小宽度
-     * @config {Number}  maxWidth  窗体最大宽度
-     * @config {Number}  minHeight 窗体最小高度
-     * @config {Number}  maxHeight 窗体最大高度
-     * @config {Boolean} topmost   窗体是否置顶
-     * @config {String}  align     对齐方式，格式定义：水平对齐方式+空格+垂直对齐方式，如 left top
+     * @config {String}  name     窗体名称
+     * @config {Number}  width    窗体宽度
+     * @config {Number}  height   窗体高度
+     * @config {Boolean} topmost  窗体是否置顶
+     * @config {String}  align    对齐方式，格式定义：水平对齐方式+空格+垂直对齐方式，如 left top
      * @return {Void}
      */
     _p._$configWindowPosition = (function(){
@@ -79,7 +76,12 @@ var f = function() {
                 _wkarea = (_n._$exec('os.getSystemInfo','desktop')||_o).workArea||_o;
             _position.x = (_fmap[_aligns[0]]||_fmap.center)(_position.width,_wkarea.width);
             _position.y = (_fmap[_aligns[1]]||_fmap.center)(_position.height,_wkarea.height);
-            _n._$exec('winhelper.setWindowPosition',_position);
+            if (!_options.name){
+                _n._$exec('winhelper.setWindowPosition',_position);
+            }else{
+                _position.name = _options.name;
+                _n._$exec('winhelper.setNativeWindowRect',_position);
+            }
         };
     })();
     /**
@@ -109,7 +111,6 @@ var f = function() {
         };
         return function(_options){
             _options = _options||_o;
-            // set window size limit
             _n._$exec(
                 'winhelper.setWindowSizeLimit',
                 _doParseBox(_options.minWidth,_options.minHeight),
@@ -125,6 +126,29 @@ var f = function() {
     _p._$showWindow = function(){
         _n._$exec('winhelper.showWindow','show');
     };
+    /**
+     * 隐藏窗体
+     * @api    {nej.cef._$hideWindow}
+     * @return {Void}
+     */
+    _p._$hideWindow = function(){
+        _n._$exec('winhelper.showWindow','hide');
+    };
+    /**
+     * 切换窗体
+     * @api    {nej.cef._$switchWindow}
+     * @see    {nej.cef._$configWindowPosition}
+     * @param  {String}  窗体名称
+     * @param  {Object}  窗体配置信息
+     * @return {Void}
+     */
+    _p._$switchWindow = function(_name,_options){
+        _p._$hideWindow();
+        _options = NEJ.X({name:_name},_options);
+        _p._$configWindowPosition(_options);
+        _n._$exec('winhelper.setNativeWindowShow',_name,!0);
+    };
+    
     
     
     // /**
