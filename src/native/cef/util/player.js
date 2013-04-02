@@ -108,8 +108,6 @@ var f = function() {
             _u._$forEach(
                 this.__nevt,_doAddEvent,this
             );
-            // sync state
-            this.__onNativeEvent('volumechange');
         };
     })();
     /**
