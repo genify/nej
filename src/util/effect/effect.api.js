@@ -254,7 +254,6 @@ var f = function() {
      */
     _e._$toggleEffect = (function(){
         var _doCheck = function(_node,_type){
-            // return parseInt(_e._$getStyle(_node,_type));
             return _type == 'height' ? _node.clientHeight : _node.clientWidth;
         };
         return function(_node,_type,_options){
@@ -325,7 +324,7 @@ var f = function() {
                 );
             }
             var _sto = window.setTimeout(function(){_effect._$start()}._$bind(this),0);
-            return this;
+            return _effect;
         };
     })();
 

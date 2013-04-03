@@ -241,8 +241,6 @@ var f = function(){
      * @return {nej.ut}
      */
     _proEffect._$stop = function(){
-        if(!this.__intvl)
-            return;
         _h.__onStop(this.__node,this.__propMap);
         this.__intvl = window.clearInterval(this.__intvl);
         this._$dispatchEvent('onstop',this.__state);
