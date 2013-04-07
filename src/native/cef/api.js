@@ -153,11 +153,18 @@ var f = function() {
      * @param  {String} 新窗口地址，参数通过查询形式输入，如?width=1000&height=200
      * @return {Void}
      */
-    _p._$open = function(_url){
-        // TODO parse param
-        var _param = _u._$query2object(_url.split('?')[1]||'');
-        _n._$exec('winhelper.launchWindow',_url,_param,_param);
-    };
+    _p._$open = (function(){
+        var _doParseInt = function(_value,_key,_map){
+            var _int = parseInt(_value);
+            if (!isNaN(_int)) _map[_key] = _int;
+        };
+        return function(_url){
+            // TODO parse param
+            var _param = _u._$query2object(_url.split('?')[1]||'');
+            _u._$forIn(_param,_doParseInt);
+            _n._$exec('winhelper.launchWindow',_url,_param,_param);
+        };
+    })();
     
     
     // /**
