@@ -170,7 +170,8 @@ var f = function(){
         this._$dispatchEvent('onbeforeclose',_event);
         if (!!_event.close){
             // do close action
-            window.close();
+            _n._$exec('app.exit');
+            //window.close();
         }else{
             // do hide action
             _n._$exec('winhelper.showWindow','hide');

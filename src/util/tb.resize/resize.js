@@ -14,7 +14,7 @@ var f = function(){
         _proTBResize;
     if (!!_p._$$TBResize) return;
     // ui css text
-    var _seed_css = _e._$pushCSSText('.#<uispace>{position:absolute;top:0;bottom:0;right:0;width:5px;height:100%;margin-left:-2px;background:#f00;}');
+    var _seed_css = _e._$pushCSSText('.#<uispace>{position:absolute;top:0;bottom:0;right:0;width:5px;height:100%;margin-left:-2px;}');
     /**
      * 可调整宽度/高度网格控件<br/>
      *
