@@ -156,7 +156,11 @@ var f = function() {
     _p._$open = (function(){
         var _doParseInt = function(_value,_key,_map){
             var _int = parseInt(_value);
-            if (!isNaN(_int)) _map[_key] = _int;
+            if (!isNaN(_int)){
+                _map[_key] = _int;
+            }else if(_value=='true'||_value=='false'){
+                _map[_key] = _value=='true';
+            }
         };
         return function(_url){
             // TODO parse param

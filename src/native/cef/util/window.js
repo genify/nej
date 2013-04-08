@@ -185,8 +185,9 @@ var f = function(){
      */
     _proWindow.__onActionDragger = function(_event){
         var _node = _v._$getElement(_event,'d:draggable');
-        if (!!_node&&
-            _e._$dataset(_node,'draggable')=='false') return;
+        if (!!_node&&_e._$dataset(
+              _node,'draggable')=='false') 
+            return;
         _n._$exec('winhelper.dragWindow');
     };
     /**
