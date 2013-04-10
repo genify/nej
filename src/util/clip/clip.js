@@ -26,7 +26,8 @@ var f = function(){
      * @extends {nej.ut._$$Event}
      * 
      * @param   {Object} 可选配置参数，已处理参数列表如下
-     * @config  {Node}         resizer
+     * @config  {String|Node} parent 容器节点
+     * @config  {String}      url    图片地址
      * 
      * [hr]
      * 大小变化开始触发事件

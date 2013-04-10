@@ -501,7 +501,7 @@ var f = function(){
         };
     })();
     /**
-     * 格式化时间，yyyy|yy|MM|M|dd|d|HH|H|mm|ms|ss|m|s|w<br/>
+     * 格式化时间，yyyy|yy|MM|cM|eM|M|dd|d|HH|H|mm|ms|ss|m|s|w<br/>
      * [ntb]
      *   标识         |  名称
      * ----------------------------

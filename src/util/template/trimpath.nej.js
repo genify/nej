@@ -108,7 +108,7 @@
                'if (!!__HASH__'+_part[1]+')'+
                    'for(var '+_part[1]+'_key in __HASH__'+_part[1]+'){'+
                         _part[1]+' = __HASH__'+_part[1]+'['+_part[1]+'_key];'+
-                        'if (!'+_part[1]+'||typeof('+_part[1]+')=="function") continue;'+
+                        'if (typeof('+_part[1]+')=="function") continue;'+
                         _part[1]+'_count++;';
     };
     /*

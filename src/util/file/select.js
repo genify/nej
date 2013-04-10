@@ -92,16 +92,16 @@ var f = function(){
                 _arr = _id.split('-'),
                 _cch = _cache[_arr[0]];
             if (!_element.value) return;
-            _cch.onchange({
-                id:_id,
-                form:_element.form
-            })
             if (_cch.multiple){
                 _e._$get(_cch.lab)
                   .htmlFor = _doAppendFile(_arr[0]);
             }else if(!!_cch.name){
                 _element.name = _cch.name;
             }
+            _cch.onchange({
+                id:_id,
+                form:_element.form
+            });
         };
         return function(_element,_options){
             _element = _e._$get(_element);
