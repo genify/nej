@@ -72,24 +72,48 @@ var f = function(){
      * @return {location}
      */
     location.active = (function(){
-        var _timer,_url;
+        var _timer,_url,_location,_locked;
         // parse location change
         var _onLocationChange = function(_href){
-            _url = _href;
-            var _event = _getLocation();
-            _v._$dispatchEvent(location,'urlchange',_event);
-            _h.__pushHistory(_event.href);
+            // locked from history back
+            if (!!_locked){
+                _locked = !1;
+                return;
+            }
+            var _event = {
+                oldValue:_location,
+                newValue:_getLocation()
+            };
+            // check ignore beforeurlchange event fire
+            if (!!location.ignored){
+                location.ignored = !1;
+            }else{
+                _v._$dispatchEvent(location,'beforeurlchange',_event);
+                if (_event.stopped){
+                    if (!!_location){
+                        _locked = !0;
+                        _setLocation(_location.href,!0);
+                    }
+                    return;
+                };
+            }
+            // fire urlchange
+            _url = location.href;
+            _location = _event.newValue;
+            _v._$dispatchEvent(location,'urlchange',_location);
+            _h.__pushHistory(_location.href);
         };
         // check location
         var _doCheckLocation = function(){
             if (_url!=location.href)
-                _onLocationChange(location.href);
+                _onLocationChange();
             _timer = requestAnimationFrame(_doCheckLocation);
         };
         return function(){
-            if (_hack&&('onhashchange' in window)){
+            // ignore onhashchange on ie7
+            if (_hack&&('onhashchange' in window)&&_b._$NOT_PATCH.trident2){
                 _v._$addEvent(window,'hashchange',_onLocationChange);
-                _onLocationChange(location.href);
+                _onLocationChange();
             }else if(!_timer){
                 _timer = requestAnimationFrame(_doCheckLocation);
             }
@@ -139,7 +163,7 @@ var f = function(){
     // extend onurlchange event on location
     _t._$$CustomEvent._$allocate({
         element:location
-       ,event:'urlchange'
+       ,event:['beforeurlchange','urlchange']
     });
 };
 NEJ.define('{lib}util/history/history.js',

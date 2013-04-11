@@ -825,6 +825,7 @@ var f = function(){
      * @config {Boolean}  replace 是否替换当前历史
      * @config {Boolean}  force   是否强制刷新
      * @config {Variable} input   输入数据
+     * @config {Boolean}  ignored 是否忽略地址变化前的验证
      * @return {nej.ut._$$Dispatcher} 调度器实例
      */
     _proDispatcher._$redirect = function(_url,_options){
@@ -844,6 +845,7 @@ var f = function(){
                 if (location.same(_url)&&!!_options.force){
                     this.__onURLChange(_location);
                 }else{
+                    location.ignored = !!_options.ignored;
                     location.redirect(_url,!!_options.replace);
                 }
             }

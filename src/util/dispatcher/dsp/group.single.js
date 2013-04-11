@@ -122,7 +122,8 @@ var f = function(){
             // hide source -> common root
             if (_source!=this.__cmroot){
                 if (this.__classed)
-                    _e._$delClassName(document.body,_odata.clazz);
+                    _e._$delClassName(
+                         document.body,_odata.clazz);
                 this.__doModuleHide(_source,this.__cmroot);
             }
             // refresh common root -> root
@@ -159,4 +160,4 @@ var f = function(){
     _proSingleGroupManager._$hideUMI = _f;
 };
 NEJ.define('{lib}util/dispatcher/dsp/group.single.js',
-      ['{lib}util/dispatcher/dsp/group.js'],f);
+          ['{lib}util/dispatcher/dsp/group.js'],f);

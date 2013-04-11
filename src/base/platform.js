@@ -143,6 +143,8 @@ var f = function(){
        ,trident0 : _notd||_kernel.release>'2.0'
        // fix for ie10+ (html5/css3 support)
        ,trident1 : _notd||_kernel.release<'6.0'
+       // fix for ie7-
+       ,trident2 : _notd||_kernel.release>'3.0'
        // fix for ie6-ie9
        ,trident  : _notd||_kernel.release>='6.0'
     };
