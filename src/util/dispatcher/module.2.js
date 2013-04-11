@@ -10,7 +10,7 @@ var f = function(){
     var _  = NEJ.P,
         _o = NEJ.O,
         _f = NEJ.F,
-        _e = _('nej.e');
+        _e = _('nej.e'),
         _p = _('nej.ut'),
         _proModule;
     if (!!_p._$$Module) return;
