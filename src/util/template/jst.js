@@ -39,13 +39,22 @@ var f = function(){
      * @param  {Object} 扩展接口
      * @return {String} 合并数据后的内容
      */
-    _e._$getHtmlTemplate = function(_sn,_data,_extend){
-        _extend = _extend||{};
-        _extend.rand = _u._$randNumberString;
-        _extend.format = _u._$format;
-        _extend.escape = _u._$escape;
-        return TrimPath.merge(_sn,_data,_extend);
-    };
+    _e._$getHtmlTemplate = (function(){
+        var _doInline = function(_id){
+            return !_e._$getTextTemplate?'':
+                    _e._$getTextTemplate(_id);
+        };
+        return function(_sn,_data,_extend){
+            _data = _data||{};
+            _data.inline = _doInline;
+            _extend = _extend||{};
+            _extend.rand = _u._$randNumberString;
+            _extend.format = _u._$format;
+            _extend.escape = _u._$escape;
+            _extend.inline = _doInline;
+            return TrimPath.merge(_sn,_data,_extend);
+        };
+    })();
     /**
      * 添加JST模板，JST模板可以是节点的值<br />
      * 脚本举例
@@ -93,7 +102,7 @@ var f = function(){
         _parent = _e._$get(_parent);
         if (!!_parent)
             _parent.innerHTML = 
-                _e._$getHtmlTemplate(_sn,_data,_extend);
+                 _e._$getHtmlTemplate(_sn,_data,_extend);
         return this;
     };
 };

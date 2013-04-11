@@ -10,7 +10,8 @@ var f = function(){
     var _  = NEJ.P,
         _o = NEJ.O,
         _f = NEJ.F,
-        _p = NEJ.P('nej.ut'),
+        _e = _('nej.e');
+        _p = _('nej.ut'),
         _proModule;
     if (!!_p._$$Module) return;
     /**
@@ -189,6 +190,19 @@ var f = function(){
     _proModule._$getExportData = function(){
         return this.__export;
     };
+    /**
+     * 注册模块
+     * @api    {nej.e._$regist}
+     * @param  {String}           模块UMI或者别名
+     * @param  {nej.ut._$$Module} 模块构造函数
+     * @return {Void}
+     */
+    _e._$regist = function(){
+        if (!!window.dispatcher){
+            dispatcher._$loaded.
+                apply(dispatcher,arguments);
+        }
+    };
 };
-NEJ.define('{lib}util/dispatcher/module.2.js'
-     ,['{lib}util/event.js'],f);
+NEJ.define('{lib}util/dispatcher/module.2.js',
+          ['{lib}util/event.js'],f);

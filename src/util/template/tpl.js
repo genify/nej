@@ -422,7 +422,7 @@ var f = function(){
     };
 };
 NEJ.define('{lib}util/template/tpl.js',
-      ['{lib}util/template/jst.js'
-      ,'{lib}util/event/event.js'
-      ,'{lib}util/ajax/tag.js'
-      ,'{lib}util/ajax/xdr.js'],f);
+          ['{lib}util/template/jst.js'
+          ,'{lib}util/event/event.js'
+          ,'{lib}util/ajax/tag.js'
+          ,'{lib}util/ajax/xdr.js'],f);

@@ -167,6 +167,16 @@
         var _name = _part[0].split('(')[0];
         return 'var '+_name+' = function'+_part.join('').replace(_name,'')+'{var __OUT="";';
     };
+    /*
+     * 解析{include "text-template-id"}字符串前缀
+     * @param  {Array} _part 按空格拆分的值,['include','"text-template-id"']
+     * @return {String}      解析后的前缀值
+     */
+    var _doParsePrefixInline = function(_part){
+        if (!_part[1]) 
+            throw 'bad include statement: '+_part.join(' ');
+        return 'if (typeof inline == "function"){__OUT+=inline(';
+    };
     /**
      * 解析IF语句前缀，{if customer != null && customer.balance > 1000 || test(customer)}
      * @param  {String}  返回值
@@ -190,7 +200,7 @@
     // jst configuration
     _config = {
         blk : /^\{(cdata|minify|eval)/i,
-        tag : 'forelse|for|list|if|elseif|else|var|macro|break|notrim|trim',
+        tag : 'forelse|for|list|if|elseif|else|var|macro|break|notrim|trim|include',
         // {pmin : min param number,
         //  pdft : param default value,
         //  pfix : statement prefix,
@@ -210,7 +220,8 @@
             'macro'  : {pfix:_doParsePrefixMacro},
             '/macro' : {pfix:'return __OUT;};'},
             'trim'   : {pfix:function(){_trim = !0;}},
-            '/trim'  : {pfix:function(){_trim = null;}}
+            '/trim'  : {pfix:function(){_trim = null;}},
+            'inline' : {pfix:_doParsePrefixInline,pmin:1,sfix:');}'}
         },
         ext : {
             'seed'   : function(_prefix){return (_prefix||'')+''+_seed;},
@@ -441,7 +452,7 @@
             _ftxt.push(';return __OUT;'); 
             _ftxt[1] = _doParseVarMap(_vars);
             _vars = null;
-            //console.log(_ftxt.join(''));
+            console.log(_ftxt.join(''));
             return new Function('__CTX','__MDF',_ftxt.join(''));
         };
     })();

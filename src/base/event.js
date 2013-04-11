@@ -652,6 +652,13 @@ var f = function(){
                 _args[0],_args[1],_options);
         return this;
     };
+    /**
+     * 导出dom事件缓存对象，仅用于调试
+     * @return {Void}
+     */
+    _v.dump = function(){
+        return _cache;
+    };
     _x.isChange = !0;
 };
 NEJ.define('{lib}base/event.js',
