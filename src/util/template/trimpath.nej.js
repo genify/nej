@@ -452,7 +452,7 @@
             _ftxt.push(';return __OUT;'); 
             _ftxt[1] = _doParseVarMap(_vars);
             _vars = null;
-            console.log(_ftxt.join(''));
+            //console.log(_ftxt.join(''));
             return new Function('__CTX','__MDF',_ftxt.join(''));
         };
     })();
