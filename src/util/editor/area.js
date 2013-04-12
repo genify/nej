@@ -160,9 +160,12 @@ var f = function(){
      * @method {_$getContent}
      * @return {String} 内容
      */
-    _proEditorArea._$getContent = function(){
+    _proEditorArea._$getContent = function(_filter){
         var _document = this._$getDocument();
         _html = _h.__filterContent(!_document?'':_document.body.innerHTML);
+        if(!_filter){
+            _html = _h.__filterContentStyle(_html);
+        }
         return !_h.__filterWordContent?_html:_h.__filterWordContent(_html);
     };
     /**

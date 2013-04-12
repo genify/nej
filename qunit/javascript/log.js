@@ -5,7 +5,7 @@ var f = function(){
         _e = _('nej.e'),
         _u = _('nej.u');
     return function(){
-        // return false;
+        return false;
         QUnit.testStart(function(_obj){
             this.__moduleName = _obj.module;
             this.__testName = _obj.name;

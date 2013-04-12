@@ -184,9 +184,9 @@ var f = function(){
      * @method {_$getContent}
      * @return {String} 编辑内容
      */
-    _proEditor._$getContent = function(){
+    _proEditor._$getContent = function(_filter){
         return !this.__copt.area ? ''
-               :this.__copt.area._$getContent();
+               :this.__copt.area._$getContent(_filter);
     };
     
      /**
