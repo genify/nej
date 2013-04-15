@@ -218,4 +218,4 @@ var f = function(){
     _x.isChange = !0;
 };
 NEJ.define('{lib}util/page/page.js',
-      ['{lib}util/page/page.base.js'],f);
+          ['{lib}util/page/page.base.js'],f);
