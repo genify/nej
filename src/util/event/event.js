@@ -234,7 +234,10 @@ var f = function(){
                 _event.stopped = !0;
                 this.__doEventBind(_type);
                 this.__doEventAdd(_type,_args[2]);
-                this._$dispatchEvent('oneventadd');
+                this._$dispatchEvent('oneventadd',{
+                    type:_type,
+                    listener:_args[2]
+                });
             }
         }._$bind(this));
         _v._$delEvent = 

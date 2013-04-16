@@ -70,4 +70,4 @@ var f = function(){
     };
 };
 NEJ.define('{lib}ui/item/list.js',
-      ['{lib}ui/item/item.js'],f);
+          ['{lib}ui/item/item.js'],f);

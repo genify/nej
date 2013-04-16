@@ -45,6 +45,7 @@ var f = function(){
         this.__supReset(_options);
         this.__umi = _options.umi||'';
         this.__dispatcher = _options.dispatcher;
+        this.__composites = _options.composite;
         // void rewrite
         this._$batEvent({
              onshow:this.__onShow._$bind(this)

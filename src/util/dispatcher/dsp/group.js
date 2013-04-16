@@ -160,6 +160,7 @@ var f = function(){
             if (this.__isStopped(_node)) return;
             var _options = {
                 umi:_node._$getPath(),
+                composite:_data.composite,
                 dispatcher:this.__dispatcher
             };
             _module = _module._$allocate(_options);

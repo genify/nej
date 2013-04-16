@@ -104,4 +104,4 @@ var f = function(){
     };
 };
 NEJ.define('{lib}util/tab/tab.view.js',
-      ['{lib}util/event.js'],f);
+          ['{lib}util/event.js'],f);

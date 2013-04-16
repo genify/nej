@@ -569,14 +569,15 @@ var f = function(){
      * [/code]
      * 
      * @method {_$regist}
-     * @param  {String|Object}   统一模块标识或者模块批量添加信息
+     * @param  {String|Object}      统一模块标识或者模块批量添加信息
      * @param  {String|Object|nej.ut._$$Module} 
-     *                           模块构造或者模块路径或者模块配置信息
-     * @config {String}   gid    指定模块分组，仅对私有模块有效，对外模块忽略此配置
-     * @config {String}   title  模块标题，显示模块时修改页面的标题
-     * @config {String}   clazz  模块切换时body样式调整，仅对公共模块有效
+     *                              模块构造或者模块路径或者模块配置信息
+     * @config {String}   gid       指定模块分组，仅对私有模块有效，对外模块忽略此配置
+     * @config {String}   title     模块标题，显示模块时修改页面的标题
+     * @config {String}   clazz     模块切换时body样式调整，仅对公共模块有效
      * @config {String|nej.ut._$$Module}
-     *                    module 指定模块对应的模板文件地址或者模块的构造函数
+     *                    module    指定模块对应的模板文件地址或者模块的构造函数
+     * @config {Object}   composite 组合模块容器对应关系,{pid:umi}
      * @return {nej.ut._$$Dispatcher} 调度器实例
      */
     _proDispatcher._$regist = (function(){
@@ -625,6 +626,9 @@ var f = function(){
                 if (!!_config.clazz)
                     this.__setModuleConf(
                           _umi,'clazz',_config.clazz);
+                // cache module composite
+                if (!!_config.composite)
+                    _data.composite = _config.composite;
             }
             // save module
             this.__doAddUMI2Group(_umi,_gid);
@@ -961,6 +965,6 @@ var f = function(){
     };
 };
 NEJ.define('{lib}util/dispatcher/dispatcher.2.js',
-      ['{lib}util/dispatcher/dsp/group.single.js'
-      ,'{lib}util/history/history.js'
-      ,'{lib}util/template/tpl.js'],f);
+          ['{lib}util/dispatcher/dsp/group.single.js'
+          ,'{lib}util/history/history.js'
+          ,'{lib}util/template/tpl.js'],f);

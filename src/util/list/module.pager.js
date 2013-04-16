@@ -288,5 +288,5 @@ var f = function(){
     };
 };
 NEJ.define('{lib}util/list/module.pager.js',
-      ['{lib}util/list/module.js'
-      ,'{lib}ui/pager/pager.js'],f);
+          ['{lib}util/list/module.js'
+          ,'{lib}ui/pager/pager.js'],f);
