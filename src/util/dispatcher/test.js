@@ -13,18 +13,18 @@ var f = function(){
     // aop regist api
     _e._$regist = 
     _e._$regist._$aop(function(_event){
+        _event.stopped = !0;
         var _klass = _event.args[1],
-            _options = location.parse(location.href);
-        _options.param = _options.query;
-        _options.parent = document.mbody||document.body;
-        var _inst = _klass._$allocate();
-        _inst._$dispatchEvent('onshow',_options);
+            _inst = _klass._$allocate();
+        _inst.count = 0;
         _v._$addEvent(
             location,'urlchange',
             function(){
-                var _options = location.parse(location.href);
+                _inst.count++;
+                var _options = location.parse(location.hash.substr(1));
                 _options.param = _options.query;
-                _inst._$dispatchEvent('onrefresh',_options);
+                _options.parent = document.mbody||document.body;
+                _inst._$dispatchEvent(_inst.count==1?'onshow':'onrefresh',_options);
             }
         );
         location.active();

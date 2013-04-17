@@ -57,6 +57,7 @@ var f = function(){
         if (!!_parent&&!!this.__body) 
             _parent.appendChild(this.__body);
         this.__supOnShow(_options);
+        this.__doApplyComposite('onshow',_options);
         this.__onRefresh(_options);
     };
     /**
@@ -68,17 +69,7 @@ var f = function(){
      */
     _proAbstractModule.__onRefresh = function(_options){
         this.__supOnRefresh(_options);
-        // refresh composited modules
-        var _query = _u._$object2query(_options.param);
-        _u._$forIn(
-            this.__composites,
-            function(_umi,_pid){
-                if (!!_query) _umi += '?'+_query;
-                this.__dispatcher._$redirect(_umi,{
-                    input:{parent:this.__export[_pid]}
-                });
-            },this
-        );
+        this.__doApplyComposite('onrefresh',_options);
     };
     /**
      * 隐藏模块触发事件，子类实现具体逻辑
@@ -89,6 +80,24 @@ var f = function(){
     _proAbstractModule.__onHide = function(){
         this.__supOnHide();
         _e._$removeByEC(this.__body);
+    };
+    /**
+     * 应用组合模块
+     * @param  {String} 类型，onshow/onrefresh
+     * @param  {Object} 事件对象
+     * @return {Void}
+     */
+    _proAbstractModule.__doApplyComposite = function(_type,_options){
+        var _query = _u._$object2query(_options.param);
+        _u._$forIn(
+            this.__composites[_type],
+            function(_umi,_pid){
+                if (!!_query) _umi += '?'+_query;
+                this.__dispatcher._$redirect(_umi,{
+                    input:{parent:this.__export[_pid]}
+                });
+            },this
+        );
     };
 };
 NEJ.define('{lib}util/dispatcher/module.base.js',
