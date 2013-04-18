@@ -127,11 +127,11 @@ var f = function() {
     })();
     /**
      * 播放音乐
-     * @param  {String} 音乐地址
+     * @param  {Object} 音乐信息
      * @return {Void}
      */
-    _proPlayer._$play = function(_url){
-        _n._$exec('player.load',_url);
+    _proPlayer._$play = function(_options){
+        _n._$exec('player.load',_options);
         this._$dispatchEvent('onstatechange',{
             state:0
         });
