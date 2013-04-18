@@ -87,18 +87,30 @@ var f = function(){
      * @param  {Object} 事件对象
      * @return {Void}
      */
-    _proAbstractModule.__doApplyComposite = function(_type,_options){
-        var _query = _u._$object2query(_options.param);
-        _u._$forIn(
-            this.__composites[_type],
-            function(_umi,_pid){
-                if (!!_query) _umi += '?'+_query;
-                this.__dispatcher._$redirect(_umi,{
-                    input:{parent:this.__export[_pid]}
-                });
-            },this
-        );
-    };
+    _proAbstractModule.__doApplyComposite = (function(){
+        var _reg0 = /^onshow|onrefresh$/;
+        var _doRedirect = function(_query,_options,_umi,_pid){
+            if (_reg0.test(_pid)) return;
+            if (!!_query) _umi += '?'+_query;
+            this.__dispatcher._$redirect(_umi,{
+                input:{
+                    location:_options,
+                    parent:this.__export[_pid]
+                }
+            });
+        };
+        return function(_type,_options){
+            var _query = _u._$object2query(_options.param)||'';
+            _u._$forIn(
+                this.__composites,
+                _doRedirect._$bind(this,_query,_options)
+            );
+            _u._$forIn(
+                this.__composites[_type],
+                _doRedirect._$bind(this,_query,_options)
+            );
+        };
+    })();
 };
 NEJ.define('{lib}util/dispatcher/module.base.js',
           ['{lib}util/dispatcher/module.2.js'],f);
