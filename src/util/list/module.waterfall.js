@@ -10,10 +10,12 @@ var f = function(){
         _o = NEJ.O,
         _r = NEJ.R,
         _e = _('nej.e'),
+        _v = _('nej.v'),
         _u = _('nej.u'),
         _i = _('nej.ui'),
         _p = _('nej.ut'),
-        _proListModuleWF;
+        _proListModuleWF,
+        _supListModuleWF;
     if (!!_p._$$ListModuleWF) return;
     /**
      * 列表模块基类
@@ -102,10 +104,13 @@ var f = function(){
      * @extends {nej.ut._$$ListModule}
      * @param   {Object}             可选配置参数
      * @config  {String|Node}  more  添加更多列表项按钮节点
+     * @config  {String|Node}  sbody 滚动条所在容器，支持onscroll事件
+     * @config  {Number}       delta 触发自动加载更多时距离滚动容器底部的便宜量，单位px，默认30
      * 
      */
     _p._$$ListModuleWF = NEJ.C();
       _proListModuleWF = _p._$$ListModuleWF._$extend(_p._$$ListModule);
+      _supListModuleWF = _p._$$ListModuleWF._$supro;
     /**
      * 控件重置
      * @protected
@@ -116,6 +121,13 @@ var f = function(){
     _proListModuleWF.__reset = function(_options){
         this.__supReset(_options);
         this.__doResetMoreBtn(_options.more);
+        this.__doInitDomEvent([[
+            _options.sbody,'scroll',
+            this.__onCheckScroll._$bind(this)
+        ]]);
+        var _delta = parseInt(_options.delta);
+        if (isNaN(_delta)) _delta = 30;
+        this.__delta = Math.max(0,_delta);
         this._$refresh();
     };
     /**
@@ -127,6 +139,21 @@ var f = function(){
     _proListModuleWF.__destroy = function(){
         this.__supDestroy();
         delete this.__nmore;
+        delete this.__nexting;
+    };
+    /**
+     * 检查滚动情况
+     * @return {Void}
+     */
+    _proListModuleWF.__onCheckScroll = function(_event){
+        var _element = _v._$getElement(_event);
+        if (!_element.scrollHeight)
+            _element = _e._$getPageBox();
+        if (_element.scrollTop+
+            _element.clientHeight>=
+            _element.scrollHeight-this.__delta){
+            this._$next();
+        }
     };
     /**
      * 重置载入更多按钮
@@ -139,6 +166,15 @@ var f = function(){
             this.__nmore,'click',
             this._$next._$bind(this)
         ]]);
+    };
+    /**
+     * 数据列表载入完成回调
+     * @param  {Object} 请求信息
+     * @return {Void}
+     */
+    _proListModuleWF.__cbListLoad = function(_options){
+        delete this.__nexting;
+        _supListModuleWF.__cbListLoad.apply(this,arguments);
     };
     /**
      * 加载数据之前处理逻辑，显示数据加载中信息
@@ -268,7 +304,12 @@ var f = function(){
      * @method {_$next}
      * @return {Void}
      */
-    _proListModuleWF._$next = function(_pulling){
+    _proListModuleWF._$next = function(){
+        // lock loading
+        if (!!this.__nexting) 
+            return;
+        this.__nexting = !0;
+        console.log('load next');
         // update offset first for
         // offset adjust after list loaded
         var _offset = this.__offset;

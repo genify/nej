@@ -14,12 +14,12 @@ var f = function(){
 		
 		// for test
 		var _arr = [];
-		var _len = _options.offset>=10?4:_options.limit;
+		var _len = _options.offset>=40?14:_options.limit;
 		for(var i=0;i<_len;i++){
 			_arr.push({id:+new Date+i,name:'user-'+(+new Date+i),loginTime:+new Date});
 		}
 		if (_options.offset==0){
-			this._$setTotal(_options.key,14);
+			this._$setTotal(_options.key,54);
 		}
 		window.setTimeout(_options.onload._$bind(_options,_arr),1000);
 		

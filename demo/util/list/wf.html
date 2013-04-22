@@ -4,6 +4,8 @@
     <title>test list module</title>
     <meta charset="utf-8"/>
     <style>
+      *{border:0;padding:0;margin:0;}
+      html,body{width:100%;height:100%;}
       .fl{float:left;width:40%;padding-bottom:50px;}
       .fr{float:right;}
       .itm{margin:10px 0;overflow:hidden;}
@@ -55,6 +57,9 @@
           _e._$parseTemplate('template-box');
           
           _t._$$ListModuleWF._$allocate({
+              limit:20,
+              delta:200,
+              sbody:window,
               parent:'list-box-0',
               more:'more-btn-0',
               item:'jst-list',
@@ -74,6 +79,7 @@
           });
 
           _t._$$ListModuleWF._$allocate({
+              limit:20,
               parent:'list-box-1',
               more:'more-btn-1',
               item:{klass:_x._$$Item},
