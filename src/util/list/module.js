@@ -12,6 +12,7 @@ var f = function(){
         _e = _('nej.e'),
         _v = _('nej.v'),
         _u = _('nej.u'),
+        _i = _('nej.ui'),
         _p = _('nej.ut'),
         _proListModule;
     if (!!_p._$$ListModule) return;
@@ -26,6 +27,7 @@ var f = function(){
      * @config  {Number}        total  列表项总数量，默认通过第一个列表请求载入总数
      * @config  {String|Object} item   列表JST模版标识或者Item配置，{clazz:'xxx',klass:_$$Item||'jst key'}
      * @config  {Object}        cache  缓存配置信息，{key:'primary key',lkey:'list key',data:{},klass:_$$ListCache}
+     * @config  {Object}        pager  分页器配置信息，{parent:'xxx',klass:_$$Pager,count:1}
      * 
      * [hr]
      * 下拉刷新列表之前处理业务逻辑，可用于处理loading状态的显示
@@ -156,6 +158,8 @@ var f = function(){
         this.__ropt.limit = parseInt(_options.limit)||10;
         this.__doResetTemplate(_options.item);
         this.__doResetCache(_options.cache||_o);
+        this.__doResetPager(_options.pager||_o);
+        this._$refresh();
     };
     /**
      * 控件销毁
@@ -168,6 +172,12 @@ var f = function(){
         this.__doClearListBox();
         this.__supDestroy();
         this.__cache._$recycle();
+        if (!!this.__pager){
+            this.__pager._$recycle();
+            delete this.__pager;
+        }
+        delete this.__pkls;
+        delete this.__popt;
         delete this.__pulling;
         delete this.__cache;
         delete this.__lbox;
@@ -260,6 +270,16 @@ var f = function(){
                 this.__ropt.key,_cache.total);
     };
     /**
+     * 重置分页器配置
+     * @param  {Object} 分页器配置
+     * @return {Void}
+     */
+    _proListModule.__doResetPager = function(_pager){
+        this.__pkls = _pager.klass||_i._$$Pager;
+        this.__popt = NEJ.X({},_pager);
+        delete this.__popt.klass;
+    };
+    /**
      * 清理列表容器
      * @return {Void}
      */
@@ -271,6 +291,15 @@ var f = function(){
             delete this.__items;
         }
         this.__lbox.innerHTML = '';
+    };
+    /**
+     * 通过分页器刷新当前页
+     * @return {Void}
+     */
+    _proListModule.__doRefreshByPager = function(){
+        var _index = !this.__pager?1
+                     :this.__pager._$getIndex();
+        this.__doChangePage({index:_index});
     };
     /**
      * 页码变化处理逻辑
@@ -363,6 +392,33 @@ var f = function(){
         // recycle loading
         this.__doBeforeListShow('onafterpullrefresh');
         this._$refresh();
+    };
+    /**
+     * 同步分页器
+     * @param  {Number}  页码索引
+     * @param  {Number}  总页数
+     * @return {Boolean} 是否重置页码
+     */
+    _proListModule.__doSyncPager = function(_index,_total){
+        if (!!this.__pager){
+            // check pager index and total
+            var _index2 = this.__pager._$getIndex(),
+                _total2 = this.__pager._$getTotal();
+            if (_index2>_total||_total!=_total2){
+                this.__pager._$recycle();
+                delete this.__pager;
+                this.__doChangePage({
+                    index:Math.min(_index,_total)
+                });
+                return !0;
+            }
+        }else{
+            // check pager instance
+            this.__popt.index = _index;
+            this.__popt.total = _total;
+            this.__pager = this.__pkls._$allocate(this.__popt);
+            this.__pager._$setEvent('onchange',this.__doChangePage._$bind(this));
+        }
     };
     /**
      * 格式化数据
@@ -726,4 +782,5 @@ var f = function(){
 };
 NEJ.define('{lib}util/list/module.js',
           ['{lib}ui/item/list.js'
+          ,'{lib}ui/pager/pager.js'
           ,'{lib}util/cache/cache.list.base.js'],f);

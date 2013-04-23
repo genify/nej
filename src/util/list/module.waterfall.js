@@ -1,6 +1,6 @@
 /*
  * ------------------------------------------
- * 列表模块基类实现文件
+ * 瀑布式列表模块实现文件
  * @version  1.0
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
@@ -18,7 +18,7 @@ var f = function(){
         _supListModuleWF;
     if (!!_p._$$ListModuleWF) return;
     /**
-     * 列表模块基类
+     * 瀑布式列表模块
      * 
      * 结构举例：
      * [code type="html"]
@@ -106,6 +106,7 @@ var f = function(){
      * @config  {String|Node}  more  添加更多列表项按钮节点
      * @config  {String|Node}  sbody 滚动条所在容器，支持onscroll事件
      * @config  {Number}       delta 触发自动加载更多时距离滚动容器底部的便宜量，单位px，默认30
+     * @config  {Number}       count 指定加载多少次后出现分页器
      * 
      */
     _p._$$ListModuleWF = NEJ.C();
@@ -119,7 +120,6 @@ var f = function(){
      * @return {Void}
      */
     _proListModuleWF.__reset = function(_options){
-        this.__supReset(_options);
         this.__doResetMoreBtn(_options.more);
         this.__doInitDomEvent([[
             _options.sbody,'scroll',
@@ -128,7 +128,9 @@ var f = function(){
         var _delta = parseInt(_options.delta);
         if (isNaN(_delta)) _delta = 30;
         this.__delta = Math.max(0,_delta);
-        this._$refresh();
+        var _count = parseInt(_options.count);
+        this.__count = Math.max(0,_count||0);
+        this.__supReset(_options);
     };
     /**
      * 控件销毁
@@ -139,21 +141,8 @@ var f = function(){
     _proListModuleWF.__destroy = function(){
         this.__supDestroy();
         delete this.__nmore;
+        delete this.__endskr;
         delete this.__nexting;
-    };
-    /**
-     * 检查滚动情况
-     * @return {Void}
-     */
-    _proListModuleWF.__onCheckScroll = function(_event){
-        var _element = _v._$getElement(_event);
-        if (!_element.scrollHeight)
-            _element = _e._$getPageBox();
-        if (_element.scrollTop+
-            _element.clientHeight>=
-            _element.scrollHeight-this.__delta){
-            this._$next();
-        }
     };
     /**
      * 重置载入更多按钮
@@ -166,6 +155,33 @@ var f = function(){
             this.__nmore,'click',
             this._$next._$bind(this)
         ]]);
+    };
+    /**
+     * 检查滚动情况
+     * @return {Void}
+     */
+    _proListModuleWF.__onCheckScroll = function(_event){
+        if (this.__endskr) return;
+        var _element = _v._$getElement(_event);
+        if (!_element.scrollHeight)
+            _element = _e._$getPageBox();
+        if (_element.scrollTop+
+            _element.clientHeight>=
+            _element.scrollHeight-this.__delta){
+            this._$next();
+        }
+    };
+    /**
+     * 页码变化处理逻辑
+     * @protected
+     * @method {__doChangePage}
+     * @param  {Object} 页码信息
+     * @return {Void}
+     */
+    _proListModuleWF.__doChangePage = function(_event){
+        this.__doClearListBox();
+        this.__offset = (_event.index-1)*this.__ropt.limit*this.__count;
+        this._$next();
     };
     /**
      * 数据列表载入完成回调
@@ -185,6 +201,7 @@ var f = function(){
     _proListModuleWF.__doBeforeListLoad = function(){
         this.__doShowMessage('onbeforelistload','列表加载中...');
         _e._$setStyle(this.__nmore,'visibility','hidden');
+        _e._$setStyle(this.__popt.parent,'visibility','hidden');
     };
     /**
      * 列表绘制之前处理逻辑
@@ -193,10 +210,27 @@ var f = function(){
      * @return {Void}
      */
     _proListModuleWF.__doBeforeListRender = function(_list,_offset,_limit){
-        var _length = _list.length;
+        var _length = _list.length,
+            _ended = _offset+_limit>_length;
         this.__offset = Math.min(this.__offset,_length);
-        _e._$setStyle(this.__nmore,'visibility',
-           _offset+_limit>_length?'hidden':'visible');
+        _e._$setStyle(this.__nmore,'visibility',_ended?'hidden':'visible');
+        if (this.__count>0){
+            // check pager
+            var _number = _limit*this.__count,
+                _index = Math.floor(_offset/_number)+1,
+                _total = Math.ceil(_length/_number);
+            if (this.__doSyncPager(_index,_total)) return !0;
+            this.__endskr = (Math.floor(_offset/_limit)+1)%this.__count==0;
+            // sync more button and pager
+            _e._$setStyle(
+                this.__nmore,'display',
+                this.__endskr||_ended?'none':''
+            );
+            _e._$style(this.__popt.parent,{
+                visibility:_total>1?'visible':'hidden',
+                display:this.__endskr||_ended?'':'none'
+            });
+        }
     };
     /**
      * 列表为空时处理逻辑
@@ -240,6 +274,12 @@ var f = function(){
         this.__doCheckResult(_event,'onafteradd');
         var _flag = _event.flag;
         if (_event.stopped||!_flag) return;
+        // with pager
+        if (this.__count>0){
+            this.__doRefreshByPager();
+            return;
+        }
+        // without pager
         this.__offset += 1;
         _flag==-1 ? this._$unshift(_event.data)
                   : this._$append(_event.data);
@@ -253,6 +293,12 @@ var f = function(){
     _proListModuleWF.__cbItemDelete = function(_event){
         this.__doCheckResult(_event,'onafterdelete');
         if (_event.stopped) return;
+        // with pager
+        if (this.__count>0){
+            this.__doRefreshByPager();
+            return;
+        }
+        // without pager
         var _id = _event.data[this.__iopt.pkey];
         if (!!this.__items){
             var _item = _e._$getItemById(_id),

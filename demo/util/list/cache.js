@@ -13,13 +13,16 @@ var f = function(){
 	_proCustomCache.__doLoadList = function(_options){
 		
 		// for test
-		var _arr = [];
-		var _len = _options.offset>=40?14:_options.limit;
+		var _arr = [],
+		    _total = 104,
+		    _count = Math.floor(_total/_options.limit),
+		    _number = _count*_options.limit;
+		var _len = _options.offset>=_number?_total-_number:_options.limit;
 		for(var i=0;i<_len;i++){
 			_arr.push({id:+new Date+i,name:'user-'+(+new Date+i),loginTime:+new Date});
 		}
 		if (_options.offset==0){
-			this._$setTotal(_options.key,54);
+			this._$setTotal(_options.key,_total);
 		}
 		window.setTimeout(_options.onload._$bind(_options,_arr),1000);
 		

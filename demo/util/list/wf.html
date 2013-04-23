@@ -18,6 +18,7 @@
       <h1>JST模版</h1>
       <div id="list-box-0"></div>
       <div id="more-btn-0"> load more </div>
+      <div id="page-box-0"></div>
     </div>
     <div class="fl xx">
       <h1>ITEM模版</h1>
@@ -57,12 +58,14 @@
           _e._$parseTemplate('template-box');
           
           _t._$$ListModuleWF._$allocate({
-              limit:20,
+              limit:10,
+              count:2,
               delta:200,
               sbody:window,
               parent:'list-box-0',
               more:'more-btn-0',
               item:'jst-list',
+              pager:{parent:'page-box-0'},
               cache:{klass:_x._$$CustomCache},
               onupdate:function(_event){
                   console.log('update from jst -> '+_event.data.id);

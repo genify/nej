@@ -11,7 +11,6 @@ var f = function(){
         _r = NEJ.R,
         _u = _('nej.u'),
         _e = _('nej.e'),
-        _i = _('nej.ui'),
         _p = _('nej.ut'),
         _proListModulePG,
         _supListModulePG;
@@ -104,49 +103,11 @@ var f = function(){
      * @class   {nej.ut._$$ListModulePG}
      * @extends {nej.ut._$$ListModule}
      * @param   {Object}       可选配置参数
-     * @config  {Object} pager 分页器配置信息，{parent:'xxx',klass:_$$Pager}
      * 
      */
     _p._$$ListModulePG = NEJ.C();
       _proListModulePG = _p._$$ListModulePG._$extend(_p._$$ListModule);
       _supListModulePG = _p._$$ListModulePG._$supro;
-    /**
-     * 控件重置
-     * @protected
-     * @method {__reset}
-     * @param  {Object} 配置参数
-     * @return {Void}
-     */
-    _proListModulePG.__reset = function(_options){
-        this.__supReset(_options);
-        this.__doResetPager(_options.pager||_o);
-        this.__doChangePage({index:1});
-    };
-    /**
-     * 控件销毁
-     * @protected
-     * @method {__destroy}
-     * @return {Void}
-     */
-    _proListModulePG.__destroy = function(){
-        this.__supDestroy();
-        if (!!this.__pager){
-            this.__pager._$recycle();
-            delete this.__pager;
-        }
-        delete this.__pkls;
-        delete this.__popt;
-    };
-    /**
-     * 重置分页器配置
-     * @param  {Object} 分页器配置
-     * @return {Void}
-     */
-    _proListModulePG.__doResetPager = function(_pager){
-        this.__pkls = _pager.klass||_i._$$Pager;
-        this.__popt = NEJ.X({},_pager);
-        delete this.__popt.klass;
-    };
     /**
      * 加载数据之前处理逻辑，显示数据加载中信息
      * @protected
@@ -175,31 +136,10 @@ var f = function(){
      * @return {Void}
      */
     _proListModulePG.__doBeforeListRender = function(_list,_offset,_limit){
-        var _total = Math.ceil(_list.length/_limit);
-        // check pager index and total
-        if (!!this.__pager){
-            var _index = this.__pager._$getIndex(),
-                _total2 = this.__pager._$getTotal();
-            if (_index>_total||_total!=_total2){
-                this.__pager._$recycle();
-                delete this.__pager;
-                this.__doChangePage({
-                    index:Math.min(_index,_total)
-                });
-                return !0;
-            }
-        }
-        // check pager instance
-        if (!this.__pager){
-            var _index = Math.floor(_offset/_limit)+1;
-            this.__popt.index = _index;
-            this.__popt.total = _total;
-            this.__pager = this.__pkls._$allocate(this.__popt);
-            this.__pager._$setEvent('onchange',this.__doChangePage._$bind(this));
-        }
-        // sync pager show
-        _e._$setStyle(this.__popt.parent,
-            'visibility',_total>1?'visible':'hidden');
+        var _index = Math.floor(_offset/_limit)+1,
+            _total = Math.ceil(_list.length/_limit);
+        if (this.__doSyncPager(_index,_total)) return !0;
+        _e._$setStyle(this.__popt.parent,'visibility',_total>1?'visible':'hidden');
     };
     /**
      * 列表为空时处理逻辑
@@ -282,11 +222,8 @@ var f = function(){
      */
     _proListModulePG._$refresh = function(){
         this.__doClearListBox();
-        var _index = !this.__pager?1
-                     :this.__pager._$getIndex();
-        this.__doChangePage({index:_index});
+        this.__doRefreshByPager();
     };
 };
 NEJ.define('{lib}util/list/module.pager.js',
-          ['{lib}util/list/module.js'
-          ,'{lib}ui/pager/pager.js'],f);
+          ['{lib}util/list/module.js'],f);
