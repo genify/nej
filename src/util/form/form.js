@@ -226,6 +226,12 @@ var f = function(){
      * @event   {onvalid}
      * @param   {Object} 验证基本信息
      * @config  {Node}   target 当前验证节点
+     * 
+     * [hr]
+     * 回车触发事件
+     * @event   {onenter}
+     * @param   {Event} 事件信息
+     * @return  {Void}
      */
     _p._$$WebForm = NEJ.C();
       _proWebForm = _p._$$WebForm._$extend(_p._$$Event);
@@ -254,6 +260,10 @@ var f = function(){
         this.__supReset(_options);
         this.__form = document.forms[_options.form]||
                      _e._$get(_options.form);
+        this.__doInitDomEvent([[
+            this.__form,'keypress',
+            this.__onCheckEnter._$bind(this)
+        ]]);
         this.__message = _options.message||{};
         this.__message.pass = this.__message.pass||'&nbsp;';
         // focus options
@@ -381,6 +391,15 @@ var f = function(){
             return Date.parse(_doFormatDate(_value));
         };
     })();
+    /**
+     * 回车操作检测
+     * @param  {Event} 事件对象
+     * @return {Void}
+     */
+    _proWebForm.__onCheckEnter = function(_event){
+        if (_event.keyCode!=13) return;
+        this._$dispatchEvent('onenter',_event);
+    };
     /**
      * 解析字符类型规则属性
      * @protected
