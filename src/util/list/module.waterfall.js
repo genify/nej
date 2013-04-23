@@ -307,7 +307,7 @@ var f = function(){
                 this.__items.splice(_index,1);
                 this.__offset -= 1;
             }
-            _item._$recycle();
+            if (!!_item) _item._$recycle();
         }else{
             var _node = _e._$get(this.
                         __getItemBodyId(_id));
@@ -355,7 +355,6 @@ var f = function(){
         if (!!this.__nexting) 
             return;
         this.__nexting = !0;
-        console.log('load next');
         // update offset first for
         // offset adjust after list loaded
         var _offset = this.__offset;
