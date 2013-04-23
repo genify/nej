@@ -59,9 +59,11 @@
           
           _t._$$ListModuleWF._$allocate({
               limit:10,
-              count:2,
-              delta:200,
-              sbody:window,
+              
+              count:2,      // 加载多少次出现分页器
+              delta:200,    // 滚动距离底部多少像素触发加载更多
+              sbody:window, // 包含列表的滚动条所在容器节点或者ID
+              
               parent:'list-box-0',
               more:'more-btn-0',
               item:'jst-list',
