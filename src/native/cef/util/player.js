@@ -96,8 +96,8 @@ var f = function() {
         this.__nevt = [
             'volumechange','notify',
             'dataloaded','play','pause',
-            'ended',,'playmode','error',
-            'playpre','playnext','timeupdate'
+            'ended',,'playmode','error','playpre',
+            'playnext','timeupdate','lyricsupdate'
         ];
         this.__supInit();
     };
@@ -263,6 +263,11 @@ var f = function() {
             case 'playmode':
                 this._$dispatchEvent('onmodechange',{
                     mode:arguments[1]
+                });
+            return;
+            case 'lyricsupdate':
+                this._$dispatchEvent('onlrcupdate',{
+                    id:arguments[1],lrc:arguments[2]
                 });
             return;
         }
