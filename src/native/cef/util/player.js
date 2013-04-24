@@ -208,7 +208,7 @@ var f = function() {
      * @return {Void}
      */
     _proPlayer._$setLRC = function(_lrc){
-        _n._$exec(!_lrc?'player.setLRC':'player.setLRCEmpty',_lrc||'');
+        _n._$exec(!_lrc?'player.setLRCEmpty':'player.setLRC',_lrc||'');
     };
     /**
      * native事件回调
