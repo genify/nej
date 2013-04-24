@@ -76,6 +76,15 @@ var f = function() {
      * @event  {onmodechange}
      * @param  {Object}  静音状态信息
      * @config {Boolean} mode 模式，见描述
+     * 
+     * [hr]
+     * 歌词更新触发事件
+     * @event  {onlrcupdate}
+     * @param  {Object}  歌词信息
+     * @config {String}  id  歌曲ID
+     * @config {String}  lrc 歌词内容
+     * 
+     * 
      */
     _p._$$Player = NEJ.C();
       _proPlayer = _p._$$Player._$extend(_t._$$Event);
@@ -192,6 +201,14 @@ var f = function() {
      */
     _proPlayer._$setPosition = function(_ratio){
         _n._$exec('player.setCurrentTime',_ratio*(_player.duration||0));
+    };
+    /**
+     * 设置歌词
+     * @param  {String} 歌词内容
+     * @return {Void}
+     */
+    _proPlayer._$setLRC = function(_lrc){
+        _n._$exec(!_lrc?'player.setLRC':'player.setLRCEmpty',_lrc||'');
     };
     /**
      * native事件回调
