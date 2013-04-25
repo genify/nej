@@ -141,7 +141,7 @@ var f = function() {
      */
     _proPlayer._$play = function(_options){
         _n._$exec('player.load',_options);
-        _n._$exec('player.setCover',_options.songId,'album');
+        _n._$exec('player.setCover',''+_options.songId,'album');
         this._$dispatchEvent('onstatechange',{
             state:0
         });
