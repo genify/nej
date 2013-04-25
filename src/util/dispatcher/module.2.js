@@ -181,9 +181,8 @@ var f = function(){
      * @return {Void}
      */
     _proModule.__doSubscribeMessage = function(){
-        if (!!this.__dispatcher)
-            this.__dispatcher._$subscribe
-                .apply(this.__dispatcher,arguments);
+        this.__dispatcher._$subscribe
+            .apply(this.__dispatcher,arguments);
     };
     /**
      * 取模块对外开放的数据信息，依赖此模块的子模块可以访问到此信息
