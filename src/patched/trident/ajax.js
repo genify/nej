@@ -12,6 +12,35 @@ var f = function(){
         _h = _('nej.h');
     if (_p._$NOT_PATCH.trident) return;
     /**
+     * 取XHR对象
+     * @return {XMLHttpRequest} XHR对象
+     */
+    _h.__getXMLHttpRequest = (function(){
+        // http://blogs.msdn.com/b/xmlteam/archive/2006/10/23/using-the-right-version-of-msxml-in-internet-explorer.aspx
+        var _msxml = ['Msxml2.XMLHTTP.6.0'
+                     ,'Msxml2.XMLHTTP.3.0'
+                     ,'Msxml2.XMLHTTP.4.0'
+                     ,'Msxml2.XMLHTTP.5.0'
+                     ,'MSXML2.XMLHTTP'
+                     ,'Microsoft.XMLHTTP'];
+        var _getXHR = function(){
+            for(var i=0,l=_msxml.length;i<l;i++){
+                try{
+                    return new ActiveXObject(_msxml[i]);
+                }catch(e){
+                    // ignore exception
+                }
+            }
+            return null;
+        };
+        return _h.__getXMLHttpRequest._$aop(
+               function(_event){
+                   if (!!window.XMLHttpRequest) return;
+                   _event.stopped = !0;
+                   _event.value = _getXHR();
+               });
+    })();
+    /**
      * 根据模式返回代理实例，模式说明
      * 0 - 自动模式，高版本使用HTML5的CORS协议，低版本采用Frame代理方式
      * 1 - 高版本使用HTML5的CORS协议，普通请求低版本采用Flash代理方式
