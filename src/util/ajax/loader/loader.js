@@ -167,7 +167,7 @@ var f = function(){
                 }catch(ex){
                     // ignore
                     console.error(ex.message);
-                    console.error(ex);
+                    console.error(ex.stack);
                 }
                 _instance._$recycle();
             }
@@ -289,7 +289,7 @@ var f = function(){
             }catch(ex){
                 // ignore
                 console.error(ex.message);
-                console.error(ex);
+                console.error(ex.stack);
             }
             this._$recycle();
             return this;

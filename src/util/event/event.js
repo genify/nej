@@ -212,7 +212,7 @@ var f = function(){
             }catch(ex){
                 // ignore
                 console.error(ex.message);
-                console.error(ex);
+                console.error(ex.stack);
             }
     };
     /**

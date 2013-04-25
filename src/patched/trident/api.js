@@ -246,7 +246,7 @@ var f = function(){
             }catch(ex){
                 // ignore unrecognized event name
                 console.error(ex.message);
-                console.error(ex);
+                console.error(ex.stack);
             }
         }
     });

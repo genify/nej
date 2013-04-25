@@ -152,7 +152,7 @@ var f = function(){
             }catch(ex){
                 // ignore exception
                 console.error(ex.message);
-                console.error(ex);
+                console.error(ex.stack);
             }
             this.__doSendRequest(_event);
         }catch(e){
