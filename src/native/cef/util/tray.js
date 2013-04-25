@@ -1,8 +1,8 @@
 /**
  * ------------------------------------------
- * 托盘控件实现文件
+ * 托盘图标控件实现文件
  * @version  1.0
- * @author   yuqijun(yuqijun@corp.netease.com)
+ * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
 var f = function() {
@@ -18,27 +18,34 @@ var f = function() {
         _p = _('nej.cef.ut'), 
         _proTray;
     /**
-     * 菜单控件封装
-     * @class 分页器控件封装
-     * @extends {nej.ui._$$Event}
-     * @param {Object}
-     *            _options 可选配置参数，已处理参数列表如下 
-     *                        tooltip            托盘鼠标移上去时提示
-     *                        icon            托盘图标，必须是绝对路径，是客户端协议形的绝对路径，不能用相对路径，不是一般的图片地址
-     *                        onclick            点击回调
-     *                        onrightclick    鼠标右击回调    
+     * 托盘图标控件
+     * 
+     * @class   {nej.cef.ut._$$Tray}
+     * @extends {nej.ut._$$Event}
+     * 
+     * @param   {Object} 可选配置参数
+     * @config  {String} tooltip  托盘鼠标移上去时提示
+     * @config  {String} icon     托盘图标，必须是绝对路径，是客户端协议形的绝对路径，不能用相对路径，不是一般的图片地址
+     * 
+     * [hr]
+     * 图标左键点击事件
+     * @event   {onclick}
+     * @param   {Object} 事件信息
+     * 
+     * [hr]
+     * 图标右键点击事件
+     * @event   {onrightclick}
+     * @param   {Object} 事件信息
+     * 
      */
     _p._$$Tray = NEJ.C();
       _proTray = _p._$$Tray._$extend(_t._$$Event);
-
-    _proTray.__init = function(){
-        this.__supInit();
-    };
+    
+    
+    
     /**
      * 控件重置
-     * 
-     * @param {Object}
-     *            _options 可选配置参数
+     * @param  {Object} 可选配置参数
      * @return {Void}
      */
     _proTray.__reset = function(_options) {
