@@ -141,7 +141,6 @@ var f = function() {
      */
     _proPlayer._$play = function(_options){
         _n._$exec('player.load',_options);
-        _n._$exec('player.setCover',''+_options.albumId,'album');
         this._$dispatchEvent('onstatechange',{
             state:0
         });
@@ -211,6 +210,15 @@ var f = function() {
     _proPlayer._$setLRC = function(_lrc){
         !_lrc ? _n._$exec('player.setLRCEmpty')
               : _n._$exec('player.setLRC',_lrc||'');
+    };
+    /**
+     * 设置封面
+     * @param  {String} 专辑ID
+     * @return {Void}
+     */
+    _proPlayer._$setCover = function(_aid){
+        !_aid ? _n._$exec('player.setCoverDefault')
+              : _n._$exec('player.setCover',''+_aid,'album');
     };
     /**
      * native事件回调

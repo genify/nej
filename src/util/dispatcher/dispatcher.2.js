@@ -733,6 +733,7 @@ var f = function(){
      * @return {Void}
      */
     _proDispatcher._$subscribe = function(_umi,_type,_callback){
+        _umi = this.__config.al[_umi]||_umi;
         this._$pushEvent(
             (_umi||'')+':'+(_type||''),_callback
         );
@@ -756,6 +757,7 @@ var f = function(){
      * @return {Void}
      */
     _proDispatcher._$unsubscribe = function(_umi,_type,_callback){
+        _umi = this.__config.al[_umi]||_umi;
         this._$delEvent(
             (_umi||'')+':'+(_type||''),_callback
         );
