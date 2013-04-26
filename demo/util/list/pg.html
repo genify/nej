@@ -41,6 +41,12 @@
       	</div>
       </textarea>
     </div>
+    <script>
+        var test_data = [];
+        for(var i=0;i<104;i++){
+            test_data.push({id:+new Date+i,name:'user-'+(+new Date+i),loginTime:+new Date});
+        }
+    </script>
     <script src="../../../src/define.js?pro=./"></script>
     <script>
       define(['{lib}util/template/tpl.js'
@@ -55,10 +61,11 @@
           _e._$parseTemplate('template-box');
           
           _t._$$ListModulePG._$allocate({
+              limit:20,
               item:'jst-list',
               parent:'list-box-0',
               pager:{parent:'page-box-0'},
-              cache:{klass:_x._$$CustomCache},
+              cache:{/*klass:_x._$$CustomCache*/lkey:'abc',list:test_data},
               onupdate:function(_event){
                   console.log('update from jst -> '+_event.data.id);
                   this._$update({

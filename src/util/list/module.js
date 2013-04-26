@@ -26,7 +26,7 @@ var f = function(){
      * @config  {Number}        limit  每页显示数量，默认10项
      * @config  {Number}        total  列表项总数量，默认通过第一个列表请求载入总数
      * @config  {String|Object} item   列表JST模版标识或者Item配置，{clazz:'xxx',klass:_$$Item||'jst key'}
-     * @config  {Object}        cache  缓存配置信息，{key:'primary key',lkey:'list key',data:{},klass:_$$ListCache}
+     * @config  {Object}        cache  缓存配置信息，{key:'primary key',lkey:'list key',data:{},klass:_$$ListCache,list:[]}
      * @config  {Object}        pager  分页器配置信息，{parent:'xxx',klass:_$$Pager,count:1}
      * 
      * [hr]
@@ -251,7 +251,7 @@ var f = function(){
             this.__cbListLoad._$bind(this);
         _copt.onpullrefresh = 
             this.__cbPullRefresh._$bind(this);
-        if ('onlistchange' in _klass){
+        if (!!_klass&&('onlistchange' in _klass)){
             this.__doInitDomEvent([[
                 _klass,'listchange',
                 this.__cbListChange._$bind(this)
@@ -264,10 +264,17 @@ var f = function(){
             _copt.onitemupdate = this.
                 __cbItemUpdate._$bind(this);
         }
-        this.__cache = _klass._$allocate(_copt);
-        if (_cache.total!=null)
+        this.__cache = (_klass||_p._$$ListCache)._$allocate(_copt);
+        // set total
+        if (_cache.total!=null){
             this.__cache._$setTotal(
                 this.__ropt.key,_cache.total);
+        }
+        // set list
+        if (!!_cache.list){
+            this.__cache._$setListInCache(
+                this.__ropt.key,_cache.list);
+        }
     };
     /**
      * 重置分页器配置

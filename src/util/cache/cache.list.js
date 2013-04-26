@@ -320,6 +320,28 @@ var f = function(){
         return this;
     };
     /**
+     * 设置列表，清除原有列表
+     * 脚本举例
+     * [code]
+     *   // 设置列表
+     *   _cc._$setListInCache('abc',[]);
+     * [/code]
+     * @method {_$setListInCache}
+     * @param  {String} 列表标识
+     * @return {Array}  列表
+     */
+    _proListCache._$setListInCache = function(_key,_list){
+        this._$clearListInCache(_key);
+        this.__getList({
+            key:_key,
+            offset:0,
+            limit:_list.length+1
+        },{
+            list:_list,
+            total:_list.length
+        });
+    };
+    /**
      * 直接从缓存中取列表<br/>
      * 脚本举例
      * [code]
