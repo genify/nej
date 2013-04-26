@@ -25,6 +25,12 @@ var f = function(){
      * @config  {Float}       value    初始值
      * 
      * [hr]
+     * 滑动过程事件
+     * @event   {onslidechange}
+     * @param   {Object} 滑动信息
+     * @config  {Float} ratio 滑动比例
+     * 
+     * [hr]
      * 滑动停止事件
      * @event   {onslidestop}
      * @param   {Object} 滑动信息
@@ -87,6 +93,9 @@ var f = function(){
         this.__doUpdatePosition(
             this.__ratio+_delta/this.__owidth
         );
+        this._$dispatchEvent('onslidechange',{
+            ratio:this.__ratio
+        });
     };
     /**
      * 滑动结束
