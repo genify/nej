@@ -159,14 +159,16 @@ var f = function(){
      * @param  {Function} 事件回调
      * @return {Void}
      */
-    _proCustomEvent.__doEventAdd = function(_type,_handler){
+    _proCustomEvent.__doEventAdd = function(_type,_handler,_front){
         var _list = this.__cache[_type];
         if (!_list){
             _list = [];
             this.__cache[_type] = _list;
         }
-        if (_u._$isFunction(_handler)) 
-            _list.push(_handler);
+        if (_u._$isFunction(_handler)){
+            !_front ? _list.push(_handler)
+                    : _list.unshift(_handler);
+        } 
     };
     /**
      * 删除事件
@@ -233,7 +235,7 @@ var f = function(){
             if (this.__isDelegate(_args[0],_type)){
                 _event.stopped = !0;
                 this.__doEventBind(_type);
-                this.__doEventAdd(_type,_args[2]);
+                this.__doEventAdd(_type,_args[2],_args[3]);
                 this._$dispatchEvent('oneventadd',{
                     type:_type,
                     listener:_args[2]
