@@ -117,6 +117,9 @@ var f = function() {
             _u._$forEach(
                 this.__nevt,_doAddEvent,this
             );
+            if (!_player.paused){
+                this.__onNativeEvent('play');
+            }
         };
     })();
     /**
