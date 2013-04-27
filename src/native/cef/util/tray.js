@@ -76,7 +76,7 @@ var f = function() {
      * @return {Void}
      */
     _proTray.__onNativeEvent = function(_name){
-        this._$dispatchEvent(_name);
+        this._$dispatchEvent('on'+_name);
     };
     /**
      * 显示托盘图标
