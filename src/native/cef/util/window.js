@@ -13,6 +13,7 @@ var f = function(){
         _n = _('nej.n'),
         _t = _('nej.ut'),
         _p = _('nej.cef.ut'),
+        _s = _('window.os'),
         _proWindow;
     /**
      * 窗体基本行为封装对象，窗体调整区域大小节点集合标识： 
@@ -102,6 +103,7 @@ var f = function(){
             _options.dragger,'mousedown',
             this.__onActionDragger._$bind(this)
         ]];
+        this.__nmax = _e._$get(_options.max); 
         // init resizer
         this.__nodes = _options.resizes||{};
         _u._$forIn(
@@ -114,6 +116,7 @@ var f = function(){
             },this
         );
         this.__doInitDomEvent(_arr);
+        this.__doUpdateMaxState(_s.hasFullScreenWindow());
     };
     /**
      * 控件销毁
@@ -136,6 +139,21 @@ var f = function(){
         this._$dispatchEvent('onaftermin');
     };
     /**
+     * 更新最大化状态
+     * @param  {Boolean} 是否最大化状态
+     * @return {Void}
+     */
+    _proWindow.__doUpdateMaxState = function(_max){
+        if (!this.__nmax) return;
+        if (!!_max){
+            this.__nmax.title = '向下还原';
+            _e._$delClassName(this.__nmax,this.__maxcls);
+        }else{
+            this.__nmax.title = '最大化';
+            _e._$addClassName(this.__nmax,this.__maxcls);
+        }
+    };
+    /**
      * 最大化行为事件
      * @param  {Event} 事件对象
      * @return {Void}
@@ -146,13 +164,11 @@ var f = function(){
         if (_e._$hasClassName(_node,this.__maxcls)){
             // do max action
             _cmd = 'maximize';
-            _node.title = '向下还原';
-            _e._$delClassName(_node,this.__maxcls);
+            this.__doUpdateMaxState(!0);
         }else{
             // do restore action
             _cmd = 'restore';
-            _node.title = '最大化';
-            _e._$addClassName(_node,this.__maxcls);
+            this.__doUpdateMaxState(!1);
         }
         var _event = {action:_cmd};
         this._$dispatchEvent('onbeforemax',_event);
