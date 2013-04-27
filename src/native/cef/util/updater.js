@@ -185,7 +185,7 @@ var f = function() {
                     });
                 return;
                 case 'updateprogress':
-                    this._$dispatchEvent('onupdateprogress',{
+                    this._$dispatchEvent('onprogress',{
                         file:arguments[1],
                         percent:arguments[2],
                         loaded:arguments[3],
