@@ -68,7 +68,6 @@ var f = function() {
         if (!!_options.tooltip){
             this.__tray.toolTip = _options.tooltip;
         }
-        this._$show();
     };
     /**
      * 托盘事件回调

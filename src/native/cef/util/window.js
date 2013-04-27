@@ -12,6 +12,7 @@ var f = function(){
         _u = _('nej.u'),
         _n = _('nej.n'),
         _t = _('nej.ut'),
+        _x = _('nej.cef'),
         _p = _('nej.cef.ut'),
         _s = _('window.os'),
         _proWindow;
@@ -186,11 +187,11 @@ var f = function(){
         this._$dispatchEvent('onbeforeclose',_event);
         if (!!_event.close){
             // do close action
-            _n._$exec('app.exit');
+            _x._$exit();
             //window.close();
         }else{
             // do hide action
-            _n._$exec('winhelper.showWindow','hide');
+            _x._$hideWindow();
         }
         this._$dispatchEvent('onafterclose',_event);
     };
@@ -219,4 +220,5 @@ var f = function(){
 };
 NEJ.define('{lib}native/cef/util/window.js',
           ['{lib}util/event.js'
-          ,'{lib}native/command.js'],f);
+          ,'{lib}native/command.js'
+          ,'{lib}native/cef/api.js'],f);
