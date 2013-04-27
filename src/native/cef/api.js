@@ -123,30 +123,24 @@ var f = function() {
      * @api    {nej.cef._$showWindow}
      * @return {Void}
      */
-    _p._$showWindow = function(){
-        _n._$exec('winhelper.showWindow','show');
+    _p._$showWindow = function(_name){
+        if (!_name){
+            _n._$exec('winhelper.showWindow','show');
+        }else{
+            _n._$exec('winhelper.setNativeWindowShow',_name,!0);
+        }
     };
     /**
      * 隐藏窗体
      * @api    {nej.cef._$hideWindow}
      * @return {Void}
      */
-    _p._$hideWindow = function(){
-        _n._$exec('winhelper.showWindow','hide');
-    };
-    /**
-     * 切换窗体
-     * @api    {nej.cef._$switchWindow}
-     * @see    {nej.cef._$configWindowPosition}
-     * @param  {String}  窗体名称
-     * @param  {Object}  窗体配置信息
-     * @return {Void}
-     */
-    _p._$switchWindow = function(_name,_options){
-        _p._$hideWindow();
-        _options = NEJ.X({name:_name},_options);
-        _p._$configWindowPosition(_options);
-        _n._$exec('winhelper.setNativeWindowShow',_name,!0);
+    _p._$hideWindow = function(_name){
+        if (!_name){
+            _n._$exec('winhelper.showWindow','hide');
+        }else{
+            _n._$exec('winhelper.setNativeWindowShow',_name,!1);
+        }
     };
     /**
      * 打开新窗体
