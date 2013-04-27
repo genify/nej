@@ -143,6 +143,15 @@ var f = function() {
         }
     };
     /**
+     * 窗口前置
+     * @return {Void}
+     */
+    _p._$topWindow = function(_name){
+        if (!_name){
+            _n._$exec('winhelper.bringWindowToTop');
+        }
+    };
+    /**
      * 打开新窗体
      * @param  {String} 新窗口地址，参数通过查询形式输入，如?width=1000&height=200
      * @return {Void}
