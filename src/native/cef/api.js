@@ -183,13 +183,29 @@ var f = function() {
         _n._$exec('app.exit');
     };
     /**
+     * 取菜单项
+     * @param  {Object} 菜单配置
+     * @return {Object} 菜单项信息
+     */
+    _p._$getMenuItem = function(_options){
+        return NEJ.X({
+            text:'菜单项',
+            menu:!0,
+            menu_id:0,
+            enable:!0,
+            separator:!1,
+            children:null
+        },_options);
+    };
+    /**
      * 弹出菜单
      * @param  {Array} 菜单项列表
      * @return {Void}
      */
     _p._$popMenu = (function(){
         var _xmap = {
-            exit:{text:'退出',menu_id:1005,menu:!0,separator:!1,enable:!0,children:null}
+            exit:_p._$getMenuItem({text:'退出',menu_id:1005}),
+            setting:_p._$getMenuItem({text:'设置',menu_id:1006})
         };
         var _doCheckMenu = function(_item,_index,_list){
             var _xitm = _xmap[_item];
@@ -213,16 +229,16 @@ var f = function() {
         };
     })();
     // init document.onmenuacton
-    _('window.winhelper').onMenuClick = function(_id){
+    _('window.winhelper').onmenuclick = function(_id){
         _v._$dispatchEvent(
-            document,'menuacton',{
-                mid:_id
+            document,'menuaction',{
+                id:_id
             }
         );
     };
     _t._$$CustomEvent._$allocate({
         element:document,
-        event:'menuacton'
+        event:'menuaction'
     });
 };
 NEJ.define('{lib}native/cef/api.js', 
