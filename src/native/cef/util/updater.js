@@ -61,6 +61,7 @@ var f = function() {
      *   2    |  暂停
      *   3    |  取消
      *   4    |  更新成功
+     *   5    |  没有更新
      * [/ntb]
      * @event   {onstatechange}
      * @param   {Object} 状态信息
@@ -139,7 +140,14 @@ var f = function() {
             if (_u._$isObject(_ver)){
                 _ver = [_ver.major,_ver.build,_ver.revision].join('.');
             }
-            return _ver==_version;
+            var _big = !0,
+                _arr1 = _ver.split('.'),     // local
+                _arr2 = _version.split('.'), // server
+                _index = _u._$indexOf(_arr2,function(_number,_idx){
+                    _big = _big&&(_number>=_arr1[_idx]);
+                    return _big&&(_number>_arr1[_idx]);
+                });
+            return _index>=0;
         };
         return function(_json){
             if (_json.code!=200){
@@ -154,7 +162,12 @@ var f = function() {
                 _json.fileContents,
                 _doCheckVersion,this
             );
-            if (!this.__upcount) return;
+            if (!this.__upcount){
+                this._$dispatchEvent('onstatechange',{
+                    state:5
+                });
+                return;
+            }
             // confirm update
             var _event = {
                 version:_json.version,
