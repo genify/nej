@@ -65,7 +65,9 @@ var f = function() {
      * [/ntb]
      * @event   {onstatechange}
      * @param   {Object} 状态信息
-     * @config  {Number} state 状态值，见描述
+     * @config  {Number} state   状态值，见描述
+     * @config  {String} version 版本信息
+     * @config  {String} content 版本更新内容
      * 
      * [hr]
      * 开始更新之前触发事件
@@ -156,6 +158,11 @@ var f = function() {
                 });
                 return;
             }
+            // save version
+            this.__version = {
+                version:_json.version,
+                content:_json.updateContent
+            };
             // check update
             this.__upcount = 0;
             _u._$forEach(
@@ -163,23 +170,14 @@ var f = function() {
                 _doCheckVersion,this
             );
             if (!this.__upcount){
-                this._$dispatchEvent('onstatechange',{
-                    state:5
-                });
+                var _event = NEJ.X({state:5},this.__version);
+                this._$dispatchEvent('onstatechange',_event);
                 return;
             }
             // confirm update
-            var _event = {
-                version:_json.version,
-                content:_json.updateContent
-            };
+            var _event = NEJ.X({},this.__version);
             this._$dispatchEvent('onbeforeupdate',_event);
-            if (_event.stopped) return;
-            // do update
-            this._$dispatchEvent('onstatechange',{
-                state:1
-            });
-            _n._$exec('update.startUpdate');
+            if (!_event.stopped) this._$start();
         };
     })();
     /**
@@ -193,9 +191,8 @@ var f = function() {
         return function(_name){
             switch(_name){
                 case 'updatestate':
-                    this._$dispatchEvent('onstatechange',{
-                        state:_smap[arguments[1]]
-                    });
+                    var _event = NEJ.X({state:_smap[arguments[1]]},this.__version);
+                    this._$dispatchEvent('onstatechange',_event);
                 return;
                 case 'updateprogress':
                     this._$dispatchEvent('onprogress',{
@@ -206,9 +203,8 @@ var f = function() {
                     });
                 return;
                 case 'updateend':
-                    this._$dispatchEvent('onstatechange',{
-                        state:arguments[1]==0?4:0
-                    });
+                    var _event = NEJ.X({state:arguments[1]==0?4:0},this.__version);
+                    this._$dispatchEvent('onstatechange',_event);
                 return;
             }
         };
@@ -224,6 +220,15 @@ var f = function() {
             onload:this.__cbVersionCheck._$bind(this),
             onerror:this.__cbVersionCheck._$bind(this,_o)
         });
+    };
+    /**
+     * 开始更新
+     * @return {Void}
+     */
+    _proUpdater._$start = function(){
+        var _event = NEJ.X({state:1},this.__version);
+        this._$dispatchEvent('onstatechange',_event);
+        _n._$exec('update.startUpdate');
     };
     /**
      * 暂停更新

@@ -161,7 +161,7 @@ var f = function(){
     _proWindow.__onActionMax = function(_event){
         _v._$stop(_event);
         var _cmd,_node = _v._$getElement(_event);
-        if (_e._$hasClassName(_node,this.__maxcls)){
+        if (_e._$hasClassName(this.__nmax,this.__maxcls)){
             // do max action
             _cmd = 'maximize';
             this.__doUpdateMaxState(!0);
