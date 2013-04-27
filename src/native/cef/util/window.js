@@ -136,7 +136,7 @@ var f = function(){
     _proWindow.__onActionMin = function(_event){
         _v._$stop(_event);
         this._$dispatchEvent('onbeforemin');
-        _n._$exec('winhelper.showWindow','minimize');
+        this._$min();
         this._$dispatchEvent('onaftermin');
     };
     /**
@@ -216,6 +216,27 @@ var f = function(){
         var _node = _v._$getElement(_event);
         if (_node!=_e._$get(this.__nodes[_key])) return;
         _n._$exec('winhelper.sizeWindow',_key);
+    };
+    /**
+     * 最小化窗体
+     * @return {Void}
+     */
+    _proWindow._$min = function(){
+        _n._$exec('winhelper.showWindow','minimize');
+    };
+    /**
+     * 最大化窗体
+     * @return {Void}
+     */
+    _proWindow._$max = function(){
+        _n._$exec('winhelper.showWindow','maximize');
+    };
+    /**
+     * 还原窗体
+     * @return {Void}
+     */
+    _proWindow._$restore = function(){
+        _n._$exec('winhelper.showWindow','restore');
     };
 };
 NEJ.define('{lib}native/cef/util/window.js',

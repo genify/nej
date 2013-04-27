@@ -15,7 +15,8 @@ var f = function() {
         _n  = _('nej.n'),
         _t  = _('nej.ut'),
         _p  = _('nej.cef'),
-        _nt = _('nej.cef.ut');
+        _nt = _('nej.cef.ut'),
+        _mcache = {};
     /**
      * 配置窗体信息
      * @see    {nej.cef._$configWindowPosition}
@@ -188,14 +189,20 @@ var f = function() {
      * @return {Object} 菜单项信息
      */
     _p._$getMenuItem = function(_options){
-        return NEJ.X({
-            text:'菜单项',
-            menu:!0,
-            menu_id:0,
-            enable:!0,
-            separator:!1,
-            children:null
+        var _item = NEJ.X({
+            text:'菜单项',menu:!0,
+            menu_id:0,enable:!0,
+            separator:!1,children:null
         },_options);
+        _mcache[_item.menu_id] = _item;
+        return _item;
+    };
+    /**
+     * 根据ID取菜单项
+     * @return {Void}
+     */
+    _p._$getMenuItemById = function(_id){
+        return _mcache[_id];
     };
     /**
      * 弹出菜单
