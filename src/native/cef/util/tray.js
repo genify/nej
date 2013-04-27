@@ -10,10 +10,8 @@ var f = function() {
     var _ = NEJ.P, 
         _o = NEJ.O, 
         _r = NEJ.R, 
-        _e = _('nej.e'), 
         _u = _('nej.u'), 
         _t = _('nej.ut'), 
-        _c = _('nej.c'), 
         _n = _('nej.n'),
         _p = _('nej.cef.ut'), 
         _proTray;
@@ -40,9 +38,23 @@ var f = function() {
      */
     _p._$$Tray = NEJ.C();
       _proTray = _p._$$Tray._$extend(_t._$$Event);
-    
-    
-    
+    /**
+     * 控件初始化
+     * @return {Void}
+     */
+    _proTray.__init = (function(){
+        var _nevt = ['click','rightclick'];
+        // add native event
+        var _doAddEvent = function(_name){
+            this.__tray['on'+_name] = this.
+                 __onNativeEvent._$bind(this,_name);
+        };
+        return function(){
+            this.__tray = _n._$exec('app.getTrayIcon');
+            _u._$forEach(_nevt,_doAddEvent,this);
+            this.__supInit();
+        };
+    })();
     /**
      * 控件重置
      * @param  {Object} 可选配置参数
@@ -50,25 +62,56 @@ var f = function() {
      */
     _proTray.__reset = function(_options) {
         this.__supReset(_options);
-        this.__trayIcon = _n._$getTrayIcon();
-        this.__trayIcon.toolTip = _options.tooltip;
-        this.__trayIcon.icon = _options.icon;//"orpheus://orpheus/images/ico/ntes_mail_assist.ico";
-        this.__trayIcon.onclick = this.__onClick._$bind(this);
-        this.__trayIcon.onrightclick = this.__onRightClick._$bind(this); 
-        if(!this.__trayIcon.wasInstall)
-            this.__trayIcon.install();
+        if (!!_options.icon){
+            this.__tray.icon = _options.icon;
+        }
+        if (!!_options.tooltip){
+            this.__tray.toolTip = _options.tooltip;
+        }
+        this._$show();
     };
     /**
-     * 托盘点击事件回调
+     * 托盘事件回调
+     * @param  {String} 名称
+     * @return {Void}
      */
-    _proTray.__onClick = function(){
-        this._$dispatchEvent('onclick');
+    _proTray.__onNativeEvent = function(_name){
+        this._$dispatchEvent(_name);
     };
     /**
-     * 托盘右击事件回调
+     * 显示托盘图标
+     * @return {Void}
      */
-    _proTray.__onRightClick = function(){
-        this._$dispatchEvent('onrightclick');
+    _proTray._$show = function(){
+        if (!this.__tray.wasInstall){
+            this.__tray.install();
+        }
+    };
+    /**
+     * 隐藏托盘图标
+     * @return {Void}
+     */
+    _proTray._$hide = function(){
+        if (this.__tray.wasInstall){
+            this.__tray.uninstall();
+        }
+    };
+    /**
+     * 显示气泡提示
+     * @param  {Object} 配置信息
+     * @config {String}  title     气泡标题，默认为空
+     * @config {String}  text      气泡内容，默认为空
+     * @config {String}  icon      气泡图标，本地路径
+     * @config {Boolean} hasSound  是否有声音提示，默认为false
+     * @config {Number}  delayTime 显示时间长度，默认使用系统配置
+     * @return {Void}
+     */
+    _proTray._$showBalloon = function(_options){
+        this.__tray.popBalloon(_options);
     };
 };
-NEJ.define('{lib}native/cef/util/tray.js', ['{lib}util/event.js','{lib}native/command.js','{lib}base/util.js','{lib}native/cef/api.js'], f);
+NEJ.define('{lib}native/cef/util/tray.js', 
+          ['{lib}base/util.js'
+          ,'{lib}util/event.js'
+          ,'{lib}native/command.js'
+          ,'{lib}native/cef/api.js'],f);
