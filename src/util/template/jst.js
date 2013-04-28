@@ -30,7 +30,7 @@ var f = function(){
      *   var _e = NEJ.P('nej.e');
      *   var _html_seed =  _e._$addHtmlTemplate('<div>${name}</div>');
      *   // 生成结构<div>jack</div>
-     *   _e._$getHtmlTemplate(_html_seed,{name:'jack'});
+     *   var _html = _e._$getHtmlTemplate(_html_seed,{name:'jack'});
      * [/code]
      * @api    {nej.e._$getHtmlTemplate}
      * @see    {#._$addHtmlTemplate}
@@ -89,7 +89,7 @@ var f = function(){
      *   var _e = NEJ.P('nej.e');
      *   var _html_seed =  _e._$addHtmlTemplate('<div>${name}</div>');
      *   // 把结构塞到box中，生成<div id="box"><div>jack</div></div>
-     *   _e._$renderHtmlTemplate('box',_seed_html,{name:'jack'});
+     *   _e._$renderHtmlTemplate('box',_html_seed,{name:'jack'});
      * [/code]
      * @api    {nej.e._$renderHtmlTemplate}
      * @param  {String|Node} 容器节点
