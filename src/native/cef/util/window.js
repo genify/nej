@@ -238,6 +238,13 @@ var f = function(){
     _proWindow._$restore = function(){
         _n._$exec('winhelper.showWindow','restore');
     };
+    /**
+     * 关闭窗体
+     * @return {Void}
+     */
+    _proWindow._$close = function(){
+        this.__onActionClose();
+    };
 };
 NEJ.define('{lib}native/cef/util/window.js',
           ['{lib}util/event.js'
