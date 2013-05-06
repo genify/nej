@@ -15,6 +15,7 @@ var f = function(){
         __rnwln    = /(?:\r\n)|\n|\r/gi,  // new line for getContent
         __reg_cls0 = /(?:class|lang)="(mso)?[^"]*"/gi,
         __reg_cls1 = /(?:class|lang)='(mso)?[^']*'/gi,
+        __reg_cls2 = /(?:class|lang|style)=(mso)?[^>\s]*/gi,// IE7 hack
         __reg_ccm  = /(?:<!--)[^>]*(?:-->)/gi,
         __reg_st0  = /(?:style)="([^"]*)"/gi,
         __reg_st1  = /(?:style)='([^']*)'/gi,
@@ -171,14 +172,14 @@ var f = function(){
      * @param {Object} _html
      */
     _h.__filterContent = function(_html){
-        var _html = (_html||'').replace(__rnwln,'<br/>').replace(__empty,'').replace(__reg_cls0,'').replace(__reg_cls1,'').replace(__reg_ccm,'');
+        var _html = (_html||'').replace(__rnwln,'<br/>').replace(__empty,'').replace(__reg_cls0,'').replace(__reg_cls1,'').replace(__reg_cls2,'').replace(__reg_ccm,'');
         _html = !_h.__filterContentPath?_html:_h.__filterContentPath(_html);
         return _html;
     };
 
 
     /**
-     * 过滤除了background-color意外的所有样式
+     * 过滤除了background-color以外的所有样式
      * @param  {[type]} _html [description]
      * @return {[type]}       [description]
      */
