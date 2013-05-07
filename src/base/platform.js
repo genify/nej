@@ -150,4 +150,4 @@ var f = function(){
     };
 };
 NEJ.define('{lib}base/platform.js',
-      ['{lib}base/global.js'],f);
+          ['{lib}base/global.js'],f);

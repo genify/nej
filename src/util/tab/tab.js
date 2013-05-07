@@ -161,6 +161,7 @@ var f = function(){
         }
         var _event = {index:_index
                      ,last:this.__index
+                     ,list:this._$getList()
                      ,data:_e._$dataset(_element,'value')};
         this.__index = _index;
         _element = this.__list[_event.last];

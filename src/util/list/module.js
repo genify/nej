@@ -26,7 +26,7 @@ var f = function(){
      * @config  {Number}        limit  每页显示数量，默认10项
      * @config  {Number}        total  列表项总数量，默认通过第一个列表请求载入总数
      * @config  {String|Object} item   列表JST模版标识或者Item配置，{clazz:'xxx',klass:_$$Item||'jst key'}
-     * @config  {Object}        cache  缓存配置信息，{key:'primary key',lkey:'list key',data:{},klass:_$$ListCache,list:[]}
+     * @config  {Object}        cache  缓存配置信息，{key:'primary key',lkey:'list key',data:{},klass:_$$ListCache,list:[],clear:true}
      * @config  {Object}        pager  分页器配置信息，{parent:'xxx',klass:_$$Pager,count:1}
      * 
      * [hr]
@@ -135,16 +135,6 @@ var f = function(){
     _p._$$ListModule = NEJ.C();
       _proListModule = _p._$$ListModule._$extend(_p._$$Event);
     /**
-     * 控件初始化
-     * @protected
-     * @method {__init}
-     * @return {Void}
-     */
-    _proListModule.__init = function(){
-        this.__ropt = {};
-        this.__supInit();
-    };
-    /**
      * 控件重置
      * @protected
      * @method {__reset}
@@ -152,6 +142,7 @@ var f = function(){
      * @return {Void}
      */
     _proListModule.__reset = function(_options){
+        this.__ropt = {};
         this.__supReset(_options);
         this.__lbox = _e._$get(_options.parent);
         this.__iopt = {parent:this.__lbox};
@@ -171,6 +162,9 @@ var f = function(){
         this._$dispatchEvent('onbeforerecycle');
         this.__doClearListBox();
         this.__supDestroy();
+        if (this.__ropt.clear){
+            this.__cache._$clearListInCache(this.__ropt.key);
+        }
         this.__cache._$recycle();
         if (!!this.__pager){
             this.__pager._$recycle();
@@ -183,6 +177,7 @@ var f = function(){
         delete this.__lbox;
         delete this.__ikls;
         delete this.__iopt;
+        delete this.__ropt;
     };
     /**
      * 根据数据ID取项节点ID
@@ -246,6 +241,7 @@ var f = function(){
             _copt  = NEJ.X({},_cache);
         this.__ropt.key  = _copt.lkey;
         this.__ropt.data = _copt.data||{};
+        this.__ropt.clear = !!_copt.clear;
         this.__iopt.pkey = _copt.key||'id';
         _copt.onlistload = 
             this.__cbListLoad._$bind(this);
@@ -291,7 +287,9 @@ var f = function(){
      * @return {Void}
      */
     _proListModule.__doClearListBox = function(){
-        this._$dispatchEvent('onbeforelistclear');
+        this._$dispatchEvent('onbeforelistclear',{
+            parent:this.__lbox
+        });
         if (!!this.__items&&this.__items.length>0){
             this.__items = this.__ikls
                 ._$recycle(this.__items);

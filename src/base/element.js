@@ -1048,7 +1048,7 @@ var f = function(){
      *   var _e = NEJ.P("nej.e");
      *   // 计算节点b到节点a(外层需要定位属性)的距离，如果没有指定节点，默认计算的根节点
      *   // _result : {x:10,y:5}
-     *   var _result = _e._$offset(_e._$get("b"),_e._$get("a"));
+     *   var _result = _e._$offset('b','a');
      * [/code]
      * 
      * @chainable
