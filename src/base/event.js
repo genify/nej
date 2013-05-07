@@ -246,6 +246,7 @@ var f = function(){
                 function(_list,_type){
                     _doClearByType(_id,_type);
                 });
+            delete _cache[_id];
         }
         return function(_element,_type){
             !_type ? _doClearAll(_element)
