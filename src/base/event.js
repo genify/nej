@@ -20,6 +20,25 @@ var f = function(){
         // capt - capture flag
         // sfun - event before wrapper
         _cache = {};
+    /*
+     * 清理节点事件缓存
+     * @param  {String|Node} 节点
+     * @return {Void}
+     */
+    var _doClearElement = function(_element){
+        _element = _e._$get(_element);
+        if (!_element||!_cache[_element.id]) return;
+        var _empty = !0,
+            _id = _element.id;
+        _u._$forIn(
+            _cache[_id],
+            function(){
+                _empty = !1;
+                return !0;
+            }
+        );
+        if (_empty) delete _cache[_id];
+    };
     /**
      * 节点添加事件，
      * 支持添加自定义事件，
@@ -163,8 +182,10 @@ var f = function(){
         return function(){
             var _args = _doDelEventInCache
                         .apply(null,arguments);
-            if (!!_args)
+            if (!!_args){
                 _h.__delEvent.apply(_h,_args);
+                _doClearElement(_args[0]);
+            }
             return this;
         };
     })();
@@ -251,6 +272,7 @@ var f = function(){
         return function(_element,_type){
             !_type ? _doClearAll(_element)
                    : _doClearByType(_element,_type);
+            _doClearElement(_element);
             return this;
         };
     })();
