@@ -315,22 +315,10 @@ var f = function(){
      * @param  {String} 列表标识
      * @return {nej.ut._$$ListCache}
      */
-    _proListCache._$setLoaded = (function(){
-        var _doClear = function(_item,_index,_list){
-            if (!!_item){
-                return !0;
-            }
-            _list.splice(_index,1);
-        };
-        return function(_key,_loaded){
-            var _list = this._$getListInCache(_key);
-            _list.loaded = _loaded!=!1;
-            if (_list.loaded){
-                _u._$reverseEach(_list,_doClear);
-            }
-            return this;
-        };
-    })();
+    _proListCache._$setLoaded = function(_key,_loaded){
+        this._$getListInCache(_key).loaded = _loaded!=!1;
+        return this;
+    };
     /**
      * 设置列表，清除原有列表
      * 脚本举例
@@ -477,34 +465,44 @@ var f = function(){
      * @param  {Array|Object}  数据列表，或者带总数信息列表
      * @return {Void}
      */
-    _proListCache.__getList = function(_options,_result){
-        _options = _options||_o;
-        // save list to cache
-        var _key = _options.key,
-            _offset = _options.offset,
-            _chlist = this._$getListInCache(_key);
-        // list with total
-        // {total:12,result:[]} 或者 {total:13,list:[]}
-        var _list = _result;
-        if (!_u._$isArray(_list)){
-            _list = _result.result||_result.list||[];
-            var _total = parseInt(_result.total)||0;
-            if (_total>_list.length){
-                this._$setTotal(_key,_total);
+    _proListCache.__getList = (function(){
+        var _doClear = function(_item,_index,_list){
+            if (!!_item){
+                return !0;
             }
-        }
-        // merge list
-        _u._$forEach(_list,
-            function(_item,_index){
-                _chlist[_offset+_index] = this.
-                     __doSaveItemToCache(_item,_key);
-            },this);
-        // check list all loaded
-        if (_list.length<_options.limit)
-            this._$setLoaded(_key);
-        // do callback
-        this.__doCallbackRequest(_options.rkey,_options);
-    };
+            _list.splice(_index,1);
+        };
+        return function(_options,_result){
+            _options = _options||_o;
+            // save list to cache
+            var _key = _options.key,
+                _offset = _options.offset,
+                _chlist = this._$getListInCache(_key);
+            // list with total
+            // {total:12,result:[]} 或者 {total:13,list:[]}
+            var _list = _result;
+            if (!_u._$isArray(_list)){
+                _list = _result.result||_result.list||[];
+                var _total = parseInt(_result.total)||0;
+                if (_total>_list.length){
+                    this._$setTotal(_key,_total);
+                }
+            }
+            // merge list
+            _u._$forEach(_list,
+                function(_item,_index){
+                    _chlist[_offset+_index] = this.
+                         __doSaveItemToCache(_item,_key);
+                },this);
+            // check list all loaded
+            if (_list.length<_options.limit){
+                this._$setLoaded(_key);
+                _u._$reverseEach(_chlist,_doClear);
+            }
+            // do callback
+            this.__doCallbackRequest(_options.rkey,_options);
+        };
+    })();
     /**
      * 清除缓存列表<br/>
      * 脚本举例
