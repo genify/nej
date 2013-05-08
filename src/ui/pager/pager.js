@@ -94,5 +94,5 @@ var f = function(){
     };
 };
 NEJ.define('{lib}ui/pager/pager.js',
-          ['{lib}ui/pager/pager.js'
+          ['{lib}ui/pager/pager.base.js'
           ,'{lib}util/page/page.js'],f);
