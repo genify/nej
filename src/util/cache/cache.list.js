@@ -315,10 +315,22 @@ var f = function(){
      * @param  {String} 列表标识
      * @return {nej.ut._$$ListCache}
      */
-    _proListCache._$setLoaded = function(_key,_loaded){
-        this._$getListInCache(_key).loaded = _loaded!=!1;
-        return this;
-    };
+    _proListCache._$setLoaded = (function(){
+        var _doClear = function(_item,_index,_list){
+            if (!!_item){
+                return !0;
+            }
+            _list.splice(_index,1);
+        };
+        return function(_key,_loaded){
+            var _list = this._$getListInCache(_key);
+            _list.loaded = _loaded!=!1;
+            if (_list.loaded){
+                _u._$reverseEach(_list,_doClear);
+            }
+            return this;
+        };
+    })();
     /**
      * 设置列表，清除原有列表
      * 脚本举例
