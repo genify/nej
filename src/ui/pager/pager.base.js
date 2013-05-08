@@ -15,6 +15,24 @@ var f = function(){
         _p = _('nej.ui'),
         _proAbstractPager;
     if (!!_p._$$AbstractPager) return;
+    // ui css text
+    var _seed_css = _e._$pushCSSText('\
+        .#<uispace>{font-size:12px;line-height:160%;}\
+        .#<uispace> a{margin:0 2px;padding:2px 8px;color:#333;border:1px solid #aaa;text-decoration:none;}\
+        .#<uispace> .js-disabled{cursor:default;}\
+        .#<uispace> .js-selected{cursor:default;background:#bbb;}');
+    var _seed_page = _e._$addHtmlTemplate('\
+        {trim}\
+        {if !defined("noprv")||!noprv}\
+        <a href="#" class="zbtn zprv ${\'js-p-\'|seed}">上一页</a>\
+        {/if}\
+        {list 1..number as x}\
+        <a href="#" class="zpgi zpg${x} ${\'js-i-\'|seed}"></a>\
+        {/list}\
+        {if !defined("nonxt")||!nonxt}\
+        <a href="#" class="zbtn znxt ${\'js-n-\'|seed}">下一页</a>\
+        {/if}\
+        {/trim}');
     /**
      * 分页器控件基类封装<br />
      * 页面结构举例
@@ -104,9 +122,53 @@ var f = function(){
      */
     _proAbstractPager.__destroy = function(){
         this.__supDestroy();
-        this.__page = this
-            .__page._$recycle();
+        this.__page._$recycle();
+        delete this.__page;
         this._$unbind();
+    };
+    /**
+     * 初始化外观信息
+     * @protected
+     * @method {__initXGui}
+     * @return {Void}
+     */
+    _proAbstractPager.__initXGui = function(){
+        this.__seed_css  = _seed_css;
+    };
+    /**
+     * 初始化节点
+     * @protected
+     * @method {__initNode}
+     * @return {Void}
+     */
+    _proAbstractPager.__initNode = function(){
+        this.__supInitNode();
+        var _seed = _e._$getHtmlTemplateSeed();
+        this.__popt.list =  
+            _e._$getByClassName(
+                this.__body,
+                'js-i-'+_seed
+            );
+        this.__popt.pbtn = (
+            _e._$getByClassName(
+                this.__body,
+                'js-p-'+_seed)||_r
+            )[0];
+        this.__popt.nbtn = (
+            _e._$getByClassName(
+                this.__body,
+                'js-n-'+_seed)||_r
+            )[0];
+    };
+    /**
+     * 生成页码列表html代码
+     * @protected
+     * @method {__doGenPageListXhtml}
+     * @param  {Object} 页码列表信息
+     * @return {String} 页码列表html代码
+     */
+    _proAbstractPager.__doGenPageListXhtml = function(_data){
+        return _e._$getHtmlTemplate(_seed_page,_data);
     };
     /**
      * 页面变化触发事件

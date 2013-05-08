@@ -14,28 +14,8 @@ var f = function(){
         _u = _('nej.u'),
         _t = _('nej.ut'),
         _p = _('nej.ui'),
-        _proPager;
+        _proPager,_seed_html;
     if (!!_p._$$Pager) return;
-    // ui css text
-    var _seed_css = _e._$pushCSSText('\
-        .#<uispace>{font-size:12px;line-height:160%;}\
-        .#<uispace> a{margin:0 2px;padding:2px 8px;color:#333;border:1px solid #aaa;text-decoration:none;}\
-        .#<uispace> .js-disabled{cursor:default;}\
-        .#<uispace> .js-selected{cursor:default;background:#bbb;}');
-    var _seed_page = _e._$addHtmlTemplate('\
-        {trim}\
-        {if !defined("noprv")||!noprv}\
-        <a href="#" class="zbtn zprv ${\'js-p-\'|seed}">上一页</a>\
-        {/if}\
-        {list 1..number as x}\
-        <a href="#" class="zpgi zpg${x} ${\'js-i-\'|seed}"></a>\
-        {/list}\
-        {if !defined("nonxt")||!nonxt}\
-        <a href="#" class="zbtn znxt ${\'js-n-\'|seed}">下一页</a>\
-        {/if}\
-        {/trim}');
-    // ui html code
-    var _seed_html;
     /**
      * 分页器控件封装<br />
      * 页面结构举例
@@ -100,32 +80,6 @@ var f = function(){
         this.__page = _t._$$Page._$allocate(this.__popt);
     };
     /**
-     * 初始化外观信息
-     * @protected
-     * @method {__initXGui}
-     * @return {Void}
-     */
-    _proPager.__initXGui = function(){
-        this.__seed_css  = _seed_css;
-        this.__seed_html = _seed_html;
-    };
-    /**
-     * 初始化节点
-     * @protected
-     * @method {__initNode}
-     * @return {Void}
-     */
-    _proPager.__initNode = function(){
-        this.__supInitNode();
-        var _seed = _e._$getHtmlTemplateSeed();
-        this.__popt.list =  _e._$getByClassName
-                           (this.__body,'js-i-'+_seed);
-        this.__popt.pbtn = (_e._$getByClassName
-                           (this.__body,'js-p-'+_seed)||_r)[0];
-        this.__popt.nbtn = (_e._$getByClassName
-                           (this.__body,'js-n-'+_seed)||_r)[0];
-    };
-    /**
      * 动态构建控件节点模板
      * @protected
      * @method {__initNodeTemplate}
@@ -138,17 +92,7 @@ var f = function(){
                      '</div>');
         this.__seed_html = _seed_html;
     };
-    /**
-     * 生成页码列表html代码
-     * @protected
-     * @method {__doGenPageListXhtml}
-     * @param  {Object} 页码列表信息
-     * @return {String} 页码列表html代码
-     */
-    _proPager.__doGenPageListXhtml = function(_data){
-        return _e._$getHtmlTemplate(_seed_page,_data);
-    };
 };
 NEJ.define('{lib}ui/pager/pager.js',
-      ['{lib}ui/pager/pager.base.js'
-      ,'{lib}util/page/page.js'],f);
+          ['{lib}ui/pager/pager.js'
+          ,'{lib}util/page/page.js'],f);

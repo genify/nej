@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>test list module</title>
+    <meta charset="utf-8"/>
+    <style>
+      .fl{float:left;width:40%;padding-bottom:50px;}
+      .fr{float:right;}
+      .itm{margin:10px 0;overflow:hidden;}
+      .itm p{margin:0 150px 0 0;}
+      .itm a{margin-right:15px;font-size:12px;}
+    </style>
+  </head>
+  <body>
+  	
+    <script src="../../../src/define.js?pro=./"></script>
+    <script>
+      define(['{lib}ui/pager/pager.simple.js'],
+      function(){
+          var _  = NEJ.P,
+              _i = _('nej.ui');
+          
+          _i._$$SimplePager._$allocate({
+              parent:document.body,
+              index:1,
+              onchange:function(_event){
+                  console.log('from '+_event.last+' to '+_event.index);
+              }
+          });
+          
+      });
+    </script>
+  </body>
+</html>

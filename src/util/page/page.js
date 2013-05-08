@@ -59,7 +59,7 @@ var f = function(){
      *   _pg._$updatePage(5,10);
      * [/code]
      * @class   {nej.ut._$$Page} 三段分页器业务逻辑封装
-     * @extends {nej.ut._$$_$$PageBase}
+     * @extends {nej.ut._$$AbstractPage}
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {Array}          list        页码节点列表【长度保持奇数】
      * @config  {String}         event       触发页码切换事件，默认为click
@@ -82,7 +82,7 @@ var f = function(){
      * 
      */
     _p._$$Page = NEJ.C();
-      _proPage = _p._$$Page._$extend(_p._$$PageBase);
+      _proPage = _p._$$Page._$extend(_p._$$AbstractPage);
     /**
      * 初始化控件
      * @protected

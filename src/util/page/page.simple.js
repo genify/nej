@@ -15,7 +15,6 @@ var f = function(){
         _proSimplePage;
     if (!!_p._$$SimplePage) return;
     /**
-     * 一段分页器业务逻辑封装，主要适合于以下形式的分页器
      * 一段分页器业务逻辑封装，主要适合于以下形式的分页器<br />
      * 此结构有首页，末页
      * <ul>
@@ -65,7 +64,7 @@ var f = function(){
      *   _ps._$updatePage(5,10);
      * [/code]
      * @class   {nej.ut._$$SimplePage} 一段分页器业务逻辑封装
-     * @extends {nej.ut._$$_$$PageBase}
+     * @extends {nej.ut._$$AbstractPage}
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {Array}          list        页码节点列表【长度保持奇数】
      * @config  {String}         event       触发页码切换事件，默认为click
@@ -88,7 +87,7 @@ var f = function(){
      * 
      */
     _p._$$SimplePage = NEJ.C();
-      _proSimplePage = _p._$$SimplePage._$extend(_p._$$PageBase);
+      _proSimplePage = _p._$$SimplePage._$extend(_p._$$AbstractPage);
     /**
      * 刷新页码列表算法
      * @protected
@@ -108,6 +107,19 @@ var f = function(){
                       _page>this.__total||_page<1?null:_page);
             },this);
     };
+    /**
+     * 设置是否禁用下一页功能
+     * @param  {Boolean} 是否禁用
+     * @return {Void}
+     */
+    _proSimplePage._$disableNext = function(_disabled){
+        if (!_disabled){
+            this.__total = Number.MAX_VALUE;
+        }else{
+            this.__total = this.__index;
+        }
+        this.__doSyncBtnState();
+    };
 };
 NEJ.define('{lib}util/page/page.simple.js',
-      ['{lib}util/page/page.base.js'],f);
+          ['{lib}util/page/page.base.js'],f);
