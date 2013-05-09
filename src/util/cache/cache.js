@@ -381,4 +381,5 @@ var f = function(){
         return !0;
     };
 };
-NEJ.define('{lib}util/cache/cache.js',['{lib}util/event.js'],f);
+NEJ.define('{lib}util/cache/cache.js',
+          ['{lib}util/event.js'],f);

@@ -14,6 +14,7 @@ var f = function(){
         _t = _('nej.ut'),
         _reg1 = /^[#?]+/,
         _reg2 = /#(.*?)$/,
+        _ctxt = window,
         _hack = !history.pushState||
                 _b._$IS.android||!history.auto;
     /*
@@ -23,17 +24,16 @@ var f = function(){
      * @return {Void}
      */
     var _setLocation = function(_url,_replaced){
-        history[!_replaced
-                ?'pushState'
-                :'replaceState']
-               (null,document.title,_url);
+        _ctxt.history[!_replaced
+                ?'pushState':'replaceState']
+                (null,document.title,_url);
     };
     /*
      * 取位置信息
      * @return {Object} 位置信息
      */
     var _getLocation = function(){
-        return location.parse(location.href);
+        return location.parse(_ctxt.location.href);
     };
     // extend api
     _setLocation = 
@@ -43,15 +43,15 @@ var f = function(){
         _event.stopped = !0;
         // not encodeURIComponent
         _url = _args[0].replace(_reg1,'');
-        !_args[1] ? location.hash = _url
-                  : location.replace('#'+_url);
+        !_args[1] ? _ctxt.location.hash = _url
+                  : _ctxt.location.replace('#'+_url);
     });
     _getLocation = 
     _getLocation._$aop(function(_event){
         if (!_hack) return;
         _event.stopped = !0;
         // fix ie6 location.hash error for #/m/a?a=aaa
-        var _hash = _reg2.test(location.href)?RegExp.$1:'';
+        var _hash = _reg2.test(_ctxt.location.href)?RegExp.$1:'';
         // not decodeURIComponent
         _event.value = location.parse(_hash.replace(_reg1,''));
     });
@@ -98,21 +98,21 @@ var f = function(){
                 };
             }
             // fire urlchange
-            _url = location.href;
+            _url = _ctxt.location.href;
             _location = _event.newValue;
             _v._$dispatchEvent(location,'urlchange',_location);
             _h.__pushHistory(_location.href);
         };
         // check location
         var _doCheckLocation = function(){
-            if (_url!=location.href)
-                _onLocationChange();
+            if (_url!=_ctxt.location.href) _onLocationChange();
             _timer = requestAnimationFrame(_doCheckLocation);
         };
-        return function(){
+        return function(_context){
+            _ctxt = _context||window;
             // ignore onhashchange on ie7
             if (_hack&&('onhashchange' in window)&&_b._$NOT_PATCH.trident2){
-                _v._$addEvent(window,'hashchange',_onLocationChange);
+                _v._$addEvent(_ctxt,'hashchange',_onLocationChange);
                 _onLocationChange();
             }else if(!_timer){
                 _timer = requestAnimationFrame(_doCheckLocation);

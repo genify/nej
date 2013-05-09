@@ -84,5 +84,5 @@ var f = function(){
     _p._$BLANK_IMAGE  = _c._$get('blank.png')||'data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
 };
 NEJ.define('{lib}base/constant.js',
-      ['{lib}base/global.js'
-      ,'{patch}config.js'],f);
+          ['{lib}base/global.js'
+          ,'{patch}config.js'],f);

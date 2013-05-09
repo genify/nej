@@ -717,8 +717,9 @@ var f = function(){
                  .getElementsByTagName('iframe'),_clearFrame);
             }
             // remove node
-            if (!_element.parentNode) return this;
-            _element.parentNode.removeChild(_element);
+            if (!!_element.parentNode){
+                _element.parentNode.removeChild(_element);
+            }
             return this;
         };
     })();
