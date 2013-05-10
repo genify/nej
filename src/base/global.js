@@ -68,6 +68,37 @@ var f = function(){
         return  _package;
     };
     /**
+     * 读取上下文中指定名字空间的值
+     * [code]
+     *     var obj = {
+     *         a:{
+     *             b:{
+     *                 c:{
+     *                     d:'ddddd'
+     *                 }
+     *             }
+     *         }
+     *     };
+     *     // print ddddd
+     *     console.log(NEJ.Q(obj,'a.b.c.d'));
+     *     // print undefined
+     *     console.log(NEJ.Q(null,'a.b.c.d'));
+     * [/code]
+     * @api    {NEJ.Q}
+     * @param  {Object}   上下文
+     * @param  {String}   名字空间
+     * @return {Varaible} 值
+     */
+    NEJ.Q = function(_context,_namespace){
+        _context = _context||NEJ.O;
+        var _arr = _namespace.split('.');
+        for(var i=0,l=_arr.length;i<l;i++){
+            _context = _context[_arr[i]];
+            if (!_context) break;
+        }
+        return _context;
+    };
+    /**
      * 定义类，通过此api定义的类具有以下特性：<br/>
      * [ul]
      *   具有静态扩展接口_$extend

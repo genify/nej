@@ -76,6 +76,12 @@ var f = function(){
      * @config {Node}    parent  容器节点
      * 
      * [hr]
+     * 列表显示之后处理业务逻辑，此事件确保列表有数据
+     * @event  {onafterlistrender}
+     * @param  {Object}          事件信息
+     * @config {Node}    parent  容器节点
+     * 
+     * [hr]
      * 列表清除之前处理业务逻辑
      * @event  {onbeforelistclear}
      * 
@@ -347,8 +353,8 @@ var f = function(){
      * @return {Void}
      */
     _proListModule.__cbListLoad = function(_options){
-        if (_options.offset
-           !=this.__ropt.offset) return;
+        if (_options.key!==this.__ropt.key||
+            _options.offset!=this.__ropt.offset) return;
         this.__doBeforeListShow();
         // check list
         var _list = this.__cache.
@@ -383,6 +389,11 @@ var f = function(){
                          _list,this.__ikls,this.__iopt);
             this.__doShowListByItem(_items);
         }
+        this._$dispatchEvent('onafterlistrender',{
+            list:_list,
+            offset:_offset,
+            parent:this.__lbox
+        });
     };
     /**
      * 前向刷新数据列表载入完成回调
@@ -683,6 +694,7 @@ var f = function(){
      * @return {Void}
      */
     _proListModule.__cbListChange = function(_event){
+        if (_event.key!=this.__ropt.key) return;
         switch(_event.action){
             case 'add':
                 this.__cbItemAdd(_event);

@@ -36,6 +36,23 @@ var f = function(){
         _event.value = _result;
     });
     /**
+     * 取节点的子节点列表
+     * @param  {Node} _element 节点ID或者对象
+     * @return {Array}         子节点列表
+     */
+    _h.__getChildren = 
+    _h.__getChildren._$aop(function(_event){
+        _event.stopped = !0;
+        var _arr = [];
+        _u._$forEach(
+           _event.args[0].childNodes,
+           function(_node){
+               if (_node.nodeType==1)
+                   _arr.push(_node);
+           });
+        _event.value = _arr;
+    });
+    /**
      * 取节点属性值
      * @param  {Node}   节点
      * @param  {String} 属性名

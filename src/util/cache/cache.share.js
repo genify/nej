@@ -118,6 +118,14 @@ var f = function(){
             });
         return _old;
     };
+    /**
+     * 查询
+     * @param  {String}   查询串，如：a.b.c
+     * @return {Variable} 结果
+     */
+    _proShareCache._$query = function(_namespace){
+        return NEJ.Q(this.__cache,_namespace);
+    };
     // local cache instance
     window.localCache = _p._$$ShareCache._$allocate();
     // custom event

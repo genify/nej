@@ -105,16 +105,7 @@ var f = function(){
      * @return {Array}         子节点列表
      */
     _h.__getChildren = function(_element){
-        if (!!_element.children)
-            return _h.__col2array(_element.children);
-        var _arr = [];
-        _u._$forEach(
-           _element.childNodes,
-           function(_node){
-               if (_node.nodeType==1)
-                   _arr.push(_node);
-           });
-        return _arr;
+        return _h.__col2array(_element.children);
     };
     /**
      * 根据类名取节点列表
