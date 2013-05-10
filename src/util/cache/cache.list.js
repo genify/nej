@@ -544,20 +544,32 @@ var f = function(){
      * 脚本举例
      * [code]
      *   // 取某一项数据
-     *   _cc._$getItemInCache('abc','123');
+     *   _cc._$getItem({
+     *       id:'aaaa',
+     *       key:'xxxxxx'
+     *   });
      * [/code]
      * @method {_$getItem}
-     * @param  {String} 项标识
-     * @param  {String} 列表标识
+     * @param  {Object} 请求信息
+     * @config {String} id   项标识，该名称与配置的项标识键一致
+     * @config {String} key  列表标识
+     * @config {Object} data 发送到服务器的数据
      * @return {nej.ut._$$ListCache}
      */
     _proListCache._$getItem = (function(){
         var _doFormatKey = function(_options){
             return 'r-'+_options.key+'-'+_options.id;
         };
-        return function(_id,_key){
-            var _ropt = {id:_id,key:_key||''};
+        return function(_options){
+            _options = _options||_o;
+            var _id = _options[this.__key],
+                _ropt = {
+                    id:_id,
+                    key:_options.key||'',
+                    data:_options.data||{}
+                };
                 _item = this._$getItemInCache(_id);
+            _ropt.data[this.__key] = _id;
             if (!!_item){
                 this._$dispatchEvent('onitemload',_ropt);
                 return this;
