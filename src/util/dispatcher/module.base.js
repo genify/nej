@@ -79,6 +79,7 @@ var f = function(){
      */
     _proAbstractModule.__onHide = function(){
         this.__supOnHide();
+        this.__doHideComposite();
         _e._$removeByEC(this.__body);
     };
     /**
@@ -101,14 +102,30 @@ var f = function(){
         };
         return function(_type,_options){
             var _query = _u._$object2query(_options.param)||'';
-            _u._$forIn(
-                this.__composites,
-                _doRedirect._$bind(this,_query,_options)
-            );
+            if (_type=='onrefresh'){
+                _u._$forIn(
+                    this.__composites,
+                    _doRedirect._$bind(this,_query,_options)
+                );
+            }
             _u._$forIn(
                 this.__composites[_type],
                 _doRedirect._$bind(this,_query,_options)
             );
+        };
+    })();
+    /**
+     * 隐藏组合模块
+     * @return {Void}
+     */
+    _proAbstractModule.__doHideComposite = (function(){
+        var _doHide = function(_umi){
+            this.__dispatcher._$hide(_umi);
+        };
+        return function(){
+            _u._$forIn(this.__composites,_doHide,this);
+            _u._$forIn(this.__composites.onshow,_doHide,this);
+            _u._$forIn(this.__composites.onrefresh,_doHide,this);
         };
     })();
 };
