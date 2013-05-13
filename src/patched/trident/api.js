@@ -8,6 +8,7 @@
 var f = function(){
     // variable declaration
     var _  = NEJ.P,
+        _o = NEJ.O,
         _p = _('nej.p'),
         _e = _('nej.e'),
         _v = _('nej.v'),
@@ -57,7 +58,6 @@ var f = function(){
      * @param  {Node}   节点
      * @param  {String} 属性名
      * @return {String} 属性值
-     */
     _h.__getAttribute = 
     _h.__getAttribute._$aop(null,function(_event){
         // fix ie7 maxlength default value 2147483647
@@ -66,6 +66,7 @@ var f = function(){
             _event.value==2147483647)
             _event.value = '';
     });
+     */
     /**
      * 根据类名取节点列表
      * @param  {Node}   _element 节点ID或者对象
@@ -372,11 +373,17 @@ var f = function(){
     _h.__getAttribute = 
     _h.__getAttribute._$aop(function(_event){
         var _args = _event.args,
-            _node = _args[0].attributes[_args[1]];
+            _node = (_args[0].attributes||_o)[_args[1]];
         if (!!_node){
             _event.stopped = !0;
             _event.value = _node.value;
         }
+    },function(_event){
+        // fix ie7 maxlength default value 2147483647
+        var _args = _event.args;
+        if (_args[1]=='maxlength'&&
+            _event.value==2147483647)
+            _event.value = '';
     });
     // cache background image
     try{document.execCommand('BackgroundImageCache',!1,!0);}catch(e){}
