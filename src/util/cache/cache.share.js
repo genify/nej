@@ -93,7 +93,7 @@ var f = function(){
         var _old = this.__cache[_key];
         this.__cache[_key] = _value;
         _v._$dispatchEvent(
-            window,'cachechange',{
+            localCache,'cachechange',{
                 key:_key,
                 type:'set',
                 oldValue:_old,
@@ -110,7 +110,7 @@ var f = function(){
         var _old = this.__cache[_key];
         _u._$safeDelete(this.__cache,_key);
         _v._$dispatchEvent(
-            window,'cachechange',{
+            localCache,'cachechange',{
                 key:_key,
                 type:'delete',
                 oldValue:_old,
