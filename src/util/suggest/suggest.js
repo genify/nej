@@ -301,7 +301,10 @@ var f = function(){
                 return this;
             } 
             this.__list = _list;
-            this.__doSelectItem(0);
+            var _index = _u._$indexOf(this.__list,function(_node){
+                return _e._$hasClassName(_node,this.__selected);
+            });
+            this.__doSelectItem(Math.max(0,_index));
             _u._$forEach(this.__list,_doFlag);
             this.__body.style.visibility = 'visible';
             return this;
