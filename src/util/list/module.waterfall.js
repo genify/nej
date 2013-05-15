@@ -162,7 +162,7 @@ var f = function(){
      */
     _proListModuleWF.__onCheckScroll = function(_event){
         if (this.__endskr) return;
-        var _element = _v._$getElement(_event);
+        var _element = _v._$getElement(_event)||_o;
         if (!_element.scrollHeight)
             _element = _e._$getPageBox();
         if (_element.scrollTop+
