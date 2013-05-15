@@ -68,7 +68,7 @@
               more:'more-btn-0',
               item:'jst-list',
               pager:{parent:'page-box-0'},
-              cache:{klass:_x._$$CustomCache},
+              cache:{klass:_x._$$CustomCache,lkey:'test-list'},
               onupdate:function(_event){
                   console.log('update from jst -> '+_event.data.id);
                   this._$update({
@@ -88,7 +88,7 @@
               parent:'list-box-1',
               more:'more-btn-1',
               item:{klass:_x._$$Item},
-              cache:{klass:_x._$$CustomCache},
+              cache:{klass:_x._$$CustomCache,lkey:'test-list'},
               onupdate:function(_event){
                   console.log('update from item -> '+_event.data.id);
                   this._$update({

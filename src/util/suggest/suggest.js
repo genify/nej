@@ -132,6 +132,7 @@ var f = function(){
         delete this.__input;
         delete this.__body;
         delete this.__hkie9;
+        delete this.__hkie;
     };
     /**
      * 判断节点是否建议项
@@ -202,7 +203,9 @@ var f = function(){
                               ||_item.innerText;
         this.__input.value = _value;
         this._$setList();
+        this.__hkie = !0;
         this._$dispatchEvent('onselect',_value);
+        this.__hkie = !1;
     };
     /**
      * 输入内容变化触发事件
@@ -215,6 +218,7 @@ var f = function(){
         if (!_value){
             this._$setList();
         }else{
+            if (this.__hkie) return;
             this._$dispatchEvent('onchange',_value);
         }
     };
