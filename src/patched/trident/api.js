@@ -176,6 +176,16 @@ var f = function(){
                         }
                     };
                 break;
+                case 'propertychange':
+                    _callback = function(_event){
+                        var _element = _v._$getElement(_event)||this;
+                        if (('value' in _element)&&
+                            _event.propertyName=='value'){
+                            _event.target = _element;
+                            _handler.call(_element,_event);
+                        }
+                    };
+                break;
             }
             return _callback;
         };
