@@ -12,6 +12,7 @@ var f = function(){
         _e = _('nej.e'),
         _v = _('nej.v'),
         _u = _('nej.u'),
+        _b = _('nej.p'),
         _p = _('nej.ut'),
         _proSuggest,
         _supSuggest;
@@ -91,25 +92,32 @@ var f = function(){
         this.__input = _e._$get(_options.input);
         this.__selected = _options.selected||'js-selected';
         this.__index = 0;
-//        this._$setEvent('onchange',_options.onchange||_f);
-//        this._$setEvent('onselect',_options.onselect||_f);
-        this.__registDomEvent();
-    };
-    
-    /**
-     * 注册suggest上的事件，子类可重写
-     * @protected
-     * @method {__registDomEvent}
-     * @return {Void}
-     */
-    _proSuggest.__registDomEvent = function(){
-        this.__doInitDomEvent([
-             [this.__input,'input',this.__onInput._$bind(this)]
-            ,[this.__input,'blur',this.__doFinishSelect._$bind(this)]
-            ,[this.__body,'mouseover',this.__onMouseOver._$bind(this)]
-            ,[document,'keydown',this.__onKeyBoardSelect._$bind(this)]
-            ,[document,'keypress',this.__onKeyBoardEnter._$bind(this)]
-        ]);
+        this.__doInitDomEvent([[
+            this.__input,'input',
+            this.__onInput._$bind(this)
+        ],[
+            this.__input,'blur',
+            this.__doFinishSelect._$bind(this)
+        ],[
+            this.__body,'mouseover',
+            this.__onMouseOver._$bind(this)
+        ],[
+            document,'keydown',
+            this.__onKeyBoardSelect._$bind(this)
+        ],[
+            document,'keypress',
+            this.__onKeyBoardEnter._$bind(this)
+        ]]);
+        // fix ie9 bug
+        if (_b._$KERNEL.release=='5.0'){
+            this.__doInitDomEvent([[
+                this.__input,'keydown',
+                this.__doHackIE9Input._$bind(this)
+            ],[
+                this.__input,'keyup',
+                this.__doHackIE9Input._$bind(this)
+            ]]);
+        }
     };
     /**
      * 控件销毁
@@ -123,6 +131,7 @@ var f = function(){
         delete this.__selected;
         delete this.__input;
         delete this.__body;
+        delete this.__hkie9;
     };
     /**
      * 判断节点是否建议项
@@ -192,7 +201,6 @@ var f = function(){
             _value = _e._$dataset(_item,'value')
                               ||_item.innerText;
         this.__input.value = _value;
-        this.__body.style.visibility = 'hidden';
         this._$setList();
         this._$dispatchEvent('onselect',_value);
     };
@@ -204,8 +212,11 @@ var f = function(){
      */
     _proSuggest.__onInput = function(){
         var _value = this.__input.value.trim();
-        !_value ? this.__body.style.visibility = 'hidden'
-                : this._$dispatchEvent('onchange',_value);
+        if (!_value){
+            this._$setList();
+        }else{
+            this._$dispatchEvent('onchange',_value);
+        }
     };
     /**
      * 鼠标移出建议项触发事件
@@ -255,6 +266,20 @@ var f = function(){
         if (_event.keyCode==13) this.__doFinishSelect();
     };
     /**
+     * IE9删除文字不触发onchange事件
+     * @protected
+     * @method {__doHackIE9Input}
+     * @param  {Event} 事件对象
+     * @return {Void}
+     */
+    _proSuggest.__doHackIE9Input = function(_event){
+        if (_event.type=='keydown'){
+            this.__hkie9 = this.__input.value;
+        }else if(this.__hkie9!=this.__input.value&&!!this.__list){
+            this.__onInput();
+        }
+    };
+    /**
      * 设置列表<br />
      * 脚本举例
      * [code]
@@ -271,8 +296,10 @@ var f = function(){
         };
         return function(_list){
             this.__doDestroyList();
-            if (!_list||!_list.length) 
+            if (!_list||!_list.length){
+                this.__body.style.visibility = 'hidden';
                 return this;
+            } 
             this.__list = _list;
             this.__doSelectItem(0);
             _u._$forEach(this.__list,_doFlag);
@@ -280,14 +307,6 @@ var f = function(){
             return this;
         };
     })();
-    /*
-     * 
-     * @param {Node|String} _input
-     * @param {Object}      _options
-     */
-    _p._$suggest = function(_input,_options){
-        
-    };
 };
 NEJ.define('{lib}util/suggest/suggest.js',
-      ['{lib}util/event.js'],f);
+          ['{lib}util/event.js'],f);
