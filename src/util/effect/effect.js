@@ -244,7 +244,6 @@ var f = function(){
     _proEffect._$stop = function(){
         _h.__onStop(this.__node,this.__propMap);
         this.__intvl = window.clearInterval(this.__intvl);
-        debugger;
         this._$dispatchEvent('onstop',this.__state);
         return this;
     };

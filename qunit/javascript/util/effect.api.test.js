@@ -47,7 +47,7 @@ var f = function() {
                     console.log(_event.left);
                 },
                 onplaystate:function(_event){
-                    console.log(_event.left);
+                    // console.log(_event.left);
                 }
             });
         }
