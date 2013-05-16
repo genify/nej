@@ -43,7 +43,7 @@ var f = function() {
                 }else{
                     _v = _e._$getStyle(_node,_name);
                 }
-                if(_v == _value)
+                if(parseInt(_v) == _value)
                     _fg = false;
             }._$bind(this));
             return _fg;
@@ -85,7 +85,7 @@ var f = function() {
                         property:'opacity',
                         timing:_options.timing||'ease-in',
                         delay:_options.delay||0,
-                        duration:_options.duration||0
+                        duration:_options.duration||1
                     }
                 ],
                 styles:['opacity:'+_opacity],
@@ -192,7 +192,7 @@ var f = function() {
      * @return {nej.e}
      */
     _e._$moveTo = function(_node,_position,_options){
-        if(!_e.__doBeforeStart(_node)){
+        if(!_e.__doBeforeStart(_node,_position)){
             return false;
         }
     	_options = _e.__initOptions(_options);
@@ -207,18 +207,18 @@ var f = function() {
                         property:'top',
                         timing:_options.timing||'ease-in',
                         delay:_options.delay||0,
-                        duration:_options.duration||0
+                        duration:_options.duration||1
                     },
                     {
                         property:'left',
                         timing:_options.timing||'ease-in',
                         delay:_options.delay||0,
-                        duration:_options.duration||0
+                        duration:_options.duration||1
                     }
                 ],
                 styles:['top:'+_top,'left:'+_left],
                 onstop:function(_state){
-				    _options.onstop.call(_state);
+				    _options.onstop.call(this,_state);
                     _effect = _p._$$Effect._$recycle(_effect);
                     _effectLock = !1;
                 },
@@ -269,6 +269,10 @@ var f = function() {
             return _styles;
         };
         return function(_node,_position,_options){
+            if(!_effectLock)
+                _effectLock = true;
+            else
+                return !1;
             _node = _e._$get(_node);
             var _list  = _position.split(':');
             var _pro0 = _list[0];
@@ -287,13 +291,13 @@ var f = function() {
                             property:_pro0,
                             timing:_options.timing||'ease-in',
                             delay:_options.delay||0,
-                            duration:_options.duration||0
+                            duration:_options.duration||1
                         },
                         {
                             property:_pro1,
                             timing:_options.timing||'ease-in',
                             delay:_options.delay||0,
-                            duration:_options.duration||0
+                            duration:_options.duration||1
                         }
                     ],
                     styles:_styles,
@@ -363,13 +367,12 @@ var f = function() {
                                 property:_type,
                                 timing:_options.timing||'ease-in',
                                 delay:_options.delay||0,
-                                duration:_options.duration||0
+                                duration:_options.duration||1
                             }
                         ],
                         styles:[_type + ':' + _value],
                         onstop:function(_state){
-                            _e._$setStyle(_node,_type,'auto');
-                            _options.onstop.call(_state);
+                            _options.onstop.call(this,_state);
                             _effect = _p._$$Effect._$recycle(_effect);
                             _effectLock = !1;
                             _sto = window.clearTimeout(_sto);
@@ -387,15 +390,15 @@ var f = function() {
                                 property:_type,
                                 timing:_options.timing||'ease-in',
                                 delay:_options.delay||0,
-                                duration:_options.duration||0
+                                duration:_options.duration||1
                             }
                         ],
                         styles:[_type + ':' + 0],
                         onstop:function(_state){
-                            _e._$setStyle(_node,'display','none');
+                            // _e._$setStyle(_node,'display','none');
                             _e._$setStyle(_node,'visibility','hidden');
                             _e._$setStyle(_node,_type,'auto');
-                            _options.onstop.call(_state);
+                            _options.onstop.call(this,_state);
                             _effect = _p._$$Effect._$recycle(_effect);
                             _effectLock = !1;
                             _sto = window.clearTimeout(_sto);
