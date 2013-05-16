@@ -84,8 +84,8 @@ var f = function() {
                     {
                         property:'opacity',
                         timing:_options.timing||'ease-in',
-                        delay:_options.delay||1,
-                        duration:_options.duration||2
+                        delay:_options.delay||0,
+                        duration:_options.duration||0
                     }
                 ],
                 styles:['opacity:'+_opacity],
@@ -206,14 +206,14 @@ var f = function() {
                     {
                         property:'top',
                         timing:_options.timing||'ease-in',
-                        delay:_options.delay||1,
-                        duration:_options.duration||5
+                        delay:_options.delay||0,
+                        duration:_options.duration||0
                     },
                     {
                         property:'left',
                         timing:_options.timing||'ease-in',
-                        delay:_options.delay||1,
-                        duration:_options.duration||5
+                        delay:_options.delay||0,
+                        duration:_options.duration||0
                     }
                 ],
                 styles:['top:'+_top,'left:'+_left],
@@ -286,14 +286,14 @@ var f = function() {
                         {
                             property:_pro0,
                             timing:_options.timing||'ease-in',
-                            delay:_options.delay||1,
-                            duration:_options.duration||5
+                            delay:_options.delay||0,
+                            duration:_options.duration||0
                         },
                         {
                             property:_pro1,
                             timing:_options.timing||'ease-in',
-                            delay:_options.delay||1,
-                            duration:_options.duration||5
+                            delay:_options.delay||0,
+                            duration:_options.duration||0
                         }
                     ],
                     styles:_styles,
@@ -363,7 +363,7 @@ var f = function() {
                                 property:_type,
                                 timing:_options.timing||'ease-in',
                                 delay:_options.delay||0,
-                                duration:_options.duration||0.5
+                                duration:_options.duration||0
                             }
                         ],
                         styles:[_type + ':' + _value],
@@ -387,7 +387,7 @@ var f = function() {
                                 property:_type,
                                 timing:_options.timing||'ease-in',
                                 delay:_options.delay||0,
-                                duration:_options.duration||0.5
+                                duration:_options.duration||0
                             }
                         ],
                         styles:[_type + ':' + 0],

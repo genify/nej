@@ -39,13 +39,14 @@ var f = function() {
             _e._$toggle(_box,'height',100);
         };
         var _silde = function(){
-            _e._$silde(_box,'bottom:+=300',{
+            _e._$silde(_box,'left:+=300',{
                 timing:'ease-out',
                 delay:0,
                 duration:10,
                 onstop:function(_event){
                 },
                 onplaystate:function(_event){
+                    console.log(_event.left);
                 }
             });
         }

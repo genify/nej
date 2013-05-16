@@ -190,22 +190,23 @@ var f = function(){
             return _prop + ':' + _value + ';';
         };
         // 解析动画的规则
-        var _doParseAnim = function(_index,_sumtime){
+        var _doParseAnim = function(_index){
             if(!this.__transition[_index])
                 return '';
             var _rule = this.__transition[_index],
                 _t = _rule.duration + _rule.delay;
-            if( _t > _sumtime){
-                _sumtime = _t;
+            if( _t > this.__sumtime){
+                this.__sumtime = _t;
                 this.__lastProp = _rule.property;
             }
             return _rule.property + ' ' + _rule.duration + 's ' + _rule.timing + ' ' + _rule.delay + 's,';
         };
         return function(){
-            var _animRule = '',_sumtime = 0;;
+            var _animRule = '';
+            this.__sumtime = 0;
             _u._$forEach(this.__styles,function(_style,_index){
                 _doParseStyle.call(this,this.__node,_style);
-                _animRule += _doParseAnim.call(this,_index,_sumtime);
+                _animRule += _doParseAnim.call(this,_index);
             }._$bind(this));
             return _animRule;
         };
