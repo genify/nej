@@ -90,7 +90,7 @@ var f = function() {
                 ],
                 styles:['opacity:'+_opacity],
                 onstop:function(_state){
-                    _options.onstop.call(_state);
+                    _options.onstop.call(this,_state);
                     _effect = _p._$$Effect._$recycle(_effect);
                     _effectLock = !1;
                 },

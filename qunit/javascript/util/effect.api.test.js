@@ -42,8 +42,9 @@ var f = function() {
             _e._$silde(_box,'left:+=300',{
                 timing:'ease-out',
                 delay:0,
-                duration:10,
+                duration:1,
                 onstop:function(_event){
+                    console.log(_event.left);
                 },
                 onplaystate:function(_event){
                     console.log(_event.left);
