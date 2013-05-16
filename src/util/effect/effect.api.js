@@ -50,11 +50,11 @@ var f = function() {
         return function(_node,_objs){
             if(!_doCheckState(_node,_objs))
                 return !1;
-            if(!_effectLock && _doCheckdisplay(_node))
-                _effectLock = true;
+            if(!_node.effectLock && _doCheckdisplay(_node))
+                _node.effectLock = true;
             else
                 return !1;
-            return _effectLock;
+            return _node.effectLock;
         };
     })();
 
@@ -91,7 +91,7 @@ var f = function() {
                 onstop:function(_state){
                     _options.onstop.call(this,_state);
                     _effect = _p._$$Effect._$recycle(_effect);
-                    _effectLock = !1;
+                    _node.effectLock = !1;
                 },
                 onplaystate:_options.onplaystate._$bind(_effect)
             }
@@ -219,7 +219,7 @@ var f = function() {
                 onstop:function(_state){
 				    _options.onstop.call(this,_state);
                     _effect = _p._$$Effect._$recycle(_effect);
-                    _effectLock = !1;
+                    _node.effectLock = !1;
                 },
                 onplaystate:_options.onplaystate._$bind(_effect)
             }
@@ -341,8 +341,8 @@ var f = function() {
             return _type == 'height' ? _node.clientHeight : _node.clientWidth;
         };
         return function(_node,_type,_options){
-            if(!_effectLock)
-                _effectLock = true;
+            if(!_node.effectLock)
+                _node.effectLock = true;
             else
                 return !1;
             var _effect;
@@ -373,7 +373,7 @@ var f = function() {
                         onstop:function(_state){
                             _options.onstop.call(this,_state);
                             _effect = _p._$$Effect._$recycle(_effect);
-                            _effectLock = !1;
+                            _node.effectLock = !1;
                             _sto = window.clearTimeout(_sto);
                         },
                         onplaystate:_options.onplaystate._$bind(_effect)
@@ -399,7 +399,7 @@ var f = function() {
                             _e._$setStyle(_node,_type,'auto');
                             _options.onstop.call(this,_state);
                             _effect = _p._$$Effect._$recycle(_effect);
-                            _effectLock = !1;
+                            _node.effectLock = !1;
                             _sto = window.clearTimeout(_sto);
                         },
                         onplaystate:_options.onplaystate._$bind(_effect)
