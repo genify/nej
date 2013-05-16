@@ -5,7 +5,6 @@ var f = function() {
         _e = _('nej.e'),
         _u = _('nej.u'),
         _p = _('nej.ut');
-    var _effectLock;
     /**
      * 初始化特效参数
      * @param  {Object} 特效参数
@@ -269,8 +268,8 @@ var f = function() {
             return _styles;
         };
         return function(_node,_position,_options){
-            if(!_effectLock)
-                _effectLock = true;
+            if(!_node.effectLock)
+                _node.effectLock = true;
             else
                 return !1;
             _node = _e._$get(_node);
@@ -304,7 +303,7 @@ var f = function() {
                     onstop:function(_state){
                         _options.onstop.call(this,_state);
                         _effect = _p._$$Effect._$recycle(_effect);
-                        _effectLock = !1;
+                        _node.effectLock = !1;
                     },
                     onplaystate:_options.onplaystate._$bind(_effect)
                 }

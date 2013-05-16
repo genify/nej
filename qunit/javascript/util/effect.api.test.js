@@ -48,14 +48,23 @@ var f = function() {
             _e._$silde(_box,'left:+=300',{
                 timing:'ease-out',
                 delay:0,
-                duration:1,
+                duration:10,
                 onstop:function(_event){
-                    console.log(_event.left);
+                    // console.log(_event.left);
                 },
                 onplaystate:function(_event){
                     // console.log(_event.left);
                 }
             });
+            _e._$silde('box2','left:+=600',{
+                timing:'ease-out',
+                delay:0,
+                duration:20,
+                onstop:function(_event){
+                },
+                onplaystate:function(_event){
+                }
+            })
         }
     	_v._$addEvent(_button[0],'click',_fdo);
     	_v._$addEvent(_button[1],'click',_fdi);
