@@ -7,7 +7,8 @@
 		<script type="text/javascript" src="../../../qunit/base/qunit.js"></script>
 		<script src="../../../src/define.js?pro=/qunit/javascript/"></script>
     <style type="text/css">
-        .box{font-weight:900;width:100px;height:100px;background:blue;position:absolute;top:300px;left:300px;border:solid red 1px;z-index:0;zoom:1;filter:alpha(opacity=100);}
+        .box{font-weight:900;width:100px;height:100px;background:blue;position:absolute;bottom:100px;left:300px;border:solid red 1px;z-index:0;zoom:1;filter:alpha(opacity=100);}
+        .box2{font-weight:900;width:100px;height:100px;background:blue;position:absolute;bottom:300px;left:300px;border:solid red 1px;z-index:0;zoom:1;filter:alpha(opacity=100);}
     </style>
 	</head>
 	<body>
@@ -18,10 +19,12 @@
 		<ol id="qunit-tests"></ol>
  		<div id="qunit-fixture"></div>
     	<div id="box" class="box"></div>
+    	<div id="box2" class="box2"></div>
     	<button class="button">淡出</button>
     	<button class="button">淡入</button>
     	<button class="button">移动位置</button>
     	<button class="button">toggle</button>
+    	<button class="button">slide</button>
 		<script type="text/javascript" src="../../javascript/util/effect.api.test.js"></script>
 	</body>
 </html>

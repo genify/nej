@@ -5,7 +5,6 @@ var f = function() {
         _e = _('nej.e'),
         _u = _('nej.u'),
         _p = _('nej.ut');
-    var _effectLock;
     /**
      * 初始化特效参数
      * @param  {Object} 特效参数
@@ -43,7 +42,7 @@ var f = function() {
                 }else{
                     _v = _e._$getStyle(_node,_name);
                 }
-                if(_v == _value)
+                if(parseInt(_v) == _value)
                     _fg = false;
             }._$bind(this));
             return _fg;
@@ -51,11 +50,11 @@ var f = function() {
         return function(_node,_objs){
             if(!_doCheckState(_node,_objs))
                 return !1;
-            if(!_effectLock && _doCheckdisplay(_node))
-                _effectLock = true;
+            if(!_node.effectLock && _doCheckdisplay(_node))
+                _node.effectLock = true;
             else
                 return !1;
-            return _effectLock;
+            return _node.effectLock;
         };
     })();
 
@@ -84,15 +83,15 @@ var f = function() {
                     {
                         property:'opacity',
                         timing:_options.timing||'ease-in',
-                        delay:_options.delay||1,
-                        duration:_options.duration||2
+                        delay:_options.delay||0,
+                        duration:_options.duration||1
                     }
                 ],
                 styles:['opacity:'+_opacity],
                 onstop:function(_state){
-                    _options.onstop.call(_state);
+                    _node.effectLock = !1;
+                    _options.onstop.call(this,_state);
                     _effect = _p._$$Effect._$recycle(_effect);
-                    _effectLock = !1;
                 },
                 onplaystate:_options.onplaystate._$bind(_effect)
             }
@@ -192,7 +191,7 @@ var f = function() {
      * @return {nej.e}
      */
     _e._$moveTo = function(_node,_position,_options){
-        if(!_e.__doBeforeStart(_node)){
+        if(!_e.__doBeforeStart(_node,_position)){
             return false;
         }
     	_options = _e.__initOptions(_options);
@@ -206,21 +205,21 @@ var f = function() {
                     {
                         property:'top',
                         timing:_options.timing||'ease-in',
-                        delay:_options.delay||1,
-                        duration:_options.duration||5
+                        delay:_options.delay||0,
+                        duration:_options.duration||1
                     },
                     {
                         property:'left',
                         timing:_options.timing||'ease-in',
-                        delay:_options.delay||1,
-                        duration:_options.duration||5
+                        delay:_options.delay||0,
+                        duration:_options.duration||1
                     }
                 ],
                 styles:['top:'+_top,'left:'+_left],
                 onstop:function(_state){
-				    _options.onstop.call(_state);
+                    _node.effectLock = !1;
+				    _options.onstop.call(this,_state);
                     _effect = _p._$$Effect._$recycle(_effect);
-                    _effectLock = !1;
                 },
                 onplaystate:_options.onplaystate._$bind(_effect)
             }
@@ -228,6 +227,91 @@ var f = function() {
         _effect._$start();
         return this;
     };
+
+    /**
+     * 移动节点
+     * 页面结构举例
+     * [code type="html"]
+     *   <div id="box">123</div>
+     * [/code]
+     * 脚本举例
+     * [code]
+     *   var _e = NEJ.P("nej.e");
+     *   var _node = _e._$get("box");
+     *   // 需要配合预先定义的position属性
+     *   _e._$silde(_node,'top:+100'{
+     *       timing:'ease-out',
+     *       delay:0,
+     *       duration:5
+     *   });
+     * [/code]
+     * @api    {nej.e._$moveTo}
+     * @param  {Node|String} 节点或者节点ID
+     * @param  {String}      滑动的方向
+     * @param  {Object}      配置参数
+     * @config {String} timing   运动曲线
+     * @config {Number} delay    延迟时间
+     * @config {String} duration 运动时间
+     * @return {nej.e}
+     */
+    _e._$silde = (function(){
+        var _setPst = function(_node,_position){
+            var _list  = _position.split(':');
+            var _pst = _list[0];
+            var _styles = [];
+            _styles.push(_position);
+            if(_pst == 'top' || _pst == 'bottom'){
+                _styles.push('left:' + _e._$getStyle(_node,'left'));
+            }else{
+                _styles.push('top:' + _e._$getStyle(_node,'top'));
+            }
+            return _styles;
+        };
+        return function(_node,_position,_options){
+            if(!_node.effectLock)
+                _node.effectLock = true;
+            else
+                return !1;
+            _node = _e._$get(_node);
+            var _list  = _position.split(':');
+            var _pro0 = _list[0];
+            var _pro1 = '';
+            if(_pro0 == 'top' || _pro0 == 'bottom'){
+                _pro1 = 'left';
+            }else{
+                _pro1 = 'top';
+            }
+            var _styles = _setPst.call(this,_node,_position);
+            var _effect = _p._$$Effect._$allocate(
+                {
+                    node:_node,
+                    transition:[
+                        {
+                            property:_pro0,
+                            timing:_options.timing||'ease-in',
+                            delay:_options.delay||0,
+                            duration:_options.duration||1
+                        },
+                        {
+                            property:_pro1,
+                            timing:_options.timing||'ease-in',
+                            delay:_options.delay||0,
+                            duration:_options.duration||1
+                        }
+                    ],
+                    styles:_styles,
+                    onstop:function(_state){
+                        _node.effectLock = !1;
+                        _options.onstop.call(this,_state);
+                        _effect = _p._$$Effect._$recycle(_effect);
+                    },
+                    onplaystate:_options.onplaystate._$bind(_effect)
+                }
+            );
+            _effect._$start();
+            return this;
+        };
+    })();
 
     /**
      * toggle效果
@@ -257,8 +341,8 @@ var f = function() {
             return _type == 'height' ? _node.clientHeight : _node.clientWidth;
         };
         return function(_node,_type,_options){
-            if(!_effectLock)
-                _effectLock = true;
+            if(!_node.effectLock)
+                _node.effectLock = true;
             else
                 return !1;
             var _effect;
@@ -282,15 +366,14 @@ var f = function() {
                                 property:_type,
                                 timing:_options.timing||'ease-in',
                                 delay:_options.delay||0,
-                                duration:_options.duration||0.5
+                                duration:_options.duration||1
                             }
                         ],
                         styles:[_type + ':' + _value],
                         onstop:function(_state){
-                            _e._$setStyle(_node,_type,'auto');
-                            _options.onstop.call(_state);
+                            _node.effectLock = !1;
+                            _options.onstop.call(this,_state);
                             _effect = _p._$$Effect._$recycle(_effect);
-                            _effectLock = !1;
                             _sto = window.clearTimeout(_sto);
                         },
                         onplaystate:_options.onplaystate._$bind(_effect)
@@ -306,17 +389,17 @@ var f = function() {
                                 property:_type,
                                 timing:_options.timing||'ease-in',
                                 delay:_options.delay||0,
-                                duration:_options.duration||0.5
+                                duration:_options.duration||1
                             }
                         ],
                         styles:[_type + ':' + 0],
                         onstop:function(_state){
-                            _e._$setStyle(_node,'display','none');
+                            // _e._$setStyle(_node,'display','none');
                             _e._$setStyle(_node,'visibility','hidden');
                             _e._$setStyle(_node,_type,'auto');
-                            _options.onstop.call(_state);
+                            _node.effectLock = !1;
+                            _options.onstop.call(this,_state);
                             _effect = _p._$$Effect._$recycle(_effect);
-                            _effectLock = !1;
                             _sto = window.clearTimeout(_sto);
                         },
                         onplaystate:_options.onplaystate._$bind(_effect)

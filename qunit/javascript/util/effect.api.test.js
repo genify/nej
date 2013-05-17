@@ -36,12 +36,41 @@ var f = function() {
             });
     	};
         var _toggle = function(){
-            _e._$toggle(_box,'height',100);
+            _e._$toggleEffect(_box,'height',{value:100,
+                onstop:function(_event){
+                },
+                onplaystate:function(_event){
+
+                }
+            });
         };
+        var _silde = function(){
+            _e._$silde(_box,'left:+=300',{
+                timing:'ease-out',
+                delay:0,
+                duration:10,
+                onstop:function(_event){
+                    // console.log(_event.left);
+                },
+                onplaystate:function(_event){
+                    // console.log(_event.left);
+                }
+            });
+            _e._$silde('box2','left:+=600',{
+                timing:'ease-out',
+                delay:0,
+                duration:20,
+                onstop:function(_event){
+                },
+                onplaystate:function(_event){
+                }
+            })
+        }
     	_v._$addEvent(_button[0],'click',_fdo);
     	_v._$addEvent(_button[1],'click',_fdi);
     	_v._$addEvent(_button[2],'click',_moveTo);
         _v._$addEvent(_button[3],'click',_toggle);
+        _v._$addEvent(_button[4],'click',_silde);
     });
 };
 module('依赖模块');
