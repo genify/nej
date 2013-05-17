@@ -278,7 +278,7 @@ var f = function(){
     };
 };
 NEJ.define('{lib}util/event/event.js',
-      ['{lib}base/util.js'
-      ,'{lib}base/event.js'
-      ,'{lib}base/element.js'
-      ,'{lib}util/event.js'],f);
+          ['{lib}base/util.js'
+          ,'{lib}base/event.js'
+          ,'{lib}base/element.js'
+          ,'{lib}util/event.js'],f);
