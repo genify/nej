@@ -73,6 +73,7 @@ var f = function(){
      *   _p._$$MyCard._$attach(_node,_options);
      * [/code]
      * @static
+     * @method {_$attach}
      * @param  {String|Node}      执行节点
      * @param  {Object}           构建卡片配置参数
      * @config {String}   event   触发显示卡片事件名称，默认为click事件
