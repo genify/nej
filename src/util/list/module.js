@@ -796,6 +796,13 @@ var f = function(){
             data:this.__ropt.data
         });
     };
+    /**
+     * 取列表总数
+     * @return {Number} 列表总数
+     */
+    _proListModule._$getTotal = function(){
+        return this.__cache._$getTotal(this.__ropt.key);
+    };
 };
 NEJ.define('{lib}util/list/module.js',
           ['{lib}ui/item/list.js'
