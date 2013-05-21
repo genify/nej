@@ -34,7 +34,7 @@ var f = function() {
         var _doCheckState = function(_node,_objs){
             var _v,_fg = true;
             _u._$forIn(_objs,function(_value,_name){
-                if(_name == 'opacity' && nej.p._$KERNEL.engine=='trident' && nej.p._$KERNEL.release != '5.0'){
+                if(_name == 'opacity' && nej.p._$KERNEL.engine=='trident' && (nej.p._$KERNEL.release - 5) < 0){
                     _name = 'filter';
                     var _filter = _e._$getStyle(_node,_name);
                     _v = parseFloat(_filter.split('=')[1])||0;
