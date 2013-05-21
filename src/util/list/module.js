@@ -71,8 +71,9 @@ var f = function(){
      * [hr]
      * 页码变化触发事件
      * @event  {onpagechange}
-     * @param  {Object}        事件信息
-     * @config {Number}  index 当前页码
+     * @param  {Object}          事件信息
+     * @config {Number}  index   当前页码
+     * @config {Boolean} stopped 设置此参数用以表明已处理，后续逻辑忽略分页处理
      * 
      * [hr]
      * 列表显示之前处理业务逻辑，此事件确保列表有数据
