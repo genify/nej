@@ -214,16 +214,6 @@ var f = function(){
         this.__doCheckResult(_event,'onafterupdate');
         if (!_event.stopped) this._$refresh();
     };
-    /**
-     * 刷新列表
-     * @method {_$refresh}
-     * @param  {Number} 刷新到的页码
-     * @return {Void}
-     */
-    _proListModulePG._$refresh = function(){
-        this.__doClearListBox();
-        this.__doRefreshByPager();
-    };
 };
 NEJ.define('{lib}util/list/module.pager.js',
           ['{lib}util/list/module.js'],f);
