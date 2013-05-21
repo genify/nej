@@ -102,11 +102,12 @@ var f = function(){
      * 
      * @class   {nej.ut._$$ListModuleWF}
      * @extends {nej.ut._$$ListModule}
-     * @param   {Object}             可选配置参数
-     * @config  {String|Node}  more  添加更多列表项按钮节点
-     * @config  {String|Node}  sbody 滚动条所在容器，支持onscroll事件
-     * @config  {Number}       delta 触发自动加载更多时距离滚动容器底部的便宜量，单位px，默认30
-     * @config  {Number}       count 指定加载多少次后出现分页器
+     * @param   {Object}              可选配置参数
+     * @config  {String|Node}  more   添加更多列表项按钮节点
+     * @config  {String|Node}  sbody  滚动条所在容器，支持onscroll事件
+     * @config  {Number}       delta  触发自动加载更多时距离滚动容器底部的便宜量，单位px，默认30
+     * @config  {Number}       count  指定加载多少次后出现分页器
+     * @config  {Number}       number 初始加载次数，小于等于count数有效
      * 
      */
     _p._$$ListModuleWF = NEJ.C();
@@ -128,8 +129,12 @@ var f = function(){
         var _delta = parseInt(_options.delta);
         if (isNaN(_delta)) _delta = 30;
         this.__delta = Math.max(0,_delta);
-        var _count = parseInt(_options.count);
-        this.__count = Math.max(0,_count||0);
+        var _count = parseInt(_options.count)||0;
+        this.__count = Math.max(0,_count);
+        var _number = parseInt(_options.number)||0;
+        if (_number>0&&_number<=_count){
+            this.__number = _number;
+        }
         this.__supReset(_options);
     };
     /**
@@ -184,6 +189,21 @@ var f = function(){
         this._$next();
     };
     /**
+     * 生成请求对象信息
+     * @param  {Object} 预处理请求信息
+     * @return {Object} 处理后请求信息
+     */
+    _proListModuleWF.__doGenRequestOpt = function(_options){
+        if (!!this.__number){
+            var _limit = _options.limit*this.__number;
+            this.__offset = _options.offset+_limit;
+            _options.data.limit = _limit;
+            _options.limit = _limit;
+            delete this.__number;
+        }
+        return _options;
+    };
+    /**
      * 数据列表载入完成回调
      * @param  {Object} 请求信息
      * @return {Void}
@@ -216,11 +236,11 @@ var f = function(){
         _e._$setStyle(this.__nmore,'visibility',_ended?'hidden':'visible');
         if (this.__count>0){
             // check pager
-            var _number = _limit*this.__count,
+            var _number = this.__ropt.limit*this.__count,
                 _index = Math.floor(_offset/_number)+1,
                 _total = Math.ceil(_length/_number);
             if (this.__doSyncPager(_index,_total)) return !0;
-            this.__endskr = (Math.floor(_offset/_limit)+1)%this.__count==0;
+            this.__endskr = (_offset+_limit)%_number==0;
             // sync more button and pager
             _e._$setStyle(
                 this.__nmore,'display',
@@ -359,17 +379,8 @@ var f = function(){
         // offset adjust after list loaded
         var _offset = this.__offset;
         this.__offset += this.__ropt.limit;
+        console.log('request -> '+_offset);
         this.__doChangeOffset(_offset);
-    };
-    /**
-     * 模块刷新
-     * @method {_$refresh}
-     * @return {Void}
-     */
-    _proListModuleWF._$refresh = function(){
-        this.__doClearListBox();
-        this.__offset = 0;
-        this._$next();
     };
 };
 NEJ.define('{lib}util/list/module.waterfall.js',

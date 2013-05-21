@@ -8,6 +8,7 @@
 var f = function(){
     // variable declaration
     var _  = NEJ.P,
+        _f = NEJ.F,
         _o = NEJ.O,
         _e = _('nej.e'),
         _u = _('nej.u'),
@@ -83,6 +84,13 @@ var f = function(){
         _e._$removeByEC(this.__body);
     };
     /**
+     * 生成组合模块的输入参数，子类实现具体业务逻辑
+     * @param  {String} 模块类别
+     * @param  {Object} 输入信息
+     * @return {Object} 参数信息
+     */
+    _proAbstractModule.__doGenCompositeParam = _f;
+    /**
      * 应用组合模块
      * @param  {String} 类型，onshow/onrefresh
      * @param  {Object} 事件对象
@@ -92,13 +100,11 @@ var f = function(){
         var _reg0 = /^onshow|onrefresh$/;
         var _doRedirect = function(_query,_options,_umi,_pid){
             if (_reg0.test(_pid)) return;
-            if (!!_query) _umi += '?'+_query;
-            this.__dispatcher._$redirect(_umi,{
-                input:{
-                    location:_options,
-                    parent:this.__export[_pid]
-                }
-            });
+            if (!!_query) _umi += (_umi.indexOf('?')>1?'&':'?')+_query;
+            var _input = this.__doGenCompositeParam(_pid,_options)||{};
+            _input.location = _options;
+            _input.parent = this.__export[_pid];
+            this.__dispatcher._$redirect(_umi,{input:_input});
         };
         return function(_type,_options){
             var _query = _u._$object2query(_options.param)||'';

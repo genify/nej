@@ -24,10 +24,9 @@ var f = function(){
      * @param   {Object}               可选配置参数
      * @config  {String|Node}   parent 列表容器节点
      * @config  {Number}        limit  每页显示数量，默认10项
-     * @config  {Number}        total  列表项总数量，默认通过第一个列表请求载入总数
      * @config  {String|Object} item   列表JST模版标识或者Item配置，{clazz:'xxx',klass:_$$Item||'jst key'}
      * @config  {Object}        cache  缓存配置信息，{key:'primary key',lkey:'list key',data:{},klass:_$$ListCache,list:[],clear:true}
-     * @config  {Object}        pager  分页器配置信息，{parent:'xxx',klass:_$$Pager,count:1}
+     * @config  {Object}        pager  分页器配置信息，{parent:'xxx',klass:_$$Pager,index:2}
      * 
      * [hr]
      * 下拉刷新列表之前处理业务逻辑，可用于处理loading状态的显示
@@ -68,6 +67,13 @@ var f = function(){
      * @config {Node}    parent  容器节点
      * @config {String}  value   设置此参数返回用以显示的html代码
      * @config {Boolean} stopped 设置此参数用以表明已处理，后续逻辑忽略处理状态
+     * 
+     * [hr]
+     * 页码变化触发事件
+     * @event  {onpagechange}
+     * @param  {Object}          事件信息
+     * @config {Number}  index   当前页码
+     * @config {Boolean} stopped 设置此参数用以表明已处理，后续逻辑忽略分页处理
      * 
      * [hr]
      * 列表显示之前处理业务逻辑，此事件确保列表有数据
@@ -308,8 +314,11 @@ var f = function(){
      * @return {Void}
      */
     _proListModule.__doRefreshByPager = function(){
-        var _index = !this.__pager?1
-                     :this.__pager._$getIndex();
+        var _index = this.__popt.index||1;
+        delete this.__popt.index;
+        if (!!this.__pager){
+            _index = this.__pager._$getIndex();
+        }
         this.__doChangePage({index:_index});
     };
     /**
@@ -320,8 +329,13 @@ var f = function(){
      * @return {Void}
      */
     _proListModule.__doChangePage = function(_event){
-        this.__doChangeOffset((
-              _event.index-1)*this.__ropt.limit);
+        this._$dispatchEvent('onpagechange',_event);
+        if (!_event.stopped){
+            this.__doChangeOffset(
+                (_event.index-1)*
+                this.__ropt.limit
+            );
+        }
     };
     /**
      * 偏移量变化处理逻辑
@@ -335,6 +349,14 @@ var f = function(){
         this.__doLoadList();
     };
     /**
+     * 生成请求对象信息
+     * @param  {Object} 预处理请求信息
+     * @return {Object} 处理后请求信息
+     */
+    _proListModule.__doGenRequestOpt = function(_options){
+        return _options;
+    };
+    /**
      * 加载数据列表
      * @return {Void}
      */
@@ -345,7 +367,10 @@ var f = function(){
         _data.limit  = this.__ropt.limit;
         _data.offset = this.__ropt.offset;
         _data.total  = _data.offset==0;
-        this.__cache._$getList(this.__ropt);
+        this.__cache._$getList(
+            this.__doGenRequestOpt(
+                NEJ.X({},this.__ropt)
+        ));
     };
     /**
      * 数据列表载入完成回调
@@ -774,7 +799,10 @@ var f = function(){
      * @param  {Number} 刷新到的页码
      * @return {Void}
      */
-    _proListModule._$refresh = _f;
+    _proListModule._$refresh = function(){
+        this.__doClearListBox();
+        this.__doRefreshByPager();
+    };;
     /**
      * 前向刷新列表，子类实现具体业务逻辑
      * @method {_$pullRefresh}
@@ -795,6 +823,13 @@ var f = function(){
             key:this.__ropt.key,
             data:this.__ropt.data
         });
+    };
+    /**
+     * 取列表总数
+     * @return {Number} 列表总数
+     */
+    _proListModule._$getTotal = function(){
+        return this.__cache._$getTotal(this.__ropt.key);
     };
 };
 NEJ.define('{lib}util/list/module.js',
