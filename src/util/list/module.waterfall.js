@@ -379,7 +379,6 @@ var f = function(){
         // offset adjust after list loaded
         var _offset = this.__offset;
         this.__offset += this.__ropt.limit;
-        console.log('request -> '+_offset);
         this.__doChangeOffset(_offset);
     };
 };
