@@ -211,12 +211,15 @@ var f = function(){
      * @return {Object} 缓存中列表项
      */
     _proListCache.__doSaveItemToCache = function(_item,_lkey){
-        _item = this.__doFormatItem(
-                      _item,_lkey)||_item;
+        _item = this.__doFormatItem
+               (_item,_lkey)||_item;
         if (!_item) return null;
         var _key = _item[this.__key];
-        if (!!_key)
+        if (!!_key){
+            var _itm = this.__getHash()[_key];
+            if (!!_itm) _item = NEJ.X(_itm,_item);
             this.__getHash()[_key] = _item;
+        }
         return _item;
     };
     /**
