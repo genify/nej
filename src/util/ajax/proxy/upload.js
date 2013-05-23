@@ -159,6 +159,18 @@ var f = function(){
             });
         };
     })();
+    /**
+     * 中断请求
+     * @method {_$abort}
+     * @return {Void}
+     */
+    _proUploadProxy._$abort = function(){
+        this._$dispatchEvent('onerror',{
+            code:_g._$CODE_ERRABRT,
+            message:'客户端终止文件上传'
+        });
+        return this;
+    };
 };
 NEJ.define('{lib}util/ajax/proxy/upload.js',
       ['{lib}util/ajax/message.js'

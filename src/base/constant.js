@@ -53,6 +53,12 @@ var f = function(){
      */
     _p._$CODE_ERRSERV = 10006-_seed;
     /**
+     * 异常终止的错误码<br/>
+     * @const {nej.g._$CODE_ERRABRT}
+     * @type  {Number}
+     */
+    _p._$CODE_ERRABRT = 10007-_seed;
+    /**
      * 请求头content-type统一名称<br/>
      * @const {nej.g._$HEAD_CT}
      * @type  {Number}
