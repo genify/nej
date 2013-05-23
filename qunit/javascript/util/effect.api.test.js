@@ -11,6 +11,7 @@ var f = function() {
     	var _button = _e._$getByClassName(document.body,'button');
     	var _fdo = function(){
 	    	_e._$fadeOut(_box,{
+                delay:1,
 	    		onstop:function(_event){
 	    			_fdi(_box);
 	    		},
@@ -20,6 +21,7 @@ var f = function() {
     	};
     	var _fdi = function(){
 	    	_e._$fadeIn(_box,{
+                delay:1,
 	    		onstop:function(_event){
 	    			_fdo(_box);
 	    		},
