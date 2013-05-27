@@ -374,8 +374,8 @@ var f = function(){
         // list is object
         if (_u._$isObject(_list)){
             for(var x in _list)
-                if (!!_callback.call(
-                      _this,_list[x],x,_list))
+                if (_list.hasOwnProperty(x)&&
+                  !!_callback.call(_this,_list[x],x,_list))
                     return x;
         }
         return null;

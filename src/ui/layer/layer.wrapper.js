@@ -144,6 +144,7 @@ var f = function(){
            ,content:this.__body
            ,destroyable:!1
            ,oncontentready:null
+           ,nohack:!1
         };
     };
     /**
