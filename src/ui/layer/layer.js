@@ -75,6 +75,7 @@ var f = function(){
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {String|Node} content     内容HTML代码或者节点对象
      * @config  {Boolean}     destroyable 调用隐藏时是否自动回收，默认不自动回收
+     * @config  {Boolean}     nohack      针对IE6不做hack处理
      * 
      * [hr]
      * 
@@ -101,6 +102,7 @@ var f = function(){
         this._$setEvent('oncontentready',
                         _options.oncontentready||
                         this.__doInitContent._$bind(this));
+        this.__nohack = !!_options.nohack;
         this.__destroyable = !!_options.destroyable;
         this._$setContent(_options.content);
     };
@@ -140,7 +142,10 @@ var f = function(){
      */
     _proLayer.__doHide = function(){
         _e._$removeByEC(this.__body);
-        this.__mask = _h.__unmask(this.__body);
+        if (!!this.__mask){
+            this.__mask = _h.__unmask(this.__body);
+            delete this.__mask;
+        }
     };
     /**
      * 设置层显示内容<br />
@@ -205,7 +210,9 @@ var f = function(){
         _supLayer._$show.apply(this,arguments);
         this.__doPositionAlign();
         _e._$setStyle(this.__body,'visibility','');
-        this.__mask = _h.__mask(this.__body);
+        if (!this.__nohack){
+            this.__mask = _h.__mask(this.__body);
+        }
         return this;
     };
     /**
