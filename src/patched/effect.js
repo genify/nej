@@ -76,4 +76,4 @@ var f = function(){
     };*/
 };
 NEJ.define('{lib}patched/effect.js',
-      ['{lib}base/platform.js','{patch}effect.js'],f);
+      ['{lib}base/platform.js'],f);

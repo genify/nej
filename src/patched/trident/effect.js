@@ -31,7 +31,7 @@ var f = function(){
      * @return {nej.h}
      */
     _h.__onStart = (function(){
-    	var _sumtime = 0,_isLastOne;
+    	var _sumtime = 0,_isLastOne = 0;
     	// 属性是all的情况，重新构建anim
     	var _doRbAnim = function(_rules,_anim){
     		var _str = '';
@@ -61,7 +61,7 @@ var f = function(){
 				_from = parseFloat(_e._$getStyle(_node,_prop))||0,
 				_to   = parseFloat(_rules[_prop]),
 				_cutr = _animMap[_value[2]],
-				_durt = _value[1].slice(0,-1) * 1000;
+				_durt = _value[1].slice(0,-1) * 1000 + _value[3].slice(0,1) * 1000;
 				if(_durt > _sumtime){
 					_isLastOne = _index;
 				}
@@ -97,7 +97,13 @@ var f = function(){
 				};
 				return _options;
 		};
-		return function(_node,_rules,_anim,_stop){
+		return _h.__onStart._$aop(function(_event){
+			_event.stopped = !0;
+			var _list = _event.args;
+			var _node = _list[0],
+				_rules= _list[1],
+				_anim = _list[2],
+				_stop = _list[3];
 			var _effects   = [];
 			if(_anim.indexOf('all') > -1)
 				_anim = _doRbAnim(_rules,_anim);
@@ -116,7 +122,7 @@ var f = function(){
 				_effect._$play();
 			});
 			return this;
-		};
+		});
     })(); 
 
     /**
@@ -124,12 +130,16 @@ var f = function(){
      * @param  {Node}   动画节点
      * @return {nej.h}
      */
-    _h.__onStop = function(_node){
+    _h.__onStop = 
+    _h.__onStop._$aop(function(_event){
+    	_event.stopped = !0;
+    	var _list = _event.args;
+    	var _node = _list[0];
 		_u._$forEach(_node.effects,function(_o){
 			_o._$stop();
 		});
 		return this;
-    };
+    });
 
     /**
      * 暂停动画

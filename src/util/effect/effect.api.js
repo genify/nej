@@ -37,7 +37,12 @@ var f = function() {
                 if(_name == 'opacity' && nej.p._$KERNEL.engine=='trident' && (nej.p._$KERNEL.release - 5) < 0){
                     _name = 'filter';
                     var _filter = _e._$getStyle(_node,_name);
-                    _v = parseFloat(_filter.split('=')[1])||0;
+                    if(_filter == ''){
+                        _node.style.filter = 'alpha(opacity=100)';
+                        _v = 100;
+                    }else{
+                        _v = parseFloat(_filter.split('=')[1])||0;
+                    }
                     _value = _value * 100;
                 }else{
                     _v = _e._$getStyle(_node,_name);
