@@ -184,9 +184,12 @@ var f = function(){
      * @return {Void}
      */
     _proListModuleWF.__doChangePage = function(_event){
-        this.__doClearListBox();
-        this.__offset = (_event.index-1)*this.__ropt.limit*this.__count;
-        this._$next();
+        _supListModuleWF.__doChangePage.apply(this,arguments);
+        if (!_event.stopped){
+            this.__doClearListBox();
+            this.__offset = (_event.index-1)*this.__ropt.limit*this.__count;
+            this._$next();
+        }
     };
     /**
      * 生成请求对象信息

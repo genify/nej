@@ -81,6 +81,9 @@
               ondelete:function(_event){
                   console.log('delete from jst -> '+_event.data.id);
                   this._$delete(_event.data);
+              },
+              onpagechange:function(_event){
+                  console.log('go page -> '+_event.index);
               }
           });
 
