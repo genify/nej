@@ -457,6 +457,7 @@ var f = function(){
             _element = _e._$get(_element);
             if (!!_element){
                 var _obj = {
+                    ontoggle:_f,
                     clazz:'js-toggle',
                     element:_element.parentNode
                 };
