@@ -724,6 +724,9 @@ var f = function(){
             case 'update':
                 this.__cbItemUpdate(_event);
             break;
+            case 'refresh':
+                this._$refresh();
+            break;
         }
     };
     /**
