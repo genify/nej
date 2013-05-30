@@ -246,9 +246,11 @@ var f = function(){
         if (!_object||!_config) 
             return _object;
         _filter = _filter||NEJ.F;
-        for(var x in _config)
-            if (!_filter(_config[x],x))
+        for(var x in _config){
+            if (_config.hasOwnProperty(x)&&
+               !_filter(_config[x],x))
                 _object[x] = _config[x];
+        }
         return _object;
     };
     /**
@@ -271,9 +273,11 @@ var f = function(){
      */
     NEJ.EX = function(_object,_config){
         if (!_object||!_config) return;
-        for(var x in _object)
-            if (_config[x]!=null)
+        for(var x in _object){
+            if (_object.hasOwnProperty(x)&&
+                _config[x]!=null)
                 _object[x] = _config[x];
+        }
         return _object;
     };
     // extend native object method

@@ -227,12 +227,10 @@ var f = function() {
         var _doCompleteMenu = function(_list){
             _u._$forEach(_list,_doCheckMenu);
         };
-        return function(_menu){
-            _doCompleteMenu(_menu);
-            _n._$exec(
-                'winhelper.popupMenu',
-                JSON.stringify(_menu)
-            );
+        return function(_conf){
+            _doCompleteMenu(_conf.content);
+            _conf.content = JSON.stringify(_conf.content);
+            _n._$exec('winhelper.popupMenu',_conf);
         };
     })();
     // init document.onmenuacton
