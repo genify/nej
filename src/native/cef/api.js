@@ -229,6 +229,7 @@ var f = function() {
         };
         return function(_conf){
             _doCompleteMenu(_conf.content);
+            _conf.hotkey = JSON.stringify(_conf.hotkey);
             _conf.content = JSON.stringify(_conf.content);
             _n._$exec('winhelper.popupMenu',_conf);
         };
