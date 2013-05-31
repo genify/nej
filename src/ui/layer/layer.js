@@ -206,7 +206,12 @@ var f = function(){
      * @return {nej.ui._$$Layer}
      */
     _proLayer._$show = function(){
-        _e._$setStyle(this.__body,'visibility','hidden');
+        _e._$style(
+            this.__body,{
+                top:0,left:0,
+                visibility:'hidden'
+            }
+        );
         _supLayer._$show.apply(this,arguments);
         this.__doPositionAlign();
         _e._$setStyle(this.__body,'visibility','');
