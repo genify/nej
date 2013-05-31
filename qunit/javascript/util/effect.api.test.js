@@ -12,6 +12,7 @@ var f = function() {
     	var _fdo = function(){
 	    	_e._$fadeOut(_box,{
                 delay:1,
+                duration:2,
 	    		onstop:function(_event){
 	    			_fdi(_box);
 	    		},
@@ -22,6 +23,7 @@ var f = function() {
     	var _fdi = function(){
 	    	_e._$fadeIn(_box,{
                 delay:1,
+                duration:2,
 	    		onstop:function(_event){
 	    			_fdo(_box);
 	    		},
@@ -47,21 +49,21 @@ var f = function() {
             });
         };
         var _silde = function(){
-            _e._$silde(_box,'left:+=300',{
-                timing:'ease-out',
-                delay:0,
-                duration:10,
-                onstop:function(_event){
-                    // console.log(_event.left);
-                },
-                onplaystate:function(_event){
-                    // console.log(_event.left);
-                }
-            });
+            // _e._$silde(_box,'left:+=300',{
+            //     timing:'ease-out',
+            //     delay:0,
+            //     duration:2,
+            //     onstop:function(_event){
+            //         // console.log(_event.left);
+            //     },
+            //     onplaystate:function(_event){
+            //         // console.log(_event.left);
+            //     }
+            // });
             _e._$silde('box2','left:+=600',{
                 timing:'ease-out',
                 delay:0,
-                duration:20,
+                duration:1,
                 onstop:function(_event){
                 },
                 onplaystate:function(_event){
