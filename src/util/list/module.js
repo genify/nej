@@ -330,12 +330,6 @@ var f = function(){
      */
     _proListModule.__doChangePage = function(_event){
         this._$dispatchEvent('onpagechange',_event);
-        if (!_event.stopped){
-            this.__doChangeOffset(
-                (_event.index-1)*
-                this.__ropt.limit
-            );
-        }
     };
     /**
      * 偏移量变化处理逻辑
@@ -729,6 +723,9 @@ var f = function(){
             break;
             case 'update':
                 this.__cbItemUpdate(_event);
+            break;
+            case 'refresh':
+                this._$refresh();
             break;
         }
     };

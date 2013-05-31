@@ -109,6 +109,22 @@ var f = function(){
       _proListModulePG = _p._$$ListModulePG._$extend(_p._$$ListModule);
       _supListModulePG = _p._$$ListModulePG._$supro;
     /**
+     * 页码变化处理逻辑
+     * @protected
+     * @method {__doChangePage}
+     * @param  {Object} 页码信息
+     * @return {Void}
+     */
+    _proListModulePG.__doChangePage = function(_event){
+        _supListModulePG.__doChangePage.apply(this,arguments);
+        if (!_event.stopped){
+            this.__doChangeOffset(
+                (_event.index-1)*
+                this.__ropt.limit
+            );
+        }
+    };
+    /**
      * 加载数据之前处理逻辑，显示数据加载中信息
      * @protected
      * @method {__doBeforeListLoad}

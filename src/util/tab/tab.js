@@ -153,9 +153,8 @@ var f = function(){
      */
     _proTab._$go = function(_index,_force){
         var _element = this.__list[_index];
-        if (!_force&&(_index==this.__index||
-            !_element||_e._$hasClassName(
-                _element,this.__disabled))){
+        if (_force!=!0&&(_index==this.__index||!_element||
+            _e._$hasClassName(_element,this.__disabled))){
             _v._$stopDefault(arguments[1]);
             return this;
         }

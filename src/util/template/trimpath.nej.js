@@ -165,7 +165,7 @@
         if (!_part||!_part.length) return;
         _part.shift(); // remove macro key word
         var _name = _part[0].split('(')[0];
-        return 'var '+_name+' = function'+_part.join('').replace(_name,'')+'{var __OUT="";';
+        return 'var '+_name+' = function'+_part.join('').replace(_name,'')+'{var __OUT=[];';
     };
     /*
      * 解析{include "text-template-id"}字符串前缀
@@ -175,7 +175,7 @@
     var _doParsePrefixInline = function(_part){
         if (!_part[1]) 
             throw 'bad include statement: '+_part.join(' ');
-        return 'if (typeof inline == "function"){__OUT+=inline(';
+        return 'if (typeof inline == "function"){__OUT.push(inline(';
     };
     /**
      * 解析IF语句前缀，{if customer != null && customer.balance > 1000 || test(customer)}
@@ -218,10 +218,10 @@
             'break'  : {pfix:'break;'},
             'var'    : {pfix:_doParsePrefixConditionVAR,sfix:';'},
             'macro'  : {pfix:_doParsePrefixMacro},
-            '/macro' : {pfix:'return __OUT;};'},
+            '/macro' : {pfix:'return __OUT.join("");};'},
             'trim'   : {pfix:function(){_trim = !0;}},
             '/trim'  : {pfix:function(){_trim = null;}},
-            'inline' : {pfix:_doParsePrefixInline,pmin:1,sfix:');}'}
+            'inline' : {pfix:_doParsePrefixInline,pmin:1,sfix:'));}'}
         },
         ext : {
             'seed'   : function(_prefix){return (_prefix||'')+''+_seed;},
@@ -306,7 +306,7 @@
                 if (!_line) continue;
             } 
             _doParseSectionTextLine(_line,_out);
-            if (!!_trim&&i<l-1) _out.push('__OUT+=\'\\n\';');
+            if (!!_trim&&i<l-1) _out.push('__OUT.push(\'\\n\');');
         }
     };
     /*
@@ -337,7 +337,7 @@
                 // parse expression: 'firstName|default:"John Doe"|capitalize'.split('|')
                 _exparr = _content.substring(_begexp+_begin.length,_endexp).replace(_raor,'#@@#').split('|');
                 for(var i=0,l=_exparr.length;i<l;_exparr[i]=_exparr[i].replace(_rvor,'||'),i++);
-                _out.push('__OUT+='); _doParseExpression(_exparr,_out); _out.push(';');
+                _out.push('__OUT.push('); _doParseExpression(_exparr,_out); _out.push(');');
                 _prvmrkend = _end; _prvexpend = _endexp;
             }
             _doParseText(_content.substring(_prvexpend+_prvmrkend.length),_out);
@@ -358,7 +358,7 @@
         };
         return function(_content,_out){
             if (!_content) return;
-            _out.push('__OUT+=\''+_doEncode(_content)+'\';');
+            _out.push('__OUT.push(\''+_doEncode(_content)+'\');');
         };
     })();
     /*
@@ -394,7 +394,7 @@
             var _ftxt = ['if(!__CTX) return \'\';',''];
             _ftxt.push('function $v(__NAME){var v = __CTX[__NAME];return v==null?window[__NAME]:v;};');
             _ftxt.push('var defined=function(__NAME){return __CTX[__NAME]!=null;},');
-            _ftxt.push('__OUT="";');
+            _ftxt.push('__OUT=[];');
             // defiend used variables
             var _prvend = -1,_length = _content.length;
             var _stmtbeg,_stmtend,_statement,
@@ -426,7 +426,7 @@
                                 switch(_blockrx[1]){
                                     case 'cdata' : _doParseText(_blktxt,_ftxt); break;
                                     case 'minify': _doParseText(_blktxt.replace(_rnln,' ').replace(_rspc,' '),_ftxt); break;
-                                    case 'eval'  : if (!!_blktxt) _ftxt.push('__OUT+=(function(){'+_blktxt+'})();'); break;
+                                    case 'eval'  : if (!!_blktxt) _ftxt.push('__OUT.push((function(){'+_blktxt+'})());'); break;
                                 }
                                 _stmtbeg = _prvend = _blktmp+_blkmrk.length-1;
                             }
@@ -449,7 +449,7 @@
                 _prvend = _stmtend;
             }
             _doParseSectionText(_content.substring(_prvend+1),_ftxt);
-            _ftxt.push(';return __OUT;'); 
+            _ftxt.push(';return __OUT.join("");'); 
             _ftxt[1] = _doParseVarMap(_vars);
             _vars = null;
             //console.log(_ftxt.join(''));
