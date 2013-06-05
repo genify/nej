@@ -168,18 +168,6 @@ var f = function(){
         this.__doSwapCache(_options.id);
     };
     /**
-     * 控件销毁
-     * @protected
-     * @method {__destroy}
-     * @return {Void}
-     */
-    _proListCache.__destroy = function(){
-        this.__supDestroy();
-        delete this.__key;
-        delete this.__data;
-        delete this.__lspl;
-    };
-    /**
      * 切换缓存
      * @protected
      * @method {__doSwapCache}
