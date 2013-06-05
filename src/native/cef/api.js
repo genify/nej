@@ -184,6 +184,14 @@ var f = function() {
         _n._$exec('app.exit');
     };
     /**
+     * 打开外部链接
+     * @param  {String} 链接地址
+     * @return {Void}
+     */
+    _p._$external = function(_url){
+        _n._$exec('os.navigateExternal',_url);
+    };
+    /**
      * 取菜单项
      * @param  {Object} 菜单配置
      * @return {Object} 菜单项信息
