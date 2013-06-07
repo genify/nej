@@ -102,7 +102,10 @@ var f = function(){
             this.__onActionClose._$bind(this)
         ],[
             _options.dragger,'mousedown',
-            this.__onActionDragger._$bind(this)
+            this.__onActionDraggerStart._$bind(this)
+        ],[
+            _options.dragger,'mousemove',
+            this.__onActionDraggerCheck._$bind(this)
         ]];
         this.__nmax = _e._$get(_options.max); 
         // init resizer
@@ -200,11 +203,21 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    _proWindow.__onActionDragger = function(_event){
+    _proWindow.__onActionDraggerStart = function(_event){
         var _node = _v._$getElement(_event,'d:draggable');
-        if (!!_node&&_e._$dataset(
-              _node,'draggable')=='false') 
+        if (!!_node&&_e._$dataset(_node,'draggable')=='false') 
             return;
+        this.__reqdrg = !0;
+    };
+    /**
+     * 拖拽行为事件
+     * @param  {Event} 事件对象
+     * @return {Void}
+     */
+    _proWindow.__onActionDraggerCheck = function(_event){
+        if (!this.__reqdrg) 
+            return;
+        this.__reqdrg = !1;
         _n._$exec('winhelper.dragWindow');
     };
     /**
