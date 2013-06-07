@@ -81,7 +81,7 @@ var f = function() {
         }
         _options = _e.__initOptions(_options);
         _node = _e._$get(_node);
-        var _effect = _p._$$Effect._$allocate(
+        _node.effect = _p._$$Effect._$allocate(
             {
                 node:_node,
                 transition:[
@@ -96,12 +96,12 @@ var f = function() {
                 onstop:function(_state){
                     _node.effectLock = !1;
                     _options.onstop.call(this,_state);
-                    _effect = _p._$$Effect._$recycle(_effect);
+                    _node.effect = _p._$$Effect._$recycle(_node.effect);
                 },
-                onplaystate:_options.onplaystate._$bind(_effect)
+                onplaystate:_options.onplaystate._$bind(_node.effect)
             }
         );
-        _effect._$start();
+        _node.effect._$start();
         return this;
     };
 
@@ -166,6 +166,14 @@ var f = function() {
      */
     _e._$fadeOut = function(_node,_options){
         return _e.__doFade(_node,_options,0);
+    };
+
+    _e._$fadeStop = function(_node){
+        _e._$setStyle(_node,'transition','none');
+        if(!!_node.effectLock)
+           _node.effectLock = false;
+        if(!!_node.effect)
+            _node.effect = _p._$$Effect._$recycle(_node.effect);
     };
 
     /**
