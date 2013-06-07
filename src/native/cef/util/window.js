@@ -137,6 +137,7 @@ var f = function(){
      * @return {Void}
      */
     _proWindow.__onActionMin = function(_event){
+        this.__reqdrg = !1;
         _v._$stop(_event);
         this._$dispatchEvent('onbeforemin');
         this._$min();
@@ -163,7 +164,7 @@ var f = function(){
      * @return {Void}
      */
     _proWindow.__onActionMax = function(_event){
-        console.log('do max')
+        this.__reqdrg = !1;
         _v._$stop(_event);
         var _cmd,_node = _v._$getElement(_event);
         if (_e._$hasClassName(this.__nmax,this.__maxcls)){
@@ -186,6 +187,7 @@ var f = function(){
      * @return {Void}
      */
     _proWindow.__onActionClose = function(_event){
+        this.__reqdrg = !1;
         _v._$stop(_event);
         var _event = {};
         this._$dispatchEvent('onbeforeclose',_event);
@@ -208,7 +210,10 @@ var f = function(){
         var _node = _v._$getElement(_event,'d:draggable');
         if (!!_node&&_e._$dataset(_node,'draggable')=='false') 
             return;
-        this.__reqdrg = !0;
+        this.__reqdrg = [
+            _v._$pageX(_event),
+            _v._$pageY(_event)
+        ];
     };
     /**
      * 拖拽行为事件
@@ -218,9 +223,13 @@ var f = function(){
     _proWindow.__onActionDraggerCheck = function(_event){
         if (!this.__reqdrg) 
             return;
-        this.__reqdrg = !1;
-        console.log('do dragger')
-        _n._$exec('winhelper.dragWindow');
+        var _x = _v._$pageX(_event),
+            _y = _v._$pageY(_event);
+        if (Math.abs(this.__reqdrg[0]-_x)>5||
+            Math.abs(this.__reqdrg[1]-_y)>5){
+            this.__reqdrg = !1;
+            _n._$exec('winhelper.dragWindow');
+        }
     };
     /**
      * 调整窗体大小行为事件
