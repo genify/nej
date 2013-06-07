@@ -163,6 +163,7 @@ var f = function(){
      * @return {Void}
      */
     _proWindow.__onActionMax = function(_event){
+        console.log('do max')
         _v._$stop(_event);
         var _cmd,_node = _v._$getElement(_event);
         if (_e._$hasClassName(this.__nmax,this.__maxcls)){
@@ -218,6 +219,7 @@ var f = function(){
         if (!this.__reqdrg) 
             return;
         this.__reqdrg = !1;
+        console.log('do dragger')
         _n._$exec('winhelper.dragWindow');
     };
     /**
