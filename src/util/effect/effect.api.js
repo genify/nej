@@ -169,6 +169,7 @@ var f = function() {
     };
 
     _e._$fadeStop = function(_node){
+        _e._$setStyle(_node,'transition','none');
         _node.effectLock = false;
         _node.effect = _p._$$Effect._$recycle(_node.effect);
     };
