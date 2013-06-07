@@ -13,6 +13,7 @@ var f = function() {
 	    	_e._$fadeOut(_box,{
                 delay:1,
                 duration:2,
+                opacity:0.1,
 	    		onstop:function(_event){
 	    			_fdi(_box);
 	    		},
