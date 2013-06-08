@@ -200,9 +200,10 @@ var f = function() {
         var _item = NEJ.X({
             text:'菜单项',menu:!0,
             menu_id:0,enable:!0,
-            separator:!1,children:null
+            children:null
         },_options);
         _mcache[_item.menu_id] = _item;
+        _item.separator = !_item.menu;
         return _item;
     };
     /**
