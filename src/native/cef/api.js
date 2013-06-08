@@ -249,7 +249,11 @@ var f = function() {
         return function(_conf){
             _doCompleteMenu(_conf.content);
             _doCompleteHotKey(_conf.hotkey);
-            _conf = NEJ.X({},_conf);
+            _conf = NEJ.EX({
+                menu_type:'',
+                content:null,
+                hotkey:null
+            },_conf);
             if (!_conf.menu_type) _conf.menu_type = 'normal';
             _conf.hotkey = JSON.stringify(_conf.hotkey||null);
             _conf.content = JSON.stringify(_conf.content||[]);

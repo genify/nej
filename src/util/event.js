@@ -416,6 +416,22 @@ var f = function(){
         };
     })();
     /**
+     * 清理所有控件
+     * @param  {Function} 过滤接口
+     * @return {Void}
+     */
+    _proEvent.__doClearComponent = function(_filter){
+        _filter = _filter||_f;
+        _u._$forIn(this,function(_inst,_key,_map){
+            if (!!_inst&&
+                !!_inst._$recycle&&
+                 !_filter(_inst)){
+                delete _map[_key];
+                _inst._$recycle();
+            }
+        });
+    };
+    /**
      * 回收控件，通过实例的构造类来回收当前实例
      * [code]
      *   // 通过实例的接口回收当前实例
