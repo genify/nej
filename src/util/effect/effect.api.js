@@ -95,8 +95,8 @@ var f = function() {
                 styles:['opacity:'+_opacity],
                 onstop:function(_state){
                     _node.effectLock = !1;
-                    _options.onstop.call(this,_state);
                     _node.effect = _p._$$Effect._$recycle(_node.effect);
+                    _options.onstop.call(this,_state);
                 },
                 onplaystate:_options.onplaystate._$bind(_node.effect)
             }
