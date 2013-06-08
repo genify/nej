@@ -417,6 +417,7 @@ var f = function(){
      * @config {Number} data     其他数据信息
      * @config {Number} offset   偏移量
      * @config {Number} limit    数量
+     * @config {Object} ext      回传数据
      * @return {nej.ut._$$ListCache}
      */
     _proListCache._$getList = (function(){
@@ -429,6 +430,7 @@ var f = function(){
         return function(_options){
             _options = _options||_o;
             var _ropt = {key:_options.key||''
+                        ,ext:_options.ext||null
                         ,data:_options.data||null
                         ,offset:parseInt(_options.offset)||0
                         ,limit:parseInt(_options.limit)||0},
