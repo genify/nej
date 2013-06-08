@@ -219,10 +219,11 @@ var f = function() {
      * @return {Void}
      */
     _p._$popMenu = (function(){
-        var _xmap = {
-            exit:_p._$getMenuItem({text:'退出',menu_id:1005}),
-            setting:_p._$getMenuItem({text:'设置',menu_id:1006})
-        };
+        var _reg0 = /\)$/,
+            _xmap = {
+                exit:_p._$getMenuItem({text:'退出',menu_id:1005}),
+                setting:_p._$getMenuItem({text:'设置',menu_id:1006})
+            };
         var _doCheckMenu = function(_item,_index,_list){
             var _xitm = _xmap[_item];
             if (!!_xitm){
@@ -236,9 +237,20 @@ var f = function() {
         var _doCompleteMenu = function(_list){
             _u._$forEach(_list,_doCheckMenu);
         };
+        var _doCheckHotKey = function(_value,_id){
+            var _item = _p._$getMenuItemById(_id);
+            if (!!_item&&!_reg0.test(_item.text)){
+                _item.text += '('+_value+')';
+            }
+        };
+        var _doCompleteHotKey = function(_hotkey){
+            _u._$forIn(_hotkey,_doCheckHotKey);
+        };
         return function(_conf){
             _doCompleteMenu(_conf.content);
+            _doCompleteHotKey(_conf.hotkey);
             _conf = NEJ.X({},_conf);
+            if (!_conf.menu_type) _conf.menu_type = 'normal';
             _conf.hotkey = JSON.stringify(_conf.hotkey||null);
             _conf.content = JSON.stringify(_conf.content||[]);
             _n._$exec('winhelper.popupMenu',_conf);
