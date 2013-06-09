@@ -91,7 +91,10 @@ var f = function() {
      * @config {String}  id  歌曲ID
      * @config {String}  lrc 歌词内容
      * 
-     * 
+     * [hr]
+     * 请求切换到下一个模式
+     * @event  {onnextmode}
+     * @param  {Object} 模式信息
      */
     _p._$$Player = NEJ.C();
       _proPlayer = _p._$$Player._$extend(_t._$$Event);
@@ -103,8 +106,8 @@ var f = function() {
         this.__nevt = [
             'volumechange','notify',
             'dataloaded','play','pause','ended',
-            'playmode','error','playpre','loading',
-            'playnext','timeupdate','lyricsupdate','buffering'
+            'playmode','playmodechange','error','playpre',
+            'loading','playnext','timeupdate','lyricsupdate','buffering'
         ];
         this.__supInit();
     };
@@ -303,6 +306,9 @@ var f = function() {
                 this._$dispatchEvent('onstatechange',{
                     state:0
                 });
+            return;
+            case 'playmodechange':
+                this._$dispatchEvent('onnextmode');
             return;
         }
     };
