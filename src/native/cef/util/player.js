@@ -216,9 +216,9 @@ var f = function() {
      * @return {Void}
      */
     _proPlayer._$stepVolume = function(_flag){
+        var _vol = _n._$exec('player.getVolume')+(_flag||0)*this.__step;
         this._$setVolume(
-            _n._$exec('player.getVolume')
-            +(_flag||0)*this.__step
+            Math.max(0,Math.min(1,_vol))
         );
     };
     /**
