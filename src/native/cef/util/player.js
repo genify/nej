@@ -22,6 +22,7 @@ var f = function() {
      * @class   {nej.cef.ut._$$Player}
      * @extends {nej.ut._$$Event}
      * @param   {Object} 配置参数
+     * @config  {Number} step 音量调节步长，0-1之间，默认0.1
      * 
      * [hr]
      * 播放状态变化触发事件，播放状态值说明
@@ -104,10 +105,10 @@ var f = function() {
      */
     _proPlayer.__init = function(){
         this.__nevt = [
-            'volumechange','notify',
-            'dataloaded','play','pause','ended',
-            'playmode','playmodechange','error','playpre',
-            'loading','playnext','timeupdate','lyricsupdate','buffering'
+            'volumechange','volumeupdate','notify',
+            'dataloaded','play','pause','ended','playmode',
+            'playmodechange','error','playpre','loading',
+            'playnext','timeupdate','lyricsupdate','buffering'
         ];
         this.__supInit();
     };
@@ -124,6 +125,7 @@ var f = function() {
         };
         return function(_options){
             this.__supReset(_options);
+            this.__step = _options.step||0.1;
             _u._$forEach(
                 this.__nevt,_doAddEvent,this
             );
@@ -309,6 +311,11 @@ var f = function() {
             return;
             case 'playmodechange':
                 this._$dispatchEvent('onnextmode');
+            return;
+            case 'volumeupdate':
+                var _vol = _n._$exec('player.getVolume'),
+                    _delta = (arguments[1]||0)*this.__step;
+                this._$setVolume(_vol+_delta);
             return;
         }
     };
