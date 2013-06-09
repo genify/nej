@@ -211,6 +211,17 @@ var f = function() {
         _n._$exec('player.setVolume',_volume);
     };
     /**
+     * 微调音量
+     * @param  {Number} 调节标识, 1/-1
+     * @return {Void}
+     */
+    _proPlayer._$stepVolume = function(_flag){
+        this._$setVolume(
+            _n._$exec('player.getVolume')
+            +(_flag||0)*this.__step
+        );
+    };
+    /**
      * 设置播放位置
      * @param  {Float} 播放位置，百分比
      * @return {Void}
@@ -313,9 +324,7 @@ var f = function() {
                 this._$dispatchEvent('onnextmode');
             return;
             case 'volumeupdate':
-                var _vol = _n._$exec('player.getVolume'),
-                    _delta = (arguments[1]||0)*this.__step;
-                this._$setVolume(_vol+_delta);
+                this._$stepVolume(arguments[1]);
             return;
         }
     };
