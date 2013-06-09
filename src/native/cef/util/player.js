@@ -145,8 +145,10 @@ var f = function() {
     _proPlayer._$play = function(_options){
         _n._$exec('player.load',_options);
         _n._$exec('player.setInfo',_options);
+        this.__loading = 0;
         this._$dispatchEvent('onstatechange',{
-            state:0,progress:0
+            state:0,
+            progress:this.__loading
         });
     };
     /**
@@ -254,6 +256,13 @@ var f = function() {
                     current:_n._$exec('player.getCurrentTime')||0,
                     duration:_player.duration||0
                 });
+                var _loading = _n._$exec('player.getDownloadSchedule')||0;
+                if (_loading==1&&this.__loading==1) return;
+                this.__loading = _loading;
+                this._$dispatchEvent('onstatechange',{
+                    state:0,
+                    progress:this.__loading
+                });
             return;
             case 'volumechange':
                 this._$dispatchEvent('onvolumechange',{
@@ -283,9 +292,6 @@ var f = function() {
                 this._$dispatchEvent('onlrcupdate',{
                     id:arguments[1],lrc:arguments[2]
                 });
-            return;
-            case '':
-            
             return;
         }
     };
