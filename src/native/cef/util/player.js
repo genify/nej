@@ -28,7 +28,7 @@ var f = function() {
      * [ntb]
      *   状态值  |  说明
      *   ------------------
-     *   0    |  缓冲阶段
+     *   0    |  缓冲阶段，出loading提示
      *   1    |  播放状态
      *   2    |  暂停状态
      *   3    |  停止状态
@@ -38,6 +38,13 @@ var f = function() {
      * @event  {onstatechange}
      * @param  {Object} 状态信息
      * @config {Number} state 状态值，见说明表
+     * 
+     * [hr]
+     * 歌曲文件下载进度
+     * @event  {onloading}
+     * @param  {Object} 进度信息
+     * @config {Number} loaded 已下载，如0.5
+     * @config {Number} total  总数，为1
      * 
      * [hr]
      * 播放位置变化触发事件
@@ -95,9 +102,9 @@ var f = function() {
     _proPlayer.__init = function(){
         this.__nevt = [
             'volumechange','notify',
-            'dataloaded','play','pause',
-            'ended',,'playmode','error','playpre',
-            'playnext','timeupdate','lyricsupdate'
+            'dataloaded','play','pause','ended',
+            'playmode','error','playpre','loading',
+            'playnext','timeupdate','lyricsupdate','buffering'
         ];
         this.__supInit();
     };
@@ -145,10 +152,8 @@ var f = function() {
     _proPlayer._$play = function(_options){
         _n._$exec('player.load',_options);
         _n._$exec('player.setInfo',_options);
-        this.__loading = 0;
         this._$dispatchEvent('onstatechange',{
-            state:0,
-            progress:this.__loading
+            state:0
         });
     };
     /**
@@ -256,12 +261,12 @@ var f = function() {
                     current:_n._$exec('player.getCurrentTime')||0,
                     duration:_player.duration||0
                 });
+                // lock loading
                 var _loading = _n._$exec('player.getDownloadSchedule')||0;
                 if (_loading==1&&this.__loading==1) return;
                 this.__loading = _loading;
-                this._$dispatchEvent('onstatechange',{
-                    state:0,
-                    progress:this.__loading
+                this._$dispatchEvent('onloading',{
+                    loaded:this.__loading,total:1
                 });
             return;
             case 'volumechange':
@@ -291,6 +296,12 @@ var f = function() {
             case 'lyricsupdate':
                 this._$dispatchEvent('onlrcupdate',{
                     id:arguments[1],lrc:arguments[2]
+                });
+            return;
+            case 'loading':
+            case 'buffering':
+                this._$dispatchEvent('onstatechange',{
+                    state:0
                 });
             return;
         }
