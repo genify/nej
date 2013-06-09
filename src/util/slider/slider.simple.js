@@ -147,6 +147,13 @@ var f = function(){
         if (!!this.__offset) return;
         this.__doUpdatePosition(_ratio);
     };
+    /**
+     * 取滑块位置
+     * @return {Float} 滑块百分比
+     */
+    _proSimpleSlider._$getPosition = function(_ratio){
+        return this.__ratio;
+    };
 };
 NEJ.define('{lib}util/slider/slider.simple.js',
           ['{lib}util/event.js'],f);

@@ -146,7 +146,7 @@ var f = function() {
         _n._$exec('player.load',_options);
         _n._$exec('player.setInfo',_options);
         this._$dispatchEvent('onstatechange',{
-            state:0
+            state:0,progress:0
         });
     };
     /**
@@ -283,6 +283,9 @@ var f = function() {
                 this._$dispatchEvent('onlrcupdate',{
                     id:arguments[1],lrc:arguments[2]
                 });
+            return;
+            case '':
+            
             return;
         }
     };
