@@ -13,13 +13,13 @@ var f = function(){
         _h = _('nej.h');
     var __empty    = /(?:<(p|div)>(?:\&nbsp\;|<br\/?>)<\/\1>|<br\/?>|\&nbsp\;|\s)+$/gi, // empty content
         __rnwln    = /(?:\r\n)|\n|\r/gi,  // new line for getContent
-        __reg_cls0 = /(?:class|lang|style)="(mso)?[^"]*"/gi,
-        __reg_cls1 = /(?:class|lang|style)='(mso)?[^']*'/gi,
-        __reg_cls2 = /(?:class|lang|style)=(mso)?[^>]*/gi,// IE7 hack
+        __reg_cls0 = /(?:class|lang)="(mso)?[^"]*"/gi,
+        __reg_cls1 = /(?:class|lang)='(mso)?[^']*'/gi,
+        __reg_cls2 = /(?:class|lang)=(mso)?[^>]*/gi,// IE7 hack
         __reg_ccm  = /(?:<!--)[^>]*(?:-->)/gi,
-        __reg_st0  = /(?:style)="([^"]*)"/gi,
-        __reg_st1  = /(?:style)='([^']*)'/gi,
-        __reg_bgc  = /background-color:([^;]*);/gi;//clear class,lang
+        __reg_st0  = /(?:<\w* style)="([^"]*)"/gi,
+        __reg_st1  = /(?:<\w* style)='([^']*)'/gi,
+        __reg_bgc  = /(?:background-color:|text-align:)([^;]*)(;)*/gi;//clear class,lang
         
     /**
      * 取节点所在的窗体对象
@@ -184,29 +184,30 @@ var f = function(){
      * @return {[type]}       [description]
      */
     _h.__filterContentStyle = function(_html){
-      _html = _html.replace(__reg_st0,function(_a,_b,_c){
-        if(_b.match(__reg_bgc)!=null){
-            var _str0 = '';
-            var _bgc = _b.replace(__reg_bgc,function(_str,_sstr,_index){
-                return _str0 = _str;
-            }._$bind(this));
-            return 'style="' + _str0 +'"';
-        }else{
-            return '';
-        }
-      }._$bind(this));
-      _html = _html.replace(__reg_st1,function(_a,_b,_c){
-        if(_b.match(__reg_bgc)!=null){
-            var _str0 = '';
-            var _bgc = _b.replace(__reg_bgc,function(_str,_sstr,_index){
-                return _str0 = _str;
-            }._$bind(this));
-            return 'style="' + _str0 +'"';
-        }else{
-            return '';
-        }
-      }._$bind(this));
-      return _html;
+        _html = _html.replace(__reg_st0,function(_a,_b,_c){
+            if(_b.match(__reg_bgc)!=null){
+                var _str0 = '';
+                var _bgc = _b.replace(__reg_bgc,function(_str,_sstr,_index){
+                    return _str0 += _str;
+                }._$bind(this));
+                var _str = _a.split('style')[0];
+                return _str + 'style="' + _str0 +'"';
+            }else{
+                return '';
+            }
+        }._$bind(this));
+        _html = _html.replace(__reg_st1,function(_a,_b,_c){
+            if(_b.match(__reg_bgc)!=null){
+                var _str0 = '';
+                var _bgc = _b.replace(__reg_bgc,function(_str,_sstr,_index){
+                    return _str0 = _str;
+                }._$bind(this));
+                return 'style="' + _str0 +'"';
+            }else{
+                return '';
+            }
+        }._$bind(this));
+        return _html;
     };
 };
 NEJ.define('{lib}patched/editor.js',
