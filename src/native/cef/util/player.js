@@ -129,9 +129,11 @@ var f = function() {
             _u._$forEach(
                 this.__nevt,_doAddEvent,this
             );
-            if (!_player.paused){
-                this.__onNativeEvent('play');
-            }
+            // 初始状态下native都不会处于播放状态
+            // maybe 不应该有这个判断
+            // if (!_player.paused){
+            //     this.__onNativeEvent('play');
+            // }
         };
     })();
     /**
