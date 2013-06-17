@@ -209,6 +209,7 @@ var f = function() {
      */
     _proPlayer._$setVolume = function(_volume){
         _n._$exec('player.setVolume',_volume);
+        this._$setMute(_volume==0);
     };
     /**
      * 微调音量
