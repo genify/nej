@@ -219,7 +219,7 @@ var f = function() {
     _proPlayer._$stepVolume = function(_flag){
         var _vol = _n._$exec('player.getVolume')+(_flag||0)*this.__step;
         this._$setVolume(
-            Math.max(0,Math.min(1,_vol))
+            Math.max(0,Math.min(1,_u._$fixed(_vol,2)))
         );
     };
     /**
