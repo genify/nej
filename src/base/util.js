@@ -246,7 +246,7 @@ var f = function(){
         var _doSearch = function(_list,_low,_high){
             if (_low>_high) return -1;
             var _middle = Math.ceil((_low+_high)/2),
-                _result = _docheck(_list[_middle]);
+                _result = _docheck(_list[_middle],_middle,_list);
             if (_result==0)
                 return _middle;
             if (_result<0)

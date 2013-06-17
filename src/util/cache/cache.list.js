@@ -597,14 +597,16 @@ var f = function(){
      *   _cc._$addItem({
      *       key: '123',
      *       item: {},
-     *       push: false
+     *       push: false,
+     *       offset:0
      *   });
      * [/code]
      * @method {_$addItem}
      * @param  {Object} 配置信息
-     * @config {String}  key  列表标识
-     * @config {Object}  data 列表项数据
-     * @config {Boolean} push 是否追加到列表尾部
+     * @config {String}  key    列表标识
+     * @config {Object}  data   列表项数据
+     * @config {Boolean} push   是否追加到列表尾部
+     * @config {Number}  offset 对于非尾部追加的项可通过此参数指定追加位置
      * @return {nej.ut._$$ListCache}
      */
     _proListCache._$addItem = function(_options){
@@ -628,7 +630,8 @@ var f = function(){
                 _list = this._$getListInCache(_key);
             if (!_options.push){
                 _flag = -1;
-                _list.unshift(_item);
+                var _offset = _options.offset||0;
+                _list.splice(_offset,0,_item);
             }else if(_list.loaded){
                 _flag = 1;
                 _list.push(_item);
