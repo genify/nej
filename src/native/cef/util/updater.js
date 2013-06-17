@@ -124,23 +124,32 @@ var f = function() {
         var _doCheckVersion = function(_item){
             // illegal module
             var _mid = _item.id,
-                _file = this.__map[_item.id];
+                _file = this.__map[_item.id].name,
+                _type = this.__map[_item.id].type;
             if (!_file) return;
             // check module update
             if (_hasUpdate(_mid,_item.versionNum)){
                 this.__upcount++;
+                this.__updateItem.push({
+                    fileName:_file,
+                    url:_item.downloadUrl,
+                    md5:_item.md5||'md5',
+                    installtype:_type
+                });
+                /*
                 _n._$exec(
-                    'setUpdateItem',
+                    'startUpdate',{}
                     _file,_item.downloadUrl,
                     _item.md5||'md5',_mid=='core'?1:0
                 );
+                */
             }
         };
         // check version match
         var _hasUpdate = function(_id,_version){
             var _ver = _n._$exec('update.getVersion',_id)||'';
             if (_u._$isObject(_ver)){
-                _ver = [_ver.major,_ver.build,_ver.revision].join('.');
+                _ver = [_ver.build,_ver.major,_ver.revision].join('.');
             }
             var _big = !0,
                 _arr1 = _ver.split('.'),     // local
@@ -165,13 +174,15 @@ var f = function() {
             };
             // check update
             this.__upcount = 0;
+            this.__updateItem =[];
             _u._$forEach(
                 _json.fileContents,
                 _doCheckVersion,this
             );
             if (!this.__upcount){
-                var _event = NEJ.X({state:5},this.__version);
+                    var _event = NEJ.X({state:5},this.__version);
                 this._$dispatchEvent('onstatechange',_event);
+                
                 return;
             }
             // confirm update
@@ -228,7 +239,7 @@ var f = function() {
     _proUpdater._$start = function(){
         var _event = NEJ.X({state:1},this.__version);
         this._$dispatchEvent('onstatechange',_event);
-        _n._$exec('update.startUpdate');
+        _n._$exec('startUpdate',this.__updateItem);
     };
     /**
      * 暂停更新
