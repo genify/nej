@@ -96,7 +96,7 @@ var f = function(){
             this.__onActionMax._$bind(this)
         ],[
             _options.dbmax,'dblclick',
-            this.__onActionMax._$bind(this)
+            this.__onActionDBClick._$bind(this)
         ],[
             _options.close,'click',
             this.__onActionClose._$bind(this)
@@ -180,6 +180,16 @@ var f = function(){
         this._$dispatchEvent('onbeforemax',_event);
         _n._$exec('winhelper.showWindow',_cmd);
         this._$dispatchEvent('onaftermax',_event);
+    };
+    /**
+     * 双击最大化
+     * @return {Void}
+     */
+    _proWindow.__onActionDBClick = function(_event){
+        var _node = _v._$getElement(_event,'d:draggable');
+        if (!!_node&&_e._$dataset(_node,'draggable')=='false') 
+            return;
+        this.__onActionMax(_event);
     };
     /**
      * 关闭行为事件
