@@ -108,7 +108,7 @@ var f = function() {
             'volumechange','volumeupdate','notify',
             'dataloaded','play','pause','ended','playmode',
             'playmodechange','error','playpre','loading',
-            'playnext','timeupdate','lyricsupdate','buffering'
+            'playnext','timeupdate','lyricsupdate','buffering','action'
         ];
         this.__supInit();
     };
@@ -253,82 +253,111 @@ var f = function() {
      * @param  {String} 事件名称
      * @return {Void}
      */
-    _proPlayer.__onNativeEvent = function(_name){
-        switch(_name){
-            case 'dataloaded':
+    _proPlayer.__onNativeEvent = (function(){
+        var _actions = {
+            play:function(){
                 this._$resume();
-            return;
-            case 'play':
-                this._$dispatchEvent('onstatechange',{
-                    state:1
-                });
-            return;
-            case 'pause':
-                this._$dispatchEvent('onstatechange',{
-                    state:2
-                });
-            return;
-            case 'ended':
-                this._$dispatchEvent('onstatechange',{
-                    state:4
-                });
-            return;
-            case 'timeupdate':
-                this._$dispatchEvent('onpositionchange',{
-                    current:_n._$exec('player.getCurrentTime')||0,
-                    duration:_player.duration||0
-                });
-                // lock loading
-                var _loading = _n._$exec('player.getDownloadSchedule')||0;
-                if (_loading==1&&this.__loading==1) return;
-                this.__loading = _loading;
-                this._$dispatchEvent('onloading',{
-                    loaded:this.__loading,total:1
-                });
-            return;
-            case 'volumechange':
-                this._$dispatchEvent('onvolumechange',{
-                    volume:_n._$exec('player.getVolume')
-                });
-            return;
-            case 'error':
-                this._$dispatchEvent('onstatechange',{
-                    state:5
-                });
-            return;
-            case 'notify':
-                
-            return;
-            case 'playpre':
-            case 'playnext':
+            },
+            pause:function(){
+                this._$pause();
+            },
+            stop:function(){
+                this._$stop();
+            },
+            prev:function(){
                 this._$dispatchEvent('ontrackchange',{
-                    flag:_name=='playpre'?-1:1
+                    flag:-1
                 });
-            return;
-            case 'playmode':
-                this._$dispatchEvent('onmodechange',{
-                    mode:arguments[1]
+            },
+            next:function(){
+                this._$dispatchEvent('ontrackchange',{
+                    flag:1
                 });
-            return;
-            case 'lyricsupdate':
-                this._$dispatchEvent('onlrcupdate',{
-                    id:arguments[1],lrc:arguments[2]
-                });
-            return;
-            case 'loading':
-            case 'buffering':
-                this._$dispatchEvent('onstatechange',{
-                    state:0
-                });
-            return;
-            case 'playmodechange':
+            },
+            mode:function(){
                 this._$dispatchEvent('onnextmode');
-            return;
-            case 'volumeupdate':
-                this._$stepVolume(arguments[1]);
-            return;
-        }
-    };
+            }
+        };
+        return function(_name){
+            switch(_name){
+                case 'dataloaded':
+                    this._$resume();
+                return;
+                case 'play':
+                    this._$dispatchEvent('onstatechange',{
+                        state:1
+                    });
+                return;
+                case 'pause':
+                    this._$dispatchEvent('onstatechange',{
+                        state:2
+                    });
+                return;
+                case 'ended':
+                    this._$dispatchEvent('onstatechange',{
+                        state:4
+                    });
+                return;
+                case 'timeupdate':
+                    this._$dispatchEvent('onpositionchange',{
+                        current:_n._$exec('player.getCurrentTime')||0,
+                        duration:_player.duration||0
+                    });
+                    // lock loading
+                    var _loading = _n._$exec('player.getDownloadSchedule')||0;
+                    if (_loading==1&&this.__loading==1) return;
+                    this.__loading = _loading;
+                    this._$dispatchEvent('onloading',{
+                        loaded:this.__loading,total:1
+                    });
+                return;
+                case 'volumechange':
+                    this._$dispatchEvent('onvolumechange',{
+                        volume:_n._$exec('player.getVolume')
+                    });
+                return;
+                case 'error':
+                    this._$dispatchEvent('onstatechange',{
+                        state:5
+                    });
+                return;
+                case 'notify':
+                    
+                return;
+                case 'playpre':
+                case 'playnext':
+                    this._$dispatchEvent('ontrackchange',{
+                        flag:_name=='playpre'?-1:1
+                    });
+                return;
+                case 'playmode':
+                    this._$dispatchEvent('onmodechange',{
+                        mode:arguments[1]
+                    });
+                return;
+                case 'lyricsupdate':
+                    this._$dispatchEvent('onlrcupdate',{
+                        id:arguments[1],lrc:arguments[2]
+                    });
+                return;
+                case 'loading':
+                case 'buffering':
+                    this._$dispatchEvent('onstatechange',{
+                        state:0
+                    });
+                return;
+                case 'playmodechange':
+                    this._$dispatchEvent('onnextmode');
+                return;
+                case 'volumeupdate':
+                    this._$stepVolume(arguments[1]);
+                return;
+                case 'action':
+                    (_actions[arguments[1]]||_f).call(this);
+                return;
+            }
+        };
+    })();
 };
 NEJ.define('{lib}native/cef/util/player.js',
           ['{lib}util/event.js'
