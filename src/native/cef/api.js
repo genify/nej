@@ -249,7 +249,6 @@ var f = function() {
             _doCompleteMenu(_conf.content);
             _doCompleteHotKey(_conf.hotkey);
             _conf = NEJ.EX({
-                menu_type:'',
                 content:null,
                 hotkey:null
             },_conf);
