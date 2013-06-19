@@ -16,6 +16,7 @@ var f = function(){
         _p = _('nej.cef.ut'),
         _s = _('os'),
         _a = _('app'),
+        _z = _('player'),
         _h = _('winhelper'),
         _proWindow;
     /**
@@ -125,6 +126,8 @@ var f = function(){
         this.__doUpdateMaxState(_s.hasFullScreenWindow());
         if (!_h.onclose)
              _h.onclose = this.__onActionClose._$bind(this);
+        if (!_z.onrequestclose)
+             _z.onrequestclose = this.__onActionClose._$bind(this);
         if (!_a.onexitmessage)
              _a.onexitmessage = this.__onActionExit._$bind(this);
         if (!_a.onforegroundpreinstance)
