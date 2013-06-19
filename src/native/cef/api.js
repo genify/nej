@@ -155,6 +155,14 @@ var f = function() {
         }
     };
     /**
+     * 设置窗口标题
+     * @param  {String} 标题
+     * @return {Void}
+     */
+    _p._$setWindowTitle = function(_title){
+        _n._$exec('winhelper.setWindowTitle',_title||'应用名称');
+    };
+    /**
      * 打开新窗体
      * @param  {String} 新窗口地址，参数通过查询形式输入，如?width=1000&height=200
      * @return {Void}
