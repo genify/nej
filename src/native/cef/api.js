@@ -187,9 +187,9 @@ var f = function() {
      * 退出应用
      * @return {Void}
      */
-    _p._$exit = function(){
+    _p._$exit = function(_action){
         _nt._$$Tray._$getInstance()._$hide();
-        _n._$exec('app.exit');
+        _n._$exec('app.exit',_action||'');
     };
     /**
      * 打开外部链接
