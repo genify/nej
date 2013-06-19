@@ -14,7 +14,8 @@ var f = function(){
         _t = _('nej.ut'),
         _x = _('nej.cef'),
         _p = _('nej.cef.ut'),
-        _s = _('window.os'),
+        _s = _('os'),
+        _a = _('app'),
         _proWindow;
     /**
      * 窗体基本行为封装对象，窗体调整区域大小节点集合标识： 
@@ -121,6 +122,8 @@ var f = function(){
         );
         this.__doInitDomEvent(_arr);
         this.__doUpdateMaxState(_s.hasFullScreenWindow());
+        if (!_a.onexitmessage)
+             _a.onexitmessage = this.__onActionClose._$bind(this);
     };
     /**
      * 控件销毁
