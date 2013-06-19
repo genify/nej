@@ -16,6 +16,7 @@ var f = function(){
         _p = _('nej.cef.ut'),
         _s = _('os'),
         _a = _('app'),
+        _h = _('winhelper'),
         _proWindow;
     /**
      * 窗体基本行为封装对象，窗体调整区域大小节点集合标识： 
@@ -122,8 +123,10 @@ var f = function(){
         );
         this.__doInitDomEvent(_arr);
         this.__doUpdateMaxState(_s.hasFullScreenWindow());
+        if (!_h.onclose)
+             _h.onclose = this.__onActionClose._$bind(this);
         if (!_a.onexitmessage)
-             _a.onexitmessage = this.__onActionClose._$bind(this);
+             _a.onexitmessage = this.__onActionExit._$bind(this);
     };
     /**
      * 控件销毁
@@ -207,12 +210,19 @@ var f = function(){
         if (!!_event.close){
             // do close action
             _x._$exit();
-            //window.close();
         }else{
             // do hide action
             _x._$hideWindow();
         }
         this._$dispatchEvent('onafterclose',_event);
+        return !_event.close;
+    };
+    /**
+     * 强行退出
+     * @return {Void}
+     */
+    _proWindow.__onActionExit = function(){
+        _x._$exit();
     };
     /**
      * 拖拽行为事件
