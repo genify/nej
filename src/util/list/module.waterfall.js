@@ -294,6 +294,7 @@ var f = function(){
      * @return {Void}
      */
     _proListModuleWF.__cbItemAdd = function(_event){
+        _e._$removeByEC(this.__ntip);
         this.__doCheckResult(_event,'onafteradd');
         var _flag = _event.flag;
         if (_event.stopped||!_flag) return;
