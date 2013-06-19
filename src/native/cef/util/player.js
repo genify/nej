@@ -13,7 +13,7 @@ var f = function() {
         _t = _('nej.ut'),
         _n = _('nej.n'),
         _p = _('nej.cef.ut'),
-        _player = _('window.player'),
+        _player = _('player'),
         _proPlayer;
     /**
      * 播放器控件，单例模式使用
@@ -118,6 +118,10 @@ var f = function() {
      * @return {Void}
      */
     _proPlayer.__reset = (function(){
+        var _mevent = {
+            playing:'play',
+            paused:'pause'
+        };
         // add native event
         var _doAddEvent = function(_name){
             _player['on'+_name] = this.
@@ -129,9 +133,11 @@ var f = function() {
             _u._$forEach(
                 this.__nevt,_doAddEvent,this
             );
-            if (!_player.paused){
-                this.__onNativeEvent('play');
-            }
+            // sync player status
+            var _status = _player.status||'pause';
+            this.__onNativeEvent(
+                _mevent[_status]||_status
+            );
         };
     })();
     /**
