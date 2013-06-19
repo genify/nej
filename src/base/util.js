@@ -866,6 +866,26 @@ var f = function(){
         return _h.__col2array(_object);
     };
     /**
+     * 数组转对象
+     * @api    {nej.u._$array2object}
+     * @param  {Array}    列表
+     * @param  {Function} 过滤函数
+     * @return {Object}   对象
+     */
+    _u._$array2object = function(_list,_filter){
+        var _result = {};
+        _u._$forEach(
+            _list,function(_item){
+                var _key = _item;
+                if (!!_filter){
+                    _key = _filter(_item);
+                }
+                _result[_key] = _item;
+            }
+        );
+        return _result;
+    };
+    /**
      * 安全删除属性<br/>
      * @api    {nej.u._$safeDelete}
      * @param  {Object}        对象
