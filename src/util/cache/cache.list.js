@@ -547,6 +547,7 @@ var f = function(){
      * @config {String} id   项标识，该名称与配置的项标识键一致
      * @config {String} key  列表标识
      * @config {Object} data 发送到服务器的数据
+     * @config {Object} ext  需要回传的数据信息
      * @return {nej.ut._$$ListCache}
      */
     _proListCache._$getItem = (function(){
@@ -558,6 +559,7 @@ var f = function(){
             var _id = _options[this.__key],
                 _ropt = {
                     id:_id,
+                    ext:_options.ext,
                     key:_options.key||'',
                     data:_options.data||{}
                 };
