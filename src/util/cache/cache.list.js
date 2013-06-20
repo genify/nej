@@ -685,7 +685,7 @@ var f = function(){
         var _item,
             _key = _options.key;
         if (!!_isok){
-            _item = this.__doRemoveItemInCache(_options.id)||null;
+            _item = this._$getItemInCache(_options.id)||null;
             var _id = _options.id,
                 _pkey = this.__key,
                 _list = this._$getListInCache(_key),
