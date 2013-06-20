@@ -211,6 +211,17 @@ var f = function(){
             },this);
     };
     /**
+     * 从本地存储中删除数据
+     * @protected
+     * @method {__delDataInStorage}
+     * @param  {String} 存储键值
+     * @return {String} 存储数据
+     */
+    _proCache.__delDataInStorage = function(_key){
+        if (!!_j._$delDataInStorage)
+            return _j._$delDataInStorage(_key);
+    };
+    /**
      * 从本地存储中取数据
      * @protected
      * @method {__getDataInStorage}
