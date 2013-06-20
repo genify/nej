@@ -262,7 +262,7 @@ var f = function() {
     _proPlayer.__onNativeEvent = (function(){
         var _actions = {
             play:function(){
-                this._$resume();
+                this._$dispatchEvent('onplay');
             },
             pause:function(){
                 this._$pause();
