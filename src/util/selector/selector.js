@@ -11,6 +11,7 @@ var f = function(){
         _v = _('nej.v'),
         _u = _('nej.u'),
         _p = _('nej.ut'),
+        _tkey = 'test-'+(+new Date),
         _proMultiSelector;
     if (!!_p._$$MultiSelector) return;
     /**
@@ -52,9 +53,9 @@ var f = function(){
      * @config  {String}       selected 选中样式，默认为js-selected
      * 
      * [hr]
-     * 
-     * @event {onchange} 选中变化触发事件
-     * @param {Event} 事件对象
+     * 选中变化触发事件
+     * @event {onchange} 
+     * @param {Object} 事件对象
      * 
      */
     _p._$$MultiSelector = NEJ.C();
@@ -78,7 +79,7 @@ var f = function(){
      */
     _proMultiSelector.__reset = function(_options){
         this.__supReset(_options);
-        this.__last = -1;
+        this.__last = _tkey;
         this.__kname = _options.name||'id';
         this.__kfcls = _options.item||'js-item';
         this.__parent = _e._$get(_options.parent);
@@ -89,7 +90,7 @@ var f = function(){
         // init dom event
         this.__doInitDomEvent([[
             document,'click',
-            this.__onItemClear._$bind(this)
+            this._$clear._$bind(this)
         ],[
             document,'keydown',
             this.__onItemSelectAll._$bind(this)
@@ -183,7 +184,6 @@ var f = function(){
             _event.shiftKey)
             return;
         this.__doItemClear();
-        this._$dispatchEvent('onchange');
     };
     /**
      * 选择项
@@ -193,8 +193,6 @@ var f = function(){
      * @return {Void}
      */
     _proMultiSelector.__onItemSelect = function(_event){
-        // ignore non-left button
-        if (_event.button!=0) return;
         // check element
         var _element = _v._$getElement(
             _event,'c:'+this.__kfcls
@@ -204,6 +202,10 @@ var f = function(){
         var _ctrl = _event.ctrlKey,
             _shift = _event.shiftKey,
             _id = _e._$dataset(_element,this.__kname);
+        // right click
+        if (_event.button==2&&
+            this.__isItemSelected(_id))
+            return;
         // not ctrl and shift
         if (!_ctrl&&!_shift){
             this.__doItemClear(_id);
@@ -218,12 +220,13 @@ var f = function(){
         // shift
         if (_shift){
             var _last,_test,
-                _selected = !1;
+                _selected = !1,
+                _last = this.__last!=_tkey?this.__last:
+                        _e._$dataset(this.__list[0],this.__kname);
             _u._$forEach(
                 this.__list,
-                function(_item){
+                function(_item,_index,_list){
                     var _key = _e._$dataset(_item,this.__kname);
-                    _last = this.__last;
                     _test = _key==_last||_key==_id;
                     if (_last!=_id&&_test) 
                         _selected = !_selected;
@@ -271,6 +274,7 @@ var f = function(){
      */
     _proMultiSelector._$clear = function(){
         this.__doItemClear();
+        this._$dispatchEvent('onchange');
         return this;
     };
     /**
@@ -298,7 +302,7 @@ var f = function(){
      * @return {Object}  当前选中信息
      */
     _proMultiSelector._$getSelection = function(_sorted){
-        this.__selection.list = null;
+        var _result = NEJ.X({},this.__selection);
         if (!!_sorted){
             _list = [];
             _u._$forEach(
@@ -308,9 +312,9 @@ var f = function(){
                     if (this.__isItemSelected(_id)) _list.push(_id);
                 },this
             );
-            this.__selection.list = _list;
+            _result.list = _list;
         }
-        return this.__selection;
+        return _result;
     };
 };
 NEJ.define('{lib}util/selector/selector.js',
