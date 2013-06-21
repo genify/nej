@@ -105,9 +105,9 @@ var f = function() {
      */
     _proPlayer.__init = function(){
         this.__nevt = [
-            'volumechange','volumeupdate','notify',
-            'dataloaded','play','pause','ended','playmode',
             'playmodechange','error','playpre','loading',
+            'volumechange','volumeupdate','notify','stop',
+            'dataloaded','play','pause','ended','playmode',
             'playnext','timeupdate','lyricsupdate','buffering','action'
         ];
         this.__supInit();
@@ -193,7 +193,7 @@ var f = function() {
                 this,'onstatechange',{
                     state:3
                 }
-            ),10
+            ),100
         );
     };
     /**
@@ -305,6 +305,11 @@ var f = function() {
                 case 'pause':
                     this._$dispatchEvent('onstatechange',{
                         state:2
+                    });
+                return;
+                case 'stop':
+                    this._$dispatchEvent('onstatechange',{
+                        state:3
                     });
                 return;
                 case 'ended':

@@ -13,7 +13,8 @@ var f = function() {
         _u = _('nej.u'), 
         _t = _('nej.ut'), 
         _n = _('nej.n'),
-        _p = _('nej.cef.ut'), 
+        _p = _('nej.cef.ut'),
+        _a = _('app'),
         _proTray;
     /**
      * 托盘图标控件
@@ -68,6 +69,9 @@ var f = function() {
         if (!!_options.tooltip){
             this.__tray.toolTip = _options.tooltip;
         }
+        if (!_a.ontaskbarrestart){
+             _a.ontaskbarrestart = this._$refresh._$bind(this);
+        }
     };
     /**
      * 托盘事件回调
@@ -94,6 +98,18 @@ var f = function() {
         if (this.__tray.wasInstall){
             this.__tray.uninstall();
         }
+    };
+    /**
+     * 刷新托盘图标
+     * @return {Void}
+     */
+    _proTray._$refresh = function(){
+        var _icon = this.__tray.icon,
+            _ttip = this.__tray.toolTip;
+        this._$hide();
+        this.__tray.icon = _icon;
+        this.__tray.toolTip = _ttip;
+        this._$show();
     };
     /**
      * 显示气泡提示
