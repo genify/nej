@@ -44,7 +44,7 @@ var f = function(){
         _element = _e._$get(_element);
         if (!_element) return;
         var _id = !!_element.id ? _element.id
-                : 'auto-id-'+_u._$randString(8);
+                : 'auto-id-'+_u._$randString(16);
         _element.id = _id;
         if (_e._$get(_id)!=_element)
             _empol[_id] = _element;

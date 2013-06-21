@@ -47,6 +47,7 @@ var f = function(){
      * @extends {nej.ut._$$Event}
      * @param   {Object} 可选配置参数，已处理参数列表如下所示
      * @config  {Node|String}  parent   容器节点或者ID，如果不输入则在列表的每一项上检测事件
+     * @config  {String}       name     项标识属性名称，默认id，节点通过data-id指定项标识
      * @config  {String}       item     可选节点样式标识，默认为js-item
      * @config  {String}       selected 选中样式，默认为js-selected
      * 
@@ -65,12 +66,7 @@ var f = function(){
      * @return {Void}
      */
     _proMultiSelector.__init = function(){
-        this.__eopt = {
-            clear:this.__onItemClear._$bind(this),
-            select:this.__onItemSelect._$bind(this),
-            selectall:this.__onItemSelectAll._$bind(this)
-        };
-        this.__selection = {length:0};
+        this.__selection = {count:0};
         this.__supInit();
     };
     /**
@@ -83,12 +79,26 @@ var f = function(){
     _proMultiSelector.__reset = function(_options){
         this.__supReset(_options);
         this.__last = -1;
+        this.__kname = _options.name||'id';
+        this.__kfcls = _options.item||'js-item';
         this.__parent = _e._$get(_options.parent);
         this.__selected = _options.selected||'js-selected';
-        this.__doInitNode(
-            _e._$getByClassName(
-            this.__parent,_options.item||'js-item'
-        ));
+        this.__list = _e._$getByClassName(
+            this.__parent,this.__kfcls
+        );
+        // init dom event
+        this.__doInitDomEvent([[
+            document,'click',
+            this.__onItemClear._$bind(this)
+        ],[
+            document,'keydown',
+            this.__onItemSelectAll._$bind(this)
+        ],[
+            this.__parent,'click',_v._$stop
+        ],[
+            this.__parent,'mouseup',
+            this.__onItemSelect._$bind(this)
+        ]]);
     };
     /**
      * 控件销毁
@@ -96,41 +106,14 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proMultiSelector.__destroy = (function(){
-        var _doclear = function(_node){
-            _u._$safeDelete(_node,'flag');
-        };
-        return function(){
-            this.__supDestroy();
-            this.__doItemClear();
-            _u._$forEach(this.__list,_doclear);
-            delete this.__last;
-            delete this.__list;
-            delete this.__parent;
-            delete this.__selected;
-        };
-    })();
-    /**
-     * 列表转哈希表
-     * @protected
-     * @method {__doInitNode}
-     * @param  {Array} 节点列表
-     * @return {Void}
-     */
-    _proMultiSelector.__doInitNode = (function(){
-        var _doflag = function(_node,_index){
-            _node.flag = _index;
-        };
-        return function(_list){
-            this.__list = _list||[];
-            _u._$forEach(this.__list,_doflag);
-            this.__doInitDomEvent([
-                [document,'mousedown',this.__eopt.clear],
-                [document,'keydown',this.__eopt.selectall],
-                [this.__parent,'mousedown',this.__eopt.select]
-            ]);
-        };
-    })();
+    _proMultiSelector.__destroy = function(){
+        this.__supDestroy();
+        this.__doItemClear();
+        delete this.__last;
+        delete this.__list;
+        delete this.__parent;
+        delete this.__selected;
+    };
     /**
      * 判断节点是否被选中
      * @protected
@@ -152,8 +135,8 @@ var f = function(){
     _proMultiSelector.__doItemAddToSelection = function(_id,_element){
         if (!!this.__selection[_id]) return;
         _e._$addClassName(_element,this.__selected);
-        this.__selection[_id] = _element;
-        this.__selection.length++;
+        this.__selection[_id] = _e._$id(_element);
+        this.__selection.count++;
     };
     /**
      * 反选节点
@@ -167,7 +150,7 @@ var f = function(){
         if (!this.__selection[_id]) return;
         _e._$delClassName(_element,this.__selected);
         delete this.__selection[_id];
-        this.__selection.length--;
+        this.__selection.count--;
     };
     /**
      * 清除选中项
@@ -177,10 +160,16 @@ var f = function(){
      * @return {Void}
      */
     _proMultiSelector.__doItemClear = function(_id){
-        for(var x in this.__selection){
-            if (x==_id||x=='length'||x=='list') continue;
-            this.__doItemDelFromSelection(x,this.__selection[x]);
-        }
+        _u._$forIn(
+            this.__selection,
+            function(_node,_key){
+                if (_key==_id||
+                    _key=='list'||
+                    _key=='count')
+                    return;
+                this.__doItemDelFromSelection(_key,_node);
+            },this
+        );
     };
     /**
      * 清除选中项
@@ -203,51 +192,52 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    _proMultiSelector.__onItemSelect = (function(){
-        var _dofilter = function(_element){
-            return _element.flag!=null;
-        };
-        return function(_event){
-            var _element = _v._$getElement(
-                             _event,_dofilter);
-            if (!_element) return;
-            _v._$stop(_event);
-            var _ctrl = _event.ctrlKey,
-                _shift = _event.shiftKey,
-                _id = _element.flag;
-            // not ctrl and shift
-            if (!_ctrl&&!_shift){
-                this.__doItemClear(_id)
-                this.__doItemAddToSelection(_id,_element);
-            }
-            // ctrl
-            if (_ctrl){
-                ! this.__isItemSelected(_id)
-                ? this.__doItemAddToSelection(_id,_element)
-                : this.__doItemDelFromSelection(_id,_element);
-            }
-            // shift
-            if (_shift){
-                for(var i=0,l=this.__list.length,
-                    _selected = !1,_test,_item,_key,_last;i<l;i++){
-                    _item = this.__list[i];
-                    _key  = _item.flag;
-                    _last = Math.max(0,this.__last);
+    _proMultiSelector.__onItemSelect = function(_event){
+        // ignore non-left button
+        if (_event.button!=0) return;
+        // check element
+        var _element = _v._$getElement(
+            _event,'c:'+this.__kfcls
+        );
+        if (!_element) return;
+        _v._$stopBubble(_event);
+        var _ctrl = _event.ctrlKey,
+            _shift = _event.shiftKey,
+            _id = _e._$dataset(_element,this.__kname);
+        // not ctrl and shift
+        if (!_ctrl&&!_shift){
+            this.__doItemClear(_id);
+            this.__doItemAddToSelection(_id,_element);
+        }
+        // ctrl
+        if (_ctrl){
+            ! this.__isItemSelected(_id)
+            ? this.__doItemAddToSelection(_id,_element)
+            : this.__doItemDelFromSelection(_id,_element);
+        }
+        // shift
+        if (_shift){
+            var _last,_test,
+                _selected = !1;
+            _u._$forEach(
+                this.__list,
+                function(_item){
+                    var _key = _e._$dataset(_item,this.__kname);
+                    _last = this.__last;
                     _test = _key==_last||_key==_id;
                     if (_last!=_id&&_test) 
                         _selected = !_selected;
                     if (_selected||_test){
                         this.__doItemAddToSelection(_key,_item);
-                        continue;
+                    }else if(!_ctrl){
+                        this.__doItemDelFromSelection(_key,_item);
                     }
-                    if (_ctrl) continue;
-                    this.__doItemDelFromSelection(_key,_item);
-                }
-            }
-            if (!_shift) this.__last = _id;
-            this._$dispatchEvent('onchange',_event);
-        };
-    })();
+                },this
+            );
+        }
+        if (!_shift) this.__last = _id;
+        this._$dispatchEvent('onchange');
+    };
     /**
      * 全选
      * @protected
@@ -256,11 +246,18 @@ var f = function(){
      * @return {Void}
      */
     _proMultiSelector.__onItemSelectAll = function(_event){
-        if (!_event.ctrlKey||_event.keyCode!=65) return;
-        for(var i=0,l=this.__list.length,_item;i<l;i++){
-            _item = this.__list[i];
-            this.__doItemAddToSelection(_item.flag,_item);
-        }
+        if (!_event.ctrlKey||
+             _event.keyCode!=65) 
+            return;
+        _u._$forEach(
+            this.__list,
+            function(_node){
+                this.__doItemAddToSelection(
+                    _e._$dataset(_node,this.__kname),_node
+                );
+            },this
+        );
+        this._$dispatchEvent('onchange');
     };
     /**
      * 清除选中<br />
@@ -304,11 +301,13 @@ var f = function(){
         this.__selection.list = null;
         if (!!_sorted){
             _list = [];
-            for(var i=0,l=this.__list.length;i<l;i++){
-                if (this.__isItemSelected(
-                    this.__list[i].flag))
-                _list.push(this.__list[i]);
-            }
+            _u._$forEach(
+                this.__list,
+                function(_node){
+                    var _id = _e._$dataset(_node,this.__kname);
+                    if (this.__isItemSelected(_id)) _list.push(_id);
+                },this
+            );
             this.__selection.list = _list;
         }
         return this.__selection;
