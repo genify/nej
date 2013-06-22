@@ -99,6 +99,9 @@ var f = function(){
         ],[
             this.__parent,'mouseup',
             this.__onItemSelect._$bind(this)
+        ],[
+            this.__parent,'mousedown',
+            this.__onItemSelectCheck._$bind(this)
         ]]);
     };
     /**
@@ -240,6 +243,27 @@ var f = function(){
         }
         if (!_shift) this.__last = _id;
         this._$dispatchEvent('onchange');
+    };
+    /**
+     * 检查元素选中情况
+     * @return {Void}
+     */
+    _proMultiSelector.__onItemSelectCheck = function(_event){
+        // check element
+        var _element = _v._$getElement(
+            _event,'c:'+this.__kfcls
+        );
+        if (!_element) return;
+        _v._$stopBubble(_event);
+        var _id = _e._$dataset(_element,this.__kname);
+        // not ctrl and shift
+        if (!_event.ctrlKey&&
+            !_event.shiftKey&&
+            !this.__isItemSelected(_id)){
+            this.__doItemClear(_id);
+            this.__doItemAddToSelection(_id,_element);
+            this._$dispatchEvent('onchange');
+        }
     };
     /**
      * 全选
