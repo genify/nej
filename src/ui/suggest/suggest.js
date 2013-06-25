@@ -146,8 +146,8 @@ var f = function(){
      * @param  {String} 选中值
      * @return {Void}
      */
-    _proSuggest.__onSelect = function(_value){
-        this._$dispatchEvent('onselect',_value);
+    _proSuggest.__onSelect = function(_value,_options){
+        this._$dispatchEvent('onselect',_value,_options);
     };
     /**
      * 设置建议列表<br />
