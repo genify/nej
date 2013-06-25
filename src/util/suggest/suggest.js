@@ -211,13 +211,6 @@ var f = function(){
         this.__hkie = !1;
     };
     /**
-     * 失去焦点，隐藏推荐菜单
-     * @return {Void}
-     */
-    _proSuggest.__onBlur = function(_event){
-        this.__body.style.visibility = 'hidden';
-    };
-    /**
      * 输入内容变化触发事件
      * @protected
      * @method {__onInput}
