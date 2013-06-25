@@ -96,8 +96,11 @@ var f = function(){
             this.__input,'input',
             this.__onInput._$bind(this)
         ],[
+            this.__input,'focus',
+            this.__onInput._$bind(this)
+        ],[
             this.__input,'blur',
-            this.__doFinishSelect._$bind(this)
+            this.__onBlur._$bind(this)
         ],[
             this.__body,'mouseover',
             this.__onMouseOver._$bind(this)
@@ -206,6 +209,13 @@ var f = function(){
         this.__hkie = !0;
         this._$dispatchEvent('onselect',_value);
         this.__hkie = !1;
+    };
+    /**
+     * 失去焦点，隐藏推荐菜单
+     * @return {Void}
+     */
+    _proSuggest.__onBlur = function(_event){
+        this.__body.style.visibility = 'hidden';
     };
     /**
      * 输入内容变化触发事件
