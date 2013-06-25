@@ -95,7 +95,7 @@ var f = function(){
             document,'keydown',
             this.__onItemSelectAll._$bind(this)
         ],[
-            this.__parent,'click',_v._$stop
+            this.__parent,'click',_v._$stopBubble
         ],[
             this.__parent,'mouseup',
             this.__onItemSelect._$bind(this)
