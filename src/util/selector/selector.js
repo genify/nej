@@ -89,13 +89,8 @@ var f = function(){
         );
         // init dom event
         this.__doInitDomEvent([[
-            document,'click',
-            this._$clear._$bind(this)
-        ],[
             document,'keydown',
             this.__onItemSelectAll._$bind(this)
-        ],[
-            this.__parent,'click',_v._$stopBubble
         ],[
             this.__parent,'mouseup',
             this.__onItemSelect._$bind(this)
