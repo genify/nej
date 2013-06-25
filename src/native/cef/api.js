@@ -180,6 +180,7 @@ var f = function() {
             // TODO parse param
             var _param = _u._$query2object(_url.split('?')[1]||'');
             _u._$forIn(_param,_doParseInt);
+            _param.visible = _param.visible==null?!0:_param.visible;
             _n._$exec('winhelper.launchWindow',_url,_param,_param);
         };
     })();
