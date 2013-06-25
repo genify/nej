@@ -96,8 +96,11 @@ var f = function(){
             this.__input,'input',
             this.__onInput._$bind(this)
         ],[
+            this.__input,'focus',
+            this.__onInput._$bind(this)
+        ],[
             this.__input,'blur',
-            this.__doFinishSelect._$bind(this)
+            this.__doFinishSelect._$bind(this, {type: 'blur'})
         ],[
             this.__body,'mouseover',
             this.__onMouseOver._$bind(this)
@@ -194,7 +197,7 @@ var f = function(){
      * @method {__doFinishSelect}
      * @return {Void}
      */
-    _proSuggest.__doFinishSelect = function(){
+    _proSuggest.__doFinishSelect = function(_options){
         if (!this.__list) return;
         var _item = this.__list[
                     this.__index]||
@@ -267,7 +270,7 @@ var f = function(){
      * @return {Void}
      */
     _proSuggest.__onKeyBoardEnter = function(_event){
-        if (_event.keyCode==13) this.__doFinishSelect();
+        if (_event.keyCode==13) this.__doFinishSelect({type: 'enter'});
     };
     /**
      * IE9删除文字不触发onchange事件
