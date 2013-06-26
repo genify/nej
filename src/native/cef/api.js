@@ -150,6 +150,7 @@ var f = function() {
      * @return {Void}
      */
     _p._$topWindow = function(_name){
+        _p._$showWindow(_name);
         if (!_name){
             _n._$exec('winhelper.bringWindowToTop');
         }
