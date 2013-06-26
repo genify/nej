@@ -186,15 +186,7 @@ var f = function() {
      * @return {Void}
      */
     _proPlayer._$stop = function(){
-        this._$setPosition(0);
-        this._$pause();
-        window.setTimeout(
-            this._$dispatchEvent._$bind(
-                this,'onstatechange',{
-                    state:3
-                }
-            ),100
-        );
+        _n._$exec('player.stop');
     };
     /**
      * 设置静音
