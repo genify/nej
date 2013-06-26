@@ -102,6 +102,9 @@ var f = function(){
             this.__body,'mouseover',
             this.__onMouseOver._$bind(this)
         ],[
+            this.__body,'click',
+            this.__onClick._$bind(this)
+        ],[
             document,'keydown',
             this.__onKeyBoardSelect._$bind(this)
         ],[
@@ -195,19 +198,21 @@ var f = function(){
      * @return {Void}
      */
     _proSuggest.__doFinishSelect = function(_type){
-        if (!this.__list) return;
-        var _item = this.__list[
-                    this.__index]||
-                    this.__list[0],
-            _value = _e._$dataset(_item,'value')
-                              ||_item.innerText;
-        this.__input.value = _value;
-        this._$setList();
-        this.__hkie = !0;
-        this._$dispatchEvent('onselect',_value,{
-            type:_type
-        });
-        this.__hkie = !1;
+        this.__stb = setTimeout(function(){
+            if (!this.__list) return;
+            var _item = this.__list[
+                        this.__index]||
+                        this.__list[0],
+                _value = _e._$dataset(_item,'value')
+                                  ||_item.innerText;
+            this.__input.value = _value;
+            this._$setList();
+            this.__hkie = !0;
+            this._$dispatchEvent('onselect',_value,{
+                type:_type
+            });
+            this.__hkie = !1;
+        }._$bind(this),_type == 'blur' ? 100 : 0);
     };
     /**
      * 输入内容变化触发事件
@@ -238,6 +243,12 @@ var f = function(){
             this.__deSelectItem(this.__index);
             this.__doSelectItem(_element.flag);
         } 
+    };
+    _proSuggest.__onClick = function(){
+        if(this.__stb){
+            this.__stb = clearTimeout(this.__stb);
+        }
+        this.__doFinishSelect('click');
     };
     /**
      * 键盘上下键选择项触发事件
