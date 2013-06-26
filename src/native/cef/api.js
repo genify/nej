@@ -27,6 +27,10 @@ var f = function() {
     _p._$configWindow = function(_options){
         _p._$configWindowSizeLimit(_options);
         _p._$configWindowPosition(_options);
+        if (!!_options.icon)
+            _p._$setWindowIcon(_options.icon);
+        if (!!_options.title)
+            _p._$setWindowTitle(_options.title);
     };
     /**
      * 配置窗体位置，对齐方式定义如下<br/>
@@ -161,6 +165,15 @@ var f = function() {
      */
     _p._$setWindowTitle = function(_title){
         _n._$exec('winhelper.setWindowTitle',_title||'应用名称');
+    };
+    /**
+     * 设置窗口图标
+     * @param  {String} 图标路径
+     * @return {Void}
+     */
+    _p._$setWindowIcon = function(_url){
+        if (!_url) return;
+        _n._$exec('winhelper.setWindowIconFromLocalFile',_url);
     };
     /**
      * 打开新窗体
