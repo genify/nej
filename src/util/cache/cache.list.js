@@ -519,6 +519,15 @@ var f = function(){
         };
     })();
     /**
+     * 验证项缓存中的项是否有效，子类可重写
+     * @param  {Object}  数据项
+     * @param  {String}  列表标识
+     * @return {Boolean} 是否有效
+     */
+    _proListCache.__doCheckItemValidity = function(_item,_lkey){
+        return !0;
+    };
+    /**
      * 从缓存中取列表项<br/>
      * 脚本举例
      * [code]
@@ -565,7 +574,8 @@ var f = function(){
                 };
                 _item = this._$getItemInCache(_id);
             _ropt.data[this.__key] = _id;
-            if (!!_item){
+            if (!!_item&&this.
+                __doCheckItemValidity(_item,_ropt.key)){
                 this._$dispatchEvent('onitemload',_ropt);
                 return this;
             }

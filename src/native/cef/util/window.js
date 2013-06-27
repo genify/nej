@@ -150,9 +150,7 @@ var f = function(){
     _proWindow.__onActionMin = function(_event){
         this.__reqdrg = !1;
         _v._$stop(_event);
-        this._$dispatchEvent('onbeforemin');
         this._$min();
-        this._$dispatchEvent('onaftermin');
     };
     /**
      * 更新最大化状态
@@ -281,7 +279,9 @@ var f = function(){
      * @return {Void}
      */
     _proWindow._$min = function(){
+        this._$dispatchEvent('onbeforemin');
         _n._$exec('winhelper.showWindow','minimize');
+        this._$dispatchEvent('onaftermin');
     };
     /**
      * 最大化窗体
