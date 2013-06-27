@@ -36,6 +36,18 @@ var f = function(){
         return this;
     };
     /**
+     * 从历史记录移出一个历史
+     * @return {Void}
+     */
+    history.pop = function(){
+        _hpool.pop();
+        history.size = _hpool.length;
+        history.index = Math.min(
+            history.index,
+            history.size-1
+        );
+    };
+    /**
      * 后退
      * @api    {history.back}
      * @return {history}
