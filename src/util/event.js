@@ -146,10 +146,12 @@ var f = function(){
      */
     _p._$$Event._$allocate = function(_options){
         _options = _options||{};
-        // check pool first
         var _instance = !!this.__pool
-                        &&this.__pool.shift()
-                        ||new this(_options);
+                        &&this.__pool.shift();
+        if (!_instance){
+            _instance = new this(_options);
+            this.__inst__ = (this.__inst__||0)+1;
+        }
         // reset instance, flag first
         _instance.__reset(_options);
         return _instance;
@@ -239,10 +241,8 @@ var f = function(){
      */
     _p._$$Event._$getInstance = function(_options){
         _options = _options||{};
-        if (!this.__instance){
-            this.__instance = new this(_options);
-            this.__instance.__reset(_options);
-        }
+        if (!this.__instance)
+            this.__instance = this._$allocate(_options);
         return this.__instance;
     };
     /**
