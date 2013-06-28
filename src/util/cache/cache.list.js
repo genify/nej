@@ -473,7 +473,7 @@ var f = function(){
                 _chlist = this._$getListInCache(_key);
             // list with total
             // {total:12,result:[]} 或者 {total:13,list:[]}
-            var _list = _result;
+            var _list = _result||[];
             if (!_u._$isArray(_list)){
                 _list = _result.result||_result.list||[];
                 var _total = parseInt(_result.total)||0;
