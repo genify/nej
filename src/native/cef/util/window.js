@@ -123,9 +123,13 @@ var f = function(){
             },this
         );
         this.__doInitDomEvent(_arr);
-        this.__doUpdateMaxState(_s.hasFullScreenWindow());
+        this.__onSizeStateChange(
+            _s.hasFullScreenWindow()?'maximize':'restore'
+        );
         if (!_h.onclose)
              _h.onclose = this.__onActionClose._$bind(this);
+        if (!_h.onSizeStatus)
+             _h.onSizeStatus = this.__onSizeStateChange._$bind(this);
         if (!_z.onrequestclose)
              _z.onrequestclose = this.__onActionClose._$bind(this);
         if (!_a.onexitmessage)
@@ -153,21 +157,6 @@ var f = function(){
         this._$min();
     };
     /**
-     * 更新最大化状态
-     * @param  {Boolean} 是否最大化状态
-     * @return {Void}
-     */
-    _proWindow.__doUpdateMaxState = function(_max){
-        if (!this.__nmax) return;
-        if (!!_max){
-            this.__nmax.title = '向下还原';
-            _e._$delClassName(this.__nmax,this.__maxcls);
-        }else{
-            this.__nmax.title = '最大化';
-            _e._$addClassName(this.__nmax,this.__maxcls);
-        }
-    };
-    /**
      * 当前窗口置顶
      * @return {Void}
      */
@@ -185,17 +174,11 @@ var f = function(){
         var _cmd,_node = _v._$getElement(_event);
         if (_e._$hasClassName(this.__nmax,this.__maxcls)){
             // do max action
-            _cmd = 'maximize';
-            this.__doUpdateMaxState(!0);
+            this._$max();
         }else{
             // do restore action
-            _cmd = 'restore';
-            this.__doUpdateMaxState(!1);
+            this._$restore();
         }
-        var _event = {action:_cmd};
-        this._$dispatchEvent('onbeforemax',_event);
-        _n._$exec('winhelper.showWindow',_cmd);
-        this._$dispatchEvent('onaftermax',_event);
     };
     /**
      * 双击最大化
@@ -275,13 +258,34 @@ var f = function(){
         _n._$exec('winhelper.sizeWindow',_key);
     };
     /**
+     * 窗体大小变化触发事件
+     * @param  {String} 状态值
+     * @return {Void}
+     */
+    _proWindow.__onSizeStateChange = function(_state){
+        switch(_state){
+            case 'minimize':
+                // TODO
+            break;
+            case 'maximize':
+                this.__nmax&&(this.__nmax.title = '向下还原');
+                _e._$delClassName(this.__nmax,this.__maxcls);
+            break;
+            case 'restore':
+                this.__nmax&&(this.__nmax.title = '最大化');
+                _e._$addClassName(this.__nmax,this.__maxcls);
+            break;
+        }
+        this._$dispatchEvent('onstatuschange',{
+            status:_state
+        });
+    };
+    /**
      * 最小化窗体
      * @return {Void}
      */
     _proWindow._$min = function(){
-        this._$dispatchEvent('onbeforemin');
         _n._$exec('winhelper.showWindow','minimize');
-        this._$dispatchEvent('onaftermin');
     };
     /**
      * 最大化窗体
