@@ -1030,9 +1030,15 @@ var f = function(){
         _text = _text||'';
         switch(_type){
             case 'xml' : 
-            return _e._$xml2dom(_text);
+                _text = _e._$xml2dom(_text);
+            break;
             case 'json': 
-            return _e._$addScript('return '+_text);
+                try{
+                    _text = JSON.parse(_text);
+                }catch(ex){
+                    _text = null;
+                }
+            break;
         }
         return _text;
     };
@@ -1519,7 +1525,8 @@ var f = function(){
     _x.isChange = !0;
 };
 NEJ.define('{lib}base/element.js',
-      ['{lib}base/constant.js'
-      ,'{lib}base/event.js'
-      ,'{lib}base/util.js'
-      ,'{patch}api.js'],f);
+          ['{lib}base/constant.js'
+          ,'{lib}base/event.js'
+          ,'{lib}base/util.js'
+          ,'{patch}api.js'
+          ,'{patch}json.js'],f);
