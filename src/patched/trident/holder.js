@@ -43,7 +43,8 @@ var f = function(){
                     clazz:_clazz
                 });
             _label.htmlFor = _id;
-            _label.innerText = _e._$attr(_input,'placeholder');
+            var _text = _e._$attr(_input,'placeholder')||'';
+            _label.innerText = _text=='null'?'':_text;
             var _height = _input.offsetHeight+'px';
             _e._$style(_label,{
                 left:0,
