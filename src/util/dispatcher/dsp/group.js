@@ -220,7 +220,6 @@ var f = function(){
                 // onrefresh must after onshow
                 if (_name=='onrefresh'&&_xname=='onhide')
                     _name = 'onshow';
-                console.log(_event.umi+':'+_data.xname+':'+_name)
                 _data.xname = _name;
                 // do dispatch event
                 _module._$dispatchEvent(_name,_event||{});
