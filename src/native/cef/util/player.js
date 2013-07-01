@@ -156,6 +156,14 @@ var f = function() {
         };
     })();
     /**
+     * 预加载歌曲
+     * @param  {Object} 歌曲信息
+     * @return {Void}
+     */
+    _proPlayer._$preload = function(_options){
+        _n._$exec('player.preload',_options);
+    };
+    /**
      * 播放音乐
      * @param  {Object} 音乐信息
      * @return {Void}
