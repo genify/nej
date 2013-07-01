@@ -61,16 +61,6 @@ var f = function(){
     _p._$$MultiSelector = NEJ.C();
       _proMultiSelector = _p._$$MultiSelector._$extend(_p._$$Event);
     /**
-     * 控件初始化
-     * @protected
-     * @method {__init}
-     * @return {Void}
-     */
-    _proMultiSelector.__init = function(){
-        this.__selection = {count:0};
-        this.__supInit();
-    };
-    /**
      * 控件重置
      * @protected
      * @method {__reset}
@@ -80,6 +70,7 @@ var f = function(){
     _proMultiSelector.__reset = function(_options){
         this.__supReset(_options);
         this.__last = _tkey;
+        this.__selection = {count:0};
         this.__kname = _options.name||'id';
         this.__kfcls = _options.item||'js-item';
         this.__parent = _e._$get(_options.parent);
@@ -98,6 +89,15 @@ var f = function(){
             this.__parent,'mousedown',
             this.__onItemSelectCheck._$bind(this)
         ]]);
+        // init selection
+        _u._$forEach(
+            this.__list,function(_node){
+                if (_e._$hasClassName(_node,this.__selected))
+                    this.__doItemAddToSelection(
+                        _e._$dataset(_node,this.__kname),_node
+                    );
+            },this
+        );
     };
     /**
      * 控件销毁
@@ -112,6 +112,7 @@ var f = function(){
         delete this.__list;
         delete this.__parent;
         delete this.__selected;
+        delete this.__selection;
     };
     /**
      * 判断节点是否被选中
