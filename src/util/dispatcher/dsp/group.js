@@ -212,10 +212,15 @@ var f = function(){
                     _event.data = _getParentExport(_node);
                 }
                 // check event name
+                // order must be onhide->onshow->onrefresh
+                // onshow must after onhide
+                var _xname = _data.xname||'onhide';
+                if (_name=='onshow'&&_xname!='onhide')
+                    _name = 'onrefresh';
                 // onrefresh must after onshow
-                if (_name=='onrefresh'&&
-                   (!_data.xname||_data.xname=='onhide'))
+                if (_name=='onrefresh'&&_xname=='onhide')
                     _name = 'onshow';
+                console.log(_event.umi+':'+_data.xname+':'+_name)
                 _data.xname = _name;
                 // do dispatch event
                 _module._$dispatchEvent(_name,_event||{});
