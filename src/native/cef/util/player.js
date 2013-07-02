@@ -171,9 +171,6 @@ var f = function() {
     _proPlayer._$play = function(_options){
         _n._$exec('player.load',_options);
         _n._$exec('player.setInfo',_options);
-        this._$dispatchEvent('onstatechange',{
-            state:0
-        });
     };
     /**
      * 恢复状态
