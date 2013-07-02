@@ -23,6 +23,7 @@ var f = function(){
      * @config  {String|Node} thumb    滑块
      * @config  {String|Node} progress 进度条
      * @config  {Float}       value    初始值
+     * @config  {Number}      delta    数据计算偏差
      * 
      * [hr]
      * 滑动过程事件
@@ -46,6 +47,7 @@ var f = function(){
      */
     _proSimpleSlider.__reset = function(_options){
         this.__supReset(_options);
+        this.__delta = parseInt(_options.delta)||0;
         this.__track = _e._$get(_options.track);
         this.__prgrs = _e._$get(_options.progress);
         this.__doInitDomEvent([[
@@ -119,7 +121,7 @@ var f = function(){
         var _ofstx = _e._$offset(this.__track).x,
             _pagex = _v._$pageX(_event);
         this.__doUpdatePosition(
-            (_pagex-_ofstx)/this.__track.offsetWidth
+            (_pagex-_ofstx+this.__delta)/this.__track.offsetWidth
         );
         this._$dispatchEvent('onslidestop',{
             ratio:this.__ratio
