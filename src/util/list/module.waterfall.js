@@ -253,7 +253,9 @@ var f = function(){
      */
     _proListModuleWF.__doBeforeListRender = function(_list,_offset,_limit){
         var _length = _list.length,
-            _ended = _offset+_limit>_length;
+            _ended = _list.loaded
+                   ? _offset+_limit>=_length
+                   : _offset+_limit>_length;
         this.__offset = Math.min(this.__offset,_length);
         _e._$setStyle(this.__nmore,'visibility',_ended?'hidden':'visible');
         if (this.__count>0){
