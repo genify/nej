@@ -266,20 +266,22 @@ var f = function(){
      */
     _proDispatcher.__doRewriteUMI = (function(){
         var _reg = /\$\d/;
-        return function(_umi){
+        return function(_umi,_href){
             var _result;
             _u._$forIn(this.__config.r,
                 function(_config){
                     _u._$forIn(_config,
                         function(_value,_key){
-                            if (!!_value.test
-                                &&_value.test(_umi)){
+                            if (!!_value.test&&(
+                                  _value.test(_umi)||
+                                  _value.test(_href))){
                                 // /^\/a\/([\d]+)\/([\d]+)\/$/ ---> /a/?p=$1&k=$2
                                 // /a/123/456/ ---> /a/?p=123&k=456
                                 _result = _reg.test(_key)?_umi.replace(_value,_key):_key
                                 return !0;
                             }
-                            if (_value===_umi){
+                            if (_value===_umi||
+                                _value===_href){
                                 _result = _key;
                                 return !0;
                             }
@@ -328,7 +330,10 @@ var f = function(){
             delete this.__dtmp[_location.path];
             // check outer logic
             this._$dispatchEvent('onbeforechange',_location);
-            var _umi = this.__doRewriteUMI(_location.path),
+            var _umi = this.__doRewriteUMI(
+                    _location.path,
+                    _location.href
+                ),
                 _gid = this.__config.mg[_umi];
             // try umi from rest path
             if (!_gid&&this.__rest)
