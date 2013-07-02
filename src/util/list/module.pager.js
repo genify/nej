@@ -109,6 +109,17 @@ var f = function(){
       _proListModulePG = _p._$$ListModulePG._$extend(_p._$$ListModule);
       _supListModulePG = _p._$$ListModulePG._$supro;
     /**
+     * 取当前偏移量的分页信息
+     * @param  {Number} 偏移位置
+     * @param  {Number} 长度
+     * @return {Object} 分页信息，如：{index:1,total:4}
+     */
+    _proListModulePG.__getPageInfo = function(_offset,_length){
+        return _supListModulePG.__getPageInfo.call(
+            this,this.__first,_offset,this.__limit,_length
+        );
+    };
+    /**
      * 页码变化处理逻辑
      * @protected
      * @method {__doChangePage}
@@ -118,10 +129,11 @@ var f = function(){
     _proListModulePG.__doChangePage = function(_event){
         _supListModulePG.__doChangePage.apply(this,arguments);
         if (!_event.stopped){
-            this.__doChangeOffset(
-                (_event.index-1)*
-                this.__ropt.limit
-            );
+            var _offset = 0;
+            if (_event.index>1)
+                _offset = this.__first+(
+                    _event.index-2)*this.__limit;
+            this.__doChangeOffset(_offset);
         }
     };
     /**
@@ -152,10 +164,9 @@ var f = function(){
      * @return {Void}
      */
     _proListModulePG.__doBeforeListRender = function(_list,_offset,_limit){
-        var _index = Math.floor(_offset/_limit)+1,
-            _total = Math.ceil(_list.length/_limit);
-        if (this.__doSyncPager(_index,_total)) return !0;
-        _e._$setStyle(this.__popt.parent,'visibility',_total>1?'visible':'hidden');
+        var _info = this.__getPageInfo(_offset,_list.length);
+        if (this.__doSyncPager(_info.index,_info.total)) return !0;
+        _e._$setStyle(this.__popt.parent,'visibility',_info.total>1?'visible':'hidden');
     };
     /**
      * 列表为空时处理逻辑

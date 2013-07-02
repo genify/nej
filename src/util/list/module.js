@@ -24,6 +24,7 @@ var f = function(){
      * @param   {Object}               可选配置参数
      * @config  {String|Node}   parent 列表容器节点
      * @config  {Number}        limit  每页显示数量，默认10项
+     * @config  {Number}        first  首页显示数量，默认为limit的值
      * @config  {String|Object} item   列表JST模版标识或者Item配置，{clazz:'xxx',klass:_$$Item||'jst key'}
      * @config  {Object}        cache  缓存配置信息，{key:'primary key',lkey:'list key',data:{},klass:_$$ListCache,list:[],clear:true}
      * @config  {Object}        pager  分页器配置信息，{parent:'xxx',klass:_$$Pager,index:2}
@@ -158,7 +159,8 @@ var f = function(){
         this.__supReset(_options);
         this.__lbox = _e._$get(_options.parent);
         this.__iopt = {parent:this.__lbox};
-        this.__ropt.limit = parseInt(_options.limit)||10;
+        this.__limit = parseInt(_options.limit)||10;
+        this.__first = parseInt(_options.first)||this.__limit;
         this.__doResetTemplate(_options.item);
         this.__doResetCache(_options.cache||_o);
         this.__doResetPager(_options.pager||_o);
@@ -200,6 +202,25 @@ var f = function(){
      */
     _proListModule.__getItemBodyId = function(_id){
         return _id+''+_e._$getHtmlTemplateSeed();
+    };
+    /**
+     * 取当前偏移量的分页信息
+     * @param  {Number} 偏移位置
+     * @param  {Number} 长度
+     * @return {Object} 分页信息，如：{index:1,total:4}
+     */
+    _proListModule.__getPageInfo = function(_point,_offset,_limit,_length){
+        var _result = {
+            index:1,
+            total:1
+        };
+        if (_offset>=_point){
+            _result.index = Math.floor((_offset-_point)/_limit)+2;
+        }
+        if (_length>_point){
+            _result.total = Math.ceil((_length-_point)/_limit)+1;
+        }
+        return _result;
     };
     /**
      * 重置JST模版
@@ -358,9 +379,12 @@ var f = function(){
         this.__doBeforeListLoad();
         // load data from cache
         var _data = this.__ropt.data;
-        _data.limit  = this.__ropt.limit;
         _data.offset = this.__ropt.offset;
-        _data.total  = _data.offset==0;
+        var _first = _data.offset==0;
+        _data.total  = _first;
+        this.__ropt.limit = 
+              _first?this.__first:this.__limit;
+        _data.limit  = this.__ropt.limit;
         this.__cache._$getList(
             this.__doGenRequestOpt(
                 NEJ.X({},this.__ropt)

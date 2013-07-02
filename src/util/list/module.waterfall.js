@@ -132,7 +132,7 @@ var f = function(){
         var _count = parseInt(_options.count)||0;
         this.__count = Math.max(0,_count);
         var _number = parseInt(_options.number)||0;
-        if (_number>0&&_number<=_count){
+        if (_number>1&&_number<=_count){
             this.__number = _number;
         }
         this.__supReset(_options);
@@ -148,6 +148,19 @@ var f = function(){
         delete this.__nmore;
         delete this.__endskr;
         delete this.__nexting;
+    };
+    /**
+     * 取当前偏移量的分页信息
+     * @param  {Number} 偏移位置
+     * @param  {Number} 长度
+     * @return {Object} 分页信息，如：{index:1,total:4}
+     */
+    _proListModuleWF.__getPageInfo = function(_offset,_length){
+        var _point = this.__first+(this.__count-1)*this.__limit,
+            _limit = this.__count*this.__limit;
+        return _supListModuleWF.__getPageInfo.call(
+            this,_point,_offset,_limit,_length
+        );
     };
     /**
      * 重置载入更多按钮
@@ -187,7 +200,12 @@ var f = function(){
         _supListModuleWF.__doChangePage.apply(this,arguments);
         if (!_event.stopped){
             this.__doClearListBox();
-            this.__offset = (_event.index-1)*this.__ropt.limit*this.__count;
+            var _offset = 0;
+            if (_event.index>1){
+                _offset = this.__first+((
+                    _event.index-1)*this.__count-1)*this.__limit;
+            }
+            this.__offset = _offset;
             this._$next();
         }
     };
@@ -198,7 +216,8 @@ var f = function(){
      */
     _proListModuleWF.__doGenRequestOpt = function(_options){
         if (!!this.__number){
-            var _limit = _options.limit*this.__number;
+            var _delta = _options.offset>0?this.__limit:this.__first,
+                _limit = _delta+this.__limit*(this.__number-1);
             this.__offset = _options.offset+_limit;
             _options.data.limit = _limit;
             _options.limit = _limit;
@@ -239,18 +258,19 @@ var f = function(){
         _e._$setStyle(this.__nmore,'visibility',_ended?'hidden':'visible');
         if (this.__count>0){
             // check pager
-            var _number = this.__ropt.limit*this.__count,
-                _index = Math.floor(_offset/_number)+1,
-                _total = Math.ceil(_length/_number);
-            if (this.__doSyncPager(_index,_total)) return !0;
-            this.__endskr = (_offset+_limit)%_number==0;
+            var _info = this.__getPageInfo(_offset,_list.length);
+            if (this.__doSyncPager(_info.index,_info.total)) return !0;
+            // check scroll end
+            var _delta = this.__first-this.__limit,
+                _number = this.__count*this.__limit;
+            this.__endskr = (_offset+_limit-_delta)%_number==0;
             // sync more button and pager
             _e._$setStyle(
                 this.__nmore,'display',
                 this.__endskr||_ended?'none':''
             );
             _e._$style(this.__popt.parent,{
-                visibility:_total>1?'visible':'hidden',
+                visibility:_info.total>1?'visible':'hidden',
                 display:this.__endskr||_ended?'':'none'
             });
         }
@@ -382,7 +402,8 @@ var f = function(){
         // update offset first for
         // offset adjust after list loaded
         var _offset = this.__offset;
-        this.__offset += this.__ropt.limit;
+        this.__offset += _offset==0?
+            this.__first:this.__limit;
         this.__doChangeOffset(_offset);
     };
 };
