@@ -203,7 +203,7 @@ var f = function(){
                (_item,_lkey)||_item;
         if (!_item) return null;
         var _key = _item[this.__key];
-        if (!!_key){
+        if (_key!=null){
             var _itm = this.__getHash()[_key];
             if (!!_itm) _item = NEJ.X(_itm,_item);
             this.__getHash()[_key] = _item;
