@@ -225,7 +225,16 @@ var f = function() {
             menu_id:0,enable:!0,
             separator:!1,children:null
         },_options);
-        _mcache[_item.menu_id] = _item;
+        // cache menu
+        var _menu = _mcache[_item.menu_id];
+        if (!!_menu){
+            if (!_u._$isArray(_menu))
+                _menu = [_menu];
+            _menu.push(_item);
+        }else{
+            _menu = _item;
+        }
+        _mcache[_item.menu_id] = _menu;
         return _item;
     };
     /**
