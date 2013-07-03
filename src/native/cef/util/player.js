@@ -305,6 +305,7 @@ var f = function() {
                     });
                 return;
                 case 'stop':
+                    this.__onNativeEvent('timeupdate');
                     this._$dispatchEvent('onstatechange',{
                         state:3
                     });
