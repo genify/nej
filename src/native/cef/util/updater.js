@@ -92,18 +92,10 @@ var f = function() {
      * 控件初始化
      * @return {Void}
      */
-    _proUpdater.__init = (function(){
-        var _nevt = ['updateend','updatestate','updateprogress'];
-        // add native event
-        var _doAddEvent = function(_name){
-            _updater['on'+_name] = this.
-                __onNativeEvent._$bind(this,_name);
-        };
-        return function(){
-            _u._$forEach(_nevt,_doAddEvent,this);
-            this.__supInit();
-        };
-    })();
+    _proUpdater.__init = function(){
+        update.onupdateprogress =this.__onNativeEvent._$bind(this);
+        this.__supInit();
+    };
     /**
      * 控件重置
      * @param  {Object} 可选配置参数
@@ -131,7 +123,7 @@ var f = function() {
             if (_hasUpdate(_mid,_item.versionNum)){
                 this.__upcount++;
                 this.__updateItem.push({
-                    fileName:_file,
+                    filename:_file,
                     url:_item.downloadUrl,
                     md5:_item.md5||'md5',
                     installtype:_type
@@ -155,8 +147,8 @@ var f = function() {
                 _arr1 = _ver.split('.'),     // local
                 _arr2 = _version.split('.'), // server
                 _index = _u._$indexOf(_arr2,function(_number,_idx){
-                    _big = _big&&(_number>=_arr1[_idx]);
-                    return _big&&(_number>_arr1[_idx]);
+                    _big = _big&&(Number(_number)>=Number(_arr1[_idx]));
+                    return _big&&(Number(_number)>Number(_arr1[_idx]));
                 });
             return _index>=0;
         };
@@ -182,7 +174,6 @@ var f = function() {
             if (!this.__upcount){
                     var _event = NEJ.X({state:5},this.__version);
                 this._$dispatchEvent('onstatechange',_event);
-                
                 return;
             }
             // confirm update
@@ -196,30 +187,12 @@ var f = function() {
      * @param  {String} 事件名
      * @return {Void}
      */
-    _proUpdater.__onNativeEvent = (function(){
-        // state map
-        var _smap = {1:2,2:3,3:1};
-        return function(_name){
-            switch(_name){
-                case 'updatestate':
-                    var _event = NEJ.X({state:_smap[arguments[1]]},this.__version);
-                    this._$dispatchEvent('onstatechange',_event);
-                return;
-                case 'updateprogress':
-                    this._$dispatchEvent('onprogress',{
-                        file:arguments[1],
-                        percent:arguments[2],
-                        loaded:arguments[3],
-                        total:this.__upcount
-                    });
-                return;
-                case 'updateend':
-                    var _event = NEJ.X({state:arguments[1]==0?4:0},this.__version);
-                    this._$dispatchEvent('onstatechange',_event);
-                return;
-            }
-        };
-    })();
+     _proUpdater.__onNativeEvent = function(_curfile, _filePercent, _totalPercent, _end, _suc){
+             this._$dispatchEvent('onprogress',{file:_curfile,percent:_filePercent,totalPercent:_totalPercent,end:_end,suc:_suc});
+             if(_end)
+                    console.log('updatend');
+        }
+    
     /**
      * 检查更新
      * @return {Void}
@@ -239,7 +212,7 @@ var f = function() {
     _proUpdater._$start = function(){
         var _event = NEJ.X({state:1},this.__version);
         this._$dispatchEvent('onstatechange',_event);
-        _n._$exec('startUpdate',this.__updateItem);
+        _n._$exec('update.startUpdate',this.__updateItem);
     };
     /**
      * 暂停更新
