@@ -24,6 +24,7 @@ var f = function(){
      * @config  {String|Node} progress 进度条
      * @config  {Float}       value    初始值
      * @config  {Number}      delta    数据计算偏差
+     * @config  {Boolean}     reset    回收时是否重置位置
      * 
      * [hr]
      * 滑动过程事件
@@ -47,6 +48,7 @@ var f = function(){
      */
     _proSimpleSlider.__reset = function(_options){
         this.__supReset(_options);
+        this.__ndrst = !!_options.reset;
         this.__delta = parseInt(_options.delta)||0;
         this.__track = _e._$get(_options.track);
         this.__prgrs = _e._$get(_options.progress);
@@ -70,6 +72,15 @@ var f = function(){
                      this.__track.offsetWidth;
         }
         this._$setPosition(_ratio);
+    };
+    /**
+     * 控件销毁
+     * @return {Void}
+     */
+    _proSimpleSlider.__destroy = function(){
+        if (!!this.__ndrst)
+            this.__doUpdatePosition(0);
+        this.__supDestroy();
     };
     /**
      * 滑动开始
