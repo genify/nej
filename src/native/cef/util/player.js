@@ -324,7 +324,6 @@ var f = function() {
                         current:_n._$exec('player.getCurrentTime')||0,
                         duration:_player.duration||0
                     });
-                    //console.log((_n._$exec('player.getCurrentTime')||0)+':'+(_player.duration||0));
                     // lock loading
                     var _loading = _n._$exec('player.getDownloadSchedule')||0;
                     if (_loading==1&&this.__loading==1) return;
