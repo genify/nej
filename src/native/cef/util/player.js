@@ -29,6 +29,7 @@ var f = function() {
      * [ntb]
      *   状态值  |  说明
      *   ------------------
+     *  -1    |  初始化阶段
      *   0    |  缓冲阶段，出loading提示
      *   1    |  播放状态
      *   2    |  暂停状态
@@ -169,8 +170,12 @@ var f = function() {
      * @return {Void}
      */
     _proPlayer._$play = function(_options){
+        console.log('call native player.load');
         _n._$exec('player.load',_options);
         _n._$exec('player.setInfo',_options);
+        this._$dispatchEvent('onstatechange',{
+            state:-1
+        });
     };
     /**
      * 恢复状态
@@ -319,6 +324,7 @@ var f = function() {
                         current:_n._$exec('player.getCurrentTime')||0,
                         duration:_player.duration||0
                     });
+                    //console.log((_n._$exec('player.getCurrentTime')||0)+':'+(_player.duration||0));
                     // lock loading
                     var _loading = _n._$exec('player.getDownloadSchedule')||0;
                     if (_loading==1&&this.__loading==1) return;
