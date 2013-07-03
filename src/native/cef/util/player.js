@@ -170,7 +170,6 @@ var f = function() {
      * @return {Void}
      */
     _proPlayer._$play = function(_options){
-        console.log('call native player.load');
         _n._$exec('player.load',_options);
         _n._$exec('player.setInfo',_options);
         this._$dispatchEvent('onstatechange',{
@@ -343,7 +342,7 @@ var f = function() {
                     });
                 return;
                 case 'notify':
-                    
+                    // TODO
                 return;
                 case 'playpre':
                 case 'playnext':
