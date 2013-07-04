@@ -170,6 +170,7 @@ var f = function() {
      * @return {Void}
      */
     _proPlayer._$play = function(_options){
+        this.__load = !0;
         _n._$exec('player.load',_options);
         _n._$exec('player.setInfo',_options);
         this._$dispatchEvent('onstatechange',{
@@ -297,6 +298,7 @@ var f = function() {
             switch(_name){
                 case 'dataloaded':
                     this._$resume();
+                    this.__load = !1;
                 return;
                 case 'play':
                     this._$dispatchEvent('onstatechange',{
@@ -319,10 +321,12 @@ var f = function() {
                     });
                 return;
                 case 'timeupdate':
-                    this._$dispatchEvent('onpositionchange',{
-                        current:_n._$exec('player.getCurrentTime')||0,
-                        duration:_player.duration||0
-                    });
+                    if (!this.__load){
+                        this._$dispatchEvent('onpositionchange',{
+                            current:_n._$exec('player.getCurrentTime')||0,
+                            duration:_player.duration||0
+                        });
+                    }
                     // lock loading
                     var _loading = _n._$exec('player.getDownloadSchedule')||0;
                     if (_loading==1&&this.__loading==1) return;
