@@ -429,11 +429,14 @@ var f = function(){
         };
         return function(_options){
             _options = _options||_o;
-            var _ropt = {key:_options.key||''
-                        ,ext:_options.ext||null
-                        ,data:_options.data||null
-                        ,offset:parseInt(_options.offset)||0
-                        ,limit:parseInt(_options.limit)||0},
+            var _skey = ''+_options.key,
+                _ropt = {
+                    key:_skey||'',
+                    ext:_options.ext||null,
+                    data:_options.data||null,
+                    offset:parseInt(_options.offset)||0,
+                    limit:parseInt(_options.limit)||0
+                },
                 _list = this._$getListInCache(_ropt.key);
             if (this.__hasFragment(_list,
                       _ropt.offset,_ropt.limit)){
