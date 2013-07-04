@@ -342,7 +342,8 @@ var f = function() {
                 return;
                 case 'error':
                     this._$dispatchEvent('onstatechange',{
-                        state:5
+                        state:5,
+                        code:_player.errorCode
                     });
                 return;
                 case 'notify':
