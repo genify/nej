@@ -396,7 +396,7 @@ var f = function(){
      * @return {Void}
      */
     _proListModule.__cbListLoad = function(_options){
-        if (_options.key!==this.__ropt.key||
+        if (_options.key!=this.__ropt.key||
             _options.offset!=this.__ropt.offset) return;
         this.__doBeforeListShow();
         // check list
