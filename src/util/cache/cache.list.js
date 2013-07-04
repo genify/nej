@@ -429,9 +429,8 @@ var f = function(){
         };
         return function(_options){
             _options = _options||_o;
-            var _skey = ''+_options.key,
-                _ropt = {
-                    key:_skey||'',
+            var _ropt = {
+                    key:(''+_options.key)||'',
                     ext:_options.ext||null,
                     data:_options.data||null,
                     offset:parseInt(_options.offset)||0,
@@ -572,8 +571,8 @@ var f = function(){
                 _ropt = {
                     id:_id,
                     ext:_options.ext,
-                    key:_options.key||'',
-                    data:_options.data||{}
+                    data:_options.data||{},
+                    key:(''+_options.key)||''
                 };
                 _item = this._$getItemInCache(_id);
             _ropt.data[this.__key] = _id;
