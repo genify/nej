@@ -295,6 +295,14 @@ var f = function(){
         if (!this.__page) return;
         this.__page._$updatePage(_index,_total);
     };
+    /**
+     * 更新总页数
+     * @return {Void}
+     */
+    _proAbstractPager._$updateTotal = function(_total){
+        if (!this.__page) return;
+        this.__page._$updateTotal(_total);
+    };
 };
 NEJ.define('{lib}ui/pager/pager.base.js',
       ['{lib}ui/base.js'],f);

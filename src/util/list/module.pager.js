@@ -120,6 +120,18 @@ var f = function(){
         );
     };
     /**
+     * 根据页码计算偏移量
+     * @param  {Number} 页码
+     * @return {Number} 偏移量
+     */
+    _proListModulePG.__getOffsetByIndex = function(_index){
+        var _offset = 0;
+        if (_index>1)
+            _offset = this.__first+(
+                _index-2)*this.__limit;
+        return _offset;
+    };
+    /**
      * 页码变化处理逻辑
      * @protected
      * @method {__doChangePage}
@@ -129,11 +141,9 @@ var f = function(){
     _proListModulePG.__doChangePage = function(_event){
         _supListModulePG.__doChangePage.apply(this,arguments);
         if (!_event.stopped){
-            var _offset = 0;
-            if (_event.index>1)
-                _offset = this.__first+(
-                    _event.index-2)*this.__limit;
-            this.__doChangeOffset(_offset);
+            this.__doChangeOffset(
+                this.__getOffsetByIndex(_event.index)
+            );
         }
     };
     /**
@@ -240,6 +250,32 @@ var f = function(){
     _proListModulePG.__cbItemUpdate = function(_event){
         this.__doCheckResult(_event,'onafterupdate');
         if (!_event.stopped) this._$refresh();
+    };
+    /**
+     * 批量添加回调
+     * @param  {Object} 偏移量
+     * @param  {Object} 数量
+     * @return {Void}
+     */
+    _proListModulePG.__cbAppendList = function(_offset,_limit){
+        var _index = 1;
+        if (!!this.__pager){
+            _index = this.__pager._$getIndex();
+        }
+        var _beg = this.__getOffsetByIndex(_index),
+            _end = _beg+(_index>1?this.__limit:this.__first);
+        if (_offset>=_end&&!!this.__pager){
+            var _info = this.__getPageInfo(
+                0,this._$getTotal()
+            );
+            this.__pager._$updateTotal(_info.total);
+            _e._$setStyle(
+                this.__popt.parent,'visibility',
+                _info.total>1?'visible':'hidden'
+            );
+        }else{
+            this._$refresh();
+        }
     };
 };
 NEJ.define('{lib}util/list/module.pager.js',

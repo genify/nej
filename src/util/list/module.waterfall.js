@@ -392,6 +392,15 @@ var f = function(){
         }
     };
     /**
+     * 批量添加回调
+     * @param  {Object} 偏移量
+     * @param  {Object} 数量
+     * @return {Void}
+     */
+    _proListModuleWF.__cbAppendList = function(_offset,_limit){
+        // TODO
+    };
+    /**
      * 载入更多列表
      * @method {_$next}
      * @return {Void}

@@ -371,6 +371,24 @@ var f = function(){
         return this;
     };
     /**
+     * 更新总页码数，当前页码不变，无回调<br />
+     * 脚本举例
+     * [code]
+     *   // 设置总页码数
+     *   _ps._$updateTotal(10);
+     * [/code]
+     * @method {_$updateTotal}
+     * @param  {Number} 总页码数
+     * @return {nej.ut._$$AbstractPage}
+     */
+    _proAbstractPage._$updateTotal = function(_total){
+        if (this.__doSaveTotal(_total)){
+            this.__doRefreshPage();
+            this.__doSyncBtnState();
+        }
+        return this;
+    };
+    /**
      * 更新页码信息<br />
      * 脚本举例
      * [code]
