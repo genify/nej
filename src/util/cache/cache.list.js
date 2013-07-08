@@ -746,14 +746,8 @@ var f = function(){
      */
     _proListCache.__updateItem = function(_options,_item){
         var _key = _options.key;
-        if (!!_item){
-            var _id = _item[this.__key],
-                _old = this.__doRemoveItemInCache(_id),
-                _list = this._$getListInCache(_key),
-                _index = _u._$indexOf(_list,_old);
-            if (_index>=0) _list[_index] = _item;
+        if (!!_item)
             _item = this.__doSaveItemToCache(_item,_key);
-        }
         var _event = {
                 key:_key,
                 data:_item,
