@@ -205,22 +205,40 @@ var f = function(){
      * [/ntb]
      *                  
      */
-    _e._$getPageBox = function(){
-        var _body0 = document.body,
-            _body1 = document.documentElement,
-            _result = {
-                scrollTop:Math.max(_body0.scrollTop,_body1.scrollTop)
-               ,scrollLeft:Math.max(_body0.scrollLeft,_body1.scrollLeft)
-               ,clientWidth:Math.max(_body0.clientWidth,_body0.offsetWidth,
-                                     _body1.clientWidth,_body1.offsetWidth)
-               ,clientHeight:Math.max(_body0.clientHeight,_body0.offsetHeight,
-                                      _body1.clientHeight,_body1.offsetHeight)};
-        _result.scrollWidth  = Math.max(_result.clientWidth,
-                                        _body0.scrollWidth,_body1.scrollWidth);
-        _result.scrollHeight = Math.max(_result.clientHeight,
-                                        _body0.scrollHeight,_body1.scrollHeight);
-        return _result;
-    };
+    _e._$getPageBox = (function(){
+        var _getClientBox = function(_list){
+            var _result = 0;
+            _u._$forEach(
+                _list,function(_size){
+                    if (!_size) return;
+                    if (!_result){
+                        _result = _size;
+                    }else{
+                        _result = Math.min(_result,_size);
+                    }
+                }
+            );
+            return _result;
+        };
+        return function(){
+            var _body0 = document.body,
+                _body1 = document.documentElement,
+                _result = {
+                    scrollTop:Math.max(_body0.scrollTop,_body1.scrollTop)
+                   ,scrollLeft:Math.max(_body0.scrollLeft,_body1.scrollLeft)
+                   ,clientWidth:_getClientBox([
+                                _body0.clientWidth,_body0.offsetWidth,
+                                _body1.clientWidth,_body1.offsetWidth])
+                   ,clientHeight:_getClientBox([
+                                 _body0.clientHeight,_body0.offsetHeight,
+                                 _body1.clientHeight,_body1.offsetHeight])};
+            _result.scrollWidth  = Math.max(_result.clientWidth,
+                                            _body0.scrollWidth,_body1.scrollWidth);
+            _result.scrollHeight = Math.max(_result.clientHeight,
+                                            _body0.scrollHeight,_body1.scrollHeight);
+            return _result;
+        };
+    })();
     // /**
      // * 根据选择器取节点列表，IE8以下暂时不支持<br/>
      // * 
