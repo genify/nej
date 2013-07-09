@@ -478,8 +478,8 @@ var f = function(){
             var _list = _result||[];
             if (!_u._$isArray(_list)){
                 _list = _result.result||_result.list||[];
-                var _total = parseInt(_result.total)||0;
-                if (_total>_list.length){
+                var _total = parseInt(_result.total);
+                if (!isNaN(_total)||_total>_list.length){
                     this._$setTotal(_key,_total);
                 }
             }
