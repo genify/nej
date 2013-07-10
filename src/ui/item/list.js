@@ -49,9 +49,9 @@ var f = function(){
      * 删除列表项触发事件
      * @return {Void}
      */
-    _proListItem.__onDelete = function(_event){
-        _v._$stop(_event);
+    _proListItem.__onDelete = function(_data){
         this._$dispatchEvent('ondelete',{
+            ext:_data,
             id:this._$getId(),
             data:this._$getData(),
             body:this._$getBody()
@@ -63,6 +63,7 @@ var f = function(){
      */
     _proListItem.__onUpdate = function(_data){
         this._$dispatchEvent('onupdate',{
+            ext:_data,
             id:this._$getId(),
             data:this._$getData(),
             body:this._$getBody()
