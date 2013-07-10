@@ -134,8 +134,6 @@ var f = function(){
              _z.onrequestclose = this.__onActionClose._$bind(this);
         if (!_a.onexitmessage)
              _a.onexitmessage = this.__onActionExit._$bind(this);
-        if (!_a.onforegroundpreinstance)
-             _a.onforegroundpreinstance = this.__onActionTop._$bind(this);
     };
     /**
      * 控件销毁
@@ -155,13 +153,6 @@ var f = function(){
         this.__reqdrg = !1;
         _v._$stop(_event);
         this._$min();
-    };
-    /**
-     * 当前窗口置顶
-     * @return {Void}
-     */
-    _proWindow.__onActionTop = function(){
-        _x._$topWindow();
     };
     /**
      * 最大化行为事件
