@@ -183,9 +183,10 @@ var f = function(){
         var _element = _v._$getElement(_event)||_o;
         if (!_element.scrollHeight)
             _element = _e._$getPageBox();
-        if (_element.scrollTop+
-            _element.clientHeight>=
-            _element.scrollHeight-this.__delta){
+        var _offset = _e._$offset(this.__lbox),
+            _delta = _offset.y+this.__lbox.offsetHeight-
+                     _element.scrollTop-_element.clientHeight;
+        if (_delta<=this.__delta){
             this._$next();
         }
     };
