@@ -212,7 +212,7 @@ var f = function(){
                 type:_type
             });
             this.__hkie = !1;
-        }._$bind(this),_type == 'blur' ? 100 : 0);
+        }._$bind(this),_type == 'blur' ? 200 : 0);
     };
     /**
      * 输入内容变化触发事件
@@ -244,6 +244,10 @@ var f = function(){
             this.__doSelectItem(_element.flag);
         } 
     };
+    /**
+     * 点击suggest窗体
+     * @return {[type]} [description]
+     */
     _proSuggest.__onClick = function(){
         if(this.__stb){
             this.__stb = clearTimeout(this.__stb);
