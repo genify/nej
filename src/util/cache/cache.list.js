@@ -208,6 +208,7 @@ var f = function(){
             if (!!_itm) _item = NEJ.X(_itm,_item);
             this.__getHash()[_key] = _item;
         }
+        delete _item.__dirty__;
         return _item;
     };
     /**
@@ -225,12 +226,12 @@ var f = function(){
      * @method {__doRemoveItemInCache}
      * @param  {String} 列表项
      * @return {Object} 删除的列表项
-     */
     _proListCache.__doRemoveItemInCache = function(_id){
         var _item = this.__getHash()[_id];
         delete this.__getHash()[_id];
         return _item;
     };
+     */
     /**
      * 前向追加列表项至列表
      * @param  {String} 列表标识
@@ -527,7 +528,7 @@ var f = function(){
      * @return {Boolean} 是否有效
      */
     _proListCache.__doCheckItemValidity = function(_item,_lkey){
-        return !0;
+        return !_item.__dirty__;
     };
     /**
      * 从缓存中取列表项<br/>
@@ -542,6 +543,16 @@ var f = function(){
      */
     _proListCache._$getItemInCache = function(_id){
         return this.__getHash()[_id];
+    };
+    /**
+     * 清除缓存项
+     * @method {_$clearItemInCache}
+     * @param  {String} 项标识
+     * @return {Void}
+     */
+    _proListCache._$clearItemInCache = function(_id){
+        var _item = this._$getItemInCache(_id);
+        if (!!_item) _item.__dirty__ = !0;
     };
     /**
      * 取列表项项<br/>
