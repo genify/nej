@@ -17,8 +17,8 @@ var f = function(){
         __reg_cls1 = /(?:class|lang)='(mso)?[^']*'/gi,
         __reg_cls2 = /(?:class|lang)=(mso)?[^>]*/gi,// IE7 hack
         __reg_ccm  = /(?:<!--)[^>]*(?:-->)/gi,
-        __reg_st0  = /(?:<\w* style)="([^"]*)"/gi,
-        __reg_st1  = /(?:<\w* style)='([^']*)'/gi,
+        __reg_st0  = /(?:<[^>]* style)="([^"]*)"/gi,
+        __reg_st1  = /(?:<[^>]* style)='([^']*)'/gi,
         __reg_bgc  = /(?:background-color:|text-align:)([^;]*)(;)*/gi;//clear class,lang
         
     /**
@@ -185,26 +185,27 @@ var f = function(){
      */
     _h.__filterContentStyle = function(_html){
         _html = _html.replace(__reg_st0,function(_a,_b,_c){
+            var _prefix = _a.split('style')[0];
             if(_b.match(__reg_bgc)!=null){
                 var _str0 = '';
                 var _bgc = _b.replace(__reg_bgc,function(_str,_sstr,_index){
                     return _str0 += _str;
                 }._$bind(this));
-                var _str = _a.split('style')[0];
-                return _str + 'style="' + _str0 +'"';
+                return _prefix + ' style="' + _str0 +'"';
             }else{
-                return '';
+                return _prefix;
             }
         }._$bind(this));
         _html = _html.replace(__reg_st1,function(_a,_b,_c){
+            var _prefix = _a.split('style')[0];
             if(_b.match(__reg_bgc)!=null){
                 var _str0 = '';
                 var _bgc = _b.replace(__reg_bgc,function(_str,_sstr,_index){
                     return _str0 = _str;
                 }._$bind(this));
-                return 'style="' + _str0 +'"';
+                return _prefix + " style='" + _str0 +"'";
             }else{
-                return '';
+                return _prefix;
             }
         }._$bind(this));
         return _html;
