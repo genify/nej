@@ -193,7 +193,7 @@ var f = function(){
                 }._$bind(this));
                 return _prefix + ' style="' + _str0 +'"';
             }else{
-                return '';
+                return _prefix;
             }
         }._$bind(this));
         _html = _html.replace(__reg_st1,function(_a,_b,_c){
