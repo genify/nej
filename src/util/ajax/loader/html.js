@@ -30,8 +30,21 @@ var f = function(){
      */
     _proHtmlLoader.__getRequest = function(){
         var _iframe = _e._$create('iframe');
+        _iframe.width = 0;
+        _iframe.height = 0;
         _iframe.style.display = 'none';
         return _iframe;
+    };
+    /**
+     * 资源载入
+     * @protected
+     * @method {__doRequest}
+     * @param  {Script} 控件
+     * @return {Void}
+     */
+    _proHtmlLoader.__doRequest = function(_request){
+        _request.src = this.__url;
+        document.body.appendChild(_request);
     };
     /**
      * 资源载入异常事件
