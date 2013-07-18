@@ -150,6 +150,14 @@ var f = function() {
         }
     };
     /**
+     * 关闭窗体，销毁窗体
+     * @api    {nej.cef._$closeWindow}
+     * @return {Void}
+     */
+    _p._$closeWindow = function(){
+        _n._$exec('winhelper.destroyWindow');
+    };
+    /**
      * 窗口前置
      * @return {Void}
      */
