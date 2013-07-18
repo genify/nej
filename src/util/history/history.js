@@ -72,7 +72,7 @@ var f = function(){
      * @return {location}
      */
     location.active = (function(){
-        var _timer,_url,_location,_locked;
+        var _timer,_url,_location,_locked,_done;
         // parse location change
         var _onLocationChange = function(_href){
             // locked from history back
@@ -109,6 +109,11 @@ var f = function(){
             _timer = requestAnimationFrame(_doCheckLocation);
         };
         return function(_context){
+            // lock active
+            if (!!_done)
+                return this;
+            _done = !0;
+            // do init
             _ctxt = _context||window;
             // ignore onhashchange on ie7
             if (_hack&&('onhashchange' in window)&&_b._$NOT_PATCH.trident2){
