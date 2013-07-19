@@ -386,7 +386,7 @@ var f = function(){
             var _ropt = NEJ.X({},_options),
                 _rkey = _doFormatKey(_ropt);
             if (!this.__doQueueRequest(_rkey,
-                 this._$dispatchEvent._$bind(this,'onpullrefresh'))){
+                 this._$dispatchEvent._$bind(this))){
                 _ropt.rkey = _rkey;
                 _ropt.onload = this.__pullRefresh._$bind(this,_ropt);
                 this._$dispatchEvent('dopullrefresh',_ropt);
@@ -404,7 +404,7 @@ var f = function(){
      */
     _proListCache.__pullRefresh = function(_options,_list){
         this.__doUnshiftToList(_options.key,_list);
-        this.__doCallbackRequest(_options.rkey,_options);
+        this.__doCallbackRequest(_options.rkey,'onpullrefresh',_options);
     };
     /**
      * 取列表<br/>
@@ -445,7 +445,7 @@ var f = function(){
             }
             var _rkey = _doFormatKey(_ropt);
             if (!this.__doQueueRequest(_rkey,
-                 this._$dispatchEvent._$bind(this,'onlistload'))){
+                 this._$dispatchEvent._$bind(this))){
                 _ropt.rkey = _rkey;
                 _ropt.onload = this.__getList._$bind(this,_ropt);
                 this._$dispatchEvent('doloadlist',_ropt);
@@ -496,7 +496,7 @@ var f = function(){
                 _u._$reverseEach(_chlist,_doClear);
             }
             // do callback
-            this.__doCallbackRequest(_options.rkey,_options);
+            this.__doCallbackRequest(_options.rkey,'onlistload',_options);
         };
     })();
     /**
@@ -594,7 +594,7 @@ var f = function(){
             }
             var _rkey = _doFormatKey(_ropt);
             if (!this.__doQueueRequest(_rkey,
-                 this._$dispatchEvent._$bind(this,'onitemload'))){
+                 this._$dispatchEvent._$bind(this))){
                 _ropt.rkey = _rkey;
                 _ropt.onload = this.__getItem._$bind(this,_ropt);
                 this._$dispatchEvent('doloaditem',_ropt);
@@ -613,7 +613,7 @@ var f = function(){
     _proListCache.__getItem = function(_options,_item){
         _options = _options||_o;
         this.__doSaveItemToCache(_item,_options.key);
-        this.__doCallbackRequest(_options.rkey,_options);
+        this.__doCallbackRequest(_options.rkey,'onitemload',_options);
     };
     /**
      * 添加列表项<br />
