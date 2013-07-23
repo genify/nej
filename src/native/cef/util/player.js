@@ -107,7 +107,7 @@ var f = function() {
     _proPlayer.__init = function(){
         this.__nevt = [
             'playmodechange','error','playpre','loading',
-            'volumechange','volumeupdate','notify','stop',
+            'volumechange','volumeupdate','notify','stop','dataloadfailed',
             'dataloaded','play','pause','ended','playmode','playnext',
             'timeupdate','lyricsupdate','buffering','action','cachefailed'
         ];
@@ -344,6 +344,12 @@ var f = function() {
                     this._$dispatchEvent('onstatechange',{
                         state:5,
                         code:-100
+                    });
+                return;
+                case 'dataloadfailed':
+                    this._$dispatchEvent('onstatechange',{
+                        state:5,
+                        code:-101
                     });
                 return;
                 case 'error':
