@@ -524,7 +524,8 @@ var f = function(){
                       _node,'autoFocus',2))
                 this.__fnode = _node;
             // check placeholder
-            if (!!_e._$attr(_node,'placeholder'))
+            var _holder = _e._$attr(_node,'placeholder');
+            if (!!_holder&&_holder!='null')
                 _e._$placeholder(_node,this.__holder);
             // check focus
             if (!!this.__fopt&&
@@ -557,7 +558,7 @@ var f = function(){
             this._$showTip(_node);
             // node counter
             var _info = this.__vinfo[_id],
-                _data = (_info||_o).data,
+                _data = (_info||_o).data||_o,
                 _need = this.__dataset(_node,'counter',2);
             if (_need&&(_data.maxlength||_data.maxLength)){
                 _e._$counter(_id,{nid:this.__wopt.tp.nid,clazz:'js-counter'});

@@ -108,8 +108,8 @@ var f = function() {
         this.__nevt = [
             'playmodechange','error','playpre','loading',
             'volumechange','volumeupdate','notify','stop',
-            'dataloaded','play','pause','ended','playmode',
-            'playnext','timeupdate','lyricsupdate','buffering','action'
+            'dataloaded','play','pause','ended','playmode','playnext',
+            'timeupdate','lyricsupdate','buffering','action','cachefailed'
         ];
         this.__supInit();
     };
@@ -338,6 +338,12 @@ var f = function() {
                 case 'volumechange':
                     this._$dispatchEvent('onvolumechange',{
                         volume:_n._$exec('player.getVolume')
+                    });
+                return;
+                case 'cachefailed':
+                    this._$dispatchEvent('onstatechange',{
+                        state:5,
+                        code:-100
                     });
                 return;
                 case 'error':
