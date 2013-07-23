@@ -79,8 +79,9 @@ var f = function(){
             this.__parent,this.__kfcls
         );
         // init dom event
+        this.__parent.tabIndex = 10000;
         this.__doInitDomEvent([[
-            document,'keydown',
+            this.__parent,'keydown',
             this.__onItemSelectAll._$bind(this)
         ],[
             this.__parent,'mouseup',
