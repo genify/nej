@@ -122,8 +122,9 @@ var f = function(){
      */
     _proListModuleWF.__reset = function(_options){
         this.__doResetMoreBtn(_options.more);
+        this.__sbody = _e._$get(_options.sbody);
         this.__doInitDomEvent([[
-            _options.sbody,'scroll',
+            this.__sbody,'scroll',
             this.__onCheckScroll._$bind(this)
         ]]);
         var _delta = parseInt(_options.delta);
@@ -146,6 +147,7 @@ var f = function(){
     _proListModuleWF.__destroy = function(){
         this.__supDestroy();
         delete this.__nmore;
+        delete this.__sbody;
         delete this.__endskr;
         delete this.__nexting;
     };
@@ -175,12 +177,11 @@ var f = function(){
         ]]);
     };
     /**
-     * 检查滚动情况
+     * 检查滚动条
      * @return {Void}
      */
-    _proListModuleWF.__onCheckScroll = function(_event){
-        if (this.__endskr) return;
-        var _element = _v._$getElement(_event)||_o;
+    _proListModuleWF.__doCheckScroll = function(_element){
+        if (this.__endskr||!_element) return;
         if (!_element.scrollHeight)
             _element = _e._$getPageBox();
         var _offset = _e._$offset(this.__lbox),
@@ -189,6 +190,16 @@ var f = function(){
         if (_delta<=this.__delta){
             this._$next();
         }
+    };
+    /**
+     * 检查滚动情况
+     * @return {Void}
+     */
+    _proListModuleWF.__onCheckScroll = function(_event){
+        if (this.__endskr) return;
+        this.__doCheckScroll(
+            _v._$getElement(_event)
+        );
     };
     /**
      * 页码变化处理逻辑
@@ -234,6 +245,7 @@ var f = function(){
     _proListModuleWF.__cbListLoad = function(_options){
         delete this.__nexting;
         _supListModuleWF.__cbListLoad.apply(this,arguments);
+        this.__doCheckScroll(this.__sbody);
     };
     /**
      * 加载数据之前处理逻辑，显示数据加载中信息
