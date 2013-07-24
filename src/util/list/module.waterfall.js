@@ -246,7 +246,10 @@ var f = function(){
         delete this.__nexting;
         _supListModuleWF.__cbListLoad.apply(this,arguments);
         // if not scroll check next
-        var _element = this.__sbody||_o;
+        var _element = this.__sbody;
+        if (!_element) return;
+        if (!_element.scrollHeight)
+             _element = _e._$getPageBox();
         if (_element.scrollHeight<=_element.clientHeight){
             this.__doCheckScroll(this.__sbody);
         }
