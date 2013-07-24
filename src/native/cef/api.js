@@ -67,10 +67,10 @@ var f = function() {
                     return 0;
                 },
                 center:function(_mbox,_total){
-                    return Math.floor((_total-_mbox)/2);
+                    return Math.floor(Math.abs(_total-_mbox)/2);
                 },
                 right:function(_mbox,_total){
-                    return _total;
+                    return Math.abs(_total);
                 }
             };
         _fmap.top = _fmap.left;
@@ -80,9 +80,9 @@ var f = function() {
             // set window position
             var _aligns = (_options.align||'').trim().split(_reg0),
                 _position = NEJ.EX({width:0,height:0,topmost:!1},_options),
-                _wkarea = (_n._$exec('os.getSystemInfo','desktop')||_o).workArea||_o;
-            _position.x = (_fmap[_aligns[0]]||_fmap.center)(_position.width,_wkarea.width);
-            _position.y = (_fmap[_aligns[1]]||_fmap.center)(_position.height,_wkarea.height);
+                _wkarea = (_n._$exec('os.getSystemInfo','monitor')||_o).workArea||_o;
+            _position.x = _wkarea.x+(_fmap[_aligns[0]]||_fmap.center)(_position.width,_wkarea.width);
+            _position.y = _wkarea.y+(_fmap[_aligns[1]]||_fmap.center)(_position.height,_wkarea.height);
             if (!_options.name){
                 _n._$exec('winhelper.setWindowPosition',_position);
             }else{
