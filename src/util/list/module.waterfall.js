@@ -245,14 +245,7 @@ var f = function(){
     _proListModuleWF.__cbListLoad = function(_options){
         delete this.__nexting;
         _supListModuleWF.__cbListLoad.apply(this,arguments);
-        // if not scroll check next
-        var _element = this.__sbody;
-        if (!_element) return;
-        if (!_element.scrollHeight)
-             _element = _e._$getPageBox();
-        if (_element.scrollHeight<=_element.clientHeight){
-            this.__doCheckScroll(this.__sbody);
-        }
+        this._$resize();
     };
     /**
      * 加载数据之前处理逻辑，显示数据加载中信息
@@ -285,15 +278,15 @@ var f = function(){
             // check scroll end
             var _delta = this.__first-this.__limit,
                 _number = this.__count*this.__limit;
-            this.__endskr = (_offset+_limit-_delta)%_number==0;
+            this.__endskr = (_offset+_limit-_delta)%_number==0||_ended;
             // sync more button and pager
             _e._$setStyle(
                 this.__nmore,'display',
-                this.__endskr||_ended?'none':''
+                this.__endskr?'none':''
             );
             _e._$style(this.__popt.parent,{
                 visibility:_info.total>1?'visible':'hidden',
-                display:this.__endskr||_ended?'':'none'
+                display:this.__endskr?'':'none'
             });
         }
     };
@@ -419,6 +412,20 @@ var f = function(){
      */
     _proListModuleWF.__cbAppendList = function(_offset,_limit){
         // TODO
+    };
+    /**
+     * 重置大小触发滚动条修正
+     * @return {Void}
+     */
+    _proListModuleWF._$resize = function(){
+        // if not scroll check next
+        var _element = this.__sbody;
+        if (!_element||this.__endskr) return;
+        if (!_element.scrollHeight)
+             _element = _e._$getPageBox();
+        if (_element.scrollHeight<=_element.clientHeight){
+            this.__doCheckScroll(this.__sbody);
+        }
     };
     /**
      * 载入更多列表
