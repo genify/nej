@@ -271,6 +271,7 @@ var f = function(){
                    : _offset+_limit>_length;
         this.__offset = Math.min(this.__offset,_length);
         _e._$setStyle(this.__nmore,'visibility',_ended?'hidden':'visible');
+        if (_ended) this.__endskr = !0;
         if (this.__count>0){
             // check pager
             var _info = this.__getPageInfo(_offset,_list.length);
