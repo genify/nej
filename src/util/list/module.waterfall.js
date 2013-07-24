@@ -245,7 +245,11 @@ var f = function(){
     _proListModuleWF.__cbListLoad = function(_options){
         delete this.__nexting;
         _supListModuleWF.__cbListLoad.apply(this,arguments);
-        this.__doCheckScroll(this.__sbody);
+        // if not scroll check next
+        var _element = this.__sbody||_o;
+        if (_element.scrollHeight<=_element.clientHeight){
+            this.__doCheckScroll(this.__sbody);
+        }
     };
     /**
      * 加载数据之前处理逻辑，显示数据加载中信息
