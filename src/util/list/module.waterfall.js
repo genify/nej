@@ -415,6 +415,7 @@ var f = function(){
     };
     /**
      * 重置大小触发滚动条修正
+     * @method {_$resize}
      * @return {Void}
      */
     _proListModuleWF._$resize = function(){
