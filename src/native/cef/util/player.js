@@ -320,12 +320,15 @@ var f = function() {
                         state:4
                     });
                 return;
+                case 'synctime':
+                    this._$dispatchEvent('onpositionchange',{
+                        current:_n._$exec('player.getCurrentTime')||0,
+                        duration:_player.duration||0
+                    });
+                return;
                 case 'timeupdate':
                     if (!this.__load){
-                        this._$dispatchEvent('onpositionchange',{
-                            current:_n._$exec('player.getCurrentTime')||0,
-                            duration:_player.duration||0
-                        });
+                        this.__onNativeEvent('synctime');
                     }
                     // lock loading
                     var _loading = _n._$exec('player.getDownloadSchedule')||0;
@@ -345,18 +348,21 @@ var f = function() {
                         state:5,
                         code:-100
                     });
+                    this.__onNativeEvent('synctime');
                 return;
                 case 'dataloadfailed':
                     this._$dispatchEvent('onstatechange',{
                         state:5,
                         code:-101
                     });
+                    this.__onNativeEvent('synctime');
                 return;
                 case 'error':
                     this._$dispatchEvent('onstatechange',{
                         state:5,
                         code:_player.errorCode
                     });
+                    this.__onNativeEvent('synctime');
                 return;
                 case 'notify':
                     // TODO
