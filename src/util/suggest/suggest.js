@@ -212,7 +212,7 @@ var f = function(){
                 type:_type
             });
             this.__hkie = !1;
-        }._$bind(this),_type == 'blur' ? 200 : 0);
+        }._$bind(this),_type == 'blur' ? 500 : 0);
     };
     /**
      * 输入内容变化触发事件
