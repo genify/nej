@@ -91,6 +91,8 @@ var f = function(){
      * [hr]
      * 列表清除之前处理业务逻辑
      * @event  {onbeforelistclear}
+     * @param  {Object}          事件信息
+     * @config {Node}    parent  容器节点
      * 
      * [hr]
      * 请求更新列表项数据，主要用于处理删除之前的确认，
