@@ -298,6 +298,7 @@ var f = function(){
      * @return {Void}
      */
     _proListModuleWF.__doShowEmpty = function(){
+        this.__endskr = !0;
         this.__doShowMessage('onemptylist','没有列表数据！');
     };
     /**
