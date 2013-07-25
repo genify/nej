@@ -272,7 +272,8 @@ var f = function(){
      * @return {Void}
      */
     NEJ.EX = function(_object,_config){
-        if (!_object||!_config) return;
+        if (!_object||!_config) 
+            return _object;
         for(var x in _object){
             if (_object.hasOwnProperty(x)&&
                 _config[x]!=null)
