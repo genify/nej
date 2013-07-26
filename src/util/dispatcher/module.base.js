@@ -97,7 +97,7 @@ var f = function(){
      * @return {Void}
      */
     _proAbstractModule.__doApplyComposite = (function(){
-        var _reg0 = /^onshow|onrefresh$/;
+        var _reg0 = /^onshow|onrefresh|delay$/;
         var _doRedirect = function(_query,_options,_umi,_pid){
             if (_reg0.test(_pid)) return;
             if (!!_query) _umi += (_umi.indexOf('?')>1?'&':'?')+_query;
@@ -107,6 +107,12 @@ var f = function(){
             this.__dispatcher._$redirect(_umi,{input:_input});
         };
         return function(_type,_options){
+            // delay all
+            if (!!this.__composites.delay) return;
+            // check delay
+            var _composite = this.__composites[_type];
+            if (_composite.delay) return;
+            // do apply
             var _query = _u._$object2query(_options.param)||'';
             if (_type=='onrefresh'){
                 _u._$forIn(
@@ -115,8 +121,8 @@ var f = function(){
                 );
             }
             _u._$forIn(
-                this.__composites[_type],
-                _doRedirect._$bind(this,_query,_options)
+                _composite,_doRedirect.
+                _$bind(this,_query,_options)
             );
         };
     })();
