@@ -113,7 +113,7 @@ var f = function() {
     // name space  _("nej.$")    
     var $ = nej.$ = function(_selector, _context){
         if(_x.isChange){
-            $._$implement(nej.x, {static: true});
+            $._$implement(nej.x, {"static": true});
             _x.isChange = false;
         }
         return new _$$NodeList(_selector, _context);
@@ -129,6 +129,7 @@ var f = function() {
         if(!_selector) return 
         if(typeof _selector === "string"){
             if(_context && _context instanceof _$$NodeList) _context = _context[0];
+            if(typeof _context == 'string') _context = $(_context)[0];
             this._$add(_e._$all(_selector, _context));
         }else if(_selector instanceof _$$NodeList || _isAcceptedNode(_selector) ||
             _selector.length){ // _$$NodeList 或者 是单节点、或者是类数组(如childNodes)
