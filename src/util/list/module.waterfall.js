@@ -270,7 +270,7 @@ var f = function(){
                    ? _offset+_limit>=_length
                    : _offset+_limit>_length;
         this.__offset = Math.min(this.__offset,_length);
-        _e._$setStyle(this.__nmore,'visibility',_ended?'hidden':'visible');
+        _e._$setStyle(this.__nmore,'display',_ended?'none':'');
         if (_ended) this.__endskr = !0;
         if (this.__count>0){
             // check pager
@@ -285,10 +285,10 @@ var f = function(){
                 this.__nmore,'display',
                 this.__endskr?'none':''
             );
-            _e._$style(this.__popt.parent,{
-                visibility:_info.total>1?'visible':'hidden',
-                display:this.__endskr?'':'none'
-            });
+            _e._$setStyle(
+                this.__popt.parent,'display',
+                this.__endskr&&_info.total>1?'':'none'
+            );
         }
     };
     /**
