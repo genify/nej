@@ -255,8 +255,8 @@ var f = function(){
      */
     _proListModuleWF.__doBeforeListLoad = function(){
         this.__doShowMessage('onbeforelistload','列表加载中...');
-        _e._$setStyle(this.__nmore,'visibility','hidden');
-        _e._$setStyle(this.__popt.parent,'visibility','hidden');
+        _e._$setStyle(this.__nmore,'display','none');
+        _e._$setStyle(this.__popt.parent,'display','none');
     };
     /**
      * 列表绘制之前处理逻辑

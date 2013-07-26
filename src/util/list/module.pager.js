@@ -155,7 +155,7 @@ var f = function(){
     _proListModulePG.__doBeforeListLoad = function(){
         this.__doClearListBox();
         this.__doShowMessage('onbeforelistload','列表加载中...');
-        _e._$setStyle(this.__popt.parent,'visibility','hidden');
+        _e._$setStyle(this.__popt.parent,'display','none');
     };
     /**
      * 数据载入之后处理逻辑
