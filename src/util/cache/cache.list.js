@@ -713,7 +713,7 @@ var f = function(){
                 _pkey = this.__key,
                 _list = this._$getListInCache(_key),
                 _index = _u._$indexOf(_list,function(_itm){
-                    return _itm[_pkey]==_id;
+                    return !!_item&&_itm[_pkey]==_id;
                 });
             if (_index>=0) _list.splice(_index,1);
         }
