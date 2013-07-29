@@ -135,7 +135,8 @@ var f = function() {
         if (!_name){
             _n._$exec('winhelper.showWindow','show');
         }else{
-            _n._$exec('winhelper.setNativeWindowShow',_name,!0);
+            var _area = (_n._$exec('os.getSystemInfo','monitor')||_o).workArea||_o;
+            _n._$exec('winhelper.setNativeWindowShow',_name,!0,_area);
         }
     };
     /**
@@ -147,7 +148,8 @@ var f = function() {
         if (!_name){
             _n._$exec('winhelper.showWindow','hide');
         }else{
-            _n._$exec('winhelper.setNativeWindowShow',_name,!1);
+            var _area = (_n._$exec('os.getSystemInfo','monitor')||_o).workArea||_o;
+            _n._$exec('winhelper.setNativeWindowShow',_name,!1,_area);
         }
     };
     /**
