@@ -192,14 +192,14 @@ var f = function(){
         var _event = {};
         this._$dispatchEvent('onbeforeclose',_event);
         switch(_event.action){
-            case 'min':
-                _x._$hideWindow();
+            case 'confirm':
+                // do nothing
             break;
             case 'exit':
                 _x._$exit();
             break;
             default:
-                // do nothing
+                _x._$hideWindow();
             break;
         }
         this._$dispatchEvent('onafterclose',_event);
