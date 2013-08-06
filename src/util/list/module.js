@@ -725,7 +725,7 @@ var f = function(){
      */
     _proListModule.__doCheckResult = function(_event,_name){
         if (!_event.data){
-            this._$dispatchEvent('onerror');
+            this._$dispatchEvent('onerror',_event);
             _event.stopped = !0;
         }
         if (!_event.stopped){
