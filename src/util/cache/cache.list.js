@@ -491,7 +491,8 @@ var f = function(){
                          __doSaveItemToCache(_item,_key);
                 },this);
             // check list all loaded
-            if (_list.length<_options.limit){
+            if (!(_result||_o).noloaded&&
+                _list.length<_options.limit){
                 this._$setLoaded(_key);
                 _u._$reverseEach(_chlist,_doClear);
             }
