@@ -342,7 +342,10 @@ var f = function(){
         if (!!this.__pager){
             _index = this.__pager._$getIndex();
         }
-        this.__doChangePage({index:_index});
+        this.__doChangePage({
+            last:_index,
+            index:_index
+        });
     };
     /**
      * 页码变化处理逻辑
@@ -400,6 +403,7 @@ var f = function(){
     _proListModule.__cbListLoad = function(_options){
         if (_options.key!=this.__ropt.key||
             _options.offset!=this.__ropt.offset) return;
+        console.log('list load -> '+_options.key);
         this.__doBeforeListShow();
         // check list
         var _list = this.__cache.
@@ -469,6 +473,7 @@ var f = function(){
                 this.__pager._$recycle();
                 delete this.__pager;
                 this.__doChangePage({
+                    last:_index2,
                     index:Math.min(_index,_total)
                 });
                 return !0;
