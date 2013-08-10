@@ -261,11 +261,12 @@ var f = function() {
      * @return {Void}
      */
     _p._$popMenu = (function(){
-        var _reg0 = /\)$/;
+        var _reg0 = /\)$/,
+            _reg1 = /\s+/g;
         var _doCheckHotKey = function(_value,_id){
             var _item = _p._$getMenuItemById(_id);
             if (!!_item&&!_reg0.test(_item.text)){
-                _item.text += '('+_value+')';
+                _item.text += '('+_value.replace(_reg1,'+')+')';
             }
         };
         var _doCompleteHotKey = function(_hotkey){
