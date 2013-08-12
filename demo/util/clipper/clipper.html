@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>test list module</title>
+    <meta charset="utf-8"/>
+    <style>
+      *{border:0;padding:0;margin:0;}
+      html,body{width:100%;height:100%;}
+      .test{padding:20px;overflow:hidden;}
+      .box{border:1px solid #aaa;}
+      .mbox{position:relative;float:left;width:500px;height:500px;margin-right:-500px;}
+      .prev{margin-left:500px;padding-left:20px;}
+      .pbox{margin-bottom:10px;}
+      .pbox-0{width:80px;height:80px;}
+      .pbox-1{width:120px;height:120px;}
+      .pbox-2{width:200px;height:200px;}
+    </style>
+  </head>
+  <body>
+    <div class="test">
+      <div class="box mbox" id="clip-main"></div>
+      <div class="prev">
+        <div class="box pbox pbox-0" id="clip-preview-0"></div>
+        <div class="box pbox pbox-1" id="clip-preview-1"></div>
+        <div class="box pbox pbox-2" id="clip-preview-2"></div>
+      </div>
+    </div>
+    <script src="../../../src/define.js?pro=./"></script>
+    <script>
+      define(['{lib}util/clipper/clipper.js'],
+      function(){
+          var _  = NEJ.P,
+              _e = _('nej.e'),
+              _t = _('nej.ut');
+          
+          _t._$$Clipper._$allocate({
+              url:'./3.jpg',
+              mbox:'clip-main',
+              pbox:[
+                  'clip-preview-0',
+                  'clip-preview-1',
+                  'clip-preview-2'
+              ]
+          });
+          
+      });
+    </script>
+  </body>
+</html>

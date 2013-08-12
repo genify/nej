@@ -107,5 +107,5 @@ var f = function(){
     };
 };
 NEJ.define('{lib}ui/resizer/resizer.js',
-      ['{lib}ui/base.js'
-      ,'{lib}util/resize/resize.js'],f);
+          ['{lib}ui/base.js'
+          ,'{lib}util/resize/resize.js'],f);

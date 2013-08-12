@@ -31,10 +31,10 @@ var f = function(){
      */
     _proForeColor.__init = function(){
         this.__supInit();
-        this.__fopt['default'] = '#000'; 
+        this.__fopt.defaultColor = '#000'; 
     };
     // regist command implemention
     _p._$$ForeColor._$regist();
 };
 NEJ.define('{lib}util/editor/command/forecolor.js',
-      ['{lib}util/editor/command/color.js'],f);
+          ['{lib}util/editor/command/color.js'],f);
