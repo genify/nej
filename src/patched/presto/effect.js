@@ -11,7 +11,7 @@ var f = function(){
         _h = _('nej.h'),
         _p = _('nej.p');
     if (_p._$NOT_PATCH.presto) return;
-
+   
 };
 NEJ.define('{lib}patched/presto/effect.js',
       ['{lib}patched/effect.js'],f);

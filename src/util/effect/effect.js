@@ -143,6 +143,12 @@ var f = function(){
      * @return {Void}  
      */
     _proEffect.__onTransitionEnd = function(_event){
+        if(!!_h.__onTransitionEnd &&_h.__onTransitionEnd()){
+            this.__start = !1;
+            this._$stop();
+            return;
+        }
+        // 只有chrome会触发多次
         if(!!this.__start&&this.__isLast(_event)){
             this.__start = !1;
             this._$stop();
@@ -195,7 +201,7 @@ var f = function(){
                 return '';
             var _rule = this.__transition[_index],
                 _t = _rule.duration + _rule.delay;
-            if( _t > this.__sumtime){
+            if( _t >= this.__sumtime){
                 this.__sumtime = _t;
                 this.__lastProp = _rule.property;
             }
@@ -232,7 +238,7 @@ var f = function(){
     _proEffect._$start = function(){
         this.__start = !0;
         _h.__onStart(this.__node,this.__propMap,this.__animRule,this.__onstop);
-        this.__intvl = window.setInterval(this.__onPlayState._$bind(this),50);
+        this.__intvl = window.setInterval(this.__onPlayState._$bind(this),49);
         return this;
     };
 
@@ -252,20 +258,19 @@ var f = function(){
      * 暂停动画
      * @method {nej.e._$paused}
      * @return {nej.ut}
-     
+     */
     _proEffect._$paused = function(){
-        _h.__onPaused(this.__node,this.__state);
-        return this;
+       // todo
     };
 
     /**
      * 暂停后重新开始动画
      * @method {nej.e._$restart}
      * @return {nej.ut}
+     */
     _proEffect._$restart = function(){
-        _h.__onRestart(this.__node,this.__propMap,this.__animRule);
-        return this;
-    };*/
+        // todo
+    };
 };
 NEJ.define('{lib}util/effect/effect.js',
       ['{lib}base/element.js'

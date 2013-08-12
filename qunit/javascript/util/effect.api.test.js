@@ -42,6 +42,7 @@ var f = function() {
     	};
         var _toggle = function(){
             _e._$toggleEffect(_box,'height',{value:100,
+                duration:1,
                 onstop:function(_event){
                 },
                 onplaystate:function(_event){
@@ -64,7 +65,7 @@ var f = function() {
             _e._$silde('box2','left:+=600',{
                 timing:'ease-out',
                 delay:0,
-                duration:1,
+                duration:100,
                 onstop:function(_event){
                 },
                 onplaystate:function(_event){
