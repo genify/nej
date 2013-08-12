@@ -23,43 +23,33 @@ var f = function() {
      * @return {[type]}       [description]
      */
     _e.__doBeforeStart = (function(){
-        // 检查节点是否隐藏
-        var _doCheckdisplay = function(_node){
-            var _d = _e._$getStyle(_node,'display')
-            if(_d == 'none')
-                return false;
-            return true;
-        };
         // 如果有一个属性是没有变化的，此属性的回调不会发生，避免此情况
         var _doCheckState = function(_node,_objs){
-            var _v,_fg = true;
+            var _number,_flag = true;
             _u._$forIn(_objs,function(_value,_name){
-                if(_name == 'opacity' && nej.p._$KERNEL.engine=='trident' && (nej.p._$KERNEL.release - 5) < 0){
+                // IE9以下
+                if(_name === 'opacity' && nej.p._$KERNEL.engine === 'trident' && (nej.p._$KERNEL.release - 5) < 0){
                     _name = 'filter';
                     var _filter = _e._$getStyle(_node,_name);
-                    if(_filter == ''){
-                        _node.style.filter = 'alpha(opacity=100)';
-                        _v = 100;
+                    if(_filter === ''){
+                        _e._$setStyle(_node,'filter','alpha(opacity=100)')
+                        _number = 100;
                     }else{
-                        _v = parseFloat(_filter.split('=')[1])||0;
+                        _number = parseFloat(_filter.split('=')[1])||0;
                     }
                     _value = _value * 100;
                 }else{
-                    _v = _e._$getStyle(_node,_name);
+                    _number = _e._$getStyle(_node,_name);
                 }
-                if(parseInt(_v) == _value)
-                    _fg = false;
+                // 透明度没有变化
+                if(parseInt(_number) === _value)
+                    _flag = false;
             }._$bind(this));
-            return _fg;
+            return _flag;
         }
         return function(_node,_objs){
-            if(!_doCheckState(_node,_objs))
-                return !1;
-            if(!_node.effectLock && _doCheckdisplay(_node))
-                _node.effectLock = true;
-            else
-                return !1;
-            return _node.effectLock;
+            if(!_doCheckState(_node,_objs)) return !1;
+            return !0;
         };
     })();
 
@@ -74,36 +64,46 @@ var f = function() {
      * @param  {Number} 1表示淡入，0表示淡出，优先使用opacity配置
      * @return {nej.e}
      */
-    _e.__doFade = function(_node,_options,_default){
-        var _opacity = _options.opacity||_default;
-        if(!_e.__doBeforeStart(_node,{opacity:_opacity})){
-            return false;
-        }
-        _options = _e.__initOptions(_options);
-        _node = _e._$get(_node);
-        _node.effect = _p._$$Effect._$allocate(
-            {
-                node:_node,
-                transition:[
-                    {
-                        property:'opacity',
-                        timing:_options.timing||'ease-in',
-                        delay:_options.delay||0,
-                        duration:_options.duration||1
-                    }
-                ],
-                styles:['opacity:'+_opacity],
-                onstop:function(_state){
-                    _node.effectLock = !1;
-                    _node.effect = _p._$$Effect._$recycle(_node.effect);
-                    _options.onstop.call(this,_state);
-                },
-                onplaystate:_options.onplaystate._$bind(_node.effect)
-            }
-        );
-        _node.effect._$start();
-        return this;
-    };
+    _e.__doFade = (function(){
+        // 检查节点是否隐藏
+        var _doCheckDisplay = function(_node){
+            var _display = _e._$getStyle(_node,'display');
+            if(_display === 'none') return !1;
+            return !0;
+        };
+        return function(_node,_options,_default){
+            var _opacity = _options.opacity||_default;
+                   _node = _e._$get(_node);
+            // display is none
+            if(!_doCheckDisplay.call(_node)) return !1;
+            // isLocked
+            if(!!_node.effect) return !1;
+            // attribute not change
+            if(!_e.__doBeforeStart(_node,{opacity:_opacity})) return !1;
+            _options = _e.__initOptions(_options);
+            _node.effect = _p._$$Effect._$allocate(
+                {
+                    node:_node,
+                    transition:[
+                        {
+                            property:'opacity',
+                            timing:_options.timing||'ease-in',
+                            delay:_options.delay||0,
+                            duration:_options.duration||1
+                        }
+                    ],
+                    styles:['opacity:'+_opacity],
+                    onstop:function(_state){
+                        _node.effect = _p._$$Effect._$recycle(_node.effect);
+                        _options.onstop.call(this,_state);
+                    },
+                    onplaystate:_options.onplaystate._$bind(_node.effect)
+                }
+            );
+            _node.effect._$start();
+            return this;
+        };
+    }._$bind(this))();
 
     /**
      * 淡入动画
@@ -168,10 +168,14 @@ var f = function() {
         return _e.__doFade(_node,_options,0);
     };
 
+    /**
+     * 终止淡入淡出特效
+     * @param  {[type]} _node [description]
+     * @return {[type]}       [description]
+     */
     _e._$fadeStop = function(_node){
+        _node = _e._$get(_node);
         _e._$setStyle(_node,'transition','none');
-        if(!!_node.effectLock)
-           _node.effectLock = false;
         if(!!_node.effect)
             _node.effect = _p._$$Effect._$recycle(_node.effect);
     };
@@ -204,14 +208,12 @@ var f = function() {
      * @return {nej.e}
      */
     _e._$moveTo = function(_node,_position,_options){
-        if(!_e.__doBeforeStart(_node,_position)){
-            return false;
-        }
+        _node = _e._$get(_node);
+        if(!!_node.effect) return !1;
+        if(!_e.__doBeforeStart(_node,_position)) return !1;
     	_options = _e.__initOptions(_options);
-    	   _node = _e._$get(_node);
-    	var _top = _position.top||0,
-    		_left= _position.left||0;
-    	var _effect = _p._$$Effect._$allocate(
+    	var _top = _position.top||0,_left= _position.left||0;
+    	_node.effect = _p._$$Effect._$allocate(
             {
                 node:_node,
                 transition:[
@@ -230,14 +232,13 @@ var f = function() {
                 ],
                 styles:['top:'+_top,'left:'+_left],
                 onstop:function(_state){
-                    _node.effectLock = !1;
 				    _options.onstop.call(this,_state);
-                    _effect = _p._$$Effect._$recycle(_effect);
+                    _node.effect = _p._$$Effect._$recycle(_node.effect);
                 },
-                onplaystate:_options.onplaystate._$bind(_effect)
+                onplaystate:_options.onplaystate._$bind(_node.effect)
             }
         );
-        _effect._$start();
+        _node.effect._$start();
         return this;
     };
 
@@ -269,33 +270,30 @@ var f = function() {
      */
     _e._$silde = (function(){
         var _setPst = function(_node,_position){
-            var _list  = _position.split(':');
-            var _pst = _list[0];
-            var _styles = [];
+            var _list  = _position.split(':'),_pst = _list[0],_styles = [];
             _styles.push(_position);
-            if(_pst == 'top' || _pst == 'bottom'){
-                _styles.push('left:' + _e._$getStyle(_node,'left'));
+            if(_pst === 'top' || _pst === 'bottom'){
+                var _left = _e._$getStyle(_node,'left');
+                if(_left!='auto')
+                    _styles.push('left:' + _left);
             }else{
-                _styles.push('top:' + _e._$getStyle(_node,'top'));
+                var _top = _e._$getStyle(_node,'top');
+                if(_top!='auto')
+                    _styles.push('top:' + _top);
             }
             return _styles;
         };
         return function(_node,_position,_options){
-            if(!_node.effectLock)
-                _node.effectLock = true;
-            else
-                return !1;
             _node = _e._$get(_node);
-            var _list  = _position.split(':');
-            var _pro0 = _list[0];
-            var _pro1 = '';
-            if(_pro0 == 'top' || _pro0 == 'bottom'){
+            if(!!_node.effect) return !1;
+            var _list  = _position.split(':'),_pro0 = _list[0],_pro1 = '';
+            if(_pro0 === 'top' || _pro0 === 'bottom'){
                 _pro1 = 'left';
             }else{
                 _pro1 = 'top';
             }
             var _styles = _setPst.call(this,_node,_position);
-            var _effect = _p._$$Effect._$allocate(
+            _node.effect = _p._$$Effect._$allocate(
                 {
                     node:_node,
                     transition:[
@@ -314,14 +312,13 @@ var f = function() {
                     ],
                     styles:_styles,
                     onstop:function(_state){
-                        _node.effectLock = !1;
                         _options.onstop.call(this,_state);
-                        _effect = _p._$$Effect._$recycle(_effect);
+                        _node.effect = _p._$$Effect._$recycle(_node.effect);
                     },
-                    onplaystate:_options.onplaystate._$bind(_effect)
+                    onplaystate:_options.onplaystate._$bind(_node.effect)
                 }
             );
-            _effect._$start();
+            _node.effect._$start();
             return this;
         };
     })();
@@ -354,11 +351,8 @@ var f = function() {
             return _type == 'height' ? _node.clientHeight : _node.clientWidth;
         };
         return function(_node,_type,_options){
-            if(!_node.effectLock)
-                _node.effectLock = true;
-            else
-                return !1;
-            var _effect;
+            _node = _e._$get(_node);
+            if(!!_node.effect) return !1;
             _options = _e.__initOptions(_options);
             // set
             var _value = _options.value||false;
@@ -368,10 +362,10 @@ var f = function() {
                 _value = _doCheck(_node,_type);
             }
             var _flag = _e._$getStyle(_node,'visibility');
-            if(_flag == 'hidden'){
+            if(_flag === 'hidden'){
                 _node.style.height = 0;
                 _e._$setStyle(_node,'visibility','inherit');
-                _effect = _p._$$Effect._$allocate(
+                _node.effect = _p._$$Effect._$allocate(
                     {
                         node:_node,
                         transition:[
@@ -384,17 +378,16 @@ var f = function() {
                         ],
                         styles:[_type + ':' + _value],
                         onstop:function(_state){
-                            _node.effectLock = !1;
                             _options.onstop.call(this,_state);
-                            _effect = _p._$$Effect._$recycle(_effect);
+                            _node.effect = _p._$$Effect._$recycle(_node.effect);
                             _sto = window.clearTimeout(_sto);
                         },
-                        onplaystate:_options.onplaystate._$bind(_effect)
+                        onplaystate:_options.onplaystate._$bind(_node.effect)
                     }
                 );
             }else{
                 _node.style.height = _value;
-                _effect = _p._$$Effect._$allocate(
+                _node.effect = _p._$$Effect._$allocate(
                     {
                         node:_node,
                         transition:[
@@ -407,20 +400,18 @@ var f = function() {
                         ],
                         styles:[_type + ':' + 0],
                         onstop:function(_state){
-                            // _e._$setStyle(_node,'display','none');
                             _e._$setStyle(_node,'visibility','hidden');
                             _e._$setStyle(_node,_type,'auto');
-                            _node.effectLock = !1;
                             _options.onstop.call(this,_state);
-                            _effect = _p._$$Effect._$recycle(_effect);
+                            _node.effect = _p._$$Effect._$recycle(_node.effect);
                             _sto = window.clearTimeout(_sto);
                         },
-                        onplaystate:_options.onplaystate._$bind(_effect)
+                        onplaystate:_options.onplaystate._$bind(_node.effect)
                     }
                 );
             }
-            var _sto = window.setTimeout(function(){_effect._$start()}._$bind(this),0);
-            return _effect;
+            var _sto = window.setTimeout(function(){_node.effect._$start()}._$bind(this),0);
+            return _node.effect;
         };
     })();
 

@@ -1,6 +1,6 @@
 /**
  * ------------------------------------------
- * 本地存储接口实现文件
+ * 动画效果接口实现文件
  * @version  1.0
  * @author   cheng-lin(cheng-lin@corp.netease.com)
  * ------------------------------------------
@@ -39,6 +39,10 @@ var f = function(){
         _anim = _anim.slice(0,-1);
         _e._$setStyle(_node,'transition',_anim);
         _e._$style(_node,_rules);
+        // FF toggle fix
+        setTimeout(function(){
+            _e._$style(_node,_rules);
+        },50)
         return this;
     };
 

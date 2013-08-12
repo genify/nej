@@ -9,9 +9,30 @@ var f = function(){
     var _  = NEJ.P,
         _f = NEJ.F,
         _h = _('nej.h'),
+        _e = _('nej.e'),
         _p = _('nej.p');
     if (_p._$NOT_PATCH.gecko) return;
 
+   	_h.__onTransitionEnd = function(){
+    	return !0;
+    };
+
+    /**
+     * 执行动画
+     * @param  {Node}   动画节点
+     * @param  {String} 动画目标样式
+     * @param  {String} 动画变换信息
+     * @return {nej.h} 
+     */
+    _h.__onStart = function(_node,_rules,_anim){
+        _anim = _anim.slice(0,-1);
+        _e._$setStyle(_node,'transition',_anim);
+        // FF toggle fix
+        setTimeout(function(){
+            _e._$style(_node,_rules);
+        },50)
+        return this;
+    };
 };
 NEJ.define('{lib}patched/gecko/effect.js',
       ['{lib}patched/effect.js'],f);
