@@ -244,6 +244,7 @@ var f = function() {
      * @return {Void}
      */
     _proPlayer._$setPosition = function(_ratio){
+        console.log('set position -> '+_ratio+':'+_player.duration);
         _n._$exec('player.setCurrentTime',_ratio*(_player.duration||0));
     };
     /**
