@@ -260,9 +260,9 @@ var f = function() {
      * @param  {String} 专辑ID
      * @return {Void}
      */
-    _proPlayer._$setCover = function(_aid,_tid){
+    _proPlayer._$setCover = function(_aid){
         !_aid ? _n._$exec('player.setCoverDefault')
-              : _n._$exec('player.setCover',''+_aid,'album',''+(_tid||''));
+              : _n._$exec('player.setCover',''+_aid,'album');
     };
     /**
      * native事件回调
