@@ -403,7 +403,7 @@ var f = function(){
     _proListModule.__cbListLoad = function(_options){
         if (_options.key!=this.__ropt.key||
             _options.offset!=this.__ropt.offset) return;
-        console.log('list load -> '+_options.key);
+        //console.log('list load -> '+_options.key);
         this.__doBeforeListShow();
         // check list
         var _list = this.__cache.
