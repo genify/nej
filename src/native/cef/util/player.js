@@ -261,7 +261,7 @@ var f = function() {
      * @return {Void}
      */
     _proPlayer._$setCover = function(_aid,_tid){
-        !_aid ? _n._$exec('player.setCoverDefault',''+(_tid||''))
+        !_aid ? _n._$exec('player.setCoverDefault')
               : _n._$exec('player.setCover',''+_aid,'album',''+(_tid||''));
     };
     /**
