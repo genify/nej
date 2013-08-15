@@ -32,7 +32,12 @@ var f = function(){
      */
     _j._$setDataInStorage = function(_key,_value){
         var _sval = JSON.stringify(_value);
-        _h.__setItemToStorage(_key,_sval);
+        try{
+	        _h.__setItemToStorage(_key,_sval);
+        }catch(ex){
+        	console.log(ex.message);
+        	console.log(ex);
+        }
         // set failed
         if (_sval!=_h.__getItemInStorage(_key))
             _cache[_key] = _value;
