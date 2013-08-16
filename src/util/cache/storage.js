@@ -35,8 +35,8 @@ var f = function(){
         try{
 	        _h.__setItemToStorage(_key,_sval);
         }catch(ex){
-        	console.log(ex.message);
-        	console.log(ex);
+        	console.error(ex.message);
+        	console.error(ex);
         }
         // set failed
         if (_sval!=_h.__getItemInStorage(_key))
