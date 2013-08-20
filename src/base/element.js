@@ -1222,6 +1222,17 @@ var f = function(){
     };
     /**
      * 设置/获取光标位置在TEXTAREA中的位置
+     * 脚本举例
+     * [code]
+     *   // 设置光标选中内容
+     *   nej.e._$cursor('xxx',{start:5,end:10});
+     *   // 设置光标位置
+     *   nej.e._$cursor('xxx',8);
+     *   // 获取光标位置
+     *   var _position = nej.e._$cursor('xxx');
+     *   // _position.start 光标起始位置
+     *   // _position.end   光标结束位置
+     * [/code]
      * @api    {nej.e._$cursor}
      * @param  {String|Node}   TEXTAREA节点
      * @param  {Number|Object} 待设置光标的位置，如果起始位置和结束位置一致则输入数值即可
