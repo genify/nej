@@ -1222,8 +1222,9 @@ var f = function(){
     };
     /**
      * 取光标位置在TEXTAREA中的位置
+     * @api    {nej.e._$cursor}
      * @param  {String|Node} TEXTAREA节点
-     * @return {Number}      
+     * @return {Object}      光标位置，{start:0,end:10}
      */
     _e._$cursor = 
     _x._$cursor = function(_textarea){
