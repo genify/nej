@@ -189,6 +189,16 @@ var f = function(){
         // do nothing
     };
     /**
+     * 取光标位置
+     * @return {Void}
+     */
+    _h.__getCursorPosition = function(_textarea){
+        return {
+            end:_textarea.selectionEnd,
+            start:_textarea.selectionStart
+        };
+    };
+    /**
      * 节点focus行为
      * @param  {String|Node} 节点
      * @param  {Number}      模式

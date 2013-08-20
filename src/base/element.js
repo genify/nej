@@ -1221,6 +1221,17 @@ var f = function(){
         return this;
     };
     /**
+     * 取光标位置在TEXTAREA中的位置
+     * @param  {String|Node} TEXTAREA节点
+     * @return {Number}      
+     */
+    _e._$cursor = 
+    _x._$cursor = function(_textarea){
+        _textarea = _e._$get(_textarea);
+        if (!_textarea) return 0;
+        return _h.__getCursorPosition(_textarea);
+    };
+    /**
      * 设置样式<br/>
      * 
      * 页面结构举例

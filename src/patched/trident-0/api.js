@@ -116,4 +116,4 @@ var f = function(){
     });
 };
 NEJ.define('{lib}patched/trident-0/api.js',
-      ['{lib}patched/api.js'],f);
+          ['{lib}patched/api.js'],f);

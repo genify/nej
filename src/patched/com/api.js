@@ -103,4 +103,4 @@ var f = function(){
     });
 };
 NEJ.define('{lib}patched/com/api.js',
-      ['{lib}patched/api.js'],f);
+          ['{lib}patched/api.js'],f);
