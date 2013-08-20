@@ -1221,16 +1221,34 @@ var f = function(){
         return this;
     };
     /**
-     * 取光标位置在TEXTAREA中的位置
+     * 设置/获取光标位置在TEXTAREA中的位置
      * @api    {nej.e._$cursor}
-     * @param  {String|Node} TEXTAREA节点
-     * @return {Object}      光标位置，{start:0,end:10}
+     * @param  {String|Node}   TEXTAREA节点
+     * @param  {Number|Object} 待设置光标的位置，如果起始位置和结束位置一致则输入数值即可
+     * @config {Number}  start 起始位置
+     * @config {Number}  end   结束位置，没有end则表示与start相同
+     * @return {Object}        光标位置，{start:0,end:10}
      */
     _e._$cursor = 
-    _x._$cursor = function(_textarea){
+    _x._$cursor = function(_textarea,_options){
         _textarea = _e._$get(_textarea);
-        if (!_textarea) return 0;
-        return _h.__getCursorPosition(_textarea);
+        if (!_textarea)
+            return {
+                start:0,end:0
+            };
+        if (_u._$isNumber(_options))
+            _options = {
+                start:_options,
+                end:_options
+            };
+        if (_options!=null){
+            if (_options.end==null)
+                _options.end = _options.start||0;
+            _h.__setCursorPosition(_textarea,_options);
+        }else{
+            _options = _h.__getCursorPosition(_textarea);
+        }
+        return _options;
     };
     /**
      * 设置样式<br/>

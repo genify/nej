@@ -103,6 +103,24 @@ var f = function(){
     });
      */
     /**
+     * 设置光标位置
+     * @return {Void}
+     */
+    _h.__setCursorPosition = 
+    _h.__setCursorPosition._$aop(function(_event){
+        var _textarea = _event.args[0],
+            _position = _event.args[1];
+        if (_textarea.selectionStart==null){
+            _event.stopped = !0;
+            var _range = _textarea.createTextRange();
+            _range.collapse(!0);
+            _range.moveStart('character',_position.start);
+            _range.moveEnd('character',_position.end-_position.start);
+            _range.select();
+            _textarea.focus();
+        }
+    });
+    /**
      * 取光标位置
      * @return {Void}
      */

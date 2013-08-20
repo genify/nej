@@ -13,7 +13,7 @@
     </style>
   </head>
   <body>
-    <textarea id="xxx"></textarea>
+    <textarea id="xxx">1234567890abcdefghijklmnopqrstuvwxyz</textarea>
     <input type="button" value="get" id="yyy"/>
     <script src="../../src/define.js?pro=./"></script>
     <script>
@@ -25,6 +25,8 @@
                   console.log(x.start+':'+x.end);
               }
           );
+          
+          nej.e._$cursor('xxx',{start:5,end:10});
       });
     </script>
   </body>

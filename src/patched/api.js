@@ -189,6 +189,15 @@ var f = function(){
         // do nothing
     };
     /**
+     * 设置光标位置
+     * @return {Void}
+     */
+    _h.__setCursorPosition = function(_textarea,_position){
+        _textarea.selectionEnd = _position.end||0;
+        _textarea.selectionStart = _position.start||0;
+        _textarea.focus();
+    };
+    /**
      * 取光标位置
      * @return {Void}
      */
