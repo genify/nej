@@ -26,8 +26,8 @@ var f = function(){
      * @config  {Number}        limit  每页显示数量，默认10项
      * @config  {Number}        first  首页显示数量，默认为limit的值
      * @config  {String|Object} item   列表JST模版标识或者Item配置，{clazz:'xxx',klass:_$$Item||'jst key'}
-     * @config  {Object}        cache  缓存配置信息，{key:'primary key',lkey:'list key',data:{},klass:_$$ListCache,list:[],clear:true,total:200}
-     * @config  {Object}        pager  分页器配置信息，{parent:'xxx',klass:_$$Pager,index:2}
+     * @config  {Object}        cache  缓存配置信息，注：total值仅在构造时有效，{key:'primary key',lkey:'list key',data:{},klass:_$$ListCache,list:[],clear:true,total:200}
+     * @config  {Object}        pager  分页器配置信息，注：index值仅在构造时有效，{parent:'xxx',klass:_$$Pager,index:2}
      * 
      * [hr]
      * 下拉刷新列表之前处理业务逻辑，可用于处理loading状态的显示
