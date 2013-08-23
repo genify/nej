@@ -80,6 +80,7 @@ var f = function(){
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {Number} index 当前页码
      * @config  {Number} total 总页码数
+     * @config  {Object} label 按钮文案，{prev:'&lt;',next:'&gt;'}
      * 
      * [hr]
      * 
@@ -113,6 +114,9 @@ var f = function(){
         this.__supReset(_options);
         this.__popt.total = _options.total;
         this.__popt.index = _options.index;
+        var _label = _options.label||_o;
+        this.__popt.pbtn.innerText = _label.prev||'上一页';
+        this.__popt.nbtn.innerText = _label.next||'下一页';
     };
     /**
      * 控件销毁
@@ -125,6 +129,8 @@ var f = function(){
         this.__page._$recycle();
         delete this.__page;
         this._$unbind();
+        this.__popt.pbtn.innerText = '上一页';
+        this.__popt.nbtn.innerText = '下一页';
     };
     /**
      * 初始化外观信息

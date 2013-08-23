@@ -1221,6 +1221,47 @@ var f = function(){
         return this;
     };
     /**
+     * 设置/获取光标位置在TEXTAREA中的位置
+     * 脚本举例
+     * [code]
+     *   // 设置光标选中内容
+     *   nej.e._$cursor('xxx',{start:5,end:10});
+     *   // 设置光标位置
+     *   nej.e._$cursor('xxx',8);
+     *   // 获取光标位置
+     *   var _position = nej.e._$cursor('xxx');
+     *   // _position.start 光标起始位置
+     *   // _position.end   光标结束位置
+     * [/code]
+     * @api    {nej.e._$cursor}
+     * @param  {String|Node}   TEXTAREA节点
+     * @param  {Number|Object} 待设置光标的位置，如果起始位置和结束位置一致则输入数值即可
+     * @config {Number}  start 起始位置
+     * @config {Number}  end   结束位置，没有end则表示与start相同
+     * @return {Object}        光标位置，{start:0,end:10}
+     */
+    _e._$cursor = 
+    _x._$cursor = function(_textarea,_options){
+        _textarea = _e._$get(_textarea);
+        if (!_textarea)
+            return {
+                start:0,end:0
+            };
+        if (_u._$isNumber(_options))
+            _options = {
+                start:_options,
+                end:_options
+            };
+        if (_options!=null){
+            if (_options.end==null)
+                _options.end = _options.start||0;
+            _h.__setCursorPosition(_textarea,_options);
+        }else{
+            _options = _h.__getCursorPosition(_textarea);
+        }
+        return _options;
+    };
+    /**
      * 设置样式<br/>
      * 
      * 页面结构举例
