@@ -55,7 +55,6 @@ var f = function() {
                         _flag = false;
                 }._$bind(this));
             }
-            
             return _flag;
         }
         return function(_node,_objs){
