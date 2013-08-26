@@ -107,10 +107,9 @@ var f = function(){
      */
     _proEditor.__reset = function(_options){
         this.__supReset(_options);
-        NEJ.X(this.__aopt,NEJ.EX(_aopt,_options));
         this.__aopt.style = _options.style;
-        this.__aopt.focus = !_options.focus?false:true;
         this.__aopt.content = _options.content;
+        this.__aopt.focus = !_options.focus?false:true;
         this.__editor = _t._$$Editor._$allocate({
             area:_t._$$EditorArea._$allocate(this.__aopt)
            ,toolbar:_t._$$EditorToolbar._$allocate(this.__topt)
