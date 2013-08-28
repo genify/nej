@@ -12,12 +12,14 @@ var f = function() {
     	var _fdo = function(){
 	    	_e._$fadeOut(_box,{
                 delay:1,
-                duration:2,
-                opacity:0.1,
+                duration:5,
+                opacity:0.01,
 	    		onstop:function(_event){
+                    console.log('stop')
 	    			_fdi(_box);
 	    		},
 	    		onplaystate:function(_event){
+                    console.log(_event.opacity)
 	    		}
 	    	})
     	};
@@ -26,6 +28,7 @@ var f = function() {
                 delay:1,
                 duration:2,
 	    		onstop:function(_event){
+                    console.log('stop')
 	    			_fdo(_box);
 	    		},
 	    		onplaystate:function(_event){
@@ -33,10 +36,13 @@ var f = function() {
 	    	})
     	};
     	var _moveTo = function(){
-    		_e._$moveTo(_box,{top:500,left:600},{duration:2,
+    		_e._$moveTo(_box,{top:300,left:500},{
+                duration:[3,1],
                 onstop:function(_event){
+                    alert('moveTo stop')
                 },
                 onplaystate:function(_event){
+                    console.log('moveTo state')
                 }
             });
     	};
@@ -62,21 +68,37 @@ var f = function() {
             //         // console.log(_event.left);
             //     }
             // });
-            _e._$silde('box2','left:+=600',{
+            _e._$silde('box2','left:-=300',{
                 timing:'ease-out',
                 delay:0,
-                duration:100,
+                duration:5,
                 onstop:function(_event){
                 },
                 onplaystate:function(_event){
                 }
             })
         }
+        var _nochange = function(){
+            _e._$silde('box2','bottom:-=300',{
+                timing:'ease-out',
+                delay:0,
+                duration:5,
+                onstop:function(_event){
+                },
+                onplaystate:function(_event){
+                }
+            })
+        };
+        var _fadeStop = function(){
+            _e._$fadeStop('box');
+        }
     	_v._$addEvent(_button[0],'click',_fdo);
     	_v._$addEvent(_button[1],'click',_fdi);
     	_v._$addEvent(_button[2],'click',_moveTo);
         _v._$addEvent(_button[3],'click',_toggle);
         _v._$addEvent(_button[4],'click',_silde);
+        _v._$addEvent(_button[5],'click',_nochange);
+        _v._$addEvent(_button[6],'click',_fadeStop);
     });
 };
 module('依赖模块');

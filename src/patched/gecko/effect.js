@@ -13,10 +13,6 @@ var f = function(){
         _p = _('nej.p');
     if (_p._$NOT_PATCH.gecko) return;
 
-   	_h.__onTransitionEnd = function(){
-    	return !0;
-    };
-
     /**
      * 执行动画
      * @param  {Node}   动画节点
@@ -30,7 +26,7 @@ var f = function(){
         // FF toggle fix
         setTimeout(function(){
             _e._$style(_node,_rules);
-        },50)
+        },33)
         return this;
     };
 };

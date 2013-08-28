@@ -39,10 +39,6 @@ var f = function(){
         _anim = _anim.slice(0,-1);
         _e._$setStyle(_node,'transition',_anim);
         _e._$style(_node,_rules);
-        // FF toggle fix
-        setTimeout(function(){
-            _e._$style(_node,_rules);
-        },50)
         return this;
     };
 
@@ -52,9 +48,10 @@ var f = function(){
      * @param  {String} 节点目标样式
      * @return {nej.h}
      */
-    _h.__onStop = function(_node,_state){
+    _h.__onStop = function(_node,_state,_stop){
         _e._$style(_node,_state);
         _e._$setStyle(_node,'transition','none');
+        _stop.call(null,_state);
         return this;
     };
 

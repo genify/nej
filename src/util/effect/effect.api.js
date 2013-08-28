@@ -24,31 +24,42 @@ var f = function() {
      */
     _e.__doBeforeStart = (function(){
         // 如果有一个属性是没有变化的，此属性的回调不会发生，避免此情况
-        var _doCheckState = function(_node,_objs){
+        var _doCheckState = function(_node,_objs,_isLowerIE){
             var _number,_flag = true;
-            _u._$forIn(_objs,function(_value,_name){
-                // IE9以下
-                if(_name === 'opacity' && nej.p._$KERNEL.engine === 'trident' && (nej.p._$KERNEL.release - 5) < 0){
-                    _name = 'filter';
-                    var _filter = _e._$getStyle(_node,_name);
-                    if(_filter === ''){
-                        _e._$setStyle(_node,'filter','alpha(opacity=100)')
-                        _number = 100;
+            if(!!_isLowerIE){
+                // IE6-8
+                _u._$forIn(_objs,function(_value,_name){
+                    if(_name === 'opacity'){
+                        _name = 'filter';
+                        var _filter = _e._$getStyle(_node,_name);
+                        // 没设置透明度默认为100
+                        if(_filter === ''){
+                            _e._$setStyle(_node,'filter','alpha(opacity=100)');
+                            _number = 100;
+                        }else{
+                            _number = parseFloat(_filter.split('=')[1])||0;
+                        }
+                        _value = _value * 100;
                     }else{
-                        _number = parseFloat(_filter.split('=')[1])||0;
+                        _number = _e._$getStyle(_node,_name);
                     }
-                    _value = _value * 100;
-                }else{
+                    // 属性没有变化是不允许的
+                    if(parseInt(_number) === _value)
+                        _flag = false;
+                }._$bind(this));
+            }else{
+                _u._$forIn(_objs,function(_value,_name){
                     _number = _e._$getStyle(_node,_name);
-                }
-                // 透明度没有变化
-                if(parseInt(_number) === _value)
-                    _flag = false;
-            }._$bind(this));
+                    // 属性没有变化是不允许的
+                    if(parseInt(_number) === _value)
+                        _flag = false;
+                }._$bind(this));
+            }
             return _flag;
         }
         return function(_node,_objs){
-            if(!_doCheckState(_node,_objs)) return !1;
+            var _isLowerIE = (nej.p._$KERNEL.engine === 'trident' && (nej.p._$KERNEL.release - 5) < 0)
+            if(!_doCheckState(_node,_objs,_isLowerIE)) return !1;
             return !0;
         };
     })();
@@ -95,7 +106,7 @@ var f = function() {
                     styles:['opacity:'+_opacity],
                     onstop:function(_state){
                         _node.effect = _p._$$Effect._$recycle(_node.effect);
-                        _options.onstop.call(this,_state);
+                        _options.onstop.call(null,_state);
                     },
                     onplaystate:_options.onplaystate._$bind(_node.effect)
                 }
@@ -170,14 +181,26 @@ var f = function() {
 
     /**
      * 终止淡入淡出特效
-     * @param  {[type]} _node [description]
-     * @return {[type]}       [description]
+     * @param  {Node|String} 节点或者节点ID
+     * @return {nej.e}      
      */
     _e._$fadeStop = function(_node){
+        _e._$stopEffect(_node);
+        return this;
+    };
+
+    /**
+     * 中途停止特效，直接跑到最后的目标
+     * @param  {Node|String} 节点或者节点ID
+     * @return {nej.e}      
+     */
+    _e._$stopEffect = function(_node){
         _node = _e._$get(_node);
-        _e._$setStyle(_node,'transition','none');
-        if(!!_node.effect)
-            _node.effect = _p._$$Effect._$recycle(_node.effect);
+        if(_node.effect && _node.effect._$stop()){
+            if(!!_node.effect)
+                _node.effect = _p._$$Effect._$recycle(_node.effect);
+        }
+        return this;
     };
 
     /**
@@ -194,7 +217,7 @@ var f = function() {
      *   _e._$moveTo(_node,{top:100,left:100}{
      *       timing:'ease-out',
      *       delay:0,
-     *       duration:5
+     *       duration:[5,1]
      *   });
      * [/code]
      * @api    {nej.e._$moveTo}
@@ -212,6 +235,7 @@ var f = function() {
         if(!!_node.effect) return !1;
         if(!_e.__doBeforeStart(_node,_position)) return !1;
     	_options = _e.__initOptions(_options);
+        _options.duration = _options.duration||[];
     	var _top = _position.top||0,_left= _position.left||0;
     	_node.effect = _p._$$Effect._$allocate(
             {
@@ -221,18 +245,18 @@ var f = function() {
                         property:'top',
                         timing:_options.timing||'ease-in',
                         delay:_options.delay||0,
-                        duration:_options.duration||1
+                        duration:_options.duration[0]||1
                     },
                     {
                         property:'left',
                         timing:_options.timing||'ease-in',
                         delay:_options.delay||0,
-                        duration:_options.duration||1
+                        duration:_options.duration[1]||1
                     }
                 ],
                 styles:['top:'+_top,'left:'+_left],
                 onstop:function(_state){
-				    _options.onstop.call(this,_state);
+				    _options.onstop.call(null,_state);
                     _node.effect = _p._$$Effect._$recycle(_node.effect);
                 },
                 onplaystate:_options.onplaystate._$bind(_node.effect)
@@ -253,6 +277,8 @@ var f = function() {
      *   var _e = NEJ.P("nej.e");
      *   var _node = _e._$get("box");
      *   // 需要配合预先定义的position属性
+     *   // top,bottom,left,right只可操作其一
+     *   // 同时操作2个属性参照moveTo
      *   _e._$silde(_node,'top:+100'{
      *       timing:'ease-out',
      *       delay:0,
@@ -269,30 +295,13 @@ var f = function() {
      * @return {nej.e}
      */
     _e._$silde = (function(){
-        var _setPst = function(_node,_position){
-            var _list  = _position.split(':'),_pst = _list[0],_styles = [];
-            _styles.push(_position);
-            if(_pst === 'top' || _pst === 'bottom'){
-                var _left = _e._$getStyle(_node,'left');
-                if(_left!='auto')
-                    _styles.push('left:' + _left);
-            }else{
-                var _top = _e._$getStyle(_node,'top');
-                if(_top!='auto')
-                    _styles.push('top:' + _top);
-            }
-            return _styles;
-        };
         return function(_node,_position,_options){
             _node = _e._$get(_node);
             if(!!_node.effect) return !1;
-            var _list  = _position.split(':'),_pro0 = _list[0],_pro1 = '';
-            if(_pro0 === 'top' || _pro0 === 'bottom'){
-                _pro1 = 'left';
-            }else{
-                _pro1 = 'top';
-            }
-            var _styles = _setPst.call(this,_node,_position);
+            var _list  = _position.split(':'),
+                _pro0  = _list[0],
+                _styles= [];
+            _styles.push(_position);
             _node.effect = _p._$$Effect._$allocate(
                 {
                     node:_node,
@@ -302,17 +311,11 @@ var f = function() {
                             timing:_options.timing||'ease-in',
                             delay:_options.delay||0,
                             duration:_options.duration||1
-                        },
-                        {
-                            property:_pro1,
-                            timing:_options.timing||'ease-in',
-                            delay:_options.delay||0,
-                            duration:_options.duration||1
                         }
                     ],
                     styles:_styles,
                     onstop:function(_state){
-                        _options.onstop.call(this,_state);
+                        _options.onstop.call(null,_state);
                         _node.effect = _p._$$Effect._$recycle(_node.effect);
                     },
                     onplaystate:_options.onplaystate._$bind(_node.effect)
@@ -378,7 +381,7 @@ var f = function() {
                         ],
                         styles:[_type + ':' + _value],
                         onstop:function(_state){
-                            _options.onstop.call(this,_state);
+                            _options.onstop.call(null,_state);
                             _node.effect = _p._$$Effect._$recycle(_node.effect);
                             _sto = window.clearTimeout(_sto);
                         },
@@ -402,7 +405,7 @@ var f = function() {
                         onstop:function(_state){
                             _e._$setStyle(_node,'visibility','hidden');
                             _e._$setStyle(_node,_type,'auto');
-                            _options.onstop.call(this,_state);
+                            _options.onstop.call(null,_state);
                             _node.effect = _p._$$Effect._$recycle(_node.effect);
                             _sto = window.clearTimeout(_sto);
                         },
@@ -411,7 +414,7 @@ var f = function() {
                 );
             }
             var _sto = window.setTimeout(function(){_node.effect._$start()}._$bind(this),0);
-            return _node.effect;
+            return this;
         };
     })();
 
