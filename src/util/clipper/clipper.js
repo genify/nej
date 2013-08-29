@@ -28,10 +28,13 @@ var f = function(){
      * [/code]
      * @class   {nej.ut._$$Clipper} 循环播放封装对象
      * @extends {nej.ut._$$Event}
+     * @uses    {nej.ui._$$Resizer}
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {String|Node}       mbox 裁剪容器节点
      * @config  {String|Node|Array} pbox 预览容器节点 
      * @config  {String}            url  图片地址
+     * @config  {Boolean}           lock 是否锁定比例
+     * @config  {Object}            size 裁剪缩放器初始大小
      * 
      * [hr]
      * 图片载入之前事件
@@ -122,6 +125,7 @@ var f = function(){
         this.__supDestroy();
         this.__doClearResizer();
         this.__doClearPreview();
+        this.__image.src = _g._$BLANK_IMAGE;
     };
     /**
      * 清除缩放器
@@ -212,6 +216,7 @@ var f = function(){
             });
         };
         return function(_isok){
+            if (this.__image.src==_g._$BLANK_IMAGE) return;
             this._$dispatchEvent('onafterimageload',{
                 parent:this.__mbox,
                 loaded:_isok
