@@ -402,5 +402,7 @@ var f = function(){
         NEJ.P('console').log = NEJ.F;
         NEJ.P('console').error = NEJ.F;
     }
+    // void generating these name when publish
+    var lt,gt,amp,nbsp,quot,apos,copy,reg;
 };
 NEJ.define('{lib}base/global.js',f);
