@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>简易表情控件 - 前端实例</title>
+</head>
+<body>
+  <script>window.NEJ_CONF = {root:'/NEJ/res/'};</script>
+  <script src="../../../src/define.js?pro=../../"></script>
+  <script>
+      define(['{lib}ui/portrait/portrait.simple.js'],
+      function(){
+          nej.ui._$$SimplePortrait._$allocate({
+              parent:document.body,
+              onselect:function(_event){
+                  var p = document.createElement('p');
+                  p.innerText = _event.text+':'+_event.url;
+                  document.body.appendChild(p);
+              }
+          });
+      });
+  </script>
+</body>
+</html>
