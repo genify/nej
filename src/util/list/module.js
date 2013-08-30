@@ -872,6 +872,13 @@ var f = function(){
     _proListModule._$getTotal = function(){
         return this.__cache._$getTotal(this.__ropt.key);
     };
+    /**
+     * 取分页器实例
+     * @return {Void}
+     */
+    _proListModule._$getPager = function(){
+        return this.__pager;
+    };
 };
 NEJ.define('{lib}util/list/module.js',
           ['{lib}ui/item/list.js'

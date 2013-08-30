@@ -432,9 +432,9 @@ var f = function(){
                 y:_offset.y-this.__offset.y
             },
             _event = {
-                top:0,left:0
-               ,width:this.__body.offsetWidth
-               ,height:this.__body.offsetHeight
+                top:0,left:0,
+                width:this.__body.offsetWidth,
+                height:this.__body.offsetHeight
             };
         this.__offset = _offset;
         // get source value
@@ -446,6 +446,8 @@ var f = function(){
                ? this.__doCalBoxWithoutLock(_event,_delta)
                : this.__doCalBoxWithLock(this.__flag,_event,_delta);
         // active style
+        this._$dispatchEvent('onbeforeresize',_event);
+        if (!!_event.stopped) return;
         _tmp = this.__body.style;
         for(var x in _event)
             _tmp[x] = _event[x]+'px';

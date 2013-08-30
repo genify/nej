@@ -17,7 +17,8 @@
     <input type="button" value="get" id="yyy"/>
     <script src="../../src/define.js?pro=./"></script>
     <script>
-      define(['{lib}base/element.js'],
+      define(['{lib}base/element.js'
+             ,'{lib}util/encode/crc32.js'],
       function(){
           nej.v._$addEvent(
               'yyy','click',function(){

@@ -10,7 +10,7 @@
       .box{border:1px solid #aaa;}
       .mbox{position:relative;float:left;width:500px;height:500px;margin-right:-500px;}
       .prev{margin-left:500px;padding-left:20px;}
-      .pbox{margin-bottom:10px;}
+      .pbox{position:relative;margin-bottom:10px;overflow:hidden;}
       .pbox-0{width:80px;height:80px;}
       .pbox-1{width:120px;height:120px;}
       .pbox-2{width:200px;height:200px;}
@@ -25,6 +25,8 @@
         <div class="box pbox pbox-2" id="clip-preview-2"></div>
       </div>
     </div>
+    <p><input type="button" value="查看裁剪信息" id="abc"/></p>
+    <div id="result"></div>
     <script src="../../../src/define.js?pro=./"></script>
     <script>
       define(['{lib}util/clipper/clipper.js'],
@@ -33,15 +35,34 @@
               _e = _('nej.e'),
               _t = _('nej.ut');
           
-          _t._$$Clipper._$allocate({
-              url:'./3.jpg',
+          var _clipper = _t._$$Clipper._$allocate({
+              url:'./4.jpg',
               mbox:'clip-main',
               pbox:[
                   'clip-preview-0',
                   'clip-preview-1',
                   'clip-preview-2'
-              ]
+              ],
+              lock:!0,
+              size:{
+                  ratio:1,
+                  width:80
+              }
           });
+          
+          nej.v._$addEvent(
+              'abc','click',function(){
+                  var _result = [];
+                  nej.u._$forIn(
+                      _clipper._$getClipResult(),
+                      function(_inf,_id){
+                          _result.push('<p>'+_id+':'+JSON.stringify(_inf)+'</p>');
+                      }
+                  );
+                  nej.e._$get('result').innerHTML = _result.join('');
+              }
+          );
+          
           
       });
     </script>

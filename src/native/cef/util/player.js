@@ -109,7 +109,7 @@ var f = function() {
             'playmodechange','error','playpre','loading',
             'volumechange','volumeupdate','notify','stop','dataloadfailed',
             'dataloaded','play','pause','ended','playmode','playnext',
-            'timeupdate','lyricsupdate','buffering','action','cachefailed'
+            'timeupdate','lyricsupdate','buffering','action','cachefailed','playcopyright'
         ];
         this.__supInit();
     };
@@ -355,6 +355,13 @@ var f = function() {
                     this._$dispatchEvent('onstatechange',{
                         state:5,
                         code:-101
+                    });
+                    this.__onNativeEvent('synctime');
+                return;
+                case 'playcopyright':
+                    this._$dispatchEvent('onstatechange',{
+                        state:5,
+                        code:-102
                     });
                     this.__onNativeEvent('synctime');
                 return;
