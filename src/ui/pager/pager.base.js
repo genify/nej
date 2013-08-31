@@ -87,7 +87,6 @@ var f = function(){
         this.__popt = {
             onchange:this.__onChange._$bind(this)
         };
-        this.__bopt = {};
         this.__supInit();
     };
     /**
@@ -99,6 +98,8 @@ var f = function(){
      */
     _pro.__reset = function(_options){
         this.__supReset(_options);
+        this.__bopt = NEJ.X({},_options);
+        delete this.__bopt.onchange;
         this.__popt.total = _options.total;
         this.__popt.index = _options.index;
         var _label = _options.label||_o;
@@ -114,7 +115,7 @@ var f = function(){
     _pro.__destroy = function(){
         this.__supDestroy();
         this.__page._$recycle();
-        this.__bopt = {};
+        delete this.__bopt;
         delete this.__page;
         this._$unbind();
         this.__popt.pbtn.innerText = '上一页';
@@ -199,11 +200,12 @@ var f = function(){
     _pro._$bind = function(_parent){
         _parent = _e._$get(_parent);
         if (!_parent) return this;
-        var _opt = NEJ.X({
-            parent:_parent,
-            index:this._$getIndex(),
-            total:this._$getTotal()
-        },this.__bopt);
+        var _opt = NEJ.X(
+            {},this.__bopt
+        );
+        _opt.parent = _parent;
+        _opt.index = this._$getIndex();
+        _opt.total = this._$getTotal();
         var _pager = this.constructor._$allocate(_opt);
         _pager._$setEvent('onchange',this.__popt.onchange);
         if (!this.__binders) this.__binders = [];

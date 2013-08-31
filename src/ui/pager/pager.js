@@ -80,7 +80,6 @@ var f = function(){
      */
     _pro.__reset = function(_options){
         this.__supReset(_options);
-        this.__bopt.noend = !!_options.noend;
         this.__page = _t._$$Page._$allocate(this.__popt);
     };
     /**
@@ -104,7 +103,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__onChange = function(_event){
-        if (this.__bopt.noend){
+        if (!!this.__bopt.noend){
             var _dext = _event.ext||_o,
                 _list = _dext.list||_r;
             _e._$setStyle(
