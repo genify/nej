@@ -15,18 +15,20 @@
   	
     <script src="../../../src/define.js?pro=./"></script>
     <script>
-      define(['{lib}ui/pager/pager.simple.js'],
+      define(['{lib}ui/pager/pager.js'],
       function(){
           var _  = NEJ.P,
               _i = _('nej.ui');
           
-          _i._$$SimplePager._$allocate({
+          var _pager = _i._$$Pager._$allocate({
               parent:document.body,
-              index:1,
+              index:99,total:100,noend:!0,
               onchange:function(_event){
                   console.log('from '+_event.last+' to '+_event.index);
               }
           });
+          
+          _pager._$bind(document.body);
           
       });
     </script>

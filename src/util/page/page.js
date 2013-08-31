@@ -13,7 +13,7 @@ var f = function(){
         _u = _('nej.u'),
         _x = _('nej.x'),
         _p = _('nej.ut'),
-        _proPage;
+        _pro;
     if (!!_p._$$Page) return;
     /**
      * 三段分页器业务逻辑封装，适合于以下形式的分页器<br />
@@ -82,14 +82,14 @@ var f = function(){
      * 
      */
     _p._$$Page = NEJ.C();
-      _proPage = _p._$$Page._$extend(_p._$$AbstractPage);
+    _pro = _p._$$Page._$extend(_p._$$AbstractPage);
     /**
      * 初始化控件
      * @protected
      * @method {__init}
      * @return {Void}
      */
-    _proPage.__init = function(){
+    _pro.__init = function(){
         this.__supInit();
         var _node = _e._$create('span','zdot');
         _node.innerText = '...';
@@ -101,7 +101,7 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proPage.__destroy = function(){
+    _pro.__destroy = function(){
         this.__supDestroy();
         this.__doRecycleDotNode();
     };
@@ -111,7 +111,7 @@ var f = function(){
      * @method {__doRecycleDotNode}
      * @return {Void}
      */
-    _proPage.__doRecycleDotNode = function(){
+    _pro.__doRecycleDotNode = function(){
         _e._$removeByEC(this.__ndot[0]);
         _e._$removeByEC(this.__ndot[1]);
     };
@@ -121,7 +121,12 @@ var f = function(){
      * @method {__doRefreshPage}
      * @return {Void}
      */
-    _proPage.__doRefreshPage = function(){
+    _pro.__doRefreshPage = function(){
+        this.__extdata = {
+            last:!1,
+            first:!1,
+            list:this.__list
+        };
         this.__doRecycleDotNode();
         this.__doSetNodeIndex(this.__list[0],1);
         var _point = 1;
@@ -131,18 +136,22 @@ var f = function(){
                 _count = Math.floor((_length-2)/2),
                 _mxbeg = this.__total-_length+2,
                 _start = Math.max(2,this.__index-_count);
-            if (this.__total>=_length)
+            if (this.__total>=_length){
                 _start = Math.min(_start,_mxbeg);
-            if (_start>2)
-                this.__list[0]
-                    .insertAdjacentElement(
-                    'afterEnd',this.__ndot[0]);
+            }
+            if (_start>2){
+                this.__list[0].insertAdjacentElement(
+                    'afterEnd',this.__ndot[0]
+                );
+                this.__extdata.first = !0;
+            }
             for(var _index;;_point++){
                 _index = _start+_point-1;
                 if (_index>this.__index)
                     break;
-                this.__doSetNodeIndex(this
-                    .__list[_point],_index);
+                this.__doSetNodeIndex(
+                    this.__list[_point],_index
+                );
             }
         }
         // index -> total
@@ -150,23 +159,29 @@ var f = function(){
             var _index,_start = this.__index+1;
             for(var i=0,l=this.__list.length-2;;i++,_point++){
                 _index = _start+i;
-                if (_point>l||
-                    _index>this.__total)
+                if (_point>l||_index>this.__total)
                     break;
-                this.__doSetNodeIndex(this
-                    .__list[_point],_index);
+                this.__doSetNodeIndex(
+                    this.__list[_point],_index
+                );
             }
-            if (_index<this.__total)
-                this.__list[_point]
-                    .insertAdjacentElement(
-                    'beforeBegin',this.__ndot[1]);
-            if (_index<=this.__total)
-                this.__doSetNodeIndex(this
-                    .__list[_point++],this.__total);
+            if (_index<this.__total){
+                this.__list[_point].insertAdjacentElement(
+                    'beforeBegin',this.__ndot[1]
+                );
+                this.__extdata.last = !0;
+            }
+            if (_index<=this.__total){
+                this.__doSetNodeIndex(
+                    this.__list[_point++],
+                    this.__total
+                );
+            }
         }
         // hidden point -> length
-        for(var l=this.__list.length;_point<l;_point++)
+        for(var l=this.__list.length;_point<l;_point++){
             this.__doSetNodeIndex(this.__list[_point]);
+        }
     };
     /**
      * 分页器加入分页算法
