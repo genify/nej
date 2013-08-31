@@ -255,7 +255,6 @@ var f = function(){
     _pro.__doBeforeListLoad = function(){
         this.__doShowMessage('onbeforelistload','列表加载中...');
         _e._$setStyle(this.__nmore,'display','none');
-        _e._$setStyle(this.__popt.parent,'display','none');
     };
     /**
      * 列表绘制之前处理逻辑
@@ -284,8 +283,7 @@ var f = function(){
                 this.__nmore,'display',
                 this.__endskr?'none':''
             );
-            _e._$setStyle(
-                this.__popt.parent,'display',
+            this.__doSwitchPagerShow(
                 this.__endskr&&_info.total>1?'':'none'
             );
         }

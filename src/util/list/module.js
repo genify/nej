@@ -341,6 +341,18 @@ var f = function(){
         this.__lbox.innerHTML = '';
     };
     /**
+     * 切换分页器的显示状态
+     * @return {Void}
+     */
+    _pro.__doSwitchPagerShow = function(_display){
+        _e._$setStyle(this.__popt.parent,'display',_display);
+        _u._$forEach(
+            this.__pbid,function(_parent){
+                _e._$setStyle(_parent,'display',_display);
+            },this
+        );
+    };
+    /**
      * 通过分页器刷新当前页
      * @return {Void}
      */

@@ -154,7 +154,6 @@ var f = function(){
     _pro.__doBeforeListLoad = function(){
         this.__doClearListBox();
         this.__doShowMessage('onbeforelistload','列表加载中...');
-        //_e._$setStyle(this.__popt.parent,'display','none');
     };
     /**
      * 数据载入之后处理逻辑
@@ -175,7 +174,7 @@ var f = function(){
     _pro.__doBeforeListRender = function(_list,_offset,_limit){
         var _info = this.__getPageInfo(_offset,_list.length);
         if (this.__doSyncPager(_info.index,_info.total)) return !0;
-        _e._$setStyle(this.__popt.parent,'display',_info.total>1?'':'none');
+        this.__doSwitchPagerShow(_info.total>1?'':'none');
     };
     /**
      * 列表为空时处理逻辑
@@ -268,10 +267,7 @@ var f = function(){
                 0,this._$getTotal()
             );
             this.__pager._$updateTotal(_info.total);
-            _e._$setStyle(
-                this.__popt.parent,
-                'display',_info.total>1?'':'none'
-            );
+            this.__doSwitchPagerShow(_info.total>1?'':'none');
         }else{
             this._$refresh();
         }
