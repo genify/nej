@@ -245,11 +245,11 @@ var f = function(){
      * @protected
      * @method {__cbItemUpdate}
      * @return {Void}
-     */
     _pro.__cbItemUpdate = function(_event){
         this.__doCheckResult(_event,'onafterupdate');
         if (!_event.stopped) this._$refresh();
     };
+     */
     /**
      * 批量添加回调
      * @param  {Object} 偏移量

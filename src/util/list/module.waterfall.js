@@ -381,7 +381,6 @@ var f = function(){
      * @protected
      * @method {__cbItemUpdate}
      * @return {Void}
-     */
     _pro.__cbItemUpdate = function(_event){
         this.__doCheckResult(_event,'onafterupdate');
         if (_event.stopped) return;
@@ -405,6 +404,7 @@ var f = function(){
             _e._$remove(_node);
         }
     };
+     */
     /**
      * 批量添加回调
      * @param  {Object} 偏移量

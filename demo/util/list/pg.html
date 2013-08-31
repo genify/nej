@@ -22,6 +22,7 @@
   	</div>
   	<div class="fl xx">
   	  <h1>ITEM模版</h1>
+      <input type="button" value="update" id="yyy"/>
   	  <div id="list-box-1"></div>
   	  <div id="page-box-1"></div>
   	</div>
@@ -45,7 +46,7 @@
       </textarea>
     </div>
     <script>
-        var test_data = [];
+        var test_data = [{id:1,name:'test',loginTime:+new Date}];
         for(var i=0;i<104;i++){
             test_data.push({id:+new Date+i,name:'user-'+(+new Date+i),loginTime:+new Date});
         }
@@ -92,12 +93,13 @@
               }
           );
           
+          
           function a(){
               var xx = _t._$$ListModulePG._$allocate({
                   parent:'list-box-1',
                   item:{klass:_x._$$Item},
                   pager:{parent:'page-box-1'},
-                  cache:{/*klass:_x._$$CustomCache,*/lkey:'abc',list:test_data},
+                  cache:{klass:_x._$$CustomCache,lkey:'abc',list:test_data},
                   onupdate:function(_event){
                       xx._$recycle();
                       return;
@@ -113,6 +115,14 @@
                       this._$delete(_event.data);
                   }
               });
+              nej.v._$addEvent(
+                  'yyy','click',function(){
+                      xx._$update({
+                          id:1,
+                          name:'xxxxxxxxxxxxxxx'+(+new Date)
+                      });
+                  }
+              );
           }
           a();
           

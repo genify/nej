@@ -728,12 +728,34 @@ var f = function(){
         this.__cache._$updateItem(_options);
     };
     /**
-     * 更新列表项回调，子类按需实现具体业务逻辑
+     * 更新列表项回调，子类可按需重写具体业务逻辑
      * @protected
      * @method {__cbItemUpdate}
      * @return {Void}
      */
-    _pro.__cbItemUpdate = _f;
+    _pro.__cbItemUpdate = function(_event){
+        this.__doCheckResult(_event,'onafterupdate');
+        if (_event.stopped) return;
+        var _id = _event.data[this.__iopt.pkey];
+        if (!!this.__items){
+            var _item = _e._$getItemById(_id);
+            if (!!_item) _item._$refresh(_event.data);
+        }else{
+            var _node = _e._$get(_id+''+
+                        _e._$getHtmlTemplateSeed());
+            if (!_node) return;
+            var _list = this.__cache._$getListInCache(_event.key),
+                _index = _u._$indexOf(_list,_event.data);
+            if (_index<0) return;
+            this.__iopt.list = _list;
+            this.__iopt.beg  = _index;
+            this.__iopt.end  = _index;
+            var _html = _e._$getHtmlTemplate(
+                        this.__ikey,this.__iopt);
+            _node.insertAdjacentHTML('afterEnd',_html);
+            _e._$remove(_node);
+        }
+    };
     /**
      * 验证操作结果
      * @protected
