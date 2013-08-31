@@ -61,4 +61,4 @@ var f = function(){
     _x.isChange = !0;
 };
 NEJ.define('{lib}util/placeholder/placeholder.js',
-      ['{patch}holder.js'],f);
+          ['{patch}holder.js'],f);

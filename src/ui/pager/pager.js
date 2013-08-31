@@ -107,8 +107,8 @@ var f = function(){
             var _dext = _event.ext||_o,
                 _list = _dext.list||_r;
             _e._$setStyle(
-                _list[_list.length-1],
-                'display',!_dext.last?'':'none'
+                _list[_list.length-1],'display',
+                _dext.first&&!_dext.last?'':'none'
             );
         }
         _sup.__onChange.apply(this,arguments);
