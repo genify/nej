@@ -16,8 +16,9 @@
   	<div class="fl xx">
   	  <h1>JST模版</h1>
   	  <input type="button" value="refresh" id="xxx"/>
+  	  <div id="page-box-00"></div>
   	  <div id="list-box-0"></div>
-  	  <div id="page-box-0"></div>
+  	  <div id="page-box-01"></div>
   	</div>
   	<div class="fl xx">
   	  <h1>ITEM模版</h1>
@@ -66,7 +67,7 @@
               //first:12,
               item:'jst-list',
               parent:'list-box-0',
-              pager:{parent:'page-box-0',index:3},
+              pager:{parent:['page-box-00','page-box-01'],index:3},
               cache:{klass:_x._$$CustomCache,lkey:'abc'/*,list:test_data*/,total:40},
               onupdate:function(_event){
                   console.log('update from jst -> '+_event.data.id);
