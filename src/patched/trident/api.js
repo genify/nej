@@ -127,9 +127,10 @@ var f = function(){
     _h.__getCursorPosition = 
     _h.__getCursorPosition._$aop(function(_event){
         var _textarea = _event.args[0];
+        // fix bug for ie9 selectionStart/seletionEnd
+        _textarea.focus();
         if (_textarea.selectionStart==null){
             _event.stopped = !0;
-            _textarea.focus();
             var _range0 = document.selection.createRange();
             // create in textarea object and match to document.selection
             var _range1 = _textarea.createTextRange();
