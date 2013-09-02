@@ -382,24 +382,32 @@ var f = function(){
      */
     _proDispatcher.__onClickDelegate = (function(){
         // check event need delegated
+        var _doCheckUMI = function(_url,_href){
+            if (!_url) return;
+            var _info = location.parse(_url);
+            this._$dispatchEvent('onbeforechange',_info);
+            var _umi = this.__doRewriteUMI(
+                _info.path,_href||_info.href
+            );
+            return this.__groups[this.__pbseed]._$hasUMI(_umi);
+        };
         var _doParseUMI = function(_node){
             // parse data-href
             var _umi = _e._$dataset(_node,'href');
             if (!!_umi) return _umi;
             // parse href without data-not-umi
-            var _href = _e._$attr(_node,'href'),
-                _group = this.__groups[this.__pbseed];
-            if (!!_href&&!_e._$dataset('notUmi')){
+            var _href = _e._$attr(_node,'href');
+            if (!!_href&&!_e._$dataset(_node,'notUmi')){
                 // umi in hash
                 var _arr = _href.split('#');
                 _arr.shift();
                 var _umi = _arr.join('#');
-                if (!!_umi&&_group._$hasUMI(_d._$path2umi(_umi))){
+                if (_doCheckUMI.call(this,_umi,_href)){
                     return _umi;
                 }
                 // umi in path
-                var _info = location.parse(_href);
-                if (_group._$hasUMI(_info.path)){
+                if (_doCheckUMI.call(this,_href)){
+                    var _info = location.parse(_href);
                     return _info.path+'?'+
                            _u._$object2query(_info.query);
                 }
@@ -415,7 +423,7 @@ var f = function(){
             if (!!_element){
                 _v._$stopDefault(_event);
                 this._$redirect(
-                    _doParseUMI.call(this,_node)
+                    _doParseUMI.call(this,_element)
                 );
             }
         };
