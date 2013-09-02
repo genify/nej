@@ -394,7 +394,7 @@ var f = function(){
                 var _arr = _href.split('#');
                 _arr.shift();
                 var _umi = _arr.join('#');
-                if (_group._$hasUMI(_d._$path2umi(_umi))){
+                if (!!_umi&&_group._$hasUMI(_d._$path2umi(_umi))){
                     return _umi;
                 }
                 // umi in path
@@ -414,7 +414,9 @@ var f = function(){
             );
             if (!!_element){
                 _v._$stopDefault(_event);
-                this._$redirect(_doParseUMI.call(this,_node));
+                this._$redirect(
+                    _doParseUMI.call(this,_node)
+                );
             }
         };
     })();
