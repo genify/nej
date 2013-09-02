@@ -13,26 +13,10 @@ var f = function(){
         _e = _('nej.e'),
         _u = _('nej.u'),
         _p = _('nej.ui'),
-        _proAbstractPager;
+        _pro,
+        _seed_css,
+        _seed_page;
     if (!!_p._$$AbstractPager) return;
-    // ui css text
-    var _seed_css = _e._$pushCSSText('\
-        .#<uispace>{font-size:12px;line-height:160%;}\
-        .#<uispace> a{margin:0 2px;padding:2px 8px;color:#333;border:1px solid #aaa;text-decoration:none;}\
-        .#<uispace> .js-disabled{cursor:default;}\
-        .#<uispace> .js-selected{cursor:default;background:#bbb;}');
-    var _seed_page = _e._$addHtmlTemplate('\
-        {trim}\
-        {if !defined("noprv")||!noprv}\
-        <a href="#" class="zbtn zprv ${\'js-p-\'|seed}">上一页</a>\
-        {/if}\
-        {list 1..number as x}\
-        <a href="#" class="zpgi zpg${x} ${\'js-i-\'|seed}"></a>\
-        {/list}\
-        {if !defined("nonxt")||!nonxt}\
-        <a href="#" class="zbtn znxt ${\'js-n-\'|seed}">下一页</a>\
-        {/if}\
-        {/trim}');
     /**
      * 分页器控件基类封装<br />
      * 页面结构举例
@@ -92,15 +76,17 @@ var f = function(){
      * 
      */
     _p._$$AbstractPager = NEJ.C();
-      _proAbstractPager = _p._$$AbstractPager._$extend(_p._$$Abstract);
+      _pro = _p._$$AbstractPager._$extend(_p._$$Abstract);
     /**
      * 初始化
      * @protected
      * @method {__init}
      * @return {Void}
      */
-    _proAbstractPager.__init = function(){
-        this.__popt = {onchange:this.__onChange._$bind(this)};
+    _pro.__init = function(){
+        this.__popt = {
+            onchange:this.__onChange._$bind(this)
+        };
         this.__supInit();
     };
     /**
@@ -110,8 +96,10 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proAbstractPager.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
+        this.__bopt = NEJ.X({},_options);
+        delete this.__bopt.onchange;
         this.__popt.total = _options.total;
         this.__popt.index = _options.index;
         var _label = _options.label||_o;
@@ -124,9 +112,10 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proAbstractPager.__destroy = function(){
+    _pro.__destroy = function(){
         this.__supDestroy();
         this.__page._$recycle();
+        delete this.__bopt;
         delete this.__page;
         this._$unbind();
         this.__popt.pbtn.innerText = '上一页';
@@ -138,7 +127,7 @@ var f = function(){
      * @method {__initXGui}
      * @return {Void}
      */
-    _proAbstractPager.__initXGui = function(){
+    _pro.__initXGui = function(){
         this.__seed_css  = _seed_css;
     };
     /**
@@ -147,7 +136,7 @@ var f = function(){
      * @method {__initNode}
      * @return {Void}
      */
-    _proAbstractPager.__initNode = function(){
+    _pro.__initNode = function(){
         this.__supInitNode();
         var _seed = _e._$getHtmlTemplateSeed();
         this.__popt.list =  
@@ -173,7 +162,7 @@ var f = function(){
      * @param  {Object} 页码列表信息
      * @return {String} 页码列表html代码
      */
-    _proAbstractPager.__doGenPageListXhtml = function(_data){
+    _pro.__doGenPageListXhtml = function(_data){
         return _e._$getHtmlTemplate(_seed_page,_data);
     };
     /**
@@ -183,7 +172,7 @@ var f = function(){
      * @param  {Object} 事件对象
      * @return {Void}
      */
-    _proAbstractPager.__onChange = function(_event){
+    _pro.__onChange = function(_event){
         if (this.__flag) return;
         var _index = _event.index,
             _total = _event.total;
@@ -208,18 +197,18 @@ var f = function(){
      * @param  {String|Node} 联动分页器父容器
      * @return {nej.ui._$$AbstractPager}
      */
-    _proAbstractPager._$bind = function(_parent){
+    _pro._$bind = function(_parent){
         _parent = _e._$get(_parent);
         if (!_parent) return this;
-        var _pager = this.constructor._$allocate({
-            parent:_parent,
-            index:this._$getIndex(),
-            total:this._$getTotal()
-        });
-        _pager._$setEvent('onchange',
-               this.__popt.onchange);
-        if (!this.__binders) 
-             this.__binders = [];
+        var _opt = NEJ.X(
+            {},this.__bopt
+        );
+        _opt.parent = _parent;
+        _opt.index = this._$getIndex();
+        _opt.total = this._$getTotal();
+        var _pager = this.constructor._$allocate(_opt);
+        _pager._$setEvent('onchange',this.__popt.onchange);
+        if (!this.__binders) this.__binders = [];
         this.__binders.push(_pager);
         return this;
     };
@@ -233,7 +222,7 @@ var f = function(){
      * @method {_$unbind}
      * @return {nej.ui._$$AbstractPager}
      */
-    _proAbstractPager._$unbind = (function(){
+    _pro._$unbind = (function(){
         var _doRemove = function(_pager,_index,_list){
             _pager._$recycle();
             _list.splice(_index,1);
@@ -253,7 +242,7 @@ var f = function(){
      * @param  {Number} 页码
      * @return {nej.ui._$$AbstractPager}
      */
-    _proAbstractPager._$setIndex = function(_index){
+    _pro._$setIndex = function(_index){
         if (!this.__page) return;
         this.__page._$setIndex(_index);
     };
@@ -267,7 +256,7 @@ var f = function(){
      * @method {_$getIndex}
      * @return {Number} 当前页码 
      */
-    _proAbstractPager._$getIndex = function(){
+    _pro._$getIndex = function(){
         if (!this.__page) return 1;
         return this.__page._$getIndex();
     };
@@ -281,7 +270,7 @@ var f = function(){
      * @method {_$getTotal}
      * @return {Number} 总页数
      */
-    _proAbstractPager._$getTotal = function(){
+    _pro._$getTotal = function(){
         if (!this.__page) return 1;
         return this.__page._$getTotal();
     };
@@ -297,7 +286,7 @@ var f = function(){
      * @param  {Number} 总页码数
      * @return {nej.ui._$$AbstractPager}
      */
-    _proAbstractPager._$updatePage = function(_index,_total){
+    _pro._$updatePage = function(_index,_total){
         if (!this.__page) return;
         this.__page._$updatePage(_index,_total);
     };
@@ -305,10 +294,30 @@ var f = function(){
      * 更新总页数
      * @return {Void}
      */
-    _proAbstractPager._$updateTotal = function(_total){
+    _pro._$updateTotal = function(_total){
         if (!this.__page) return;
         this.__page._$updateTotal(_total);
     };
+    // ui css text
+    _seed_css = _e._$pushCSSText('\
+        .#<uispace>{font-size:12px;line-height:160%;}\
+        .#<uispace> a{margin:0 2px;padding:2px 8px;color:#333;border:1px solid #aaa;text-decoration:none;}\
+        .#<uispace> .js-disabled{cursor:default;}\
+        .#<uispace> .js-selected{cursor:default;background:#bbb;}\
+    ');
+    _seed_page = _e._$addHtmlTemplate('\
+        {trim}\
+        {if !defined("noprv")||!noprv}\
+        <a href="#" class="zbtn zprv ${\'js-p-\'|seed}">上一页</a>\
+        {/if}\
+        {list 1..number as x}\
+        <a href="#" class="zpgi zpg${x} ${\'js-i-\'|seed}"></a>\
+        {/list}\
+        {if !defined("nonxt")||!nonxt}\
+        <a href="#" class="zbtn znxt ${\'js-n-\'|seed}">下一页</a>\
+        {/if}\
+        {/trim}\
+    ');
 };
 NEJ.define('{lib}ui/pager/pager.base.js',
-      ['{lib}ui/base.js'],f);
+          ['{lib}ui/base.js'],f);

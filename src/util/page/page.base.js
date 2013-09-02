@@ -13,7 +13,7 @@ var f = function(){
         _v = _('nej.v'),
         _u = _('nej.u'),
         _p = _('nej.ut'),
-        _proAbstractPage;
+        _pro;
     if (!!_p._$$AbstractPage) return;
     /**
      * 分页逻辑封装基类<br />
@@ -97,7 +97,7 @@ var f = function(){
      * 
      */
     _p._$$AbstractPage = NEJ.C();
-      _proAbstractPage = _p._$$AbstractPage._$extend(_p._$$Event);
+    _pro = _p._$$AbstractPage._$extend(_p._$$Event);
     /**
      * 控件重置
      * @protected
@@ -105,7 +105,7 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proAbstractPage.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
         this.__pbtn  = _options.pbtn;
         this.__nbtn  = _options.nbtn;
@@ -126,7 +126,7 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proAbstractPage.__destroy = function(){
+    _pro.__destroy = function(){
         this.__supDestroy();
         delete this.__list;
         delete this.__name;
@@ -147,7 +147,7 @@ var f = function(){
      * @param  {Array} 列表节点
      * @return {Void}
      */
-    _proAbstractPage.__doPageListCheck = (function(){
+    _pro.__doPageListCheck = (function(){
         var _doInitDomEvent = function(_node){
             this.__list.push(_node);
             this.__doInitDomEvent([[
@@ -181,7 +181,7 @@ var f = function(){
      * @param  {Number} 页码值
      * @return {Void}
      */
-    _proAbstractPage.__doSetNodeIndex = function(_node,_index){
+    _pro.__doSetNodeIndex = function(_node,_index){
         if (_index==null){
             _node.innerText = '';
             _e._$setStyle(_node,'display','none');
@@ -200,7 +200,7 @@ var f = function(){
      * @method {__doSyncBtnState}
      * @return {Void}
      */
-    _proAbstractPage.__doSyncBtnState = function(){
+    _pro.__doSyncBtnState = function(){
         // sync start and previous
         if (this.__index<=1){
             _e._$addClassName(this.__pbtn,this.__disabled);
@@ -224,21 +224,22 @@ var f = function(){
      * @method {__doRefreshPage}
      * @return {Void}
      */
-    _proAbstractPage.__doRefreshPage = _f;
+    _pro.__doRefreshPage = _f;
     /**
      * 强制刷新至新页码
      * @protected
      * @method {__doChangeIndex}
      * @return {Void}
      */
-    _proAbstractPage.__doChangeIndex = function(){
+    _pro.__doChangeIndex = function(){
         this.__doRefreshPage();
         this.__doSyncBtnState();
         this._$dispatchEvent(
             'onchange',{
                 last:this.__last,
                 total:this.__total,
-                index:this.__index
+                index:this.__index,
+                ext:this.__extdata
             }
         );
     };
@@ -249,7 +250,7 @@ var f = function(){
      * @param  {Number}  页码
      * @return {Boolean} 是否保存成功
      */
-    _proAbstractPage.__doSaveIndex = function(_index){
+    _pro.__doSaveIndex = function(_index){
         _index = parseInt(_index);
         if (isNaN(_index)||
             this.__total==null)
@@ -267,11 +268,11 @@ var f = function(){
      * @param  {Number}  总页码
      * @return {Boolean} 页码是否保存成功
      */
-    _proAbstractPage.__doSaveTotal = function(_total){
+    _pro.__doSaveTotal = function(_total){
         _total = parseInt(_total);
         if (isNaN(_total)||_total<1) 
             return !1;
-        this.__total = _total; 
+        this.__total = _total;
         return !0;
     };
     /**
@@ -282,7 +283,7 @@ var f = function(){
      * @param  {Number} 页码标记
      * @return {Void}
      */
-    _proAbstractPage.__onClick = function(_event,_flag){
+    _pro.__onClick = function(_event,_flag){
         _v._$stopDefault(_event);
         var _element = _v._$getElement(_event);
         if (!_element||
@@ -317,7 +318,7 @@ var f = function(){
      * @method {_$getIndex}
      * @return {Number} 当前页码
      */
-    _proAbstractPage._$getIndex = function(){
+    _pro._$getIndex = function(){
         return this.__index;
     };
     /**
@@ -331,7 +332,7 @@ var f = function(){
      * @param  {Number} 页码值
      * @return {nej.ut._$$AbstractPage}
      */
-    _proAbstractPage._$setIndex = function(_index){
+    _pro._$setIndex = function(_index){
         var _oidx = this.__index;
         this.__doSaveIndex(_index);
         if (_oidx!=this.__index)
@@ -348,7 +349,7 @@ var f = function(){
      * @method {_$getTotal}
      * @return {Number} 页码总数
      */
-    _proAbstractPage._$getTotal = function(){
+    _pro._$getTotal = function(){
         return this.__total;
     };
     /**
@@ -362,7 +363,7 @@ var f = function(){
      * @param  {Number} 总页码数
      * @return {nej.ut._$$AbstractPage}
      */
-    _proAbstractPage._$setTotal = function(_total){
+    _pro._$setTotal = function(_total){
         if (this.__doSaveTotal(_total)&&
             this.__index!=null){
             this.__index = 1;
@@ -381,7 +382,7 @@ var f = function(){
      * @param  {Number} 总页码数
      * @return {nej.ut._$$AbstractPage}
      */
-    _proAbstractPage._$updateTotal = function(_total){
+    _pro._$updateTotal = function(_total){
         if (this.__doSaveTotal(_total)){
             this.__doRefreshPage();
             this.__doSyncBtnState();
@@ -400,7 +401,7 @@ var f = function(){
      * @param  {Number} 总页码数
      * @return {nej.ut._$$AbstractPage}
      */
-    _proAbstractPage._$updatePage = function(_index,_total){
+    _pro._$updatePage = function(_index,_total){
         if (!this.__doSaveTotal(_total)||
             !this.__doSaveIndex(_index))
             return this;

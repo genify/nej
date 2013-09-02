@@ -15,10 +15,12 @@
   <body>
     <textarea id="xxx">1234567890abcdefghijklmnopqrstuvwxyz</textarea>
     <input type="button" value="get" id="yyy"/>
+    <input type="text" placeholder="输入名字" id="xxxxx"/>
     <script src="../../src/define.js?pro=./"></script>
     <script>
       define(['{lib}base/element.js'
-             ,'{lib}util/encode/crc32.js'],
+             ,'{lib}util/encode/crc32.js'
+             ,'{lib}util/placeholder/placeholder.js'],
       function(){
           nej.v._$addEvent(
               'yyy','click',function(){
@@ -28,6 +30,10 @@
           );
           
           nej.e._$cursor('xxx',{start:5,end:10});
+          
+          nej.e._$placeholder('xxxxx');
+          
+          
       });
     </script>
   </body>

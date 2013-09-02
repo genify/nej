@@ -382,14 +382,41 @@ var f = function(){
      */
     _proDispatcher.__onClickDelegate = (function(){
         // check event need delegated
+        var _doParseUMI = function(_node){
+            // parse data-href
+            var _umi = _e._$dataset(_node,'href');
+            if (!!_umi) return _umi;
+            // parse href without data-not-umi
+            var _href = _e._$attr(_node,'href'),
+                _group = this.__groups[this.__pbseed];
+            if (!!_href&&!_e._$dataset('notUmi')){
+                // umi in hash
+                var _arr = _href.split('#');
+                _arr.shift();
+                var _umi = _arr.join('#');
+                if (!!_umi&&_group._$hasUMI(_d._$path2umi(_umi))){
+                    return _umi;
+                }
+                // umi in path
+                var _info = location.parse(_href);
+                if (_group._$hasUMI(_info.path)){
+                    return _info.path+'?'+
+                           _u._$object2query(_info.query);
+                }
+            }
+        };
         var _isNode = function(_node){
-            return !!_e._$dataset(_node,'href');
+            return !!_doParseUMI.call(this,_node);
         };
         return function(_event){
-            var _element = _v._$getElement(_event,_isNode);
+            var _element = _v._$getElement(
+                _event,_isNode._$bind(this)
+            );
             if (!!_element){
                 _v._$stopDefault(_event);
-                this._$redirect(_e._$dataset(_element,'href'));
+                this._$redirect(
+                    _doParseUMI.call(this,_node)
+                );
             }
         };
     })();

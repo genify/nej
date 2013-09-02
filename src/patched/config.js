@@ -120,4 +120,4 @@ var f = function(){
     _doInit(window.NEJ_CONF||NEJ.O);
 };
 NEJ.define('{lib}patched/config.js',
-      ['{lib}base/platform.js'],f);
+          ['{lib}base/platform.js'],f);

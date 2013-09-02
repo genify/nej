@@ -14,7 +14,8 @@ var f = function(){
         _u = _('nej.u'),
         _t = _('nej.ut'),
         _p = _('nej.ui'),
-        _proPager,_seed_html;
+        _pro,_sup,
+        _seed_html;
     if (!!_p._$$Pager) return;
     /**
      * 分页器控件封装<br />
@@ -53,9 +54,10 @@ var f = function(){
      * @class   {nej.ui._$$Pager} 分页器控件封装
      * @uses    {nej.ut._$$Page}
      * @extends {nej.ui._$$Abstract}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
-     * @config  {Number} index 当前页码
-     * @config  {Number} total 总页码数
+     * @param   {Object}  可选配置参数，已处理参数列表如下
+     * @config  {Number}  index 当前页码
+     * @config  {Number}  total 总页码数
+     * @config  {Boolean} noend 无尾页显示
      * 
      * [hr]
      * 
@@ -67,7 +69,8 @@ var f = function(){
      * 
      */
     _p._$$Pager = NEJ.C();
-    _proPager = _p._$$Pager._$extend(_p._$$AbstractPager);
+    _pro = _p._$$Pager._$extend(_p._$$AbstractPager);
+    _sup = _p._$$Pager._$supro;
     /**
      * 控件重置
      * @protected
@@ -75,7 +78,7 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proPager.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
         this.__page = _t._$$Page._$allocate(this.__popt);
     };
@@ -85,12 +88,30 @@ var f = function(){
      * @method {__initNodeTemplate}
      * @return {Void}
      */
-    _proPager.__initNodeTemplate = function(){
+    _pro.__initNodeTemplate = function(){
         _seed_html = _e._$addNodeTemplate(
                      '<div class="'+this.__seed_css+'">'
                      +this.__doGenPageListXhtml({number:9})+
                      '</div>');
         this.__seed_html = _seed_html;
+    };
+    /**
+     * 页面变化触发事件
+     * @protected
+     * @method {__onChange}
+     * @param  {Object} 事件对象
+     * @return {Void}
+     */
+    _pro.__onChange = function(_event){
+        if (!!this.__bopt.noend){
+            var _dext = _event.ext||_o,
+                _list = _dext.list||_r;
+            _e._$setStyle(
+                _list[_list.length-1],'display',
+                _dext.first&&!_dext.last?'':'none'
+            );
+        }
+        _sup.__onChange.apply(this,arguments);
     };
 };
 NEJ.define('{lib}ui/pager/pager.js',
