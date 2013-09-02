@@ -279,7 +279,7 @@ var f = function() {
      *   // 需要配合预先定义的position属性
      *   // top,bottom,left,right只可操作其一
      *   // 同时操作2个属性参照moveTo
-     *   _e._$silde(_node,'top:+100'{
+     *   _e._$slide(_node,'top:+100'{
      *       timing:'ease-out',
      *       delay:0,
      *       duration:5
@@ -294,10 +294,11 @@ var f = function() {
      * @config {String} duration 运动时间
      * @return {nej.e}
      */
-    _e._$silde = (function(){
+    _e._$slide = (function(){
         return function(_node,_position,_options){
             _node = _e._$get(_node);
             if(!!_node.effect) return !1;
+            _options = _e.__initOptions(_options);
             var _list  = _position.split(':'),
                 _pro0  = _list[0],
                 _styles= [];
