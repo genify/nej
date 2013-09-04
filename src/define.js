@@ -368,7 +368,7 @@ var _doCheckLoading = function(){
         if (__cache[_item.n]!==2){
             _item.f();
             __cache[_item.n] = 2;
-            console.log('do '+_item.n)
+            console.log('do '+_item.n);
         }
         i = __queue.length-1;
     }
@@ -377,7 +377,7 @@ var _doCheckLoading = function(){
         var _item = _doFindCircularRef()||__queue.pop();
         _item.f();
         __cache[_item.n] = 2;
-        console.log('do+ '+_item.n)
+        console.log('do+ '+_item.n);
         _doCheckLoading();
     }
 };

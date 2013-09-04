@@ -26,7 +26,7 @@ var f = function(){
         // FF toggle fix
         setTimeout(function(){
             _e._$style(_node,_rules);
-        },33)
+        },33);
         return this;
     };
 };

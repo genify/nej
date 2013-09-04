@@ -26,7 +26,7 @@ var f = function(){
      *                           onerror   [Function] - 异常回调事件
      */
     _p._$$Dispatcher = NEJ.C();
-      _proDispatcher = _p._$$Dispatcher._$extend(_p._$$Event)
+      _proDispatcher = _p._$$Dispatcher._$extend(_p._$$Event);
       _supDispatcher = _p._$$Dispatcher._$supro;
     /**
      * 控件初始化

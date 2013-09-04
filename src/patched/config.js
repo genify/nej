@@ -120,7 +120,7 @@ var f = function(){
      * @return {String} 代理文件地址
      */
     _c._$getFlashProxy = function(_url){
-        return _cache.flashs[_url2host(_url)]
+        return _cache.flashs[_url2host(_url)];
     };
     // init
     _doInit(window.NEJ_CONF||NEJ.O);

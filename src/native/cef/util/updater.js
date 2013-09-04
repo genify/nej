@@ -191,7 +191,7 @@ var f = function() {
              this._$dispatchEvent('onprogress',{file:_curfile,percent:_filePercent,totalPercent:_totalPercent,end:_end,suc:_suc});
              if(_end)
                     console.log('updatend');
-        }
+        };
     
     /**
      * 检查更新

@@ -67,7 +67,7 @@ var f = function(){
     j._$delDataInPreference = function(_key){
         PhoneGap._$exec('Properties.remove',{param:[null,_key]});
         PhoneGap._$exec('Properties.flush');
-    }
+    };
 };
 NEJ.define('{lib}native/ios/preference.js',
       ['{lib}native/ios/phonegap.js'],f);

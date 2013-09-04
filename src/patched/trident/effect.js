@@ -35,10 +35,10 @@ var f = function(){
     	var _doRbAnim = function(_rules,_anim){
     		var _str = '';
     		_u._$forIn(_rules,function(_value,_name){
-    			_str += _anim.replace('all',_name)
+    			_str += _anim.replace('all',_name);
     		});
     		return _str;
-    	}
+    	};
     	// 适配特殊属性
     	var _doAdap  = function(_value,_prop){
     		if(_prop === 'filter'){
@@ -84,11 +84,11 @@ var f = function(){
             onupdate:function(_offset){
     	        var _value = _offset.offset;
     	        if(!_h.__doCheckProp(_prop)){
-    	        	_value = _doAdap(_value,_prop)
-                _e._$setStyle(_node,_prop,_value);
-              }else{
-                _e._$setStyle(_node,_prop,_value + 'px');
-              }
+    	        	_value = _doAdap(_value,_prop);
+                    _e._$setStyle(_node,_prop,_value);
+                }else{
+                    _e._$setStyle(_node,_prop,_value + 'px');
+                }
             },
             onstop:function(_prop){
                 var _effect = _node.effects[_index];

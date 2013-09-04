@@ -77,7 +77,7 @@ var f = function(){
         }catch(e){
             return null;
         }
-    }
+    };
     /**
      * 节点选择器
      * 

@@ -110,7 +110,7 @@ var f = function(){
      * @return {Void}
      */
     __proXEP_REGISTER.__onReceiveField = (function(){
-        var _reg = /^x|instructions|registered$/i
+        var _reg = /^x|instructions|registered$/i;
         return function(_iq){
             var _obj = {},
                 _child = e._$getChildren(_iq.children[0]);

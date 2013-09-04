@@ -12,7 +12,7 @@ var f = function(){
         u = NEJ.P('nej.u'),
         e = NEJ.P('nej.e'),
         v = NEJ.P('nej.v'),
-        c = NEJ.P('navigator.n2j')
+        c = NEJ.P('navigator.n2j'),
         p = NEJ.P('nej.mb'),
         __cache = {};
     /**

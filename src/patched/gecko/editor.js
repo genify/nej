@@ -56,7 +56,7 @@ var f = function(){
     _h.__filterContentPath = function(_html){
         _html = _html.replace(__reg_fimg,'');//过滤掉源数据是base64内容的图片
         return _html.replace(__ffurl,'$1=$2'+__ffpth);
-    }
+    };
 };
 NEJ.define('{lib}patched/gecko/editor.js',
       ['{lib}patched/editor.js'],f);

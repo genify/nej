@@ -23,7 +23,7 @@ var f = function() {
         _extend = function(_name, _value, _options) {
             _options = _options || {};
             if (this[_name] == null || _options.override) this[_name] = _value;
-            return this
+            return this;
         },
         _bubbleUp = function(_sl, _node, _container) {
             while (_node && _node !== _container) {
@@ -44,7 +44,7 @@ var f = function() {
                     _result === _e || _result === _v);// 这两个是为了兼容nej
         },
         _isAcceptedNode = function(_node){
-            if(!_node) return false
+            if(!_node) return false;
             var _type = _node.nodeType;
             return _type === 1 || _type === 9 || //  element document
                 _type === 11|| _node.window === _node; // framement window
@@ -52,7 +52,7 @@ var f = function() {
         // 安全的添加原型, 本作用域内
         _safeProtoExtend = function(Type){
             var _proto = Type.prototype,
-                _list = {}
+                _list = {};
             return {
                 extend:function(_name, _fn){
                     _list[_name] = _proto._name;//先保存之前的
@@ -68,7 +68,7 @@ var f = function() {
                         }
                     }
                 }
-            }
+            };
         },
         _fn = _safeProtoExtend(Function);
 
@@ -78,7 +78,7 @@ var f = function() {
         var _fn = this;
         return function(_key, _value) {
             if (_u._$isObject(_key)){
-                var _args = _slice.call(arguments, 1)
+                var _args = _slice.call(arguments, 1);
                 for(var _i in _key){
                     _fn.apply(this, [_i, _key[_i]].concat(_args));
                 }
@@ -94,21 +94,21 @@ var f = function() {
             if(_u._$isArray(_params)){
                 var _args = _slice.call(arguments, 1),
                     _len = _params.length,
-                    _ret
+                    _ret;
                 if(_isGetter) _ret = {}; //当时getter函数需要返回值
                 for(var _i = 0 ; _i < _len ;_i++){
                     var _param = _params[_i],
                         _tmpRet = _fn.apply(this, [_param].concat(_args));
                     if(_isGetter && typeof _param === "string") _ret[_param] = _tmpRet;
                 }
-                return _isGetter? _ret : this
+                return _isGetter? _ret : this;
             }else{
                 return _fn.apply(this, arguments);
             }
-        }
+        };
     });
 
-    _extend = _extend.autoSet()
+    _extend = _extend.autoSet();
 
     // name space  _("nej.$")    
     var $ = nej.$ = function(_selector, _context){
@@ -126,7 +126,7 @@ var f = function() {
         this.length = 0;
         this._signs = {};//标示是否有了当前节点
         this._context = _context || _doc;
-        if(!_selector) return 
+        if(!_selector) return ;
         if(typeof _selector === "string"){
             if(_context && _context instanceof _$$NodeList) _context = _context[0];
             if(typeof _context == 'string') _context = $(_context)[0];
@@ -138,7 +138,7 @@ var f = function() {
     }
 
     // 扩展接口
-    $._$extend = _extend._$bind($)
+    $._$extend = _extend._$bind($);
 
 
     $._$extend({
@@ -152,7 +152,7 @@ var f = function() {
         _transport: function(_fn){
             return function(){
                 // if(!this.length) throw Error("内部节点集为空")
-                var _args = _slice.call(arguments)
+                var _args = _slice.call(arguments);
                 _args.unshift(this[0]);
 
                 var _ret = _fn.apply(this,_args);
@@ -164,8 +164,8 @@ var f = function() {
                     _args[0] = _node;
                     _fn.apply(this ,_args);
                 });
-                return this
-            }
+                return this;
+            };
         },
         _merge: function(_list1, _list2 , _filter){
             var _i = _list1.length || 0,
@@ -184,7 +184,7 @@ var f = function() {
         },
         // ** fork form jQuery **
         _contains: _docElem.contains ? function( _a, _b ) {
-            return _a === _b || (_a.nodeType == 9? _a[_de]: _a).contains(_b)
+            return _a === _b || (_a.nodeType == 9? _a[_de]: _a).contains(_b);
         }: _docElem.compareDocumentPosition ?
         function( _a, _b ) {
             // more info : https://gist.github.com/4601579
@@ -204,7 +204,7 @@ var f = function() {
             if(_withContent){
                 _be = nes.all("*", _node);
                 _be.push(_node);
-                _ce = nes.all("*", _clone)
+                _ce = nes.all("*", _clone);
                 _ce.push(_clone);
             }else{
                 _be = [_node];
@@ -222,7 +222,7 @@ var f = function() {
         _$matches : nes.matches,
         _$fn: _$$NodeList.prototype,
         _$uid : nes._getUid
-    })
+    });
 
     // proto function 扩展
     // ================================
@@ -271,7 +271,7 @@ var f = function() {
                 // 判断是否有需要处理属性的节点
                 _nodeName = _dest.nodeName.toLowerCase();
                 if(_prop = _definitions.fixProps[_nodeName]){
-                    _dest[_prop] = _src[_prop]
+                    _dest[_prop] = _src[_prop];
                 }
                 //移除节点标示
                 _dest.removeAttribute($._$signal);
@@ -304,12 +304,12 @@ var f = function() {
                 if(!_e.preventDefault) _e.preventDefault = function(){
                     this.returnValue = false;
                     return this;
-                }
+                };
 
                 if(!_e.stopPropagation) _e.stopPropagation = function(){
                    this.cancelBubble = true; 
                    return this;
-                }
+                };
             }
         }
     },
@@ -332,9 +332,9 @@ var f = function() {
                   }
                   _tmp = _tmp[_direct];
                 }
-            })
+            });
             return _ret;
-        }
+        };
     };
 
 
@@ -342,36 +342,36 @@ var f = function() {
 
         // NEJ-enhance API :style attr
         _$style: function(_key, _value){
-            if(!_key) throw Error("缺少css样式名")
+            if(!_key) throw Error("缺少css样式名");
             if(_value === undefined){
-                return _e._$getStyle(this[0], _key)
+                return _e._$getStyle(this[0], _key);
             }
             return this._$forEach(function(_node){
-                _e._$setStyle(_node, _key, _value)
+                _e._$setStyle(_node, _key, _value);
             });
         }.splitProcess(true).autoSet(),
         _$attr: function(_key, _value){
-            if(!_key) throw Error("缺少属性名")
+            if(!_key) throw Error("缺少属性名");
             if(_value === undefined){
-                return _e._$attr(this[0], _key)
+                return _e._$attr(this[0], _key);
             }
             return this._$forEach(function(_node){
-                _e._$attr(_node, _key, _value)
-            })
+                _e._$attr(_node, _key, _value);
+            });
         }.splitProcess(true).autoSet(),
 
         // 1. 工具类
         // ===========
         _$forEach: function(_fn){
-            _u._$forEach(this, _fn)
-            return this
+            _u._$forEach(this, _fn);
+            return this;
         },
         _$filter: function(_fn){
             var _ret = [],
                 _isSelctor = typeof _fn === "string";
             this._$forEach(function(_node, _index){
                 var _test = _isSelctor ? $._$matches(_node, _fn):_fn.call(this, _node, _index);
-                if(_test) _ret.push(_node)
+                if(_test) _ret.push(_node);
             });
             return $(_ret);
         },
@@ -381,14 +381,14 @@ var f = function() {
                 _isNotAllNode = false;
             this._$forEach(function(_node, _index){
                 var _res = _fn.call(this, _node, _index);
-                if(!_isAcceptedNode(_res)) _isNotAllNode = true
-                _ret.push(_res)
+                if(!_isAcceptedNode(_res)) _isNotAllNode = true;
+                _ret.push(_res);
             });
-            return _isNotAllNode ? _ret : $([])._$add(_ret)
+            return _isNotAllNode ? _ret : $([])._$add(_ret);
         },
         _$sort:function(){
             var _array = this._$get();
-            $._$uniqueSort(_array)
+            $._$uniqueSort(_array);
             return $(_array);
         },
         _$add:function(_node){
@@ -397,12 +397,12 @@ var f = function() {
             if(typeof _node.length !== "number" || _node === window) _node = [_node];
             $._merge(this, _node, function(_nodum){
                 if(!_isAcceptedNode(_nodum)) return false;
-                var _uid = $._$uid(_nodum) 
+                var _uid = $._$uid(_nodum); 
                 if(this._signs[_uid]){
-                    return false 
+                    return false; 
                 }else{
-                    this._signs[_uid] = 1
-                    return true
+                    this._signs[_uid] = 1;
+                    return true;
                 }
             });
             return this;
@@ -418,7 +418,7 @@ var f = function() {
             return wrap? $(this[0]) : this[0];
         },
         _$matches: function(_selector){
-            return $._$matches(this[0],_selector)
+            return $._$matches(this[0],_selector);
         },
         /**
          * 2. 遍历、获取
@@ -439,10 +439,10 @@ var f = function() {
                     : $(_node.childNodes);
                 _ret._$add(_backed);
             });
-            return _ret
+            return _ret;
         },
         _$siblings: function(_selector){ // sibling 默认就是取所有
-            return this._$prev(_selector, true)._$add(this._$next(_selector, true))
+            return this._$prev(_selector, true)._$add(this._$next(_selector, true));
         },
         // 3. 操作
         // =========================
@@ -455,53 +455,53 @@ var f = function() {
             if(!_definitions.insertor[_direct]) _direct = "bottom";
             var _content = $(_selector)[0], //将被插入的节点
                 _insertor = _definitions.insertor[_direct];
-            if(!_content) throw Error("The Element to be inserted is not exist")
+            if(!_content) throw Error("The Element to be inserted is not exist");
 
             return this._$forEach(function(_node, _index){
                 _insertor(_node, _index === 0? _content
-                    : $._$cloneNode(_content, true))//如果是多个节点则cloneNode
+                    : $._$cloneNode(_content, true));//如果是多个节点则cloneNode
             });
 
         },
         // e....  means insert To
         _$insert2: function(_selector, _direct){
-            $(_selector)._$insert(this, _direct)
-            return this
+            $(_selector)._$insert(this, _direct);
+            return this;
         },
         _$clone: function(_withContent){
             return this._$map(function(_node){
-                return $._$cloneNode(_node, _withContent)
-            })
+                return $._$cloneNode(_node, _withContent);
+            });
         },
         // 4. 属性
         // ===============================
         _$text: function(_content){
             if(_content === undefined){
-                if(!this[0]) throw Error("内部节点为空，无法完成get操作")
+                if(!this[0]) throw Error("内部节点为空，无法完成get操作");
                 return this[0][_textHandle];
             }
             return this._$forEach(function(_node){
-                _node[_textHandle] = _content
-            })
+                _node[_textHandle] = _content;
+            });
         },
         _$html: function(_content){
             if(_content === undefined){
-                if(!this[0]) throw Error("内部节点为空，无法完成get操作")
+                if(!this[0]) throw Error("内部节点为空，无法完成get操作");
                 return this[0].innerHTML;
             }
             return this._$forEach(function(_node){
                 _node.innerHTML = _content;
-            })
+            });
             return this;
         },
         _$val:function(_content){
             if(_content === undefined){
-                if(!this[0]) throw Error("内部节点为空，无法完成get操作")
+                if(!this[0]) throw Error("内部节点为空，无法完成get操作");
                 return this[0].value;
             }
             return this._$forEach(function(_node){
                 _node.value = _content;
-            })
+            });
             return this;
         },
 
@@ -529,7 +529,7 @@ var f = function() {
                 _v._$addEvent(_node, _event, _realCb);
                 // Fix: 我们保存原始_handler为了 nej的 delEvent可以正确解绑
                 // 省去再存储一份handler列表的开销
-            })
+            });
         },
         // 私有方法 解绑事件代理
         _undelegate:function(_event, _selector, _handler){
@@ -539,20 +539,20 @@ var f = function() {
                 var _handlers, _events, _selectors;
                 if (!(_handlers = $._delegateHandlers[_uid]) || 
                     !(_events = _handlers[_event]) || !(_selectors = _events[_selector])){
-                    return 
+                    return; 
                 }
                 for(var _len = _selectors.length;_len--;){
                     var _fn = _selectors[_len];
                     //如果没有传入_handler或者 函数匹配了
                     if(!_handler || _fn._raw === _handler){
-                        _v._$delEvent(_node, _event, _fn)
-                        _selectors.splice(_len,1)
+                        _v._$delEvent(_node, _event, _fn);
+                        _selectors.splice(_len,1);
                     }
                 }
                 // 如果被删光了
                 if(!_selectors.length) delete _events[_selector];
-            })
-            return this
+            });
+            return this;
         },
         _$on:function(_event, _selector, _handler){
             if(_event === undefined) throw Error("缺少事件名参数");
@@ -576,7 +576,7 @@ var f = function() {
                 _raw.real = _handler;//
             }    
             if(_selector){ // on ("click", "li.clas1", handler)或 on("click", "li.class1")
-                return this._delegate(_event,_selector, _handler)
+                return this._delegate(_event,_selector, _handler);
             }
             // on("click", handler)
             return this._$forEach(function(_node){
@@ -596,7 +596,7 @@ var f = function() {
             }
             if(_handler) _handler = _handler.real || _handler;
             if(_selector){ // off("click", ".class")   off("click", ".class", handler)
-                return this._undelegate(_event, _selector, _handler)
+                return this._undelegate(_event, _selector, _handler);
             }
             return this._$forEach(function(_node){
                 var _uid = $._$uid(_node),
@@ -604,35 +604,35 @@ var f = function() {
                     _events;
                 if(!_event){ // off()
                     if(_handlers){
-                        delete $._delegateHandlers[_uid] // 删除所有
+                        delete $._delegateHandlers[_uid]; // 删除所有
                     }
                     _v._$clearEvent(_node, _event);
                 }else{ 
                     if(_handlers) _events = _handlers[_event];
                     if(!_handler){ // off("click")
                         if(_events){
-                            delete _handlers[_event]
+                            delete _handlers[_event];
                         }
-                        _v._$clearEvent(_node, _event)
+                        _v._$clearEvent(_node, _event);
                     }else{ // off("click", handler)
                         // 这里不对delegate做清理是因为 这样不会对delegate发生影响
-                        _v._$delEvent(_node, _event, _handler)
+                        _v._$delEvent(_node, _event, _handler);
                     }
                 }
             });
         }.splitProcess().autoSet(),
 
         _$trigger:function(_event, _options){
-            if(typeof _event !== 'string') throw Error("事件类型参数错误")
+            if(typeof _event !== 'string') throw Error("事件类型参数错误");
             this._$forEach(function(_node){
-                _v._$dispatchEvent(_node, _event, _options)
-            })
-            return this
+                _v._$dispatchEvent(_node, _event, _options);
+            });
+            return this;
         }.splitProcess().autoSet(),
 
         // http://stackoverflow.com/questions/6599071/array-like-objects-in-javascript
         // 让这个对象看起来像数组
-        splice: function(){ throw Error("don't use the NodeList#splice")}
+        splice: function(){ throw Error("don't use the NodeList#splice");}
     });
     // @ remove 无法被混淆的方法
     // // 无奈 添加 _$before // _$before2   _$bottom _$bottom2等方法    
@@ -673,7 +673,7 @@ var f = function() {
     // });
     // 把原型还回去, WARN:千万注意
     _fn.reset();
-}
+};
 NEJ.define('{lib}util/chain/NodeList.js', [
     '{lib}util/query/query.js',
     '{lib}base/element.js',

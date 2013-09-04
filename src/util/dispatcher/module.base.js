@@ -91,7 +91,7 @@ var f = function(){
         var _reg0 = /^onshow|onrefresh|delay$/;
         return function(_umi){
             return _reg0.test(_umi);    
-        }
+        };
     })();
     /**
      * 生成组合模块的输入参数，子类实现具体业务逻辑
