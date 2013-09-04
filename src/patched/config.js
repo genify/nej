@@ -17,6 +17,9 @@
  *      // https request proxy
  *      // default value -> $root+'nej_proxy_flash.swf'
  *      ajax : '/res/nej_proxy_flash.swf'
+ *      // portrait root
+ *      // default value -> $root+'portrait/'
+ *      portrait : '/res/portrait/'
  *      // cross domain xhr request for ie6-ie9
  *      // if path not start with http[s]://
  *      // will use /res/nej_proxy_frame.html as default
@@ -64,6 +67,9 @@ var f = function(){
         return function(_config){
             // root
             _c.__set('root',_config.root||'/res/');
+            // portrait root
+            _c.__set('portrait',_config.portrait||
+                    (_c._$get('root')+'portrait/'));
             // ajax by flash proxy
             _c.__set('ajax.swf',_config.ajax||
                     (_c._$get('root')+'nej_proxy_flash.swf'));

@@ -8,6 +8,7 @@
 var f = function(){
     var _  = NEJ.P,
         _o = NEJ.O,
+        _r = NEJ.R,
         _c = _('nej.c'),
         _u = _('nej.u'),
         _p = _('nej.ut'),
@@ -57,7 +58,7 @@ var f = function(){
     _pro.__doLoadList = function(_options){
         var _type = (_options.data||_o).type||'',
             _list = _dmap[_type]||[],
-            _root = _c._$get('root')+'portrait/';
+            _root = _c._$get('portrait');
         if (!(_list[0]||_o).id){
             _u._$forEach(
                 _list,function(_value,_index){
@@ -66,6 +67,12 @@ var f = function(){
                         id:_type+'-'+_index,
                         url:_root+_type+'/preview/'+_type+_index+'.gif'
                     };
+                }
+            );
+        }else if(_type=='type'&&(_list[0]||_o).total==null){
+            _u._$forEach(
+                _list,function(_item){
+                    _item.total = (_dmap[_item.id]||_r).length;
                 }
             );
         }

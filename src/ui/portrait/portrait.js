@@ -8,7 +8,6 @@
 var f = function(){
     // variable declaration
     var _  = NEJ.P,
-        _c = _('nej.c'),
         _g = _('nej.g'),
         _e = _('nej.e'),
         _v = _('nej.v'),
@@ -242,10 +241,8 @@ var f = function(){
     _seed_css = _e._$pushCSSText('\
         .#<uispace>{width:310px;padding:5px;background:#e5e5e1;border:1px solid #888;}\
         .#<uispace> .zlst{position:relative;height:190px;}\
-        .#<uispace> .zlst .zitm{display:block;float:left;width:30px;height:30px;line-height:30px;margin:-1px 0 0 -1px;text-indent:200px;overflow:hidden;border:1px solid #e5e5e1;cursor:pointer;}\
+        .#<uispace> .zlst .zitm{display:block;float:left;width:30px;height:30px;line-height:30px;margin:-1px 0 0 -1px;text-indent:200px;overflow:hidden;border:1px solid #e5e5e1;cursor:pointer;background:no-repeat;}\
         .#<uispace> .zlst .zitm:hover{position:relative;border-color:#000;zoom:1;}\
-        .#<uispace> .js-page-1 .zitm{background:url('+_c._$get('root')+'portrait/face/face-0.png) no-repeat;}\
-        .#<uispace> .js-page-2 .zitm{background:url('+_c._$get('root')+'portrait/face/face-1.png) no-repeat;}\
         '+_arr.join('')+'\
         .#<uispace> .zpbx{padding:5px 0;text-align:right;}\
         .#<uispace> .zpager .zbtn,.#<uispace> .zpager .zpgi{border:0;margin:0;}\
@@ -272,5 +269,4 @@ NEJ.define('{lib}ui/portrait/portrait.js',
           ['{patch}config.js'
           ,'{lib}base/constant.js'
           ,'{lib}ui/pager/pager.simple.js'
-          ,'{lib}util/portrait/portrait.js'
           ,'{lib}util/list/module.pager.js'],f);

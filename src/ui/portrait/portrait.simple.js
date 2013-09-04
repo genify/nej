@@ -9,9 +9,11 @@ var f = function(){
     // variable declaration
     var _  = NEJ.P,
         _c = _('nej.c'),
+        _e = _('nej.e'),
         _u = _('nej.u'),
         _p = _('nej.ui'),
-        _pro;
+        _pro,
+        _seed_css;
     if (!!_p._$$SimplePortrait) return;
     /**
      * 简易表情控件
@@ -49,7 +51,15 @@ var f = function(){
         ];
         var _doInit = function(){
             if (!!_ilist[0].id) return;
-            var _root = _c._$get('root')+'portrait/face/preview/';
+            // push css text
+            var _arr = [],
+                _prefix = _c._$get('portrait')+'face/face-';
+            for(var i=0;i<2;i++){
+                _arr.push('.#<uispace> .js-page-'+(i+1)+' .zitm{background-image:url('+_prefix+i+'.png);}');
+            }
+            _seed_css = _e._$pushCSSText(_arr.join(' '));
+            // format data
+            var _root = _c._$get('portrait')+'face/preview/';
             _u._$forEach(
                 _ilist,function(_text,_index,_list){
                     _list[_index] = {
@@ -82,6 +92,7 @@ var f = function(){
     _pro.__reset = function(_options){
         this.__supReset(_options);
         _options.cache = NEJ.X({},this.__popt.cache);
+        _options.clazz = _seed_css+' '+(_options.clazz||'');
         this.__portrait = _p._$$Portrait._$allocate(_options);
     };
     /**
