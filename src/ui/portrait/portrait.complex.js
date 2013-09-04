@@ -1,6 +1,6 @@
 /*
  * ------------------------------------------
- * 简易表情控件封装实现文件
+ * 复杂表情控件封装实现文件
  * @version  1.0
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
@@ -19,7 +19,7 @@ var f = function(){
         _seed_ilist;
     if (!!_p._$$ComplexPortrait) return;
     /**
-     * 简易表情控件
+     * 复杂表情控件
      * 
      * @class   {nej.ui._$$ComplexPortrait}
      * @extends {nej.ut._$$Event}
