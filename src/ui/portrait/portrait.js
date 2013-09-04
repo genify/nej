@@ -234,6 +234,11 @@ var f = function(){
             _arr.push('.#<uispace> .zlst .z30-'+(i*10+j)+'{background-position:-'+(j*30)+'px -'+(i*30)+'px;}');
         }
     }
+    for(var i=0;i<3;i++){
+        for(var j=0;j<5;j++){
+            _arr.push('.#<uispace> .zlst .z60-'+(i*5+j)+'{background-position:-'+(j*60)+'px -'+(i*60)+'px;}');
+        }
+    }
     _seed_css = _e._$pushCSSText('\
         .#<uispace>{width:310px;padding:5px;background:#e5e5e1;border:1px solid #888;}\
         .#<uispace> .zlst{position:relative;height:190px;}\
