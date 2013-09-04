@@ -57,6 +57,8 @@ var f = function(){
      * @param  {Object} tab信息
      * @config {Number} last  上一次的tab索引
      * @config {Number} index 需要切换到的tab索引
+     * @config {Array}  list  节点列表
+     * @config {String} data  节点上通过data-value设置的内容
      * 
      */
     _p._$$Tab = NEJ.C();
@@ -158,10 +160,12 @@ var f = function(){
             _v._$stopDefault(arguments[1]);
             return this;
         }
-        var _event = {index:_index
-                     ,last:this.__index
-                     ,list:this._$getList()
-                     ,data:_e._$dataset(_element,'value')};
+        var _event = {
+            index:_index,
+            last:this.__index,
+            list:this._$getList(),
+            data:_e._$dataset(_element,'value')
+        };
         this.__index = _index;
         _element = this.__list[_event.last];
         if (!!_element)
@@ -231,6 +235,6 @@ var f = function(){
     _x.isChange = !0;
 };
 NEJ.define('{lib}util/tab/tab.js',
-      ['{lib}base/event.js'
-      ,'{lib}base/element.js'
-      ,'{lib}util/event.js'],f);
+          ['{lib}base/event.js'
+          ,'{lib}base/element.js'
+          ,'{lib}util/event.js'],f);

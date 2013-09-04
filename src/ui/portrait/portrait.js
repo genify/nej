@@ -48,6 +48,7 @@ var f = function(){
                 klass:_seed_ilist
             },
             pager:{
+                fixed:!0,
                 clazz:'zpager',
                 klass:_p._$$SimplePager
             },
@@ -241,14 +242,17 @@ var f = function(){
     _seed_css = _e._$pushCSSText('\
         .#<uispace>{width:310px;padding:5px;background:#e5e5e1;border:1px solid #888;}\
         .#<uispace> .zlst{position:relative;height:190px;}\
-        .#<uispace> .zlst .zitm{display:block;float:left;width:30px;height:30px;line-height:30px;margin:-1px 0 0 -1px;text-indent:200px;overflow:hidden;border:1px solid #e5e5e1;cursor:pointer;background:no-repeat;}\
+        .#<uispace> .zlst .zitm{display:block;float:left;margin:-1px 0 0 -1px;text-indent:200px;overflow:hidden;border:1px solid #e5e5e1;cursor:pointer;background:no-repeat;}\
         .#<uispace> .zlst .zitm:hover{position:relative;border-color:#000;zoom:1;}\
+        .#<uispace> .zlst .z30{width:30px;height:30px;line-height:30px;}\
+        .#<uispace> .zlst .z60{width:61px;height:60px;line-height:60px;}\
         '+_arr.join('')+'\
-        .#<uispace> .zpbx{padding:5px 0;text-align:right;}\
+        .#<uispace> .zpbx{padding:5px 0 1px;text-align:right;}\
         .#<uispace> .zpager .zbtn,.#<uispace> .zpager .zpgi{border:0;margin:0;}\
         .#<uispace> .zpager .zpgi{display:none;}\
         .#<uispace> .zpager .js-disabled{color:#777;}\
-        .#<uispace> .js-prev{position:absolute;top:0;left:0;width:60px;height:60px;background:#fff no-repeat center center;border:1px solid #888;}\
+        .#<uispace> .js-prev{position:absolute;top:0;left:0;background:#fff no-repeat center center;border:1px solid #888;}\
+        .#<uispace> .js-prev-30{width:60px;height:60px;}\
         .#<uispace> .js-prev-30 img{display:none;}\
     ');
     _seed_html = _e._$addNodeTemplate('\
@@ -260,7 +264,7 @@ var f = function(){
     _seed_ilist = _e._$addHtmlTemplate('\
         {list beg..end as y}\
           {var x=xlist[y]}\
-          <a href="#" hidefocus="true" class="zitm z${size}-${y%(row*col)}" title="${x.text}"\
+          <a href="#" hidefocus="true" class="zitm z${size} z${size}-${y%(row*col)}" title="${x.text}"\
              data-id="${x.id}" data-align="{if y%col<col/2}right{else}left{/if} top">${x.text}</a>\
         {/list}\
     ');

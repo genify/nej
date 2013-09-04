@@ -27,7 +27,7 @@ var f = function(){
      * @config  {Number}        first  首页显示数量，默认为limit的值
      * @config  {String|Object} item   列表JST模版标识或者Item配置，{clazz:'xxx',klass:_$$Item||'jst key'}
      * @config  {Object}        cache  缓存配置信息，{key:'primary key',lkey:'list key',data:{},klass:_$$ListCache,list:[],clear:true,total:200}
-     * @config  {Object}        pager  分页器配置信息，{parent:'xxx',klass:_$$Pager,index:2}
+     * @config  {Object}        pager  分页器配置信息，{parent:'xxx',klass:_$$Pager,index:2,fixed:true}
      * 
      * [hr]
      * 下拉刷新列表之前处理业务逻辑，可用于处理loading状态的显示
@@ -345,6 +345,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__doSwitchPagerShow = function(_display){
+        if (!!this.__popt.fixed) return;
         _e._$setStyle(this.__popt.parent,'display',_display);
         _u._$forEach(
             this.__pbid,function(_parent){

@@ -67,8 +67,8 @@ var f = function(){
      * @config  {Object} label 按钮文案，{prev:'&lt;',next:'&gt;'}
      * 
      * [hr]
-     * 
-     * @event  {onchange} 页码切换事件，输入{last:3,index:1,total:12}
+     * 页码切换事件，输入{last:3,index:1,total:12}
+     * @event  {onchange} 
      * @param  {Object} 页码状态对象
      * @config {Number} last  上一次的页码
      * @config {Number} index 当前要切换的页面

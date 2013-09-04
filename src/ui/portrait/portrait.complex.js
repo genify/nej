@@ -40,43 +40,32 @@ var f = function(){
      * 控件初始化
      * @return {Void}
      */
-    _pro.__init = (function(){
-        var _ilist = [
-            '微笑','开怀笑','哭泣','失望','困了','好好笑','啵','电到了','汗','流口水了',
-            '真困啊','我吐','眨眼','？？？','嘘','砸死你','不说','坏','色迷迷','教训',
-            '可爱','YEAH','崩溃','惊讶','鄙视','开心','仰慕你','晕','挖鼻孔','撒娇', 
-            '鼓掌','害羞','老大','欠揍','吐舌笑脸','飞吻','工作忙','大哭','偷偷笑','送花给你', 
-            '来，亲一个','拍桌子','拜拜','得意的笑','生气','怕怕','尴尬','难过','叹气','我是女生', 
-            '玫瑰','好爱你','心碎了','亲亲','NO','YES','握个手','到点了','音乐','我是男生', 
-            '带血的刀','炸弹','有了','好晚了','吸血蝙蝠','便便','干一杯','抽烟','打电话','家', 
-            '车子','礼物','金钱','太阳','下雨','猪猪','小猫','小狗','骨头','喝水', 
-            '汉堡','包子','西瓜','约会','CALL我'
-        ];
-        var _doInit = function(){
-            if (!_u._$isString(_ilist[0])) return;
-            var _root = _c._$get('root')+'portrait/face/preview/';
-            _u._$forEach(
-                _ilist,function(_text,_index,_list){
-                    _list[_index] = {
-                        text:_text,
-                        id:'sp-'+_index,
-                        url:_root+'face'+_index+'.gif'
-                    };
-                }
-            );
+    _pro.__init = function(){
+        this.__popt = {
+            clazz:'zptrt',
+            cache:{
+                data:{},
+                klass:_t._$$PortraitCache
+            }
         };
-        return function(){
-            _doInit();
-            this.__popt = {
-                limit:60,
-                pager:{clazz:'zpager'},
-                list:_ilist,
-                item:_seed_ilist,
-                onselect:this._$dispatchEvent._$bind(this,'onselect')
-            };
-            this.__supInit();
+        this.__topt = {
+            offset:0,
+            limit:1000,
+            data:{type:'type'},
+            key:'portrait-type'
         };
-    })();
+        this.__bopt = {
+            onchange:this.__onTypeChange._$bind(this)
+        };
+        this.__copt = {
+            onlistload:this.__cbTypeListLoad._$bind(this)
+        };
+        this.__gopt = {
+            limit:8,
+            onchange:this.__onPageChange._$bind(this)
+        };
+        this.__supInit();
+    };
     /**
      * 控件重置
      * @protected
@@ -85,8 +74,12 @@ var f = function(){
      * @return {Void}
      */
     _pro.__reset = function(_options){
+        this.__popt.onselect = _options.onselect;
+        delete _options.onselect;
         this.__supReset(_options);
-        this.__portrait = _t._$$Portrait._$allocate(this.__popt);
+        this.__cache = _t._$$PortraitCache
+                         ._$allocate(this.__copt);
+        this.__cache._$getList(this.__topt);
     };
     /**
      * 控件销毁
@@ -94,10 +87,7 @@ var f = function(){
      */
     _pro.__destroy = function(){
         this.__supDestroy();
-        if (!!this.__portrait){
-            this.__portrait._$recycle();
-            delete this.__portrait;
-        }
+        this.__doClearComponent();
     };
     /**
      * 初始化外观
@@ -113,48 +103,132 @@ var f = function(){
      */
     _pro.__initNode = function(){
         this.__supInitNode();
-        // 0 - item list box
-        // 1 - pager box
+        // 0 - previous type
+        // 1 - type list
+        // 2 - next type
+        // 3 - portrait list
         var _list = _e._$getByClassName(this.__body,'j-flag');
-        this.__popt.lbox = _list[0];
-        this.__popt.pager.parent = _list[1];
+        this.__tbox = _list[1];
+        this.__gopt.pbtn = _list[0];
+        this.__gopt.nbtn = _list[2];
+        this.__popt.parent = _list[3];
+    };
+    /**
+     * 分类列表载入回调
+     * @return {Void}
+     */
+    _pro.__cbTypeListLoad = (function(){
+        var _inited = !1,
+            _limit = {
+                30:60,
+                60:15
+            };
+        var _doInit = function(_list){
+            if (_inited)
+                return;
+            _inited = !0;
+            var _arr = [];
+            _u._$forEach(
+                _list,function(_item){
+                    var _id = _item.id,
+                        _prefix = _c._$get('portrait')+_id+'/'+_id+'-',
+                        _total = Math.ceil(_item.total/_limit[_item.size]);
+                    for(var i=0;i<_total;i++){
+                        _arr.push('.'+_seed_css+' .js-'+_id+'-'+(i+1)+' .zitm{background-image:url('+_prefix+i+'.png);}');
+                    }
+                }
+            );
+            _e._$addStyle(_arr.join(''));
+        };
+        return function(_options){
+            var _list = this.__cache.
+                _$getListInCache(_options.key);
+            _doInit(_list);
+            _e._$renderHtmlTemplate(
+                this.__tbox,_seed_tlist,{
+                    xlist:_list
+                }
+            );
+            this.__gopt.total = Math.ceil(_list.length/this.__gopt.limit);
+            this.__pager = _t._$$SimplePage._$allocate(this.__gopt);
+            this.__bopt.list = _e._$getChildren(this.__tbox);
+            this.__taber = _t._$$Tab._$allocate(this.__bopt);
+        };
+    })();
+    /**
+     * 分类变化事件
+     * @param  {Object} 分类信息
+     * @return {Void}
+     */
+    _pro.__onTypeChange = function(_event){
+        if (!!this.__portrait){
+            this.__portrait._$recycle();
+        }
+        var _cache = this.__popt.cache,
+            _item = this.__cache._$getItemInCache(_event.data);
+        this.__popt.size = _item.size;
+        this.__popt.page = 'js-'+_item.id+'-';
+        _cache.lkey = 'portrait-'+_item.id;
+        _cache.data.type = _item.id;
+        this.__portrait = _p._$$Portrait._$allocate(this.__popt);
+    };
+    /**
+     * 分类页码变化事件
+     * @param  {Object} 页码信息
+     * @return {Void}
+     */
+    _pro.__onPageChange = function(_event){
+        var _offset = 0;
+        if (!!this.__taber){
+            var _list = this.__taber._$getList(),
+                _index = (_event.index-1)*this.__gopt.limit,
+                _offset = Math.max(0,_list[_index].offsetTop-2);
+            this.__taber._$go(_index);
+        }
+        _e._$setStyle(this.__tbox,'top',0-_offset+'px');
     };
     // init style and html
-    var _arr = [];
-    for(var i=0;i<6;i++){
-        for(var j=0;j<10;j++){
-            _arr.push('.#<uispace> .zlst .zbg'+(i*10+j)+'{background-position:-'+(j*30)+'px -'+(i*30)+'px;}');
-        }
-    }
     _seed_css = _e._$pushCSSText('\
-        .#<uispace>{width:310px;padding:5px;background:#e5e5e1;border:1px solid #888;}\
-        .#<uispace> .zlst{position:relative;height:190px;}\
-        .#<uispace> .zlst .zitm{display:block;float:left;width:30px;height:30px;line-height:30px;margin:-1px 0 0 -1px;text-indent:200px;overflow:hidden;border:1px solid #e5e5e1;cursor:pointer;}\
-        .#<uispace> .zlst .zitm:hover{position:relative;border-color:#000;zoom:1;}\
-        .#<uispace> .js-page-1 .zitm{background:url('+_c._$get('root')+'portrait/face/face-0.png) no-repeat;}\
-        .#<uispace> .js-page-2 .zitm{background:url('+_c._$get('root')+'portrait/face/face-1.png) no-repeat;}\
-        '+_arr.join('')+'\
-        .#<uispace> .zpbx{padding:5px 0;text-align:right;}\
-        .#<uispace> .zpager .zbtn,.#<uispace> .zpager .zpgi{border:0;margin:0;}\
-        .#<uispace> .zpager .zpgi{display:none;}\
-        .#<uispace> .zpager .js-disabled{color:#777;}\
-        .#<uispace> .js-prev{position:absolute;width:60px;height:60px;background:#fff no-repeat center center;border:1px solid #888;}\
-        .#<uispace> .js-prev img{display:none;}\
+        .#<uispace>{width:410px;border:1px;font-size:12px;text-align:center;}\
+        .#<uispace>,.#<uispace> .zbrd{border-style:solid;border-color:#aaa;}\
+        .#<uispace> a{text-decoration:none;}\
+        .#<uispace> .zbgp{background:url('+_c._$get('portrait')+'btn.png) no-repeat;}\
+        .#<uispace> .zsdb{float:right;width:80px;text-align:left;}\
+        .#<uispace> .zsdb .zpgr{text-align:center;}\
+        .#<uispace> .zsdb .zpgr span{display:block;height:24px;margin:0 10px;border-color:#eee;cursor:pointer;}\
+        .#<uispace> .zsdb .zpup span{border-width:0 0 1px;background-position:center 2px;}\
+        .#<uispace> .zsdb .zpdn span{border-width:1px 0 0;background-position:center -18px;}\
+        .#<uispace> .zsdb .zwin{position:relative;height:180px;overflow:hidden;}\
+        .#<uispace> .zsdb .zlst{position:absolute;top:0;left:0;width:100%;}\
+        .#<uispace> .zsdb .zlst .zitm{height:22px;line-height:22px;padding-left:5px;border-width:0;}\
+        .#<uispace> .zsdb .zlst .zitm.js-selected{border-width:1px 0;margin-left:0;}\
+        .#<uispace> .zsdb .zbtn{display:block;margin-left:1px;color:#777;}\
+        .#<uispace> .zsdb .zbtn:hover,\
+        .#<uispace> .zsdb .zlst .zitm.js-selected{background-color:#e5e5e1;color:#000;text-decoration:none;}\
+        .#<uispace> .zsdb .js-disabled{cursor:default;}\
+        .#<uispace> .zsdb .js-disabled span{opacity:0.6;filter:alpha(opacity=60);cursor:default;}\
+        .#<uispace> .zsdb .js-disabled:hover{background-color:transparent;}\
+        .#<uispace> .zcnt{margin-right:79px;padding:5px 5px 0;border-width:0 1px 0 0;background:#e5e5e1;}\
+        .#<uispace> .zcnt .zptrt{border:none;}\
     ');
     _seed_html = _e._$addNodeTemplate('\
-        <div class="'+_seed_css+'">\
-          <div class="zlst j-flag"></div>\
-          <div class="zpbx j-flag"></div>\
+        <div class="'+_seed_css+' zbrd">\
+          <div class="zsdb">\
+            <a class="zbtn zpgr zpup j-flag" href="#" hidefocus="true" title="上一页"><span class="zbrd zbgp">&nbsp;</span></a>\
+            <div class="zwin"><div class="zlst j-flag"></div></div>\
+            <a class="zbtn zpgr zpdn j-flag" href="#" hidefocus="true" title="下一页"><span class="zbrd zbgp">&nbsp;</span></a>\
+          </div>\
+          <div class="zcnt zbrd j-flag"></div>\
         </div>\
     ');
-    _seed_ilist = _e._$addHtmlTemplate('\
-        {list beg..end as y}\
-          {var x=xlist[y]}\
-          <a href="#" hidefocus="true" class="zitm zbg${y%60}" title="${x.text}"\
-             data-id="${x.id}" data-align="{if y%10<5}right{else}left{/if} top">${x.text}</a>\
+    _seed_tlist = _e._$addHtmlTemplate('\
+        {list xlist as x}\
+        <a href="#" hidefoucus="true" class="zbtn zitm zbrd" data-value="${x.id}">${x.name}</a>\
         {/list}\
     ');
 };
 NEJ.define('{lib}ui/portrait/portrait.complex.js',
-          ['{patch}config.js'
-          ,'{lib}util/portrait/portrait.js'],f);
+          ['{lib}ui/portrait/portrait.js'
+          ,'{lib}util/tab/tab.js'
+          ,'{lib}util/page/page.simple.js'
+          ,'{lib}util/data/portrait/portrait.js'],f);
