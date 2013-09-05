@@ -777,7 +777,8 @@ var f = function(){
      * @return {Void}
      */
     _pro.__doCheckResult = function(_event,_name){
-        if (!_event.data){
+        var _item = _event.data;
+        if (!_item||_item[this.__iopt.pkey]==null){
             this._$dispatchEvent('onerror',_event);
             _event.stopped = !0;
         }
