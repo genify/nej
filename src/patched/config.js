@@ -27,6 +27,9 @@
  *      // flash crossdomain.xml file path
  *      // default value -> http://a.b.com/crossdomain.xml
  *      p_flash:['http://a.b.com/proxy/crossdomain.xml']
+ *      // CSRF cookie name and parameter name
+ *      // default value -> {cookie:'',param:''}
+ *      p_csrf:{cookie:'',param:''}
  *  };
  * @version  1.0
  * @author   genify(caijf@corp.netease.com)
@@ -76,9 +79,14 @@ var f = function(){
             // clipboard flash
             _c.__set('clipboard.swf',_config.clipboard||
                     (_c._$get('root')+'nej_clipboard.swf'));
-            // chart flash            
+            // chart flash
             _c.__set('chart.swf',_config.chart||
                     (_c._$get('root')+'nej_flex_chart.swf'));
+            // csrf config
+            _c.__set('csrf',NEJ.EX({
+                cookie:'p_info',
+                param:'csrf_token'
+            },_config.p_csrf));
             // ajax by frame proxy
             _cache.frames = {};
             _doInitProxy(_config.p_frame,_cache.frames);
