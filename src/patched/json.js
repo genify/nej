@@ -8,4 +8,5 @@
 var f = function(){
     
 };
-NEJ.define('{lib}patched/json.js',f);
+NEJ.define('{lib}patched/json.js',
+          ['{lib}base/platform.js'],f);
