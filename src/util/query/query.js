@@ -119,5 +119,5 @@ var f = function(){
     _e._$g = nes._get;
 };
 NEJ.define('{lib}util/query/query.js',
-      ['{lib}base/global.js'
-      ,'{lib}util/query/nes.js'],f);
+          ['{lib}base/global.js'
+          ,'{lib}util/query/nes.js'],f);

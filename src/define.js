@@ -58,7 +58,7 @@ var _doInit = function(){
     if (!__config.global)
         p.define = NEJ.define;
 };
-/**
+/*
  * 解析地址
  * @param  {String} 
  * @return {Void}
@@ -141,7 +141,7 @@ var _doParsePatched = function(_list){
         }
     }
 };
-/**
+/*
  * 根据给定地址指定请求编码
  * @param  {String} _uri 地址
  * @return {String}      编码方式
@@ -483,12 +483,14 @@ var _doDefine = (function(){
  *  function(){
  *      // TODO something
  *  });
+ * 
  * [/code]
  * 
  * @api    {NEJ.define}
  * @param  {String}   当前所在文件，确定文件中模块不会被其他文件依赖时可以不用传此参数，比如入口文件
  * @param  {Array}    模块依赖的其他模块文件，没有依赖其他文件可不传此参数
  * @param  {Function} 模块定义回调【必须】
+ * @return {Void}
  */
 window.NEJ = {};
 NEJ.define = function(_uri,_deps,_callback){
