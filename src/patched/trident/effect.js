@@ -13,6 +13,7 @@ var f = function(){
     	_u = _('nej.u'),
     	_h = _('nej.h'),
     	_p = _('nej.p'),
+      _x = _('nej.x'),
     	_ut= _('nej.ut');
    	if (_p._$NOT_PATCH.trident) return;
     var _animMap = {
@@ -159,6 +160,7 @@ var f = function(){
     _h.__onRestart = function(_node,_rules,_anim){
         return this;
     };*/
+
 
 };
 NEJ.define('{lib}patched/trident/effect.js',
