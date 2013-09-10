@@ -50,7 +50,7 @@ var f = function() {
         var fn3 = function() {
                 return "fn3"
             }
-        $._$implement("_$test1", fn1)
+        $._$implement({_$test1: fn1})
         deepEqual($()._$test1, fn1)
         $._$implement({
             "fn2": fn2,
@@ -70,10 +70,10 @@ var f = function() {
             }
 
         $._$implement("sfn1", staticFn, {
-            static: true
+            statics: true
         })
         $._$implement("sfn2", staticFn2, {
-            static: true
+            statics: true
         })
 
         var _list = $("#chainable li")
@@ -85,7 +85,7 @@ var f = function() {
 
         ok(_notAll === false, "所有的节点都被影响了")
 
-        equal(_list.sfn2(), 20, "set型方法不可链式，且有返回值");
+        equal(_list.sfn2(), 20, "get型方法不可链式，且有返回值");
     })
     
 
