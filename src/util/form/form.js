@@ -273,7 +273,7 @@ var f = function(){
             this.__fopt = {
                 mode:_mode,
                 clazz:_options.focus
-            }
+            };
         }
         // save class name
         this.__holder = _options.holder;

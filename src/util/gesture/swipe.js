@@ -69,7 +69,7 @@ var f = function(){
             _options.direction = _deltax<0?'left':'right';
             _options.distance = _absx;
             _options.movement = _deltax;
-            this.__doDispatchEvent('swipe',_touch,_options)
+            this.__doDispatchEvent('swipe',_touch,_options);
         }
     };
     

@@ -12,7 +12,7 @@ var f = function(){
         _e = _('nej.e'),
         _u = _('nej.u'),
         _p = _('nej.ut'),
-        _proSimplePage;
+        _pro;
     if (!!_p._$$SimplePage) return;
     /**
      * 一段分页器业务逻辑封装，主要适合于以下形式的分页器<br />
@@ -87,14 +87,14 @@ var f = function(){
      * 
      */
     _p._$$SimplePage = NEJ.C();
-      _proSimplePage = _p._$$SimplePage._$extend(_p._$$AbstractPage);
+    _pro = _p._$$SimplePage._$extend(_p._$$AbstractPage);
     /**
      * 刷新页码列表算法
      * @protected
      * @method {__doRefreshPage}
      * @return {Void}
      */
-    _proSimplePage.__doRefreshPage = function(){
+    _pro.__doRefreshPage = function(){
         var _length = this.__list.length;
         if (!_length) return;
         var _middle = Math.floor(_length/2),
@@ -112,7 +112,7 @@ var f = function(){
      * @param  {Boolean} 是否禁用
      * @return {Void}
      */
-    _proSimplePage._$disableNext = function(_disabled){
+    _pro._$disableNext = function(_disabled){
         if (!_disabled){
             this.__total = Number.MAX_VALUE;
         }else{

@@ -93,7 +93,7 @@ var f = function(){
     _proDrag.__doTouchEnd = function(_touch,_event){
         if(!this.__dragstart) return;
         _touch = _touch[0];
-        var _o = this.__getDetal(_touch)
+        var _o = this.__getDetal(_touch);
         this.__doDispatchEvent('dragcomplete',_touch,_o);
         this.__dragstart = !1;
     };

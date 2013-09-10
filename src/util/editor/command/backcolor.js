@@ -31,7 +31,7 @@ var f = function(){
      */
     _proBackColor.__init = function(){
         this.__supInit();
-        this.__fopt['default'] = '#fff'; 
+        this.__fopt.defaultColor = '#fff';
     };
     // regist command implemention
     _p._$$BackColor._$regist();

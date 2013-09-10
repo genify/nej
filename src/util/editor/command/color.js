@@ -43,5 +43,5 @@ var f = function(){
     _p._$$Color._$regist();
 };
 NEJ.define('{lib}util/editor/command/color.js',
-      ['{lib}util/editor/command/card.js'
-      ,'{lib}ui/editor/command/color.js'],f);
+          ['{lib}util/editor/command/card.js'
+          ,'{lib}ui/editor/command/color.js'],f);

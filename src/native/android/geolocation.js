@@ -24,7 +24,7 @@ var f = function(){
     p.getCurrentPosition = function(_options){
             _options = _options||o;
             if (!!__cache.gp){
-                try{(_options.onerror||f)({code:3,message:'Geolocation Error: Still waiting for previous getCurrentPosition() request.'})}catch(ex){}
+                try{(_options.onerror||f)({code:3,message:'Geolocation Error: Still waiting for previous getCurrentPosition() request.'});}catch(ex){}
                 return;
             }
             __cache.gp = {onerror:_options.onerror||f,

@@ -58,6 +58,7 @@ var f = function() {
      * @config {Number}  height   窗体高度
      * @config {Boolean} topmost  窗体是否置顶
      * @config {String}  align    对齐方式，格式定义：水平对齐方式+空格+垂直对齐方式，如 left top
+     * @config {Object}  area     区域位置，默认自动计算，格式如：{x:0,y:0,width:100,height:200}
      * @return {Void}
      */
     _p._$configWindowPosition = (function(){
@@ -80,7 +81,7 @@ var f = function() {
             // set window position
             var _aligns = (_options.align||'').trim().split(_reg0),
                 _position = NEJ.EX({width:0,height:0,topmost:!1},_options),
-                _wkarea = (_n._$exec('os.getSystemInfo','monitor')||_o).workArea||_o;
+                _wkarea = _options.area||(_n._$exec('os.getSystemInfo','monitor')||_o).workArea||_o;
             _position.x = _wkarea.x+(_fmap[_aligns[0]]||_fmap.center)(_position.width,_wkarea.width);
             _position.y = _wkarea.y+(_fmap[_aligns[1]]||_fmap.center)(_position.height,_wkarea.height);
             if (!_options.name){
@@ -134,7 +135,8 @@ var f = function() {
         if (!_name){
             _n._$exec('winhelper.showWindow','show');
         }else{
-            _n._$exec('winhelper.setNativeWindowShow',_name,!0);
+            var _area = (_n._$exec('os.getSystemInfo','monitor')||_o).workArea||_o;
+            _n._$exec('winhelper.setNativeWindowShow',_name,!0,_area);
         }
     };
     /**
@@ -146,7 +148,8 @@ var f = function() {
         if (!_name){
             _n._$exec('winhelper.showWindow','hide');
         }else{
-            _n._$exec('winhelper.setNativeWindowShow',_name,!1);
+            var _area = (_n._$exec('os.getSystemInfo','monitor')||_o).workArea||_o;
+            _n._$exec('winhelper.setNativeWindowShow',_name,!1,_area);
         }
     };
     /**
@@ -258,11 +261,12 @@ var f = function() {
      * @return {Void}
      */
     _p._$popMenu = (function(){
-        var _reg0 = /\)$/;
+        var _reg0 = /\)$/,
+            _reg1 = /\s+/g;
         var _doCheckHotKey = function(_value,_id){
             var _item = _p._$getMenuItemById(_id);
             if (!!_item&&!_reg0.test(_item.text)){
-                _item.text += '('+_value+')';
+                _item.text += '('+_value.replace(_reg1,'+')+')';
             }
         };
         var _doCompleteHotKey = function(_hotkey){

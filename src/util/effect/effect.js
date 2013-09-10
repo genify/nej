@@ -113,9 +113,14 @@ var f = function(){
         this.__transition = _options.transition||[];
         this.__propMap = {};
         this.__animRule= this.__doParseStyle();
-        this.__doInitDomEvent([
-            [this.__node,'transitionend',this.__onTransitionEnd._$bind(this)]
-        ]);
+        // IE10只触发一次hack
+        if(!!_h.__onTransitionEnd && _h.__onTransitionEnd()){
+            setTimeout(this.__onTransitionEnd._$bind(this),this.__sumtime * 1000);
+        }else{
+            this.__doInitDomEvent([
+                [this.__node,'transitionend',this.__onTransitionEnd._$bind(this)]
+            ]);
+        }
     };
 
     /**
@@ -143,6 +148,12 @@ var f = function(){
      * @return {Void}  
      */
     _proEffect.__onTransitionEnd = function(_event){
+        // IE10只触发一次hack
+        if(!!_h.__onTransitionEnd && _h.__onTransitionEnd()){
+            this.__start = !1;
+            this._$stop();
+            return;
+        }
         if(!!this.__start&&this.__isLast(_event)){
             this.__start = !1;
             this._$stop();
@@ -157,9 +168,9 @@ var f = function(){
     _proEffect.__isLast = function(_event){
         var _name = _event.propertyName;
         if((_name === this.__lastProp)||(_name.indexOf(this.__lastProp) > -1))
-            return true;
+            return !0;
         else
-            return false;
+            return !1;
     };
     /**
      * 解析出目标样式
@@ -167,15 +178,15 @@ var f = function(){
      */
     _proEffect.__doParseStyle = (function(){
         // 根据属性的拼写规则，做适当的调整
-        var _doParseStyle = function(_node,_style){
+        var _doParseStyle = function(_style){
             var _list  = _style.split(':'),
                 _prop  = _list[0],
-                _value = _list[1];
+                _value = _list[1],
+                _node  = this.__node;
             // 需要解析=号
             if(_value.indexOf('=') > -1){
-                var _a = _e._$getStyle(_node,_prop)||0;
-                _a = parseInt(_a) * 1 || 0;
-                var _b = parseInt(_value.split('=')[1]) * 1;
+                var _a = parseInt(_e._$getStyle(_node,_prop))||0;
+                var _b = parseInt(_value.split('=')[1]);
                 if(_value.indexOf('+') > -1)
                     _value = _a + _b;
                 else
@@ -187,7 +198,6 @@ var f = function(){
                     _value += 'px';
             }
             this.__propMap[_prop] = _value;
-            return _prop + ':' + _value + ';';
         };
         // 解析动画的规则
         var _doParseAnim = function(_index){
@@ -195,7 +205,7 @@ var f = function(){
                 return '';
             var _rule = this.__transition[_index],
                 _t = _rule.duration + _rule.delay;
-            if( _t > this.__sumtime){
+            if( _t >= this.__sumtime){
                 this.__sumtime = _t;
                 this.__lastProp = _rule.property;
             }
@@ -205,7 +215,7 @@ var f = function(){
             var _animRule = '';
             this.__sumtime = 0;
             _u._$forEach(this.__styles,function(_style,_index){
-                _doParseStyle.call(this,this.__node,_style);
+                _doParseStyle.call(this,_style);
                 _animRule += _doParseAnim.call(this,_index);
             }._$bind(this));
             return _animRule;
@@ -232,7 +242,7 @@ var f = function(){
     _proEffect._$start = function(){
         this.__start = !0;
         _h.__onStart(this.__node,this.__propMap,this.__animRule,this.__onstop);
-        this.__intvl = window.setInterval(this.__onPlayState._$bind(this),50);
+        this.__intvl = window.setInterval(this.__onPlayState._$bind(this),49);
         return this;
     };
 
@@ -242,9 +252,8 @@ var f = function(){
      * @return {nej.ut}
      */
     _proEffect._$stop = function(){
-        _h.__onStop(this.__node,this.__propMap);
+        _h.__onStop(this.__node,this.__propMap,this.__onstop);
         this.__intvl = window.clearInterval(this.__intvl);
-        this._$dispatchEvent('onstop',this.__state);
         return this;
     };
 
@@ -252,20 +261,19 @@ var f = function(){
      * 暂停动画
      * @method {nej.e._$paused}
      * @return {nej.ut}
-     
+     */
     _proEffect._$paused = function(){
-        _h.__onPaused(this.__node,this.__state);
-        return this;
+       // todo
     };
 
     /**
      * 暂停后重新开始动画
      * @method {nej.e._$restart}
      * @return {nej.ut}
+     */
     _proEffect._$restart = function(){
-        _h.__onRestart(this.__node,this.__propMap,this.__animRule);
-        return this;
-    };*/
+        // todo
+    };
 };
 NEJ.define('{lib}util/effect/effect.js',
       ['{lib}base/element.js'

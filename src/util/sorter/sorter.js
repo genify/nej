@@ -248,7 +248,7 @@ var f = function(){
             if(this.__to < 0) return;
             if(_doCheckSort.call(this)) return;
             _doSort.call(this);
-        }
+        };
     })();
 };
 NEJ.define('{lib}util/sorter/sorter.js',

@@ -65,17 +65,17 @@ var f = function(){
         // for test
         window.setTimeout(function(){
             var _event = _options.onload(_options.data);
-            _v._$dispatchEvent(
-                _p._$$CustomCache,'listchange',_event);
+            //_v._$dispatchEvent(
+            //    _p._$$CustomCache,'listchange',_event);
         },500);
         
     };
-	
+	/*
 	_t._$$CustomEvent._$allocate({
 		element:_p._$$CustomCache,
 		event:'listchange'
 	})
-	
+	*/
 };
 define('{pro}cache.js',
       ['{lib}util/event/event.js'

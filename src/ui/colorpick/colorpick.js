@@ -47,31 +47,35 @@ var f = function(){
      *   var _cp = _p._$$ColorPick._$allocate({
      *       parent:'colorpanel-box',
      *       color:'默认rgb颜色',
-     *       default:'默认rgb颜色',
-     *       onchange:function(_color){
+     *       defaultColor:'默认rgb颜色',
+     *       onchange:function(_event){
      *           // 选择颜色或者亮度的时候触发
+     *           console.log(_event.color)
      *       },
      *       onselect:function(_color){
      *           // 最后保存颜色的时候触发
+     *           console.log(_event.color)
      *       }
      *   });
      * [/code]
-     * @class   {nej.ui._$$ColorPick} 颜色选择控件
+     * @class   {nej.ui._$$ColorPick}
      * @uses    {nej.ui._$$ColorPanel}
      * @extends {nej.ui._$$Abstract}
      * @param   {Object} 可选配置参数，已处理参数列表如下
-     * @config  {String} color   颜色值
-     * @config  {String} default 默认颜色值
+     * @config  {String} color        颜色值
+     * @config  {String} defaultColor 默认颜色值
      * 
      * [hr]
-     * 
-     * @event  {onchange} 颜色变化触发事件
-     * @param  {String}   颜色值
+     * 颜色变化触发事件
+     * @event  {onchange} 
+     * @param  {Object}   颜色信息
+     * @config {String}   color 颜色值
      * 
      * [hr]
-     * 
-     * @event  {onselect} 确定选择颜色触发事件
-     * @param  {String}   颜色值
+     * 确定选择颜色触发事件
+     * @event  {onselect} 
+     * @param  {Object}   颜色信息
+     * @config {String}   color 颜色值
      * 
      */
     _p._$$ColorPick = NEJ.C();
@@ -96,7 +100,7 @@ var f = function(){
      */
     _proColorPick.__reset = function(_options){
         this.__supReset(_options);
-        this.__default = _options['default']||'#fff';
+        this.__default = _options.defaultColor||'#fff';
         this.__popt.color = _options.color||this.__default;
         this.__panel = _p._$$ColorPanel._$allocate(this.__popt);
     };
@@ -159,7 +163,7 @@ var f = function(){
     _proColorPick.__onColorChange = function(_color){
         this.__ninput.value = _color.substr(1);
         _e._$setStyle(this.__npreview,'backgroundColor',_color);
-        this._$dispatchEvent('onchange',_color);
+        this._$dispatchEvent('onchange',{color:_color});
     };
     /**
      * 确定选择颜色
@@ -173,7 +177,7 @@ var f = function(){
             return;
         this.__panel._$setColor(_color);
         _color = '#'+this.__ninput.value.trim();
-        this._$dispatchEvent('onselect',_color);
+        this._$dispatchEvent('onselect',{color:_color});
     };
     /**
      * 回车事件侦测
@@ -204,4 +208,4 @@ var f = function(){
     };
 };
 NEJ.define('{lib}ui/colorpick/colorpick.js',
-      ['{lib}ui/colorpick/colorpanel.js'],f);
+          ['{lib}ui/colorpick/colorpanel.js'],f);

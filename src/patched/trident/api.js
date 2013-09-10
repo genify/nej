@@ -103,6 +103,51 @@ var f = function(){
     });
      */
     /**
+     * 设置光标位置
+     * @return {Void}
+     */
+    _h.__setCursorPosition = 
+    _h.__setCursorPosition._$aop(function(_event){
+        var _textarea = _event.args[0],
+            _position = _event.args[1];
+        if (_textarea.selectionStart==null){
+            _event.stopped = !0;
+            var _range = _textarea.createTextRange();
+            _range.collapse(!0);
+            _range.moveStart('character',_position.start);
+            _range.moveEnd('character',_position.end-_position.start);
+            _range.select();
+            _textarea.focus();
+        }
+    });
+    /**
+     * 取光标位置
+     * @return {Void}
+     */
+    _h.__getCursorPosition = 
+    _h.__getCursorPosition._$aop(function(_event){
+        var _textarea = _event.args[0];
+        // fix bug for ie9 selectionStart/seletionEnd
+        _textarea.focus();
+        if (_textarea.selectionStart==null){
+            _event.stopped = !0;
+            var _range0 = document.selection.createRange();
+            // create in textarea object and match to document.selection
+            var _range1 = _textarea.createTextRange();
+            _range1.moveToBookmark(_range0.getBookmark());
+            // create textrange object for left amount of textarea & align them
+            var _range2 = _textarea.createTextRange();
+            _range2.collapse(!0);
+            _range2.setEndPoint("EndToStart",_range1);
+            // dump start and end
+            var _start = _range2.text.length;
+            _event.value = {
+                start:_start,
+                end:_start+_range0.text.length
+            };
+        }
+    });
+    /**
      * 将dom节点转为xml串
      * @param  {Node} _dom 节点
      * @return {String}    xml串
@@ -448,4 +493,4 @@ if (_p._$KERNEL.release<5.0){
     try{document.execCommand('BackgroundImageCache',!1,!0);}catch(e){}
 };
 NEJ.define('{lib}patched/trident/api.js',
-      ['{lib}patched/api.js'],f);
+          ['{lib}patched/api.js'],f);

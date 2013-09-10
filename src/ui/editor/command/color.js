@@ -40,8 +40,7 @@ var f = function(){
      */
     _proColorCard.__init = function(){
         this.__copt = {
-            clazz:_seed_css
-           ,onselect:this.__onColorSelect._$bind(this)
+            onselect:this.__onColorSelect._$bind(this)
         };
         this.__supInit();
     };
@@ -55,9 +54,9 @@ var f = function(){
     _proColorCard.__reset = function(_options){
         this.__supReset(_options);
         this.__copt.color = _options.color;
-        this.__copt['default'] = _options['default'];
         this.__copt.parent = this.__layer._$getBody();
-        this.__colorpick = _i._$$ColorPick._$allocate(this.__copt);
+        this.__copt.defaultColor = _options.defaultColor;
+        this.__colorpick = this.__getColorPicker();
     };
     /**
      * 控件回收
@@ -74,17 +73,25 @@ var f = function(){
         this.__supDestroy();
     };
     /**
+     * 取取色器实例
+     * @return {Void}
+     */
+    _proColorCard.__getColorPicker = function(){
+        this.__copt.clazz = _seed_css;
+        return _i._$$ColorPick._$allocate(this.__copt);
+    };
+    /**
      * 颜色选择回调
      * @protected
      * @method {__onColorSelect}
      * @param  {String} 颜色值
      * @return {Void}
      */
-    _proColorCard.__onColorSelect = function(_color){
-        this._$dispatchEvent('onchange',_color);
+    _proColorCard.__onColorSelect = function(_event){
+        this._$dispatchEvent('onchange',_event.color);
         this._$hide();
     };
 };
 NEJ.define('{lib}ui/editor/command/color.js',
-      ['{lib}ui/layer/card.wrapper.js'
-      ,'{lib}ui/colorpick/colorpick.js'],f);
+          ['{lib}ui/layer/card.wrapper.js'
+          ,'{lib}ui/colorpick/colorpick.js'],f);

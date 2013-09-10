@@ -16,7 +16,7 @@ var f = function(){
     // this speed is noticeable especially when coding larger texts (>5k or so)
     for(var i=0,l=__b64tab.length,c;i<l;i++){
         c = __b64tab.charAt(i);
-        __b64char[i] = c
+        __b64char[i] = c;
         __b64index[c] = i;
     }
     // returns an array of byterepresenting dezimal numbers which represent the

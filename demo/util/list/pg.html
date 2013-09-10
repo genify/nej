@@ -15,11 +15,14 @@
   <body>
   	<div class="fl xx">
   	  <h1>JST模版</h1>
+  	  <input type="button" value="refresh" id="xxx"/>
+  	  <div id="page-box-00"></div>
   	  <div id="list-box-0"></div>
-  	  <div id="page-box-0"></div>
+  	  <div id="page-box-01"></div>
   	</div>
   	<div class="fl xx">
   	  <h1>ITEM模版</h1>
+      <input type="button" value="update" id="yyy"/>
   	  <div id="list-box-1"></div>
   	  <div id="page-box-1"></div>
   	</div>
@@ -43,7 +46,7 @@
       </textarea>
     </div>
     <script>
-        var test_data = [];
+        var test_data = [{id:1,name:'test',loginTime:+new Date}];
         for(var i=0;i<104;i++){
             test_data.push({id:+new Date+i,name:'user-'+(+new Date+i),loginTime:+new Date});
         }
@@ -60,13 +63,13 @@
               _x = _('tst.ut');
           
           _e._$parseTemplate('template-box');
-          _t._$$ListModulePG._$allocate({
+          var _module = _t._$$ListModulePG._$allocate({
               limit:10,
-              first:12,
+              //first:12,
               item:'jst-list',
               parent:'list-box-0',
-              pager:{parent:'page-box-0'},
-              cache:{/*klass:_x._$$CustomCache*/lkey:'abc',list:test_data},
+              pager:{parent:['page-box-00','page-box-01'],index:3},
+              cache:{klass:_x._$$CustomCache,lkey:'abc'/*,list:test_data*/,total:40},
               onupdate:function(_event){
                   console.log('update from jst -> '+_event.data.id);
                   this._$update({
@@ -81,13 +84,22 @@
               }
           });
           
+          nej.v._$addEvent(
+              'xxx','click',function(){
+                  alert(0);
+                  _module._$clearListData(40);
+                  _module._$refresh();
+                  alert(1);
+              }
+          );
+          
           
           function a(){
               var xx = _t._$$ListModulePG._$allocate({
                   parent:'list-box-1',
                   item:{klass:_x._$$Item},
                   pager:{parent:'page-box-1'},
-                  cache:{/*klass:_x._$$CustomCache,*/lkey:'abc',list:test_data},
+                  cache:{klass:_x._$$CustomCache,lkey:'abc',list:test_data},
                   onupdate:function(_event){
                       xx._$recycle();
                       return;
@@ -103,6 +115,14 @@
                       this._$delete(_event.data);
                   }
               });
+              nej.v._$addEvent(
+                  'yyy','click',function(){
+                      xx._$update({
+                          id:1,
+                          name:'xxxxxxxxxxxxxxx'+(+new Date)
+                      });
+                  }
+              );
           }
           a();
           

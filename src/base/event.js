@@ -268,7 +268,7 @@ var f = function(){
                     _doClearByType(_id,_type);
                 });
             delete _cache[_id];
-        }
+        };
         return function(_element,_type){
             !_type ? _doClearAll(_element)
                    : _doClearByType(_element,_type);

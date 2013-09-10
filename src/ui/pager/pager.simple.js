@@ -14,7 +14,8 @@ var f = function(){
         _u = _('nej.u'),
         _t = _('nej.ut'),
         _p = _('nej.ui'),
-        _proSimplePager,_seed_html;
+        _pro,
+        _seed_html;
     if (!!_p._$$SimplePager) return;
     /**
      * 分页器控件封装<br />
@@ -67,7 +68,7 @@ var f = function(){
      * 
      */
     _p._$$SimplePager = NEJ.C();
-    _proSimplePager = _p._$$SimplePager._$extend(_p._$$AbstractPager);
+    _pro = _p._$$SimplePager._$extend(_p._$$AbstractPager);
     /**
      * 控件重置
      * @protected
@@ -75,7 +76,7 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proSimplePager.__reset = function(_options){
+    _pro.__reset = function(_options){
         if (_options.total==null)
             _options.total = 10000;
         this.__supReset(_options);
@@ -87,7 +88,7 @@ var f = function(){
      * @method {__initNodeTemplate}
      * @return {Void}
      */
-    _proSimplePager.__initNodeTemplate = function(){
+    _pro.__initNodeTemplate = function(){
         _seed_html = _e._$addNodeTemplate(
                      '<div class="'+this.__seed_css+'">'
                      +this.__doGenPageListXhtml({number:1})+

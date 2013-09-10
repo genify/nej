@@ -12,8 +12,7 @@ var f = function(){
         _u = _('nej.u'),
         _e = _('nej.e'),
         _p = _('nej.ut'),
-        _proListModulePG,
-        _supListModulePG;
+        _pro,_sup;
     if (!!_p._$$ListModulePG) return;
     /**
      * 分页式列表模块
@@ -106,16 +105,16 @@ var f = function(){
      * 
      */
     _p._$$ListModulePG = NEJ.C();
-      _proListModulePG = _p._$$ListModulePG._$extend(_p._$$ListModule);
-      _supListModulePG = _p._$$ListModulePG._$supro;
+    _pro = _p._$$ListModulePG._$extend(_p._$$ListModule);
+    _sup = _p._$$ListModulePG._$supro;
     /**
      * 取当前偏移量的分页信息
      * @param  {Number} 偏移位置
      * @param  {Number} 长度
      * @return {Object} 分页信息，如：{index:1,total:4}
      */
-    _proListModulePG.__getPageInfo = function(_offset,_length){
-        return _supListModulePG.__getPageInfo.call(
+    _pro.__getPageInfo = function(_offset,_length){
+        return _sup.__getPageInfo.call(
             this,this.__first,_offset,this.__limit,_length
         );
     };
@@ -124,7 +123,7 @@ var f = function(){
      * @param  {Number} 页码
      * @return {Number} 偏移量
      */
-    _proListModulePG.__getOffsetByIndex = function(_index){
+    _pro.__getOffsetByIndex = function(_index){
         var _offset = 0;
         if (_index>1)
             _offset = this.__first+(
@@ -138,8 +137,8 @@ var f = function(){
      * @param  {Object} 页码信息
      * @return {Void}
      */
-    _proListModulePG.__doChangePage = function(_event){
-        _supListModulePG.__doChangePage.apply(this,arguments);
+    _pro.__doChangePage = function(_event){
+        _sup.__doChangePage.apply(this,arguments);
         if (!_event.stopped){
             this.__doChangeOffset(
                 this.__getOffsetByIndex(_event.index)
@@ -152,10 +151,9 @@ var f = function(){
      * @method {__doBeforeListLoad}
      * @return {Void}
      */
-    _proListModulePG.__doBeforeListLoad = function(){
+    _pro.__doBeforeListLoad = function(){
         this.__doClearListBox();
         this.__doShowMessage('onbeforelistload','列表加载中...');
-        _e._$setStyle(this.__popt.parent,'visibility','hidden');
     };
     /**
      * 数据载入之后处理逻辑
@@ -163,8 +161,8 @@ var f = function(){
      * @method {__doBeforeListShow}
      * @return {Void}
      */
-    _proListModulePG.__doBeforeListShow = function(){
-        _supListModulePG.__doBeforeListShow.apply(this,arguments);
+    _pro.__doBeforeListShow = function(){
+        _sup.__doBeforeListShow.apply(this,arguments);
         this.__doClearListBox();
     };
     /**
@@ -173,10 +171,10 @@ var f = function(){
      * @method {__doBeforeListRend er}
      * @return {Void}
      */
-    _proListModulePG.__doBeforeListRender = function(_list,_offset,_limit){
+    _pro.__doBeforeListRender = function(_list,_offset,_limit){
         var _info = this.__getPageInfo(_offset,_list.length);
         if (this.__doSyncPager(_info.index,_info.total)) return !0;
-        _e._$setStyle(this.__popt.parent,'display',_info.total>1?'':'none');
+        this.__doSwitchPagerShow(_info.total>1?'':'none');
     };
     /**
      * 列表为空时处理逻辑
@@ -184,7 +182,7 @@ var f = function(){
      * @method {__doShowEmpty}
      * @return {Void}
      */
-    _proListModulePG.__doShowEmpty = function(){
+    _pro.__doShowEmpty = function(){
         this.__doShowMessage('onemptylist','没有列表数据！');
     };
     /**
@@ -196,12 +194,12 @@ var f = function(){
      * @param  {Object} 扩展信息
      * @return {Void} 
      */
-    _proListModulePG.__doRenderMessage = function(_message,_pos){
+    _pro.__doRenderMessage = function(_message,_pos){
         if (!_pos){
             this.__lbox.innerHTML = _message;
             return;
         }
-        _supListModulePG.__doRenderMessage.apply(this,arguments);
+        _sup.__doRenderMessage.apply(this,arguments);
     };
     /**
      * 以jst模版方式绘制列表
@@ -209,7 +207,7 @@ var f = function(){
      * @method {__doShowListByJST}
      * @return {Void}
      */
-    _proListModulePG.__doShowListByJST = function(_html){
+    _pro.__doShowListByJST = function(_html){
         this.__lbox.innerHTML = _html;
     };
     /**
@@ -218,7 +216,7 @@ var f = function(){
      * @method {__doShowListByItem}
      * @return {Void}
      */
-    _proListModulePG.__doShowListByItem = function(_items){
+    _pro.__doShowListByItem = function(_items){
         this.__items = _items;
     };
     /**
@@ -227,7 +225,7 @@ var f = function(){
      * @method {__cbItemAdd}
      * @return {Void}
      */
-    _proListModulePG.__cbItemAdd = function(_event){
+    _pro.__cbItemAdd = function(_event){
         this.__doCheckResult(_event,'onafteradd');
         if (!_event.stopped) this._$refresh();
     };
@@ -237,7 +235,7 @@ var f = function(){
      * @method {__cbItemDelete}
      * @return {Void}
      */
-    _proListModulePG.__cbItemDelete = function(_event){
+    _pro.__cbItemDelete = function(_event){
         this.__doCheckResult(_event,'onafterdelete');
         if (!_event.stopped) this._$refresh();
     };
@@ -246,18 +244,18 @@ var f = function(){
      * @protected
      * @method {__cbItemUpdate}
      * @return {Void}
-     */
-    _proListModulePG.__cbItemUpdate = function(_event){
+    _pro.__cbItemUpdate = function(_event){
         this.__doCheckResult(_event,'onafterupdate');
         if (!_event.stopped) this._$refresh();
     };
+     */
     /**
      * 批量添加回调
      * @param  {Object} 偏移量
      * @param  {Object} 数量
      * @return {Void}
      */
-    _proListModulePG.__cbAppendList = function(_offset,_limit){
+    _pro.__cbAppendList = function(_offset,_limit){
         var _index = 1;
         if (!!this.__pager){
             _index = this.__pager._$getIndex();
@@ -269,10 +267,7 @@ var f = function(){
                 0,this._$getTotal()
             );
             this.__pager._$updateTotal(_info.total);
-            _e._$setStyle(
-                this.__popt.parent,
-                'display',_info.total>1?'':'none'
-            );
+            this.__doSwitchPagerShow(_info.total>1?'':'none');
         }else{
             this._$refresh();
         }

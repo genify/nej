@@ -1,6 +1,6 @@
 /**
  * ------------------------------------------
- * 本地存储接口实现文件
+ * 动画效果接口实现文件
  * @version  1.0
  * @author   cheng-lin(cheng-lin@corp.netease.com)
  * ------------------------------------------
@@ -48,9 +48,10 @@ var f = function(){
      * @param  {String} 节点目标样式
      * @return {nej.h}
      */
-    _h.__onStop = function(_node,_state){
+    _h.__onStop = function(_node,_state,_stop){
         _e._$style(_node,_state);
         _e._$setStyle(_node,'transition','none');
+        _stop.call(null,_state);
         return this;
     };
 

@@ -121,7 +121,7 @@ var f = function(){
      * 
      */
     _p._$$Dispatcher = NEJ.C();
-      _proDispatcher = _p._$$Dispatcher._$extend(_p._$$Event)
+      _proDispatcher = _p._$$Dispatcher._$extend(_p._$$Event);
     /**
      * 控件初始化
      * @protected
@@ -277,7 +277,7 @@ var f = function(){
                                   _value.test(_href))){
                                 // /^\/a\/([\d]+)\/([\d]+)\/$/ ---> /a/?p=$1&k=$2
                                 // /a/123/456/ ---> /a/?p=123&k=456
-                                _result = _reg.test(_key)?_umi.replace(_value,_key):_key
+                                _result = _reg.test(_key)?_umi.replace(_value,_key):_key;
                                 return !0;
                             }
                             if (_value===_umi||
@@ -382,14 +382,49 @@ var f = function(){
      */
     _proDispatcher.__onClickDelegate = (function(){
         // check event need delegated
+        var _doCheckUMI = function(_url,_href){
+            if (!_url) return;
+            var _info = location.parse(_url);
+            this._$dispatchEvent('onbeforechange',_info);
+            var _umi = this.__doRewriteUMI(
+                _info.path,_href||_info.href
+            );
+            return this.__groups[this.__pbseed]._$hasUMI(_umi);
+        };
+        var _doParseUMI = function(_node){
+            // parse data-href
+            var _umi = _e._$dataset(_node,'href');
+            if (!!_umi) return _umi;
+            // parse href without data-not-umi
+            var _href = _e._$attr(_node,'href');
+            if (!!_href&&!_e._$dataset(_node,'notUmi')){
+                // umi in hash
+                var _arr = _href.split('#');
+                _arr.shift();
+                var _umi = _arr.join('#');
+                if (_doCheckUMI.call(this,_umi,_href)){
+                    return _umi;
+                }
+                // umi in path
+                if (_doCheckUMI.call(this,_href)){
+                    var _info = location.parse(_href);
+                    return _info.path+'?'+
+                           _u._$object2query(_info.query);
+                }
+            }
+        };
         var _isNode = function(_node){
-            return !!_e._$dataset(_node,'href');
+            return !!_doParseUMI.call(this,_node);
         };
         return function(_event){
-            var _element = _v._$getElement(_event,_isNode);
+            var _element = _v._$getElement(
+                _event,_isNode._$bind(this)
+            );
             if (!!_element){
                 _v._$stopDefault(_event);
-                this._$redirect(_e._$dataset(_element,'href'));
+                this._$redirect(
+                    _doParseUMI.call(this,_element)
+                );
             }
         };
     })();

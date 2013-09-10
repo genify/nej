@@ -14,7 +14,7 @@ var f = function(){
         _u = _('nej.u'),
         _i = _('nej.ui'),
         _p = _('nej.ut'),
-        _proListModule;
+        _pro;
     if (!!_p._$$ListModule) return;
     /**
      * 列表模块基类
@@ -27,7 +27,7 @@ var f = function(){
      * @config  {Number}        first  首页显示数量，默认为limit的值
      * @config  {String|Object} item   列表JST模版标识或者Item配置，{clazz:'xxx',klass:_$$Item||'jst key'}
      * @config  {Object}        cache  缓存配置信息，{key:'primary key',lkey:'list key',data:{},klass:_$$ListCache,list:[],clear:true,total:200}
-     * @config  {Object}        pager  分页器配置信息，{parent:'xxx',klass:_$$Pager,index:2}
+     * @config  {Object}        pager  分页器配置信息，{parent:'xxx',klass:_$$Pager,index:2,fixed:true}
      * 
      * [hr]
      * 下拉刷新列表之前处理业务逻辑，可用于处理loading状态的显示
@@ -148,7 +148,7 @@ var f = function(){
      * 
      */
     _p._$$ListModule = NEJ.C();
-      _proListModule = _p._$$ListModule._$extend(_p._$$Event);
+    _pro = _p._$$ListModule._$extend(_p._$$Event);
     /**
      * 控件重置
      * @protected
@@ -156,7 +156,7 @@ var f = function(){
      * @param  {Object} 配置参数
      * @return {Void}
      */
-    _proListModule.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__ropt = {};
         this.__supReset(_options);
         this.__lbox = _e._$get(_options.parent);
@@ -174,7 +174,7 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proListModule.__destroy = function(){
+    _pro.__destroy = function(){
         this._$dispatchEvent('onbeforerecycle');
         this.__doClearListBox();
         this.__supDestroy();
@@ -202,7 +202,7 @@ var f = function(){
      * @param  {String} 数据ID
      * @return {String} 节点ID
      */
-    _proListModule.__getItemBodyId = function(_id){
+    _pro.__getItemBodyId = function(_id){
         return _id+''+_e._$getHtmlTemplateSeed();
     };
     /**
@@ -211,7 +211,7 @@ var f = function(){
      * @param  {Number} 长度
      * @return {Object} 分页信息，如：{index:1,total:4}
      */
-    _proListModule.__getPageInfo = function(_point,_offset,_limit,_length){
+    _pro.__getPageInfo = function(_point,_offset,_limit,_length){
         var _result = {
             index:1,
             total:1
@@ -231,7 +231,7 @@ var f = function(){
      * @param  {String} JST标识
      * @return {Void}
      */
-    _proListModule.__doResetJSTTemplate = function(_key){
+    _pro.__doResetJSTTemplate = function(_key){
         delete this.__ikls;
         this.__ikey = _key;
         this.__doInitDomEvent([[
@@ -244,7 +244,7 @@ var f = function(){
      * @param  {String|Object} 列表项模版配置
      * @return {Void}
      */
-    _proListModule.__doResetTemplate = function(_item){
+    _pro.__doResetTemplate = function(_item){
         // if item is jst-key
         if (_u._$isString(_item)){
             this.__doResetJSTTemplate(_item);
@@ -271,7 +271,7 @@ var f = function(){
      * @param  {Object} 缓存配置
      * @return {Void}
      */
-    _proListModule.__doResetCache = function(_cache){
+    _pro.__doResetCache = function(_cache){
         var _klass = _cache.klass,
             _copt  = NEJ.X({},_cache);
         this.__ropt.key  = _copt.lkey;
@@ -312,16 +312,24 @@ var f = function(){
      * @param  {Object} 分页器配置
      * @return {Void}
      */
-    _proListModule.__doResetPager = function(_pager){
+    _pro.__doResetPager = function(_pager){
         this.__pkls = _pager.klass||_i._$$Pager;
         this.__popt = NEJ.X({},_pager);
+        // parse bind pager
+        if (_u._$isArray(_pager.parent)){
+            this.__popt.parent = _pager.parent[0];
+            this.__pbid = _pager.parent.slice(1);
+            if (!this.__pbid||!this.__pbid.length){
+                delete this.__pbid;
+            }
+        }
         delete this.__popt.klass;
     };
     /**
      * 清理列表容器
      * @return {Void}
      */
-    _proListModule.__doClearListBox = function(){
+    _pro.__doClearListBox = function(){
         this._$dispatchEvent('onbeforelistclear',{
             parent:this.__lbox
         });
@@ -333,16 +341,32 @@ var f = function(){
         this.__lbox.innerHTML = '';
     };
     /**
+     * 切换分页器的显示状态
+     * @return {Void}
+     */
+    _pro.__doSwitchPagerShow = function(_display){
+        if (!!this.__popt.fixed) return;
+        _e._$setStyle(this.__popt.parent,'display',_display);
+        _u._$forEach(
+            this.__pbid,function(_parent){
+                _e._$setStyle(_parent,'display',_display);
+            },this
+        );
+    };
+    /**
      * 通过分页器刷新当前页
      * @return {Void}
      */
-    _proListModule.__doRefreshByPager = function(){
+    _pro.__doRefreshByPager = function(){
         var _index = this.__popt.index||1;
         delete this.__popt.index;
         if (!!this.__pager){
             _index = this.__pager._$getIndex();
         }
-        this.__doChangePage({index:_index});
+        this.__doChangePage({
+            last:_index,
+            index:_index
+        });
     };
     /**
      * 页码变化处理逻辑
@@ -351,7 +375,7 @@ var f = function(){
      * @param  {Object} 页码信息
      * @return {Void}
      */
-    _proListModule.__doChangePage = function(_event){
+    _pro.__doChangePage = function(_event){
         this._$dispatchEvent('onpagechange',_event);
     };
     /**
@@ -361,7 +385,7 @@ var f = function(){
      * @param  {Number} 偏移量
      * @return {Void}
      */
-    _proListModule.__doChangeOffset = function(_offset){
+    _pro.__doChangeOffset = function(_offset){
         this.__ropt.offset = _offset;
         this.__doLoadList();
     };
@@ -370,14 +394,14 @@ var f = function(){
      * @param  {Object} 预处理请求信息
      * @return {Object} 处理后请求信息
      */
-    _proListModule.__doGenRequestOpt = function(_options){
+    _pro.__doGenRequestOpt = function(_options){
         return _options;
     };
     /**
      * 加载数据列表
      * @return {Void}
      */
-    _proListModule.__doLoadList = function(){
+    _pro.__doLoadList = function(){
         this.__doBeforeListLoad();
         // load data from cache
         var _data = this.__ropt.data;
@@ -397,9 +421,10 @@ var f = function(){
      * @param  {Object} 请求信息
      * @return {Void}
      */
-    _proListModule.__cbListLoad = function(_options){
+    _pro.__cbListLoad = function(_options){
         if (_options.key!=this.__ropt.key||
             _options.offset!=this.__ropt.offset) return;
+        //console.log('list load -> '+_options.key);
         this.__doBeforeListShow();
         // check list
         var _list = this.__cache.
@@ -445,7 +470,7 @@ var f = function(){
      * @param  {Object} 请求信息
      * @return {Void}
      */
-    _proListModule.__cbPullRefresh = function(_options){
+    _pro.__cbPullRefresh = function(_options){
         // unlock pulling
         if (!this.__pulling) 
             return;
@@ -460,7 +485,7 @@ var f = function(){
      * @param  {Number}  总页数
      * @return {Boolean} 是否重置页码
      */
-    _proListModule.__doSyncPager = function(_index,_total){
+    _pro.__doSyncPager = function(_index,_total){
         if (!!this.__pager){
             // check pager index and total
             var _index2 = this.__pager._$getIndex(),
@@ -469,6 +494,7 @@ var f = function(){
                 this.__pager._$recycle();
                 delete this.__pager;
                 this.__doChangePage({
+                    last:_index2,
                     index:Math.min(_index,_total)
                 });
                 return !0;
@@ -479,6 +505,11 @@ var f = function(){
             this.__popt.total = _total;
             this.__pager = this.__pkls._$allocate(this.__popt);
             this.__pager._$setEvent('onchange',this.__doChangePage._$bind(this));
+            _u._$forEach(
+                this.__pbid,function(_parent){
+                    this.__pager._$bind(_parent);
+                },this
+            );
         }
     };
     /**
@@ -486,7 +517,7 @@ var f = function(){
      * @param  {Object} 数据信息
      * @return {Void}
      */
-    _proListModule.__doFormatData = (function(){
+    _pro.__doFormatData = (function(){
         var _seed = +new Date;
         return function(_data){
             var _id = _data[this.__iopt.pkey];
@@ -502,7 +533,7 @@ var f = function(){
      * @param  {Object} 数据信息
      * @return {String} 数据标识
      */
-    _proListModule.__doSplitDirty = function(_data){
+    _pro.__doSplitDirty = function(_data){
         var _id = _data[this.__iopt.pkey];
         if (!!_data['dirty-data']){
             delete _data['dirty-data'];
@@ -516,7 +547,7 @@ var f = function(){
      * @param  {Object} 数据对象
      * @return {Void}
      */
-    _proListModule.__doInsertOneItem = (function(){
+    _pro.__doInsertOneItem = (function(){
         var _doInsert = function(_pos,_body){
             this.__lbox.insertAdjacentElement(_pos,_body);
         };
@@ -551,14 +582,14 @@ var f = function(){
      * @method {__doBeforeListLoad}
      * @return {Void}
      */
-    _proListModule.__doBeforeListLoad = _f;
+    _pro.__doBeforeListLoad = _f;
     /**
      * 数据载入之后处理逻辑，子类实现具体业务逻辑
      * @protected
      * @method {__doBeforeListShow}
      * @return {Void}
      */
-    _proListModule.__doBeforeListShow = function(_name){
+    _pro.__doBeforeListShow = function(_name){
         var _event = {
             parent:this.__lbox
         };
@@ -573,7 +604,7 @@ var f = function(){
      * @method {__doBeforeListRender}
      * @return {Void}
      */
-    _proListModule.__doBeforeListRender = _f;
+    _pro.__doBeforeListRender = _f;
     /**
      * 呈现提示信息
      * @protected
@@ -582,7 +613,7 @@ var f = function(){
      * @param  {String} 位置信息
      * @return {Void}
      */
-    _proListModule.__doRenderMessage = function(_message,_pos){
+    _pro.__doRenderMessage = function(_message,_pos){
         if (_u._$isString(_message)){
             if (!this.__ntip)
                  this.__ntip = _e._$create('div');
@@ -602,7 +633,7 @@ var f = function(){
      * @param  {String} 默认显示内容
      * @return {Void} 
      */
-    _proListModule.__doShowMessage = function(_name,_default,_pos){
+    _pro.__doShowMessage = function(_name,_default,_pos){
         var _event = {
             parent:this.__lbox
         };
@@ -619,27 +650,27 @@ var f = function(){
      * @method {__doShowEmpty}
      * @return {Void}
      */
-    _proListModule.__doShowEmpty = _f;
+    _pro.__doShowEmpty = _f;
     /**
      * 以jst模版方式绘制列表，子类实现具体业务逻辑
      * @protected
      * @method {__doShowListByJST}
      * @return {Void}
      */
-    _proListModule.__doShowListByJST = _f;
+    _pro.__doShowListByJST = _f;
     /**
      * 以item模版方式绘制列表，子类实现具体业务逻辑
      * @protected
      * @method {__doShowListByItem}
      * @return {Void}
      */
-    _proListModule.__doShowListByItem = _f;
+    _pro.__doShowListByItem = _f;
     /**
      * 检查列表行为
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    _proListModule.__onCheckAction = (function(){
+    _pro.__onCheckAction = (function(){
         var _reg0 = /^(?:delete|update)$/;
         return function(_event){
             var _node = _v._$getElement(_event,'d:action');
@@ -664,7 +695,7 @@ var f = function(){
      * @method {__cbItemAdd}
      * @return {Void}
      */
-    _proListModule.__cbItemAdd = _f;
+    _pro.__cbItemAdd = _f;
     /**
      * 删除列表项
      * @protected
@@ -674,7 +705,7 @@ var f = function(){
      * @config {Object} data 项绑定的数据信息
      * @return {Void}
      */
-    _proListModule.__doDeleteItem = function(_event){
+    _pro.__doDeleteItem = function(_event){
         var _data = _event.data||{},
             _options = {
                 data:_data,
@@ -690,7 +721,7 @@ var f = function(){
      * @method {__cbItemDelete}
      * @return {Void}
      */
-    _proListModule.__cbItemDelete = _f;
+    _pro.__cbItemDelete = _f;
     /**
      * 更新列表项
      * @protected
@@ -700,7 +731,7 @@ var f = function(){
      * @config {Object} data 项绑定的数据信息
      * @return {Void}
      */
-    _proListModule.__doUpdateItem = function(_event){
+    _pro.__doUpdateItem = function(_event){
         var _data = _event.data||{},
             _options = {
                 data:_data,
@@ -710,12 +741,34 @@ var f = function(){
         this.__cache._$updateItem(_options);
     };
     /**
-     * 更新列表项回调，子类按需实现具体业务逻辑
+     * 更新列表项回调，子类可按需重写具体业务逻辑
      * @protected
      * @method {__cbItemUpdate}
      * @return {Void}
      */
-    _proListModule.__cbItemUpdate = _f;
+    _pro.__cbItemUpdate = function(_event){
+        this.__doCheckResult(_event,'onafterupdate');
+        if (_event.stopped) return;
+        var _id = _event.data[this.__iopt.pkey];
+        if (!!this.__items){
+            var _item = _e._$getItemById(_id);
+            if (!!_item) _item._$refresh(_event.data);
+        }else{
+            var _node = _e._$get(_id+''+
+                        _e._$getHtmlTemplateSeed());
+            if (!_node) return;
+            var _list = this.__cache._$getListInCache(_event.key),
+                _index = _u._$indexOf(_list,_event.data);
+            if (_index<0) return;
+            this.__iopt.list = _list;
+            this.__iopt.beg  = _index;
+            this.__iopt.end  = _index;
+            var _html = _e._$getHtmlTemplate(
+                        this.__ikey,this.__iopt);
+            _node.insertAdjacentHTML('afterEnd',_html);
+            _e._$remove(_node);
+        }
+    };
     /**
      * 验证操作结果
      * @protected
@@ -723,9 +776,10 @@ var f = function(){
      * @param  {Object} 事件信息
      * @return {Void}
      */
-    _proListModule.__doCheckResult = function(_event,_name){
-        if (!_event.data){
-            this._$dispatchEvent('onerror');
+    _pro.__doCheckResult = function(_event,_name){
+        var _item = _event.data;
+        if (!_item||_item[this.__iopt.pkey]==null){
+            this._$dispatchEvent('onerror',_event);
             _event.stopped = !0;
         }
         if (!_event.stopped){
@@ -738,14 +792,14 @@ var f = function(){
      * @param  {Number} 数量
      * @return {Void}
      */
-    _proListModule.__cbAppendList = _f;
+    _pro.__cbAppendList = _f;
     /**
      * 列表变化回调（删除/添加），子类按需实现具体业务逻辑
      * @protected
      * @method {__cbListChange}
      * @return {Void}
      */
-    _proListModule.__cbListChange = function(_event){
+    _pro.__cbListChange = function(_event){
         if (_event.key!=this.__ropt.key) return;
         switch(_event.action){
             case 'add':
@@ -774,7 +828,7 @@ var f = function(){
      * @param  {Object} 需要更新的数据
      * @return {Void}
      */
-    _proListModule._$update = function(_item){
+    _pro._$update = function(_item){
         this.__doUpdateItem({data:_item});
     };
     /**
@@ -783,7 +837,7 @@ var f = function(){
      * @param  {Object} 需要删除的数据
      * @return {Void}
      */
-    _proListModule._$delete = function(_item){
+    _pro._$delete = function(_item){
         this.__doDeleteItem({data:_item});
     };
     /**
@@ -792,7 +846,7 @@ var f = function(){
      * @param  {Object} 需要添加的数据
      * @return {Void}
      */
-    _proListModule._$add = function(_item){
+    _pro._$add = function(_item){
         this.__cache._$addItem({
             data:_item,
             key:this.__ropt.key
@@ -802,7 +856,7 @@ var f = function(){
      * 取缓存实例
      * @return {nej.ut._$$ListCache}
      */
-    _proListModule._$cache = function(){
+    _pro._$cache = function(){
         return this.__cache;
     };
     /**
@@ -810,7 +864,7 @@ var f = function(){
      * @param  {Object} 数据信息
      * @return {Number} 插入项标识
      */
-    _proListModule._$unshift = function(_data){
+    _pro._$unshift = function(_data){
         this.__doInsertOneItem(
             'afterBegin',
             this.__doFormatData(_data)
@@ -822,7 +876,7 @@ var f = function(){
      * @param  {Object} 数据信息
      * @return {Number} 插入项标识
      */
-    _proListModule._$append = function(_data){
+    _pro._$append = function(_data){
         this.__doInsertOneItem(
             'beforeEnd',
             this.__doFormatData(_data)
@@ -835,7 +889,7 @@ var f = function(){
      * @param  {Number} 刷新到的页码
      * @return {Void}
      */
-    _proListModule._$refresh = function(){
+    _pro._$refresh = function(){
         this.__doClearListBox();
         this.__doRefreshByPager();
     };;
@@ -844,7 +898,7 @@ var f = function(){
      * @method {_$pullRefresh}
      * @return {Void}
      */
-    _proListModule._$pullRefresh = function(){
+    _pro._$pullRefresh = function(){
         // lock pulling
         if (!!this.__pulling) 
             return;
@@ -864,8 +918,15 @@ var f = function(){
      * 取列表总数
      * @return {Number} 列表总数
      */
-    _proListModule._$getTotal = function(){
+    _pro._$getTotal = function(){
         return this.__cache._$getTotal(this.__ropt.key);
+    };
+    /**
+     * 取分页器实例
+     * @return {Void}
+     */
+    _pro._$getPager = function(){
+        return this.__pager;
     };
 };
 NEJ.define('{lib}util/list/module.js',

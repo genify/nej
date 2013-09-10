@@ -222,7 +222,7 @@ var f = function(){
         if (!!_data.oauth_token&&
             !!_data.oauth_token_secret)
             _result = {token:_data.oauth_token
-                      ,secret:_data.oauth_token_secret}
+                      ,secret:_data.oauth_token_secret};
         this._$dispatchEvent('onrequesttokenload',_result);
         return this;
     };

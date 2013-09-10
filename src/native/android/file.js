@@ -111,7 +111,7 @@ var f = function(){
                     break;
                 }
             }catch(ex){
-                alert(ex.message)
+                alert(ex.message);
             }
             delete t['cb_'+_key];
         };

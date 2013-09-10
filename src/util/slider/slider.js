@@ -97,7 +97,7 @@ var f = function(){
         delete this.__range;
         delete this.__dopt.view;
         delete this.__dopt.body;
-        delete this.__dopt.mbar
+        delete this.__dopt.mbar;
     };
     /**
      * 活动过程触发事件
