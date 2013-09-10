@@ -84,8 +84,8 @@ var f = function(){
                     (_c._$get('root')+'nej_flex_chart.swf'));
             // csrf config
             _c.__set('csrf',NEJ.EX({
-                cookie:'p_info',
-                param:'csrf_token'
+                cookie:'AntiCSRF',
+                param:'AntiCSRF'
             },_config.p_csrf));
             // ajax by frame proxy
             _cache.frames = {};
