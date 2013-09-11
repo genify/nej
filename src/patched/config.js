@@ -28,8 +28,9 @@
  *      // default value -> http://a.b.com/crossdomain.xml
  *      p_flash:['http://a.b.com/proxy/crossdomain.xml']
  *      // CSRF cookie name and parameter name
+ *      // set p_csrf:true to use URS config {cookie:'AntiCSRF',param:'AntiCSRF'}
  *      // default value -> {cookie:'',param:''}
- *      p_csrf:{cookie:'',param:''}
+ *      p_csrf:{cookie:'AntiCSRF',param:'AntiCSRF'}
  *  };
  * @version  1.0
  * @author   genify(caijf@corp.netease.com)
@@ -83,10 +84,14 @@ var f = function(){
             _c.__set('chart.swf',_config.chart||
                     (_c._$get('root')+'nej_flex_chart.swf'));
             // csrf config
-            _c.__set('csrf',NEJ.EX({
-                cookie:'AntiCSRF',
-                param:'AntiCSRF'
-            },_config.p_csrf));
+            var _csrf = _config.p_csrf;
+            if (_csrf==!0){
+                _csrf = {
+                    cookie:'AntiCSRF',
+                    param:'AntiCSRF'
+                };
+            }
+            _c.__set('csrf',NEJ.EX({cookie:'',param:''},_csrf));
             // ajax by frame proxy
             _cache.frames = {};
             _doInitProxy(_config.p_frame,_cache.frames);

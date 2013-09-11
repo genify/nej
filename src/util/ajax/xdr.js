@@ -213,7 +213,7 @@ var f = function(){
                     _query = _options.query;
                 if (_u._$isObject(_query))
                     _query = _u._$object2query(_query);
-                _url += _sep+_query;
+                if (!!_query) _url += _sep+_query;
             }
             _options.url = _url;
             _cache.req = _getProxy(_options);
