@@ -39,7 +39,7 @@ var f = function(){
         var _callback = _request[_type],
             _args = r.slice.call(arguments,2);
         try{
-            (_callback||f).apply(null,_args)
+            (_callback||f).apply(null,_args);
         }catch(ex){
             // ignore
             console.error(ex.message);

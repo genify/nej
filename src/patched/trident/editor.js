@@ -43,7 +43,7 @@ var f = function(){
      * @return {Boolean}      trident下内容是否来自Word
      */
     var __isFromWord = function(_html){
-        return (_html||'').search('</?[\\w]+:[\\w]+.*?>')>=0
+        return (_html||'').search('</?[\\w]+:[\\w]+.*?>')>=0;
     };
     
     /**

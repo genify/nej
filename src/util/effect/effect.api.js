@@ -56,9 +56,9 @@ var f = function() {
                 }._$bind(this));
             }
             return _flag;
-        }
+        };
         return function(_node,_objs){
-            var _isLowerIE = (nej.p._$KERNEL.engine === 'trident' && (nej.p._$KERNEL.release - 5) < 0)
+            var _isLowerIE = (nej.p._$KERNEL.engine === 'trident' && (nej.p._$KERNEL.release - 5) < 0);
             if(!_doCheckState(_node,_objs,_isLowerIE)) return !1;
             return !0;
         };
@@ -414,7 +414,7 @@ var f = function() {
                     }
                 );
             }
-            var _sto = window.setTimeout(function(){_node.effect._$start()}._$bind(this),0);
+            var _sto = window.setTimeout(function(){_node.effect._$start();}._$bind(this),0);
             return this;
         };
     })();

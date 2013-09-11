@@ -121,7 +121,7 @@ var f = function(){
      * 
      */
     _p._$$Dispatcher = NEJ.C();
-      _proDispatcher = _p._$$Dispatcher._$extend(_p._$$Event)
+      _proDispatcher = _p._$$Dispatcher._$extend(_p._$$Event);
     /**
      * 控件初始化
      * @protected
@@ -277,7 +277,7 @@ var f = function(){
                                   _value.test(_href))){
                                 // /^\/a\/([\d]+)\/([\d]+)\/$/ ---> /a/?p=$1&k=$2
                                 // /a/123/456/ ---> /a/?p=123&k=456
-                                _result = _reg.test(_key)?_umi.replace(_value,_key):_key
+                                _result = _reg.test(_key)?_umi.replace(_value,_key):_key;
                                 return !0;
                             }
                             if (_value===_umi||

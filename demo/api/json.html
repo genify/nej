@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>test json</title>
+    <meta charset="utf-8"/>
+  </head>
+  <body>
+    <script src="../../src/define.js?pro=./"></script>
+    <script>
+      define(['{patch}json.js'],
+      function(){
+          
+          function log(msg){
+              var p = document.createElement('p');
+              p.innerText = msg;
+              document.body.appendChild(p);
+          }
+          
+          var arr = [];
+          var str = '{"kitcambridge":"Kit","contributors":{"jdalton":"John-David","mathias":"Mathias"},"list":[1,2,3],"number1":5,"date1":"2012-04-25T14:08:36.879Z","boolean":true,"nil":null}';
+          for(var i=0;i<4000;i++){
+              arr.push('"'+i+'":'+str);
+          }
+          str = '{'+arr.join(',')+'}';
+          log('json size:'+str.length);
+          /*
+          var t = +new Date;
+          window.xx = eval('('+str+')');
+          log('eval:'+(+new Date-t));
+          
+          var t = +new Date;
+          window.bg = (new Function('return '+str))();
+          log('function:'+(+new Date-t));
+          */
+         
+          var t = +new Date;
+          window.big = JSON.parse(str);
+          log('parse:'+(+new Date-t));
+          
+      });
+    </script>
+  </body>
+</html>

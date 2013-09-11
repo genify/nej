@@ -376,7 +376,7 @@ var f = function(){
      */
     __proProxy._$sendFragment = function(_fragment){
 //        console.log('send:'+_fragment);
-        try{this.__connector.send(_fragment);}catch(ex){console.log(ex.message)}
+        try{this.__connector.send(_fragment);}catch(ex){console.log(ex.message);}
         this.__timer = window.clearTimeout(this.__timer);
         if (!this.__canSendHeartbeat()) return;
         this.__timer = window.setTimeout(this._$sendFragment._$bind(this,' '),25000);

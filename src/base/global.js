@@ -384,7 +384,7 @@ var f = function(){
         return function(){
             NEJ.R.push.apply(arguments,_args);
             return _function.apply(_object||window,arguments);
-        }
+        };
     };
     var _extpro = String.prototype;
     if (!_extpro.trim){

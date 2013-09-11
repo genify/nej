@@ -14,7 +14,7 @@ var f = function(){
     var __empty    = /(?:<(p|div)>(?:\&nbsp\;|<br\/?>)<\/\1>|<br\/?>|\&nbsp\;|\s)+$/gi, // empty content
         __reg_cls0 = /(?:class|lang)="(mso)?[^"]*"/gi,
         __reg_cls1 = /(?:class|lang)='(mso)?[^']*'/gi,
-        __reg_cls2 = /(?:class|lang)=(mso)?[^>]*/gi,// IE7 hack
+        __reg_cls2 = /(?:class|lang)=(mso)?[^>]*?[\s$]/gi,// IE7/8 hack
         __reg_ccm  = /(?:<!--)[^>]*(?:-->)/gi,
         __reg_st0  = /(?:<[^>]* style)="([^"]*)"/gi,
         __reg_st1  = /(?:<[^>]* style)='([^']*)'/gi,

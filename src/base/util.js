@@ -577,7 +577,7 @@ var f = function(){
                 _map.H = _map.H%12;
             }
             return _u._$encode(_map,_format);
-        }
+        };
     })();
     /**
      * 转日期对象<br/>
@@ -744,7 +744,7 @@ var f = function(){
                 _u._$dom2object(_node,_tmp);
             });
         return _obj;
-    }
+    };
     /**
      * XML转对象<br/>
      * @api    {nej.u._$xml2object}
@@ -929,7 +929,7 @@ var f = function(){
                 _result.push(_chars.charAt(_rnum));
             }
             return _result.join('');
-        }
+        };
     })();
     /**
      * 随机生成一个给定范围的整数<br/>

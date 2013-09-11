@@ -67,7 +67,7 @@ var f = function() {
     //     }
     // })();
 
-}
+};
 NEJ.define('{lib}util/chain/chainable.js', [
     '{lib}util/chain/NodeList.js'
     ], f);

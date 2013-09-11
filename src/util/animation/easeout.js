@@ -62,4 +62,4 @@ var f = function(){
     };
 };
 NEJ.define('{lib}util/animation/easeout.js',
-      ['{lib}util/animation/bezier.js'],f)
+          ['{lib}util/animation/bezier.js'],f);

@@ -673,7 +673,7 @@ var f = function(){
             // will trigger onload
             var _parent = _options.parent;
             if (_u._$isFunction(_parent)){
-                try{_parent(_iframe)}catch(e){}
+                try{_parent(_iframe);}catch(e){}
             }else{
                 (_e._$get(_parent)
                 ||document.body).appendChild(_iframe);

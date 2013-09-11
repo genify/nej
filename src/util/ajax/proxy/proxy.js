@@ -8,11 +8,13 @@
 var f = function(){
     var _  = NEJ.P,
         _f = NEJ.F,
+        _c = _('nej.c'),
         _g = _('nej.g'),
         _e = _('nej.e'),
+        _j = _('nej.j'),
         _t = _('nej.ut'),
         _p = _('nej.ut.j'),
-        _proProxy;
+        _pro;
     if (!!_p._$$Proxy) return;
     /**
      * Ajax代理对象
@@ -29,23 +31,23 @@ var f = function(){
      * @config  {Object}  headers 头信息
      * 
      * [hr]
-     * 
-     * @event {onload} 载入回调
+     * 载入回调
+     * @event {onload}
      * @param {Object} 数据信息
      * 
      * [hr]
-     * 
-     * @event {onerror} 异常回调
+     * 异常回调
+     * @event {onerror}
      * @param {Object}  数据信息
      * 
      * [hr]
-     * 
-     * @event {onbeforerequest} 请求之前对数据处理回调
-     * @param {Object}             数据信息
+     * 请求之前对数据处理回调
+     * @event {onbeforerequest}
+     * @param {Object}  数据信息
      * 
      */
     _p._$$Proxy = NEJ.C();
-      _proProxy = _p._$$Proxy._$extend(_t._$$Event);
+    _pro = _p._$$Proxy._$extend(_t._$$Event);
     /**
      * 控件重置
      * @protected
@@ -53,7 +55,7 @@ var f = function(){
      * @param  {Object} 配置参数
      * @return {Void}
      */
-    _proProxy.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
         // reset request information
         this.__request = {
@@ -65,6 +67,14 @@ var f = function(){
             timeout:60000
         };
         NEJ.EX(this.__request,_options);
+        // for csrf attack
+        var _csrf = _c._$get('csrf');
+        if (!!_csrf.cookie&&!!_csrf.param){
+            var _query = encodeURIComponent(_csrf.param)+'='+
+                         encodeURIComponent(_j._$cookie(_csrf.cookie)||''),
+                _split = this.__request.url.indexOf('?')<0?'?':'&';
+            this.__request.url += _split+_query;
+        }
         // reset headers
         this.__headers = _options.headers||{};
         var _content = this.__headers[_g._$HEAD_CT];
@@ -78,7 +88,7 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proProxy.__destroy = function(){
+    _pro.__destroy = function(){
         this.__supDestroy();
         delete this.__rkey;
         delete this.__request;
@@ -93,7 +103,7 @@ var f = function(){
      * @config {String} result 请求结果，纯文本形式
      * @return {Void}
      */
-    _proProxy.__onLoadRequest = function(_event){
+    _pro.__onLoadRequest = function(_event){
         var _status = _event.status;
         // timeout error
         if (_status==-1){
@@ -124,14 +134,14 @@ var f = function(){
      * @param  {Object} 请求信息
      * @return {Void}
      */
-    _proProxy.__doSendRequest = _f;
+    _pro.__doSendRequest = _f;
     /**
      * 发送请求
      * @method {_$send}
      * @param  {Variable} 要发送的数据
      * @return {nej.ut.j._$$Proxy}
      */
-    _proProxy._$send = function(_data){
+    _pro._$send = function(_data){
         var _url = this.__request.url;
         if (!_url){
             this._$dispatchEvent('onerror',{
@@ -168,12 +178,13 @@ var f = function(){
      * @method {_$abort}
      * @return {Void}
      */
-    _proProxy._$abort = _f;
+    _pro._$abort = _f;
 };
 NEJ.define('{lib}util/ajax/proxy/proxy.js',
-      ['{patch}config.js'
-      ,'{lib}base/util.js'
-      ,'{lib}base/event.js'
-      ,'{lib}base/constant.js'
-      ,'{lib}base/element.js'
-      ,'{lib}util/event.js'],f);
+          ['{patch}config.js'
+          ,'{lib}base/util.js'
+          ,'{lib}base/event.js'
+          ,'{lib}base/constant.js'
+          ,'{lib}base/element.js'
+          ,'{lib}util/event.js'
+          ,'{lib}util/cache/cookie.js'],f);

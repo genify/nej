@@ -251,7 +251,7 @@ var f = function(){
             break;
         }
         return {top:_y,left:_x};
-    }
+    };
     /**
      * 通过参照节点显示卡片位置<br />
      * 脚本举例

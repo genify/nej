@@ -24,7 +24,7 @@ var f = function(){
                 _flash.initChart(_options.data);
             }._$bind(this)
         });
-    }
+    };
     /**
      * 绘制图表对象<br/>
      * 页面结构举例

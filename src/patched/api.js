@@ -583,4 +583,4 @@ var f = function(){
     _doInit();
 };
 NEJ.define('{lib}patched/api.js',
-      ['{lib}base/platform.js'],f);
+          ['{lib}base/platform.js'],f);

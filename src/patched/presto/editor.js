@@ -26,7 +26,7 @@ var f = function(){
      * @return {Boolean}      presto下内容是否来自Word
      */
     var __isFromWord = function(_html){
-        return (_html||'').search('</?[\\w]+:[\\w]+.*?>')>=0
+        return (_html||'').search('</?[\\w]+:[\\w]+.*?>')>=0;
     };
     
     /**
@@ -46,7 +46,7 @@ var f = function(){
      */
     _h.__filterContentPath = function(_html){
         return _html.replace(__opspc,'&nbsp;');
-    }
+    };
 };
 NEJ.define('{lib}patched/presto/editor.js',
       ['{lib}patched/editor.js'],f);
