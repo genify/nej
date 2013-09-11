@@ -120,7 +120,7 @@ var f = function() {
      * 淡入动画
      * 页面结构举例
      * [code type="html"]
-     *   // 必须有opactiy属性
+     *   // 必须有opacity属性
      *   <div id="box" style="opact">123</div>
      * [/code]
      * 脚本举例
@@ -129,7 +129,7 @@ var f = function() {
      *   var _node = _e._$get("box");
      *   _e._$fadeIn(_node,{
      *       // 注意两位小数可能没有预期效果
-     *       opactiy:0.8,
+     *       opacity:0.8,
      *       timing:'ease-out',
      *       delay:0,
      *       duration:5
@@ -160,7 +160,7 @@ var f = function() {
      *   var _node = _e._$get("box");
      *   _e._$fadeOut(_node,{
      *       // 注意两位小数可能没有预期效果
-     *       opactiy:0.8,
+     *       opacity:0.8,
      *       timing:'ease-out',
      *       delay:0,
      *       duration:5
