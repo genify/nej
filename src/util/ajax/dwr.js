@@ -7,12 +7,13 @@
  */
 var f = function(){
     // variable declaration
-    var o = NEJ.O,
+    var _ = NEJ.P,
+        o = NEJ.O,
         f = NEJ.F,
-        g = NEJ.P('nej.g'),
-        j = NEJ.P('nej.j'),
-        u = NEJ.P('nej.u'),
-        w = NEJ.P('dwr.engine'),
+        g = _('nej.g'),
+        j = _('nej.j'),
+        u = _('nej.u'),
+        w = _('dwr.engine'),
         __batchid,      // 请求ID标识
         __filter= f,    // 全局异常过滤器
         __proxy = {},   // 交互代理
@@ -446,13 +447,19 @@ var f = function(){
         __onErrorAll(_bid,_error);
         __destroyBatch(_bid);
     };
-    // DWR Adapter
+    // DWR2 Adapter
     w['_remoteHandleCallback'] = __onLoadFromDWR;
     w['_remoteHandleException'] = __onError;
     w['_remoteHandleBatchException'] = __onErrorAll;
+    // DWR3 Adapter
+    _('dwr')['_'] = [{
+        handleCallback:w['_remoteHandleCallback'],
+        handleException:w['_remoteHandleException'],
+        handleBatchException:w['_remoteHandleBatchException']
+    }];
 };
 NEJ.define('{lib}util/ajax/dwr.js',
-      ['{lib}base/constant.js'
-      ,'{lib}base/util.js'
+          ['{lib}base/constant.js'
+          ,'{lib}base/util.js'
       ,'{lib}util/ajax/xdr.js'
       ,'{lib}util/cache/cookie.js'],f);
