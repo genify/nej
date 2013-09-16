@@ -10,6 +10,7 @@ var f = function(){
     var _  = NEJ.P,
         _o = NEJ.O,
         _e = _('nej.e'),
+        _h = _('nej.h'),
         _p = _('nej.ut.j'),
         _proHtmlLoader;
     if (!!_p._$$HtmlLoader) return;
@@ -57,7 +58,7 @@ var f = function(){
         var _iframe = (this.__getLoadData
                       (this.__url)||_o).request;
         this.__doCallback('onerror',_error);
-        _e._$remove(_iframe);
+        _h.__removeIFrameKeepHistory(_iframe);
     };
     /**
      * 资源载入成功事件
@@ -70,8 +71,9 @@ var f = function(){
             _iframe = (this.__getLoadData(this.__url)||_o).request;
         try{_body = _iframe.contentWindow.document.body;}catch(ex){}
         this.__doCallback('onloaded',_body);
-        _e._$remove(_iframe);
+        _h.__removeIFrameKeepHistory(_iframe);
     };
 };
 NEJ.define('{lib}util/ajax/loader/html.js',
-      ['{lib}util/ajax/loader/loader.js'],f);
+          ['{patch}api.js'
+          ,'{lib}util/ajax/loader/loader.js'],f);

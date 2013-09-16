@@ -1,6 +1,7 @@
 var f = function(){
     var _  = NEJ.P,
         _p = _('nej.p'),
+        _e = _('nej.e'),
         _h = _('nej.h');
     if (_p._$NOT_PATCH.trident1) return;
     /**
@@ -43,6 +44,18 @@ var f = function(){
     _h.__canFlashEventBubble = function(_wmode){
         return !0;
     };
+    /**
+     * 删除IFrame节点，保留历史
+     * @param  {Node} iframe节点
+     * @return {Void}
+     */
+    _h.__removeIFrameKeepHistory = 
+    _h.__removeIFrameKeepHistory._$aop(function(_event){
+        _event.stopped = !0;
+        var _iframe = _event.args[0];
+        _e._$setStyle(_iframe,'display','none');
+        try{_iframe.contentWindow.document.body.innerHTML = '&nbsp;';}catch(ex){}
+    });
 };
 NEJ.define('{lib}patched/trident-1/api.js',
-      ['{lib}patched/api.js'],f);
+          ['{lib}patched/api.js'],f);

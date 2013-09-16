@@ -579,6 +579,14 @@ var f = function(){
             return _element.getAttribute(_name);
         return '';
     };
+    /**
+     * 删除IFrame节点，保留历史
+     * @param  {Node} iframe节点
+     * @return {Void}
+     */
+    _h.__removeIFrameKeepHistory = function(_iframe){
+        _e._$remove(_iframe);
+    };
     // init
     _doInit();
 };
