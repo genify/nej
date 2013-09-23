@@ -20,15 +20,30 @@
           var _  = NEJ.P,
               _i = _('nej.ui');
           
+
+          for(var i=1;i<100;i++){
+              var div = document.createElement('div');
+              div.innerHTML = '<h2>'+i+'</h2>';
+              document.body.appendChild(div);
+              _i._$$Pager._$allocate({
+                parent:div,
+                index:1,total:i,noend:!0,
+                onchange:function(_event){
+                    console.log('from '+_event.last+' to '+_event.index);
+                }
+            });
+          }
+
+/*
           var _pager = _i._$$Pager._$allocate({
               parent:document.body,
-              index:1,total:10,noend:!0,
+              index:1,total:4,noend:!0,
               onchange:function(_event){
                   console.log('from '+_event.last+' to '+_event.index);
               }
           });
-          
-          _pager._$bind(document.body);
+*/          
+          //_pager._$bind(document.body);
           
       });
     </script>
