@@ -18,7 +18,7 @@ var f = function(){
         __reg_ccm  = /(?:<!--)[^>]*(?:-->)/gi,
         __reg_st0  = /(?:<[^>]* style)="([^"]*)"/gi,
         __reg_st1  = /(?:<[^>]* style)='([^']*)'/gi,
-        __reg_bgc  = /(?:background-color:|text-align:)([^;]*)(;)*/gi;//clear class,lang
+        __reg_bgc  = /(?:background-color:|text-align:|color:)([^;]*)(;)*/gi;//clear class,lang
         
     /**
      * 取节点所在的窗体对象
