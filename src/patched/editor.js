@@ -14,10 +14,11 @@ var f = function(){
     var __empty    = /(?:<(p|div)>(?:\&nbsp\;|<br\/?>)<\/\1>|<br\/?>|\&nbsp\;|\s)+$/gi, // empty content
         __reg_cls0 = /(?:class|lang)="(mso)?[^"]*"/gi,
         __reg_cls1 = /(?:class|lang)='(mso)?[^']*'/gi,
-        __reg_cls2 = /(?:class|lang)=(mso)?[^>]*?[\s$]/gi,// IE7/8 hack
+        __reg_cls2 = /(?:class|lang)=(mso)?[^>\s]*/gi,// IE7/8 hack
         __reg_ccm  = /(?:<!--)[^>]*(?:-->)/gi,
         __reg_st0  = /(?:<[^>]* style)="([^"]*)"/gi,
         __reg_st1  = /(?:<[^>]* style)='([^']*)'/gi,
+        __reg_st2  = /(?:<[^>]* style)=([^>\s]*)/gi,
         __reg_bgc  = /(?:background-color:|text-align:|color:)([^;]*)(;)*/gi;//clear class,lang
         
     /**
@@ -182,33 +183,30 @@ var f = function(){
      * @param  {[type]} _html [description]
      * @return {[type]}       [description]
      */
-    _h.__filterContentStyle = function(_html){
-        _html = _html.replace(__reg_st0,function(_a,_b,_c){
-            var _prefix = _a.split('style')[0];
-            if(_b.match(__reg_bgc)!=null){
-                var _str0 = '';
-                var _bgc = _b.replace(__reg_bgc,function(_str,_sstr,_index){
-                    return _str0 += _str;
-                }._$bind(this));
-                return _prefix + ' style="' + _str0 +'"';
-            }else{
-                return _prefix;
-            }
-        }._$bind(this));
-        _html = _html.replace(__reg_st1,function(_a,_b,_c){
-            var _prefix = _a.split('style')[0];
-            if(_b.match(__reg_bgc)!=null){
-                var _str0 = '';
-                var _bgc = _b.replace(__reg_bgc,function(_str,_sstr,_index){
-                    return _str0 = _str;
-                }._$bind(this));
-                return _prefix + " style='" + _str0 +"'";
-            }else{
-                return _prefix;
-            }
-        }._$bind(this));
-        return _html;
-    };
+    _h.__filterContentStyle = (function(){
+        var _doFilter = function(_reg,_html){
+            _html = _html.replace(_reg,function(_a,_b,_c){
+                var _prefix = _a.split('style')[0];
+                if(_b.match(__reg_bgc)!=null){
+                    var _str0 = '';
+                    var _bgc = _b.replace(__reg_bgc,function(_str,_sstr,_index){
+                        return _str0 += _str;
+                    }._$bind(this));
+                    return _prefix + ' style="' + _str0 +'"';
+                }else{
+                    return _prefix;
+                }
+            }._$bind(this));
+            return _html;
+        };
+        return function(_html){
+            _html = _doFilter(__reg_st0,_html);
+            _html = _doFilter(__reg_st1,_html);
+            _html = _doFilter(__reg_st2,_html);
+            return _html;
+        };
+    })();
+    
 };
 NEJ.define('{lib}patched/editor.js',
       ['{lib}base/platform.js'
