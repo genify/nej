@@ -11,9 +11,7 @@ var f = function(){
     /**
      * 基本内容过滤
      */
-    var __ffpth = location.href.replace(/\/[^\/]*$/,'/'),// firefox relative path
-        __ffurl = /(href|src)\s*=\s*("|')(?!\w+:|\/)/gi, // firefox relative path
-        __empty = /(?:<(p|div)>(?:\&nbsp\;|<br\/?>)<\/\1>|<br\/?>|\&nbsp\;|\s)+$/gi; // empty content
+    var __empty = /(?:<(p|div)>(?:\&nbsp\;|<br\/?>)<\/\1>|<br\/?>|\&nbsp\;|\s)+$/gi; // empty content
     /**
      * word内容过滤
      */
@@ -55,7 +53,7 @@ var f = function(){
      */
     _h.__filterContentPath = function(_html){
         _html = _html.replace(__reg_fimg,'');//过滤掉源数据是base64内容的图片
-        return _html.replace(__ffurl,'$1=$2'+__ffpth);
+        return _html;
     };
 };
 NEJ.define('{lib}patched/gecko/editor.js',
