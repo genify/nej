@@ -285,7 +285,7 @@ var f = function() {
      *       duration:5
      *   });
      * [/code]
-     * @api    {nej.e._$moveTo}
+     * @api    {nej.e._$slide}
      * @param  {Node|String} 节点或者节点ID
      * @param  {String}      滑动的方向
      * @param  {Object}      配置参数

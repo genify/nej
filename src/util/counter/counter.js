@@ -101,5 +101,5 @@ var f = function(){
     })();
 };
 NEJ.define('{lib}util/counter/counter.js',
-      ['{lib}base/element.js'
-      ,'{lib}base/event.js'],f);
+          ['{lib}base/element.js'
+          ,'{lib}base/event.js'],f);

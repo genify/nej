@@ -26,17 +26,17 @@ var f = function(){
      * @config  {Number} timeout 超时时间，0表示禁止超时监测
      * 
      * [hr]
-     * 
-     * @event  {onerror} 资源载入失败回调
+     * 资源载入失败回调
+     * @event  {onerror} 
      * @param  {String}  错误信息
      * 
      * [hr]
-     * 
-     * @event  {onloaded} 资源载入成功回调
+     * 资源载入成功回调
+     * @event  {onloaded} 
      * 
      * [hr]
-     * 
-     * @event  {onloading} 资源加载中回调
+     * 资源加载中回调
+     * @event  {onloading} 
      * 
      */
     _p._$$Loader = NEJ.C();

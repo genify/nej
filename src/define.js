@@ -349,7 +349,9 @@ var _doFindCircularRef = (function(){
     };
     return function(){
         _result = [];
-        return _loop(__queue[__queue.length-1]);
+        // check from begin to end
+        return _loop(__queue[0]);
+        //return _loop(__queue[__queue.length-1]);
     };
 })();
 /*
