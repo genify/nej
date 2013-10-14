@@ -104,8 +104,7 @@ var f = function(){
         this.__mbox = _e._$get(_options.mbox);
         this.__sopt = NEJ.EX({
             lock:!1,
-            size:null,
-            min:[60,60]
+            size:null
         },_options);
         var _preview = _options.pbox;
         if (!_u._$isArray(_preview)){
@@ -229,7 +228,15 @@ var f = function(){
                 },{
                     width:this.__mbox.clientWidth,
                     height:this.__mbox.clientHeight
-                });
+                }),
+                _max = {
+                    width:_pos.width,
+                    height:_pos.height
+                };
+            this.__sopt.max = {
+                width:_pos.width,
+                height:_pos.height
+            };
             this.__ratio = _pos.ratio;
             delete _pos.ratio;
             _doAppendUnit(_pos);

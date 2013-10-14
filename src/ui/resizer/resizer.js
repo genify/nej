@@ -17,7 +17,7 @@ var f = function(){
     // ui css text
     var _seed_css = _e._$pushCSSText('\
         .#<uispace>-parent{position:relative;}\
-        .#<uispace>{position:absolute;border:1px solid #aaa;cursor:move;$<user-select>:none;z-index:1000;}\
+        .#<uispace>{position:absolute;top:0;left:0;border:1px solid #aaa;cursor:move;$<user-select>:none;z-index:1000;}\
         .#<uispace> .zln{width:48px;height:48px;border:1px solid #fff;background:url('+_g._$BLANK_IMAGE+');}\
         .#<uispace> .zpc{border:1px solid #aaa;}\
         .#<uispace> .zpt{position:absolute;width:5px;height:5px;font-size:1px;overflow:hidden;}\
@@ -42,7 +42,7 @@ var f = function(){
      * @extends {nej.ui._$$Abstract}
      * @param   {Object}  可选配置参数，其他参数见nej.ut._$$Resize控件所示
      * @config  {Object}  size 初始大小，输入任意两个值，其中ratio为width/height，{width:100,height:200,ratio:0.5}
-     * 
+     * @config  {Object}  max  最大款高限制，{width:300,height:400}
      */
     _p._$$Resizer = NEJ.C();
       _proResizer = _p._$$Resizer._$extend(_p._$$Abstract);
@@ -68,41 +68,60 @@ var f = function(){
      * @return {Void}
      */
     _proResizer.__reset = (function(){
-        var _doParseSize = function(_size){
+        var _doParseSize = function(_size,_max){
             if (!_size) return;
-            var _width = _size.width,
+            var _result,
+                _width = _size.width,
                 _height = _size.height,
                 _ratio = _size.ratio;
             if (!!_width&&!!_height){
-                return {
-                    width:_width-2+'px',
-                    height:_height-2+'px'
+                _result = {
+                    width:_width-2,
+                    height:_height-2
                 };
             }else if(!!_ratio){
                 if (!!_width){
-                    return {
-                        width:_width-2+'px',
-                        height:Math.floor(_width/_ratio)-2+'px'
-                    }
+                    _result = {
+                        width:_width-2,
+                        height:Math.floor(_width/_ratio)-2
+                    };
                 }else if(!!_height){
-                    return {
-                        height:_height-2+'px',
-                        width:Math.floor(_height*_ratio)-2+'px'
-                    }
+                    _result = {
+                        height:_height-2,
+                        width:Math.floor(_height*_ratio)-2
+                    };
                 }
             }
+            // fix max limit
+            if (!!_max){
+                var _maxw = _max.width-2,
+                    _maxh = _max.height-2,
+                    _orgw = _result.width,
+                    _orgh = _result.height,
+                    _delta = _maxw/_maxh-_orgw/_orgh;
+                if (_delta>0&&_orgh>_maxh){
+                    _result.height = _maxh;
+                    _result.width = Math.floor(_orgw*_maxh/_orgh);
+                }else if(_delta<0&&_orgw>_maxw){
+                    _result.width = _maxw;
+                    _result.height = Math.floor(_maxw*_orgh/_orgw);
+                }
+            }
+            _result.width += 'px';
+            _result.height += 'px';
+            return _result;
         };
         return function(_options){
             this.__supReset(_options);
             var _opt = NEJ.X(NEJ.EX({
                 lock:!1,
-                min:[50,50]
+                min:null
             },_options),this.__ropt);
             _opt.view = this.__parent;
             _opt.body = this.__body;
             _e._$style(
                 this.__nsize,
-                _doParseSize(_options.size)
+                _doParseSize(_options.size,_options.max)
             );
             this.__resize = _t._$$Resize._$allocate(_opt);
         };
