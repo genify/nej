@@ -330,7 +330,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__doClearListBox = (function(){
-        var _reg0 = /^(?:table|tr|tbody|ul|ol|select)$/gi;
+        var _reg0 = /^(?:table|tr|tbody|ul|ol|select)$/i;
         return function(){
             this._$dispatchEvent('onbeforelistclear',{
                 parent:this.__lbox

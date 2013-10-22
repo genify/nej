@@ -195,7 +195,7 @@ var f = function(){
      * @return {Void} 
      */
     _pro.__doRenderMessage = function(_message,_pos){
-        if (!_pos){
+        if (!_pos&&_u._$isString(_message)){
             this.__lbox.innerHTML = _message;
             return;
         }
