@@ -192,7 +192,8 @@ var f = function(){
                     var _bgc = _b.replace(__reg_bgc,function(_str,_sstr,_index){
                         return _str0 += _str;
                     }._$bind(this));
-                    return _prefix + ' style="' + _str0 +'"';
+                    
+                    return _prefix + ' style="' + _str0 + '"';
                 }else{
                     return _prefix;
                 }
@@ -200,9 +201,13 @@ var f = function(){
             return _html;
         };
         return function(_html){
-            _html = _doFilter(__reg_st0,_html);
-            _html = _doFilter(__reg_st1,_html);
-            _html = _doFilter(__reg_st2,_html);
+            if(__reg_st0.test(_html)){
+                _html = _doFilter(__reg_st0,_html);
+            }else if(__reg_st1.test(_html)){
+                _html = _doFilter(__reg_st1,_html);
+            }else{
+                _html = _doFilter(__reg_st2,_html);
+            }
             return _html;
         };
     })();
