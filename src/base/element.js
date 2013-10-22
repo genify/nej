@@ -769,6 +769,17 @@ var f = function(){
         return this;
     };
     /**
+     * 
+     */
+    _e._$clearChildren =
+    _x._$clearChildren = function(_element){
+        _element = _e._$get(_element);
+        if (!_element) return;
+        _u._$reverseEach(
+            _element.childNodes,_e._$remove
+        );
+    };
+    /**
      * 内联元素增加定位封装<br/>
      * 加入以下html代码
      * [code type="html"]

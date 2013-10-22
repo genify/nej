@@ -329,17 +329,24 @@ var f = function(){
      * 清理列表容器
      * @return {Void}
      */
-    _pro.__doClearListBox = function(){
-        this._$dispatchEvent('onbeforelistclear',{
-            parent:this.__lbox
-        });
-        if (!!this.__items&&this.__items.length>0){
-            this.__items = this.__ikls
-                ._$recycle(this.__items);
-            delete this.__items;
-        }
-        this.__lbox.innerHTML = '';
-    };
+    _pro.__doClearListBox = (function(){
+        var _reg0 = /^(?:table|tr|tbody|ul|ol|select)$/gi;
+        return function(){
+            this._$dispatchEvent('onbeforelistclear',{
+                parent:this.__lbox
+            });
+            if (!!this.__items&&this.__items.length>0){
+                this.__items = this.__ikls
+                    ._$recycle(this.__items);
+                delete this.__items;
+            }
+            if (_reg0.test(this.__lbox.tagName)){
+                _e._$clearChildren(this.__lbox);
+            }else{
+                this.__lbox.innerHTML = '';
+            }
+        };
+    })();
     /**
      * 切换分页器的显示状态
      * @return {Void}
