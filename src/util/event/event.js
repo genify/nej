@@ -13,7 +13,7 @@ var f = function(){
         _v = _('nej.v'),
         _u = _('nej.u'),
         _p = _('nej.ut'),
-        _proCustomEvent;
+        _pro;
     if (!!_p._$$CustomEvent) return;
     /**
      * 自定义事件封装对象，封装的事件支持通过事件相关接口进行添加、删除等操作
@@ -38,32 +38,29 @@ var f = function(){
      * @config  {String|Array} event   事件名称或者名称列表
      * 
      * [hr]
-     * 
      * 初始化时触发事件
      * @event  {oninit}
      * @param  {Object} 事件信息
      * 
      * [hr]
-     * 
      * 事件调度前触发事件
      * @event  {ondispatch}
      * @param  {Object} 事件信息
      * 
      * [hr]
-     * 
      * 添加事件时触发事件
      * @event  {oneventadd}
      * @param  {Object} 事件信息
      */
     _p._$$CustomEvent = NEJ.C();
-    _proCustomEvent = _p._$$CustomEvent._$extend(_p._$$Event);
+    _pro = _p._$$CustomEvent._$extend(_p._$$Event);
     /**
      * 控件初始化
      * @protected
      * @method {__init}
      * @return {Void}
      */
-    _proCustomEvent.__init = function(){
+    _pro.__init = function(){
         // onxxx - event entry handler
         //   xxx - event callback handler list
         this.__cache = {};
@@ -76,7 +73,7 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proCustomEvent.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
         this.__element = _e._$get(_options.element)||window;
         // init event
@@ -90,16 +87,22 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proCustomEvent.__destroy = function(){
-        this.__supDestroy();
-        // clear cache
-        for(var x in this.__cache){
-            if (!_u._$isArray(this.__cache[x]))
-                _u._$safeDelete(this.__element,x);
-            delete this.__cache[x];
-        }
-        delete this.__element;
-    };
+    _pro.__destroy = (function(){
+        var _doClear = function(_value,_key,_map){
+            if (!_u._$isArray(_value)){
+                _u._$safeDelete(this.__element,_key);
+            }
+            delete _map[_key];
+        };
+        return function(){
+            this.__supDestroy();
+            // clear cache
+            _u._$forIn(
+                this.__cache,_doClear,this
+            );
+            delete this.__element;
+        };
+    })();
     /**
      * 判断是否需要代理事件
      * @protected
@@ -108,7 +111,7 @@ var f = function(){
      * @param  {String}      事件
      * @return {Boolean}     是否需要代理事件
      */
-    _proCustomEvent.__isDelegate = function(_element,_type){
+    _pro.__isDelegate = function(_element,_type){
         _element = _e._$get(_element);
         return _element===this.__element&&
              (!_type||!!this.__cache['on'+_type]);
@@ -120,18 +123,21 @@ var f = function(){
      * @param  {String} 事件名称
      * @return {Void}
      */
-    _proCustomEvent.__doEventInit = function(_event){
+    _pro.__doEventInit = function(_event){
         if (_u._$isString(_event)){
             var _name = 'on'+_event;
             if (!this.__cache[_name]){
-                this.__cache[_name] = this
-                    .__doEventDispatch._$bind(this,_event);
+                this.__cache[_name] = 
+                    this.__doEventDispatch.
+                        _$bind(this,_event);
             }
             this.__doEventBind(_event); return;
         }
-        if (_u._$isArray(_event))
-            for(var i=0,l=_event.length;i<l;i++)
-                this.__doEventInit(_event[i]);
+        if (_u._$isArray(_event)){
+            _u._$forEach(
+                _event,this.__doEventInit,this
+            );
+        }
     };
     /**
      * 绑定事件
@@ -140,7 +146,7 @@ var f = function(){
      * @param  {String} 事件名称
      * @return {Void}
      */
-    _proCustomEvent.__doEventBind = function(_type){
+    _pro.__doEventBind = function(_type){
         var _event = 'on'+_type,
             _handler = this.__element[_event],
             _handler1 = this.__cache[_event];
@@ -159,7 +165,7 @@ var f = function(){
      * @param  {Function} 事件回调
      * @return {Void}
      */
-    _proCustomEvent.__doEventAdd = function(_type,_handler,_front){
+    _pro.__doEventAdd = function(_type,_handler,_front){
         var _list = this.__cache[_type];
         if (!_list){
             _list = [];
@@ -178,7 +184,7 @@ var f = function(){
      * @param  {Function} 事件回调
      * @return {Void}
      */
-    _proCustomEvent.__doEventDelete = function(_type,_handler){
+    _pro.__doEventDelete = function(_type,_handler){
         var _list = this.__cache[_type];
         if (!_list||!_list.length) return;
         // clear all event handler
@@ -187,11 +193,14 @@ var f = function(){
             return;
         }
         // delete one event handler
-        for(var i=_list.length-1;i>=0;i--)
-            if (_handler===_list[i]){
-                _list.splice(i,1);
-                break;
+        _u._$reverseEach(
+            _list,function(_value,_index,_xlist){
+                if (_handler===_value){
+                    _xlist.splice(_index,1);
+                    return !0;
+                }
             }
+        );
     };
     /**
      * 事件调度
@@ -201,21 +210,22 @@ var f = function(){
      * @param  {Object} 事件对象
      * @return {Void}
      */
-    _proCustomEvent.__doEventDispatch = function(_type,_event){
+    _pro.__doEventDispatch = function(_type,_event){
         _event = _event||{noargs:!0};
         _event.type = _type;
         this._$dispatchEvent('ondispatch',_event);
         if (!!_event.stopped) return;
-        var _list = this.__cache[_type];
-        if (!_list||!_list.length) return;
-        for(var i=0,l=_list.length;i<l;i++)
-            try{
-                _list[i](_event);
-            }catch(ex){
-                // ignore
-                console.error(ex.message);
-                console.error(ex.stack);
+        _u._$forEach(
+            this.__cache[_type],function(_handler){
+                try{
+                    _handler(_event);
+                }catch(ex){
+                    // ignore
+                    console.error(ex.message);
+                    console.error(ex.stack);
+                }
             }
+        );
     };
     /**
      * 增强事件操作API
@@ -223,13 +233,8 @@ var f = function(){
      * @method {__doEventAPIEnhance}
      * @return {Void}
      */
-    _proCustomEvent.__doEventAPIEnhance = function(){
-        // void multi-enhance
-        if (!!this.__enhanced)
-            return;
-        this.__enhanced = true;
-        _v._$addEvent = 
-        _v._$addEvent._$aop(function(_event){
+    _pro.__doEventAPIEnhance = (function(){
+        var _doAddEvent = function(_event){
             var _args = _event.args,
                 _type = _args[1].toLowerCase();
             if (this.__isDelegate(_args[0],_type)){
@@ -241,18 +246,16 @@ var f = function(){
                     listener:_args[2]
                 });
             }
-        }._$bind(this));
-        _v._$delEvent = 
-        _v._$delEvent._$aop(function(_event){
+        };
+        var _doDelEvent = function(_event){
             var _args = _event.args,
                 _type = _args[1].toLowerCase();
             if (this.__isDelegate(_args[0],_type)){
                 _event.stopped = !0;
                 this.__doEventDelete(_type,_args[2]);
             }
-        }._$bind(this));
-        _v._$clearEvent = 
-        _v._$clearEvent._$aop(function(_event){
+        };
+        var _doClearEvent = function(_event){
             var _args = _event.args,
                 _type = (_args[1]||'').toLowerCase();
             if (this.__isDelegate(_args[0])){
@@ -260,25 +263,44 @@ var f = function(){
                     this.__doEventDelete(_type);
                     return;
                 }
-                for(var x in this.__cache){
-                    if (_u._$isArray(this.__cache[x]))
-                        this.__doEventDelete(x);
-                }
+                _u._$forIn(
+                    this.__cache,function(_value,_key){
+                        if (_u._$isArray(_value)){
+                            this.__doEventDelete(_key);
+                        }
+                    },this
+                );
             }
-        }._$bind(this));
-        _v._$dispatchEvent = 
-        _v._$dispatchEvent._$aop(function(_event){
+        };
+        var _doDispatchEvent = function(_event){
             var _args = _event.args,
                 _type = _args[1].toLowerCase();
             if (this.__isDelegate(_args[0],_type)){
                 _event.stopped = !0;
                 _args[0]['on'+_type].apply(_args[0],_args.slice(2));
             }
-        }._$bind(this));
-    };
+        };
+        return function(){
+            // void multi-enhance
+            if (!!this.__enhanced)
+                return;
+            this.__enhanced = true;
+            _v._$addEvent = 
+            _v._$addEvent._$aop(_doAddEvent._$bind(this));
+            _v._$delEvent = 
+            _v._$delEvent._$aop(_doDelEvent._$bind(this));
+            _v._$clearEvent = 
+            _v._$clearEvent._$aop(_doClearEvent._$bind(this));
+            _v._$dispatchEvent = 
+            _v._$dispatchEvent._$aop(_doDispatchEvent._$bind(this));
+        };
+    })();
 };
-NEJ.define('{lib}util/event/event.js',
-          ['{lib}base/util.js'
-          ,'{lib}base/event.js'
-          ,'{lib}base/element.js'
-          ,'{lib}util/event.js'],f);
+// define dependency
+NEJ.define(
+    '{lib}util/event/event.js',[
+    '{lib}base/util.js',
+    '{lib}base/event.js',
+    '{lib}base/element.js',
+    '{lib}util/event.js'
+],f);

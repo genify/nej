@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>test rest</title>
+    <meta charset="utf-8"/>
+    <style>
+      .fl{float:left;width:40%;padding-bottom:50px;}
+      .fr{float:right;}
+      .itm{padding:10px 0;overflow:hidden;}
+      .itm:hover{background:#BBBBBB;font-size:100%;}
+      .itm p{margin:0 150px 0 0;}
+      .itm a{margin-right:15px;font-size:12px;}
+    </style>
+  </head>
+  <body>
+    <script src="../../../src/define.js?pro=./"></script>
+    <script>
+    
+      var log = function(m){
+          var p = document.createElement('p');
+          p.innerHTML = m;
+          document.body.appendChild(p);
+      };
+    
+      define(['{lib}util/ajax/rest.js'],
+      function(){
+          var _ = NEJ.P,
+              _v = _('nej.v'),
+              _j = _('nej.j');
+          
+          _v._$addEvent(
+              window,'resterror',function(_error){
+                  log('onresterror callback 1');
+                  log('error info -> '+JSON.stringify(_error));
+              }
+          );
+          
+          _v._$addEvent(
+              window,'resterror',function(_error){
+                  // _error.stopped = !0;
+                  log('onresterror callback 2');
+                  log('error info -> '+JSON.stringify(_error));
+              }
+          );
+          
+          _j._$requestByREST(
+              'http://192.168.145.133:8282/rest/messages/count/statistic',{
+                  method:'GET',
+                  query:{days:7},
+                  onload:function(_data){
+                      log('load data:'+JOSN.stringify(_data));
+                  },
+                  onerror:function(_error){
+                      log('request error call');
+                      log('error info -> '+JSON.stringify(_error));
+                  }
+              }
+          );
+          
+      });
+    </script>
+  </body>
+</html>
