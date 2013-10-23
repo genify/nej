@@ -138,8 +138,8 @@ var f = function(){
      * @config {Variable} data    出错时携带数据
      * 
      * [hr]
-     * 
-     * @event  {onbeforerequest} 请求之前对数据处理回调
+     * 请求之前对数据处理回调
+     * @event  {onbeforerequest} 
      * @param  {Object} 数据对象
      * 
      */
