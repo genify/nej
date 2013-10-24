@@ -1000,7 +1000,9 @@ var f = function(){
         _v._$addEvent(
             document,'templateready',
             function(){
-                dispatcher._$active();
+                window.setTimeout(
+                    dispatcher._$active._$bind(dispatcher),0
+                );
             }
         );
         return window.dispatcher;
