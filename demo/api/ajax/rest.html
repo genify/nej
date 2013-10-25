@@ -3,30 +3,23 @@
   <head>
     <title>test rest</title>
     <meta charset="utf-8"/>
-    <style>
-      .fl{float:left;width:40%;padding-bottom:50px;}
-      .fr{float:right;}
-      .itm{padding:10px 0;overflow:hidden;}
-      .itm:hover{background:#BBBBBB;font-size:100%;}
-      .itm p{margin:0 150px 0 0;}
-      .itm a{margin-right:15px;font-size:12px;}
-    </style>
   </head>
   <body>
     <script src="../../../src/define.js?pro=./"></script>
     <script>
     
-      var log = function(m){
-          var p = document.createElement('p');
-          p.innerHTML = m;
-          document.body.appendChild(p);
-      };
     
       define(['{lib}util/ajax/rest.js'],
       function(){
           var _ = NEJ.P,
               _v = _('nej.v'),
               _j = _('nej.j');
+
+          var log = function(m){
+              var p = document.createElement('p');
+              p.innerHTML = m;
+              document.body.appendChild(p);
+          };
           
           _v._$addEvent(
               window,'resterror',function(_error){

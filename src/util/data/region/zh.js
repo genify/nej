@@ -7,9 +7,10 @@
  * ------------------------------------------
  */
 var f = function(){
-    var _r = NEJ.R,
-        _p = NEJ.P('nej.ut'),
-        _proRegionCacheZH;
+    var _  = NEJ.P,
+        _r = NEJ.R,
+        _p = _('nej.ut'),
+        _pro;
     if (!!_p._$$RegionCacheZH) return;
     /**
      * 中国行政划区数据缓存，使用方式
@@ -29,7 +30,7 @@ var f = function(){
      * 
      */
     _p._$$RegionCacheZH = NEJ.C();
-      _proRegionCacheZH = _p._$$RegionCacheZH._$extend(_p._$$AbstractListCache);
+    _pro = _p._$$RegionCacheZH._$extend(_p._$$AbstractListCache);
     /**
      * 从服务器端载入列表
      * @protected
@@ -42,7 +43,7 @@ var f = function(){
      * @config {Function} onload 列表载入回调
      * @return {Void}
      */
-    _proRegionCacheZH.__doLoadList = function(_options){
+    _pro.__doLoadList = function(_options){
         var _list,
             _arr = _options.key.split('-');
         switch(_arr.shift()){
@@ -65,7 +66,7 @@ var f = function(){
      * @param  {String}  省份
      * @return {Boolean} 是否有三级目录
      */
-    _proRegionCacheZH._$hasArea = function(_province){
+    _pro._$hasArea = function(_province){
         return !_dmap.s[_province];
     };
     // init data
@@ -439,5 +440,7 @@ var f = function(){
          }
      };
 };
-NEJ.define('{lib}util/data/region/zh.js',
-      ['{lib}util/cache/cache.list.base.js'],f);
+NEJ.define(
+    '{lib}util/data/region/zh.js',[
+    '{lib}util/cache/cache.list.base.js'
+],f);

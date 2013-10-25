@@ -11,7 +11,7 @@ var f = function(){
         _e = _('nej.e'),
         _u = _('nej.u'),
         _p = _('nej.ut'),
-        _proRegionSelector;
+        _pro;
     if (!!_p._$$RegionSelector) return;
     /**
      * 三级联动区域选择控件<br />
@@ -45,13 +45,13 @@ var f = function(){
      * @config  {Object}                        data     初始地区信息，如{province:'浙江省',city:'杭州市',area:'滨江区'}
      * 
      * [hr]
-     * 
-     * @event   {onchange} 区域变化触发事件
+     * 区域变化触发事件
+     * @event   {onchange} 
      * @param   {String}   变化类型(province/city/area)
      * 
      */
     _p._$$RegionSelector = NEJ.C();
-      _proRegionSelector = _p._$$RegionSelector._$extend(_p._$$Event);
+    _pro = _p._$$RegionSelector._$extend(_p._$$Event);
     /**
      * 控件重置
      * @protected
@@ -59,7 +59,7 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proRegionSelector.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
         var _nmap = {
             province:_e._$get(_options.province)
@@ -74,9 +74,11 @@ var f = function(){
            ,[_nmap.province,'change',this.__onChange._$bind(this,'province')]
         ]);
         this.__cache = _options.cache||
-                       _p._$$RegionCacheZH._$allocate();
-        this.__cache._$setEvent('onlistload',
-             this.__onListLoad._$bind(this));
+            _p._$$RegionCacheZH._$allocate();
+        this.__cache._$setEvent(
+            'onlistload',
+            this.__onListLoad._$bind(this)
+        );
         this.__doClearSelect(_nmap.province);
         this._$setRegion(_options.data,!0);
         this.__cache._$getList({key:'province'});
@@ -87,9 +89,12 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proRegionSelector.__destroy = function(){
+    _pro.__destroy = function(){
         this.__supDestroy();
-        this.__cache._$recycle();
+        if (!!this.__cache){
+            this.__cache._$recycle();
+            delete this.__cache;
+        }
         delete this.__cache;
         delete this.__data;
         delete this.__selectors;
@@ -101,9 +106,10 @@ var f = function(){
      * @param  {Node} 选择器
      * @return {Void}
      */
-    _proRegionSelector.__doClearSelect = function(_selector){
-        if (!!_selector)
+    _pro.__doClearSelect = function(_selector){
+        if (!!_selector){
             _selector.options.length = this.__offset;
+        }
     };
     /**
      * 选择器填充数据
@@ -113,13 +119,17 @@ var f = function(){
      * @param  {Array} 数据列表
      * @return {Void}
      */
-    _proRegionSelector.__doFillList = function(_selector,_list){
+    _pro.__doFillList = function(_selector,_list){
         if (!_selector) return;
-        _u._$forEach(_list,
-            function(_value){
+        _u._$forEach(
+            _list,function(_value){
                 _selector.add(new Option(_value,_value));
-            });
-        _selector.style.display = !_list||!_list.length?'none':'';
+            }
+        );
+        _e._$setStyle(
+            _selector,'display',
+            !_list||!_list.length?'none':''
+        );
     };
     /**
      * 设置值
@@ -128,7 +138,7 @@ var f = function(){
      * @param  {String} 类型
      * @return {Void}
      */
-    _proRegionSelector.__doSetValue = function(_type){
+    _pro.__doSetValue = function(_type){
         var _value = this.__data[_type]||'';
         if (!!_value){
             this.__selectors[_type].value = _value;
@@ -143,18 +153,30 @@ var f = function(){
      * @param  {String} 变化类型，province/city/area
      * @return {Void}
      */
-    _proRegionSelector.__onChange = function(_type){
+    _pro.__onChange = function(_type){
         var _nmap = this.__selectors,
             _value = _nmap.province.value;
         switch(_type){
             case 'province':
                 this.__doClearSelect(_nmap.city);
                 this.__doClearSelect(_nmap.area);
-                if (!!_nmap.area)
-                    _nmap.area.style.display = this
-                         .__cache._$hasArea(_value)?'':'none';
-                if (!_value) return;
-                this.__cache._$getList({key:'city-'+_value});
+                // init show e.g. municipality
+                if (!this.__cache._$hasArea(_value)){
+                    _e._$setStyle(_nmap.area,'display','none');
+                    if (!_nmap.area){
+                        _e._$setStyle(_nmap.city,'display','none');
+                        break;
+                    }else{
+                        _e._$setStyle(_nmap.city,'display','');
+                    }
+                }else{
+                    _e._$setStyle(_nmap.area,'display','');
+                    _e._$setStyle(_nmap.city,'display','');
+                }
+                // get city list
+                if (!!_nmap.city&&!!_value){
+                    this.__cache._$getList({key:'city-'+_value});
+                }
             break;
             case 'city':
                 this.__doClearSelect(_nmap.area);
@@ -172,12 +194,14 @@ var f = function(){
      * @param  {Object} 列表信息
      * @return {Void}
      */
-    _proRegionSelector.__onListLoad = function(_options){
+    _pro.__onListLoad = function(_options){
         var _key  = _options.key,
             _type = _key.split('-')[0],
             _node = this.__selectors[_type];
-        this.__doFillList(_node,this
-            .__cache._$getListInCache(_key));
+        this.__doFillList(
+            _node,this.__cache.
+            _$getListInCache(_key)
+        );
         this.__doSetValue(_type);
     };
     /**
@@ -193,12 +217,14 @@ var f = function(){
      * @config {String} area     区
      * @return {nej.ut._$$RegionSelector}
      */
-    _proRegionSelector._$setRegion = function(_data,_nochange){
+    _pro._$setRegion = function(_data,_nochange){
         this.__data = _data||_o;
         if (!_nochange)
             this.__doSetValue('province');
         return this;
     };
 };
-NEJ.define('{lib}util/region/region.zh.js',
-      ['{lib}util/event.js'],f);
+NEJ.define(
+    '{lib}util/region/region.zh.js',[
+    '{lib}util/event.js'
+],f);

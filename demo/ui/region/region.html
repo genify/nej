@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>省市区联动 - 前端实例</title>
+<link href="../../css/template.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="g-doc">
+	<div class="g-hd">
+        <h1 class="m-logo">网易-杭研院-前端技术组-实例库</h1>
+        <h2 class="m-title">省市区联动</h2>
+    </div>
+    <div class="g-bd">
+    	<div class="g-mn">
+    		<div class="m-cnt">
+    			<div>
+    			    <select id="province-0"><option>省份</option></select>
+    			    <select id="city-0"><option>城市</option></select>
+    			    <select id="area-0"><option>区域</option></select>
+    			</div>
+    			<div>
+                    <select id="province-1"><option>省份</option></select>
+                    <select id="city-1"><option>城市</option></select>
+                </div>
+                <div>
+                    <select id="province-2"><option>省份</option></select>
+                </div>
+    		</div>
+			<div class="m-event">
+				<h2>事件日志</h2>
+				<div class="panel">
+					<div class="client" id="log"></div>
+				</div>
+			</div>
+        </div>
+        <div class="g-sd" id="side">
+		</div>
+    </div>
+</div>
+<div class="g-bd">
+    <div class="m-foot">
+    	如有任何问题，请联系：魏文庆(<a href="mailto:wqwei@corp.netease.com">wqwei@corp.netease.com</a>)
+    </div>
+</div>
+<div class="g-ft">
+    <div class="m-foot">
+    	&nbsp;&copy;&nbsp;网易-杭研院-前端技术组
+    </div>
+</div>
+<script src="../../../src/define.js?pro=../../"></script>
+<script>
+    define(['{lib}util/data/region/zh.js',
+            '{lib}util/region/region.zh.js'],
+    function(){
+        var log = function(msg){
+            var p = document.createElement('p');
+            p.innerHTML = msg;
+            document.getElementById('log').appendChild(p);
+        };
+        
+        
+        var _t = NEJ.P('nej.ut');
+        
+        _t._$$RegionSelector._$allocate({
+            province:'province-0',
+            city:'city-0',
+            area:'area-0',
+            onchange:function(_type){
+                log('region0 change -> '+_type);
+            }
+        });
+        
+        _t._$$RegionSelector._$allocate({
+            province:'province-1',
+            city:'city-1',
+            onchange:function(_type){
+                log('region1 change -> '+_type);
+            }
+        });
+        
+        _t._$$RegionSelector._$allocate({
+            province:'province-2',
+            onchange:function(_type){
+                log('region2 change -> '+_type);
+            }
+        });
+        
+    });
+</script>
+</body>
+</html>
