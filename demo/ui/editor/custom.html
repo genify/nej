@@ -5,6 +5,8 @@
 <title>富文本编辑器 - 前端实例</title>
 <link href="../../css/template.css" rel="stylesheet" type="text/css"/>
 <style type="text/css">
+  body{font-family:"Courier New";font-size:20px;}
+  div.m-cmp{width:600px;}
 </style>
 </head>
 <body>
@@ -18,6 +20,7 @@
     		<div class="m-cnt">
     			<div id="box" class="box"></div>
     		</div>
+    		<div id="xxyy"></div>
         </div>
         <div class="g-sd" id="side">
         	<form class="w-form" onsubmit="return false;" name="param">
@@ -67,7 +70,7 @@
 			 cmp = i._$$CustomEditor._$allocate({
 					parent: 'box',
 					clazz: 'm-cmp',
-					content: _data.content,
+					//content: _data.content,
 					focus: !!_data.focus[0]
 				});
 		}
@@ -88,7 +91,7 @@
 		 * 获取内容
 		 */
 		function getContent(){
-			alert(cmp._$getContent());
+		    e._$get('xxyy').innerHTML = cmp._$getContent();
 		}
 		/**
 		 * 隐藏控件

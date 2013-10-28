@@ -14,65 +14,12 @@ var f = function(){
         _u = _('nej.u'),
         _t = _('nej.ut'),
         _p = _('nej.ui'),
-        _proEditor,
-        _supEditor;
+        _seed_css,
+        _seed_icmd,
+        _seed_ifnt,
+        _seed_iedt,
+        _pro,_sup;
     if (!!_p._$$Editor) return;
-    /*
-     * 获取图标样式代码
-     * @return {String} 图标样式
-     */
-    var __doGenIconStyle = function(){
-        var _arr=[],_row=20,_col=3;
-        for(var i=0;i<_row;i++)
-            for(var j=0;j<_col;j++)
-                _arr.push('.#<uispace> .z-i-'+i+j+'{background-position:-'+(16*j)+'px -'+(40+i*16)+'px;}');
-//        _row = 5;
-//        for(var i=0;i<_row;i++)
-//            for(var j=0;j<_col;j++)
-//                _arr.push('.#<uispace> .z-x-'+i+j+'{background-position:-'+(80+26*j)+'px -'+(70+i*26)+'px;}');
-        return _arr.join('');
-    };
-    // ui css text
-    var _seed_css = _e._$pushCSSText('\
-        .#<uispace>{width:500px;border:1px solid #ddd;text-align:center;}\
-        .#<uispace> .zbg{background:url('+_c._$get('root')+'nej_editor.png) no-repeat 100px 100px;}\
-        .#<uispace> .ztbar{height:30px;background-color:#eee;zoom:1;}\
-        .#<uispace> .ztbar:after{display:block;clear:both;visibility:hidden;height:0;content:".";}\
-        .#<uispace> .zitm{float:left;width:24px;height:24px;margin:3px 0;course:pointer;}\
-        .#<uispace> .zitm:hover{background-position:0 0;}\
-        .#<uispace> .zitm.js-selected{background-position:-30px 0;}\
-        .#<uispace> .zitm .zicn{width:16px;height:16px;margin:4px auto 0;overflow:hidden;text-indent:100px;}\
-        .#<uispace> .zitm .ztxt{display:none;}\
-        .#<uispace> .zisp{float:left;width:10px;height:24px;margin:3px 0;background-position:-60px 0;overflow:hidden;}\
-        .#<uispace> .zsel{float:left;position:relative;height:20px;overflow:hidden;line-height:20px;padding:0 5px;margin:4px;border:1px solid #C5C5C5;background:#fff;font-size:12px;text-align:left;cursor:pointer;}\
-        .#<uispace> .zsel .zarw{position:absolute;top:0;right:0;width:18px;height:18px;background-position:0px -244px;}\
-        .#<uispace> .zsel.zfs{width:60px;}\
-        .#<uispace> .zsel.zfm{width:140px;}\
-        .#<uispace> .zarea{height:200px;}\
-        .#<uispace> .zarea iframe{width:100%;height:100%;}'+__doGenIconStyle());
-    // command list html
-    var _seed_icmd = _e._$addHtmlTemplate('\
-        {list xlist as x}\
-        <div class="zitm zbg ${\'js-\'|seed}" data-command="${x.cmd}" title="${x.txt}">\
-          <div class="zicn zbg ${x.icn}">&nbsp;</div>\
-          <div class="ztxt">${x.txt}</div>\
-        </div>\
-        {/list}\
-        {if defined("hr")&&!!hr}\
-        <div class="zbg zisp">&nbsp;</div>\
-        {/if}');
-    // font-size and font-family select html
-    var _seed_ifnt = _e._$addHtmlTemplate('\
-        <div class="zsel ${icn} ${\'js-\'|seed}" data-command="${cmd}">\
-          <span class="${\'js-t-\'|seed}">${txt}</span>\
-          <span class="zarw zbg">&nbsp;</span>\
-        </div>');
-    // editor html
-    var _seed_iedt = _e._$addHtmlTemplate('\
-        <div class="'+_seed_css+'">\
-          <div class="ztbar">${toolbar}</div>\
-          <div class="zarea"></div>\
-        </div>');
     /**
      * 富媒体编辑器基类封装
      * @class   {nej.ui._$$Editor} 富媒体编辑器基类封装
@@ -85,15 +32,15 @@ var f = function(){
      * 
      */
     _p._$$Editor = NEJ.C();
-      _proEditor = _p._$$Editor._$extend(_p._$$Abstract);
-      _supEditor = _p._$$Editor._$supro;
+      _pro = _p._$$Editor._$extend(_p._$$Abstract);
+      _sup = _p._$$Editor._$supro;
     /**
      * 控件初始化
      * @protected
      * @method {__init}
      * @return {Void}
      */
-    _proEditor.__init = function(){
+    _pro.__init = function(){
         this.__aopt = {};
         this.__topt = {};
         this.__supInit();
@@ -105,7 +52,7 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proEditor.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
         this.__aopt.style = _options.style;
         this.__aopt.content = _options.content;
@@ -121,7 +68,7 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proEditor.__destroy = function(){
+    _pro.__destroy = function(){
         // recycle editor first
         this.__editor._$recycle();
         this.__supDestroy();
@@ -133,7 +80,7 @@ var f = function(){
      * @method {__initXGui}
      * @return {Void}
      */
-    _proEditor.__initXGui = function(){
+    _pro.__initXGui = function(){
         this.__seed_css = _seed_css;
     };
     /**
@@ -142,7 +89,7 @@ var f = function(){
      * @method {__initNode}
      * @return {Void}
      */
-    _proEditor.__initNode = function(){
+    _pro.__initNode = function(){
         this.__supInitNode();
         var _list = _e._$getChildren(this.__body);
         this.__aopt.parent = _list[1];
@@ -156,7 +103,7 @@ var f = function(){
      * @param  {Object} 命令数据
      * @return {String} html代码
      */
-    _proEditor.__doGenCmdXhtml = function(_data){
+    _pro.__doGenCmdXhtml = function(_data){
         return _e._$getHtmlTemplate(_seed_icmd,_data);
     };
     /**
@@ -165,7 +112,7 @@ var f = function(){
      * @method {__doGenFontSizeXhtml}
      * @return {String} html代码
      */
-    _proEditor.__doGenFontSizeXhtml = function(){
+    _pro.__doGenFontSizeXhtml = function(){
         return _e._$getHtmlTemplate(_seed_ifnt,
                {cmd:'fontSize',txt:'标准',icn:'zfs'});
     };
@@ -175,7 +122,7 @@ var f = function(){
      * @method {__doGenFontNameXhtml}
      * @return {String} html代码
      */
-    _proEditor.__doGenFontNameXhtml = function(){
+    _pro.__doGenFontNameXhtml = function(){
         return _e._$getHtmlTemplate(_seed_ifnt,
                {cmd:'fontName',txt:'Arial',icn:'zfm'});
     };
@@ -186,7 +133,7 @@ var f = function(){
      * @param  {Object} 命令数据
      * @return {Void}
      */
-    _proEditor.__doGenEditorXhtml = function(_data){
+    _pro.__doGenEditorXhtml = function(_data){
         return _e._$getHtmlTemplate(_seed_iedt,_data);
     };
     /**
@@ -194,7 +141,7 @@ var f = function(){
      * @method {_$getContent}
      * @return {String} 内容
      */
-    _proEditor._$getContent = function(){
+    _pro._$getContent = function(){
         return this.__editor._$getContent();
     };
     /**
@@ -202,7 +149,7 @@ var f = function(){
      * @method {_$getContent}
      * @return {Array} 编辑内中的图片ID+@+图片地址的列表，根据ID是否为0判断是否需要放入列表
      */
-    _proEditor._$getPhotoIdsAndUrls = (function(){
+    _pro._$getPhotoIdsAndUrls = (function(){
         var _filter = function(_item){
             if(_item.id!=0)
                 this.__idsAndUrls.push(_item.id+'@'+_item.src);
@@ -227,7 +174,7 @@ var f = function(){
      * @method {_$getTextContent}
      * @return {String} 内容
      */
-    _proEditor._$getTextContent = function(){
+    _pro._$getTextContent = function(){
         return this.__editor._$getTextContent();
     };
     /**
@@ -236,7 +183,7 @@ var f = function(){
      * @param  {String} 内容
      * @return {nej.ui._$$Editor}
      */
-    _proEditor._$setContent = function(_content){
+    _pro._$setContent = function(_content){
         this.__editor._$setContent(_content);
         return this;
     };
@@ -246,7 +193,7 @@ var f = function(){
      * @param  {Array|nej.ut._$$EditorCommand} 命令实现类构造
      * @return {nej.ui._$$Editor}
      */
-    _proEditor._$registCommand = function(_class){
+    _pro._$registCommand = function(_class){
         this.__editor._$registCommand(_class);
         return this;
     };
@@ -255,7 +202,7 @@ var f = function(){
      * @method {_$show}
      * @return {nej.ui._$$Editor}
      */
-    _proEditor._$show = function(){
+    _pro._$show = function(){
         this.__body.style.display = '';
         return this;
     };
@@ -264,12 +211,75 @@ var f = function(){
      * @method {_$hide}
      * @return {nej.ui._$$Editor}
      */
-    _proEditor._$hide = function(){
+    _pro._$hide = function(){
         this.__body.style.display = 'none';
         return this;
     };
+    /*
+     * 获取图标样式代码
+     * @return {String} 图标样式
+     */
+    var __doGenIconStyle = function(){
+        var _arr=[],_row=20,_col=3;
+        for(var i=0;i<_row;i++)
+            for(var j=0;j<_col;j++)
+                _arr.push('.#<uispace> .z-i-'+i+j+'{background-position:-'+(16*j)+'px -'+(40+i*16)+'px;}');
+//        _row = 5;
+//        for(var i=0;i<_row;i++)
+//            for(var j=0;j<_col;j++)
+//                _arr.push('.#<uispace> .z-x-'+i+j+'{background-position:-'+(80+26*j)+'px -'+(70+i*26)+'px;}');
+        return _arr.join('');
+    };
+    // ui css text
+    _seed_css = _e._$pushCSSText('\
+        .#<uispace>{width:500px;border:1px solid #ddd;text-align:center;}\
+        .#<uispace> .zbg{background:url('+_c._$get('root')+'nej_editor.png?20131028) no-repeat 100px 100px;}\
+        .#<uispace> .ztbar{height:30px;background-color:#eee;zoom:1;}\
+        .#<uispace> .ztbar:after{display:block;clear:both;visibility:hidden;height:0;content:".";}\
+        .#<uispace> .zitm{float:left;width:24px;height:24px;margin:3px 0;course:pointer;}\
+        .#<uispace> .zitm:hover{background-position:0 0;}\
+        .#<uispace> .zitm.js-selected{background-position:-30px 0;}\
+        .#<uispace> .zitm .zicn{width:16px;height:16px;margin:4px auto 0;overflow:hidden;text-indent:100px;}\
+        .#<uispace> .zitm .ztxt{display:none;}\
+        .#<uispace> .zisp{float:left;width:10px;height:24px;margin:3px 0;background-position:-60px 0;overflow:hidden;}\
+        .#<uispace> .zsel{float:left;position:relative;height:20px;overflow:hidden;line-height:20px;padding:0 5px;margin:4px;border:1px solid #C5C5C5;background:#fff;font-size:12px;text-align:left;cursor:pointer;}\
+        .#<uispace> .zsel .zarw{position:absolute;top:0;right:0;width:18px;height:18px;background-position:0px -244px;}\
+        .#<uispace> .zsel.zfs{width:60px;}\
+        .#<uispace> .zsel.zfm{width:140px;}\
+        .#<uispace> .zarea{height:200px;}\
+        .#<uispace> .zarea iframe{width:100%;height:100%;}'+
+        __doGenIconStyle()
+    );
+    // command list html
+    _seed_icmd = _e._$addHtmlTemplate('\
+        {list xlist as x}\
+        <div class="zitm zbg ${\'js-\'|seed}" data-command="${x.cmd}" title="${x.txt}">\
+          <div class="zicn zbg ${x.icn}">&nbsp;</div>\
+          <div class="ztxt">${x.txt}</div>\
+        </div>\
+        {/list}\
+        {if defined("hr")&&!!hr}\
+        <div class="zbg zisp">&nbsp;</div>\
+        {/if}\
+    ');
+    // font-size and font-family select html
+    _seed_ifnt = _e._$addHtmlTemplate('\
+        <div class="zsel ${icn} ${\'js-\'|seed}" data-command="${cmd}">\
+          <span class="${\'js-t-\'|seed}">${txt}</span>\
+          <span class="zarw zbg">&nbsp;</span>\
+        </div>\
+    ');
+    // editor html
+    _seed_iedt = _e._$addHtmlTemplate('\
+        <div class="'+_seed_css+'">\
+          <div class="ztbar">${toolbar}</div>\
+          <div class="zarea"></div>\
+        </div>\
+    ');
 };
-NEJ.define('{lib}ui/editor/editor.js',
-      ['{patch}config.js'
-      ,'{lib}ui/base.js'
-      ,'{lib}util/editor/editor.js'],f);
+NEJ.define(
+    '{lib}ui/editor/editor.js',[
+    '{patch}config.js',
+    '{lib}ui/base.js',
+    '{lib}util/editor/editor.js'
+],f);

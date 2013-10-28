@@ -9,8 +9,7 @@ var f = function(){
     var _  = NEJ.P,
         _e = _('nej.e'),
         _p = _('nej.ui'),
-        _proCustomEditor,
-        _supCustomEditor;
+        _pro,_sup;
     if (!!_p._$$CustomEditor) return;
     // ui html code
     var _seed_html;
@@ -21,16 +20,16 @@ var f = function(){
      * @param   {Object} 可选配置参数，已处理参数列表如下
      */
     _p._$$CustomEditor = NEJ.C();
-      _proCustomEditor = _p._$$CustomEditor._$extend(_p._$$Editor);
-      _supCustomEditor = _p._$$CustomEditor._$supro;
+    _pro = _p._$$CustomEditor._$extend(_p._$$Editor);
+    _sup = _p._$$CustomEditor._$supro;
     /**
      * 初始化外观信息
      * @protected
      * @method {__initXGui}
      * @return {Void}
      */
-    _proCustomEditor.__initXGui = function(){
-        _supCustomEditor.__initXGui.apply(this,arguments);
+    _pro.__initXGui = function(){
+        _sup.__initXGui.apply(this,arguments);
         this.__seed_html = _seed_html;
     };
     /**
@@ -39,7 +38,7 @@ var f = function(){
      * @method {__initNodeTemplate}
      * @return {Void}
      */
-    _proCustomEditor.__initNodeTemplate = (function(){
+    _pro.__initNodeTemplate = (function(){
         var _flist = [{cmd:'bold',txt:'加粗',icn:'z-i-30'}
                      ,{cmd:'italic',txt:'斜体',icn:'z-i-31'}
                      ,{cmd:'underline',txt:'下划线',icn:'z-i-32'}
@@ -63,20 +62,22 @@ var f = function(){
         };
     })();
 };
-NEJ.define('{lib}ui/editor/custom.js',
-      ['{lib}ui/editor/editor.js'
-      ,'{lib}util/editor/command/fontsize.js'
-      ,'{lib}util/editor/command/fontname.js'
-      ,'{lib}util/editor/command/bold.js'
-      ,'{lib}util/editor/command/italic.js'
-      ,'{lib}util/editor/command/insertorderedlist.js'
-      ,'{lib}util/editor/command/insertunorderedlist.js'
-      ,'{lib}util/editor/command/underline.js'
-      ,'{lib}util/editor/command/strikethrough.js'
-      ,'{lib}util/editor/command/forecolor.js'
-      ,'{lib}util/editor/command/backcolor.js'
-      ,'{lib}util/editor/command/justifyleft.js'
-      ,'{lib}util/editor/command/justifycenter.js'
-      ,'{lib}util/editor/command/justifyright.js'
-      ,'{lib}util/editor/command/link.js'
-      ,'{lib}util/editor/command/blockquote.js'],f);
+NEJ.define(
+    '{lib}ui/editor/custom.js',[
+    '{lib}ui/editor/editor.js',
+    '{lib}util/editor/command/fontsize.js',
+    '{lib}util/editor/command/fontname.js',
+    '{lib}util/editor/command/bold.js',
+    '{lib}util/editor/command/italic.js',
+    '{lib}util/editor/command/insertorderedlist.js',
+    '{lib}util/editor/command/insertunorderedlist.js',
+    '{lib}util/editor/command/underline.js',
+    '{lib}util/editor/command/strikethrough.js',
+    '{lib}util/editor/command/forecolor.js',
+    '{lib}util/editor/command/backcolor.js',
+    '{lib}util/editor/command/justifyleft.js',
+    '{lib}util/editor/command/justifycenter.js',
+    '{lib}util/editor/command/justifyright.js',
+    '{lib}util/editor/command/link.js',
+    '{lib}util/editor/command/blockquote.js'
+],f);
