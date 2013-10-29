@@ -247,21 +247,21 @@ var f = function(){
             }
             // 0 -> begin
             if (_beg>0){
-                _date.setMonth(_month-2);
+                _date.setMonth(_month-2||0);
                 _year  = _date.getFullYear();
-                _month = _date.getMonth()+1;
-                var _limit = _getMonthDay(_year,_month);
+                var _monthTemp = _date.getMonth()+1;
+                var _limit = _getMonthDay(_year,_monthTemp);
                 for(var i=_beg-1,_node;i>=0;i--){
                     _node = this.__list[i];
                     this.__doSaveDateInfo(
-                          _node,_year,_month,_limit--);
+                          _node,_year,_monthTemp,_limit--);
                     _e._$addClassName(_node,this.__extended);
                 }
             }
             // end -> length
             var _length = this.__list.length;
             if (_end<_length-1){
-                _date.setMonth(_month+1);
+                _date.setMonth(_month==12?0:_month);
                 _year  = _date.getFullYear();
                 _month = _date.getMonth()+1;
                 for(var i=_end,k=1;i<_length;i++){
