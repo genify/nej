@@ -129,11 +129,22 @@ var f = function(){
         };
         this.__doRecycleDotNode();
         this.__doSetNodeIndex(this.__list[0],1);
-        var _point = 1;
+        // for total<length
+        var _point = 1,
+            _length = this.__list.length;
+        if (this.__total<_length){
+            for(var _page;_point<_length;_point++){
+                _page = _point+1;
+                this.__doSetNodeIndex(
+                    this.__list[_point],
+                    _page>this.__total?null:_page
+                );
+            }
+            return;
+        }
         // 2 -> index
         if (this.__index>1){
-            var _length = this.__list.length,
-                _count = Math.floor((_length-2)/2),
+            var _count = Math.floor((_length-2)/2),
                 _mxbeg = this.__total-_length+2,
                 _start = Math.max(2,this.__index-_count);
             if (this.__total>=_length){
@@ -157,7 +168,7 @@ var f = function(){
         // index -> total
         if (this.__index<this.__total){
             var _index,_start = this.__index+1;
-            for(var i=0,l=this.__list.length-2;;i++,_point++){
+            for(var i=0,l=_length-2;;i++,_point++){
                 _index = _start+i;
                 if (_point>l||_index>this.__total)
                     break;
@@ -179,7 +190,7 @@ var f = function(){
             }
         }
         // hidden point -> length
-        for(var l=this.__list.length;_point<l;_point++){
+        for(;_point<_length;_point++){
             this.__doSetNodeIndex(this.__list[_point]);
         }
     };
@@ -232,5 +243,7 @@ var f = function(){
     };
     _x.isChange = !0;
 };
-NEJ.define('{lib}util/page/page.js',
-          ['{lib}util/page/page.base.js'],f);
+NEJ.define(
+    '{lib}util/page/page.js',[
+    '{lib}util/page/page.base.js'
+],f);
