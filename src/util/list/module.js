@@ -935,6 +935,13 @@ var f = function(){
     _pro._$getPager = function(){
         return this.__pager;
     };
+    /**
+     * 判断列表是否载入完成s
+     * @return {Boolean} 
+     */
+    _pro._$isLoaded = function(){
+        return this.__cache._$isLoaded(this.__ropt.key);
+    };
 };
 NEJ.define('{lib}util/list/module.js',
           ['{lib}ui/item/list.js'

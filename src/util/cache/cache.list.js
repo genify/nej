@@ -312,6 +312,15 @@ var f = function(){
         return this;
     };
     /**
+     * 判断列表是否载入完成<br/>
+     * @method {_$isLoaded}
+     * @param  {String}  列表标识
+     * @return {Boolean} 是否载入完成
+     */
+    _proListCache._$isLoaded = function(_key){
+        return !!this._$getListInCache(_key).loaded;
+    };
+    /**
      * 设置列表，清除原有列表
      * 脚本举例
      * [code]
