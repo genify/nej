@@ -144,6 +144,10 @@ var f = function(){
         this.__type = _event.type;
         setTimeout(this.__doCompareContent._$bind(this),50);
     };
+    /**
+     * 比较富文本的内容
+     * @return {[type]} [description]
+     */
     _proEditorArea.__doCompareContent = function(){
         if(this.__initcnt === this._$getContent()){
             return !1;
