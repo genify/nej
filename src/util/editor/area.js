@@ -133,6 +133,14 @@ var f = function(){
         this._$dispatchEvent('onselectionchange');
     };
     /**
+     * 输入事件
+     * @return {[type]} [description]
+     */
+    _proEditorArea.__onKeyUp = function(){
+        // TODO something
+        this._$dispatchEvent('onkeyup');
+    };
+    /**
      * 聚焦编辑器
      * @method {_$focus}
      * @param  {Number} 光标位置，默认为0，0-末尾、1-起始、2-不变

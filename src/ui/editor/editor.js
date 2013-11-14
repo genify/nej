@@ -56,7 +56,7 @@ var f = function(){
         this.__supReset(_options);
         this.__aopt.style = _options.style;
         this.__aopt.content = _options.content;
-        this.__aopt.focus = !_options.focus?false:true;
+        this.__aopt.focus = !_options.focus?!1:!0;
         this.__editor = _t._$$Editor._$allocate({
             area:_t._$$EditorArea._$allocate(this.__aopt)
            ,toolbar:_t._$$EditorToolbar._$allocate(this.__topt)
