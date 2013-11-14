@@ -56,7 +56,7 @@ var f = function(){
         this.__supReset(_options);
         NEJ.X(this.__aopt,_options,function(_value,_key){
             if(_key.search(/^on/)<0){
-                return !1;
+                return !0;
             }
         });
         this.__aopt.style = _options.style;
