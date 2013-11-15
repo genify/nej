@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>test storage manager</title>
+    <meta charset="utf-8"/>
+  </head>
+  <body>
+    <form>
+      <p><input type="text" name="uid0"><input type="button" name="add" value="add"/></p>
+      <p><input type="text" name="uid1"><input type="button" name="get" value="get"/></p>
+      <p><input type="text" name="uid2"><input type="button" name="delete" value="delete"/></p>
+      <p><input type="text" name="uid3"><input type="button" name="update" value="update"/></p>
+    </form>
+    <script src="../../../src/define.js?pro=./"></script>
+    <script>
+      define(['{lib}util/cache/storage.js',
+              '{lib}util/cache/storage.manager.js'],
+      function(){
+          var _  = NEJ.P,
+              _v = _('nej.v'),
+              _u = _('nej.u'),
+              _t = _('nej.ut');
+          
+          var _seed = 0;
+          
+          var _inst = _t._$$StorageManager._$allocate({
+              key:'userId',
+              prefix:'test-user-',
+              limit:5
+          });
+          
+          var _form = document.forms[0];
+          
+          _v._$addEvent(
+              _form.get,'click',function(){
+                  var _data = _inst._$get(_form.uid1.value);
+                  log('get ->'+JSON.stringify(_data));
+              }
+          );
+          _v._$addEvent(
+              _form.add,'click',function(){
+                  var _uid = _form.uid0.value||_seed++,
+                      _data = {userId:_uid,name:'user-'+(+new Date)};
+                  _inst._$add(_data);
+                  log('add -> '+JSON.stringify(_data));
+              }
+          );
+          _v._$addEvent(
+              _form['delete'],'click',function(){
+                  var _ids = _form.uid2.value.split(',');
+                  _u._$forEach(_ids,function(_id,_index,_list){
+                      _list[_index] = parseInt(_id);
+                  });
+                  _inst._$delete(_ids);
+                  log('delete -> '+JSON.stringify(_ids));
+              }
+          );
+          _v._$addEvent(
+              _form['update'],'click',function(){
+                  var _data = {
+                      userId:_form.uid3.value,
+                      name:'xusr-'+(+new Date)
+                  };
+                  _inst._$update(_data);
+                  log('update -> '+JSON.stringify(_data));
+              }
+          );
+          
+          function log(m){
+              var p = document.createElement('p');
+              p.innerHTML = m;
+              document.body.appendChild(p);
+          }
+      });
+    </script>
+  </body>
+</html>

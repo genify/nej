@@ -483,8 +483,9 @@ var f = function(){
      * [/code]
      * 
      * @method {_$rule}
-     * @param  {String}       规则类型，支持类型: title/rewrite
+     * @param  {String}       规则类型，支持类型: title/rewrite/alias
      * @param  {Object|Array} 规则配置，对于重写规则存在匹配的先后顺序
+     * 
      * @return {nej.ut._$$Dispatcher}
      */
     _proDispatcher._$rule = (function(){
@@ -617,7 +618,7 @@ var f = function(){
      * @config {String}   clazz     模块切换时body样式调整，仅对公共模块有效
      * @config {String|nej.ut._$$Module}
      *                    module    指定模块对应的模板文件地址或者模块的构造函数
-     * @config {Object}   composite 组合模块容器对应关系,{pid:umi}
+     * @config {Object}   composite 组合模块容器对应关系,{pid:umi},其中pid为umi对应模块的容器
      * @return {nej.ut._$$Dispatcher} 调度器实例
      */
     _proDispatcher._$regist = (function(){
