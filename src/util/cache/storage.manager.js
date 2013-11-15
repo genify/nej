@@ -260,22 +260,26 @@ var f = function(){
     };
     /**
      * 持久化块数据
-     * @param  {String} 块标识，没传表示序列化所有块
+     * @param  {String|Array} 块标识，没传表示序列化所有块
      * @return {Void}
      */
     _pro.__doFlushBlock = function(_key){
         var _map = this.__getBlock();
         if (_key!=null){
-            var _arr = [];
-            _u._$forEach(
-                _map[_key],function(_id){
-                    var _item = this._$get(_id);
-                    if (!!_item) _arr.push(_item);
-                },this
-            );
-            this.__setDataInStorage(
-                this.__prefix+_key,_arr
-            );
+            if (!_u._$isArray(_key)){
+                var _arr = [];
+                _u._$forEach(
+                    _map[_key],function(_id){
+                        var _item = this._$get(_id);
+                        if (!!_item) _arr.push(_item);
+                    },this
+                );
+                this.__setDataInStorage(
+                    this.__prefix+_key,_arr
+                );
+            }else{
+                _u._$forEach(_key,this.__doFlushBlock,this);
+            }
             return;
         }
         // flush all blocks
@@ -321,69 +325,94 @@ var f = function(){
 	 * @param  {Object|Array} 单个数据或列表
 	 * @return {Void}
      */
-    _pro._$add = function(_data){
-        if (!_u._$isArray(_data)){
-            var _id = _data[this.__pkey],
-                _item = this._$get(_id),
-                _index = this.__getIndex();
-            // add ref and update data if exist
-            if (!!_item){
-                var _conf = _index[_id],
-                    _ref = _conf.ref;
-                _conf.ref = !_ref?1:(_ref+1);
-                this._$update(_data);
-                this.__doFlushIndex();
+    _pro._$add = (function(){
+        var _batch;
+        return function(_data){
+            var _bidx;
+            if (!_u._$isArray(_data)){
+                var _id = _data[this.__pkey],
+                    _item = this._$get(_id),
+                    _index = this.__getIndex();
+                // add ref and update data if exist
+                if (!!_item){
+                    var _conf = _index[_id],
+                        _ref = _conf.ref;
+                    _conf.ref = !_ref?1:(_ref+1);
+                    this._$update(_data);
+                    this.__doFlushIndex();
+                    return;
+                }
+                // add to cache
+                this.__getData()[_id] = _data;
+                _bidx = this.__getBlockIndex();
+                var _list = this.__getBlock()[_bidx];
+                if (_u._$indexOf(_list,_id)<0){
+                    _list.push(_id);
+                }
+                _index[_id] = {ref:1,block:_bidx};
+            }else{
+                _batch = [];
+                _u._$forEach(_data,this._$add,this);
+                _bidx = _batch;
+                _batch = null;
+            }
+            if (!!_batch){
+                if (_u._$indexOf(_batch,_bidx)<0){
+                    _batch.push(_bidx);
+                }
                 return;
             }
-            // add to cache
-            this.__getData()[_id] = _data;
-            var _bidx = this.__getBlockIndex(),
-                _list = this.__getBlock()[_bidx];
-            if (_u._$indexOf(_list,_id)<0){
-                _list.push(_id);
-            }
-            _index[_id] = {ref:1,block:_bidx};
             // flush to storage
             this.__doFlushIndex();
             this.__doFlushBlock(_bidx);
-            return;
-        }
-        _u._$forEach(_data,this._$add,this);
-    };
+        };
+    })();
     /**
      * 删除数据
      * @method {_$delete}
      * @param  {String|Array} 数据标识列表
      * @return {Void}
      */
-    _pro._$delete = function(_id){
-    	if (!_u._$isArray(_id)){
-    	    // check data
-    	    var _data = this._$get(_id);
-    	    if (!_data) return;
-    	    // check data index
-    	    var _index = this.__getIndex(),
-    	        _conf = _index[_id]||_o;
-    	    if (_conf.ref>1){
-    	        // check ref
-    	        _conf.ref--;
-    	    }else{
-                // remove data from block list
-        	    delete _index[_id];
-        	    var _bidx = _conf.block,
-        	        _list = this.__getBlock()[_bidx],
-        	        _idx = _u._$indexOf(_list,_id);
-        	    if (_idx>=0){
-        	        _list.splice(_idx,1);
-        	        this.__doFlushBlock(_bidx);
+    _pro._$delete = (function(){
+        var _batch;
+        return function(_id){
+        	if (!_u._$isArray(_id)){
+        	    // check data
+        	    var _data = this._$get(_id);
+        	    if (!_data) return;
+        	    // check data index
+        	    var _index = this.__getIndex(),
+        	        _conf = _index[_id]||_o;
+        	    if (_conf.ref>1){
+        	        // check ref
+        	        _conf.ref--;
+        	    }else{
+                    // remove data from block list
+            	    delete _index[_id];
+            	    var _bidx = _conf.block,
+            	        _list = this.__getBlock()[_bidx],
+            	        _idx = _u._$indexOf(_list,_id);
+            	    if (_idx>=0){
+            	        _list.splice(_idx,1);
+            	        if (!_batch){
+            	            this.__doFlushBlock(_bidx);
+            	        }else if(_u._$indexOf(_batch,_bidx)<0){
+            	            _batch.push(_bidx);
+            	        }
+            	    }
         	    }
-    	    }
-    	    // flush to storage
-    	    this.__doFlushIndex();
-    	    return;
-    	}
-    	_u._$forEach(_id,this._$delete,this);
-    };
+        	    
+        	}else{
+        	    _batch = [];
+        	    _u._$forEach(_id,this._$delete,this);
+        	    this.__doFlushBlock(_batch);
+        	    _batch = null;
+        	}
+        	if (!!_batch) return;
+        	// flush to storage
+        	this.__doFlushIndex();
+        };
+    })();
     /**
      * 更新数据
      * @method {_$update}
@@ -413,6 +442,20 @@ var f = function(){
         }
     };
     /**
+     * 迁移数据集，如果是数据列表直接使用_$add方法，
+     * 如果数据可能存在重复迁移则建议迁移后使用_$syncRef同步引用计数
+     * @method {_$migrate}
+     * @param  {Object} 数据集
+     * @return {Void}
+     */
+    _pro._$migrate = function(_hash){
+        var _arr = [];
+        _u._$forIn(_hash,function(_item){
+            _arr.push(_item);
+        });
+        this._$add(_arr);
+    };
+    /**
      * 同步引用计数
      * @method {_$syncRef}
      * @param  {Object} ID对应的引用计数信息,{id:2}
@@ -427,6 +470,7 @@ var f = function(){
                 _index[_id] = _conf;
             },this
         );
+        this.__doFlushIndex();
     };
 };
 NEJ.define(

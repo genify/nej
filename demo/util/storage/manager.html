@@ -18,6 +18,7 @@
       function(){
           var _  = NEJ.P,
               _v = _('nej.v'),
+              _u = _('nej.u'),
               _t = _('nej.ut');
           
           var _seed = 0;
@@ -46,9 +47,12 @@
           );
           _v._$addEvent(
               _form['delete'],'click',function(){
-                  var _id = parseInt(_form.uid2.value);
-                  _inst._$delete(_id);
-                  log('delete -> '+_id);
+                  var _ids = _form.uid2.value.split(',');
+                  _u._$forEach(_ids,function(_id,_index,_list){
+                      _list[_index] = parseInt(_id);
+                  });
+                  _inst._$delete(_ids);
+                  log('delete -> '+JSON.stringify(_ids));
               }
           );
           _v._$addEvent(
