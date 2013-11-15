@@ -73,6 +73,8 @@ var f = function(){
         _h.__clearRange(this._$getDocument());
         delete this.__content;
         delete this.__fopt.parent;
+        delete this.__initcnt;
+        delete this.__type;
         this.__iframe = _e._$remove(this.__iframe);
     };
     /**
@@ -101,11 +103,13 @@ var f = function(){
             [_document,'click',this.__onDocumentClick._$bind(this)]
            ,[_document,'selectionchange',this.__onSelectionChange._$bind(this)]
            ,[_document,'beforedeactivate',this.__doSaveRange._$bind(this)]
+           ,[_document,'keyup',this.__onDocumentEvent._$bind(this)]
+           ,[_document.body,'paste',this.__onDocumentEvent._$bind(this)]
+           ,[_document.body,'drop',this.__onDocumentEvent._$bind(this)]
         ]);
         // init content and focus
         if (!!this.__initcnt){
             this._$setContent(this.__initcnt);
-            delete this.__initcnt;
         }
         if (this.__focus){
             this._$focus();
@@ -131,6 +135,26 @@ var f = function(){
     _proEditorArea.__onSelectionChange = function(){
         // TODO something
         this._$dispatchEvent('onselectionchange');
+    };
+    /**
+     * 输入事件
+     * @return {[type]} [description]
+     */
+    _proEditorArea.__onDocumentEvent = function(_event){
+        this.__type = _event.type;
+        setTimeout(this.__doCompareContent._$bind(this),50);
+    };
+    /**
+     * 比较富文本的内容
+     * @return {[type]} [description]
+     */
+    _proEditorArea.__doCompareContent = function(){
+        if(this.__initcnt === this._$getContent()){
+            return !1;
+        }else{
+            this.__initcnt = this._$getContent();
+            this._$dispatchEvent('oninput',{cont:this.__initcnt,txt:this._$getTextContent()});
+        }
     };
     /**
      * 聚焦编辑器
