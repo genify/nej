@@ -151,7 +151,7 @@ var f = function(){
         _options.draggable = _options.draggable || false;
         _options.destroyable = _options.destroyable || false;
         _options.title = _options.title || '超链接';
-        _options.mask  = true;
+        _options.mask  = _options.maskclazz || true;
         this.__supReset(_options);
         this.__inputs[0].value = _options.name||'';
         this.__doInitDomEvent([
