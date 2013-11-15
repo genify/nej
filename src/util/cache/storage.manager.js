@@ -25,7 +25,7 @@ var f = function(){
      *     var inst = nej.ut._$$StorageManager._$allocate({
      *         key:'userId',
      *         prefix:'test-user-',
-     *         block_limit:2
+     *         limit:2
      *     });
      *     
      *     // memory中存储结构类似：
@@ -48,13 +48,13 @@ var f = function(){
      *     //         '3':{userId:3,name:'33333'}
      *     //     },
      *     //     // 每个块的初始数据长度
-     *     //     'test-user-ext':[
+     *     //     'test-user-blen':[
      *     //         2,1
      *     //     ]
      *     // }
      * 
      *     // storage中存储结构类似：
-     *     // test-user-index:{'1':'0','2':'0','3':'1','test-user-ext':{'0':2,'1':1}}
+     *     // test-user-index:{'1':{b:'0',r:1},'2':{b:'0',r:2},'3':{b:'1',r:1},'test-user-blen':[2,1]}
      *     // test-user-0:[{userId:1,name:'11111'},{userId:2,name:'22222'}]
      *     // test-user-1:[{userId:3,name:'33333'}]
      *     
@@ -70,6 +70,7 @@ var f = function(){
      *     inst._$update({userId:1,name:'aaaaaa'});
      *     // 取数据对象
      *     var user = inst._$get(1);
+     * 
      * [/code]
      * 
      * @class   {nej.ut._$$StorageManager}
@@ -398,7 +399,11 @@ var f = function(){
             return;
         }
         // update item in cache
-        NEJ.X(_item,_data);
+        var _changed = !1;
+        NEJ.X(_item,_data,function(_value,_key){
+            _changed = _changed||(_value!==_item[_key]);
+        });
+        if (!_changed) return;
         // flush block
         var _index = this.__getIndex(),
             _conf = _index[_id]||_o,
