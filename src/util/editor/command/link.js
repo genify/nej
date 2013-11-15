@@ -40,8 +40,8 @@ var f = function(){
         if(!_link)
             return;
         var _text = (_link.name != '') ? _link.name : _link.href;
-        this.__editor._$execCommand('inserthtml','<a target="_blank" href='
-                        + _link.href + '>'+ _text +'</a>');
+        this.__editor._$execCommand('inserthtml','<a target="_blank" href="'
+                        + _link.href + '">'+ _text +'</a>');
         this.__editor._$focus();
     };
     
