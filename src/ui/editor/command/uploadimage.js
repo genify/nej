@@ -300,7 +300,7 @@ var f = function(){
      * @method {__initNodeTemplate}
      * @return {Void}
      */
-    _proUploadImageCard.__initNodeTemplate = function(){
+    _proUploadImageCard.__initXGui = function(){
         this.__seed_css = _seed_css;
         this.__seed_html = _seed_html;
     };

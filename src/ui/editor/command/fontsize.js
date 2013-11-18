@@ -10,13 +10,8 @@ var f = function(){
         _o = NEJ.O,
         _e = _('nej.e'),
         _p = _('nej.ui.cmd'),
-        _proFontSizeCard,
-        _supFontSizeCard;
+        _pro,_sup,_seed_html;
     if (!!_p._$$FontSizeCard) return;
-    // ui css text
-    var _seed_css = _e._$pushCSSText('.#<uispace>{width:110px;}');
-    // ui html code
-    var _seed_html;
     /**
      * 字号选择控件
      * @class   {nej.ui.cmd._$$FontSizeCard} 字号选择控件
@@ -30,8 +25,8 @@ var f = function(){
      * 
      */
     _p._$$FontSizeCard = NEJ.C();
-      _proFontSizeCard = _p._$$FontSizeCard._$extend(_p._$$FontCard);
-      _supFontSizeCard = _p._$$FontSizeCard._$supro;
+    _pro = _p._$$FontSizeCard._$extend(_p._$$FontCard);
+    _sup = _p._$$FontSizeCard._$supro;
     /**
      * 字号选项列表
      * @type Array
@@ -43,12 +38,22 @@ var f = function(){
       ,{name:'特大',tip:'18px',style:'large',value:4}
       ,{name:'极大',tip:'24px',style:'x-large',value:5}];
     /**
+     * 初始化外观信息
+     * @protected
+     * @method {__initXGui}
+     * @return {Void}
+     */
+    _pro.__initXGui = function(){
+        _sup.__initXGui.apply(this,arguments);
+        this.__seed_html = _seed_html;
+    };
+    /**
      * 动态构建控件节点模板
      * @protected
      * @method {__initNodeTemplate}
      * @return {Void}
      */
-    _proFontSizeCard.__initNodeTemplate = function(){
+    _pro.__initNodeTemplate = function(){
         _seed_html = _e._$addNodeTemplate(
                      '<div class="'+_seed_css+'">'
                      +this.__doGenFontListXhtml({
@@ -59,5 +64,7 @@ var f = function(){
         this.__seed_html = _seed_html;
     };
 };
-NEJ.define('{lib}ui/editor/command/fontsize.js',
-      ['{lib}ui/editor/command/font.js'],f);
+NEJ.define(
+    '{lib}ui/editor/command/fontsize.js',[
+    '{lib}ui/editor/command/font.js'
+],f);
