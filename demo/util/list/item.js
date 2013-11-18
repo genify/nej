@@ -13,6 +13,11 @@ var f = function(){
         
     _p._$$Item = NEJ.C();
       _proItem = _p._$$Item._$extend(_i._$$ListItem);
+    
+    _proItem.__reset = function(_options){
+        this.__supReset(_options);
+        this.__doInitDomEvent(this.__xxev);
+    };
     /**
      * 初始化模版
      */
@@ -26,8 +31,11 @@ var f = function(){
     	this.__supInitNode();
     	var _list = _e._$getByClassName(this.__body,'js-flag');
     	this.__nbox = _list[2];
-    	_v._$addEvent(_list[0],'click',this.__onDelete._$bind(this));
-    	_v._$addEvent(_list[1],'click',this.__onUpdate._$bind(this));
+    	this.__xxev = [[
+    	    _list[0],'click',this.__onDelete._$bind(this)
+    	],[
+    	    _list[1],'click',this.__onUpdate._$bind(this)
+    	]];
     };
     /**
      * 刷新项,子类实现具体逻辑

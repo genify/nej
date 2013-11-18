@@ -351,10 +351,10 @@ var f = function(){
                 _cache[_id] = _instance;
                 _instance._$recycle = 
                 _instance._$recycle._$aop(
-                    function(_id,_event){
+                    function(_id,_instance){
                         delete _cache[_id];
                         delete _instance._$recycle;
-                    }._$bind(null,_id));
+                    }._$bind(null,_id,_instance));
                 _arr.push(_instance);
             }
             return _arr;
@@ -419,6 +419,13 @@ var f = function(){
                       ._$dispatchEvent('onshow',_options);
             }
         );
+    };
+    /**
+     * 导出模版缓存对象，仅用于调试
+     * @return {Void}
+     */
+    _('dbg').dumpTC = function(){
+        return _cache;
     };
 };
 NEJ.define('{lib}util/template/tpl.js',

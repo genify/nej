@@ -62,9 +62,10 @@ var f = function(){
      * @class   {nej.ui._$$AbstractPager} 分页器控件封装
      * @extends {nej.ui._$$Abstract}
      * @param   {Object} 可选配置参数，已处理参数列表如下
-     * @config  {Number} index 当前页码
-     * @config  {Number} total 总页码数
-     * @config  {Object} label 按钮文案，{prev:'&lt;',next:'&gt;'}
+     * @config  {Number} index  当前页码
+     * @config  {Number} total  总页码数
+     * @config  {Number} number 显示页数
+     * @config  {Object} label  按钮文案，{prev:'&lt;',next:'&gt;'}
      * 
      * [hr]
      * 页码切换事件，输入{last:3,index:1,total:12}
@@ -72,7 +73,7 @@ var f = function(){
      * @param  {Object} 页码状态对象
      * @config {Number} last  上一次的页码
      * @config {Number} index 当前要切换的页面
-     * @config {Number} total  总页面数
+     * @config {Number} total 总页面数
      * 
      */
     _p._$$AbstractPager = NEJ.C();
@@ -102,9 +103,10 @@ var f = function(){
         delete this.__bopt.onchange;
         this.__popt.total = _options.total;
         this.__popt.index = _options.index;
-        var _label = _options.label||_o;
-        this.__popt.pbtn.innerText = _label.prev||'上一页';
-        this.__popt.nbtn.innerText = _label.next||'下一页';
+        this.__doResetNumber({
+            number:_options.number,
+            label:_options.label||_o
+        });
     };
     /**
      * 控件销毁
@@ -118,8 +120,10 @@ var f = function(){
         delete this.__bopt;
         delete this.__page;
         this._$unbind();
-        this.__popt.pbtn.innerText = '上一页';
-        this.__popt.nbtn.innerText = '下一页';
+        delete this.__popt.list;
+        delete this.__popt.pbtn;
+        delete this.__popt.nbtn;
+        this.__body.innerHTML = '&nbsp;';
     };
     /**
      * 初始化外观信息
@@ -131,6 +135,32 @@ var f = function(){
         this.__seed_css  = _seed_css;
     };
     /**
+     * 重置页码数
+     * @return {Void}
+     */
+    _pro.__doResetNumber = function(_data){
+        _e._$renderHtmlTemplate(
+            this.__body,_seed_page,_data
+        );
+        var _seed = _e._$getHtmlTemplateSeed();
+        this.__popt.list = _e._$getByClassName(
+                this.__body,
+                'js-i-'+_seed
+        );
+        this.__popt.pbtn = (
+            _e._$getByClassName(
+                this.__body,
+                'js-p-'+_seed
+            )||_r
+        )[0];
+        this.__popt.nbtn = (
+            _e._$getByClassName(
+                this.__body,
+                'js-n-'+_seed
+            )||_r
+        )[0];
+    };
+    /**
      * 初始化节点
      * @protected
      * @method {__initNode}
@@ -138,22 +168,6 @@ var f = function(){
      */
     _pro.__initNode = function(){
         this.__supInitNode();
-        var _seed = _e._$getHtmlTemplateSeed();
-        this.__popt.list =  
-            _e._$getByClassName(
-                this.__body,
-                'js-i-'+_seed
-            );
-        this.__popt.pbtn = (
-            _e._$getByClassName(
-                this.__body,
-                'js-p-'+_seed)||_r
-            )[0];
-        this.__popt.nbtn = (
-            _e._$getByClassName(
-                this.__body,
-                'js-n-'+_seed)||_r
-            )[0];
     };
     /**
      * 生成页码列表html代码
@@ -308,16 +322,18 @@ var f = function(){
     _seed_page = _e._$addHtmlTemplate('\
         {trim}\
         {if !defined("noprv")||!noprv}\
-        <a href="#" class="zbtn zprv ${\'js-p-\'|seed}">上一页</a>\
+        <a href="#" class="zbtn zprv ${\'js-p-\'|seed}">${label.prev||"上一页"}</a>\
         {/if}\
         {list 1..number as x}\
         <a href="#" class="zpgi zpg${x} ${\'js-i-\'|seed}"></a>\
         {/list}\
         {if !defined("nonxt")||!nonxt}\
-        <a href="#" class="zbtn znxt ${\'js-n-\'|seed}">下一页</a>\
+        <a href="#" class="zbtn znxt ${\'js-n-\'|seed}">${label.next||"下一页"}</a>\
         {/if}\
         {/trim}\
     ');
 };
-NEJ.define('{lib}ui/pager/pager.base.js',
-          ['{lib}ui/base.js'],f);
+NEJ.define(
+    '{lib}ui/pager/pager.base.js',[
+    '{lib}ui/base.js'
+],f);

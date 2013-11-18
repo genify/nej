@@ -77,23 +77,12 @@ var f = function(){
      * @return {Void}
      */
     _pro.__reset = function(_options){
+        _options.number = 
+            parseInt(_options.number)||1;
         if (_options.total==null)
             _options.total = 10000;
         this.__supReset(_options);
         this.__page = _t._$$SimplePage._$allocate(this.__popt);
-    };
-    /**
-     * 动态构建控件节点模板
-     * @protected
-     * @method {__initNodeTemplate}
-     * @return {Void}
-     */
-    _pro.__initNodeTemplate = function(){
-        _seed_html = _e._$addNodeTemplate(
-                     '<div class="'+this.__seed_css+'">'
-                     +this.__doGenPageListXhtml({number:1})+
-                     '</div>');
-        this.__seed_html = _seed_html;
     };
 };
 NEJ.define('{lib}ui/pager/pager.simple.js',
