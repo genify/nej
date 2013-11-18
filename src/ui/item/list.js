@@ -10,8 +10,7 @@ var f = function(){
         _e = _('nej.e'),
         _v = _('nej.v'),
         _p = _('nej.ui'),
-        _proListItem,
-        _supListItem;
+        _pro,_sup;
     if (!!_p._$$ListItem) return;
     /**
      * 列表项基类对象
@@ -31,8 +30,8 @@ var f = function(){
      * 
      */
     _p._$$ListItem = NEJ.C();
-      _proListItem = _p._$$ListItem._$extend(_p._$$Item);
-      _supListItem = _p._$$ListItem._$supro;
+    _pro = _p._$$ListItem._$extend(_p._$$Item);
+    _sup = _p._$$ListItem._$supro;
     /**
      * 控件重置
      * @protected
@@ -40,16 +39,15 @@ var f = function(){
      * @param  {Object} 配置信息
      * @return {Void}
      */
-    _proListItem.__reset = function(_options){
-        this.__supReset(_options);
+    _pro.__reset = function(_options){
         this.__pkey = _options.pkey||'id';
-        this.__id = this.__data[this.__pkey];
+        this.__supReset(_options);
     };
     /**
      * 删除列表项触发事件
      * @return {Void}
      */
-    _proListItem.__onDelete = function(_data){
+    _pro.__onDelete = function(_data){
         this._$dispatchEvent('ondelete',{
             ext:_data,
             id:this._$getId(),
@@ -61,7 +59,7 @@ var f = function(){
      * 删除列表项触发事件
      * @return {Void}
      */
-    _proListItem.__onUpdate = function(_data){
+    _pro.__onUpdate = function(_data){
         this._$dispatchEvent('onupdate',{
             ext:_data,
             id:this._$getId(),
@@ -69,6 +67,28 @@ var f = function(){
             body:this._$getBody()
         });
     };
+    /**
+     * 刷新项绑定的数据<br/>
+     * 
+     * 脚本举例：
+     * [code]
+     *   // 获取当前item的数据信息
+     *   _item._$refresh({
+     *       a:'aaaaa',
+     *       b:'bbbbb'
+     *   });
+     * [/code]
+     * 
+     * @method {_$refresh}
+     * @param  {Object} 项绑定的数据
+     * @return {Void}
+     */
+    _pro._$refresh = function(_data){
+        _sup._$refresh.apply(this,arguments);
+        this.__id = this.__data[this.__pkey]||this.__genId();
+    };
 };
-NEJ.define('{lib}ui/item/list.js',
-          ['{lib}ui/item/item.js'],f);
+NEJ.define(
+    '{lib}ui/item/list.js',[
+    '{lib}ui/item/item.js'
+],f);
