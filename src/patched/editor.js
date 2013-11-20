@@ -76,7 +76,7 @@ var f = function(){
     _h.__getSelectText = function(_document){
         var _range = this.__getRange(_document);
         if (!_range) return '';
-        return (!!document.selection && _p._$KERNEL.release!=5.0)?_range.text:_range.toString()||_range.cloneContents().textContent;
+        return (!!document.selection && parseFloat(_p._$KERNEL.release)<5.0)?_range.text:_range.toString()||_range.cloneContents().textContent||_range.commonAncestorContainer.data;
     };
     /**
      * 获取选中内容的html,并删除原来内容
