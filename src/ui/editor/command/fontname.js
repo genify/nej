@@ -10,13 +10,8 @@ var f = function(){
         _o = NEJ.O,
         _e = _('nej.e'),
         _p = _('nej.ui.cmd'),
-        _proFontNameCard,
-        _supFontNameCard;
+        _pro,_sup,_seed_html;
     if (!!_p._$$FontNameCard) return;
-    // ui css text
-    var _seed_css = _e._$pushCSSText('.#<uispace>{width:150px;font-size:16px;}');
-    // ui html code
-    var _seed_html;
     /**
      * 字体选择控件
      * @class   {nej.ui.cmd._$$FontNameCard} 字体选择控件
@@ -30,8 +25,8 @@ var f = function(){
      * 
      */
     _p._$$FontNameCard = NEJ.C();
-      _proFontNameCard = _p._$$FontNameCard._$extend(_p._$$FontCard);
-      _supFontNameCard = _p._$$FontNameCard._$supro;
+    _pro = _p._$$FontNameCard._$extend(_p._$$FontCard);
+    _sup = _p._$$FontNameCard._$supro;
     /**
      * 字体选项列表
      * @type Array
@@ -52,12 +47,22 @@ var f = function(){
       ,{name:'Verdana'}
       ,{name:'Times New Roman'}];
     /**
+     * 初始化外观信息
+     * @protected
+     * @method {__initXGui}
+     * @return {Void}
+     */
+    _pro.__initXGui = function(){
+        _sup.__initXGui.apply(this,arguments);
+        this.__seed_html = _seed_html;
+    };
+    /**
      * 动态构建控件节点模板
      * @protected
      * @method {__initNodeTemplate}
      * @return {Void}
      */
-    _proFontNameCard.__initNodeTemplate = function(){
+    _pro.__initNodeTemplate = function(){
         _seed_html = _e._$addNodeTemplate(
                      '<div class="'+_seed_css+'">'
                      +this.__doGenFontListXhtml({
@@ -68,5 +73,7 @@ var f = function(){
         this.__seed_html = _seed_html;
     };
 };
-NEJ.define('{lib}ui/editor/command/fontname.js',
-      ['{lib}ui/editor/command/font.js'],f);
+NEJ.define(
+    '{lib}ui/editor/command/fontname.js',[
+    '{lib}ui/editor/command/font.js'
+],f);

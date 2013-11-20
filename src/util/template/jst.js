@@ -105,6 +105,13 @@ var f = function(){
                  _e._$getHtmlTemplate(_sn,_data,_extend);
         return this;
     };
+    /**
+     * 导出JST模版缓存对象，仅用于调试
+     * @return {Void}
+     */
+    _('dbg').dumpJST = function(){
+        return TrimPath.dump();
+    };
 };
 NEJ.define('{lib}util/template/jst.js',
           ['{lib}base/util.js'

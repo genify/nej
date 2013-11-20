@@ -679,7 +679,7 @@ var f = function(){
      * 导出dom事件缓存对象，仅用于调试
      * @return {Void}
      */
-    _v.dump = function(){
+    _('dbg').dumpEV = function(){
         return _cache;
     };
     _x.isChange = !0;

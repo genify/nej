@@ -970,7 +970,30 @@ var f = function(){
         var _min = Math.pow(10,_length-1),_max = _min*10;
         return _u._$randNumber(_min,_max).toString();
     };
+    /**
+     * 生成系统中的唯一标识，每次调用均生成一个新的标识
+     * 
+     * 脚本举例
+     * [code]
+     *   var _u = NEJ.P(nej.u);
+     *   // 可能返回123456789
+     *   var _id1 = _u._$uniqueID(),
+     *       _id2 = _u._$uniqueID();
+     *   // _id1 != _id2
+     * [/code]
+     * 
+     * @api    {nej.u._$uniqueID}
+     * @return {String} 唯一标识
+     */
+    _u._$uniqueID = (function(){
+        var _seed = +new Date;
+        return function(){
+            return ''+(_seed++);
+        };
+    })();
 };
-NEJ.define('{lib}base/util.js',
-      ['{lib}base/global.js'
-      ,'{lib}base/element.js'],f);
+NEJ.define(
+    '{lib}base/util.js',[
+    '{lib}base/global.js',
+    '{lib}base/element.js'
+],f);

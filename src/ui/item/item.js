@@ -10,7 +10,7 @@ var f = function(){
         _o = NEJ.O,
         _f = NEJ.F,
         _p = _('nej.ui'),
-        _proItem;
+        _pro;
     if (!!_p._$$Item) return;
     /**
      * 列表项控件基类<br />
@@ -64,20 +64,17 @@ var f = function(){
      * @config  {Array}  range 当前项所在的列表片段方位(begin,end)
      */
     _p._$$Item = NEJ.C();
-      _proItem = _p._$$Item._$extend(_p._$$Abstract);
+    _pro = _p._$$Item._$extend(_p._$$Abstract);
     /**
      * 控件初始化
      * @protected
      * @method {__init}
      * @return {Void}
      */
-    _proItem.__init = (function(){
-        var _seed = +new Date;
-        return function(){
-            this.__id = 'itm-'+(++_seed);
-            this.__supInit();
-        };
-    })();
+    _pro.__init = function(){
+        this.__id = this.__genId();
+        this.__supInit();
+    };
     /**
      * 控件重置
      * @protected
@@ -85,7 +82,7 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proItem.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
         this.__index = _options.index;
         this.__total = _options.total;
@@ -98,7 +95,7 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proItem.__destroy = function(){
+    _pro.__destroy = function(){
         this.__supDestroy();
         delete this.__data;
         delete this.__index;
@@ -111,7 +108,17 @@ var f = function(){
      * @method {__doRefresh}
      * @return {Void}
      */
-    _proItem.__doRefresh = _f;
+    _pro.__doRefresh = _f;
+    /**
+     * 生成ID
+     * @return {String} ID
+     */
+    _pro.__genId = (function(){
+        var _seed = +new Date;
+        return function(){
+            return 'itm-'+(++_seed);
+        };
+    })();
     /**
      * 取项标识<br />
      * 脚本举例
@@ -122,7 +129,7 @@ var f = function(){
      * @method {_$getId}
      * @return {String} 项标识
      */
-    _proItem._$getId = function(){
+    _pro._$getId = function(){
         return this.__id;
     };
     /**
@@ -136,7 +143,7 @@ var f = function(){
      * @method {_$getData}
      * @return {Object} 数据信息
      */
-    _proItem._$getData = function(){
+    _pro._$getData = function(){
         return this.__data;
     };
     /**
@@ -155,10 +162,12 @@ var f = function(){
      * @param  {Object} 项绑定的数据
      * @return {Void}
      */
-    _proItem._$refresh = function(_data){
+    _pro._$refresh = function(_data){
         this.__data  = _data||{};
         this.__doRefresh(this.__data);
     };
 };
-NEJ.define('{lib}ui/item/item.js',
-      ['{lib}ui/base.js'],f);
+NEJ.define(
+    '{lib}ui/item/item.js',[
+    '{lib}ui/base.js'
+],f);

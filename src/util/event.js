@@ -181,7 +181,7 @@ var f = function(){
      */
     _p._$$Event._$recycle = (function(){
         var _doRecycle = function(_item,_index,_list){
-            this._$recycle(_item);
+            _item._$recycle();
             _list.splice(_index,1);
         };
         return function(_instance){

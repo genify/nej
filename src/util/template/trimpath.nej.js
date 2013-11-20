@@ -473,6 +473,13 @@
      */
     TrimPath.merge = (function(){
         var _fcache = {};
+        // for test
+        TrimPath.dump = function(){
+            return {
+                func:_fcache,
+                text:_tcache
+            };
+        };
         return function(_sn,_data,_extend){
             try{
                 _data = _data||{};

@@ -12,36 +12,12 @@ var f = function(){
         _u = _('nej.u'),
         _t = _('nej.ut'),
         _p = _('nej.ui'),
-        _proDatePick,
-        _supDatePick;
+        _pro,
+        _sup;
     if (!!_p._$$DatePick) return;
-    // ui css text
-    var _seed_css = _e._$pushCSSText('\
-        .#<uispace>{width:210px;border:1px solid #aaa;font-size:14px;text-align:center;}\
-        .#<uispace> .zact{line-height:30px;overflow:hidden;zoom:1;}\
-        .#<uispace> .zact .zfl{float:left;}\
-        .#<uispace> .zact .zfr{float:right;}\
-        .#<uispace> .zact .zbtn{padding:0 5px;cursor:pointer;}\
-        .#<uispace> .zact .ztxt{margin-left:10px;}\
-        .#<uispace> .zday{table-layout:fixed;border-collapse:collapse;width:100%;}\
-        .#<uispace> .zday th{font-weight:normal;}\
-        .#<uispace> .zday a{display:block;height:22px;line-height:22px;color:#333;text-decoration:none;}\
-        .#<uispace> .zday a:hover{background:#eee;}\
-        .#<uispace> .zday a.js-extended{color:#aaa;}\
-        .#<uispace> .zday a.js-selected,\
-        .#<uispace> .zday a.js-selected:hover{background:#DAE4E7;}\
-        .#<uispace> .zday a.js-disabled,\
-        .#<uispace> .zday a.js-disabled:hover{background:#fff;color:#eee;cursor:default;}');
-    // ui date html
-    var _seed_date = _e._$addHtmlTemplate('\
-        <table class="zday">\
-          <tr>{list ["日","一","二","三","四","五","六"] as x}<th>${x}</th>{/list}</tr>\
-        {list 1..6 as x}\
-          <tr>{list 1..7 as y}<td><a href="#" class="js-ztag"></a></td>{/list}</tr>\
-        {/list}\
-        </table>');
     // ui html code
-    var _seed_html;
+    var _seed_css,_seed_html,
+        _seed_date,_seed_action;
     /**
      * 日期选择控件<br />
      * 页面结构举例
@@ -84,15 +60,15 @@ var f = function(){
      * 
      */
     _p._$$DatePick = NEJ.C();
-      _proDatePick = _p._$$DatePick._$extend(_p._$$CardWrapper);
-      _supDatePick = _p._$$DatePick._$supro;
+    _pro = _p._$$DatePick._$extend(_p._$$CardWrapper);
+    _sup = _p._$$DatePick._$supro;
     /**
      * 控件初始化
      * @protected
      * @method {__init}
      * @return {Void}
      */
-    _proDatePick.__init = function(){
+    _pro.__init = function(){
         this.__copt = {
             onselect:this.__onDateChange._$bind(this)
         };
@@ -105,7 +81,7 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proDatePick.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
         this.__copt.range = _options.range;
         this.__calendar = _t._$$Calendar
@@ -118,7 +94,7 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proDatePick.__destroy = function(){
+    _pro.__destroy = function(){
         this.__supDestroy();
         delete this.__copt.range;
         var _calendar = this.__calendar;
@@ -133,7 +109,7 @@ var f = function(){
      * @method {__initXGui}
      * @return {Void}
      */
-    _proDatePick.__initXGui = function(){
+    _pro.__initXGui = function(){
         this.__seed_css  = _seed_css;
         this.__seed_html = _seed_html;
     };
@@ -143,7 +119,7 @@ var f = function(){
      * @method {__initNode}
      * @return {Void}
      */
-    _proDatePick.__initNode = function(){
+    _pro.__initNode = function(){
         this.__supInitNode();
         var _list = _e._$getChildren(this.__body);
         this.__copt.list = _e._$getByClassName(_list[1],'js-ztag');
@@ -161,19 +137,12 @@ var f = function(){
      * @method {__initNodeTemplate}
      * @return {Void}
      */
-    _proDatePick.__initNodeTemplate = function(){
+    _pro.__initNodeTemplate = function(){
         _seed_html = _e._$addNodeTemplate(
             '<div class="'+_seed_css+' zcard">\
-               <div class="zact">\
-                 <span class="zbtn zfl" title="上一年">&lt;&lt;</span>\
-                 <span class="zbtn zfl" title="上一月">&lt;</span>\
-                 <span class="zbtn zfr" title="下一年">&gt;&gt;</span>\
-                 <span class="zbtn zfr" title="下一月">&gt;</span>\
-                 <span class="ztxt"></span>年\
-                 <span class="ztxt"></span>月\
-               </div>\
-               '+_e._$getHtmlTemplate(_seed_date)+'\
-             </div>'
+               _e._$getTextTemplate(_seed_action)+
+               _e._$getHtmlTemplate(_seed_date)+
+            '</div>'
         );
         this.__seed_html = _seed_html;
     };
@@ -184,7 +153,7 @@ var f = function(){
      * @param  {Date} 日期
      * @return {Void}
      */
-    _proDatePick.__onDateChange = function(_date){
+    _pro.__onDateChange = function(_date){
         try{
             this._$dispatchEvent('onchange',_date);
         }catch(e){
@@ -202,7 +171,7 @@ var f = function(){
      * @param  {Date} 日期
      * @return {nej.ui._$$DatePick}
      */
-    _proDatePick._$setDate = function(_date){
+    _pro._$setDate = function(_date){
         _date = _u._$var2date(_date);
         this.__calendar._$setDate(_date);
         return this;
@@ -218,10 +187,50 @@ var f = function(){
      * @method {_$getDate}
      * @return {Date} 日期
      */
-    _proDatePick._$getDate = function(){
+    _pro._$getDate = function(){
         return this.__calendar._$getDate();
     };
+    // ui css text
+    _seed_css = _e._$pushCSSText('\
+        .#<uispace>{width:210px;border:1px solid #aaa;font-size:14px;text-align:center;}\
+        .#<uispace> .zact{line-height:30px;overflow:hidden;zoom:1;}\
+        .#<uispace> .zact .zfl{float:left;}\
+        .#<uispace> .zact .zfr{float:right;}\
+        .#<uispace> .zact .zbtn{padding:0 5px;cursor:pointer;}\
+        .#<uispace> .zact .ztxt{margin-left:10px;}\
+        .#<uispace> .zday{table-layout:fixed;border-collapse:collapse;width:100%;}\
+        .#<uispace> .zday th{font-weight:normal;}\
+        .#<uispace> .zday a{display:block;height:22px;line-height:22px;color:#333;text-decoration:none;}\
+        .#<uispace> .zday a:hover{background:#eee;}\
+        .#<uispace> .zday a.js-extended{color:#aaa;}\
+        .#<uispace> .zday a.js-selected,\
+        .#<uispace> .zday a.js-selected:hover{background:#DAE4E7;}\
+        .#<uispace> .zday a.js-disabled,\
+        .#<uispace> .zday a.js-disabled:hover{background:#fff;color:#eee;cursor:default;}\
+    ');
+    // ui date html
+    _seed_date = _e._$addHtmlTemplate('\
+        <table class="zday">\
+          <tr>{list ["日","一","二","三","四","五","六"] as x}<th>${x}</th>{/list}</tr>\
+          {list 1..6 as x}\
+          <tr>{list 1..7 as y}<td><a href="#" class="js-ztag"></a></td>{/list}</tr>\
+          {/list}\
+        </table>\
+    ');
+    // button html
+    _seed_action = _e._$addTextTemplate('\
+        <div class="zact">\
+          <span class="zbtn zfl" title="上一年">&lt;&lt;</span>\
+          <span class="zbtn zfl" title="上一月">&lt;</span>\
+          <span class="zbtn zfr" title="下一年">&gt;&gt;</span>\
+          <span class="zbtn zfr" title="下一月">&gt;</span>\
+          <span class="ztxt"></span>年\
+          <span class="ztxt"></span>月\
+        </div>\
+    ');
 };
-NEJ.define('{lib}ui/datepick/datepick.js',
-      ['{lib}ui/layer/card.wrapper.js'
-      ,'{lib}util/calendar/calendar.js'],f);
+NEJ.define(
+    '{lib}ui/datepick/datepick.js',[
+    '{lib}ui/layer/card.wrapper.js',
+    '{lib}util/calendar/calendar.js'
+],f);
