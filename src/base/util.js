@@ -35,7 +35,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u);
+     *   var _u = NEJ.P(‘nej.u’);
      *   // 返回false
      *   _u._$isFunction(123);
      *   // 返回true
@@ -54,7 +54,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u);
+     *   var _u = NEJ.P(‘nej.u’);
      *   // 返回false
      *   _u._$isString(123);
      *   // 返回true
@@ -73,7 +73,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u);
+     *   var _u = NEJ.P(‘nej.u’);
      *   // 返回false
      *   _u._$isNumber("123");
      *   // 返回true
@@ -94,7 +94,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u);
+     *   var _u = NEJ.P(‘nej.u’);
      *   // 返回false
      *   _u._$isBoolean(0);
      *   // 返回true
@@ -113,7 +113,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u);
+     *   var _u = NEJ.P(‘nej.u’);
      *   // 返回false
      *   _u._$isDate(0);
      *   // 返回true
@@ -132,7 +132,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u);
+     *   var _u = NEJ.P(‘nej.u’);
      *   // 返回false
      *   _u._$isArray(0);
      *   // 返回true
@@ -151,7 +151,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u);
+     *   var _u = NEJ.P(‘nej.u’);
      *   // 返回false
      *   _u._$isObject(function(){});
      *   // 返回true
@@ -171,7 +171,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u),
+     *   var _u = NEJ.P(‘nej.u’),
      *       _str = "你i他";
      *   // 字符串实际长度为5
      *   _u._$length(_str);
@@ -192,7 +192,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u),
+     *   var _u = NEJ.P(‘nej.u’),
      *       _list = ["你","我","他"];
      *   // 返回下标1
      *   _u._$indexOf(_list,"我");
@@ -221,7 +221,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u),
+     *   var _u = NEJ.P(‘nej.u’),
      *       _list = [1,2,3];
      *   // 从有序列表里查找2，如果有返回下标1，没有返回-1
      *   _u._$binSearch(_list,function(_value){
@@ -263,7 +263,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u),
+     *   var _u = NEJ.P(‘nej.u’),
      *       _list = [1,2,3];
      *   // 从有序列表里逆序查找2，如果有返回下标1，没有返回null
      *   _u._$reverseEach(_list,function(_item,_index,_this){
@@ -299,7 +299,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u),
+     *   var _u = NEJ.P(‘nej.u’),
      *       _list = [1,2,3];
      *   // 从有序列表里查找2，如果有返回下标1，没有返回null
      *   _u._$forEach(_list,function(_item,_index,_this){});
@@ -334,7 +334,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u),
+     *   var _u = NEJ.P(‘nej.u’),
      *       _list = [1,2,3],
      *       _object = {a:1,b:2,c:3};
      *   // 从有序列表里查找2，如果有返回下标1，没有返回null
@@ -385,7 +385,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u),
+     *   var _u = NEJ.P(‘nej.u’),
      *       _list = [1,2,3],
      *       _list2 = [4,5,6];
      *   // 合并列表，把列表2加到列表1的起始位子，列表1从2开始截断
@@ -438,7 +438,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u);
+     *   var _u = NEJ.P(‘nej.u’);
      *   // 把字符串99999根据规则9替换成t，结果：ttttt
      *   _u._$encode({r:/\d/g,'9':'t'},'99999');
      * [/code]
@@ -461,7 +461,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u);
+     *   var _u = NEJ.P(‘nej.u’);
      *   // 编码，结果：&lt;a&gt;util&lt;/a&gt;&amp;
      *   _u._$escape('<a>util</a>&');
      * [/code]
@@ -483,7 +483,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u);
+     *   var _u = NEJ.P(‘nej.u’);
      *   // 反编码，结果：<&a>util</a>
      *   _u._$unescape('&lt;&amp;a&gt;util&lt;/a&gt;');
      * [/code]
@@ -526,7 +526,7 @@ var f = function(){
      * [/ntb]
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u);
+     *   var _u = NEJ.P(‘nej.u’);
      *   // 根据格式输出时间，比如:2012-01-11,连接符可自定义
      *   _u._$format(new Date(),'yyyy-MM-dd');
      * [/code]
@@ -599,7 +599,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u);
+     *   var _u = NEJ.P(‘nej.u’);
      *   // 输入字符串，数字或日期，生成日期对象
      *   _u._$var2date(new Date());
      * [/code]
@@ -621,7 +621,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u);
+     *   var _u = NEJ.P(‘nej.u’);
      *   // 保留2位小数
      *   _u._$fixed(3.14159,2);
      * [/code]
@@ -639,7 +639,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u);
+     *   var _u = NEJ.P(‘nej.u’);
      *   // 相对路径./a/b.html转绝对路径http://root/a/b.html
      *   _u._$absolute("./a/b.html","root");
      * [/code]
@@ -691,7 +691,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u);
+     *   var _u = NEJ.P(‘nej.u’);
      *   //  提前url地址的源信息，返回http://a.b.com:8080
      *   _u._$url2origin("http://a.b.com:8080/a/b/");
      * [/code]
@@ -718,7 +718,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u),
+     *   var _u = NEJ.P(‘nej.u’),
      *       _e = NEJ.P(nej.e);
      *   // 返回对象{div:"123"}
      *   _u._$dom2object(_e._$get("abc"),{});
@@ -763,7 +763,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u),
+     *   var _u = NEJ.P(‘nej.u’),
      *       _str = "abc=abc,123=123";
      *   // 返回对象{abc:"abc",123:"123"}
      *   _u._$string2object(_str,",");
@@ -792,7 +792,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u),
+     *   var _u = NEJ.P(‘nej.u’),
      *       _obj = {abc:"abc",123:"123"};
      *   // 返回数组[{abc:"abc"},{123:"123"}],不编码
      *   _u._$object2string(_obj,",",false);
@@ -818,7 +818,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u);
+     *   var _u = NEJ.P(‘nej.u’);
      *   // 返回对象{abc:"abc",123:"123"}
      *   _u._$query2object("abc=abc&123=123");
      * [/code]
@@ -835,7 +835,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u);
+     *   var _u = NEJ.P(‘nej.u’);
      *   // 返回对象123=123&abc=abc
      *   _u._$object2query({abc:"abc",123:"123"});
      * [/code]
@@ -852,7 +852,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u),
+     *   var _u = NEJ.P(‘nej.u’),
      *       _map = {0:'0',1:'1',2:'2',length:3};
      *   // 返回数组['1','2','3']
      *   _u._$object2array(_map);
@@ -910,7 +910,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u);
+     *   var _u = NEJ.P(‘nej.u’);
      *   // 可能返回"13d1r1dt2"
      *   _u._$randString(9);
      * [/code]
@@ -936,7 +936,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u);
+     *   var _u = NEJ.P(‘nej.u’);
      *   // 可能返回3
      *   _u._$randNumber(0,9);
      * [/code]
@@ -955,7 +955,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u);
+     *   var _u = NEJ.P(‘nej.u’);
      *   // 可能返回123456789
      *   _u._$randNumberString(9);
      * [/code]
@@ -975,7 +975,7 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(nej.u);
+     *   var _u = NEJ.P(‘nej.u’);
      *   // 可能返回123456789
      *   var _id1 = _u._$uniqueID(),
      *       _id2 = _u._$uniqueID();
