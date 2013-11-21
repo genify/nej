@@ -12,8 +12,7 @@ var f = function(){
         _u = _('nej.u'),
         _t = _('nej.ut'),
         _p = _('nej.ui'),
-        _pro,
-        _sup;
+        _pro,_sup;
     if (!!_p._$$DatePick) return;
     // ui html code
     var _seed_css,_seed_html,
@@ -139,7 +138,7 @@ var f = function(){
      */
     _pro.__initNodeTemplate = function(){
         _seed_html = _e._$addNodeTemplate(
-            '<div class="'+_seed_css+' zcard">\
+            '<div class="'+_seed_css+' zcard">'+
                _e._$getTextTemplate(_seed_action)+
                _e._$getHtmlTemplate(_seed_date)+
             '</div>'
