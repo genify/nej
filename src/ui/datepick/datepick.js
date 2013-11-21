@@ -138,7 +138,7 @@ var f = function(){
      */
     _pro.__initNodeTemplate = function(){
         _seed_html = _e._$addNodeTemplate(
-            '<div class="'+_seed_css+' zcard">‘+
+            '<div class="'+_seed_css+' zcard">'+
                _e._$getTextTemplate(_seed_action)+
                _e._$getHtmlTemplate(_seed_date)+
             '</div>'
