@@ -72,14 +72,15 @@ var f = function(){
         prefix:{css:'',pro:'',clz:''}
     };
     _p._$KERNEL  = _kernel;
-    if (/msie\s+(.*?);/i.test(_useragent)){
+    if (/msie\s+(.*?);/i.test(_useragent)||
+        /trident\/.+rv:([\d\.]+)/i.test(_useragent)){
         _kernel.engine  = 'trident';
         _kernel.browser = 'ie';
         _kernel.version = RegExp.$1;
         _kernel.prefix  = {css:'ms',pro:'ms',clz:'MS',evt:'MS'};
-        // 4.0-ie8 5.0-ie9 6.0-ie10
+        // 4.0-ie8 5.0-ie9 6.0-ie10 7.0-ie11
         // adjust by document mode setting in develop toolbar
-        var _test = {6:'2.0',7:'3.0',8:'4.0',9:'5.0',10:'6.0'};
+        var _test = {6:'2.0',7:'3.0',8:'4.0',9:'5.0',10:'6.0',11:'7.0'};
         _kernel.release = _test[document.documentMode]||
                           _test[parseInt(_kernel.version)];
     }else if(/webkit\/?([\d.]+?)(?=\s|$)/i.test(_useragent)){
