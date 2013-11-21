@@ -190,10 +190,17 @@ var _doStr2Obj = function(_query){
  * @return {String}      格式化后地址
  */
 var _doFormatURI = (function(){
-    var _reg = /{(.*?)}/gi,
+    var _xxx = !1,
+        _reg = /{(.*?)}/gi,
         _anchor = d.createElement('a');
     var _absolute = function(_uri){
         return _uri.indexOf('://')>0;
+    };
+    var _append = function(){
+        if (_xxx) return;
+        _xxx = !0;
+        _anchor.style.display = 'none';
+        document.body.appendChild(_anchor);
     };
     return function(_uri){
         if (!_uri) return '';
