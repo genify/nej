@@ -15,8 +15,8 @@ var f = function(){
         _pro,_sup;
     if (!!_p._$$DatePick) return;
     // ui html code
-    var _seed_css,_seed_html,
-        _seed_date,_seed_action;
+    var _seed_css,_seed_html,_seed_date,
+        _seed_action = _u._$uniqueID();
     /**
      * 日期选择控件<br />
      * 页面结构举例
@@ -217,7 +217,7 @@ var f = function(){
         </table>\
     ');
     // button html
-    _seed_action = _e._$addTextTemplate('\
+    _e._$addTextTemplate(_seed_action,'\
         <div class="zact">\
           <span class="zbtn zfl" title="上一年">&lt;&lt;</span>\
           <span class="zbtn zfl" title="上一月">&lt;</span>\
