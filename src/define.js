@@ -240,7 +240,8 @@ var _doAddListener = (function(){
  */
 var _doAddAllListener = function(){
     var _list = document.getElementsByTagName('script');
-    for(var i=_list.length-1,_script;i>=0;i--){
+    var _scriptLen = _list.length;
+    for(var i=_scriptLen-1,_script;i>=0;i--){
         _script = _list[i];
         if (!_script.xxx){
             _script.xxx = !0;
