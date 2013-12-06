@@ -370,12 +370,13 @@ var f = function(){
     };
     /**
      * 删除预览视图
-     * @param  {String} 标识
+     * @param  {String}  标识
+     * @param  {Boolean} 是否保留最终状态
      * @return {Void}
      */
-    _proClipper._$delPreview = function(_id){
+    _proClipper._$delPreview = function(_id,_keep){
         var _map = this.__pbox[_id];
-        if (!!_map)
+        if (!!_map&&!_keep)
             _e._$remove(_map.img);
         delete this.__pbox[_id];
     };
