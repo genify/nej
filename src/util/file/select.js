@@ -44,6 +44,7 @@ var f = function(){
      * @param  {Object}      配置参数
      * @config {String|Node} form     文件选择控件所在的表单，默认全新生成一个
      * @config {String}      name     单个文件选择支持指定提交时文件名称
+     * @config {String}      clazz    表单样式名称，可用于控制表单位置
      * @config {Boolean}     multiple 是否允许多选，默认单选
      * @config {Function}    onchange 文件选择变化触发回调，{form:form,id:'xxx'}
      *                                - form 文件选择控件封装表单对象
@@ -63,15 +64,16 @@ var f = function(){
             return _cch;
         };
         // build parent
-        var _doBuildParent = function(_id,_form){
+        var _doBuildParent = function(_id,_form,_clazz){
             var _parent,
-                _cch = _cache[_id];
+                _cch = _cache[_id],
+                _cls = _class+' '+(_clazz||'');
             _form = _e._$get(_form);
             if (!!_form){
-                _parent = _e._$create('div',_class);
+                _parent = _e._$create('div',_cls);
                 _form.appendChild(_parent);
             }else{
-                _parent = _e._$create('form',_class);
+                _parent = _e._$create('form',_cls);
                 document.body.appendChild(_parent);
             }
             _cch.pid = _e._$id(_parent);
@@ -112,7 +114,11 @@ var f = function(){
             var _id = _seed++,
                 _cch = _doInitCache(_id);
             _options = _options||_o;
-            _doBuildParent(_id,_options.form);
+            _doBuildParent(
+                _id,
+                _options.form,
+                _options.clazz
+            );
             _cch.nmb = 0;
             _cch.name = _options.name;
             _cch.lab = _e._$id(_element);
