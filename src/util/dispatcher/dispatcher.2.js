@@ -15,7 +15,7 @@ var f = function(){
         _u = _('nej.u'),
         _p = _('nej.ut'),
         _d = _('nej.ut.p'),
-        _proDispatcher;
+        _pro;
     if (!!_p._$$Dispatcher) return;
     /**
      * 调度器对象，项目仅允许实例化一个调度器
@@ -30,8 +30,8 @@ var f = function(){
      *           '/m/b':'模块标题'
      *       },
      *       rewrite:[
-     *          {'/m/a':''},
-     *          {'/m/b':/^\/m\/d.*$/i}
+     *           {'/m/a':''},
+     *           {'/m/b':/^\/m\/d.*$/i}
      *       ]
      *   });
      *   
@@ -112,23 +112,73 @@ var f = function(){
      * @param    {Object} 可选配置参数，已处理的参数列表如下
      * @config   {Object}  modules 模块配置
      * @config   {Object}  rules   规则配置
+     * @config   {Object}  actions 行为配置
      * @config   {Boolean} rest    是否支持REST风格的UMI解析
      * 
      * [hr]
-     * 地址变换之前触发事件
+     * 行为解析之前触发事件，一般用于解析节点中行为相关信息<br/>
+     * 结构举例：
+     * [code type="html"]
+     *   <div data-res-id="xxxx"
+     *        data-res-type="2"
+     *        data-res-action="show"
+     *        data-res-data="a=aaaa&b=bbbb&c=cccc">
+     *     <!-- content here -->
+     *   </div>
+     * [/code]
+     * 代码举例：
+     * [code]
+     *   var _  = NEJ.P,
+     *       _e = _('nej.e');
+     *   // startup dispatcher
+     *   _e._$startup({
+     *       // ...
+     *       onbeforeaction:function(_event){
+     *           var _data = _e._$dataset(_event.target,'resData');
+     *           // _event.result -> {id:'xxxx',type:'2',action:'show'}
+     *           _event.result.param = _data;
+     *       }
+     *   });
+     * [/code]
+     * @event    {onbeforeaction}
+     * @param    {Object} 行为相关信息
+     * @config   {Node}   target  触发行为的节点对象
+     * @config   {Event}  event   原始事件对象
+     * @config   {Object} result  行为相关信息
+     * 
+     * [hr]
+     * 地址变换之前触发事件<br/>
+     * 代码举例：
+     * [code]
+     *   var _  = NEJ.P,
+     *       _e = _('nej.e');
+     *   // startup dispatcher
+     *   _e._$startup({
+     *       // ...
+     *       onbeforechange:function(_event){
+     *           // _event -> {path:'/m/a',href:'http://a.b.com/m/a',query:{a:'aaaaa'}}
+     *           var _umi = _event.path||'';
+     *           if (!!_umi&&_umi.indexOf('/?')<0&&_umi.indexOf('/m')<0){
+     *               _event.path = '/m'+_umi;
+     *           }
+     *       }
+     *   });
+     * [/code]
      * @event    {onbeforechange}
      * @param    {Object} 地址信息
-     * 
+     * @config   {String} path  路径信息，不带查询参数
+     * @config   {String} href  完整路径，带查询参数
+     * @config   {Object} query 查询参数解析出来的对象
      */
     _p._$$Dispatcher = NEJ.C();
-      _proDispatcher = _p._$$Dispatcher._$extend(_p._$$Event);
+    _pro = _p._$$Dispatcher._$extend(_p._$$Event);
     /**
      * 控件初始化
      * @protected
      * @method {__init}
      * @return {Void}
      */
-    _proDispatcher.__init = function(){
+    _pro.__init = function(){
         this.__supInit();
         var _seed = +new Date;
         this.__pbseed = 'pb-'+_seed;
@@ -141,7 +191,7 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proDispatcher.__reset = function(_options){
+    _pro.__reset = function(_options){
         // temporary params
         // umi - input params
         this.__dtmp = {};
@@ -153,7 +203,8 @@ var f = function(){
         // - r   config for rewrite, [{umi:regexp or string}]
         // - rr  build-in rewrite
         // - al  alias map
-        this.__config = {m:{},mg:{},r:[],rr:{},al:{}};
+        // - am  actions map, {click:[],dblclick:[]}
+        this.__config = {m:{},mg:{},r:[],rr:{},al:{},am:{}};
         this.__groups = {};
         // for public module umi manager
         this.__doBuildGroup(this.__pbseed);
@@ -163,7 +214,7 @@ var f = function(){
                  root:this.__root,
                  dispatcher:this
              });
-        // listen urlchange
+        // add listeners
         this.__doInitDomEvent([[
             location,'urlchange',
             this.__onURLChange._$bind(this)
@@ -179,7 +230,7 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proDispatcher.__destroy = (function(){
+    _pro.__destroy = (function(){
         var _doRecycle = function(_group,_key,_map){
             delete _map[_key];
             _group._$recycle();
@@ -200,7 +251,7 @@ var f = function(){
      * @param  {Variable} 配置信息
      * @return {Void}
      */
-    _proDispatcher.__setModuleConf = function(_umi,_key,_value){
+    _pro.__setModuleConf = function(_umi,_key,_value){
         var _mconf = this.__config.m[_umi];
         if (!_mconf){
             _mconf = {};
@@ -214,7 +265,7 @@ var f = function(){
      * @param  {String} 配置标识
      * @return {String} 配置信息
      */
-    _proDispatcher.__getModuleConf = function(_umi,_key){
+    _pro.__getModuleConf = function(_umi,_key){
         var _mconf = this.__config.m[_umi];
         return !_mconf?'':_mconf[_key];
     };
@@ -226,7 +277,7 @@ var f = function(){
      * @return {nej.ut.p._$$SingleGroupManager}
      *                  分组管理器实例
      */
-    _proDispatcher.__doBuildGroup = function(_gid){
+    _pro.__doBuildGroup = function(_gid){
         if (!_gid) return;
         var _group = this.__groups[_gid];
         if (!_group){
@@ -247,7 +298,7 @@ var f = function(){
      * @param  {String} 分组标识
      * @return {Void}
      */
-    _proDispatcher.__doAddUMI2Group = function(_umi,_gid){
+    _pro.__doAddUMI2Group = function(_umi,_gid){
         var _group = this.__doBuildGroup(_gid);
         if (!_group){
             _gid = _d._$isUMIPrivate(_umi)
@@ -264,7 +315,7 @@ var f = function(){
      * @param  {String} 模块UMI
      * @return {String} 重写后模块UMI
      */
-    _proDispatcher.__doRewriteUMI = (function(){
+    _pro.__doRewriteUMI = (function(){
         var _reg = /\$\d/;
         return function(_umi,_href){
             var _result;
@@ -298,7 +349,7 @@ var f = function(){
      * @param  {Object} 地址信息
      * @return {Void}
      */
-    _proDispatcher.__onURLChange = (function(){
+    _pro.__onURLChange = (function(){
         var _trim = /(?:^\/+)|(?:\/+$)/gi,
             _reg0 = /#(\$.*?)$/;
         var _doParseRestParam = function(_umi,_node){
@@ -380,7 +431,7 @@ var f = function(){
      * @param  {Event} 点击事件对象
      * @return {Void}
      */
-    _proDispatcher.__onClickDelegate = (function(){
+    _pro.__onClickDelegate = (function(){
         // check event need delegated
         var _doCheckUMI = function(_url,_href){
             if (!_url) return;
@@ -429,6 +480,39 @@ var f = function(){
         };
     })();
     /**
+     * 解析行为代理
+     * @protected
+     * @method {__onActionDelegate}
+     * @param  {Event} 点击事件对象
+     * @return {Void}
+     */
+    _pro.__onActionDelegate = function(_event){
+        var _am = this.__config.am,
+            _conf = _am[_event.type];
+        if (!_conf) return;
+        // has action delegate
+        var _element = _v._$getElement(_event,'d:resAction');
+        if (!_element) return;
+        var _action = _e._$dataset(_element,'resAction'),
+            _handler = _conf[_action];
+        if (!_handler) return;
+        // has action node
+        var _options = {
+            action:_action,
+            id:_e._$dataset(_element,'resId'),
+            type:_e._$dataset(_element,'resType'),
+            extra:_e._$dataset(_element,'resExtra')
+        };
+        // do other parse
+        this._$dispatchEvent('onbeforeaction',{
+            event:_event,
+            target:_element,
+            result:_options
+        });
+        // trigger action
+        _handler.call(this,_options);
+    };
+    /**
      * 添加调度规则
      * [code]
      *   // 配置模块标题
@@ -461,7 +545,28 @@ var f = function(){
      *       {'/m/b':/^\/m\/b.*$/i},
      *       {'404':'/m/a'}                 // <---- 模块不存在时定向到/m/a模块
      *   ]);
-     *  
+     * 
+     *   // 配置行为，默认为click行为，模块中通过options.input接收配置信息
+     *   // 默认行为信息解析节点上的以下内容：
+     *   // data-res-id         资源标识
+     *   // data-res-type       资源类型
+     *   // data-res-action     对资源操作的行为
+     *   // data-res-extra      其他信息，如a=aaa&b=bbb或者{"a":"aaa","b":"bbb"}等等，根据实际情况配置
+     *   dispatcher._$rule('action',{
+     *       'show':'/m/a',    // 等价于dispatcher._$redirect('/m/a')
+     *       'play':function(_options){
+     *           // _options -> {type:'xxxx',id:'xxxx'}
+     *           // TODO something
+     *           // 返回结果如果为：
+     *           // undefined/null  表明业务逻辑已在此函数内处理完毕
+     *           // string          表明返回的是UMI，后续会调用_$redirect到该UMI
+     *       },
+     *       'fav':{
+     *           event:'dblclick',
+     *           value:'/m/b' // or function
+     *       }
+     *   });
+     * 
      *   // 批量配置标题和重写规则
      *   dispatcher._$rule({
      *       'title':{
@@ -477,18 +582,24 @@ var f = function(){
      *           'a':'/m/a',
      *           'b':['/m/b','/m/bb'],
      *           'c':'/m/c'
+     *       },
+     *       action:{
+     *           'show':'/m/a',
+     *           'play':function(_options){
+     *               // TODO something
+     *           }
      *       }
      *   });
      * 
      * [/code]
      * 
      * @method {_$rule}
-     * @param  {String}       规则类型，支持类型: title/rewrite/alias
+     * @param  {String}       规则类型，支持类型: title/rewrite/alias/action
      * @param  {Object|Array} 规则配置，对于重写规则存在匹配的先后顺序
      * 
      * @return {nej.ut._$$Dispatcher}
      */
-    _proDispatcher._$rule = (function(){
+    _pro._$rule = (function(){
         var _buildin = ['404'];
         // regist rule
         var _doRegistRule = function(_config,_key){
@@ -514,6 +625,49 @@ var f = function(){
                     delete _config[_key];
                 },this);
         };
+        // regist actions
+        var _doRegistAction = function(_action,_name){
+            var _am = this.__config.am;
+            // parse event/handler from object
+            var _event = 'click',
+                _handler = _action,
+                _name = (_name||'').toLowerCase();
+            if (_u._$isObject(_action)){
+                _event = _action.event||_event;
+                _handler = _action.value;
+            }
+            // parse handler
+            if (_u._$isString(_handler)){
+                _handler = function(_umi,_options){
+                    this._$redirect(_umi,{
+                        force:!0,
+                        input:_options
+                    });
+                }._$bind(this,_handler);
+            }else if(_u._$isFunction(_handler)){
+                _handler = _handler._$aop(null,function(_event){
+                    var _result = _event.value;
+                    if (_u._$isString(_result)){
+                        this._$redirect(_result,{
+                            force:!0,
+                            input:_event.args[0]
+                        });
+                    }
+                }._$bind(this));
+            }
+            // push handler to cache
+            if (_u._$isFunction(_handler)){
+                // add event delegate
+                if (!_am[_event]) {
+                    this.__doInitDomEvent([
+                        document,_event,
+                        this.__onActionDelegate._$bind(this)
+                    ]);
+                    _am[_event] = {};
+                }
+                _am[_event][_name] = _handler;
+            }
+        };
         // rule parse function map
         var _fmap = {
             title:function(_config){
@@ -535,6 +689,12 @@ var f = function(){
                     _config,
                     _doRegistAlias,this
                 );
+            },
+            action:function(_config){
+                _u._$forIn(
+                    _config,
+                    _doRegistAction,this
+                );
             }
         };
         return function(_key,_config){
@@ -542,8 +702,7 @@ var f = function(){
                 _config = _key;
                 _key = 'rewrite';
             }else if (!_u._$isString(_key)){
-                _u._$forIn(_key,
-                   _doRegistRule,this);
+                _u._$forIn(_key,_doRegistRule,this);
                 return this;
             }
             // regist rule by type
@@ -621,7 +780,7 @@ var f = function(){
      * @config {Object}   composite 组合模块容器对应关系,{pid:umi},其中pid为umi对应模块的容器
      * @return {nej.ut._$$Dispatcher} 调度器实例
      */
-    _proDispatcher._$regist = (function(){
+    _pro._$regist = (function(){
         // regist single module
         var _doRegistUMI = function(_config,_umi){
             this._$regist(_umi,_config);
@@ -690,7 +849,7 @@ var f = function(){
      *                       2 - 群体广播，节点下所有子孙子孙节点收到消息
      * @return {nej.ut._$$Dispatcher} 调度器实例
      */
-    _proDispatcher._$message = (function(){
+    _pro._$message = (function(){
         // send message
         var _doSendMessage = function(_node,_message){
             var _module = _node._$getData().module;
@@ -745,7 +904,7 @@ var f = function(){
      * @config {Object} data 消息数据
      * @return {Void}
      */
-    _proDispatcher._$publish = function(_type,_message){
+    _pro._$publish = function(_type,_message){
         var _message = NEJ.X({},_message);
         _message.type = _type||'';
         this._$dispatchEvent(
@@ -773,7 +932,7 @@ var f = function(){
      * @param  {Function} 消息处理回调
      * @return {Void}
      */
-    _proDispatcher._$subscribe = function(_umi,_type,_callback){
+    _pro._$subscribe = function(_umi,_type,_callback){
         _umi = this.__config.al[_umi]||_umi;
         this._$pushEvent(
             (_umi||'')+':'+(_type||''),_callback
@@ -797,7 +956,7 @@ var f = function(){
      * @param  {Function} 消息处理回调
      * @return {Void}
      */
-    _proDispatcher._$unsubscribe = function(_umi,_type,_callback){
+    _pro._$unsubscribe = function(_umi,_type,_callback){
         _umi = this.__config.al[_umi]||_umi;
         this._$delEvent(
             (_umi||'')+':'+(_type||''),_callback
@@ -811,7 +970,7 @@ var f = function(){
      * @param  {String} 私有模块地址
      * @return {nej.ut._$$Dispatcher} 调度器实例
      */
-    _proDispatcher._$apply = function(_url){
+    _pro._$apply = function(_url){
         return this._$redirect(_url);
     };
     /**
@@ -827,7 +986,7 @@ var f = function(){
      * @param  {String}               私有模块地址
      * @return {nej.ut._$$Dispatcher} 调度器实例
      */
-    _proDispatcher._$hide = function(_umi){
+    _pro._$hide = function(_umi){
         var _gid = this.__config.mg[_umi];
         if (_gid==this.__pvseed){
             this.__groups[_gid]._$hideUMI(_umi);
@@ -875,7 +1034,7 @@ var f = function(){
      * @config {Boolean}  ignored 是否忽略地址变化前的验证
      * @return {nej.ut._$$Dispatcher} 调度器实例
      */
-    _proDispatcher._$redirect = function(_url,_options){
+    _pro._$redirect = function(_url,_options){
         _options = _options||_o;
         var _umi = _d._$path2umi(_url),
             _location = location.parse(_url);
@@ -905,7 +1064,7 @@ var f = function(){
      * @param  {String} 模块UMI，可以带查询参数
      * @return {nej.ut._$$Dispatcher} 调度器实例
      */
-    _proDispatcher._$refresh = function(_url){
+    _pro._$refresh = function(_url){
         if (!!_url){
             this._$redirect(_url,{
                 replace:!0,force:!0
@@ -921,7 +1080,7 @@ var f = function(){
      * @see    {#_$redirect}
      * @return {nej.ut._$$Dispatcher} 调度器实例
      */
-    _proDispatcher._$delegate = function(){
+    _pro._$delegate = function(){
         this.__doInitDomEvent([
             [document,'click',this.__onClickDelegate._$bind(this)]
         ]);
@@ -934,7 +1093,7 @@ var f = function(){
      * @see    {location#active}
      * @return {nej.ut._$$Dispatcher} 调度器实例
      */
-    _proDispatcher._$active = function(){
+    _pro._$active = function(){
         location.active();
         return this;
     };
@@ -945,7 +1104,7 @@ var f = function(){
      * @param  {nej.ut._$$Module} 模块构造器
      * @return {nej.ut._$$Dispatcher}
      */
-    _proDispatcher._$loaded = function(_umi,_module){
+    _pro._$loaded = function(_umi,_module){
         _umi = this.__config.al[_umi]||_umi;
         if (!_u._$isArray(_umi)){
             this._$regist(_umi,_module);
@@ -1009,7 +1168,9 @@ var f = function(){
         return window.dispatcher;
     };
 };
-NEJ.define('{lib}util/dispatcher/dispatcher.2.js',
-          ['{lib}util/dispatcher/dsp/group.single.js'
-          ,'{lib}util/history/history.js'
-          ,'{lib}util/template/tpl.js'],f);
+NEJ.define(
+    '{lib}util/dispatcher/dispatcher.2.js',[
+    '{lib}util/dispatcher/dsp/group.single.js',
+    '{lib}util/history/history.js',
+    '{lib}util/template/tpl.js'
+],f);
