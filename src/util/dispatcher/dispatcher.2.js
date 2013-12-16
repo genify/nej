@@ -659,10 +659,10 @@ var f = function(){
             if (_u._$isFunction(_handler)){
                 // add event delegate
                 if (!_am[_event]) {
-                    this.__doInitDomEvent([
+                    this.__doInitDomEvent([[
                         document,_event,
                         this.__onActionDelegate._$bind(this)
-                    ]);
+                    ]]);
                     _am[_event] = {};
                 }
                 _am[_event][_name] = _handler;

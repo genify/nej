@@ -182,11 +182,9 @@ var f = function(){
         };
         // extend ontemplateready event on document
         _t._$$CustomEvent._$allocate({
-            element:document
-           ,event:'templateready'
-           ,oneventadd:function(){
-               _doCheckReady();
-           }
+            element:document,
+            event:'templateready',
+            oneventadd:_doCheckReady
         });
         return function(_element){
             _element = _e._$get(_element);
