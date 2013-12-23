@@ -22,6 +22,7 @@ var f = function(){
      *   data-focus      | true/false            | 聚焦时检测提示信息，对于需验证的表单控件默认已支持此属性
      *   data-auto-focus | true/false            | 自动聚焦项，多个表单项设置了该属性仅第一项有效
      *   data-counter    | true/false            | 是否需要显示计数信息，必须同时设置data-max-length或者maxlength
+     *   data-ignore     | true/false            | 临时忽略失去焦点验证，可动态控制验证触发时机
      *   data-message    | String                | 验证出错提示信息，多个提示信息可以通过配置或者回调事件定制提示内容
      *   data-tip        | String                | 默认提示信息，正常输入状态时的提示信息
      *   data-required   | true/false            | 必填项，对于checkbox/radio的required表示必须选中
@@ -516,7 +517,10 @@ var f = function(){
         };
         // onblur
         var _onBlur = function(_event){
-            this.__doCheckValidity(_v._$getElement(_event));
+            var _node = _v._$getElement(_event);
+            if (!this.__dataset(_node,'ignore',2)){
+                this.__doCheckValidity(_node);
+            }
         };
         return function(_node){
             // check auto focus node
@@ -658,10 +662,14 @@ var f = function(){
             }
         };
         return function(_options){
-            this.__treg = NEJ.X(NEJ.X({},
-                         _rmap),_options.type);
-            this.__vfun = NEJ.X(NEJ.X({},
-                         _vfun),_options.attr);
+            this.__treg = NEJ.X(
+                NEJ.X({},_rmap),
+                _options.type
+            );
+            this.__vfun = NEJ.X(
+                NEJ.X({},_vfun),
+                _options.attr
+            );
         };
     })();
     /**
