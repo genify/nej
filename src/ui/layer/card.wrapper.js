@@ -12,7 +12,7 @@ var f = function(){
         _v = _('nej.v'),
         _u = _('nej.u'),
         _p = _('nej.ui'),
-        _proCardWrapper;
+        _pro,_sup;
     if (!!_p._$$CardWrapper) return;
     /**
      * 弹出卡片封装基类对象，主要实现层里面内容部分的业务逻辑<br />
@@ -43,7 +43,8 @@ var f = function(){
      *                            
      */
     _p._$$CardWrapper = NEJ.C();
-      _proCardWrapper = _p._$$CardWrapper._$extend(_p._$$LayerWrapper);
+    _pro = _p._$$CardWrapper._$extend(_p._$$LayerWrapper);
+    _sup = _p._$$CardWrapper._$supro;
     /**
      * 卡片绑定到执行节点上<br />
      * 脚本举例
@@ -175,7 +176,7 @@ var f = function(){
      * @method {__getLayerInstance}
      * @return {nej.ui._$$Layer} 弹层控件实例
      */
-    _proCardWrapper.__getLayerInstance = function(){
+    _pro.__getLayerInstance = function(){
         return _p._$$Card._$allocate(this.__lopt);
     };
     /**
@@ -184,11 +185,11 @@ var f = function(){
      * @method {__doInitLayerOptions}
      * @return {Void}
      */
-    _proCardWrapper.__doInitLayerOptions = function(){
-        _p._$$CardWrapper._$supro
-          .__doInitLayerOptions.apply(this,arguments);
+    _pro.__doInitLayerOptions = function(){
+        _sup.__doInitLayerOptions.apply(this,arguments);
         this.__lopt.top = null;
         this.__lopt.left = null;
+        this.__lopt.nostop = !1;
     };
     /**
      * 通过参照节点显示卡片位置
@@ -196,12 +197,14 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {nej.ui._$$CardWrapper}
      */
-    _proCardWrapper._$showByReference = function(_options){
+    _pro._$showByReference = function(_options){
         if (!!this.__layer) 
             this.__layer._$showByReference(_options);
         return this;
     };
 };
-NEJ.define('{lib}ui/layer/card.wrapper.js',
-          ['{lib}ui/layer/layer.wrapper.js'
-          ,'{lib}ui/layer/card.js'],f);
+NEJ.define(
+    '{lib}ui/layer/card.wrapper.js',[
+    '{lib}ui/layer/layer.wrapper.js',
+    '{lib}ui/layer/card.js'
+],f);

@@ -11,7 +11,7 @@ var f = function(){
         _v = _('nej.v'),
         _e = _('nej.e'),
         _p = _('nej.ui'),
-        _proCard;
+        _pro;
     if (!!_p._$$Card) return;
     // ui css text
     var _seed_css = _e._$pushCSSText('.#<uispace>{position:absolute;background:#fff;}');
@@ -46,11 +46,12 @@ var f = function(){
      * @class   {nej.ui._$$Card} 卡片控件
      * @extends {nej.ui._$$Layer}
      * @param   {Object} 可选配置参数，已处理参数列表如下
-     * @config  {String} top  卡片垂直位置
-     * @config  {String} left 卡片水平位置
+     * @config  {String}  top    卡片垂直位置
+     * @config  {String}  left   卡片水平位置
+     * @config  {Boolean} nostop 是否禁用事件阻止
      */
     _p._$$Card = NEJ.C();
-      _proCard = _p._$$Card._$extend(_p._$$Layer);
+      _pro = _p._$$Card._$extend(_p._$$Layer);
     /**
      * 控件重置
      * @protected
@@ -58,11 +59,13 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proCard.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
-        this.__doInitDomEvent([
-            [document,'click',this.__onDocClick._$bind(this)]
-        ]);
+        this.__doInitDomEvent([[
+            document,'click',
+            this.__onDocClick._$bind(this)
+        ]]);
+        this.__nostop = !!_options.nostop;
         this.__position = {
             top:_options.top,
             left:_options.left
@@ -74,7 +77,7 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proCard.__destroy = function(){
+    _pro.__destroy = function(){
         delete this.__pbox;
         delete this.__fbox;
         delete this.__align;
@@ -89,7 +92,7 @@ var f = function(){
      * @method {__initXGui}
      * @return {Void}
      */
-    _proCard.__initXGui = function(){
+    _pro.__initXGui = function(){
         this.__seed_css = _seed_css;
     };
     /**
@@ -98,16 +101,19 @@ var f = function(){
      * @method {__initNode}
      * @return {Void}
      */
-    _proCard.__initNode = function(){
+    _pro.__initNode = function(){
         this.__supInitNode();
         this.__ncnt = this.__body;
-        _v._$addEvent(this.__body,'click',this.__doCheckStop._$bind(this));
+        _v._$addEvent(
+            this.__body,'click',
+            this.__doCheckStop._$bind(this)
+        );
     };
     /**
      * 文档点击事件
      * @return {Void}
      */
-    _proCard.__onDocClick = function(_event){
+    _pro.__onDocClick = function(_event){
         // fix firefox fire click when right button click
         if (_event.button!=2) this._$hide();
     };
@@ -115,7 +121,8 @@ var f = function(){
      * 检查点击节点默认事件
      * @return {Void}
      */
-    _proCard.__doCheckStop = function(_event){
+    _pro.__doCheckStop = function(_event){
+        if (this.__nostop) return;
         _v._$stopBubble(_event);
         var _element = _v._$getElement(_event);
         if (_element.tagName=='A')
@@ -128,7 +135,7 @@ var f = function(){
      * @param  {String} 对齐方式
      * @return {Void}
      */
-    _proCard.__setAlign = (function(){
+    _pro.__setAlign = (function(){
         var _reg = /\s+/i;
         return function(_align){
             _align = (_align||'').trim()
@@ -145,7 +152,7 @@ var f = function(){
      * @param  {String} 适应位置
      * @return {Object} 位置信息
      */
-    _proCard.__doCalPosition = function(_align){
+    _pro.__doCalPosition = function(_align){
         var _result = {},
             _fbox = this.__fbox,
             _pbox = _e._$getPageBox(),
@@ -185,7 +192,7 @@ var f = function(){
      * @method {__doPositionAlign}
      * @return {Void}
      */
-    _proCard.__doPositionAlign = function(){
+    _pro.__doPositionAlign = function(){
         if (!this.__fitable){
             this._$setPosition(this.__position);
             return;
@@ -205,7 +212,7 @@ var f = function(){
      * @method {__doFindPosition}
      * @return {Object} 卡片左上角坐标{top:20,left:10}
      */
-    _proCard.__doFindPosition = function(_element,_delta,_event){
+    _pro.__doFindPosition = function(_element,_delta,_event){
         _delta = _delta||_o;
         var _pageBox = _e._$getPageBox(),
             _x = _v._$pageX(_event) + (_delta.left||0),
@@ -288,7 +295,7 @@ var f = function(){
      * @config {Boolean} fitable 是否需要调整卡片位置使其适应页面
      * @return {nej.ui._$$Card}
      */
-    _proCard._$showByReference = (function(){
+    _pro._$showByReference = (function(){
         var _doCalTargetBox = function(_element,_delta){
             _element = _e._$get(_element);
             if (!_element) return;
@@ -313,5 +320,7 @@ var f = function(){
         };
     })();
 };
-NEJ.define('{lib}ui/layer/card.js',
-      ['{lib}ui/layer/layer.js'],f);
+NEJ.define(
+    '{lib}ui/layer/card.js',[
+    '{lib}ui/layer/layer.js'
+],f);
