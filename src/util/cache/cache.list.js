@@ -11,8 +11,8 @@ var f = function(){
         _f = NEJ.F,
         _u = _('nej.u'),
         _p = _('nej.ut'),
-        _proListCache,
-        _supListCache;
+        _pro,
+        _sup;
     if (!!_p._$$ListCache) return;
     /**
      * 列表缓存管理基类<br/>
@@ -106,9 +106,10 @@ var f = function(){
      * @class   {nej.ut._$$ListCache} 列表缓存管理基类
      * @extends {nej.ut._$$Cache}
      * @param  {Object} 可选配置参数，已处理参数列表如下
-     * @config {String} id      缓存标识，默认使用构造器缓存
-     * @config {String} key     列表项标识字段，默认为id
-     * @config {Object} data    列表关联数据
+     * @config {String}  id      缓存标识，默认使用构造器缓存
+     * @config {String}  key     列表项标识字段，默认为id
+     * @config {Object}  data    列表关联数据
+     * @config {Boolean} autogc  是否自动操作
      * 
      * [hr]
      * 
@@ -150,8 +151,8 @@ var f = function(){
      * 
      */
     _p._$$ListCache = NEJ.C();
-      _proListCache = _p._$$ListCache._$extend(_p._$$Cache);
-      _supListCache = _p._$$ListCache._$supro;
+    _pro = _p._$$ListCache._$extend(_p._$$Cache);
+    _sup = _p._$$ListCache._$supro;
     /**
      * 控件重置
      * @protected
@@ -161,10 +162,11 @@ var f = function(){
      * @config {Object} 列表关联数据
      * @return {Void}
      */
-    _proListCache.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
         this.__key = _options.key||'id';
         this.__data = _options.data||_o;
+        this.__auto = !!_options.autogc;
         this.__doSwapCache(_options.id);
     };
     /**
@@ -174,7 +176,7 @@ var f = function(){
      * @param  {String} 缓存标识
      * @return {Void}
      */
-    _proListCache.__doSwapCache = function(_id){
+    _pro.__doSwapCache = function(_id){
         var _cache;
         if (!!_id){
             _cache = this.__cache[_id];
@@ -191,6 +193,41 @@ var f = function(){
         this.__lspl = _cache;
     };
     /**
+     * 调度执行GC操作，删除不用的数据对象
+     * @return {Void}
+     */
+    _pro.__doScheduleGC = (function(){
+        var _doGC = function(){
+            // dump id map for used items
+            var _map = {};
+            _u._$forIn(
+                this.__lspl,function(_list,_key){
+                    if (_key=='hash') return;
+                    if (!_u._$isArray(_list)) return;
+                    _u._$forEach(_list,function(_item){
+                        if (!_item) return;
+                        _map[_item[this.__key]] = !0;
+                    },this);
+                },this
+            );
+            // check used in hash
+            _u._$forIn(
+                this.__getHash(),
+                function(_item,_id,_hash){
+                    if (!_map[_id]){
+                        delete _hash[_id];
+                    }
+                }
+            );
+        };
+        return function(){
+            if (!!this.__timer){
+                this.__timer = window.clearTimeout(this.__timer);
+            }
+            this.__timer = window.setTimeout(_doGC._$bind(this),150);
+        };
+    })();
+    /**
      * 缓存列表项
      * @protected
      * @method {__doSaveItemToCache}
@@ -198,7 +235,7 @@ var f = function(){
      * @param  {String} 列表标识
      * @return {Object} 缓存中列表项
      */
-    _proListCache.__doSaveItemToCache = function(_item,_lkey){
+    _pro.__doSaveItemToCache = function(_item,_lkey){
         _item = this.__doFormatItem
                (_item,_lkey)||_item;
         if (!_item) return null;
@@ -219,14 +256,14 @@ var f = function(){
      * @param  {String} 列表标识
      * @return {Object} 格式化后的列表项
      */
-    _proListCache.__doFormatItem = _f;
+    _pro.__doFormatItem = _f;
     /**
      * 删除列表项
      * @protected
      * @method {__doRemoveItemInCache}
      * @param  {String} 列表项
      * @return {Object} 删除的列表项
-    _proListCache.__doRemoveItemInCache = function(_id){
+    _pro.__doRemoveItemInCache = function(_id){
         var _item = this.__getHash()[_id];
         delete this.__getHash()[_id];
         return _item;
@@ -238,7 +275,7 @@ var f = function(){
      * @param  {Object|Array} 列表项或者列表
      * @return {Void}
      */
-    _proListCache.__doUnshiftToList = function(_key,_item){
+    _pro.__doUnshiftToList = function(_key,_item){
         if (!_item) return;
         if (!_u._$isArray(_item)){
             var _list = this._$getListInCache(_key),
@@ -273,7 +310,7 @@ var f = function(){
      * @param  {Number} 列表总数
      * @return {nej.ut._$$ListCache}
      */
-    _proListCache._$setTotal = function(_key,_total){
+    _pro._$setTotal = function(_key,_total){
         var _list = this._$getListInCache(_key);
         _list.length = Math.max(_list.length,_total);
         this._$setLoaded(_key);
@@ -293,7 +330,7 @@ var f = function(){
      * @param  {String} 列表标识
      * @return {Number} 列表总长度
      */
-    _proListCache._$getTotal = function(_key){
+    _pro._$getTotal = function(_key){
         return this._$getListInCache(_key).length;
     };
     /**
@@ -307,7 +344,7 @@ var f = function(){
      * @param  {String} 列表标识
      * @return {nej.ut._$$ListCache}
      */
-    _proListCache._$setLoaded = function(_key,_loaded){
+    _pro._$setLoaded = function(_key,_loaded){
         this._$getListInCache(_key).loaded = _loaded!=!1;
         return this;
     };
@@ -317,7 +354,7 @@ var f = function(){
      * @param  {String}  列表标识
      * @return {Boolean} 是否载入完成
      */
-    _proListCache._$isLoaded = function(_key){
+    _pro._$isLoaded = function(_key){
         return !!this._$getListInCache(_key).loaded;
     };
     /**
@@ -331,7 +368,7 @@ var f = function(){
      * @param  {String} 列表标识
      * @return {Array}  列表
      */
-    _proListCache._$setListInCache = function(_key,_list){
+    _pro._$setListInCache = function(_key,_list){
         this._$clearListInCache(_key);
         this.__getList({
             key:_key,
@@ -353,7 +390,7 @@ var f = function(){
      * @param  {String} 列表标识
      * @return {Array}  列表
      */
-    _proListCache._$getListInCache = (function(){
+    _pro._$getListInCache = (function(){
         var _doFormatKey = function(_key){
             return (_key||'')+(!_key?'':'-')+'list';
         };
@@ -371,7 +408,7 @@ var f = function(){
      * 取Hash映射表
      * @return {Object} 映射表
      */
-    _proListCache.__getHash = function(){
+    _pro.__getHash = function(){
         var _hash = this.__lspl.hash;
         if (!_hash){
             _hash = {};
@@ -387,7 +424,7 @@ var f = function(){
      * @config {Number} data  发送到服务器数据信息
      * @return {nej.ut._$$ListCache}
      */
-    _proListCache._$pullRefresh = (function(){
+    _pro._$pullRefresh = (function(){
         var _doFormatKey = function(_options){
             return 'r-'+_options.key;
         };
@@ -411,7 +448,7 @@ var f = function(){
      * @param  {Array}  数据列表
      * @return {Void}
      */
-    _proListCache.__pullRefresh = function(_options,_list){
+    _pro.__pullRefresh = function(_options,_list){
         this.__doUnshiftToList(_options.key,_list);
         this.__doCallbackRequest(_options.rkey,'onpullrefresh',_options);
     };
@@ -430,7 +467,7 @@ var f = function(){
      * @config {Object} ext      回传数据
      * @return {nej.ut._$$ListCache}
      */
-    _proListCache._$getList = (function(){
+    _pro._$getList = (function(){
         var _doFormatKey = function(_options){
             return 'r-'+
                    _options.key+'-'+
@@ -470,7 +507,7 @@ var f = function(){
      * @param  {Array|Object}  数据列表，或者带总数信息列表
      * @return {Void}
      */
-    _proListCache.__getList = (function(){
+    _pro.__getList = (function(){
         var _doClear = function(_item,_index,_list){
             if (!!_item){
                 return !0;
@@ -519,7 +556,7 @@ var f = function(){
      * @param  {String} 列表标识
      * @return {nej.ut._$$ListCache}
      */
-    _proListCache._$clearListInCache = (function(){
+    _pro._$clearListInCache = (function(){
         var _doClear = function(_item,_index,_list){
             _list.splice(_index,1);
         };
@@ -527,6 +564,9 @@ var f = function(){
             var _list = this._$getListInCache(_key);
             _u._$reverseEach(_list,_doClear);
             this._$setLoaded(_key,!1);
+            if (this.__auto){
+                this.__doScheduleGC();
+            }
             return this;
         };
     })();
@@ -536,7 +576,7 @@ var f = function(){
      * @param  {String}  列表标识
      * @return {Boolean} 是否有效
      */
-    _proListCache.__doCheckItemValidity = function(_item,_lkey){
+    _pro.__doCheckItemValidity = function(_item,_lkey){
         return !_item.__dirty__;
     };
     /**
@@ -550,7 +590,7 @@ var f = function(){
      * @param  {String}   项标识
      * @return {Variable} 列表项
      */
-    _proListCache._$getItemInCache = function(_id){
+    _pro._$getItemInCache = function(_id){
         return this.__getHash()[_id];
     };
     /**
@@ -559,7 +599,7 @@ var f = function(){
      * @param  {String} 项标识
      * @return {Void}
      */
-    _proListCache._$clearItemInCache = function(_id){
+    _pro._$clearItemInCache = function(_id){
         var _item = this._$getItemInCache(_id);
         if (!!_item) _item.__dirty__ = !0;
     };
@@ -581,7 +621,7 @@ var f = function(){
      * @config {Object} ext  需要回传的数据信息
      * @return {nej.ut._$$ListCache}
      */
-    _proListCache._$getItem = (function(){
+    _pro._$getItem = (function(){
         var _doFormatKey = function(_options){
             return 'r-'+_options.key+'-'+_options.id;
         };
@@ -619,7 +659,7 @@ var f = function(){
      * @param  {Object} 列表项对象
      * @return {Void}
      */
-    _proListCache.__getItem = function(_options,_item){
+    _pro.__getItem = function(_options,_item){
         _options = _options||_o;
         this.__doSaveItemToCache(_item,_options.key);
         this.__doCallbackRequest(_options.rkey,'onitemload',_options);
@@ -643,7 +683,7 @@ var f = function(){
      * @config {Number}  offset 对于非尾部追加的项可通过此参数指定追加位置
      * @return {nej.ut._$$ListCache}
      */
-    _proListCache._$addItem = function(_options){
+    _pro._$addItem = function(_options){
         _options = NEJ.X({},_options);
         _options.onload = this.__addItem._$bind(this,_options);
         this._$dispatchEvent('doadditem',_options);
@@ -656,7 +696,7 @@ var f = function(){
      * @param  {Object} 列表项对象
      * @return {Void}
      */
-    _proListCache.__addItem = function(_options,_item){
+    _pro.__addItem = function(_options,_item){
         var _key = _options.key;
         _item = this.__doSaveItemToCache(_item,_key);
         if (!!_item){
@@ -700,7 +740,7 @@ var f = function(){
      * @config {Object} ext  需要回传的数据信息
      * @return {Void}
      */
-    _proListCache._$deleteItem = function(_options){
+    _pro._$deleteItem = function(_options){
         _options = NEJ.X({},_options);
         _options.onload = this.__deleteItem._$bind(this,_options);
         this._$dispatchEvent('dodeleteitem',_options);
@@ -713,7 +753,7 @@ var f = function(){
      * @param  {Boolean} 是否删除成功
      * @return {Void}
      */
-    _proListCache.__deleteItem = function(_options,_isok){
+    _pro.__deleteItem = function(_options,_isok){
         var _item,
             _key = _options.key;
         if (!!_isok){
@@ -751,7 +791,7 @@ var f = function(){
      * @config {Object} ext  需要回传的数据信息
      * @return {nej.ut._$$ListCache}
      */
-    _proListCache._$updateItem = function(_options){
+    _pro._$updateItem = function(_options){
         _options = NEJ.X({},_options);
         _options.onload = this.__updateItem._$bind(this,_options);
         this._$dispatchEvent('doupdateitem',_options);
@@ -764,7 +804,7 @@ var f = function(){
      * @param  {Object} 列表项对象
      * @return {Void}
      */
-    _proListCache.__updateItem = function(_options,_item){
+    _pro.__updateItem = function(_options,_item){
         var _key = _options.key;
         if (!!_item)
             _item = this.__doSaveItemToCache(_item,_key);
@@ -778,5 +818,7 @@ var f = function(){
         return _event;
     };
 };
-NEJ.define('{lib}util/cache/cache.list.js',
-      ['{lib}util/cache/cache.js'],f);
+NEJ.define(
+    '{lib}util/cache/cache.list.js',[
+    '{lib}util/cache/cache.js'
+],f);

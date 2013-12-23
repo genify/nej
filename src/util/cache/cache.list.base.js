@@ -11,8 +11,7 @@ var f = function(){
         _f = NEJ.F,
         _u = _('nej.u'),
         _p = _('nej.ut'),
-        _proAbstractListCache,
-        _supAbstractListCache;
+        _pro;
     if (!!_p._$$AbstractListCache) return;
     /**
      * 列表缓存管理基类<br/>
@@ -105,15 +104,14 @@ var f = function(){
      * 
      */
     _p._$$AbstractListCache = NEJ.C();
-      _proAbstractListCache = _p._$$AbstractListCache._$extend(_p._$$ListCache);
-      _supAbstractListCache = _p._$$AbstractListCache._$supro;
+    _pro = _p._$$AbstractListCache._$extend(_p._$$ListCache);
     /**
      * 控件初始化
      * @protected
      * @method {__init}
      * @return {Void}
      */
-    _proAbstractListCache.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
         this._$batEvent({
             doloadlist:this.__doLoadList._$bind(this)
@@ -136,7 +134,7 @@ var f = function(){
      * @config {Function} onload   列表项载入回调
      * @return {Void}
      */
-    _proAbstractListCache.__doLoadList = _f;
+    _pro.__doLoadList = _f;
     /**
      * 从服务器端前向刷新列表，子类实现具体逻辑
      * @protected
@@ -147,7 +145,7 @@ var f = function(){
      * @config {Function} onload   列表项载入回调
      * @return {Void}
      */
-    _proAbstractListCache.__doPullRefresh = _f;
+    _pro.__doPullRefresh = _f;
     /**
      * 从服务器端载入列表项，子类实现具体逻辑
      * @protected
@@ -159,7 +157,7 @@ var f = function(){
      * @config  {Function} onload   列表项载入回调
      * @return {Void}
      */
-    _proAbstractListCache.__doLoadItem = _f;
+    _pro.__doLoadItem = _f;
     /**
      * 添加列表项至服务器，子类实现具体逻辑
      * @protected
@@ -171,7 +169,7 @@ var f = function(){
      * @config  {Function} onload   列表项载入回调
      * @return {Void}
      */
-    _proAbstractListCache.__doAddItem = _f;
+    _pro.__doAddItem = _f;
     /**
      * 从服务器上删除列表项，子类实现具体逻辑
      * @protected
@@ -183,7 +181,7 @@ var f = function(){
      * @config  {Function} onload   列表项载入回调
      * @return {Void}
      */
-    _proAbstractListCache.__doDeleteItem = _f;
+    _pro.__doDeleteItem = _f;
     /**
      * 更新列表项至服务器，子类实现具体逻辑
      * @protected
@@ -195,7 +193,9 @@ var f = function(){
      * @config  {Function} onload   列表项载入回调
      * @return {Void}
      */
-    _proAbstractListCache.__doUpdateItem = _f;
+    _pro.__doUpdateItem = _f;
 };
-NEJ.define('{lib}util/cache/cache.list.base.js',
-      ['{lib}util/cache/cache.list.js'],f);
+NEJ.define(
+    '{lib}util/cache/cache.list.base.js',[
+    '{lib}util/cache/cache.list.js'
+],f);
