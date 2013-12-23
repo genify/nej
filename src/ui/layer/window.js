@@ -13,23 +13,10 @@ var f = function(){
         _u = NEJ.P('nej.u'),
         _t = NEJ.P('nej.ut'),
         _p = NEJ.P('nej.ui'),
-        _proWindow,
-        _supWindow;
+        _seed_css,
+        _seed_html,
+        _pro,_sup;
     if (!!_p._$$Window) return;
-    // ui css text
-    var _seed_css = _e._$pushCSSText('\
-        .#<uispace>{position:absolute;z-index:1000;border:1px solid #aaa;background:#fff;}\
-        .#<uispace> .zbar{line-height:30px;background:#8098E7;border-bottom:1px solid #aaa;}\
-        .#<uispace> .zcnt{padding:10px 5px;}\
-        .#<uispace> .zttl{margin-right:20px;text-align:left;}\
-        .#<uispace> .zcls{position:absolute;top:5px;right:0;width:20px;height:20px;line-height:20px;cursor:pointer;}');
-    // ui html code
-    var _seed_html = _e._$addNodeTemplate('\
-        <div class="'+_seed_css+'">\
-          <div class="zbar"><div class="zttl">标题</div></div>\
-          <div class="zcnt"></div>\
-          <span class="zcls" title="关闭窗体">×</span>\
-        </div>');
     /**
      * 窗体控件<br />
      * 脚本举例
@@ -69,15 +56,15 @@ var f = function(){
      * 
      */
     _p._$$Window = NEJ.C();
-      _proWindow = _p._$$Window._$extend(_p._$$Layer);
-      _supWindow = _p._$$Window._$supro;
+    _pro = _p._$$Window._$extend(_p._$$Layer);
+    _sup = _p._$$Window._$supro;
     /**
      * 控件初始化
      * @protected
      * @method {__init}
      * @return {Void}
      */
-    _proWindow.__init = function(){
+    _pro.__init = function(){
         this.__mopt = {};
         this.__dopt = {onchange:this.__onDragging._$bind(this)};
         this.__supInit();
@@ -89,7 +76,7 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proWindow.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
         this.__setMask(_options.mask);
         this._$setAlign(_options.align);
@@ -104,7 +91,7 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proWindow.__destroy = function(){
+    _pro.__destroy = function(){
         this.__supDestroy();
         delete this.__align;
         delete this.__mclz;
@@ -123,7 +110,7 @@ var f = function(){
      * @method {__initXGui}
      * @return {Void}
      */
-    _proWindow.__initXGui = function(){
+    _pro.__initXGui = function(){
         this.__seed_css = _seed_css;
         this.__seed_html= _seed_html;
     };
@@ -133,7 +120,7 @@ var f = function(){
      * @method {__initNode}
      * @return {Void}
      */
-    _proWindow.__initNode = function(){
+    _pro.__initNode = function(){
         this.__supInitNode();
         // 0 - move bar
         // 1 - content box
@@ -155,7 +142,7 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    _proWindow.__onClose = function(_event){
+    _pro.__onClose = function(_event){
         _v._$stop(_event);
         this._$dispatchEvent('onclose');
         this._$hide();
@@ -167,7 +154,7 @@ var f = function(){
      * @param  {Event} 事件信息
      * @return {Void}
      */
-    _proWindow.__onDragStart = function(_event){
+    _pro.__onDragStart = function(_event){
         _v._$dispatchEvent(document,'click');
     };
     /**
@@ -177,7 +164,7 @@ var f = function(){
      * @param  {Object} 窗口位置信息
      * @return {Void}
      */
-    _proWindow.__onDragging = function(_event){
+    _pro.__onDragging = function(_event){
         if (!this.__mask) return;
         _e._$style(this.__mask,{
             top:_event.top+'px',
@@ -190,7 +177,7 @@ var f = function(){
      * @method {__doPositionAlign}
      * @return {Void}
      */
-    _proWindow.__doPositionAlign = (function(){
+    _pro.__doPositionAlign = (function(){
         var _func = [function(){return 0;},
                      function(_scroll,_delta,_key){
                          return Math.max(0,_scroll[_key]+_delta[_key]/2);
@@ -221,7 +208,7 @@ var f = function(){
      * @method {__doShowMask}
      * @return {Void}
      */
-    _proWindow.__doShowMask = function(){
+    _pro.__doShowMask = function(){
         if (!this.__imask){
             if (!this.__mclz) return;
             this.__mopt.parent = this.__parent;
@@ -236,10 +223,10 @@ var f = function(){
      * @method {__doHide}
      * @return {Void}
      */
-    _proWindow.__doHide = function(){
+    _pro.__doHide = function(){
         if (!!this.__imask)
             this.__imask._$hide();
-        _supWindow.__doHide.apply(this,arguments);
+        _sup.__doHide.apply(this,arguments);
     };
     /**
      * 设置盖层构造
@@ -248,7 +235,7 @@ var f = function(){
      * @param  {nej.ui._$$Mask|Boolean} 盖层构造
      * @return {Void}
      */
-    _proWindow.__setMask = function(_mask){
+    _pro.__setMask = function(_mask){
         if (!!_mask){
             if (_mask instanceof _p._$$Mask){
                 this.__imask = _mask;
@@ -275,9 +262,11 @@ var f = function(){
      * @param  {String} 标题
      * @return {nej.ui._$$Window}
      */
-    _proWindow._$setTitle = function(_title){
-        if (!this.__nttl) return this;
-        this.__nttl.innerText = _title||'标题';
+    _pro._$setTitle = function(_title,_html){
+        if (!!this.__nttl){
+            var _method = !_html?'innerText':'innerHTML';
+            this.__nttl[_method] = _title||'标题';
+        }
         return this;
     };
     /**
@@ -291,7 +280,7 @@ var f = function(){
      * @param  {String} 对齐方式
      * @return {nej.ui._$$Window}
      */
-    _proWindow._$setAlign = (function(){
+    _pro._$setAlign = (function(){
         var _reg = /\s+/,
             _halign = {left:0,center:1,right:2,auto:3},
             _valign = {top:0,middle:1,bottom:2,auto:3};
@@ -315,13 +304,31 @@ var f = function(){
      * @method {_$show}
      * @return {nej.ui._$$Window}
      */
-    _proWindow._$show = function(){
-        _supWindow._$show.apply(this,arguments);
+    _pro._$show = function(){
+        _sup._$show.apply(this,arguments);
         this.__doShowMask();
         return this;
     };
+    // ui css text
+    _seed_css = _e._$pushCSSText('\
+        .#<uispace>{position:absolute;z-index:1000;border:1px solid #aaa;background:#fff;}\
+        .#<uispace> .zbar{line-height:30px;background:#8098E7;border-bottom:1px solid #aaa;}\
+        .#<uispace> .zcnt{padding:10px 5px;}\
+        .#<uispace> .zttl{margin-right:20px;text-align:left;}\
+        .#<uispace> .zcls{position:absolute;top:5px;right:0;width:20px;height:20px;line-height:20px;cursor:pointer;}\
+    ');
+    // ui html code
+    _seed_html = _e._$addNodeTemplate('\
+        <div class="'+_seed_css+'">\
+          <div class="zbar"><div class="zttl">标题</div></div>\
+          <div class="zcnt"></div>\
+          <span class="zcls" title="关闭窗体">×</span>\
+        </div>\
+    ');
 };
-NEJ.define('{lib}ui/layer/window.js',
-      ['{lib}ui/layer/layer.js'
-      ,'{lib}ui/mask/mask.js'
-      ,'{lib}util/dragger/dragger.js'],f);
+NEJ.define(
+    '{lib}ui/layer/window.js',[
+    '{lib}ui/layer/layer.js',
+    '{lib}ui/mask/mask.js',
+    '{lib}util/dragger/dragger.js'
+],f);
