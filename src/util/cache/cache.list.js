@@ -158,8 +158,6 @@ var f = function(){
      * @protected
      * @method {__reset}
      * @param  {Object} 可选配置参数
-     * @config {String} 列表标识
-     * @config {Object} 列表关联数据
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -168,6 +166,20 @@ var f = function(){
         this.__data = _options.data||_o;
         this.__auto = !!_options.autogc;
         this.__doSwapCache(_options.id);
+    };
+    /**
+     * 控件销毁
+     * @protected
+     * @method {__reset}
+     * @param  {Object} 可选配置参数
+     * @return {Void}
+     */
+    _pro.__destroy = function(){
+        this.__supDestroy();
+        // check gc schedule
+        if (!!this.__timer){
+            this.__doGCAction();
+        }
     };
     /**
      * 切换缓存
@@ -193,40 +205,45 @@ var f = function(){
         this.__lspl = _cache;
     };
     /**
+     * 执行GC行为
+     * @return {Void}
+     */
+    _pro.__doGCAction = function(){
+        this.__timer = window.clearTimeout(this.__timer);
+        // dump id map for used items
+        var _map = {};
+        _u._$forIn(
+            this.__lspl,function(_list,_key){
+                if (_key=='hash') return;
+                if (!_u._$isArray(_list)) return;
+                _u._$forEach(_list,function(_item){
+                    if (!_item) return;
+                    _map[_item[this.__key]] = !0;
+                },this);
+            },this
+        );
+        // check used in hash
+        _u._$forIn(
+            this.__getHash(),
+            function(_item,_id,_hash){
+                if (!_map[_id]){
+                    delete _hash[_id];
+                }
+            }
+        );
+    };
+    /**
      * 调度执行GC操作，删除不用的数据对象
      * @return {Void}
      */
-    _pro.__doScheduleGC = (function(){
-        var _doGC = function(){
-            // dump id map for used items
-            var _map = {};
-            _u._$forIn(
-                this.__lspl,function(_list,_key){
-                    if (_key=='hash') return;
-                    if (!_u._$isArray(_list)) return;
-                    _u._$forEach(_list,function(_item){
-                        if (!_item) return;
-                        _map[_item[this.__key]] = !0;
-                    },this);
-                },this
-            );
-            // check used in hash
-            _u._$forIn(
-                this.__getHash(),
-                function(_item,_id,_hash){
-                    if (!_map[_id]){
-                        delete _hash[_id];
-                    }
-                }
-            );
-        };
-        return function(){
-            if (!!this.__timer){
-                this.__timer = window.clearTimeout(this.__timer);
-            }
-            this.__timer = window.setTimeout(_doGC._$bind(this),150);
-        };
-    })();
+    _pro.__doGCSchedule = function(){
+        if (!!this.__timer){
+            this.__timer = window.clearTimeout(this.__timer);
+        }
+        this.__timer = window.setTimeout(
+            this.__doGCAction._$bind(this),150
+        );
+    };
     /**
      * 缓存列表项
      * @protected
@@ -565,7 +582,7 @@ var f = function(){
             _u._$reverseEach(_list,_doClear);
             this._$setLoaded(_key,!1);
             if (this.__auto){
-                this.__doScheduleGC();
+                this.__doGCSchedule();
             }
             return this;
         };
