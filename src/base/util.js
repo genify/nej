@@ -886,6 +886,33 @@ var f = function(){
         return _result;
     };
     /**
+     * 格式化数字为指定位数<br/>
+     * 
+     * 脚本举例
+     * [code]
+     *   var _u = NEJ.P(‘nej.u’);
+     *   // 2    -> 002
+     *   // 22   -> 022
+     *   // 222  -> 222
+     *   // 2222 -> 2222
+     *   var _str = _u._$number2string(2,3);
+     * [/code]
+     * 
+     * @api    {nej.u._$number2string}
+     * @param  {Number} 数值
+     * @param  {Number} 位数，至少1位
+     * @return {String} 格式化后字符串
+     */
+    _u._$number2string = function(_number,_limit){
+        var _len1 = (''+_number).length,
+            _len2 = Math.max(1,parseInt(_limit)||0),
+            _delta = _len2-_len1;
+        if (_delta>0){
+            _number = new Array(_delta+1).join('0')+_number;
+        }
+        return ''+_number;
+    };
+    /**
      * 安全删除属性<br/>
      * @api    {nej.u._$safeDelete}
      * @param  {Object}        对象

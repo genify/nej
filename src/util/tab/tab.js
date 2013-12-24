@@ -13,7 +13,7 @@ var f = function(){
         _v = _('nej.v'),
         _x = _('nej.x'),
         _p = _('nej.ut'),
-        _proTab;
+        _pro;
     if (!!_p._$$Tab) return;
     /**
      * 标签切换控件封装<br />
@@ -62,7 +62,7 @@ var f = function(){
      * 
      */
     _p._$$Tab = NEJ.C();
-      _proTab = _p._$$Tab._$extend(_p._$$Event);
+    _pro = _p._$$Tab._$extend(_p._$$Event);
     /**
      * 控件重置
      * @protected
@@ -70,7 +70,7 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proTab.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
         this.__name = _options.event||'click';
         this.__selected = _options.selected||'js-selected';
@@ -85,7 +85,7 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proTab.__destroy = (function(){
+    _pro.__destroy = (function(){
         var _doResetSelect = function(_node){
             this.__doTabItemSelect(_node,!1);
         };
@@ -108,7 +108,7 @@ var f = function(){
      * @param  {Array} 标签列表
      * @return {Void}
      */
-    _proTab.__doTabListCheck = (function(){
+    _pro.__doTabListCheck = (function(){
         var _doInitDomEvent = function(_item){
             if (!_item) return;
             this.__list.push(_item);
@@ -134,7 +134,7 @@ var f = function(){
      * @param  {Boolean} 是否选中
      * @return {Void}
      */
-    _proTab.__doTabItemSelect = function(_element,_selected){
+    _pro.__doTabItemSelect = function(_element,_selected){
         !!_selected&&!this.__inversed
         ? _e._$addClassName(_element,this.__selected)
         : _e._$delClassName(_element,this.__selected);
@@ -153,7 +153,7 @@ var f = function(){
      * @param  {Boolean} 是否强行回调
      * @return {nej.ut._$$Tab}
      */
-    _proTab._$go = function(_index,_force){
+    _pro._$go = function(_index,_force){
         var _element = this.__list[_index];
         if (_force!=!0&&(_index==this.__index||!_element||
             _e._$hasClassName(_element,this.__disabled))){
@@ -186,7 +186,7 @@ var f = function(){
      * @method {_$getIndex}
      * @return {Number} 当前选中项索引
      */
-    _proTab._$getIndex = function(){
+    _pro._$getIndex = function(){
         return this.__index;
     };
     /**
@@ -199,7 +199,7 @@ var f = function(){
      * @method {_$getList}
      * @return {Array} 关联的节点列表
      */
-    _proTab._$getList = function(){
+    _pro._$getList = function(){
         return this.__list;
     };
     /**
@@ -234,7 +234,9 @@ var f = function(){
     };
     _x.isChange = !0;
 };
-NEJ.define('{lib}util/tab/tab.js',
-          ['{lib}base/event.js'
-          ,'{lib}base/element.js'
-          ,'{lib}util/event.js'],f);
+NEJ.define(
+    '{lib}util/tab/tab.js',[
+    '{lib}base/event.js',
+    '{lib}base/element.js',
+    '{lib}util/event.js'
+],f);
