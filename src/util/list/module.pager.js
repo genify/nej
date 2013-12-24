@@ -273,5 +273,7 @@ var f = function(){
         }
     };
 };
-NEJ.define('{lib}util/list/module.pager.js',
-          ['{lib}util/list/module.js'],f);
+NEJ.define(
+    '{lib}util/list/module.pager.js',[
+    '{lib}util/list/module.js'
+],f);

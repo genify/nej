@@ -14,7 +14,7 @@ var f = function(){
         _u = _('nej.u'),
         _t = _('nej.ut'),
         _p = _('nej.ui'),
-        _proAbstract;
+        _pro;
     if (!!_p._$$Abstract) return;
     /**
      * UI控件基类，框架及项目中所有涉及UI的控件均继承此类
@@ -36,14 +36,14 @@ var f = function(){
      * @param {String|Node|Function} 控件所在容器节点或者追加控件节点执行函数
      */
     _p._$$Abstract = NEJ.C();
-      _proAbstract = _p._$$Abstract._$extend(_t._$$Event);
+    _pro = _p._$$Abstract._$extend(_t._$$Event);
     /**
      * 初始化
      * @protected
      * @method {__init}
      * @return {Void}
      */
-    _proAbstract.__init = function(){
+    _pro.__init = function(){
         this.__supInit();
         _e._$dumpCSSText();
         this.__initXGui();
@@ -56,7 +56,7 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proAbstract.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
         this.__doInitClass(_options.clazz);
         this._$appendTo(_options.parent);
@@ -67,7 +67,7 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proAbstract.__destroy = function(){
+    _pro.__destroy = function(){
         this.__supDestroy();
         // clear parent
         this.__doDelParentClass();
@@ -84,14 +84,14 @@ var f = function(){
      * @method {__initXGui}
      * @return {Void}
      */
-    _proAbstract.__initXGui = _f;
+    _pro.__initXGui = _f;
     /**
      * 初始化节点，子类重写具体逻辑
      * @protected
      * @method {__initNode}
      * @return {Void}
      */
-    _proAbstract.__initNode = function(){
+    _pro.__initNode = function(){
         if (!this.__seed_html)
              this.__initNodeTemplate();
         this.__body = _e._$getNodeTemplate(this.__seed_html);
@@ -105,7 +105,7 @@ var f = function(){
      * @method {__initNodeTemplate}
      * @return {Void}
      */
-    _proAbstract.__initNodeTemplate = _f;
+    _pro.__initNodeTemplate = _f;
     /**
      * 添加节点样式
      * @protected
@@ -113,7 +113,7 @@ var f = function(){
      * @param  {String} 样式名称
      * @return {Void}
      */
-    _proAbstract.__doInitClass = function(_clazz){
+    _pro.__doInitClass = function(_clazz){
         this.__class = _clazz||'';
         _e._$addClassName(this.__body,this.__class);
     };
@@ -123,7 +123,7 @@ var f = function(){
      * @method {__doAddParentClass}
      * @return {Void}
      */
-    _proAbstract.__doAddParentClass = function(){
+    _pro.__doAddParentClass = function(){
         if (!this.__seed_css) return;
         _e._$addClassName(this.__parent,
                           this.__seed_css+'-parent');
@@ -134,7 +134,7 @@ var f = function(){
      * @method {__doDelParentClass}
      * @return {Void}
      */
-    _proAbstract.__doDelParentClass = function(){
+    _pro.__doDelParentClass = function(){
         if (!this.__seed_css) return;
         _e._$delClassName(this.__parent,
                           this.__seed_css+'-parent');
@@ -150,7 +150,7 @@ var f = function(){
      * @method {_$getBody}
      * @return {Node} 控件节点
      */
-    _proAbstract._$getBody = function(){
+    _pro._$getBody = function(){
         return this.__body;
     };
     /**
@@ -171,7 +171,7 @@ var f = function(){
      * @param  {String|Node|Function} _parent 控件所在容器节点
      * @return {nej.ui._$$Abstract}
      */
-    _proAbstract._$appendTo = function(_parent){
+    _pro._$appendTo = function(_parent){
         if (!this.__body) return this;
         this.__doDelParentClass();
         if (_u._$isFunction(_parent)){
@@ -194,7 +194,7 @@ var f = function(){
      * @method {_$show}
      * @return {nej.ui._$Absttact}
      */
-    _proAbstract._$show = function(){
+    _pro._$show = function(){
         if (!this.__parent||!this.__body||
              this.__body.parentNode==this.__parent)
             return this;
@@ -211,12 +211,14 @@ var f = function(){
      * @method {_$hide}
      * @return {nej.ui._$$Abstract}
      */
-    _proAbstract._$hide = function(){
+    _pro._$hide = function(){
         _e._$removeByEC(this.__body);
         return this;
     };
 };
-NEJ.define('{lib}ui/base.js',
-          ['{lib}base/element.js'
-          ,'{lib}util/event.js'
-          ,'{lib}util/template/tpl.js'],f);
+NEJ.define(
+    '{lib}ui/base.js',[
+    '{lib}base/element.js',
+    '{lib}util/event.js',
+    '{lib}util/template/tpl.js'
+],f);

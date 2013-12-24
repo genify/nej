@@ -121,5 +121,7 @@ var f = function(){
         this.__doSyncBtnState();
     };
 };
-NEJ.define('{lib}util/page/page.simple.js',
-          ['{lib}util/page/page.base.js'],f);
+NEJ.define(
+    '{lib}util/page/page.simple.js',[
+    '{lib}util/page/page.base.js'
+],f);
