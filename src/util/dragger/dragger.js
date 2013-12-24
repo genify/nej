@@ -11,7 +11,7 @@ var f = function(){
         _e = _('nej.e'),
         _v = _('nej.v'),
         _p = _('nej.ut'),
-        _proDragger;
+        _pro;
     if (!!_p._$$Dragger) return;
     /**
      * 区域移动功能封装<br />
@@ -44,22 +44,22 @@ var f = function(){
      * @config  {Number}         direction 移动方向，默认为0，0-水平+垂直、1-水平、2-垂直
      * 
      * [hr]
-     * 
-     * @event  {onchange}    位置变化触发事件
+     * 位置变化触发事件
+     * @event  {onchange}    
      * @param  {Object}      位置信息
      * @config {Number} top  离父节点顶部距离
      * @config {Number} left 离父节点左边距离
      * 
      * [hr]
-     * 
-     * @event  {ondragend}   拖拽结束触发事件
+     * 拖拽结束触发事件
+     * @event  {ondragend}   
      * @param  {Object}      位置信息
      * @config {Number} top  离父节点顶部距离
      * @config {Number} left 离父节点左边距离
      *                            
      */
     _p._$$Dragger = NEJ.C();
-    _proDragger = _p._$$Dragger._$extend(_p._$$Event);
+    _pro = _p._$$Dragger._$extend(_p._$$Event);
     /**
      * 控件重置
      * @protected
@@ -67,7 +67,7 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proDragger.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
         this.__overflow = !!_options.overflow;
         this.__body = _e._$get(_options.body);
@@ -75,11 +75,16 @@ var f = function(){
                       _e._$getScrollViewPort(this.__body);
         this.__mbar = _e._$get(_options.mbar)||this.__body;
         this.__direction = parseInt(_options.direction)||0;
-        this.__doInitDomEvent([
-            [document,'mouseup',this.__onDragEnd._$bind(this)]
-           ,[document,'mousemove',this.__onDragging._$bind(this)]
-           ,[this.__mbar,'mousedown',this.__onDragStart._$bind(this)]
-        ]);
+        this.__doInitDomEvent([[
+            document,'mouseup',
+            this.__onDragEnd._$bind(this)
+        ],[
+            document,'mousemove',
+            this.__onDragging._$bind(this)
+        ],[
+            this.__mbar,'mousedown',
+            this.__onDragStart._$bind(this)
+        ]]);
     };
     /**
      * 控件销毁
@@ -87,7 +92,7 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proDragger.__destroy = function(){
+    _pro.__destroy = function(){
         this.__supDestroy();
         delete this.__body;
         delete this.__mbar;
@@ -99,7 +104,7 @@ var f = function(){
      * @method {__getMaxRange}
      * @return {Object} 范围值
      */
-    _proDragger.__getMaxRange = function(){
+    _pro.__getMaxRange = function(){
         return {
             x:Math.max(this.__view.clientWidth,
                        this.__view.scrollWidth)-
@@ -116,7 +121,7 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    _proDragger.__onDragStart = function(_event){
+    _pro.__onDragStart = function(_event){
         _v._$stop(_event);
         if (!!this.__offset) return;
         this.__offset = {
@@ -132,7 +137,7 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    _proDragger.__onDragging = function(_event){
+    _pro.__onDragging = function(_event){
         if (!this.__offset) return;
         var _offset = {
             x:_v._$pageX(_event),
@@ -154,7 +159,7 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    _proDragger.__onDragEnd = function(_event){
+    _pro.__onDragEnd = function(_event){
         if (!this.__offset) return;
         delete this.__maxbox;
         delete this.__offset;
@@ -171,7 +176,7 @@ var f = function(){
      * @param  {Object} 位置信息
      * @return {nej.ut._$$Dragger}
      */
-    _proDragger._$setPosition = function(_event){
+    _pro._$setPosition = function(_event){
         if (!this.__overflow){
             var _maxbox = this.__maxbox||
                           this.__getMaxRange();
@@ -199,12 +204,14 @@ var f = function(){
      * @method {_$getPosition}
      * @return {Object} 当前位置，{x:100,y:100}
      */
-    _proDragger._$getPosition = function(){
+    _pro._$getPosition = function(){
         return {
             left:parseInt(_e._$getStyle(this.__body,'left'))||0,
             top:parseInt(_e._$getStyle(this.__body,'top'))||0
         };
     };
 };
-NEJ.define('{lib}util/dragger/dragger.js',
-      ['{lib}util/event.js'],f);
+NEJ.define(
+    '{lib}util/dragger/dragger.js',[
+    '{lib}util/event.js'
+],f);

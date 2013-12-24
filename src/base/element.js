@@ -239,6 +239,118 @@ var f = function(){
             return _result;
         };
     })();
+    /**
+     * 按比例计算最大值<br/>
+     * 
+     * 脚本举例
+     * [code]
+     *   var _e = NEJ.P("nej.e");
+     *   // 返回 {width:100,height:5}
+     *   var _max = _e._$getMaxBox(
+     *       {width:100,height:10},
+     *       {width:200,height:10}
+     *   );
+     *   // 返回 {width:50,height:10}
+     *   var _max = _e._$getMaxBox(
+     *       {width:100,height:10},
+     *       {width:100,height:20}
+     *   );
+     * [/code]
+     * 
+     * @api    {nej.e._$getMaxBox}
+     * @param  {Object} 最大限制
+     * @config {Number} width  宽度
+     * @config {Number} height 高度
+     * @param  {Object} 原始大小
+     * @config {Number} width  宽度
+     * @config {Number} height 高度
+     * @return {Object} 按比例计算出的最大值信息
+     * @config {Number} width  宽度
+     * @config {Number} height 高度
+     */
+    _e._$getMaxBox = function(_max,_org){
+        var _result = NEJ.X({},_org),
+            _mrto = _max.width/_max.height,
+            _orto = _org.width/_org.height;
+        // height overflow
+        if (_mrto>_orto&&
+            _org.height>_max.height){
+            _result.height = _max.height;
+            _result.width = _result.height*_orto;
+        }
+        // width overflow
+        if (_mrto<_orto&&
+            _org.width>_max.width){
+            _result.width = _max.width;
+            _result.height = _result.width/_orto;
+        }
+        return _result;
+    };
+    /**
+     * 计算在容器中对齐时的位置信息<br/>
+     * 
+     * 脚本举例
+     * [code]
+     *   var _e = NEJ.P("nej.e");
+     *   // 返回 {top:15,left:40}
+     *   var _pos = _e._$align(
+     *       {width:100,height:40},
+     *       {width:20,height:10}
+     *   );
+     *   // 返回 {top:30,left:0}
+     *   var _pos = _e._$align(
+     *       {width:100,height:40},
+     *       {width:20,height:10},
+     *       'left bottom'
+     *   );
+     * [/code]
+     * 
+     * @api    {nej.e._$align}
+     * @param  {Object} 容器信息
+     * @config {Number} width  宽度
+     * @config {Number} height 高度
+     * @param  {Object} 原始大小
+     * @config {Number} width  宽度
+     * @config {Number} height 高度
+     * @param  {String} 对齐方式，水平+空格+垂直，如left top，默认为 center middle
+     *                  水平：left/center/right，
+     *                  垂直：top/middle/bottom
+     * @return {Object} 位置信息
+     * @config {Number} top  垂直位置
+     * @config {Number} left 水平位置
+     */
+    _e._$align = (function(){
+        var _reg = /\s+/;
+        var _fmap = {
+            left:function(){
+                return 0;
+            },
+            center:function(_box,_org){
+                return (_box.width-_org.width)/2;
+            },
+            right:function(_box,_org){
+                return _box.width-_org.width;
+            },
+            top:function(){
+                return 0;
+            },
+            middle:function(_box,_org){
+                return (_box.height-_org.height)/2;
+            },
+            bottom:function(_box,_org){
+                return _box.height-_org.height;
+            }
+        };
+        return function(_box,_org,_align){
+            var _result = {},
+                _arr = _align.split(_reg),
+                _top = _fmap[_arr[1]]||_fmap.middle,
+                _left = _fmap[_arr[0]]||_fmap.center;
+            _result.top = _top(_box,_org);
+            _result.left = _left(_box,_org);
+            return _result;
+        };
+    })();
     // /**
      // * 根据选择器取节点列表，IE8以下暂时不支持<br/>
      // * 
