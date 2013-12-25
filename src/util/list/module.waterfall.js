@@ -247,6 +247,22 @@ var f = function(){
         this._$resize();
     };
     /**
+     * 列表变化回调（删除/添加），子类按需实现具体业务逻辑
+     * @protected
+     * @method {__cbListChange}
+     * @return {Void}
+     */
+    _pro.__cbListChange = function(_event){
+        if (_event.key!=this.__ropt.key) return;
+        switch(_event.action){
+            case 'refresh':
+            case 'append':
+                delete this.__nexting;
+            break;
+        }
+        _sup.__cbListChange.apply(this,arguments);
+    };
+    /**
      * 加载数据之前处理逻辑，显示数据加载中信息
      * @protected
      * @method {__doBeforeListLoad}
