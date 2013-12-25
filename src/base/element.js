@@ -353,7 +353,7 @@ var f = function(){
         };
         return function(_box,_org,_align){
             var _result = {},
-                _arr = _align.split(_reg),
+                _arr = (_align||'').split(_reg),
                 _top = _fmap[_arr[1]]||_fmap.middle,
                 _left = _fmap[_arr[0]]||_fmap.center;
             _result.top = _top(_box,_org);
