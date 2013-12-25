@@ -20,10 +20,10 @@ var f = function(){
      * @class   {nej.ut._$$EditorArea} 富媒体编辑器输入区封装
      * @extends {nej.ut._$$Event}
      * @param   {Object} _options 可选配置参数，已处理参数列表如下
-     * @config  {Node|String|Function} parent     父节点或者编辑器加入父节点执行函数
-     * @config  {String}                style      编辑器初始样式
-     * @config  {Boolean}                focus     是否自动聚焦
-     * @config  {String}                content     文本内容
+     * @config  {Node|String|Function} parent  父节点或者编辑器加入父节点执行函数
+     * @config  {String}               style   编辑器初始样式
+     * @config  {Boolean}              focus   是否自动聚焦
+     * @config  {String}               content 文本内容
      * 
      * [hr]
      * 
@@ -38,8 +38,10 @@ var f = function(){
      * @return {Void}
      */
     _proEditorArea.__init = function(){
-        this.__fopt = {visible:!0
-                      ,onload:this.__onIFrameLoaded._$bind(this)};
+        this.__fopt = {
+            visible:!0,
+            onload:this.__onIFrameLoaded._$bind(this)
+        };
         this.__supInit();
     };
     /**
@@ -50,12 +52,13 @@ var f = function(){
      * @return {Void}
      */
     _proEditorArea.__reset = (function(){
-        var _cnttpl = '<head><style>html,body{height:100%;width:100%;margin:0;padding:0;border:0;overflow:auto;cursor:text;font-size:14px;font-family:Arial;word-wrap:break-word;}#<UDCS></style></head><body contenteditable="true"></body>';
+        var _cnttpl = '<head><base href="#<BSUL>"/><style>html,body{height:100%;width:100%;margin:0;padding:0;border:0;overflow:auto;cursor:text;font-size:14px;font-family:Arial;word-wrap:break-word;}#<UDCS></style></head><body contenteditable="true"></body>';
         return function(_options){
             this.__supReset(_options);
             this.__focus = !!_options.focus;
-            this.__content = _cnttpl.replace(
-                            '#<UDCS>',_options.style||'');
+            this.__content = _cnttpl
+                .replace('#<UDCS>',_options.style||'')
+                .replace('#<BSUL>',_options.base||location.href);
             this.__initcnt = _options.content||'';
             this.__fopt.parent = _e._$get(
                   _options.parent)||document.body;
