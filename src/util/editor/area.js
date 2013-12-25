@@ -52,7 +52,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__reset = (function(){
-        var _cnttpl = '<head><base href="#<BSUL>"/><style>html,body{height:100%;width:100%;margin:0;padding:0;border:0;overflow:auto;cursor:text;font-size:14px;font-family:Arial;word-wrap:break-word;}#<UDCS></style></head><body contenteditable="true"></body>';
+        var _cnttpl = '<head><base href="#<BSUL>"/><style>html,body{margin:0;padding:0;border:0;cursor:text;font-size:14px;font-family:Arial;word-wrap:break-word;}#<UDCS></style></head><body contenteditable="true"></body>';
         return function(_options){
             this.__supReset(_options);
             this.__focus = !!_options.focus;
