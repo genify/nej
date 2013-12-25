@@ -86,12 +86,12 @@ var f = function(){
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
         this.__bopt = NEJ.X({},_options);
         this.__popt = NEJ.X({},_options);
         delete this.__bopt.onchange;
         this.__popt.onchange = 
             this.__onChange._$bind(this);
+        this.__supReset(_options);
         this.__doResetNumber({
             number:_options.number,
             label:_options.label||_o
