@@ -77,19 +77,7 @@ var f = function(){
      * 
      */
     _p._$$AbstractPager = NEJ.C();
-      _pro = _p._$$AbstractPager._$extend(_p._$$Abstract);
-    /**
-     * 初始化
-     * @protected
-     * @method {__init}
-     * @return {Void}
-     */
-    _pro.__init = function(){
-        this.__popt = {
-            onchange:this.__onChange._$bind(this)
-        };
-        this.__supInit();
-    };
+    _pro = _p._$$AbstractPager._$extend(_p._$$Abstract);
     /**
      * 控件重置
      * @protected
@@ -100,9 +88,10 @@ var f = function(){
     _pro.__reset = function(_options){
         this.__supReset(_options);
         this.__bopt = NEJ.X({},_options);
+        this.__popt = NEJ.X({},_options);
         delete this.__bopt.onchange;
-        this.__popt.total = _options.total;
-        this.__popt.index = _options.index;
+        this.__popt.onchange = 
+            this.__onChange._$bind(this);
         this.__doResetNumber({
             number:_options.number,
             label:_options.label||_o
@@ -116,13 +105,13 @@ var f = function(){
      */
     _pro.__destroy = function(){
         this.__supDestroy();
-        this.__page._$recycle();
+        if (!!this.__page){
+            this.__page._$recycle();
+            delete this.__page;
+        }
         delete this.__bopt;
-        delete this.__page;
+        delete this.__popt;
         this._$unbind();
-        delete this.__popt.list;
-        delete this.__popt.pbtn;
-        delete this.__popt.nbtn;
         this.__body.innerHTML = '&nbsp;';
     };
     /**
