@@ -299,41 +299,12 @@ var f = function(){
      *  clientHeight  | 页面可视高度
      *  scrollWidth   | 页面滚动宽度
      *  scrollHeight  | 页面滚动高度
-     *  contentWidth  | 内容实际宽度
-     *  contentHeight | 内容实际高度
      * [/ntb]
      */
-    _pro._$getAreaBox = (function(){
-        var _div;
-        var _doCalContentBox = function(_content){
-            if (!_div){
-                _div = _e._$create('div');
-                _e._$style(_div,{
-                    position:'absolute',
-                    width:'1px',
-                    height:'1px',
-                    overflow:'hidden',
-                    visibility:'hidden'
-                });
-                document.body.appendChild(_div);
-            }
-            _div.innerHTML = _content;
-            return {
-                contentWidth:_div.scrollWidth,
-                contentHeight:_div.scrollHeight
-            };
-        };
-        return function(){
-            var _document = this._$getDocument();
-            if (!_document) return null;
-            var _result = _e._$getPageBox(_document);
-            NEJ.X(_result,_doCalContentBox(
-                _document.body.innerHTML
-            ));
-            console.log(_result.contentHeight);
-            return _result;
-        };
-    })();
+    _pro._$getAreaBox = function(){
+        var _document = this._$getDocument();
+        return !_document?null:_e._$getPageBox(_document);
+    };
 };
 NEJ.define(
     '{lib}util/editor/area.js',[
