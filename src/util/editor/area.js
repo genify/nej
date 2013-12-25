@@ -13,7 +13,7 @@ var f = function(){
         _u = _('nej.u'),
         _h = _('nej.h'),
         _p = _('nej.ut'),
-        _proEditorArea;
+        _pro;
     if (!!_p._$$EditorArea) return;
     /**
      * 富媒体编辑器输入区封装
@@ -30,14 +30,14 @@ var f = function(){
      * @event  {onselectionchange}
      */
     _p._$$EditorArea = NEJ.C();
-      _proEditorArea = _p._$$EditorArea._$extend(_p._$$Event);
+    _pro = _p._$$EditorArea._$extend(_p._$$Event);
     /**
      * 控件初始化
      * @protected
      * @method {__init}
      * @return {Void}
      */
-    _proEditorArea.__init = function(){
+    _pro.__init = function(){
         this.__fopt = {
             visible:!0,
             onload:this.__onIFrameLoaded._$bind(this)
@@ -51,7 +51,7 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proEditorArea.__reset = (function(){
+    _pro.__reset = (function(){
         var _cnttpl = '<head><base href="#<BSUL>"/><style>html,body{height:100%;width:100%;margin:0;padding:0;border:0;overflow:auto;cursor:text;font-size:14px;font-family:Arial;word-wrap:break-word;}#<UDCS></style></head><body contenteditable="true"></body>';
         return function(_options){
             this.__supReset(_options);
@@ -71,7 +71,7 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proEditorArea.__destroy = function(){
+    _pro.__destroy = function(){
         this.__supDestroy();
         _h.__clearRange(this._$getDocument());
         delete this.__content;
@@ -86,7 +86,7 @@ var f = function(){
      * @method {__doSaveRange}
      * @return {Void}
      */
-    _proEditorArea.__doSaveRange = function(){
+    _pro.__doSaveRange = function(){
         _h.__saveRange(this._$getDocument());
     };
     /**
@@ -95,7 +95,7 @@ var f = function(){
      * @method {__onIFrameLoaded}
      * @return {Void}
      */
-    _proEditorArea.__onIFrameLoaded = function(_iframe){
+    _pro.__onIFrameLoaded = function(_iframe){
         var _document = this._$getDocument();
         _document.open();
         _document.write(this.__content);
@@ -126,7 +126,7 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    _proEditorArea.__onDocumentClick = function(_event){
+    _pro.__onDocumentClick = function(_event){
         _v._$dispatchEvent(document,'click');
     };
     /**
@@ -135,7 +135,7 @@ var f = function(){
      * @method {__onSelectionChange}
      * @return {Void}
      */
-    _proEditorArea.__onSelectionChange = function(){
+    _pro.__onSelectionChange = function(){
         // TODO something
         this._$dispatchEvent('onselectionchange');
     };
@@ -143,7 +143,7 @@ var f = function(){
      * 输入事件
      * @return {[type]} [description]
      */
-    _proEditorArea.__onDocumentEvent = function(_event){
+    _pro.__onDocumentEvent = function(_event){
         this.__type = _event.type;
         setTimeout(this.__doCompareContent._$bind(this),50);
     };
@@ -151,7 +151,7 @@ var f = function(){
      * 比较富文本的内容
      * @return {[type]} [description]
      */
-    _proEditorArea.__doCompareContent = function(){
+    _pro.__doCompareContent = function(){
         if(this.__initcnt === this._$getContent()){
             return !1;
         }else{
@@ -165,7 +165,7 @@ var f = function(){
      * @param  {Number} 光标位置，默认为0，0-末尾、1-起始、2-不变
      * @return {nej.ut._$$EditorArea}
      */
-    _proEditorArea._$focus = function(_cursor){
+    _pro._$focus = function(_cursor){
         var _document = this._$getDocument();
         if (!_document) return this;
         _h.__focusRange(_document.body);
@@ -179,7 +179,7 @@ var f = function(){
      * @method {_$getDocument}
      * @return {Node} 文档对象
      */
-    _proEditorArea._$getDocument = function(){
+    _pro._$getDocument = function(){
         return this.__iframe.contentWindow.document;
     };
     /**
@@ -187,7 +187,7 @@ var f = function(){
      * @method {_$getContent}
      * @return {String} 内容
      */
-    _proEditorArea._$getContent = function(_filter){
+    _pro._$getContent = function(_filter){
         var _document = this._$getDocument();
         _html = _h.__filterContent(!_document?'':_document.body.innerHTML);
         if(!_filter){
@@ -200,7 +200,7 @@ var f = function(){
      * @method {_$getTextContent}
      * @return {String} 内容
      */
-    _proEditorArea._$getTextContent = function(){
+    _pro._$getTextContent = function(){
         var _document = this._$getDocument();
         return !_document?'':_document.body.innerText||_document.body.textContent;
     };
@@ -210,7 +210,7 @@ var f = function(){
      * @param  {String} 编辑内容
      * @return {nej.ut._$$EditorArea}
      */
-    _proEditorArea._$setContent = function(_content){
+    _pro._$setContent = function(_content){
         var _document = this._$getDocument();
         if (!_document) return this;
         _document.body.innerHTML = _content;
@@ -224,7 +224,7 @@ var f = function(){
      * @param  {String} 是否通过style的方式来改变样式，比如superscript命令
      * @return {nej.ut._$$EditorArea}
      */
-    _proEditorArea._$execCommand = function(_command,_value,_css){
+    _pro._$execCommand = function(_command,_value,_css){
         var _document = this._$getDocument();
         if (!_document) return this;
         _h.__execCommand(_document,'styleWithCSS',false);
@@ -239,7 +239,7 @@ var f = function(){
      * @param  {String}   查询类型，State/Enabled/Value
      * @return {Variable} 查询结果
      */
-    _proEditorArea._$queryCommand = function(_command,_type){
+    _pro._$queryCommand = function(_command,_type){
         var _document = this._$getDocument();
         return !_document ? null
                :_document['queryCommand'+_type](_command);
@@ -249,7 +249,7 @@ var f = function(){
      * @method {_$getSelectText}
      * @return {String} 文本内容
      */
-    _proEditorArea._$getSelectText = function(){
+    _pro._$getSelectText = function(){
         this._$focus(2);
         return _h.__getSelectText(this._$getDocument());
     };
@@ -258,11 +258,29 @@ var f = function(){
      * @method {_$getSelectHtml}
      * @return  {String} HTML代码
      */
-    _proEditorArea._$getSelectHtml = function(){
+    _pro._$getSelectHtml = function(){
         this._$focus(2);
         return _h.__getSelectHtml(this._$getDocument());
     };
+    /**
+     * 取编辑区域容器位置大小信息
+     * @return {Object} 位置大小信息
+     * [ntb]
+     *  scrollTop    | 滚动垂直偏移
+     *  scrollLeft   | 滚动水平偏移
+     *  clientWidth  | 页面可视宽度
+     *  clientHeight | 页面可视高度
+     *  scrollWidth  | 页面滚动宽度
+     *  scrollHeight | 页面滚动高度
+     * [/ntb]
+     */
+    _pro._$getAreaBox = function(){
+        var _document = this._$getDocument();
+        return !_document?null:_e._$getPageBox(_document);
+    };
 };
-NEJ.define('{lib}util/editor/area.js',
-      ['{lib}util/event.js'
-      ,'{patch}editor.js'],f);
+NEJ.define(
+    '{lib}util/editor/area.js',[
+    '{lib}util/event.js',
+    '{patch}editor.js'
+],f);

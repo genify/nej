@@ -220,22 +220,32 @@ var f = function(){
             );
             return _result;
         };
-        return function(){
-            var _body0 = document.body,
-                _body1 = document.documentElement,
+        return function(_document){
+            var _doc = _document||document,
+                _body0 = _doc.body,
+                _body1 = _doc.documentElement,
                 _result = {
-                    scrollTop:Math.max(_body0.scrollTop,_body1.scrollTop)
-                   ,scrollLeft:Math.max(_body0.scrollLeft,_body1.scrollLeft)
-                   ,clientWidth:_getClientBox([
-                                _body0.clientWidth,_body0.offsetWidth,
-                                _body1.clientWidth,_body1.offsetWidth])
-                   ,clientHeight:_getClientBox([
-                                 _body0.clientHeight,_body0.offsetHeight,
-                                 _body1.clientHeight,_body1.offsetHeight])};
-            _result.scrollWidth  = Math.max(_result.clientWidth,
-                                            _body0.scrollWidth,_body1.scrollWidth);
-            _result.scrollHeight = Math.max(_result.clientHeight,
-                                            _body0.scrollHeight,_body1.scrollHeight);
+                    scrollTop:Math.max(_body0.scrollTop,_body1.scrollTop),
+                    scrollLeft:Math.max(_body0.scrollLeft,_body1.scrollLeft),
+                    clientWidth:_getClientBox([
+                        _body0.clientWidth,_body0.offsetWidth,
+                        _body1.clientWidth,_body1.offsetWidth
+                    ]),
+                    clientHeight:_getClientBox([
+                        _body0.clientHeight,_body0.offsetHeight,
+                        _body1.clientHeight,_body1.offsetHeight
+                    ])
+                };
+            _result.scrollWidth  = Math.max(
+                _result.clientWidth,
+                _body0.scrollWidth,
+                _body1.scrollWidth
+            );
+            _result.scrollHeight = Math.max(
+                _result.clientHeight,
+                _body0.scrollHeight,
+                _body1.scrollHeight
+            );
             return _result;
         };
     })();
