@@ -60,8 +60,8 @@ var f = function(){
                 .replace('#<UDCS>',_options.style||'')
                 .replace('#<BSUL>',_options.base||location.href);
             this.__initcnt = _options.content||'';
-            this.__fopt.parent = _e._$get(
-                  _options.parent)||document.body;
+            this.__fopt.parent = 
+                _e._$get(_options.parent)||document.body;
             this.__iframe = _e._$createXFrame(this.__fopt);
         };
     })();
@@ -77,7 +77,6 @@ var f = function(){
         delete this.__content;
         delete this.__fopt.parent;
         delete this.__initcnt;
-        delete this.__type;
         this.__iframe = _e._$remove(this.__iframe);
     };
     /**
@@ -102,14 +101,28 @@ var f = function(){
         if (location.hostname!=document.domain)
             _document.domain = document.domain;
         _document.close(); // <- will trigger iframe onload
-        this.__doInitDomEvent([
-            [_document,'click',this.__onDocumentClick._$bind(this)]
-           ,[_document,'selectionchange',this.__onSelectionChange._$bind(this)]
-           ,[_document,'beforedeactivate',this.__doSaveRange._$bind(this)]
-           ,[_document,'keyup',this.__onDocumentEvent._$bind(this)]
-           ,[_document.body,'paste',this.__onDocumentEvent._$bind(this)]
-           ,[_document.body,'drop',this.__onDocumentEvent._$bind(this)]
-        ]);
+        this.__doInitDomEvent([[
+            _document,'click',
+            this.__onDocumentClick._$bind(this)
+        ],[
+            _document,'selectionchange',
+            this.__onSelectionChange._$bind(this)
+        ],[
+            _document,'beforedeactivate',
+            this.__doSaveRange._$bind(this)
+        ],[
+            _document,'keydown',
+            this.__onInputCheck._$bind(this)
+        ],[
+            _document,'mouseup',
+            this.__onInputCheck._$bind(this)
+        ],[
+            _document,'paste',
+            this.__onInputCheck._$bind(this)
+        ],[
+            _document,'drop',
+            this.__onInputCheck._$bind(this)
+        ]]);
         // init content and focus
         if (!!this.__initcnt){
             this._$setContent(this.__initcnt);
@@ -143,20 +156,28 @@ var f = function(){
      * 输入事件
      * @return {[type]} [description]
      */
-    _pro.__onDocumentEvent = function(_event){
-        this.__type = _event.type;
-        setTimeout(this.__doCompareContent._$bind(this),50);
+    _pro.__onInputCheck = function(){
+        if (!!this.__timer){
+            window.clearTimeout(this.__timer);
+        }
+        this.__timer = window.setTimeout(
+            this.__doCompareContent._$bind(this),100
+        );
     };
     /**
      * 比较富文本的内容
      * @return {[type]} [description]
      */
     _pro.__doCompareContent = function(){
-        if(this.__initcnt === this._$getContent()){
-            return !1;
-        }else{
-            this.__initcnt = this._$getContent();
-            this._$dispatchEvent('oninput',{cont:this.__initcnt,txt:this._$getTextContent()});
+        var _document = this._$getDocument();
+        if (!_document) return;
+        var _content = _document.body.innerHTML;
+        if (this.__initcnt!=_content){
+            this.__initcnt = _content;
+            this._$dispatchEvent('oninput',{
+                cont:this._$getContent(),
+                txt:this._$getTextContent()
+            });
         }
     };
     /**
@@ -169,8 +190,10 @@ var f = function(){
         var _document = this._$getDocument();
         if (!_document) return this;
         _h.__focusRange(_document.body);
-        _h.__moveCursorPosition(_document.body,
-                         parseInt(_cursor)||0);
+        _h.__moveCursorPosition(
+            _document.body,
+            parseInt(_cursor)||0
+        );
         this.__onSelectionChange();
         return this;
     };
@@ -201,8 +224,10 @@ var f = function(){
      * @return {String} 内容
      */
     _pro._$getTextContent = function(){
-        var _document = this._$getDocument();
-        return !_document?'':_document.body.innerText||_document.body.textContent;
+        var _document = this._$getDocument(),
+            _text = _document.body.innerText||
+                    _document.body.textContent;
+        return !_document?'':_text;
     };
     /**
      * 设置内容
@@ -214,6 +239,7 @@ var f = function(){
         var _document = this._$getDocument();
         if (!_document) return this;
         _document.body.innerHTML = _content;
+        this.__onInputCheck();
         return this;
     };
     /**
@@ -230,6 +256,7 @@ var f = function(){
         _h.__execCommand(_document,'styleWithCSS',false);
         _h.__execCommand(_document,_command,_value);
         this._$focus(2);
+        this.__onInputCheck();
         return this;
     };
     /**
@@ -266,18 +293,47 @@ var f = function(){
      * 取编辑区域容器位置大小信息
      * @return {Object} 位置大小信息
      * [ntb]
-     *  scrollTop    | 滚动垂直偏移
-     *  scrollLeft   | 滚动水平偏移
-     *  clientWidth  | 页面可视宽度
-     *  clientHeight | 页面可视高度
-     *  scrollWidth  | 页面滚动宽度
-     *  scrollHeight | 页面滚动高度
+     *  scrollTop     | 滚动垂直偏移
+     *  scrollLeft    | 滚动水平偏移
+     *  clientWidth   | 页面可视宽度
+     *  clientHeight  | 页面可视高度
+     *  scrollWidth   | 页面滚动宽度
+     *  scrollHeight  | 页面滚动高度
+     *  contentWidth  | 内容实际宽度
+     *  contentHeight | 内容实际高度
      * [/ntb]
      */
-    _pro._$getAreaBox = function(){
-        var _document = this._$getDocument();
-        return !_document?null:_e._$getPageBox(_document);
-    };
+    _pro._$getAreaBox = (function(){
+        var _div;
+        var _doCalContentBox = function(_content){
+            if (!_div){
+                _div = _e._$create('div');
+                _e._$style(_div,{
+                    position:'absolute',
+                    width:'1px',
+                    height:'1px',
+                    overflow:'hidden',
+                    visibility:'hidden'
+                });
+                document.body.appendChild(_div);
+            }
+            _div.innerHTML = _content;
+            return {
+                contentWidth:_div.scrollWidth,
+                contentHeight:_div.scrollHeight
+            };
+        };
+        return function(){
+            var _document = this._$getDocument();
+            if (!_document) return null;
+            var _result = _e._$getPageBox(_document);
+            NEJ.X(_result,_doCalContentBox(
+                _document.body.innerHTML
+            ));
+            console.log(_result.contentHeight);
+            return _result;
+        };
+    })();
 };
 NEJ.define(
     '{lib}util/editor/area.js',[
