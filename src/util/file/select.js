@@ -29,9 +29,9 @@ var f = function(){
      *       _e = _('nej.e');
      *   // 绑定文件选择按钮
      *   _e._$file('abc',{
-     *          multiple:true,
-     *          onchange:function(_event){
-     *              // _event.form
+     *       multiple:true,
+     *       onchange:function(_event){
+     *           // _event.form
      *           // _event.id
      *           // 如果要删除某个文件选择节点必须使用以下接口
      *           _e._$remove(_event.id);
@@ -130,6 +130,8 @@ var f = function(){
     })();
     _x.isChange = !0;
 };
-NEJ.define('{lib}util/file/select.js',
-          ['{lib}base/element.js'
-          ,'{lib}base/event.js'],f);
+NEJ.define(
+    '{lib}util/file/select.js',[
+    '{lib}base/element.js',
+    '{lib}base/event.js'
+],f);
