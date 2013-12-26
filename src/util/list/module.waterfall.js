@@ -258,7 +258,6 @@ var f = function(){
         if (_event.key!=this.__ropt.key) return;
         switch(_event.action){
             case 'refresh':
-                delete this.__endskr;
             case 'append':
                 delete this.__nexting;
             break;
@@ -408,6 +407,21 @@ var f = function(){
         }
     };
     /**
+     * 前向追加数据片段回调
+     * @param  {Number} 偏移量
+     * @param  {Number} 数量
+     * @return {Void}
+     */
+    _pro.__cbUnshiftList = function(_offset,_limit){
+        if (_offset!=0) return;
+        var _xlist = this.__cache._$getListInCache(
+            this.__ropt.key
+        );
+        for(var i=_limit-1;i>=0;i--){
+            this._$unshift(_xlist[i]);
+        }
+    };
+    /**
      * 重置大小触发滚动条修正
      * @method {_$resize}
      * @return {Void}
@@ -424,6 +438,16 @@ var f = function(){
             this.__doCheckScroll(this.__sbody);
         }
         */
+    };
+    /**
+     * 刷新模块
+     * @method {_$refresh}
+     * @param  {Number} 刷新到的页码
+     * @return {Void}
+     */
+    _pro._$refresh = function(){
+        delete this.__endskr;
+        _sup._$refresh.apply(this,arguments);
     };
     /**
      * 载入更多列表

@@ -240,16 +240,6 @@ var f = function(){
         if (!_event.stopped) this._$refresh();
     };
     /**
-     * 更新列表项回调
-     * @protected
-     * @method {__cbItemUpdate}
-     * @return {Void}
-    _pro.__cbItemUpdate = function(_event){
-        this.__doCheckResult(_event,'onafterupdate');
-        if (!_event.stopped) this._$refresh();
-    };
-     */
-    /**
      * 批量添加回调
      * @param  {Object} 偏移量
      * @param  {Object} 数量
@@ -271,6 +261,26 @@ var f = function(){
         }else{
             this._$refresh();
         }
+    };
+    /**
+     * 前向追加数据片段回调
+     * @param  {Number} 偏移量
+     * @param  {Number} 数量
+     * @return {Void}
+     */
+    _pro.__cbUnshiftList = function(_offset,_limit){
+        var _index = 1;
+        if (!!this.__pager){
+            _index = this.__pager._$getIndex();
+        }
+        var _beg = this.__getOffsetByIndex(_index),
+            _info = this.__getPageInfo(
+                _beg,this._$getTotal()
+            );
+        this.__doChangePage({
+            last:_index,
+            index:_info.index
+        });
     };
 };
 NEJ.define(
