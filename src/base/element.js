@@ -891,14 +891,21 @@ var f = function(){
         return this;
     };
     /**
-     * 
+     * 清除所有子节点
+     * @chainable
+     * @api    {nej.e._$clearChildren}
+     * @param  {String|Node} 容器节点
+     * @return {Void}
      */
     _e._$clearChildren =
     _x._$clearChildren = function(_element){
         _element = _e._$get(_element);
         if (!_element) return;
         _u._$reverseEach(
-            _element.childNodes,_e._$remove
+            _element.childNodes,
+            function(_node){
+                _e._$remove(_node);
+            }
         );
     };
     /**

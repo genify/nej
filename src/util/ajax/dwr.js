@@ -458,8 +458,10 @@ var f = function(){
         handleBatchException:w['_remoteHandleBatchException']
     }];
 };
-NEJ.define('{lib}util/ajax/dwr.js',
-          ['{lib}base/constant.js'
-          ,'{lib}base/util.js'
-      ,'{lib}util/ajax/xdr.js'
-      ,'{lib}util/cache/cookie.js'],f);
+NEJ.define(
+    '{lib}util/ajax/dwr.js',[
+    '{lib}base/constant.js',
+    '{lib}base/util.js',
+    '{lib}util/ajax/xdr.js',
+    '{lib}util/cache/cookie.js'
+],f);
