@@ -391,42 +391,18 @@ var f = function(){
         if (this.__offset<=0) this._$next();
     };
     /**
-     * 更新列表项回调
-     * @protected
-     * @method {__cbItemUpdate}
-     * @return {Void}
-    _pro.__cbItemUpdate = function(_event){
-        this.__doCheckResult(_event,'onafterupdate');
-        if (_event.stopped) return;
-        var _id = _event.data[this.__iopt.pkey];
-        if (!!this.__items){
-            var _item = _e._$getItemById(_id);
-            if (!!_item) _item._$refresh(_event.data);
-        }else{
-            var _node = _e._$get(_id+''+
-                        _e._$getHtmlTemplateSeed());
-            if (!_node) return;
-            var _list = this.__cache._$getListInCache(_event.key),
-                _index = _u._$indexOf(_list,_event.data);
-            if (_index<0) return;
-            this.__iopt.list = _list;
-            this.__iopt.beg  = _index;
-            this.__iopt.end  = _index;
-            var _html = _e._$getHtmlTemplate(
-                        this.__ikey,this.__iopt);
-            _node.insertAdjacentHTML('afterEnd',_html);
-            _e._$remove(_node);
-        }
-    };
-     */
-    /**
      * 批量添加回调
      * @param  {Object} 偏移量
      * @param  {Object} 数量
      * @return {Void}
      */
     _pro.__cbAppendList = function(_offset,_limit){
-        // TODO
+        if (_offset!=this.__offset) return;
+        // check list loaded
+        if (this._$isLoaded()){
+            this.__endskr = !1;
+            this._$resize();
+        }
     };
     /**
      * 重置大小触发滚动条修正
@@ -437,11 +413,14 @@ var f = function(){
         // if not scroll check next
         var _element = this.__sbody;
         if (!_element||this.__endskr) return;
+        this.__doCheckScroll(this.__sbody);
+        /*
         if (!_element.scrollHeight)
              _element = _e._$getPageBox();
         if (_element.scrollHeight<=_element.clientHeight){
             this.__doCheckScroll(this.__sbody);
         }
+        */
     };
     /**
      * 载入更多列表
