@@ -801,6 +801,13 @@ var f = function(){
      */
     _pro.__cbAppendList = _f;
     /**
+     * 前向追加数据片段回调
+     * @param  {Number} 偏移量
+     * @param  {Number} 数量
+     * @return {Void}
+     */
+    _pro.__cbUnshiftList = _f;
+    /**
      * 列表变化回调（删除/添加），子类按需实现具体业务逻辑
      * @protected
      * @method {__cbListChange}
@@ -820,6 +827,12 @@ var f = function(){
             break;
             case 'refresh':
                 this._$refresh();
+            break;
+            case 'unshift':
+                this.__cbUnshiftList(
+                    _event.offset,
+                    _event.limit
+                );
             break;
             case 'append':
                 this.__cbAppendList(

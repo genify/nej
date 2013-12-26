@@ -256,6 +256,7 @@ var f = function(){
         if (_event.key!=this.__ropt.key) return;
         switch(_event.action){
             case 'refresh':
+                delete this.__endskr;
             case 'append':
                 delete this.__nexting;
             break;
