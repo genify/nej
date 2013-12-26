@@ -185,8 +185,10 @@ var f = function(){
             _element = _e._$getPageBox();
         var _offset = _e._$offset(this.__lbox),
             _delta = _offset.y+this.__lbox.offsetHeight-
-                     _element.scrollTop-_element.clientHeight;
-        if (_delta<=this.__delta){
+                     _element.scrollTop-_element.clientHeight,
+            _noscroll = _element.scrollHeight<=_element.clientHeight;
+        if (_delta<=this.__delta||
+           (_noscroll&&!this.__endskr)){
             this._$next();
         }
     };
