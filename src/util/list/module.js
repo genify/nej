@@ -912,7 +912,7 @@ var f = function(){
     _pro._$refresh = function(){
         this.__doClearListBox();
         this.__doRefreshByPager();
-    };;
+    };
     /**
      * 前向刷新列表，子类实现具体业务逻辑
      * @method {_$pullRefresh}
