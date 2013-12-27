@@ -7,20 +7,19 @@
  */
 var f = function(){
     // variable declaration
-    var o = NEJ.O,
-        f = NEJ.F,
-        p = NEJ.P('nej.ut'),
-        __proMedia,
-        __supMedia;
-    if (!!p._$$Media) return;
+    var _o = NEJ.O,
+        _f = NEJ.F,
+        _p = NEJ.P('nej.ut'),
+        _pro;
+    if (!!_p._$$Media) return;
     /**
      * 多媒体控件基类<br />
      * 脚本举例
      * [code]
      *   // 第一步：继承此基类
-     *   p = NEJ.P('nej.ut');
-     *   __proMediaAudio = p._$$MediaAudio._$extend(p._$$Media);
-     *   __supMediaAudio = p._$$MediaAudio._$supro;
+     *   _p = NEJ.P('nej.ut');
+     *   __proMediaAudio = _p._$$MediaAudio._$extend(_p._$$Media);
+     *   __supMediaAudio = _p._$$MediaAudio._$supro;
      *   
      *   __proMediaAudio.__reset = function(_options){
      *       this.__audio = new Audio();
@@ -80,14 +79,14 @@ var f = function(){
      * @class   {nej.ut._$$Media} 多媒体控件基类
      * @extends {nej.ut._$$Event}
      * @param   {Object} 可选配置参数，已处理参数列表如下所示
-     * @config  {String} url 多媒体文件地址
+     * @config  {String} url     多媒体文件地址
      * @config  {String} preload 是否预加载文件
      * 
      * [hr]
      * 
      * @event  {onstatechange} 状态变化触发事件
      * @param  {Object} 可选配置参数
-     * @config {Number} 播放状态
+     * @config {Number} state 播放状态
      * [ntb]
      *   0 | 当前停止状态
      *   1 | 当前缓冲状态
@@ -101,9 +100,8 @@ var f = function(){
      * @event  {ontimeupdate} 播放过程触发事件
      * 
      */
-    p._$$Media = NEJ.C();
-    __proMedia = p._$$Media._$extend(p._$$Event);
-    __supMedia = p._$$Media._$supro;
+    _p._$$Media = NEJ.C();
+    _pro = _p._$$Media._$extend(_p._$$Event);
     /**
      * 重置控件
      * @protected
@@ -113,7 +111,7 @@ var f = function(){
      * @config {String} preload 是否预加载文件
      * @return {Void}
      */
-    __proMedia.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
         this.__state = 0;
         this._$preload(!!_options.preload);
@@ -125,7 +123,7 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    __proMedia.__destroy = function(){
+    _pro.__destroy = function(){
         this.__supDestroy();
         this._$stop();
     };
@@ -140,35 +138,35 @@ var f = function(){
      * @method {__getMedia}
      * @return {Object||Node} 多媒体实体控件
      */
-    __proMedia.__getMedia = f;
+    _pro.__getMedia = _f;
     /**
      * 执行播放操作
      * @protected
      * @method {__doPlay}
      * @return {Void}
      */
-    __proMedia.__doPlay = f;
+    _pro.__doPlay = _f;
     /**
      * 执行暂停操作
      * @protected
      * @method {__doPause}
      * @return {Void}
      */
-    __proMedia.__doPause = f;
+    _pro.__doPause = _f;
     /**
      * 执行停止操作
      * @protected
      * @method {__doStop}
      * @return {Void}
      */
-    __proMedia.__doStop = f;
+    _pro.__doStop = _f;
     /**
      * 执行预加载操作
      * @protected
      * @method {__doPreload}
      * @return {Void}
      */
-    __proMedia.__doPreload = f;
+    _pro.__doPreload = _f;
     /**
      * 修改媒体播放状态
      * @protected
@@ -176,12 +174,15 @@ var f = function(){
      * @param  {Number} 播放状态
      * @return {Void}
      */
-    __proMedia.__doStateChange = function(_state){
+    _pro.__doStateChange = function(_state){
         if (_state==this.__state) return;
         this.__state = _state;
-        this._$dispatchEvent('onstatechange',
-                            {state:this.__state
-                            ,target:this.__getMedia()});
+        this._$dispatchEvent(
+            'onstatechange',{
+                state:this.__state,
+                target:this.__getMedia()
+            }
+        );
     };
     /**
      * 更新多媒体文件地址
@@ -189,7 +190,7 @@ var f = function(){
      * @param  {String} 文件地址
      * @return {nej.ut._$$Media}
      */
-    __proMedia._$source = function(_url){
+    _pro._$source = function(_url){
         _url = _url||'';
         if (this.__state!=0)
             this._$stop();
@@ -204,7 +205,7 @@ var f = function(){
      * @param  {Boolean} 是否预加载文件
      * @return {Boolean} 是否预加载文件
      */
-    __proMedia._$preload = function(_preload){
+    _pro._$preload = function(_preload){
         if (_preload===undefined)
             return this.__preload;
         this.__preload = !!_preload;
@@ -215,7 +216,7 @@ var f = function(){
      * @method {_$play}
      * @return {nej.ut._$$Media}
      */
-    __proMedia._$play = function(){
+    _pro._$play = function(){
         // only stop and pause can do play
         if (this.__state==0||
             this.__state==3){
@@ -230,7 +231,7 @@ var f = function(){
      * @method {_$pause}
      * @return {nej.ut._$$Media}
      */
-    __proMedia._$pause = function(){
+    _pro._$pause = function(){
         // only buffer and play can do pause
         if (this.__state==1||
             this.__state==2)
@@ -242,11 +243,14 @@ var f = function(){
      * @method {_$stop}
      * @return {nej.ut._$$Media}
      */
-    __proMedia._$stop = function(){
+    _pro._$stop = function(){
         // only buffer,play and pause can do stop
         if (this.__state!=0)
             this.__doStop();
         return this;
     };
 };
-NEJ.define('{lib}util/media/media.js',['{lib}util/event.js'],f);
+NEJ.define(
+    '{lib}util/media/media.js',[
+    '{lib}util/event.js'
+],f);

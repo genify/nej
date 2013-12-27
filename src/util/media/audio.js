@@ -7,12 +7,10 @@
  */
 var f = function(){
     // variable declaration
-    var o = NEJ.O,
-        v = NEJ.P('nej.v'),
-        p = NEJ.P('nej.ut'),
-        __proMediaAudio,
-        __supMediaAudio;
-    if (!!p._$$MediaAudio) return;
+    var _  = NEJ.P,
+        _p = _('nej.ut'),
+        _pro;
+    if (!!_p._$$MediaAudio) return;
     /**
      * 音频播放控件<br />
      * 脚本举例
@@ -43,9 +41,8 @@ var f = function(){
      * @param   {Object} 可选配置参数，已处理参数列表如下所示
      * @config  {String} url 音频地址
      */
-    p._$$MediaAudio = NEJ.C();
-    __proMediaAudio = p._$$MediaAudio._$extend(p._$$Media);
-    __supMediaAudio = p._$$MediaAudio._$supro;
+    _p._$$MediaAudio = NEJ.C();
+    _pro = _p._$$MediaAudio._$extend(_p._$$Media);
     /**
      * 控件重置
      * @protected
@@ -53,14 +50,18 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    __proMediaAudio.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__audio = new Audio();
-        v._$addEvent(this.__audio,'loadstart',
-                     this.__onLoading._$bind(this));
-        v._$addEvent(this.__audio,'timeupdate',
-                     this.__onPlaying._$bind(this));
-        v._$addEvent(this.__audio,'pause',
-                     this.__onPause._$bind(this));
+        this.__doInitDomEvent([[
+            this.__audio,'loadstart',
+            this.__onLoading._$bind(this)
+        ],[
+            this.__audio,'timeupdate',
+            this.__onPlaying._$bind(this)
+        ],[
+            this.__audio,'pause',
+            this.__onPause._$bind(this)
+        ]]);
         this.__supReset(_options);
     };
     /**
@@ -69,7 +70,7 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    __proMediaAudio.__destroy = function(){
+    _pro.__destroy = function(){
         this.__supDestroy();
         delete this.__audio;
     };
@@ -79,7 +80,7 @@ var f = function(){
      * @method {__getMedia}
      * @return {Node} 多媒体实体控件
      */
-    __proMediaAudio.__getMedia = function(){
+    _pro.__getMedia = function(){
         return this.__audio;
     };
     /**
@@ -88,7 +89,7 @@ var f = function(){
      * @method {__doPreload}
      * @return {Void}
      */
-    __proMediaAudio.__doPreload = function(){
+    _pro.__doPreload = function(){
         if (this.__audio.src!=this.__source){
             this.__audio.src = this.__source;
             this.__source = this.__audio.currentSrc;
@@ -100,7 +101,7 @@ var f = function(){
      * @method {__doPlay}
      * @return {Void}
      */
-    __proMediaAudio.__doPlay = function(){
+    _pro.__doPlay = function(){
         this.__audio.play();
     };
     /**
@@ -109,7 +110,7 @@ var f = function(){
      * @method {__doPause}
      * @return {Void}
      */
-    __proMediaAudio.__doPause = function(){
+    _pro.__doPause = function(){
         this.__audio.pause();
     };
     /**
@@ -118,7 +119,7 @@ var f = function(){
      * @method {__doStop}
      * @return {Void}
      */
-    __proMediaAudio.__doStop = function(){
+    _pro.__doStop = function(){
         this.__skip = !0;
         this.__doPause();
         this.__audio.currentTime = 0;
@@ -130,7 +131,7 @@ var f = function(){
      * @method {__onLoading}
      * @return {Void}
      */
-    __proMediaAudio.__onLoading = function(){
+    _pro.__onLoading = function(){
         if (!this.__audio.paused)
             this.__doStateChange(1);
     };
@@ -140,7 +141,7 @@ var f = function(){
      * @method {__onPause}
      * @return {Void}
      */
-    __proMediaAudio.__onPause = function(){
+    _pro.__onPause = function(){
         if (!this.__skip)
             this.__doStateChange(3);
         this.__skip = !1;
@@ -151,11 +152,14 @@ var f = function(){
      * @method {__onPlaying}
      * @return {Void}
      */
-    __proMediaAudio.__onPlaying = function(){
+    _pro.__onPlaying = function(){
         if (this.__audio.paused) return;
         this.__doStateChange(2);
         this._$dispatchEvent('ontimeupdate',this.__getMedia());
     };
 };
-NEJ.define('{lib}util/media/audio.js',
-      ['{lib}base/event.js','{lib}util/media/media.js'],f);
+NEJ.define(
+    '{lib}util/media/audio.js',[
+    '{lib}base/event.js',
+    '{lib}util/media/media.js'
+],f);

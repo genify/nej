@@ -13,28 +13,9 @@ var f = function(){
         _v = _('nej.v'),
         _h = _('nej.h'),
         _x = _('nej.x'),
-        _w = _('nej.ut.j.cb');
-    var _seed_html = _e._$addHtmlTemplate('\
-        {var hide  = defined("hidden")&&!!hidden}\
-        {var param = defined("params")&&params||NEJ.O}\
-        {var width = !hide?width:"1px",height = !hide?height:"1px"}\
-        {if hide}<div style="position:absolute;top:0;left:0;width:1px;height:1px;z-index:10000;overflow:hidden;">{/if}\
-        <object classid = "clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"\
-                codebase = "http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab"\
-                width = "${width|default:"100px"}"\
-                height = "${height|default:"100px"}" id="${id}">\
-            <param value="${src}" name="movie">\
-            {for x in param}\
-            <param value="${x}" name="${x_key}"/>\
-            {/for}\
-            <embed src="${src}" name="${id}"\
-                   width="${width|default:"100px"}"\
-                   height="${height|default:"100px"}"\
-                   pluginspage="http://www.adobe.com/go/getflashplayer"\
-                   type="application/x-shockwave-flash"\
-                   {for x in param}${x_key}="${x}" {/for}></embed>\
-        </object>\
-        {if hide}</div>{/if}');
+        _w = _('nej.ut.j.cb'),
+        _seed_html;
+    if (!!_e._$flash) return;
     /**
      * 页面嵌入flash<br />
      * 页面结构举例
@@ -149,8 +130,32 @@ var f = function(){
             _doCheckFlash(_id);
         };
     })();
+    _seed_html = _e._$addHtmlTemplate('\
+        {var hide  = defined("hidden")&&!!hidden}\
+        {var param = defined("params")&&params||NEJ.O}\
+        {var width = !hide?width:"1px",height = !hide?height:"1px"}\
+        {if hide}<div style="position:absolute;top:0;left:0;width:1px;height:1px;z-index:10000;overflow:hidden;">{/if}\
+        <object classid = "clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"\
+                codebase = "http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab"\
+                width = "${width|default:"100px"}"\
+                height = "${height|default:"100px"}" id="${id}">\
+            <param value="${src}" name="movie">\
+            {for x in param}\
+            <param value="${x}" name="${x_key}"/>\
+            {/for}\
+            <embed src="${src}" name="${id}"\
+                   width="${width|default:"100px"}"\
+                   height="${height|default:"100px"}"\
+                   pluginspage="http://www.adobe.com/go/getflashplayer"\
+                   type="application/x-shockwave-flash"\
+                   {for x in param}${x_key}="${x}" {/for}></embed>\
+        </object>\
+        {if hide}</div>{/if}\
+    ');
     _x.isChange = !0;
 };
-NEJ.define('{lib}util/flash/flash.js',
-          ['{lib}util/template/jst.js'
-          ,'{lib}util/timer/animation.js'],f);
+NEJ.define(
+    '{lib}util/flash/flash.js',[
+    '{lib}util/template/jst.js',
+    '{lib}util/timer/animation.js'
+],f);

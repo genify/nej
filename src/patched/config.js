@@ -1,6 +1,6 @@
 /**
  * ------------------------------------------
- * 平台配置信息接口实现文件
+ * 平台配置信息
  *  window.NEJ_CONF = {
  *      // resource root
  *      // defalut value -> '/res/'
@@ -11,6 +11,12 @@
  *      // localstorage flash
  *      // default value -> $root+'nej_storage.swf'
  *      storage : '/res/nej_storage.swf'
+ *      // audio player flash
+ *      // default value -> $root+'nej_player_audio.swf'
+ *      audio : '/res/nej_player_audio.swf'
+ *      // video player flash
+ *      // default value -> $root+'nej_player_video.swf'
+ *      video : '/res/nej_player_video.swf'
  *      // clipboard flash
  *      // default value -> $root+'nej_clipboard.swf'
  *      clipboard : '/res/nej_clipboard.swf'
@@ -68,21 +74,24 @@ var f = function(){
                     _map[_url2host(_path)] = _path;
             }
         };
+        var _conf = {
+            'portrait':{name:'portrait',dft:'portrait/'},
+            'ajax.swf':{name:'ajax',dft:'nej_proxy_flash.swf'},
+            'chart.swf':{name:'chart',dft:'nej_flex_chart.swf'},
+            'audio.swf':{name:'audio',dft:'nej_player_audio.swf'},
+            'video.swf':{name:'video',dft:'nej_player_video.swf'},
+            'clipboard.swf':{name:'clipboard',dft:'nej_clipboard.swf'}
+        };
         return function(_config){
-            // root
+            // check path config
             _c.__set('root',_config.root||'/res/');
-            // portrait root
-            _c.__set('portrait',_config.portrait||
-                    (_c._$get('root')+'portrait/'));
-            // ajax by flash proxy
-            _c.__set('ajax.swf',_config.ajax||
-                    (_c._$get('root')+'nej_proxy_flash.swf'));
-            // clipboard flash
-            _c.__set('clipboard.swf',_config.clipboard||
-                    (_c._$get('root')+'nej_clipboard.swf'));
-            // chart flash
-            _c.__set('chart.swf',_config.chart||
-                    (_c._$get('root')+'nej_flex_chart.swf'));
+            var _cnf,_root = _c._$get('root');
+            for(var x in _conf){
+                _cnf = _conf[x];
+                _c.__set(
+                    x,_config[_cnf.name]||(_root+_cnf.dft)
+                );
+            }
             // csrf config
             var _csrf = _config.p_csrf;
             if (_csrf==!0){
@@ -138,5 +147,7 @@ var f = function(){
     // init
     _doInit(window.NEJ_CONF||NEJ.O);
 };
-NEJ.define('{lib}patched/config.js',
-          ['{lib}base/platform.js'],f);
+NEJ.define(
+    '{lib}patched/config.js',[
+    '{lib}base/platform.js'
+],f);
