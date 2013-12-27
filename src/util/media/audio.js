@@ -61,6 +61,9 @@ var f = function(){
         ],[
             this.__audio,'pause',
             this.__onPause._$bind(this)
+        ],[
+            this.__audio,'ended',
+            this.__onStop._$bind(this)
         ]]);
         this.__supReset(_options);
     };
@@ -75,33 +78,16 @@ var f = function(){
         delete this.__audio;
     };
     /**
-     * 取多媒体实体控件
-     * @protected
-     * @method {__getMedia}
-     * @return {Node} 多媒体实体控件
-     */
-    _pro.__getMedia = function(){
-        return this.__audio;
-    };
-    /**
-     * 执行预加载操作
-     * @protected
-     * @method {__doPreload}
-     * @return {Void}
-     */
-    _pro.__doPreload = function(){
-        if (this.__audio.src!=this.__source){
-            this.__audio.src = this.__source;
-            this.__source = this.__audio.currentSrc;
-        }
-    };
-    /**
      * 执行播放操作
      * @protected
      * @method {__doPlay}
      * @return {Void}
      */
     _pro.__doPlay = function(){
+        if (this.__audio.currentSrc!=this.__source){
+            this.__audio.src = this.__source;
+            this.__source = this.__audio.currentSrc;
+        }
         this.__audio.play();
     };
     /**
@@ -120,10 +106,18 @@ var f = function(){
      * @return {Void}
      */
     _pro.__doStop = function(){
-        this.__skip = !0;
+        this.__stopped = !0;
+        this.__setCurrentTime(0);
         this.__doPause();
+    };
+    /**
+     * 设置播放时间
+     * @protected
+     * @method {__setCurrentTime}
+     * @return {Void}
+     */
+    _pro.__setCurrentTime = function(_time){
         this.__audio.currentTime = 0;
-        this.__doStateChange(0);
     };
     /**
      * 文件载入触发事件
@@ -132,8 +126,9 @@ var f = function(){
      * @return {Void}
      */
     _pro.__onLoading = function(){
-        if (!this.__audio.paused)
+        if (!this.__audio.paused){
             this.__doStateChange(1);
+        }
     };
     /**
      * 暂停触发事件
@@ -142,9 +137,16 @@ var f = function(){
      * @return {Void}
      */
     _pro.__onPause = function(){
-        if (!this.__skip)
-            this.__doStateChange(3);
-        this.__skip = !1;
+        var _state = !this.__stopped?3:0;
+        this.__stopped = !1;
+        this.__doStateChange(_state);
+    };
+    /**
+     * 播放停止触发事件
+     * @return {Void}
+     */
+    _pro.__onStop = function(){
+        this.__doStateChange(0);
     };
     /**
      * 播放过程触发事件
@@ -153,9 +155,13 @@ var f = function(){
      * @return {Void}
      */
     _pro.__onPlaying = function(){
-        if (this.__audio.paused) return;
         this.__doStateChange(2);
-        this._$dispatchEvent('ontimeupdate',this.__getMedia());
+        this._$dispatchEvent(
+            'ontimeupdate',{
+                duration:this.__audio.duration,
+                current:this.__audio.currentTime
+            }
+        );
     };
 };
 NEJ.define(

@@ -39,21 +39,19 @@ var f = function(){
             _func(_extr);
         };
         return function(_url,_options){
+            if (!!_audio){
+                _audio = _audio._$recycle();
+            }
             _doStopCallback();
             _playing = NEJ.X({},_options);
-            if (!_audio){
-                _audio = _h.__getAudioInst({
-                    url:_url,
-                    onstatechange:function(_event){
-                        // stop
-                        if (_event.state!=0) return;
-                        _audio = _audio._$recycle();
-                        _doStopCallback();
-                    }
-                });
-            }else{
-                _audio._$source(_url);
-            }
+            _audio = _h.__getAudioInst({
+                url:_url,
+                onstatechange:function(_event){
+                    if (_event.state!=0) return;
+                    _audio = _audio._$recycle();
+                    _doStopCallback();
+                }
+            });
             _audio._$play();
         };
     })();

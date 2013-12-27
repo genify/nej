@@ -76,15 +76,16 @@ var f = function(){
      *   // 停止播放
      *   _mda._$stop();
      * [/code]
-     * @class   {nej.ut._$$Media} 多媒体控件基类
+     * 
+     * @class   {nej.ut._$$Media}
      * @extends {nej.ut._$$Event}
-     * @param   {Object} 可选配置参数，已处理参数列表如下所示
-     * @config  {String} url     多媒体文件地址
-     * @config  {String} preload 是否预加载文件
      * 
-     * [hr]
+     * @param   {Object} 可选配置参数
+     * @config  {String} url 多媒体文件地址
      * 
-     * @event  {onstatechange} 状态变化触发事件
+     * [hr] 
+     * 状态变化触发事件
+     * @event  {onstatechange}
      * @param  {Object} 可选配置参数
      * @config {Number} state 播放状态
      * [ntb]
@@ -93,11 +94,12 @@ var f = function(){
      *   2 | 当前播放状态
      *   3 | 当前暂停状态
      * [/ntb]
-     * @config  {Object|Node} 多媒体实体控件
+     * @config  {Object} target 播放信息
      * 
      * [hr]
-     * 
-     * @event  {ontimeupdate} 播放过程触发事件
+     * 播放过程触发事件
+     * @event  {ontimeupdate} 
+     * @param  {Object} 可选配置参数
      * 
      */
     _p._$$Media = NEJ.C();
@@ -107,15 +109,12 @@ var f = function(){
      * @protected
      * @method {__reset}
      * @param  {Object} 可选配置参数
-     * @config {String} url 多媒体文件地址
-     * @config {String} preload 是否预加载文件
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
         this.__state = 0;
-        this._$preload(!!_options.preload);
         this._$source(_options.url);
+        this.__supReset(_options);
     };
     /**
      * 销毁控件
@@ -127,18 +126,6 @@ var f = function(){
         this.__supDestroy();
         this._$stop();
     };
-    /**
-     * 取多媒体实体控件对象，可以取到播放相关数据
-     * [ntb]
-     *  currentTime | [Float] | 当前播放的时间【单位秒】
-     *  duration    | [Float] | 多媒体总时间【单位秒】
-     *  volume      | [Float] | 当前声音值[0.0~1.0]
-     * [/ntb]
-     * @protected 
-     * @method {__getMedia}
-     * @return {Object||Node} 多媒体实体控件
-     */
-    _pro.__getMedia = _f;
     /**
      * 执行播放操作
      * @protected
@@ -161,12 +148,12 @@ var f = function(){
      */
     _pro.__doStop = _f;
     /**
-     * 执行预加载操作
+     * 设置播放时间
      * @protected
-     * @method {__doPreload}
+     * @method {__setCurrentTime}
      * @return {Void}
      */
-    _pro.__doPreload = _f;
+    _pro.__setCurrentTime = _f;
     /**
      * 修改媒体播放状态
      * @protected
@@ -179,8 +166,7 @@ var f = function(){
         this.__state = _state;
         this._$dispatchEvent(
             'onstatechange',{
-                state:this.__state,
-                target:this.__getMedia()
+                state:this.__state
             }
         );
     };
@@ -192,24 +178,10 @@ var f = function(){
      */
     _pro._$source = function(_url){
         _url = _url||'';
-        if (this.__state!=0)
-            this._$stop();
+        if (!_url) return;
+        this._$stop();
         this.__source = _url;
-        if (!!this._$preload())
-            this.__doPreload();
         return this;
-    };
-    /**
-     * 获取或者设置是否预加载文件
-     * @method {_$preload}
-     * @param  {Boolean} 是否预加载文件
-     * @return {Boolean} 是否预加载文件
-     */
-    _pro._$preload = function(_preload){
-        if (_preload===undefined)
-            return this.__preload;
-        this.__preload = !!_preload;
-        return this.__preload;
     };
     /**
      * 播放
@@ -218,10 +190,7 @@ var f = function(){
      */
     _pro._$play = function(){
         // only stop and pause can do play
-        if (this.__state==0||
-            this.__state==3){
-            if (!this._$preload())
-                this.__doPreload();
+        if (this.__state==0||this.__state==3){
             this.__doPlay();
         }
         return this;
@@ -233,9 +202,9 @@ var f = function(){
      */
     _pro._$pause = function(){
         // only buffer and play can do pause
-        if (this.__state==1||
-            this.__state==2)
+        if (this.__state==1||this.__state==2){
             this.__doPause();
+        }
         return this;
     };
     /**
@@ -245,9 +214,18 @@ var f = function(){
      */
     _pro._$stop = function(){
         // only buffer,play and pause can do stop
-        if (this.__state!=0)
+        if (this.__state!=0){
             this.__doStop();
+        }
         return this;
+    };
+    /**
+     * 定位到播放位置
+     * @param  {Number} 播放时间
+     * @return {Void}
+     */
+    _pro._$seek = function(_time){
+        this.__setCurrentTime(_time);
     };
 };
 NEJ.define(
