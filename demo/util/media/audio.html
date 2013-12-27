@@ -10,6 +10,11 @@
   <body>
     <input type="button" value="play" id="play"/>
     <input type="button" value="stop" id="stop"/>
+    <script>
+        window.NEJ_CONF = {
+            root:'../../../res/'
+        };
+    </script>
     <script src="../../../src/define.js?pro=./"></script>
     <script>
         define(['{patch}audio.js'],

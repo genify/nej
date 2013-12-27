@@ -52,6 +52,10 @@ var f = function(){
     _pro.__init = (function(){
         var _onReady = function(_flash){
             this.__audio = _flash;
+            if (!!this.__action){
+                this.__action.call(this);
+                delete this.__action;
+            }
         };
         return function(){
             this.__supInit();
@@ -63,22 +67,12 @@ var f = function(){
         };
     })();
     /**
-     * 取多媒体实体控件
-     * @protected
-     * @method {__getMedia}
-     * @return {Node} 多媒体实体控件
-     */
-    _pro.__getMedia = function(){
-        return this.__audio;
-    };
-    /**
-     * 执行预加载操作
-     * @protected
-     * @method {__doPreload}
+     * 控件销毁
      * @return {Void}
      */
-    _pro.__doPreload = function(){
-        // TODO
+    _pro.__destroy = function(){
+        this.__supDestroy();
+        delete this.__action;
     };
     /**
      * 执行播放操作
@@ -88,7 +82,10 @@ var f = function(){
      */
     _pro.__doPlay = function(){
         if (!!this.__audio){
+            this.__audio.setSrc(this.__source);
             this.__audio.play();
+        }else{
+            this.__action = this.__doPlay;
         }
     };
     /**
@@ -100,6 +97,8 @@ var f = function(){
     _pro.__doPause = function(){
         if (!!this.__audio){
             this.__audio.pause();
+        }else{
+            this.__action = this.__doPause;
         }
     };
     /**
@@ -111,6 +110,8 @@ var f = function(){
     _pro.__doStop = function(){
         if (!!this.__audio){
             this.__audio.stop();
+        }else{
+            this.__action = this.__doStop;
         }
     };
     /**
