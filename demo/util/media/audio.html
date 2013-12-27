@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>test audio</title>
+    <meta charset="utf-8"/>
+    <style>
+        span{position:relative;background:#f00;word-wrap:normal;white-space:nowrap;}
+    </style>
+  </head>
+  <body>
+    <input type="button" value="play" id="play"/>
+    <input type="button" value="stop" id="stop"/>
+    <script src="../../../src/define.js?pro=./"></script>
+    <script>
+        define(['{patch}audio.js'],
+        function(){
+            var _v = NEJ.P('nej.v'),
+                _e = NEJ.P('nej.e');
+            _v._$addEvent(
+                'play','click',function(){
+                    _e._$playBgSound('./a.mp3',{
+                        onstop:function(){
+                            console.log('play stop');
+                        }
+                    });
+                }
+            );
+            _v._$addEvent(
+                'stop','click',function(){
+                    _e._$stopBgSound();
+                }
+            );
+        });
+    </script>
+  </body>
+</html>

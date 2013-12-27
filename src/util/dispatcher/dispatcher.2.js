@@ -499,6 +499,7 @@ var f = function(){
         // has action node
         var _options = {
             action:_action,
+            target:_element,
             id:_e._$dataset(_element,'resId'),
             type:_e._$dataset(_element,'resType'),
             extra:_e._$dataset(_element,'resExtra')
