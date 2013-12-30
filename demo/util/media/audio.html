@@ -25,8 +25,8 @@
                 'play','click',function(){
                     _e._$playBgSound('./a.mp3',{
                         extra:+new Date,
-                        onstop:function(_data){
-                            console.log('stop -> '+_data);
+                        onstatechange:function(_event){
+                            console.log(_event.state+' -> '+_event.data);
                         }
                     });
                 }

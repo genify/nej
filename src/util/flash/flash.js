@@ -7,7 +7,7 @@
  */
 var f = function(){
     var _  = NEJ.P,
-        _o = NEJ.O,
+        _f = NEJ.F,
         _u = _('nej.u'),
         _e = _('nej.e'),
         _v = _('nej.v'),
@@ -53,48 +53,54 @@ var f = function(){
      * @config {String|Node} parent  容器节点，默认为document.body
      * @conifg {Object}      params  设置参数
      * @config {String|Node} target  触发事件的源节点
-     * @return {Flash}               flash对象
+     * @return {Void}
      * 
      * [hr]
-     * 
-     * @event  {onready} Flash初始化完毕触发事件
-     * @param  {Flash}   Flash对象
+     * Flash初始化完毕触发事件
+     * @event  {onready} 
+     * @param  {Flash} Flash对象
      * 
      */
     _e._$flash = 
     _x._$flash = (function(){
         var _cache = {},
-            _seed = +new Date;
+            _reg0 = /^(?:mouse.*|(?:dbl)?click)$/i;
+        // flash event
+        window.onflashevent = function(_event){
+            var _id = _event.target,
+                _type = _evnet.type.toLowerCase();
+            // check id-type handler
+            var _handler = _cache[_id+'-on'+_type];
+            if (!!_handler){
+                try{_handler(_event);}catch(e){}
+                return;
+            }
+            // check mouse event bubble
+            var _target = _cache[_id+'-tgt'];
+            if (!!_target&&_reg0.test(_type)){
+                _doMouseEventBubble(
+                    _target,_event
+                );
+            }
+        };
         // append flash element
         var _doInitDOM = function(_options){
             var _parent = _e._$get(_options.parent)||document.body,
                 _html = _e._$getHtmlTemplate(_seed_html,_options);
             _parent.insertAdjacentHTML(
-               !_options.hidden?'beforeEnd':'afterBegin',_html);
-        };
-        // init flash vars
-        var _doInitFlashVars = function(_options,_name){
-            var _params = _options.params;
-            if (!_params){
-                _params = {};
-                _options.params = _params;
-            }
-            var _vars = _params.flashvars||'';
-            if (!!_options.target||
-                  _h.__canFlashEventBubble(_params.wmode))
-                _vars += (!_vars?'':'&')+('onevent=nej.ut.j.cb.'+_name);
-            _params.flashvars = _vars;
-        };
-        // check flash init state
-        var _doCheckFlashInit = function(_flash){
-            return !!_flash&&!!_flash.inited&&!!_flash.inited();
+               !_options.hidden?'beforeEnd':'afterBegin',_html
+            );
         };
         // listen flash mouse event
-        var _doListenFlashEvent = function(_id,_event){
+        var _doMouseEventBubble = function(_id,_event){
             var _type = _event.type.toLowerCase();
             requestAnimationFrame(function(){
                 _v._$dispatchEvent(_id,_type);
             });
+        };
+        // check flash init state
+        var _doCheckFlashInit = function(_flash){
+            return !!_flash&&!!_flash.inited&&!!_flash.inited();
         };
         var _doCheckFlash = function(_id){
             var _arr = [document.embeds[_id],
@@ -111,19 +117,45 @@ var f = function(){
             }
             window.setTimeout(_doCheckFlash._$bind(null,_id),300);
         };
-        return function(_options){
-            _options = _options||{};
-            if (!_options.src) return;
-            var _id = _options.id||('flash-'+(_seed++));
-            _options.id = _id;
-            // delegate mouse event
-            if (!_options.hidden){
-                var _tid = _e._$id(_options.target)||
-                           _e._$id(_options.parent);
-                _w['cb'+_seed] = _doListenFlashEvent._$bind(null,_tid);
-                _doInitFlashVars(_options,'cb'+_seed);
+        // init flash event
+        var _doInitFlashEvent = function(_options){
+            // init flash vars
+            var _id = _options.id,
+                _params = _options.params;
+            if (!_params){
+                _params = {};
+                _options.params = _params;
             }
+            var _vars = _params.flashvars||'';
+            _vars += (!_vars?'':'&')+('id='+_id);
+            // delegate mouse event bubble
+            if (!_options.hidden&&(!!_options.target||
+                 _h.__canFlashEventBubble(_params.wmode))){
+                var _tid = _e._$id(_options.target)||
+                           _e._$id(_options.parent),
+                    _cid = _u._$uniqueID();
+                _w['cb'+_cid] = _doMouseEventBubble._$bind(null,_tid);
+                _vars += '&onevent=nej.ut.j.cb.cb'+_cid;
+                _cache[_id+'-tgt'] = _tid;
+            }
+            _params.flashvars = _vars;
+            // check event callback
+            _u._$forIn(_options,function(_value,_key){
+                if (_u._$isFunction(_value)&&_key!='onready'){
+                    _cache[_id+'-'+_key] = _value;
+                }
+            });
+        };
+        return function(_options){
+            _options = NEJ.X({},_options);
+            if (!_options.src) return;
+            var _id = 'flash-'+_u._$uniqueID();
+            _options.id = _id;
+            // delegate event
+            _doInitFlashEvent(_options);
+            // append flash
             _doInitDOM(_options);
+            // check flash ready
             if (!_options.onready) return;
             _cache[_id] = _options.onready;
             _cache[_id+'-count'] = 0;
