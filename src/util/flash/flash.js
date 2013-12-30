@@ -67,7 +67,7 @@ var f = function(){
             _reg0 = /^(?:mouse.*|(?:dbl)?click)$/i;
         // flash event
         window.onflashevent = function(_event){
-            var _id = _event.target,
+            var _id = decodeURIComponent(_event.target),
                 _type = _evnet.type.toLowerCase();
             // check id-type handler
             var _handler = _cache[_id+'-on'+_type];
