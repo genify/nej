@@ -62,7 +62,11 @@ var f = function(){
             _e._$flash({
                 hidden:!0,
                 src:_c._$get('audio.swf'),
-                onready:_onReady._$bind(this)
+                onready:_onReady._$bind(this),
+                onpause:this.__onPause._$bind(this),
+                onseking:this.__onLoading._$bind(this),
+                onprogress:this.__onLoading._$bind(this),
+                ontimeupdate:this.__onPlaying._$bind(this)
             });
         };
     })();
@@ -121,7 +125,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__onLoading = function(){
-        // TODO
+        this.__doStateChange(1);
     };
     /**
      * 暂停触发事件
@@ -130,7 +134,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__onPause = function(){
-        // TODO
+        this.__doStateChange(3);
     };
     /**
      * 播放过程触发事件
@@ -138,8 +142,14 @@ var f = function(){
      * @method {__onPlaying}
      * @return {Void}
      */
-    _pro.__onPlaying = function(){
-        // TODO
+    _pro.__onPlaying = function(_event){
+        this.__doStateChange(2);
+        this._$dispatchEvent(
+            'ontimeupdate',{
+                duration:_event.duration,
+                current:_event.currentTime
+            }
+        );
     };
 };
 NEJ.define(
