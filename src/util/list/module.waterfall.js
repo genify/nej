@@ -313,6 +313,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__doShowEmpty = function(){
+        this.__offset = 0;
         this.__endskr = !0;
         this.__doShowMessage('onemptylist','没有列表数据！');
     };
