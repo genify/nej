@@ -111,15 +111,6 @@ var f = function(){
         this.__doPause();
     };
     /**
-     * 设置播放时间
-     * @protected
-     * @method {__setCurrentTime}
-     * @return {Void}
-     */
-    _pro.__setCurrentTime = function(_time){
-        this.__audio.currentTime = 0;
-    };
-    /**
      * 文件载入触发事件
      * @protected
      * @method {__onLoading}
@@ -162,6 +153,15 @@ var f = function(){
                 current:this.__audio.currentTime
             }
         );
+    };
+    /**
+     * 设置播放时间
+     * @protected
+     * @method {__setCurrentTime}
+     * @return {Void}
+     */
+    _pro.__setCurrentTime = function(_time){
+        this.__audio.currentTime = _time||0;
     };
 };
 NEJ.define(

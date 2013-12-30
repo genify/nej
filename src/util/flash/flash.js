@@ -149,7 +149,7 @@ var f = function(){
         return function(_options){
             _options = NEJ.X({},_options);
             if (!_options.src) return;
-            var _id = 'flash-'+_u._$uniqueID();
+            var _id = 'flash_'+_u._$uniqueID();
             _options.id = _id;
             // delegate event
             _doInitFlashEvent(_options);

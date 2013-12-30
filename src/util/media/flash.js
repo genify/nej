@@ -63,6 +63,7 @@ var f = function(){
                 hidden:!0,
                 src:_c._$get('audio.swf'),
                 onready:_onReady._$bind(this),
+                onended:this.__onStop._$bind(this),
                 onpause:this.__onPause._$bind(this),
                 onseking:this.__onLoading._$bind(this),
                 onprogress:this.__onLoading._$bind(this),
@@ -150,6 +151,22 @@ var f = function(){
                 current:_event.currentTime
             }
         );
+    };
+    /**
+     * 播放停止触发事件
+     * @return {Void}
+     */
+    _pro.__onStop = function(){
+        this.__doStateChange(0);
+    };
+    /**
+     * 设置播放时间
+     * @protected
+     * @method {__setCurrentTime}
+     * @return {Void}
+     */
+    _pro.__setCurrentTime = function(_time){
+        this.__audio.seek(_time||0);
     };
 };
 NEJ.define(
