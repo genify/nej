@@ -1157,7 +1157,10 @@ var f = function(){
     _e._$startup = function(_options){
         window.dispatcher = _p._$$Dispatcher
                               ._$getInstance(_options);
-        _e._$parseTemplate((_options||_o).tid||'template-box');
+        _e._$parseTemplate(
+        	(_options||_o).tid||'template-box',
+        	location.config
+        );
         _v._$addEvent(
             document,'templateready',
             function(){

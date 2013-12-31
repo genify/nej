@@ -71,6 +71,8 @@ var f = function(){
      * [/code]
      * @api    {nej.e._$parseTemplate}
      * @param  {String|Node} 模板集合节点
+     * @param  {Object}      可选配置参数
+     * @config {String} root 根路径，相对规则
      * @return {nej.e}
      */
     _e._$parseTemplate = (function(){
@@ -81,10 +83,16 @@ var f = function(){
             _v._$dispatchEvent(document,'templateready');
             _v._$clearEvent(document,'templateready');
         };
-        var _doParseSrc = function(_textarea){
+        var _doParseSrc = function(_textarea,_options){
             var _src = _e._$dataset(_textarea,'src');
             if (!_src) return;
-            var _root = _textarea.ownerDocument.location.href;
+            _options = _options||_o;
+            var _root = _options.root;
+            if (!_root){
+            	_root = _textarea.ownerDocument.location.href;
+            }else{
+            	_root = _u._$absolute(_root);
+            }
             _src = _src.split(',');
             _u._$forEach(_src,
                 function(_value,_index,_list){
@@ -92,9 +100,9 @@ var f = function(){
                 });
             return _src;
         };
-        var _doAddStyle = function(_textarea){
+        var _doAddStyle = function(_textarea,_options){
             if (!_textarea) return;
-            var _src = _doParseSrc(_textarea);
+            var _src = _doParseSrc(_textarea,_options);
             if (!!_src)
                 _j._$queueStyle(_src,{version:
                    _e._$dataset(_textarea,'version')});
@@ -105,9 +113,9 @@ var f = function(){
             _e._$addScript(_value);
             _doCheckReady();
         };
-        var _doAddScript = function(_textarea){
+        var _doAddScript = function(_textarea,_options){
             if (!_textarea) return;
-            var _src = _doParseSrc(_textarea),
+            var _src = _doParseSrc(_textarea,_options),
                 _val = _textarea.value;
             if (!!_src){
                 _count++;
@@ -125,9 +133,9 @@ var f = function(){
             _e._$parseTemplate(_body);
             _doCheckReady();
         };
-        var _doAddHtml = function(_textarea){
+        var _doAddHtml = function(_textarea,_options){
             if (!_textarea) return;
-            var _src = _doParseSrc(_textarea)[0];
+            var _src = _doParseSrc(_textarea,_options)[0];
             if (!!_src){
                 _count++;
                 var _options = {version:_e._$dataset(
@@ -141,10 +149,10 @@ var f = function(){
             _e._$addTextTemplate(_id,_text||'');
             _doCheckReady();
         };
-        var _doAddTextResource = function(_textarea){
+        var _doAddTextResource = function(_textarea,_options){
             if (!_textarea||!_textarea.id) return;
             var _id = _textarea.id,
-                _src = _doParseSrc(_textarea)[0];
+                _src = _doParseSrc(_textarea,_options)[0];
             if (!!_src){
                 _count++;
                 var _url = _src+(_src.indexOf('?')<0?'?':'&')+
@@ -154,7 +162,7 @@ var f = function(){
                 window.setTimeout(_j._$request._$bind(_j,_url,_options),0);
             }
         };
-        var _doAddTemplate = function(_node){
+        var _doAddTemplate = function(_node,_options){
             var _type = _node.name.toLowerCase();
             switch(_type){
                 case 'jst':
@@ -167,16 +175,16 @@ var f = function(){
                     _e._$addNodeTemplate(_node.value||'',_node.id);
                 return;
                 case 'js':
-                    _doAddScript(_node);
+                    _doAddScript(_node,_options);
                 return;
                 case 'css':
-                    _doAddStyle(_node);
+                    _doAddStyle(_node,_options);
                 return;
                 case 'html':
-                    _doAddHtml(_node);
+                    _doAddHtml(_node,_options);
                 return;
                 case 'res':
-                    _doAddTextResource(_node);
+                    _doAddTextResource(_node,_options);
                 return;
             }
         };
@@ -186,12 +194,12 @@ var f = function(){
             event:'templateready',
             oneventadd:_doCheckReady
         });
-        return function(_element){
+        return function(_element,_options){
             _element = _e._$get(_element);
             if (!!_element){
                 var _list = _element.tagName=='TEXTAREA' ? [_element]
                           : _element.getElementsByTagName('textarea');
-                _u._$forEach(_list,_doAddTemplate);
+                _u._$forEach(_list,_doAddTemplate._$bind(null,_options));
                 _e._$remove(_element,!0);
             }
             _doCheckReady();
