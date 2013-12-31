@@ -199,7 +199,9 @@ var f = function(){
             if (!!_element){
                 var _list = _element.tagName=='TEXTAREA' ? [_element]
                           : _element.getElementsByTagName('textarea');
-                _u._$forEach(_list,_doAddTemplate._$bind(null,_options));
+                _u._$forEach(_list,function(_node){
+                	_doAddTemplate(_node,_options);
+                });
                 _e._$remove(_element,!0);
             }
             _doCheckReady();
