@@ -68,7 +68,7 @@ var f = function(){
         // flash event
         window.onflashevent = function(_event){
             var _id = decodeURIComponent(_event.target),
-                _type = _evnet.type.toLowerCase();
+                _type = _event.type.toLowerCase();
             // check id-type handler
             var _handler = _cache[_id+'-on'+_type];
             if (!!_handler){

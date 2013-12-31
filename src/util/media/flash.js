@@ -87,8 +87,8 @@ var f = function(){
      */
     _pro.__doPlay = function(){
         if (!!this.__audio){
-            this.__audio.setSrc(this.__source);
-            this.__audio.play();
+            this.__audio.nej_setSrc(this.__source);
+            this.__audio.nej_play();
         }else{
             this.__action = this.__doPlay;
         }
@@ -101,7 +101,7 @@ var f = function(){
      */
     _pro.__doPause = function(){
         if (!!this.__audio){
-            this.__audio.pause();
+            this.__audio.nej_pause();
         }else{
             this.__action = this.__doPause;
         }
@@ -114,7 +114,8 @@ var f = function(){
      */
     _pro.__doStop = function(){
         if (!!this.__audio){
-            this.__audio.stop();
+            this.__audio.nej_stop();
+            this.__onStop();
         }else{
             this.__action = this.__doStop;
         }
@@ -166,7 +167,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__setCurrentTime = function(_time){
-        this.__audio.seek(_time||0);
+        this.__audio.nej_seek(_time||0);
     };
 };
 NEJ.define(
