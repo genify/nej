@@ -55,7 +55,7 @@ var f = function(){
      */
     _pro.__initNodeTemplate = function(){
         _seed_html = _e._$addNodeTemplate(
-                     '<div class="'+_seed_css+'">'
+                     '<div class="'+this.__seed_css+'">'
                      +this.__doGenFontListXhtml({
                          style:'font-size'
                         ,xlist:this.constructor.list

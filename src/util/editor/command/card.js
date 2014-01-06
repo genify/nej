@@ -61,7 +61,8 @@ var f = function(){
         var _node = _options.target,
             _offset = _e._$offset(_node);
         this.__fopt.top = _offset.y+_node.offsetHeight+1;
-        this.__fopt.left = _offset.x;
+        this.__fopt.left = _offset.x-1;
+        this.__fopt.width = _node.clientWidth;
         this.__doShowCard();
         return this;
     };

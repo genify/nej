@@ -37,12 +37,15 @@ var f = function(){
      */
     _h.__saveRange = 
     _h.__saveRange._$aop(function(_event){
-        if (!!document.selection){
+        if (!!document.selection||
+            _p._$KERNEL.release>='7.0'){
             _event.stopped = !0;
             var _node = _event.args[0],
                 _doc = _h.__getDocument(_node),
                 _id = _e._$id(_doc);
-            _rcache[_id] = _doc.selection.createRange();
+            _rcache[_id] = _h.__getRange(
+                _h.__getWindow(_doc)
+            );
         }
     });
     /**
@@ -52,12 +55,19 @@ var f = function(){
      */
     _h.__focusRange = 
     _h.__focusRange._$aop(null,function(_event){
-        var _id = _e._$id(_h.
-                  __getDocument(
-                  _event.args[0])),
+        var _doc = _h.__getDocument(_event.args[0]),
+            _id = _e._$id(_doc),
             _range = _rcache[_id];
         if (!!_range){
-            _range.select();
+            if (!!_range.select){
+                _range.select();
+            }else{
+                // for ie11
+                var _selection = _h.__getSelection(
+                    _h.__getWindow(_doc)
+                );
+                _selection.addRange(_range);
+            }
             delete _rcache[_id];
         }
     });
@@ -68,11 +78,13 @@ var f = function(){
      */
     _h.__clearRange = 
     _h.__clearRange._$aop(null,function(_event){
-        var _id = _e._$id(_h.
-                  __getDocument(
-                  _event.args[0]));
+        var _id = _e._$id(
+            _h.__getDocument(_event.args[0])
+        );
         delete _rcache[_id];
     });
 };
-NEJ.define('{lib}patched/com/editor.td.js',
-      ['{lib}patched/editor.js'],f);
+NEJ.define(
+    '{lib}patched/com/editor.td.js',[
+    '{lib}patched/editor.js'
+],f);

@@ -13,23 +13,10 @@ var f = function(){
         _u = _('nej.u'),
         _i = _('nej.ui'),
         _p = _('nej.ui.cmd'),
-        _proFontCard,
-        _supFontCard;
+        _pro,
+        _seed_css,
+        _seed_fnt;
     if (!!_p._$$FontCard) return;
-    // ui css text
-    var _seed_css = _e._$pushCSSText('\
-        .#<uispace>{border:1px solid #9FAC87;font-size:12px;text-align:left;}\
-        .#<uispace> .zitm{display:block;position:relative;margin:1px;outline:none;padding:2px 0 2px 8px;border:1px solid #ddd;color:#000;background-color:#fff;text-decoration:none;}\
-        .#<uispace> .zitm:hover{background-color:#e5e5e1;text-decoration:none;}\
-        .#<uispace> .zitm .ztip{position:absolute;top:2px;right:5px;font-size:10px;}');
-    // ui font size list
-    var _seed_fnt = _e._$addHtmlTemplate('\
-        {list xlist as x}\
-        <a class="zitm" hidefocus="true" style="${style}:${x.style|default:x.name};" data-index="${x_index}">\
-          ${x.name}\
-          {if !!x.tip}<span class="ztip">${x.tip}</span>{/if}\
-        </a>\
-        {/list}');
     /**
      * 字体字号选择卡片基类
      * @class   {nej.ui.cmd._$$FontCard} 字体字号选择卡片基类
@@ -43,8 +30,20 @@ var f = function(){
      * 
      */
     _p._$$FontCard = NEJ.C();
-      _proFontCard = _p._$$FontCard._$extend(_i._$$CardWrapper);
-      _supFontCard = _p._$$FontCard._$supro;
+    _pro = _p._$$FontCard._$extend(_i._$$CardWrapper);
+    /**
+     * 控件重置
+     * @return {Void}
+     */
+    _pro.__reset = function(_options){
+        this.__supReset(_options);
+        if (_options.width!=null){
+            _e._$setStyle(
+                this.__body,'width',
+                _options.width+'px'
+            );
+        }
+    };
     /**
      * 取字体字号提示文字
      * @static
@@ -64,7 +63,7 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proFontCard.__destroy = function(){
+    _pro.__destroy = function(){
         this.__supDestroy();
         delete this.__flist;
     };
@@ -74,7 +73,7 @@ var f = function(){
      * @method {__initXGui}
      * @return {Void}
      */
-    _proFontCard.__initXGui = function(){
+    _pro.__initXGui = function(){
         this.__seed_css  = _seed_css;
     };
     /**
@@ -83,10 +82,12 @@ var f = function(){
      * @method {__initNode}
      * @return {Void}
      */
-    _proFontCard.__initNode = function(){
+    _pro.__initNode = function(){
         this.__supInitNode();
-        _v._$addEvent(this.__body,'click',
-                      this.__onFontSelect._$bind(this));
+        _v._$addEvent(
+            this.__body,'click',
+            this.__onFontSelect._$bind(this)
+        );
     };
     /**
      * 构建字体大小选择列表
@@ -95,7 +96,7 @@ var f = function(){
      * @param  {Object} 字体大小列表信息
      * @return {Void}
      */
-    _proFontCard.__doGenFontListXhtml = function(_data){
+    _pro.__doGenFontListXhtml = function(_data){
         return _e._$getHtmlTemplate(_seed_fnt,_data);
     };
     /**
@@ -105,7 +106,7 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    _proFontCard.__onFontSelect = (function(){
+    _pro.__onFontSelect = (function(){
         var _doFilter = function(_node){
             return !isNaN(parseInt(_e._$dataset(_node,'index')));
         };
@@ -119,6 +120,24 @@ var f = function(){
             this._$hide();
         };
     })();
+    // ui css text
+    _seed_css = _e._$pushCSSText('\
+        .#<uispace>{border:1px solid #9FAC87;font-size:12px;text-align:left;}\
+        .#<uispace> .zitm{display:block;position:relative;margin:1px;outline:none;padding:2px 0 2px 8px;border:1px solid #ddd;color:#000;background-color:#fff;text-decoration:none;}\
+        .#<uispace> .zitm:hover{background-color:#e5e5e1;text-decoration:none;}\
+        .#<uispace> .zitm .ztip{position:absolute;top:2px;right:5px;font-size:10px;}\
+    ');
+    // ui font size list
+    _seed_fnt = _e._$addHtmlTemplate('\
+        {list xlist as x}\
+        <a class="zitm" hidefocus="true" style="${style}:${x.style|default:x.name};" data-index="${x_index}">\
+          ${x.name}\
+          {if !!x.tip}<span class="ztip">${x.tip}</span>{/if}\
+        </a>\
+        {/list}\
+    ');
 };
-NEJ.define('{lib}ui/editor/command/font.js',
-      ['{lib}ui/layer/card.wrapper.js'],f);
+NEJ.define(
+    '{lib}ui/editor/command/font.js',[
+    '{lib}ui/layer/card.wrapper.js'
+],f);
