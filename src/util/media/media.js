@@ -101,6 +101,11 @@ var f = function(){
      * @event  {ontimeupdate} 
      * @param  {Object} 可选配置参数
      * 
+     * [hr]
+     * 播放错误触发事件
+     * @event  {onerror}
+     * @param  {Object} 错误信息
+     * 
      */
     _p._$$Media = NEJ.C();
     _pro = _p._$$Media._$extend(_p._$$Event);
@@ -147,6 +152,13 @@ var f = function(){
      * @return {Void}
      */
     _pro.__doStop = _f;
+    /**
+     * 播放错误
+     * @return {Void}
+     */
+    _pro.__doError = function(){
+        this.__state = 0;
+    };
     /**
      * 设置播放时间
      * @protected

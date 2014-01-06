@@ -67,7 +67,8 @@ var f = function(){
                 onpause:this.__onPause._$bind(this),
                 onseking:this.__onLoading._$bind(this),
                 onprogress:this.__onLoading._$bind(this),
-                ontimeupdate:this.__onPlaying._$bind(this)
+                ontimeupdate:this.__onPlaying._$bind(this),
+                onerror:this.__onError._$bind(this)
             });
         };
     })();
@@ -159,6 +160,17 @@ var f = function(){
      */
     _pro.__onStop = function(){
         this.__doStateChange(0);
+    };
+    /**
+     * 播放错误事件
+     * @param  {Event} 事件信息
+     * @return {Void}
+     */
+    _pro.__onError = function(_event){
+        this.__doError();
+        this._$dispatchEvent('onerror',{
+            code:_event.code
+        });
     };
     /**
      * 设置播放时间

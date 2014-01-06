@@ -64,6 +64,9 @@ var f = function(){
         ],[
             this.__audio,'ended',
             this.__onStop._$bind(this)
+        ],[
+            this.__audio,'error',
+            this.__onError._$bind(this)
         ]]);
         this.__supReset(_options);
     };
@@ -153,6 +156,18 @@ var f = function(){
                 current:this.__audio.currentTime
             }
         );
+    };
+    /**
+     * 播放错误事件
+     * @param  {Event} 事件信息
+     * @return {Void}
+     */
+    _pro.__onError = function(_event){
+        this.__doError();
+        var _error = this.__audio.error;
+        this._$dispatchEvent('onerror',{
+            code:_error.code
+        });
     };
     /**
      * 设置播放时间
