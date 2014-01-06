@@ -9,7 +9,8 @@ var f = function(){
     // variable declaration
     var _  = NEJ.P,
         _e = _('nej.e'),
-        _u = _('nej.u');
+        _u = _('nej.u'),
+        _ext = {};
     // interface
     /**
      * 取模板随机数种子<br />
@@ -47,7 +48,7 @@ var f = function(){
         return function(_sn,_data,_extend){
             _data = _data||{};
             _data.inline = _doInline;
-            _extend = _extend||{};
+            _extend = NEJ.X(NEJ.X({},_ext),_extend);
             _extend.rand = _u._$randNumberString;
             _extend.format = _u._$format;
             _extend.escape = _u._$escape;
@@ -104,6 +105,33 @@ var f = function(){
             _parent.innerHTML = 
                  _e._$getHtmlTemplate(_sn,_data,_extend);
         return this;
+    };
+    /**
+     * 注册JST扩展方法
+     * [code type="html"]
+     *   <textarea name="jst" id="abc">
+     *     <div>
+     *       <p>${name|a|b}</p>
+     *     </div>
+     *   </textarea>
+     * [/code]
+     * [code]
+     *   // 注册扩展方法 a和b
+     *   nej.e._$registJSTExt({
+     *       a:function(){},
+     *       b:function(){}
+     *   });
+     *   // 模板整合数据
+     *   nej.e._$renderHtmlTemplate(
+     *       'box','abc',{name:'jack'}
+     *   );
+     * [/code]
+     * @api    {nej.e._$registJSTExt}
+     * @param  {Object} 扩展方法
+     * @return {Void}
+     */
+    _e._$registJSTExt = function(_map){
+        NEJ.X(_ext,_map);
     };
     /**
      * 导出JST模版缓存对象，仅用于调试
