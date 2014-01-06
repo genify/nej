@@ -20,7 +20,6 @@ var f = function(){
         __reg_st1  = /(?:<[^>]* style)='([^']*)'/gi,
         __reg_st2  = /(?:<[^>]* style)=([^>\s]*)/gi,
         __reg_bgc  = /(?:background-color:|text-align:|color:)([^;]*)(;)*/gi;//clear class,lang
-        
     /**
      * 取节点所在的窗体对象
      * @param  {Node} _node 节点
@@ -213,6 +212,8 @@ var f = function(){
     })();
     
 };
-NEJ.define('{lib}patched/editor.js',
-      ['{lib}base/platform.js'
-      ,'{lib}base/element.js'],f);
+NEJ.define(
+    '{lib}patched/editor.js',[
+    '{lib}base/platform.js',
+    '{lib}base/element.js'
+],f);
