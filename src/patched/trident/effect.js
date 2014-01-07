@@ -95,6 +95,7 @@ var f = function(){
                 var _effect = _node.effects[_index];
                 if(!_effect) return;
                 	  _effect = _cutr._$recycle(_effect);
+                    _node.effects[_index] = _effect;
                 if(_node.isLastOne === _index)
                 	_stop.apply(this);
             }._$bind(this,_index)
@@ -141,7 +142,6 @@ var f = function(){
   		_u._$forEach(_node.effects,function(_o){
   			_o._$stop();
   		});
-      _node.effects = [];
   		return this;
     });
 

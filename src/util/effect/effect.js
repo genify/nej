@@ -252,8 +252,8 @@ var f = function(){
      * @return {nej.ut}
      */
     _proEffect._$stop = function(){
-        _h.__onStop(this.__node,this.__propMap,this.__onstop);
         this.__intvl = window.clearInterval(this.__intvl);
+        _h.__onStop(this.__node,this.__propMap,this.__onstop);
         return this;
     };
 
