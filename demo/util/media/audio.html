@@ -23,10 +23,14 @@
                 _e = NEJ.P('nej.e');
             _v._$addEvent(
                 'play','click',function(){
-                    _e._$playBgSound('./a.mp3',{
+                    _e._$playBgSound('./b.mp3',{
                         extra:+new Date,
+                        retry:5,
                         onstatechange:function(_event){
                             console.log(_event.state+' -> '+_event.data);
+                        },
+                        onerror:function(_event){
+                            console.log('play error -> '+_event.code);
                         }
                     });
                 }
