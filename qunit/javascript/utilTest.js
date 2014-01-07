@@ -164,7 +164,7 @@ var f = function(){
 module('依赖模块');
 test('define',function(){expect(0);
     define('{pro}utilTest.js',
-          ['{lib}base/util.js','{pro}log.js'],f);
+          ['{lib}base/util.js'],f);
 });
 
 
