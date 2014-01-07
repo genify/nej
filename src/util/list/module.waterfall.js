@@ -126,8 +126,8 @@ var f = function(){
             this.__sbody,'scroll',
             this.__onCheckScroll._$bind(this)
         ]]);
-        var _delta = parseInt(_options.delta);
-        if (isNaN(_delta)) _delta = 30;
+        var _delta = _options.delta;
+        if (_delta==null) _delta = 30;
         this.__delta = Math.max(0,_delta);
         var _count = parseInt(_options.count)||0;
         this.__count = Math.max(0,_count);
