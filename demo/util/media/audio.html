@@ -23,7 +23,7 @@
                 _e = NEJ.P('nej.e');
             _v._$addEvent(
                 'play','click',function(){
-                    _e._$playBgSound('./b.mp3',{
+                    _e._$playBgSound('./a.mp3',{
                         extra:+new Date,
                         retry:5,
                         onstatechange:function(_event){
@@ -33,11 +33,6 @@
                             console.log('play error -> '+_event.code);
                         }
                     });
-                }
-            );
-            _v._$addEvent(
-                'pause','click',function(){
-                    _e._$pauseBgSound();
                 }
             );
             _v._$addEvent(
