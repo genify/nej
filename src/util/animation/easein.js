@@ -7,8 +7,9 @@
  */
 var f = function(){
     // variable declaration
-    var _p = NEJ.P('nej.ut'),
-        _proAnimEaseIn;
+    var _  = NEJ.P,
+        _p = _('nej.ut'),
+        _pro;
     if (!!_p._$$AnimEaseIn) return;
     /**
      * 先慢后快动画<br/>
@@ -46,7 +47,7 @@ var f = function(){
      * @config  {String} timing   时间函数，easein
      */
     _p._$$AnimEaseIn = NEJ.C();
-      _proAnimEaseIn = _p._$$AnimEaseIn._$extend(_p._$$AnimBezier);
+    _pro = _p._$$AnimEaseIn._$extend(_p._$$AnimBezier);
     /**
      * 控件重置
      * @protected
@@ -55,11 +56,13 @@ var f = function(){
      * @config {String} timing   时间函数，easein
      * @return {Void}
      */
-    _proAnimEaseIn.__reset = function(_options){
+    _pro.__reset = function(_options){
         _options = NEJ.X({},_options);
         _options.timing = 'easein';
         this.__supReset(_options);
     };
 };
-NEJ.define('{lib}util/animation/easein.js',
-          ['{lib}util/animation/bezier.js'],f);
+NEJ.define(
+    '{lib}util/animation/easein.js',[
+    '{lib}util/animation/bezier.js'
+],f);

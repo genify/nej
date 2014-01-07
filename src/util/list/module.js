@@ -456,6 +456,7 @@ var f = function(){
             this.__iopt.xlist = _list;
             this.__iopt.beg = _offset;
             this.__iopt.end = Math.min(_list.length,_offset+_limit)-1;
+            this.__iopt.act = 'list';
             var _html = _e._$getHtmlTemplate(this.__ikey,this.__iopt);
             this.__doShowListByJST(_html);
         }else{
@@ -565,6 +566,7 @@ var f = function(){
                 this.__iopt.xlist = _xlist;
                 this.__iopt.beg = 0;
                 this.__iopt.end = 0;
+                this.__iopt.act = 'add';
                 this.__doShowListByJST(
                     _e._$getHtmlTemplate(
                         this.__ikey,this.__iopt
@@ -770,6 +772,7 @@ var f = function(){
             this.__iopt.list = _list;
             this.__iopt.beg  = _index;
             this.__iopt.end  = _index;
+            this.__iopt.act  = 'update';
             var _html = _e._$getHtmlTemplate(
                         this.__ikey,this.__iopt);
             _node.insertAdjacentHTML('afterEnd',_html);

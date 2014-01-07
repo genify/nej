@@ -7,10 +7,10 @@
  */
 var f = function(){
     // variable declaration
-    var _o = NEJ.O,
-        _p = NEJ.P('nej.ut'),
-        _proAnimBounce,
-        _supAnimBounce;
+    var _  = NEJ.P,
+        _o = NEJ.O,
+        _p = _('nej.ut'),
+        _pro,_sup;
     if (!!_p._$$AnimBounce) return;
     /**
      * 弹跳动画
@@ -42,8 +42,8 @@ var f = function(){
      * @config  {Number} springtension 张紧度，0-1之间，值越小弹跳距离越大
      */
     _p._$$AnimBounce = NEJ.C();
-      _proAnimBounce = _p._$$AnimBounce._$extend(_p._$$Animation);
-      _supAnimBounce = _p._$$AnimBounce._$supro;
+    _pro = _p._$$AnimBounce._$extend(_p._$$Animation);
+    _sup = _p._$$AnimBounce._$supro;
     /**
      * 控件重置
      * @protected
@@ -53,7 +53,7 @@ var f = function(){
      * @config {Number} springtension 张紧度，0-1之间，值越小弹跳距离越大
      * @return {Void}
      */
-    _proAnimBounce.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
         this.__acceleration = _options.acceleration||30;
         this.__springtension = _options.springtension||0.3;
@@ -65,7 +65,7 @@ var f = function(){
      * @param  {Number} 时间值
      * @return {Void}
      */
-    _proAnimBounce.__doAnimationFrame = function(_time){
+    _pro.__doAnimationFrame = function(_time){
         var _elapse = _time-this.__begin.time,
             _factor = _elapse/this.__acceleration,
             _pwtime = _factor*Math.pow(Math.E,-this.__springtension*_factor),
@@ -102,11 +102,13 @@ var f = function(){
      * @method {_$stop}
      * @return {nej.ut._$$AnimBounce}
      */
-    _proAnimBounce._$stop = function(){
+    _pro._$stop = function(){
         this._$dispatchEvent('onupdate',{offset:this.__begin.offset});
-        _supAnimBounce._$stop.apply(this,arguments);
+        _sup._$stop.apply(this,arguments);
         return this;
     };
 };
-NEJ.define('{lib}util/animation/bounce.js',
-      ['{lib}util/animation/animation.js'],f);
+NEJ.define(
+    '{lib}util/animation/bounce.js',[
+    '{lib}util/animation/animation.js'
+],f);

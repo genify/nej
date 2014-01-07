@@ -7,9 +7,10 @@
  */
 var f = function(){
     // variable declaration
-    var _o = NEJ.O,
-        _p = NEJ.P('nej.ut'),
-        _proAnimDecelerate;
+    var _  =NEJ.P,
+        _o = NEJ.O,
+        _p = _('nej.ut'),
+        _pro;
     if (!!_p._$$AnimDecelerate) return;
     /**
      * 减速动画
@@ -51,7 +52,7 @@ var f = function(){
      * @config  {Number}  acceleration 加速度，值越小减速越快
      */
     _p._$$AnimDecelerate = NEJ.C();
-      _proAnimDecelerate = _p._$$AnimDecelerate._$extend(_p._$$Animation);
+    _pro = _p._$$AnimDecelerate._$extend(_p._$$Animation);
     /**
      * 控件重置
      * @protected
@@ -59,7 +60,7 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proAnimDecelerate.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
         this.__friction = _options.friction||0.5;
         this.__theta = Math.log(1-(this.__friction/10));
@@ -72,7 +73,7 @@ var f = function(){
      * @param  {Number}  时间值
      * @return {Boolean} 是否停止
      */
-    _proAnimDecelerate.__doAnimationFrame = function(_time){
+    _pro.__doAnimationFrame = function(_time){
         var _factor = Math.exp((_time-this.__begin.time)/this.__acceleration*this.__theta),
             _offset = this.__begin.offset-this.__begin.velocity*(1-_factor)/this.__theta,
             _velocity = this.__begin.velocity*_factor,
@@ -84,5 +85,7 @@ var f = function(){
         return _stop;
     };
 };
-NEJ.define('{lib}util/animation/decelerate.js',
-      ['{lib}util/animation/animation.js'],f);
+NEJ.define(
+    '{lib}util/animation/decelerate.js',[
+    '{lib}util/animation/animation.js'
+],f);

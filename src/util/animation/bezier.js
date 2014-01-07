@@ -14,8 +14,7 @@ var f = function(){
         _o = NEJ.O,
         _u = _('nej.u'),
         _p = _('nej.ut'),
-        _proAnimBezier,
-        _supAnimBezier;
+        _pro,_sup;
     if (!!_p._$$AnimBezier) return;
     /**
      * 贝塞尔曲线算法
@@ -30,8 +29,8 @@ var f = function(){
      * @config  {String} timing   时间函数，默认为ease，ease/easein/easeout/easeinout/linear/cubic-bezier(x1,y1,x2,y2)
      */
     _p._$$AnimBezier = NEJ.C();
-      _proAnimBezier = _p._$$AnimBezier._$extend(_p._$$Animation);
-      _supAnimBezier = _p._$$AnimBezier._$supro;
+    _pro = _p._$$AnimBezier._$extend(_p._$$Animation);
+    _sup = _p._$$AnimBezier._$supro;
     /**
      * 控件重置
      * @protected
@@ -41,7 +40,7 @@ var f = function(){
      * @config {String} timing   时间函数，默认为ease，ease/easein/easeout/easeinout/linear/cubic-bezier(x1,y1,x2,y2)
      * @return {Void}
      */
-    _proAnimBezier.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
         this.__duration = _options.duration||200;
         this.__epsilon  = 1/(200*this.__duration);
@@ -54,7 +53,7 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proAnimBezier.__destroy = function(){
+    _pro.__destroy = function(){
         this.__supDestroy();
         delete this.__pointer;
         delete this.__coefficient;
@@ -66,7 +65,7 @@ var f = function(){
      * @param  {String} 时间动画
      * @return {Void}
      */
-    _proAnimBezier.__doParseTiming = (function(){
+    _pro.__doParseTiming = (function(){
         var _reg0 = /^cubic\-bezier\((.*?)\)$/i,
             _reg1 = /\s*,\s*/i,
             _pointers = {
@@ -96,7 +95,7 @@ var f = function(){
      * @method {__doCalPolynomialCoefficients}
      * @return {Void}
      */
-    _proAnimBezier.__doCalPolynomialCoefficients = function(){
+    _pro.__doCalPolynomialCoefficients = function(){
         var _pt = this.__pointer,
             _cx = 3*_pt[0],
             _bx = 3*(_pt[2]-_pt[0])-_cx,
@@ -117,7 +116,7 @@ var f = function(){
      * @param  {Number} 当前时间
      * @return {Float}  终点接近率
      */
-    _proAnimBezier.__doCalCubicBezierAtTime = (function(){
+    _pro.__doCalCubicBezierAtTime = (function(){
         var _doSampleCurveX = function(_time,_coef){
             return ((_coef.ax*_time+_coef.bx)*_time+_coef.cx)*_time;
         };
@@ -169,7 +168,7 @@ var f = function(){
      * @param  {Number} 时间值
      * @return {Boolean} 是否停止
      */
-    _proAnimBezier.__doAnimationFrame = function(_time){
+    _pro.__doAnimationFrame = function(_time){
         var _delta   = _time-this.__begin.time,
             _percent = this.__doCalCubicBezierAtTime(_delta),
             _offset  = _u._$fixed(this.__begin.offset*(1-_percent)+
@@ -206,11 +205,13 @@ var f = function(){
      * @method {_$stop}
      * @return {nej.ut._$$AnimBezier}
      */
-    _proAnimBezier._$stop = function(){
+    _pro._$stop = function(){
         this._$dispatchEvent('onupdate',{offset:this.__end.offset});
-        _supAnimBezier._$stop.apply(this,arguments);
+        _sup._$stop.apply(this,arguments);
         return this;
     };
 };
-NEJ.define('{lib}util/animation/bezier.js',
-      ['{lib}util/animation/animation.js'],f);
+NEJ.define(
+    '{lib}util/animation/bezier.js',[
+    '{lib}util/animation/animation.js'
+],f);

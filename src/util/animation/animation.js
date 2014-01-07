@@ -11,7 +11,7 @@ var f = function(){
         _o = NEJ.O,
         _f = NEJ.F,
         _p = _('nej.ut'),
-        _proAnimation;
+        _pro;
     if (!!_p._$$Animation) return;
     /**
      * 动画基类
@@ -19,13 +19,11 @@ var f = function(){
      * @extends {nej.ut._$$Event}
      * 
      * @param   {Object} 可选配置参数，已处理参数列表如下
-     * @config  {Object} to         动画结束信息
-     * @config  {Object} from       动画初始信息
-     * @config  {Function} onstop   动画结束回调事件
-     * @config  {Function} onupdate 动画更新回调事件
+     * @config  {Object} to    动画结束信息
+     * @config  {Object} from  动画初始信息
+     * @config  {Number} delay 延时时间，单位毫秒，默认0
      * 
      * [hr]
-     * 
      * 动画结束回调事件
      * [code]
      *   // 监测onstop事件
@@ -45,8 +43,7 @@ var f = function(){
      * @event  {onstop} 动画停止的回调
      * 
      * [hr]
-     * 
-     * 动画结束回调事件
+     * 动画过程回调事件
      * [code]
      *   // 监测onupdate事件
      *   var options = {
@@ -64,14 +61,14 @@ var f = function(){
      *     }
      *  var _bounce = nej.ut._$$AnimBounce._$allocate(options);
      * [/code]
-     * @event  {onupdate}         一帧动画结束的回调
+     * @event  {onupdate}        一帧动画结束的回调
      * @param  {Object}          可选配置参数
      * @config {Number} offset   偏移量
      * @config {Number} velocity 初速度(px/s)
      * 
      */
     _p._$$Animation = NEJ.C();
-      _proAnimation = _p._$$Animation._$extend(_p._$$Event);
+    _pro = _p._$$Animation._$extend(_p._$$Event);
     /**
      * 控件重置
      * @protected
@@ -81,10 +78,13 @@ var f = function(){
      * @config {Number} from      起始坐标
      * @return {Void}
      */
-    _proAnimation.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
         this.__end = _options.to||_o;
         this.__begin = _options.from||{};
+        this.__delay = Math.max(
+            0,parseInt(_options.delay)||0
+        );
     };
     /**
      * 控件销毁
@@ -92,9 +92,13 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proAnimation.__destroy = function(){
+    _pro.__destroy = function(){
         this.__supDestroy();
         this._$stop();
+        if (!!this.__dtime){
+            window.clearTimeout(this.__dtime);
+            delete this.__dtime;
+        }
         delete this.__end;
         delete this.__begin;
     };
@@ -105,7 +109,7 @@ var f = function(){
      * @param  {Number} 时间值
      * @return {Void}
      */
-    _proAnimation.__onAnimationFrame = function(_time){
+    _pro.__onAnimationFrame = function(_time){
         if (!this.__begin) return;
         if ((''+_time).indexOf('.')>=0)
             _time = +new Date;
@@ -123,7 +127,7 @@ var f = function(){
      * @param  {Number} _time 时间值
      * @return {Boolean}      是否停止动画
      */
-    _proAnimation.__doAnimationFrame = _f;
+    _pro.__doAnimationFrame = _f;
     /**
      * 注册动画监听事件<br/>
      * 脚本举例
@@ -145,12 +149,22 @@ var f = function(){
      * @method {_$play}
      * @return {nej.ut._$$Animation}
      */
-    _proAnimation._$play = function(){
-        this.__begin.time = +new Date;
-        this.__timer = requestAnimationFrame(
-                       this.__onAnimationFrame._$bind(this));
-        return this;
-    };
+    _pro._$play = (function(){
+        var _doPlayAnim = function(){
+            this.__dtime = window.clearTimeout(this.__dtime);
+            this.__begin.time = +new Date;
+            this.__timer = requestAnimationFrame(
+                this.__onAnimationFrame._$bind(this)
+            );
+        };
+        return function(){
+            this.__dtime = window.setTimeout(
+                _doPlayAnim._$bind(this),
+                this.__delay
+            );
+            return this;
+        };
+    })();
     /**
      * 取消动画监听事件<br/>
      * 脚本举例
@@ -175,12 +189,14 @@ var f = function(){
      * @method {_$stop}
      * @return {nej.ut._$$Animation}
      */
-    _proAnimation._$stop = function(){
+    _pro._$stop = function(){
         this.__timer = cancelRequestAnimationFrame(this.__timer);
         this._$dispatchEvent('onstop');
         return this;
     };
 };
-NEJ.define('{lib}util/animation/animation.js',
-      ['{lib}util/event.js'
-      ,'{lib}util/timer/animation.js'],f);
+NEJ.define(
+    '{lib}util/animation/animation.js',[
+    '{lib}util/event.js',
+    '{lib}util/timer/animation.js'
+],f);
