@@ -197,8 +197,7 @@ var f = function() {
     _e._$stopEffect = function(_node){
         _node = _e._$get(_node);
         if(_node.effect && _node.effect._$stop()){
-            if(!!_node.effect)
-                _node.effect = _p._$$Effect._$recycle(_node.effect);
+            return this;
         }
         return this;
     };
@@ -256,8 +255,8 @@ var f = function() {
                 ],
                 styles:['top:'+_top,'left:'+_left],
                 onstop:function(_state){
-				    _options.onstop.call(null,_state);
                     _node.effect = _p._$$Effect._$recycle(_node.effect);
+				    _options.onstop.call(null,_state);
                 },
                 onplaystate:_options.onplaystate._$bind(_node.effect)
             }
@@ -316,8 +315,8 @@ var f = function() {
                     ],
                     styles:_styles,
                     onstop:function(_state){
-                        _options.onstop.call(null,_state);
                         _node.effect = _p._$$Effect._$recycle(_node.effect);
+                        _options.onstop.call(null,_state);
                     },
                     onplaystate:_options.onplaystate._$bind(_node.effect)
                 }
@@ -382,8 +381,8 @@ var f = function() {
                         ],
                         styles:[_type + ':' + _value],
                         onstop:function(_state){
-                            _options.onstop.call(null,_state);
                             _node.effect = _p._$$Effect._$recycle(_node.effect);
+                            _options.onstop.call(null,_state);
                             _sto = window.clearTimeout(_sto);
                         },
                         onplaystate:_options.onplaystate._$bind(_node.effect)
@@ -406,8 +405,8 @@ var f = function() {
                         onstop:function(_state){
                             _e._$setStyle(_node,'visibility','hidden');
                             _e._$setStyle(_node,_type,'auto');
-                            _options.onstop.call(null,_state);
                             _node.effect = _p._$$Effect._$recycle(_node.effect);
+                            _options.onstop.call(null,_state);
                             _sto = window.clearTimeout(_sto);
                         },
                         onplaystate:_options.onplaystate._$bind(_node.effect)

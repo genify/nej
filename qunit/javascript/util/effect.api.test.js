@@ -68,7 +68,7 @@ var f = function() {
             //         // console.log(_event.left);
             //     }
             // });
-            _e._$silde('box2','left:-=300',{
+            _e._$slide('box2','left:-=300',{
                 timing:'ease-out',
                 delay:0,
                 duration:5,
