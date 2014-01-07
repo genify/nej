@@ -46,6 +46,7 @@ var f = function(){
      * @config {String}      name     单个文件选择支持指定提交时文件名称
      * @config {String}      clazz    表单样式名称，可用于控制表单位置
      * @config {Boolean}     multiple 是否允许多选，默认单选
+     * @config {String}      accept   文件类型过滤，如image/*或者.png，多个类型用逗号分隔
      * @config {Function}    onchange 文件选择变化触发回调，{form:form,id:'xxx'}
      *                                - form 文件选择控件封装表单对象
      *                                - id   当前变化的文件选择控件的ID
@@ -78,10 +79,14 @@ var f = function(){
             }
             _cch.pid = _e._$id(_parent);
         };
-        var _doAppendFile = function(_id){
+        var _doAppendFile = function(_id,_accept){
+            _accept = _accept||'';
+            if (!!_accept){
+                _accept = 'accept="'+_accept+'"';
+            }
             var _cch = _cache[_id],
                 _fid = _id+"-"+_cch.nmb,
-                _file = _e._$html2node('<input type="file" contenteditable="false" id="'+_fid+'"/>');
+                _file = _e._$html2node('<input type="file" '+_accept+' contenteditable="false" id="'+_fid+'"/>');
             _cch.nmb++;
             _e._$get(_cch.pid).appendChild(_file);
             _v._$addEvent(_file,'change',_onFileChange);
@@ -95,8 +100,8 @@ var f = function(){
                 _cch = _cache[_arr[0]];
             if (!_element.value) return;
             if (_cch.multiple){
-                _e._$get(_cch.lab)
-                  .htmlFor = _doAppendFile(_arr[0]);
+                _e._$get(_cch.lab).htmlFor = 
+                    _doAppendFile(_arr[0],_cch.accept);
             }else if(!!_cch.name){
                 _element.name = _cch.name;
             }
@@ -122,9 +127,11 @@ var f = function(){
             _cch.nmb = 0;
             _cch.name = _options.name;
             _cch.lab = _e._$id(_element);
+            _cch.accept = _options.accept||'';
             _cch.multiple = !!_options.multiple;
             _cch.onchange = _options.onchange||_f;
-            _element.htmlFor = _doAppendFile(_id);
+            _element.htmlFor = 
+                _doAppendFile(_id,_cch.accept);
             _h.__handleFileLabelClick(_element);
         };
     })();
