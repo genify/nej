@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>test download</title>
+    <meta charset="utf-8"/>
+  </head>
+  <body>
+    <!--img src="./test.jpg" id="y"/-->
+    <a href="#" id="xx">download</a>
+    <script src="../../src/define.js?pro=./"></script>
+    <script>
+      define(['{lib}util/file/save.js'],
+      function(){
+          nej.e._$bindSaveAsAction('xx',{
+              url:'./test.txt',
+              name:'a.txt'
+          });
+      });
+    </script>
+  </body>
+</html>
