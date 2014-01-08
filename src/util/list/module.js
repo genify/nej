@@ -764,9 +764,7 @@ var f = function(){
             var _item = _e._$getItemById(_id);
             if (!!_item) _item._$refresh(_event.data);
         }else{
-            var _node = _e._$get(
-                this.__getItemBodyId(_id)
-            );
+            var _node = this._$getItemBody(_id);
             if (!_node) return;
             var _list = this.__cache._$getListInCache(_event.key),
                 _index = _u._$indexOf(_list,_event.data);
@@ -776,7 +774,8 @@ var f = function(){
             this.__iopt.end  = _index;
             this.__iopt.act  = 'update';
             var _html = _e._$getHtmlTemplate(
-                        this.__ikey,this.__iopt);
+                this.__ikey,this.__iopt
+            );
             _node.insertAdjacentHTML('afterEnd',_html);
             _e._$remove(_node);
         }
@@ -952,6 +951,25 @@ var f = function(){
      */
     _pro._$getPager = function(){
         return this.__pager;
+    };
+    /**
+     * 取列表项节点
+     * @param  {String} 数据标识
+     * @return {Node}   节点
+     */
+    _pro._$getItemBody = function(_id){
+        if (!!this.__ikey){
+            // render by jst
+            return _e._$get(
+                this.__getItemBodyId(_id)
+            );
+        }else{
+            // render by item
+            var _item = _e._$getItemById(_id);
+            if (!!_item){
+                return _item._$getBody();
+            }
+        }
     };
     /**
      * 判断列表是否载入完成s

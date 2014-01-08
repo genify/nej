@@ -386,9 +386,7 @@ var f = function(){
             }
             if (!!_item) _item._$recycle();
         }else{
-            var _node = _e._$get(
-                this.__getItemBodyId(_id)
-            );
+            var _node = this._$getItemBody(_id);
             if (!!_node) this.__offset -= 1;
             _e._$remove(_node);
         }
