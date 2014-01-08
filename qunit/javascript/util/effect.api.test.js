@@ -15,11 +15,11 @@ var f = function() {
                 duration:5,
                 opacity:0.01,
 	    		onstop:function(_event){
-                    console.log('stop')
+                    console.log('fadeout stop')
 	    			_fdi(_box);
 	    		},
 	    		onplaystate:function(_event){
-                    console.log(_event.opacity)
+                    console.log('fadeout' + _event.opacity)
 	    		}
 	    	})
     	};
@@ -28,10 +28,11 @@ var f = function() {
                 delay:1,
                 duration:2,
 	    		onstop:function(_event){
-                    console.log('stop')
+                    console.log('fadein stop')
 	    			_fdo(_box);
 	    		},
 	    		onplaystate:function(_event){
+                    console.log('fadein' + _event.opacity)
 	    		}
 	    	})
     	};
@@ -68,7 +69,7 @@ var f = function() {
             //         // console.log(_event.left);
             //     }
             // });
-            _e._$silde('box2','left:-=300',{
+            _e._$slide('box2','left:-=300',{
                 timing:'ease-out',
                 delay:0,
                 duration:5,
