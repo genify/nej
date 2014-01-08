@@ -25,7 +25,7 @@ var f = function(){
      * @config  {String|Node}   parent 列表容器节点
      * @config  {Number}        limit  每页显示数量，默认10项
      * @config  {Number}        first  首页显示数量，默认为limit的值
-     * @config  {String|Object} item   列表JST模版标识或者Item配置，{clazz:'xxx',klass:_$$Item||'jst key'}
+     * @config  {String|Object} item   列表JST模版标识或者Item配置，{clazz:'xxx',klass:_$$Item||'jst key',prefix:'xxx'}
      * @config  {Object}        cache  缓存配置信息，{key:'primary key',lkey:'list key',data:{},klass:_$$ListCache,list:[],clear:true,total:200}
      * @config  {Object}        pager  分页器配置信息，{parent:'xxx',klass:_$$Pager,index:2,fixed:true}
      * 
@@ -203,7 +203,8 @@ var f = function(){
      * @return {String} 节点ID
      */
     _pro.__getItemBodyId = function(_id){
-        return _id+''+_e._$getHtmlTemplateSeed();
+        var _prefix = (this.__iopt||_o).prefix||'';
+        return _prefix+_id+_e._$getHtmlTemplateSeed();
     };
     /**
      * 取当前偏移量的分页信息
@@ -763,8 +764,9 @@ var f = function(){
             var _item = _e._$getItemById(_id);
             if (!!_item) _item._$refresh(_event.data);
         }else{
-            var _node = _e._$get(_id+''+
-                        _e._$getHtmlTemplateSeed());
+            var _node = _e._$get(
+                this.__getItemBodyId(_id)
+            );
             if (!_node) return;
             var _list = this.__cache._$getListInCache(_event.key),
                 _index = _u._$indexOf(_list,_event.data);
