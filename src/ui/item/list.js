@@ -41,6 +41,7 @@ var f = function(){
      */
     _pro.__reset = function(_options){
         this.__pkey = _options.pkey||'id';
+        this.__prefix = _options.prefix||'';
         this.__supReset(_options);
     };
     /**
@@ -85,7 +86,8 @@ var f = function(){
      */
     _pro._$refresh = function(_data){
         _sup._$refresh.apply(this,arguments);
-        this.__id = this.__data[this.__pkey]||this.__genId();
+        var _id = this.__data[this.__pkey];
+        this.__id = (this.__prefix+_id)||this.__genId();
     };
 };
 NEJ.define(
