@@ -160,7 +160,7 @@ var f = function(){
             // save audio config
             _pcache[_key] = {
                 url:_url,
-                conf:_playing,
+                conf:_playing
             };
             // play current
             _doPlayAction(_key);
