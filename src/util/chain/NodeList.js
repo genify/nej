@@ -451,6 +451,7 @@ var f = function() {
                         _e.relatedTarget = related;
                     }
                 }
+                _e.which = _e.charCode != null ? _e.charCode : _e.keyCode;
                 if( !_e.which && _button !== undefined){
                     // http://api.jquery.com/event.which/ use which
                     _e.which = ( _button & 1 ? 1 : ( _button & 2 ? 3 : ( _button & 4 ? 2 : 0 ) ) );
