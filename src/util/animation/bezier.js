@@ -179,7 +179,7 @@ var f = function(){
             _offset = this.__end.offset;
             _stop = !0;
         }
-        this._$dispatchEvent('onupdate',{offset:_offset});
+        this._$dispatchEvent('onupdate',{offset:1*_offset});
         return _stop;
     };
     /**
