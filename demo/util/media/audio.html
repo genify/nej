@@ -31,6 +31,9 @@
                         },
                         onerror:function(_event){
                             console.log('play error -> '+_event.code);
+                        },
+                        ontimeupdate:function(_event){
+                            console.log(_event.current+':'+_event.duration);
                         }
                     });
                 }

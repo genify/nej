@@ -57,7 +57,8 @@ var f = function(){
      *                                   2 | 当前播放状态
      *                                   3 | 当前暂停状态
      *                                  [/ntb]
-     * @config  {Function} onerror      播放异常回调事件
+     * @config {Function} ontimeupdate 时间轴变化事件，输入{current:1000,duration:5000}
+     * @config {Function} onerror      播放异常回调事件
      * @return {Void}
      */
     _e._$playBgSound = (function(){
@@ -102,6 +103,7 @@ var f = function(){
             if (!_cch) return;
             _cch.audio = _h.__getAudioInst({
                 url:_cch.url,
+                ontimeupdate:_cch.conf.ontimeupdate,
                 onerror:_doErrorAction._$bind(null,_key),
                 onstatechange:_doStateChangeAction._$bind(null,_key)
             });
