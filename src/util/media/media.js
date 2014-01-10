@@ -100,6 +100,8 @@ var f = function(){
      * 播放过程触发事件
      * @event  {ontimeupdate} 
      * @param  {Object} 可选配置参数
+     * @config {Float} current  当前时间，单位秒
+     * @config {Float} duration 总时长，单位秒
      * 
      * [hr]
      * 播放错误触发事件

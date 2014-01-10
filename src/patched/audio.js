@@ -57,7 +57,7 @@ var f = function(){
      *                                   2 | 当前播放状态
      *                                   3 | 当前暂停状态
      *                                  [/ntb]
-     * @config {Function} ontimeupdate 时间轴变化事件，输入{current:1000,duration:5000}
+     * @config {Function} ontimeupdate 时间轴变化事件，输入{current:1.000,duration:50.000,data:'extra data'}
      * @config {Function} onerror      播放异常回调事件
      * @return {Void}
      */
@@ -68,27 +68,33 @@ var f = function(){
         // audio - audio instance
         // timer - retry timer
         var _pcache = {};
-        // state change callback
-        var _doStateChangeCallback = function(_key,_state){
+        // callback
+        var _doCallback = function(_key,_name,_event,_cleared){
             var _cch = _pcache[_key];
             if (!_cch) return;
             var _conf = _cch.conf,
-                _func = _conf.onstatechange||_f,
+                _func = _conf[_name]||_f,
                 _extr = _conf.extra;
-            if (_state==0){
+            if (!!_cleared){
                 delete _pcache[_key];
             }
-            _func({state:_state,data:_extr});
+            _event.data = _extr;
+            _func(_event);
+        };
+        // state change callback
+        var _doStateChangeCallback = function(_key,_state){
+            _doCallback(
+                _key,'onstatechange',
+                {state:_state},_state==0
+            );
         };
         // error callback
         var _doErrorCallback = function(_key,_code){
-            var _cch = _pcache[_key];
-            if (!_cch) return;
-            var _conf = _cch.conf,
-                _func = _conf.onerror||_f,
-                _extr = _conf.extra;
-            delete _pcache[_key];
-            _func({code:_code,data:_extr});
+            _doCallback(_key,'onerror',{code:_code},!0);
+        };
+        // timeupdate callback
+        var _doTimeUpdateCallback = function(_key,_event){
+            _doCallback(_key,'ontimeupdate',_event);
         };
         // state change action
         var _doStateChangeAction = function(_key,_event){
@@ -103,8 +109,8 @@ var f = function(){
             if (!_cch) return;
             _cch.audio = _h.__getAudioInst({
                 url:_cch.url,
-                ontimeupdate:_cch.conf.ontimeupdate,
                 onerror:_doErrorAction._$bind(null,_key),
+                ontimeupdate:_doTimeUpdateCallback._$bind(null,_key),
                 onstatechange:_doStateChangeAction._$bind(null,_key)
             });
             _cch.audio._$play();
