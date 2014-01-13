@@ -1458,10 +1458,7 @@ var f = function(){
     _x._$getStyle = function(_element,_name){
         _element = _e._$get(_element);
         if (!_element) return '';
-        var _current = !window.getComputedStyle
-                       ?_element.currentStyle||_o
-                       :window.getComputedStyle(_element,null);
-        return _current[_h.__getStyleName(_name)]||'';
+        return _h.__getStyleValue(_element,_name);
     };
     /**
      * 添加样式<br/>

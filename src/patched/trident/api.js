@@ -316,6 +316,35 @@ var f = function(){
         }
     });
     /**
+     * 取样式值
+     * @param  {String|Node} 节点
+     * @param  {String}      样式名称
+     * @return {Variable}    样式值
+     */
+    _h.__getStyleValue = (function(){
+        var _reg0 = /opacity\s*=\s*([\d]+)/i;
+        return _h.__getStyleValue._$aop(function(_event){
+            if (!!window.getComputedStyle) return;
+            _event.stopped = !0;
+            var _result = '',
+                _args = _event.args,
+                _name = _args[1],
+                _current = _args[0].currentStyle||_o;
+            // opacity for ie8-
+            if (_name=='opacity'&&!(_name in _current)){
+                _result = 0;
+                var _value = _current.filter||'';
+                if (_reg0.test(_value)){
+                    _result = parseFloat(RegExp.$1)/100;
+                }
+            }else{
+                _result = _current[_h.__getStyleName()]||'';
+            }
+            _event.value = _result;
+        });
+    })();
+    
+    /**
      * 设置样式
      * @param  {String|Node} _element 节点
      * @param  {String}      _name    样式名称

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>test scroll</title>
+    <meta charset="utf-8"/>
+    <style>
+      .xbc{position:relative;width:300px;margin:10px auto;border:1px solid #aaa;}
+      .abc{height:600px;overflow:hidden;}
+      .abc p{height:80px;line-height:80px;}
+      .bar{position:absolute;background:#aaa;overflow:hidden;cursor:default;}
+      .x{left:0;bottom:0;height:10px;width:50px;}
+      .y{top:0;right:0;width:10px;height:50px;}
+      p{background:#fdc;}
+    </style>
+  </head>
+  <body>
+    <div class="xbc" id="bbox">
+      <div class="bar x" id="xbar">&nbsp;</div>
+      <div class="bar y" id="ybar">&nbsp;</div>
+      <div class="abc" id="box">
+      <script>
+          var a = [];
+          for(var i=0;i<10;i++)
+              a.push('<p>'+i+'</p>');
+          document.write(a.join(''));
+      </script>
+      </div>
+    </div>
+    <script src="http://192.168.146.236:8020/NEJ/src/define.js"></script>
+    <script>
+        define(['{lib}util/scroll/scroll.simple.js'],
+        function(){
+            var _  = NEJ.P,
+                _e = _('nej.e'),
+                _v = _('nej.v'),
+                _t = _('nej.ut');
+            
+            _t._$$SimpleScroll._$allocate({
+                xbar:'xbar',
+                ybar:'ybar',
+                parent:'box'
+            });
+            
+        });
+    </script>
+  </body>
+</html>

@@ -505,14 +505,14 @@ var f = function(){
         };
     })();
     /**
-     * 设置样式
-     * @param  {String|Node} _element 节点
-     * @param  {String}      _name    样式名称
-     * @param  {String}      _value   样式值
-     * @return {Void}
+     * 取样式值
+     * @param  {String|Node} 节点
+     * @param  {String}      样式名称
+     * @return {Variable}    样式值
      */
-    _h.__applyStyle = function(_element,_name,_value){
-        _element.style[_h.__getStyleName(_name)] = _value;
+    _h.__getStyleValue = function(_element,_name){
+        var _current = window.getComputedStyle(_element,null);
+        return _current[_h.__getStyleName(_name)]||'';
     };
     /**
      * 针对样式名称做前缀增强
@@ -533,6 +533,16 @@ var f = function(){
             return _pfxed?_addPrefix(_name):_name;
         };
     })();
+    /**
+     * 设置样式
+     * @param  {String|Node} _element 节点
+     * @param  {String}      _name    样式名称
+     * @param  {String}      _value   样式值
+     * @return {Void}
+     */
+    _h.__applyStyle = function(_element,_name,_value){
+        _element.style[_h.__getStyleName(_name)] = _value;
+    };
     /**
      * 检查样式名称是否需要前缀增强
      * @param  {String} _name 名称

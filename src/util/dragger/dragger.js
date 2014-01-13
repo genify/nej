@@ -44,6 +44,13 @@ var f = function(){
      * @config  {Number}         direction 移动方向，默认为0，0-水平+垂直、1-水平、2-垂直
      * 
      * [hr]
+     * 位置变化之前触发事件
+     * @event  {onbeforechange}    
+     * @param  {Object}      位置信息
+     * @config {Number} top  离父节点顶部距离
+     * @config {Number} left 离父节点左边距离
+     * 
+     * [hr]
      * 位置变化触发事件
      * @event  {onchange}    
      * @param  {Object}      位置信息
@@ -185,6 +192,7 @@ var f = function(){
             _event.left = Math.min(_maxbox.x,
                           Math.max(0,_event.left));
         }
+        this._$dispatchEvent('onbeforechange',_event);
         var _style  = this.__body.style;
         if (this.__direction==0||
             this.__direction==2)

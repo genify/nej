@@ -23,8 +23,8 @@ var f = function(){
      * @extends {nej.ut._$$Event}
      * 
      * @param   {Object} _options 可选配置参数
-     * @config  {String|Node} xbar   水平滚动条节点
-     * @config  {String|Node} ybar   垂直滚动条节点
+     * @config  {Node|Object} xbar   水平滚动条节点或者配置信息，配置如{body:'bar-id',min:10,speed:1}
+     * @config  {Node|Object} ybar   垂直滚动条节点或者配置信息，配置如{body:'bar-id',min:10,speed:1}
      * @config  {String|Node} parent 滚动容器节点，默认为滚动条的父容器
      * 
      * [hr]
@@ -40,33 +40,286 @@ var f = function(){
      * @return {Void}
      */
     _pro.__init = function(){
+        this.__aopt = {
+            to:{},
+            from:{},
+            duration:500,
+            onstop:this.__doStopBarOpacity._$bind(this),
+            onupdate:this.__doUpdateBarOpacity._$bind(this)
+        };
+        this.__dopt = {
+            x:{
+                direction:1,
+                ondragend:this.__onUpdateBarEnd._$bind(this),
+                onbeforechange:this.__onBeforeUpdateBar._$bind(this,'x')
+            },
+            y:{
+                direction:2,
+                ondragend:this.__onUpdateBarEnd._$bind(this),
+                onbeforechange:this.__onBeforeUpdateBar._$bind(this,'y')
+            }
+        };
+        this.__dragger = {};
         this.__supInit();
-        
     };
     /**
      * 控件重置
      * @param  {Object} _options 可选配置参数
      * @return {Void}
      */
-    _pro.__reset = function(_options){
-        this.__supReset(_options);
-        this.__xbar = _e._$get(_options.xbar);
-        this.__ybar = _e._$get(_options.ybar);
-        this.__parent = _e._$get(_options.parent)||
-            (this.__ybar||this.__xbar||_o).parentNode;
-    };
+    _pro.__reset = (function(){
+        var _bcnf = {
+            x:{
+                min:10,
+                speed:1,
+                sb:'scrollWidth',
+                cb:'clientWidth',
+                sr:'scrollLeft',
+                ss:'width',
+                sp:'left'
+            },
+            y:{
+                min:10,
+                speed:1,
+                sb:'scrollHeight',
+                cb:'clientHeight',
+                sr:'scrollTop',
+                ss:'height',
+                sp:'top'
+            }
+        };
+        // init scrollbar
+        var _doInitBar = function(_name,_conf){
+            if (!_conf.body){
+                _conf = {body:_conf};
+            }
+            return NEJ.X(
+                NEJ.X({},_bcnf[_name]),_conf
+            );
+        };
+        var _doInitBarDrag = function(_name,_body){
+            if (!_body) return;
+            this.__doInitDomEvent([[
+                _body,'mouseenter',
+                this.__onMouseEnter._$bind(this)
+            ],[
+                _body,'mouseleave',
+                this.__onMouseLeave._$bind(this)
+            ]]);
+            var _options = this.__dopt[_name];
+            _options.body = _body;
+            _options.view = this.__parent;
+            this.__dragger[_name] = 
+                _p._$$Dragger._$allocate(_options);
+        };
+        return function(_options){
+            this.__supReset(_options);
+            this.__bar = {
+                x:_doInitBar('x',_options.xbar),
+                y:_doInitBar('y',_options.ybar)
+            };
+            this.__parent = _e._$get(_options.parent);
+            this.__doUpdateBarOpacity({offset:0});
+            // init event
+            this.__doInitDomEvent([[
+                this.__parent,'mousewheel',
+                this.__onMouseWheel._$bind(this)
+            ],[
+                this.__parent,'mouseenter',
+                this.__onMouseEnter._$bind(this)
+            ],[
+                this.__parent,'mouseleave',
+                this.__onMouseLeave._$bind(this)
+            ]]);
+            // init dragdrop
+            _doInitBarDrag.call(
+                this,'x',this.__bar.x.body
+            );
+            _doInitBarDrag.call(
+                this,'y',this.__bar.y.body
+            );
+        };
+    })();
     /**
      * 控件销毁
      * @return {Void}
      */
-    _pro.__destroy = function(){
-        this.__supDestroy();
-        delete this.__xbar;
-        delete this.__ybar;
-        delete this.__parent;
+    _pro.__destroy = (function(){
+        var _doClearDragger = function(_dragger,_key,_map){
+            _dragger._$recycle();
+            delete _map[_key];
+            var _conf = this.__dopt[_key];
+            delete _conf.view;
+            delete _conf.body;
+        };
+        return function(){
+            this.__supDestroy();
+            delete this.__bar;
+            delete this.__parent;
+            delete this.__dragging;
+            this.__doStopBarOpacity();
+            _u._$forIn(
+                this.__dragger,
+                _doClearDragger._$bind(this)
+            );
+        };
+    })();
+    /**
+     * 根据配置信息重置滚动条
+     * @param  {Object} 配置信息
+     * @return {Void}
+     */
+    _pro.__doResetBarSize = function(_conf){
+        var _sbox = this.__parent[_conf.sb],
+            _cbox = this.__parent[_conf.cb],
+            _delta = _sbox-_cbox,
+            _style = {};
+        if (_delta<=0){
+            _conf.ratio = 0;
+            _style.visibility = 'hidden';
+            _style[_conf.ss] = _cbox+'px';
+        }else{
+            var _size = Math.max(
+                _conf.min,
+                _cbox-_cbox/_sbox*_delta
+            );
+            _conf.max = Math.ceil(_cbox-_size);
+            _size = Math.ceil(_size);
+            _style.visibility = 'visible';
+            _style[_conf.ss] = _size+'px';
+            _conf.ratio = (_cbox-_size)/_delta;
+        }
+        _e._$style(_conf.body,_style);
+    };
+    /**
+     * 重置滚动条位置
+     * @param  {Object} 配置信息
+     * @param  {Number} 偏移量
+     * @return {Void}
+     */
+    _pro.__doResetBarPosition = function(_conf,_delta){
+        this.__parent[_conf.sr] -= _delta*_conf.speed;
+        var _value = this.__parent[_conf.sr];
+        _e._$setStyle(
+            _conf.body,_conf.sp,
+            Math.ceil(_value*_conf.ratio)+'px'
+        );
+    };
+    /**
+     * 更新滚动位置
+     * @return {Void}
+     */
+    _pro.__doUpdateScrollBar = function(_dx,_dy){
+        this.__doResetBarPosition(
+            this.__bar.y,_dy
+        );
+        this.__doResetBarPosition(
+            this.__bar.x,_dx
+        );
+    };
+    /**
+     * 动画更新滚动条透明度
+     * @return {Void}
+     */
+    _pro.__doAnimScrollBar = function(){
+        this.__doStopBarOpacity();
+        this.__aopt.from.offset = _e._$getStyle(
+            this.__bar.y.body||
+            this.__bar.x.body,'opacity'
+        );
+        this.__anim = _p._$$AnimEaseInOut.
+                      _$allocate(this.__aopt);
+        this.__anim._$play();
+    };
+    /**
+     * 更新滚动条的透明度
+     * @return {Void}
+     */
+    _pro.__doUpdateBarOpacity = function(_event){
+        var _value = _event.offset;
+        _e._$setStyle(this.__bar.x.body,'opacity',_value);
+        _e._$setStyle(this.__bar.y.body,'opacity',_value);
+    };
+    /**
+     * 清理显示动画
+     * @return {Void}
+     */
+    _pro.__doStopBarOpacity = function(){
+        if (!!this.__anim){
+            this.__anim._$recycle();
+            delete this.__anim;
+        }
+    };
+    /**
+     * 鼠标滚动事件
+     * @param  {Event} 事件信息
+     * @return {Void}
+     */
+    _pro.__onMouseWheel = function(_event){
+        this.__doUpdateScrollBar(
+            _event.wheelDeltaX||0,
+            _event.wheelDeltaY||
+            _event.wheelDelta||0
+        );
+    };
+    /**
+     * 鼠标移入事件
+     * @param  {Event} 事件对象
+     * @return {Void}
+     */
+    _pro.__onMouseEnter = function(_event){
+        this._$resize();
+        this.__aopt.delay = 0;
+        this.__aopt.to.offset = 1;
+        this.__doAnimScrollBar();
+    };
+    /**
+     * 鼠标移出事件
+     * @param  {Event} 事件对象
+     * @return {Void}
+     */
+    _pro.__onMouseLeave = function(_event){
+        if (this.__dragging) return;
+        this.__aopt.delay = 500;
+        this.__aopt.to.offset = 0;
+        this.__doAnimScrollBar();
+    };
+    /**
+     * 更新水平滚动条
+     * @param  {Object} 拖拽信息
+     * @return {Void}
+     */
+    _pro.__onBeforeUpdateBar = function(_name,_event){
+        this.__dragging = !0;
+        var _conf = this.__bar[_name],
+            _offset = Math.min(
+                _conf.max,
+                _event[_conf.sp]
+            );
+        this.__parent[_conf.sr] = 
+            Math.ceil(_offset/_conf.ratio);
+        _event[_conf.sp] = _offset;
+    };
+    /**
+     * 拖拽滚动结束
+     * @return {Void}
+     */
+    _pro.__onUpdateBarEnd = function(){
+        this.__dragging = !1;
+    };
+    /**
+     * 容器大小变化执行逻辑
+     * @return {Void}
+     */
+    _pro._$resize = function(){
+        this.__doResetBarSize(this.__bar.x);
+        this.__doResetBarSize(this.__bar.y);
+        this.__doUpdateScrollBar(0,0);
     };
 };
 NEJ.define(
-    '{lib}util/scroll/scroll.js',[
-    '{lib}util/event.js'
+    '{lib}util/scroll/scroll.simple.js',[
+    '{lib}util/event.js',
+    '{lib}util/dragger/dragger.js',
+    '{lib}util/animation/easeinout.js'
 ],f);
