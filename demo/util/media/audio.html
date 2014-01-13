@@ -30,10 +30,10 @@
                             console.log(_event.state+' -> '+_event.data);
                         },
                         onerror:function(_event){
-                            console.log('play error -> '+_event.code);
+                            console.log('play error -> '+_event.data+':'+_event.code);
                         },
                         ontimeupdate:function(_event){
-                            console.log(_event.current+':'+_event.duration);
+                            console.log(_event.data+' -> '+_event.current+':'+_event.duration);
                         }
                     });
                 }

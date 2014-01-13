@@ -197,76 +197,68 @@ var f = function(){
      * @param  {Boolean}  _capture 是否捕获阶段事件
      * @return {Array}             事件列表
      */
-    _h.__checkEvent = (function(){
-        var _emap = {'input':'propertychange'
-                    ,'load':'readystatechange'};
+    _h.__checkEvent = 
+    _h.__checkEvent._$aop(null,function(_event){
+        var _args = _event.value;
+        if (!_args[0]||
+            !_u._$isFunction(_args[2]))
+            return;
+        if (!_u._$isFunction(_args[5]))
+            _args[5] = _args[2];
+        _args[2] = _args[2]._$bind(_args[0]);
+    });
+    /**
+     * 检查事件类型
+     * @param  {Node}   节点
+     * @param  {String} 事件类型
+     * @return {String} 变化后的事件类型
+     */
+    _h.__checkEventType = (function(){
+        var _emap = {
+            'input':'propertychange',
+            'load':'readystatechange'
+        };
         for(var x in _emap) _omap[_emap[x]] = !0;
-        // check type used in ie
-        var _doCheckType = function(_element,_type){
-            if ('on'+_type in _element) 
-                return null;
-            return _emap[_type]||'';
-        };
-        // check event handler used by element with type
-        var _doCheckEvent = function(_type,_handler){
-            var _callback = _handler;
-            switch(_type){
-                case 'readystatechange':
-                    _callback = function(_event){
-                        var _element = _v._$getElement(_event)||this;
-                        if (_element.readyState=='loaded'||
-                            _element.readyState=='complete'){
-                            _event.target = _element;
-                            _handler.call(_element,_event);
-                        }
-                    };
-                break;
-                case 'propertychange':
-                    _callback = function(_event){
-                        var _element = _v._$getElement(_event)||this;
-                        if (('value' in _element)&&
-                            _event.propertyName=='value'){
-                            _event.target = _element;
-                            _handler.call(_element,_event);
-                        }
-                    };
-                break;
-            }
-            return _callback;
-        };
-        return _h.__checkEvent._$aop(function(_event){
-            var _args = _h.__formatEventArgs
-                          .apply(_h,_event.args);
-            // illegal arguments
-            if (!_args){
-                _event.stopped = !0;
-                return;
-            }
-            // check type
-            var _type = _doCheckType(_args[0],_args[1]);
-            // other event used in ie
-            if (!!_type){
-                _event.stopped = !0;
-                _args[4] = _args[1];
-                _args[1] = _type;
-                // check event handler
-                if (!!_args[2]){
-                    _args[5] = _args[2];
-                    _args[2] = _doCheckEvent(
-                               _args[1],_args[2]);
-                }
-                _event.value = _args;
-            }
-        },function(_event){
-            var _args = _event.value;
-            if (!_args[0]||
-                !_u._$isFunction(_args[2]))
-                return;
-            if (!_u._$isFunction(_args[5]))
-                _args[5] = _args[2];
-            _args[2] = _args[2]._$bind(_args[0]);
-        });
+        return _h.__checkEventType._$aop(
+            _h.__checkEventTypeWithConf._$bind(_h,_emap)
+        );
     })();
+    /**
+     * 检查事件执行函数
+     * @param  {String}   事件类型
+     * @param  {Function} 事件执行函数
+     * @param  {Node}     事件添加节点
+     * @return {Function} 变化后的事件执行函数
+     */
+    _h.__checkEventHandler = 
+    _h.__checkEventHandler._$aop(function(_evt){
+        var _args = _evt.args,
+            _handler = _args[1];
+        switch(_args[0]){
+            case 'readystatechange':
+                _evt.stopped = !0;
+                _evt.value = function(_event){
+                    var _element = _v._$getElement(_event)||this;
+                    if (_element.readyState=='loaded'||
+                        _element.readyState=='complete'){
+                        _event.target = _element;
+                        _handler.call(_element,_event);
+                    }
+                };
+            break;
+            case 'propertychange':
+                _evt.stopped = !0;
+                _evt.value = function(_event){
+                    var _element = _v._$getElement(_event)||this;
+                    if (('value' in _element)&&
+                        _event.propertyName=='value'){
+                        _event.target = _element;
+                        _handler.call(_element,_event);
+                    }
+                };
+            break;
+        }
+    });
     /**
      * 添加节点事件
      * @param  {Node}     _element 节点对象

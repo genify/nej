@@ -350,6 +350,25 @@ var f = function(){
             var _args = _h.__formatEventArgs
                           .apply(_h,arguments);
             if (!_args) return;
+            // check event type
+            var _type = _h.__checkEventType(
+                _args[0],_args[1]
+            );
+            // type changed
+            if (!!_type){
+                // swap event
+                _args[4] = _args[1];
+                _args[1] = _type;
+                // check event handler
+                if (!!_args[2]){
+                    _args[5] = _args[2];
+                    _args[2] = _h.__checkEventHandler(
+                        _args[1],_args[2],_args[0]
+                    );
+                }
+                return _args;
+            }
+            // check type prefix
             var _type1 = _emap[_args[1]],
                 _type2 = _tmap[_args[1]];
             if (!!_type1){
@@ -365,6 +384,44 @@ var f = function(){
             return _args;
         };
     })();
+    /**
+     * 检查事件类型
+     * @param  {Node}   节点
+     * @param  {String} 事件类型
+     * @return {String} 变化后的事件类型
+     */
+    _h.__checkEventType = function(_element,_type){
+        return null;
+    };
+    /**
+     * 检查事件类型
+     */
+    _h.__checkEventTypeWithConf = function(_map,_event){
+        var _value,
+            _args = _event.args,
+            _type = _args[1],
+            _element = _args[0];
+        if (!('on'+_type in _element)){
+            _value = _map[_type]||'';
+        }
+        if (!!_value&&!('on'+_value in _element)){
+            _value = null;
+        }
+        if (!!_value){
+            _event.stopped = !0;
+            _event.value = _value;
+        }
+    };
+    /**
+     * 检查事件执行函数
+     * @param  {String}   事件类型
+     * @param  {Function} 事件执行函数
+     * @param  {Node}     事件添加节点
+     * @return {Function} 变化后的事件执行函数
+     */
+    _h.__checkEventHandler = function(_type,_handler,_element){
+        return _handler;
+    };
     /**
      * 添加节点事件
      * @param  {Node}     _element 节点对象
