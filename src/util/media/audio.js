@@ -176,6 +176,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__setCurrentTime = function(_time){
+        if (this.__state==1) return;
         this.__audio.currentTime = _time||0;
     };
 };
