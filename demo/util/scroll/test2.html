@@ -26,7 +26,7 @@
       </script>
       </div>
     </div>
-    <script src="http://192.168.146.236:8020/NEJ/src/define.js"></script>
+    <script src="../../../src/define.js?pro=./"></script>
     <script>
         define(['{lib}util/scroll/scroll.simple.js'],
         function(){
@@ -38,7 +38,8 @@
             _t._$$SimpleScroll._$allocate({
                 xbar:'xbar',
                 ybar:'ybar',
-                parent:'box'
+                parent:'box',
+                trigger:'bbox'
             });
             
         });

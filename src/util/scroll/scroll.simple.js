@@ -18,20 +18,50 @@ var f = function(){
     if (!!_p._$$SimpleScroll) return;
     /**
      * 滚动控件
+     * 结构举例：
+     * [code type="html"]
+     *  <div class="xbc" id="bbox">
+     *    <div class="bar x" id="xbar"><!-- 水平滚动条 --></div>
+     *    <div class="bar y" id="ybar"><!-- 垂直滚动条 --></div>
+     *    <div class="abc" id="box">
+     *      <!-- 滚动内容 -->
+     *      <p>11111111111111111</p>
+     *      <p>11111111111111111</p>
+     *      <p>11111111111111111</p>
+     *      <p>11111111111111111</p>
+     *      <p>11111111111111111</p>
+     *    </div>
+     *  </div>
+     * [/code]
+     * 脚本举例
+     * [code]
+     *     var _v = NEJ.P('nej.v'),
+     *         _t = NEJ.P('nej.ut');
+     * 
+     *     // 应用模拟滚动行为
+     *     _t._$$SimpleScroll._$allocate({
+     *         xbar:'xbar',
+     *         ybar:'ybar',
+     *         parent:'box'
+     *     });
+     * 
+     *     // 滚动过程可以通过监听parent上的onscroll事件获得
+     *     _v._$addEvent(
+     *         'box','scroll',function(_event){
+     *             var _node = _v._$getElement(_event);
+     *             // get scrollTop from _node.scrollTop
+     *         }
+     *     );
+     * [/code]
      * 
      * @class   {nej.ut._$$SimpleScroll}
      * @extends {nej.ut._$$Event}
      * 
      * @param   {Object} _options 可选配置参数
-     * @config  {Node|Object} xbar   水平滚动条节点或者配置信息，配置如{body:'bar-id',min:10,speed:1}
-     * @config  {Node|Object} ybar   垂直滚动条节点或者配置信息，配置如{body:'bar-id',min:10,speed:1}
-     * @config  {String|Node} parent 滚动容器节点，默认为滚动条的父容器
-     * 
-     * [hr]
-     * 滚动过程触发事件
-     * @event   {onscroll}
-     * @param   {Object} 滚动信息
-     * 
+     * @config  {Node|Object} xbar    水平滚动条节点或者配置信息，配置如{body:'bar-id',min:10,speed:1}
+     * @config  {Node|Object} ybar    垂直滚动条节点或者配置信息，配置如{body:'bar-id',min:10,speed:1}
+     * @config  {String|Node} parent  滚动容器节点，默认为滚动条的父容器，滚动过程触发该节点上的onscroll事件
+     * @config  {String|Node} trigger 滚动条显示隐藏触点，不传表示不做显示隐藏切换
      */
     _p._$$SimpleScroll = NEJ.C();
     _pro = _p._$$SimpleScroll._$extend(_p._$$Event);
@@ -99,13 +129,6 @@ var f = function(){
         };
         var _doInitBarDrag = function(_name,_body){
             if (!_body) return;
-            this.__doInitDomEvent([[
-                _body,'mouseenter',
-                this.__onMouseEnter._$bind(this)
-            ],[
-                _body,'mouseleave',
-                this.__onMouseLeave._$bind(this)
-            ]]);
             var _options = this.__dopt[_name];
             _options.body = _body;
             _options.view = this.__parent;
@@ -119,18 +142,24 @@ var f = function(){
                 y:_doInitBar('y',_options.ybar)
             };
             this.__parent = _e._$get(_options.parent);
-            this.__doUpdateBarOpacity({offset:0});
             // init event
             this.__doInitDomEvent([[
                 this.__parent,'mousewheel',
                 this.__onMouseWheel._$bind(this)
-            ],[
-                this.__parent,'mouseenter',
-                this.__onMouseEnter._$bind(this)
-            ],[
-                this.__parent,'mouseleave',
-                this.__onMouseLeave._$bind(this)
             ]]);
+            var _node = _e._$get(_options.trigger);
+            if (!!_node){
+                this.__doInitDomEvent([[
+                    _options.trigger,'mouseenter',
+                    this.__onMouseEnter._$bind(this)
+                ],[
+                    _options.trigger,'mouseleave',
+                    this.__onMouseLeave._$bind(this)
+                ]]);
+                this.__doUpdateBarOpacity({offset:0});
+            }else{
+                this._$resize();
+            }
             // init dragdrop
             _doInitBarDrag.call(
                 this,'x',this.__bar.x.body
@@ -155,6 +184,7 @@ var f = function(){
         return function(){
             this.__supDestroy();
             delete this.__bar;
+            delete this.__isout;
             delete this.__parent;
             delete this.__dragging;
             this.__doStopBarOpacity();
@@ -268,6 +298,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__onMouseEnter = function(_event){
+        this.__isout = !1;
         this._$resize();
         this.__aopt.delay = 0;
         this.__aopt.to.offset = 1;
@@ -279,6 +310,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__onMouseLeave = function(_event){
+        this.__isout = !0;
         if (this.__dragging) return;
         this.__aopt.delay = 500;
         this.__aopt.to.offset = 0;
@@ -306,6 +338,9 @@ var f = function(){
      */
     _pro.__onUpdateBarEnd = function(){
         this.__dragging = !1;
+        if (this.__isout){
+            this.__onMouseLeave();
+        }
     };
     /**
      * 容器大小变化执行逻辑
