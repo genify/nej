@@ -120,7 +120,7 @@ var f = function(){
         };
         // init scrollbar
         var _doInitBar = function(_name,_conf){
-            if (!_conf.body){
+            if (!(_conf||_o).body){
                 _conf = {body:_conf};
             }
             return NEJ.X(
