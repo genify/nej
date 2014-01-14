@@ -146,6 +146,9 @@ var f = function(){
             this.__doInitDomEvent([[
                 this.__parent,'mousewheel',
                 this.__onMouseWheel._$bind(this)
+            ],[
+                this.__parent,'scroll',
+                this.__doSyncScrollBar._$bind(this)
             ]]);
             var _node = _e._$get(_options.trigger);
             if (!!_node){
@@ -236,6 +239,13 @@ var f = function(){
             _conf.body,_conf.sp,
             Math.ceil(_value*_conf.ratio)+'px'
         );
+    };
+    /**
+     * 同步滚动条
+     * @return {Void}
+     */
+    _pro.__doSyncScrollBar = function(){
+        this.__doUpdateScrollBar(0,0);
     };
     /**
      * 更新滚动位置
@@ -351,7 +361,7 @@ var f = function(){
     _pro._$resize = function(){
         this.__doResetBarSize(this.__bar.x);
         this.__doResetBarSize(this.__bar.y);
-        this.__doUpdateScrollBar(0,0);
+        this.__doSyncScrollBar();
     };
 };
 NEJ.define(
