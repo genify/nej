@@ -152,10 +152,12 @@ var f = function(){
         };
         var _deltax = _offset.x-this.__offset.x,
             _deltay = _offset.y-this.__offset.y,
-            _value  = {top:(parseInt(_e._$getStyle
-                           (this.__body,'top'))||0)+_deltay
-                      ,left:(parseInt(_e._$getStyle
-                            (this.__body,'left'))||0)+_deltax};
+            _top = parseInt(_e._$getStyle(this.__body,'top'))||0,
+            _left = parseInt(_e._$getStyle(this.__body,'left'))||0,
+            _value  = {
+                top:_top+_deltay,
+                left:_left+_deltax
+            };
         this.__offset = _offset;
         this._$setPosition(_value);
     };

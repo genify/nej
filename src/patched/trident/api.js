@@ -338,7 +338,7 @@ var f = function(){
                     _result = parseFloat(RegExp.$1)/100;
                 }
             }else{
-                _result = _current[_h.__getStyleName()]||'';
+                _result = _current[_h.__getStyleName(_name)]||'';
             }
             _event.value = _result;
         });

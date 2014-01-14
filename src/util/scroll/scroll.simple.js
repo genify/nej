@@ -152,7 +152,7 @@ var f = function(){
                 this.__onMouseWheel._$bind(this)
             ],[
                 this.__parent,'scroll',
-                this._$resize._$bind(this)
+                this.__doSyncScrollBar._$bind(this)
             ]]);
             var _node = _e._$get(_options.trigger);
             if (!!_node){
@@ -250,6 +250,14 @@ var f = function(){
                 (Math.ceil(_value*_conf.ratio)-_conf.delta)+'px'
             );
         }
+    };
+    /**
+     * 同步滚动条位置
+     * @return {Void}
+     */
+    _pro.__doSyncScrollBar = function(){
+        if (this.__dragging) return;
+        this.__doUpdateScrollBar(0,0);
     };
     /**
      * 更新滚动位置
