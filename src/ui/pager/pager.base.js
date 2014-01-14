@@ -65,6 +65,7 @@ var f = function(){
      * @config  {Number} index  当前页码
      * @config  {Number} total  总页码数
      * @config  {Number} number 显示页数
+     * @config  {Number} limit  总页数限制
      * @config  {Object} label  按钮文案，{prev:'&lt;',next:'&gt;'}
      * 
      * [hr]

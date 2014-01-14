@@ -84,6 +84,7 @@ var f = function(){
      * @config  {String|Node}  ebtn        尾页按钮
      * @config  {Number}       index       当前页码
      * @config  {Number}       total       总页码数
+     * @config  {Number}       limit       总页数限制
      * @config  {String}       selected    选中样式，默认为js-selected
      * @config  {String}       disabled    禁用样式，默认为js-disabled
      * 
@@ -115,6 +116,7 @@ var f = function(){
         this.__selected = _options.selected||'js-selected';
         this.__disabled = _options.disabled||'js-disabled';
         this.__doPageListCheck(_options.list);
+        this.__limit = _options.limit||Infinity;
         this._$updatePage(
             _options.index||1,
             _options.total||1
@@ -272,7 +274,9 @@ var f = function(){
         _total = parseInt(_total);
         if (isNaN(_total)||_total<1) 
             return !1;
-        this.__total = _total;
+        this.__total = Math.min(
+            _total,this.__limit
+        );
         return !0;
     };
     /**
@@ -409,5 +413,7 @@ var f = function(){
         return this;
     };
 };
-NEJ.define('{lib}util/page/page.base.js',
-          ['{lib}util/event.js'],f);
+NEJ.define(
+    '{lib}util/page/page.base.js',[
+    '{lib}util/event.js'
+],f);
