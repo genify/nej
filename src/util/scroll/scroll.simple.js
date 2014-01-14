@@ -125,9 +125,11 @@ var f = function(){
             if (!(_conf||_o).body){
                 _conf = {body:_conf};
             }
-            return NEJ.X(
+            var _result = NEJ.X(
                 NEJ.X({},_bcnf[_name]),_conf
             );
+            _result.body = _e._$get(_result.body);
+            return _result;
         };
         var _doInitBarDrag = function(_name,_body){
             if (!_body) return;
@@ -150,7 +152,7 @@ var f = function(){
                 this.__onMouseWheel._$bind(this)
             ],[
                 this.__parent,'scroll',
-                this.__doSyncScrollBar._$bind(this)
+                this._$resize._$bind(this)
             ]]);
             var _node = _e._$get(_options.trigger);
             if (!!_node){
@@ -223,6 +225,7 @@ var f = function(){
             _conf.max = Math.ceil(_cbox-_size);
             _conf.ratio = (_cbox-_size)/_delta;
         }
+        _conf.delta = 0;
         if (!!_conf.body){
             _conf.delta = 
                 _conf.body[_conf.ob]-
@@ -240,18 +243,13 @@ var f = function(){
         if (_delta!=0){
             this.__parent[_conf.sr] -= _delta*_conf.speed;
         }
-        var _value = this.__parent[_conf.sr];
-        _e._$setStyle(
-            _conf.body,_conf.sp,
-            (Math.ceil(_value*_conf.ratio)-_conf.delta)+'px'
-        );
-    };
-    /**
-     * 同步滚动条
-     * @return {Void}
-     */
-    _pro.__doSyncScrollBar = function(){
-        this.__doUpdateScrollBar(0,0);
+        if (!!_conf.body){
+            var _value = this.__parent[_conf.sr];
+            _e._$setStyle(
+                _conf.body,_conf.sp,
+                (Math.ceil(_value*_conf.ratio)-_conf.delta)+'px'
+            );
+        }
     };
     /**
      * 更新滚动位置
@@ -367,7 +365,7 @@ var f = function(){
     _pro._$resize = function(){
         this.__doResetBarSize(this.__bar.x);
         this.__doResetBarSize(this.__bar.y);
-        this.__doSyncScrollBar();
+        this.__doUpdateScrollBar(0,0);
     };
 };
 NEJ.define(
