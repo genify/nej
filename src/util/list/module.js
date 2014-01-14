@@ -985,7 +985,9 @@ var f = function(){
         return this.__cache._$isLoaded(this.__ropt.key);
     };
 };
-NEJ.define('{lib}util/list/module.js',
-          ['{lib}ui/item/list.js'
-          ,'{lib}ui/pager/pager.js'
-          ,'{lib}util/cache/cache.list.base.js'],f);
+NEJ.define(
+    '{lib}util/list/module.js',[
+    '{lib}ui/item/list.js',
+    '{lib}ui/pager/pager.js',
+    '{lib}util/cache/cache.list.base.js'
+],f);
