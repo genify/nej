@@ -319,7 +319,7 @@ var f = function(){
         this.__isout = !1;
         this._$resize();
         this.__aopt.delay = 0;
-        this.__aopt.to.offset = 1;
+        this.__aopt.to.offset = 0.6;
         this.__doAnimScrollBar();
     };
     /**
