@@ -228,7 +228,9 @@ var f = function(){
      * @return {Void}
      */
     _pro.__doResetBarPosition = function(_conf,_delta){
-        this.__parent[_conf.sr] -= _delta*_conf.speed;
+        if (_delta!=0){
+            this.__parent[_conf.sr] -= _delta*_conf.speed;
+        }
         var _value = this.__parent[_conf.sr];
         _e._$setStyle(
             _conf.body,_conf.sp,
