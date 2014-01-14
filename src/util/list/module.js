@@ -496,6 +496,12 @@ var f = function(){
      */
     _pro.__doSyncPager = function(_index,_total){
         if (!!this.__pager){
+            // limit page total
+            if (this.__popt.limit>0){
+                _total = Math.min(
+                    _total,this.__popt.limit
+                );
+            }
             // check pager index and total
             var _index2 = this.__pager._$getIndex(),
                 _total2 = this.__pager._$getTotal();
@@ -607,7 +613,7 @@ var f = function(){
         if (!_event.stopped){
             _e._$removeByEC(this.__ntip);
         }
-    };;
+    };
     /**
      * 列表绘制之前处理逻辑，子类实现具体业务逻辑
      * @protected
