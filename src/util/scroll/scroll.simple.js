@@ -104,6 +104,7 @@ var f = function(){
                 speed:1,
                 sb:'scrollWidth',
                 cb:'clientWidth',
+                ob:'offsetWidth',
                 sr:'scrollLeft',
                 ss:'width',
                 sp:'left'
@@ -113,6 +114,7 @@ var f = function(){
                 speed:1,
                 sb:'scrollHeight',
                 cb:'clientHeight',
+                ob:'offsetHeight',
                 sr:'scrollTop',
                 ss:'height',
                 sp:'top'
@@ -212,15 +214,19 @@ var f = function(){
             _style.visibility = 'hidden';
             _style[_conf.ss] = _cbox+'px';
         }else{
-            var _size = Math.max(
+            var _size = Math.ceil(Math.max(
                 _conf.min,
                 _cbox-_cbox/_sbox*_delta
-            );
-            _conf.max = Math.ceil(_cbox-_size);
-            _size = Math.ceil(_size);
+            ));
             _style.visibility = 'visible';
             _style[_conf.ss] = _size+'px';
+            _conf.max = Math.ceil(_cbox-_size);
             _conf.ratio = (_cbox-_size)/_delta;
+        }
+        if (!!_conf.body){
+            _conf.delta = 
+                _conf.body[_conf.ob]-
+                _conf.body[_conf.cb];
         }
         _e._$style(_conf.body,_style);
     };
@@ -237,7 +243,7 @@ var f = function(){
         var _value = this.__parent[_conf.sr];
         _e._$setStyle(
             _conf.body,_conf.sp,
-            Math.ceil(_value*_conf.ratio)+'px'
+            (Math.ceil(_value*_conf.ratio)-_conf.delta)+'px'
         );
     };
     /**
