@@ -200,7 +200,7 @@ var f = function(){
     _h.__checkEvent = 
     _h.__checkEvent._$aop(null,function(_event){
         var _args = _event.value;
-        if (!_args[0]||
+        if (!_args||!_args[0]||
             !_u._$isFunction(_args[2]))
             return;
         if (!_u._$isFunction(_args[5]))

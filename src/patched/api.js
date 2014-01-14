@@ -431,7 +431,11 @@ var f = function(){
      * @return {Void}
      */
     _h.__addEvent = function(){
-        var _args = arguments;
+        var _args = arguments,
+            _isok = ('on'+_args[1]) in _args[0];
+        if (!_isok){
+            console.log('not support event['+_args[1]+'] for '+_args[0]);
+        }
         _args[0].addEventListener(_args[1],_args[2],!!_args[3]);
     };
     /**

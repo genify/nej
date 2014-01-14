@@ -497,7 +497,7 @@ var f = function(){
     _pro.__doSyncPager = function(_index,_total){
         if (!!this.__pager){
             // limit page total
-            if (this.__popt.limit>0){
+            if ((this.__popt||_o).limit>0){
                 _total = Math.min(
                     _total,this.__popt.limit
                 );
