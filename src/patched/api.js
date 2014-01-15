@@ -395,6 +395,9 @@ var f = function(){
     };
     /**
      * 检查事件类型
+     * @param  {Object} 事件匹配表
+     * @param  {Object} 参数及结果信息
+     * @return {Void}
      */
     _h.__checkEventTypeWithConf = function(_map,_event){
         var _value,
@@ -404,7 +407,8 @@ var f = function(){
         if (!('on'+_type in _element)){
             _value = _map[_type]||'';
         }
-        if (!!_value&&!('on'+_value in _element)){
+        if (!!_value&&!_map[_value]&&
+            !('on'+_value in _element)){
             _value = null;
         }
         if (!!_value){
