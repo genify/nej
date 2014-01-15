@@ -256,8 +256,9 @@ var f = function(){
      * @return {Void}
      */
     _pro.__doSyncScrollBar = function(){
-        if (this.__dragging) return;
-        this.__doUpdateScrollBar(0,0);
+        if (!this.__dragging){
+            this._$resize();
+        }
     };
     /**
      * 更新滚动位置
