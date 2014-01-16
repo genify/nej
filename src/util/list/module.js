@@ -785,6 +785,10 @@ var f = function(){
             _node.insertAdjacentHTML('afterEnd',_html);
             _e._$remove(_node);
         }
+        this._$dispatchEvent('onafterupdaterender',{
+            data:_event.data,
+            parent:this.__lbox
+        });
     };
     /**
      * 验证操作结果
