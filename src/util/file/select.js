@@ -116,7 +116,6 @@ var f = function(){
         return function(_element,_options){
             _element = _e._$get(_element);
             if (!_element||
-               !!_element.htmlFor||
                  _element.tagName!='LABEL') return;
             _e._$dumpCSSText();
             var _id = _u._$uniqueID(),
