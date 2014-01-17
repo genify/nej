@@ -776,15 +776,17 @@ var f = function(){
      */
     _u._$string2object = function(_string,_split){
         var _obj = {};
-        _u._$forEach((_string||'').split(_split),
-        function(_name){
-            var _brr = _name.split('=');
-            if (!_brr||!_brr.length) return;
-            var _key = _brr.shift();
-            if (!_key) return;
-            _obj[decodeURIComponent(_key)] = 
-                 decodeURIComponent(_brr.join('='));
-        });
+        _u._$forEach(
+            (_string||'').split(_split),
+            function(_name){
+                var _brr = _name.split('=');
+                if (!_brr||!_brr.length) return;
+                var _key = _brr.shift();
+                if (!_key) return;
+                _obj[decodeURIComponent(_key)] = 
+                     decodeURIComponent(_brr.join('='));
+            }
+        );
         return _obj;
     };
     /**

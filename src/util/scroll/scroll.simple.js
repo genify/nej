@@ -41,7 +41,8 @@ var f = function(){
      *     // 应用模拟滚动行为
      *     _t._$$SimpleScroll._$allocate({
      *         xbar:'xbar',
-     *         ybar:'ybar',
+     *         // 纵向滚动条至少保留20px高度，上下留5px间隙
+     *         ybar:{body:'ybar',min:20,top:5,bottom:5},
      *         parent:'box'
      *     });
      * 
@@ -58,10 +59,10 @@ var f = function(){
      * @extends {nej.ut._$$Event}
      * 
      * @param   {Object} _options 可选配置参数
-     * @config  {Node|Object} xbar    水平滚动条节点或者配置信息，配置如{body:'bar-id',min:10,speed:1}
-     * @config  {Node|Object} ybar    垂直滚动条节点或者配置信息，配置如{body:'bar-id',min:10,speed:1}
-     * @config  {String|Node} parent  滚动容器节点，默认为滚动条的父容器，滚动过程触发该节点上的onscroll事件
-     * @config  {String|Node} trigger 滚动条显示隐藏触点，不传表示不做显示隐藏切换
+     * @config  {Node|Object}  xbar    水平滚动条节点或者配置信息，配置如{body:'bar-id',min:10,speed:1,left:10,right:10}
+     * @config  {Node|Object}  ybar    垂直滚动条节点或者配置信息，配置如{body:'bar-id',min:10,speed:1,top:10,bottom:10}
+     * @config  {String|Node}  parent  滚动容器节点，默认为滚动条的父容器，滚动过程触发该节点上的onscroll事件
+     * @config  {String|Node}  trigger 滚动条显示隐藏触点，不传表示不做显示隐藏切换
      */
     _p._$$SimpleScroll = NEJ.C();
     _pro = _p._$$SimpleScroll._$extend(_p._$$Event);
@@ -102,22 +103,28 @@ var f = function(){
             x:{
                 min:10,
                 speed:1,
+                left:0,
+                right:0,
                 sb:'scrollWidth',
                 cb:'clientWidth',
                 ob:'offsetWidth',
                 sr:'scrollLeft',
                 ss:'width',
-                sp:'left'
+                sp:'left',
+                dr:'right'
             },
             y:{
                 min:10,
                 speed:1,
+                top:0,
+                bottom:0,
                 sb:'scrollHeight',
                 cb:'clientHeight',
                 ob:'offsetHeight',
                 sr:'scrollTop',
                 ss:'height',
-                sp:'top'
+                sp:'top',
+                dr:'bottom'
             }
         };
         // init scrollbar
@@ -209,9 +216,12 @@ var f = function(){
     _pro.__doResetBarSize = function(_conf){
         var _sbox = this.__parent[_conf.sb],
             _cbox = this.__parent[_conf.cb],
+            _sdlt = _sbox-_cbox,
+            _cbox = _cbox-_conf[_conf.sp]
+                    -_conf[_conf.dr],
             _delta = _sbox-_cbox,
             _style = {};
-        if (_delta<=0){
+        if (_sdlt<=0){
             _conf.ratio = 0;
             _style.visibility = 'hidden';
             _style[_conf.ss] = _cbox+'px';
@@ -222,7 +232,10 @@ var f = function(){
             ));
             _style.visibility = 'visible';
             _style[_conf.ss] = _size+'px';
-            _conf.max = Math.ceil(_cbox-_size);
+            _conf.max = Math.ceil(
+                _cbox-_size+
+                _conf[_conf.sp]
+            );
             _conf.ratio = (_cbox-_size)/_delta;
         }
         _conf.delta = 0;
@@ -244,11 +257,10 @@ var f = function(){
             this.__parent[_conf.sr] -= _delta*_conf.speed;
         }
         if (!!_conf.body){
-            var _value = this.__parent[_conf.sr];
-            _e._$setStyle(
-                _conf.body,_conf.sp,
-                (Math.ceil(_value*_conf.ratio)-_conf.delta)+'px'
-            );
+            var _value = this.__parent[_conf.sr],
+                _offset = Math.ceil(_value*_conf.ratio)-
+                         _conf.delta+_conf[_conf.sp];
+            _e._$setStyle(_conf.body,_conf.sp,_offset+'px');
         }
     };
     /**
@@ -349,12 +361,16 @@ var f = function(){
     _pro.__onBeforeUpdateBar = function(_name,_event){
         this.__dragging = !0;
         var _conf = this.__bar[_name],
-            _offset = Math.min(
-                _conf.max,
-                _event[_conf.sp]
+            _delta = _conf[_conf.sp],
+            _offset = Math.max(
+                _delta,Math.min(
+                    _conf.max,
+                    _event[_conf.sp]
+                )
             );
-        this.__parent[_conf.sr] = 
-            Math.ceil(_offset/_conf.ratio);
+        this.__parent[_conf.sr] = Math.ceil(
+            (_offset-_delta)/_conf.ratio
+        );
         _event[_conf.sp] = _offset;
     };
     /**
