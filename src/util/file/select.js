@@ -11,8 +11,10 @@ var f = function(){
         _f = NEJ.F,
         _e = _('nej.e'),
         _v = _('nej.v'),
+        _u = _('nej.u'),
         _x = _('nej.x'),
         _h = _('nej.h'),
+        _cache = {},  // {id:{lab:'label',pid:'parent'}}
         _class = _e._$pushCSSText('.#<class>{position:absolute;top:0;left:0;width:0;height:0;overflow:hidden;}');
     /**
      * 文件选择按钮封装
@@ -53,8 +55,6 @@ var f = function(){
      */
     _e._$file = 
     _x._$file = (function(){
-        var _seed = +new Date,
-            _cache = {}; // {id:{lab:'label',pid:'parent'}}
         // init cache
         var _doInitCache = function(_id){
             var _cch = _cache[_id];
@@ -73,8 +73,10 @@ var f = function(){
             if (!!_form){
                 _parent = _e._$create('div',_cls);
                 _form.appendChild(_parent);
+                _e._$dataset(_form,'id',_id);
             }else{
                 _parent = _e._$create('form',_cls);
+                _e._$dataset(_parent,'id',_id);
                 document.body.appendChild(_parent);
             }
             _cch.pid = _e._$id(_parent);
@@ -116,7 +118,7 @@ var f = function(){
                !!_element.htmlFor||
                  _element.tagName!='LABEL') return;
             _e._$dumpCSSText();
-            var _id = _seed++,
+            var _id = _u._$uniqueID(),
                 _cch = _doInitCache(_id);
             _options = _options||_o;
             _doBuildParent(
@@ -133,12 +135,47 @@ var f = function(){
             _element.htmlFor = 
                 _doAppendFile(_id,_cch.accept);
             _h.__handleFileLabelClick(_element);
+            return _id;
         };
     })();
+    /**
+     * 根据ID取选中文件的form表单
+     * @api    {nej.e._$getFileForm}
+     * @see    {nej.e._$file}
+     * @param  {String} 标识
+     * @return {Node}   表单节点
+     */
+    _e._$getFileForm = 
+    _x._$getFileForm = function(_id){
+        var _conf = _cache[_id];
+        if (!_conf) return;
+        var _form = _e._$get(_conf.pid);
+        if (!_form) return;
+        if (_form.tagName!='FORM'){
+            _form = _form.parentNode;
+        }
+        return _form;
+    };
+    /**
+     * 根据ID删除选中文件的form表单
+     * @api    {nej.e._$removeFileForm}
+     * @see    {nej.e._$file}
+     * @param  {String} 标识
+     * @return {Void}
+     */
+    _e._$removeFileForm = 
+    _x._$removeFileForm = function(_id){
+        var _conf = _cache[_id];
+        if (!!_conf){
+            _e._$remove(_conf.pid);
+            delete _cache[_id];
+        }
+    };
     _x.isChange = !0;
 };
 NEJ.define(
     '{lib}util/file/select.js',[
     '{lib}base/element.js',
-    '{lib}base/event.js'
+    '{lib}base/event.js',
+    '{lib}base/util.js'
 ],f);
