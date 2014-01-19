@@ -14,7 +14,7 @@ var f = function(){
         _g = _('nej.g'),
         _i = _('nej.ui'),
         _p = _('nej.ut'),
-        _proClipper;
+        _pro;
     if (!!_p._$$Clipper) return;
     /**
      * 图片裁剪器封装对象<br/>
@@ -69,14 +69,14 @@ var f = function(){
      *  
      */
     _p._$$Clipper = NEJ.C();
-      _proClipper = _p._$$Clipper._$extend(_p._$$Event);
+      _pro = _p._$$Clipper._$extend(_p._$$Event);
     /**
      * 控件初始化
      * @protected
      * @method {__init}
      * @return {Void}
      */
-    _proClipper.__init = function(){
+    _pro.__init = function(){
         this.__image = new Image();
         this.__ropt = {
             onmove:this.__onClipping._$bind(this),
@@ -89,7 +89,7 @@ var f = function(){
      * @param  {Object} 配置参数
      * @return {Void}
      */
-    _proClipper.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
         // init event
         this.__doInitDomEvent([[
@@ -120,7 +120,7 @@ var f = function(){
      * 控件销毁
      * @return {Void}
      */
-    _proClipper.__destroy = function(){
+    _pro.__destroy = function(){
         this.__supDestroy();
         this.__doClearResizer();
         this.__doClearPreview();
@@ -130,7 +130,7 @@ var f = function(){
      * 清除缩放器
      * @return {Void}
      */
-    _proClipper.__doClearResizer = function(){
+    _pro.__doClearResizer = function(){
         _e._$remove(this.__cbox);
         delete this.__cbox;
         if (!!this.__resizer){
@@ -142,7 +142,7 @@ var f = function(){
      * 清除预览图片
      * @return {Void}
      */
-    _proClipper.__doClearPreview = function(_keeped){
+    _pro.__doClearPreview = function(_keeped){
         _u._$forIn(
             this.__pbox,function(_conf){
                 var _img = _e._$get(_conf.img);
@@ -161,7 +161,7 @@ var f = function(){
      * @param  {Object} 容器尺寸，{width:200,height:300}
      * @return {Object} 图片位置，{left:0,top:0,width:10,height:20}
      */
-    _proClipper.__doCalImagePosition = function(_simg,_sbox){
+    _pro.__doCalImagePosition = function(_simg,_sbox){
         var _irat = _simg.width/_simg.height,
             _brat = _sbox.width/_sbox.height,
             _result = {};
@@ -187,7 +187,7 @@ var f = function(){
      * 计算裁剪预览位置
      * @return {Void}
      */
-    _proClipper.__doCalClipPosition = function(_clip,_prev){
+    _pro.__doCalClipPosition = function(_clip,_prev){
         var _result = {},
             _ratio = _clip.width/_prev.width,
             _delta = this.__ratio/_ratio;
@@ -202,7 +202,7 @@ var f = function(){
      * @param  {Boolean} 图片是否成功载入
      * @return {Void}
      */
-    _proClipper.__onImageLoad = (function(){
+    _pro.__onImageLoad = (function(){
         var _imgsize = {
             position:'absolute',
             top:0,left:0,
@@ -282,7 +282,7 @@ var f = function(){
      * @param  {Object} 裁剪信息
      * @return {Void}
      */
-    _proClipper.__onClipping = function(_event){
+    _pro.__onClipping = function(_event){
         // sync clip image
         var _img = this.__cbox.getElementsByTagName('IMG')[1],
             _crp = [_event.top+'px',_event.left+_event.width+'px',
@@ -304,7 +304,7 @@ var f = function(){
      * @param  {Object} 裁剪信息
      * @return {Void}
      */
-    _proClipper.__doPreviewClip = function(_conf,_box){
+    _pro.__doPreviewClip = function(_conf,_box){
         if (!_box){
             _box = this.__resizer._$getResizeBox();
         }
@@ -336,7 +336,7 @@ var f = function(){
      * @param  {String} 图片地址
      * @return {Void}
      */
-    _proClipper._$setURL = function(_url){
+    _pro._$setURL = function(_url){
         if (!_url) return;
         // do clear
         this.__doClearResizer();
@@ -352,7 +352,7 @@ var f = function(){
      * @param  {String|Node} 预览容器节点
      * @return {Void}
      */
-    _proClipper._$addPreview = function(_box){
+    _pro._$addPreview = function(_box){
         var _box = _e._$get(_box);
         if (!_box) return;
         var _id = _e._$id(_box),
@@ -374,7 +374,7 @@ var f = function(){
      * @param  {Boolean} 是否保留最终状态
      * @return {Void}
      */
-    _proClipper._$delPreview = function(_id,_keep){
+    _pro._$delPreview = function(_id,_keep){
         var _map = this.__pbox[_id];
         if (!!_map&&!_keep)
             _e._$remove(_map.img);
@@ -385,7 +385,7 @@ var f = function(){
      * @param  {String} 预览标识
      * @return {Object} 裁剪结果
      */
-    _proClipper._$getClipResult = function(_id){
+    _pro._$getClipResult = function(_id){
         var _conf = this.__pbox[_id];
         // dump one
         if (!!_conf){
@@ -401,7 +401,9 @@ var f = function(){
         return _result;
     };
 };
-NEJ.define('{lib}util/clipper/clipper.js',
-          ['{lib}util/event.js'
-          ,'{lib}base/constant.js'
-          ,'{lib}ui/resizer/resizer.js'],f);
+NEJ.define(
+    '{lib}util/clipper/clipper.js',[
+    '{lib}util/event.js',
+    '{lib}base/constant.js',
+    '{lib}ui/resizer/resizer.js'
+],f);
