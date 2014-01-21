@@ -386,15 +386,6 @@ var f = function(){
     })();
     /**
      * 检查事件类型
-     * @param  {Node}   节点
-     * @param  {String} 事件类型
-     * @return {String} 变化后的事件类型
-     */
-    _h.__checkEventType = function(_element,_type){
-        return null;
-    };
-    /**
-     * 检查事件类型
      * @param  {Object} 事件匹配表
      * @param  {Object} 参数及结果信息
      * @return {Void}
@@ -417,6 +408,20 @@ var f = function(){
         }
     };
     /**
+     * 检查事件类型
+     * @param  {Node}   节点
+     * @param  {String} 事件类型
+     * @return {String} 变化后的事件类型
+     */
+    _h.__checkEventType = (function(){
+        var _emap = {
+            enter:'keypress'
+        };
+        return function(_element,_type){
+            return _emap[_type]||null;
+        };
+    })();
+    /**
      * 检查事件执行函数
      * @param  {String}   事件类型
      * @param  {Function} 事件执行函数
@@ -424,7 +429,18 @@ var f = function(){
      * @return {Function} 变化后的事件执行函数
      */
     _h.__checkEventHandler = function(_type,_handler,_element){
-        return _handler;
+        var _callback = _handler;
+        switch(_type){
+            case 'keypress':
+                _callback = function(_event){
+                    var _this = _v._$getElement(_event)||this;
+                    if (_event.keyCode==13){
+                        _handler.call(_this,_event);
+                    }
+                };
+            break;
+        }
+        return _callback;
     };
     /**
      * 添加节点事件
