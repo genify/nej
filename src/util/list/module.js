@@ -775,7 +775,7 @@ var f = function(){
             var _list = this.__cache._$getListInCache(_event.key),
                 _index = _u._$indexOf(_list,_event.data);
             if (_index<0) return;
-            this.__iopt.list = _list;
+            this.__iopt.xlist = _list;
             this.__iopt.beg  = _index;
             this.__iopt.end  = _index;
             this.__iopt.act  = 'update';
