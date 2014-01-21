@@ -293,6 +293,72 @@ var f = function(){
             _args[0].detachEvent('on'+_args[1],_args[2]);
         }
     });
+// fix input for ie9
+if (_p._$KERNEL.release=='5.0'){
+    _h.__addEvent = (function(){
+        var _hmap = {},
+            _kmap = {8:1,46:1},
+            _cmap = {88:'ctrlKey'};
+        var _doEventCheck = function(_event){
+            // for backspace/delete/ctrl+x ...
+            var _code = _event.keyCode,
+                _key = _cmap[_code],
+                _icut = !!_key&&_event[_key];
+            if (!_kmap[_code]&&!_icut) return;
+            // check change
+            var _node = _v._$getElement(_event),
+                _id = _e._$id(_node),
+                _key = _id+'-last',
+                _value = _node.value;
+            if (_hmap[_key]!=_value){
+                _hmap[_key] = _value;
+                _doCallback(_id,_event);
+            }
+        };
+        var _doCallback = function(_id,_event){
+            _u._$forEach(
+                _hmap[_id],function(_handler){
+                    _handler.call(null,_event);
+                }
+            );
+        };
+        _h.__delEvent = 
+        _h.__delEvent._$aop(null,function(_event){
+            var _args = _event.args;
+            if (_args[1]=='input'){
+                var _id = _e._$id(_args[0]),
+                    _func = _args[2];
+                _u._$reverseEach(
+                    _hmap[_id],function(_handler,_index,_list){
+                        if (_func==_handler){
+                            _list.splice(_index,1);
+                            return !0;
+                        }
+                    }
+                );
+                var _list = _hmap[_id];
+                if (!_list||!_list.length){
+                    delete _hmap[_id];
+                    delete _hmap[_id+'-last'];
+                    _v._$delEvent(_id,'keyup',_doEventCheck);
+                    _v._$delEvent(_id,'keydown',_doEventCheck);
+                }
+            }
+        });
+        return _h.__addEvent._$aop(null,function(_event){
+            var _args = _event.args;
+            if (_args[1]=='input'){
+                var _id = _e._$id(_args[0]);
+                if (!_hmap[_id]){
+                    _hmap[_id] = [];
+                }
+                _hmap[_id].push(_args[2]);
+                _v._$addEvent(_id,'keyup',_doEventCheck);
+                _v._$addEvent(_id,'keydown',_doEventCheck);
+            }
+        });
+    })();
+}
     /**
      * 触发对象的某个事件
      * @param  {String|Node} _element 节点ID或者对象
@@ -343,7 +409,6 @@ var f = function(){
             _event.value = _result;
         });
     })();
-    
     /**
      * 设置样式
      * @param  {String|Node} _element 节点

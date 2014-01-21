@@ -567,8 +567,9 @@ var f = function(){
             }
             _doInitListener();
             _e._$dataset(
-                _v._$getElement(
-                    _event),'stopped','true');
+                _v._$getElement(_event),
+                'stopped','true'
+            );
         };
     })();
     /**
@@ -684,7 +685,9 @@ var f = function(){
     };
     _x.isChange = !0;
 };
-NEJ.define('{lib}base/event.js',
-      ['{lib}base/element.js'
-      ,'{lib}base/util.js'
-      ,'{patch}api.js'],f);
+NEJ.define(
+    '{lib}base/event.js',[
+    '{lib}base/element.js',
+    '{lib}base/util.js',
+    '{patch}api.js'
+],f);

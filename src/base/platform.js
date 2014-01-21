@@ -33,13 +33,13 @@ var f = function(){
      * @type   {Object}
      */
     var _is = {
-        mac        : _platform
-       ,win        : _platform
-       ,linux      : _platform
-       ,ipad       : _useragent
-       ,ipod       : _useragent
-       ,iphone     : _platform
-       ,android    : _useragent
+        mac        : _platform,
+        win        : _platform,
+        linux      : _platform,
+        ipad       : _useragent,
+        ipod       : _useragent,
+        iphone     : _platform,
+        android    : _useragent
     };
     _p._$IS = _is;
     for(var x in _is)
