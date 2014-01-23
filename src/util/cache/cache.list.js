@@ -592,6 +592,7 @@ var f = function(){
                     this.__lspl,function(_list,_key){
                         if (_key=='hash'||
                            !_u._$isArray(_list)) return;
+                        _key = _key.substr(0,_key.length-5);
                         this._$clearListInCache(_key);
                     },this
                 );
