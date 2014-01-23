@@ -578,11 +578,23 @@ var f = function(){
             _list.splice(_index,1);
         };
         return function(_key){
-            var _list = this._$getListInCache(_key);
-            _u._$reverseEach(_list,_doClear);
-            this._$setLoaded(_key,!1);
-            if (this.__auto){
-                this.__doGCSchedule();
+            if (!!_key){
+                // clear one list
+                var _list = this._$getListInCache(_key);
+                _u._$reverseEach(_list,_doClear);
+                this._$setLoaded(_key,!1);
+                if (this.__auto){
+                    this.__doGCSchedule();
+                }
+            }else{
+                // clear all list
+                _u._$forIn(
+                    this.__lspl,function(_list,_key){
+                        if (_key=='hash'||
+                           !_u._$isArray(_list)) return;
+                        this._$clearListInCache(_key);
+                    },this
+                );
             }
             return this;
         };

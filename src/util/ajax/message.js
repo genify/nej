@@ -89,6 +89,8 @@ var f = function(){
         };
     })();
 };
-NEJ.define('{lib}util/ajax/message.js',
-      ['{patch}message.js'
-      ,'{lib}base/element.js'],f);
+NEJ.define(
+    '{lib}util/ajax/message.js',[
+    '{lib}base/element.js',
+    '{patch}message.js'
+],f);
