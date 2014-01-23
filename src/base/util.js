@@ -188,6 +188,43 @@ var f = function(){
         };
     })();
     /**
+     * 根据长度限制截取字符<br/>
+     *
+     * 脚本举例
+     * [code]
+     *   var _u = NEJ.P(‘nej.u’),
+     *       _str = "你i他$ ABC我";
+     *   // 字符串实际长度为12,如果需求截取中文长度3,英文长度6
+     *   _u._$slice(_str,6);
+     * [/code]
+     * @api    {nej.u._$slice}
+     * @return {String} 截取后的字符串
+     */
+    _u._$slice = (function(){
+        var _reg = /[^\x00-\xfff]/g;
+        var _regx = /\*/g;
+        return function(_content,_index){
+            var _temp = _content||'',
+                _num = 2,
+                _end = 0;
+                _index = _index||1;
+                _content = _content.replace(_regx,'A');
+                _content = (''+(_content||'')).replace(_reg,'**');
+                _content = _content.slice(0,_index);
+            var _count = _content.match(_regx);
+            if(_count!=null){
+                _num = _count.length;
+            }
+            _content = _content.replace(/\*\*/gi,'A');
+            if(_num%2 == 0){
+                _end = _content.length;
+            }else{
+                _end = _content.length -1;
+            }
+            return _temp.slice(0,_end);
+        };
+    })();
+    /**
      * 线性查找指定项<br/>
      * 
      * 脚本举例
