@@ -367,7 +367,7 @@ var f = function(){
      *       consoel.log(_b);
      *       // 当前this.a ： 0 
      *       console.log(this.a);
-     *   }._$bind(_obj,"1");
+     *   }._$bind2(_obj,"1");
      *   _f(2);
      * [/code]
      * 
@@ -402,7 +402,7 @@ var f = function(){
         NEJ.P('console').log = NEJ.F;
         NEJ.P('console').error = NEJ.F;
     }
-    // void generating these name when publish
+    // void generating these name when deploy
     var lt,gt,amp,nbsp,quot,apos,copy,reg;
 };
 NEJ.define('{lib}base/global.js',f);

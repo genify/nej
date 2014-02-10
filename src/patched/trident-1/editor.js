@@ -39,8 +39,7 @@ var f = function(){
                 _doc = _args[0],
                 _win = _h.__getWindow(_doc),
                 _range = _h.__getRange(_win);
-            var _node = _doc.createElement('div'),
-                _last;
+            var _node = _doc.createElement('div');
             _node.innerHTML = _args[1];
             // insert content
             _range.deleteContents();
@@ -48,7 +47,6 @@ var f = function(){
                 _node.childNodes,
                 function(_elm){
                     _range.insertNode(_elm);
-                    if (!_last) _last = _elm;
                 }
             );
             // set focus

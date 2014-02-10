@@ -18,7 +18,7 @@ var f = function(){
 		    _count = Math.floor(_total/_options.limit),
 		    _number = _count*_options.limit;
 		var _len = _options.offset>=_number?_total-_number:_options.limit;
-		for(var i=0;i<_len;i++){
+		for(var i=0;i<_total;i++){
 			_arr.push({id:+new Date+i,name:'user-'+(+new Date+i),loginTime:+new Date});
 		}
 		if (_options.offset==0){

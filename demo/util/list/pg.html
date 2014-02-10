@@ -69,8 +69,8 @@
               //first:12,
               item:'jst-list',
               parent:'list-box-0',
-              pager:{parent:['page-box-00','page-box-01'],index:3},
-              cache:{klass:_x._$$CustomCache,lkey:'abc'/*,list:test_data*/,total:40},
+              pager:{parent:['page-box-00','page-box-01'],index:3,limit:10},
+              cache:{klass:_x._$$CustomCache,lkey:'abc'/*,list:test_data*/,total:40,clear:!0,autogc:!0},
               onupdate:function(_event){
                   console.log('update from jst -> '+_event.data.id);
                   this._$update({
@@ -87,13 +87,11 @@
           
           nej.v._$addEvent(
               'xxx','click',function(){
-                  alert(0);
-                  _module._$clearListData(40);
-                  _module._$refresh();
-                  alert(1);
+                  _module = _module._$recycle();
               }
           );
           
+          /*
           
           function a(){
               var xx = _t._$$ListModulePG._$allocate({
@@ -126,10 +124,12 @@
               );
           }
           a();
-          
+          */
+          /*
           document.addEventListener('keypress',function(e){
               if (e.keyCode==13) a();
           },!1);
+          */
           
       });
     </script>
