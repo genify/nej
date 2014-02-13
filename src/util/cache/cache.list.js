@@ -269,21 +269,37 @@ var f = function(){
      * 从缓存列表删除项
      * @protected
      * @method {__doRemoveItemInCache}
-     * @param  {String} 列表标识
-     * @param  {Object} 项标识
-     * @return {Object} 删除项
+     * @param  {String}       列表标识
+     * @param  {String|Array} 项标识,['111',{id:'222',...},...]
+     * @return {Object}       删除项
      */
     _pro.__doRemoveItemFromList = function(_lkey,_id){
         var _result = null,
-            _pkey = this.__key,
-            _list = this._$getListInCache(_lkey),
-            _index = _u._$indexOf(_list,function(_itm){
-                return !!_itm&&_itm[_pkey]==_id;
-            });
-        if (_index>=0){
-            _result = _list[_index];
-            _list.splice(_index,1);
+            _pkey = this.__key;
+        // remove one item
+        if (!_u._$isArray(_id)){
+            var _result = null,
+                _pkey = this.__key;
+            _id = _id[_pkey]||_id;
+            var _list = this._$getListInCache(_lkey),
+                _index = _u._$indexOf(_list,function(_itm){
+                    return !!_itm&&_itm[_pkey]==_id;
+                });
+            if (_index>=0){
+                _result = _list[_index];
+                _list.splice(_index,1);
+            }
+            return _result;
         }
+        // batch remove items
+        var _result = [];
+        _u._$forEach(
+            _id,function(_item){
+                _result.push(
+                    this.__doRemoveItemFromList(_item)
+                );
+            },this
+        );
         return _result;
     };
     /**
