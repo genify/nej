@@ -268,10 +268,10 @@ var f = function(){
     /**
      * 从缓存列表删除项
      * @protected
-     * @method {__doRemoveItemInCache}
+     * @method {__doRemoveItemFromList}
      * @param  {String}       列表标识
      * @param  {String|Array} 项标识,['111',{id:'222',...},...]
-     * @return {Object}       删除项
+     * @return {Object|Array} 删除项
      */
     _pro.__doRemoveItemFromList = function(_lkey,_id){
         var _result = null,
