@@ -14,7 +14,7 @@ var f = function(){
         _v = _('nej.v'),
         _u = _('nej.u'),
         _p = _('nej.ut'),
-        _proEvent;
+        _pro;
     if (!!_p._$$Event) return;
     /**
      * 控件基类，主要实现以下功能：
@@ -26,16 +26,16 @@ var f = function(){
      *   // 自定义一个控件及使用回收的流程
      *   var _  = NEJ.P,
      *       _p = _('pt.w'),
-     *       _proWidget;
+     *       _pro;
      *   
      *   // 第一步
      *   // 定义控件类，从父类继承
      *   _p._$$Widget = NEJ.C();
-     *     _proWidget = _p._$$Widget._$extend(nej.ut._$$Event);
+     *   _pro = _p._$$Widget._$extend(nej.ut._$$Event);
      *   
      *   // 第二步
      *   // 重写控件初始化业务逻辑
-     *   _proWidget.__init = function(_options){
+     *   _pro.__init = function __init(_options){
      *       // _options - 配置参数信息
      *       //            初始化时一般不对该参数做处理
      *       // 调用父类初始化业务逻辑
@@ -45,7 +45,7 @@ var f = function(){
      *   
      *   // 第三步
      *   // 重写控件重置业务逻辑
-     *   _proWidget.__reset = function(_options){
+     *   _pro.__reset = function __reset(_options){
      *       // _options - 配置参数信息
      *       //            此处重置控件配置信息
      *       // 调用父类重置业务逻辑
@@ -55,7 +55,7 @@ var f = function(){
      *   
      *   // 第四步
      *   // 重写控件回收业务逻辑
-     *   _proWidget.__destroy = function(){
+     *   _pro.__destroy = function __destroy(){
      *       // 调用父类回收业务逻辑
      *       this.__supDestroy();
      *       // TODO something
@@ -80,11 +80,10 @@ var f = function(){
      * @param {Object} 配置参数，根据控件实际情况提供配置参数支持
      *
      * [hr]
-     * 
      * 控件回收前触发事件，控件在具体实现时如需触发回收前的事件
      * [code]
      *   // 重写控件回收业务逻辑触发onbeforerecycle事件
-     *   _proWidget.__destroy = function(){
+     *   _pro.__destroy = function(){
      *       this._$dispatchEvent('onbeforerecycle');
      *       // 调用父类回收业务逻辑
      *       this.__supDestroy();
@@ -101,11 +100,10 @@ var f = function(){
      * @param  {Object} 事件触发信息
      *
      * [hr]
-     * 
      * 控件回收后触发事件，控件在具体实现时如需触发回收后的事件
      * [code]
      *   // 重写控件回收业务逻辑触发onbeforerecycle事件
-     *   _proWidget.__destroy = function(){
+     *   _pro.__destroy = function(){
      *       // 调用父类回收业务逻辑
      *       this.__supDestroy();
      *       // TODO something
@@ -121,10 +119,9 @@ var f = function(){
      * [/code]
      * @event  {onaftercycle}
      * @param  {Object} 事件触发信息
-     * 
      */
     _p._$$Event = NEJ.C();
-      _proEvent = _p._$$Event.prototype;
+    _pro = _p._$$Event.prototype;
     /**
      * 控件分配，NEJ框架提供的所有控件统一使用分配和回收机制，
      * 分配空间时会优先考虑使用前面回收的同种控件，只有在没有可用控件的情况下才会实例化新的控件
@@ -159,18 +156,12 @@ var f = function(){
     /**
      * 控件回收，NEJ框架提供的所有控件统一使用分配和回收机制，
      * 如果提供的实例非当前类的实例则自动调整为输入实例的类来回收此实例
-     * [ul]
-     *   会自动调用{#__destroy}
-     * [/ul]
      * [code]
      *   // 回收前面分配的实例有两种方式
-     *   
      *   // 如果不能确定实例的构造类，则可以直接使用实例的回收接口
      *   _widget._$recycle();
-     *   
      *   // 如果可以确定实例的构造类，则可以使用构造类的静态回收接口
      *   _p._$$Widget._$recycle(_widget);
-     *   
      *   // 如果回收多个实例则使用构造类的静态回收接口
      *   _p._$$Widget._$recycle([_widget0,_widget1]);
      * [/code]
@@ -267,7 +258,8 @@ var f = function(){
      * @static
      * @method {_$getInstanceWithReset}
      * @see    {#_$getInstance}
-     * @param  {Object} 配置参数，根据控件实际情况提供配置参数支持
+     * @param  {Object}  配置参数，根据控件实际情况提供配置参数支持
+     * @param  {Boolean} 是否需要先清理已有实例
      * @return {Void}
      */
     _p._$$Event._$getInstanceWithReset = function(_options,_clear){
@@ -291,7 +283,7 @@ var f = function(){
      * 子类可通过调用__supInit接口调用父类的初始化业务逻辑
      * [code]
      *   // 子类控件初始化业务逻辑
-     *   _proWidget.__init = function(){
+     *   _pro.__init = function(){
      *       // 调用父类控件初始化
      *       this.__supInit();
      *       // TODO something
@@ -301,14 +293,11 @@ var f = function(){
      * @method {__init}
      * @return {Void}
      */
-    _proEvent.__init = (function(){
-        var _seed = +new Date;
-        return function(){
-            this.id = _seed++;
-            this.__events = {};
-            this.__events_dom = {};
-        };
-    })();
+    _pro.__init = function __init(){
+        this.__events = {};
+        this.__events_dom = {};
+        this.id = _u._$uniqueID();
+    };
     /**
      * 控件重置，此接口用来接收控件配置参数的处理，
      * 控件基类已处理以下业务逻辑：
@@ -319,7 +308,7 @@ var f = function(){
      * 子类通过调用__supReset接口调用父类的重置业务逻辑
      * [code]
      *   // 子类控件重置业务逻辑
-     *   _proWidget.__reset = function(_options){
+     *   _pro.__reset = function(_options){
      *       // 调用父类控件重置逻辑
      *       this.__supReset(_options);
      *       // TODO something
@@ -330,7 +319,7 @@ var f = function(){
      * @param  {Object} 配置参数，根据控件实际情况提供配置参数支持
      * @return {Void}
      */
-    _proEvent.__reset = function(_options){
+    _pro.__reset = function __reset(_options){
         this._$batEvent(_options);
     };
     /**
@@ -345,7 +334,7 @@ var f = function(){
      * 子类可通过调用__supDestroy接口调用父类的销毁业务逻辑
      * [code]
      *   // 子类重写控件销毁逻辑
-     *   _proWidget.__destroy = function(){
+     *   _pro.__destroy = function(){
      *       // 触发回收之前事件
      *       this._$dispatchEvent('onbeforerecycle');
      *       // 调用父类清理逻辑，如果有触发回收之后事件则以下业务逻辑需在触发回收之后事件后面调用
@@ -353,7 +342,6 @@ var f = function(){
      *       // 清理本控件的数据
      *       delete this.__conf0;
      *       this.__widget2 = this.__widget2._$recycle();
-     *       
      *       // 触发回收之后事件，确保在onafterrecycle事件被清理前触发
      *       this._$dispatchEvent('onafterrecycle');
      *       this.__supDestroy();
@@ -363,7 +351,7 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proEvent.__destroy = function(){
+    _pro.__destroy = function __destroy(){
         this._$clearEvent();
         this.__doClearDomEvent();
     };
@@ -372,7 +360,7 @@ var f = function(){
      * {nej.v#_$addEvent}接口添加的事件，使用此接口添加可以在回收时自动被清理
      * [code]
      *   // 子类重置接口添加节点事件
-     *   _proWidget.__reset = function(_options){
+     *   _pro.__reset = function(_options){
      *       this.__supReset(_options);
      *       // 添加DOM事件或者自定义事件
      *       this.__doInitDomEvent([
@@ -387,14 +375,13 @@ var f = function(){
      * @param  {Array} 待添加的事件配置列表 
      * @return {Void}
      */
-    _proEvent.__doInitDomEvent = (function(){
-        var _seed = +new Date;
+    _pro.__doInitDomEvent = (function(){
         var _doAttach = function(_args){
             if (!_args||_args.length<3) return;
-            this.__events_dom['de-'+(_seed++)] = _args;
+            this.__events_dom['de-'+_u._$uniqueID()] = _args;
             _v._$addEvent.apply(_v,_args);
         };
-        return function(_list){
+        return function __doInitDomEvent(_list){
             _u._$forEach(_list,_doAttach,this);
         };
     })();
@@ -406,26 +393,26 @@ var f = function(){
      * @see    {#__doInitDomEvent}
      * @return {Void}
      */
-    _proEvent.__doClearDomEvent = (function(){
+    _pro.__doClearDomEvent = (function(){
         var _doRemoveEvent = function(_args,_key,_map){
             delete _map[_key];
             _v._$delEvent.apply(_v,_args);
         };
-        return function(){
+        return function __doClearDomEvent(){
             _u._$forIn(this.__events_dom,_doRemoveEvent);
         };
     })();
     /**
-     * 清理所有控件
+     * 清理所有组合的控件
+     * @protected
+     * @method {__doClearComponent}
      * @param  {Function} 过滤接口
      * @return {Void}
      */
-    _proEvent.__doClearComponent = function(_filter){
+    _pro.__doClearComponent = function __doClearComponent(_filter){
         _filter = _filter||_f;
         _u._$forIn(this,function(_inst,_key,_map){
-            if (!!_inst&&
-                !!_inst._$recycle&&
-                 !_filter(_inst)){
+            if (!!_inst&&!!_inst._$recycle&&!_filter(_inst)){
                 delete _map[_key];
                 _inst._$recycle();
             }
@@ -441,7 +428,7 @@ var f = function(){
      * @method {_$recycle}
      * @return {Void}
      */
-    _proEvent._$recycle = function(){
+    _pro._$recycle = function _$recycle(){
         this.constructor._$recycle(this);
     };
     /**
@@ -460,9 +447,9 @@ var f = function(){
      * @param  {String}  事件类型
      * @return {Boolean} 是否注册了事件回调
      */
-    _proEvent._$hasEvent = function(_type){
-        var _event = this.__events[
-                 _type.toLowerCase()];
+    _pro._$hasEvent = function _$hasEvent(_type){
+        var _type = (_type||'').toLowerCase(),
+            _event = this.__events[_type];
         return !!_event&&_event!==_f;
     };
     /**
@@ -472,32 +459,32 @@ var f = function(){
      * @see    {#_$setEvent}
      * @param  {String}   事件类型
      * @param  {Function} 事件处理函数
-     * @return {nej.ut}
+     * @return {Void}
      */
-    _proEvent._$addEvent = function(_type,_event){
+    _pro._$addEvent = function _$addEvent(_type,_event){
         this._$setEvent.apply(this,arguments);
-        return this;
     };
     /**
      * 删除事件
      * @method {_$delEvent}
      * @param  {String}   事件类型
      * @param  {Function} 事件处理函数
-     * @return {nej.ut}
+     * @return {Void}
      */
-    _proEvent._$delEvent = function(_type,_event){
+    _pro._$delEvent = function _$delEvent(_type,_event){
         var _type = (_type||'').toLowerCase(),
             _events = this.__events[_type];
         if (!_u._$isArray(_events)){
-            if (_events==_event)
+            if (_events==_event){
                 delete this.__events[_type];
+            }
             return;
         }
         _u._$reverseEach(
-            _events,
-            function(_func,_index,_list){
-                if (_func==_event)
+            _events,function(_func,_index,_list){
+                if (_func==_event){
                     _list.splice(_index,1);
+                }
             }
         );
     };
@@ -517,12 +504,12 @@ var f = function(){
      * @method {_$setEvent}
      * @param  {String}   事件类型，大小写不敏感
      * @param  {Function} 事件处理函数
-     * @return {nej.ut._$$Event} 控件实例
+     * @return {Void}
      */
-    _proEvent._$setEvent = function(_type,_event){
-        if (!!_type&&_u._$isFunction(_event)) 
+    _pro._$setEvent = function _$setEvent(_type,_event){
+        if (!!_type&&_u._$isFunction(_event)){
             this.__events[_type.toLowerCase()] = _event;
-        return this;
+        }
     };
     /**
      * 批量添加事件
@@ -542,16 +529,14 @@ var f = function(){
      * @method {_$batEvent}
      * @see    {#_$setEvent}
      * @param  {Object} 事件集合,{type:function}
-     * @return {nej.ut._$$Event} 控件实例
+     * @return {Void}
      */
-    _proEvent._$batEvent = (function(){
+    _pro._$batEvent = (function(){
         var _doSetEvent = function(_event,_type){
             this._$setEvent(_type,_event);
         };
-        return function(_events){
-            _u._$forIn(_events,
-               _doSetEvent,this);
-            return this;
+        return function _$batEvent(_events){
+            _u._$forIn(_events,_doSetEvent,this);
         };
     })();
     /**
@@ -570,20 +555,19 @@ var f = function(){
      * [/code]
      * @method {_$clearEvent}
      * @param  {String} 事件类型
-     * @return {nej.ut._$$Event} 控件实例
+     * @return {Void}
      */
-    _proEvent._$clearEvent = (function(){
+    _pro._$clearEvent = (function(){
         var _doClearEvent = function(_event,_type){
             this._$clearEvent(_type);
         };
-        return function(_type){
+        return function _$clearEvent(_type){
             var _type = (_type||'').toLowerCase();
             if (!!_type){
                 delete this.__events[_type];
             }else{
                 _u._$forIn(this.__events,_doClearEvent,this);
             }
-            return this;
         };
     })();
     /**
@@ -605,22 +589,24 @@ var f = function(){
      * @method {_$pushEvent}
      * @param  {String}   事件类型
      * @param  {Function} 事件处理函数
-     * @return {nej.ut._$$Event} 控件实例
+     * @return {Void}
      */
-    _proEvent._$pushEvent = function(_type,_event){
-        if (!_type||!_u._$isFunction(_event)) 
-            return this;
+    _pro._$pushEvent = function _$pushEvent(_type,_event){
+        // check type and event
+        if (!_type||!_u._$isFunction(_event)){
+            return;
+        }
+        // cache event
         _type = _type.toLowerCase();
         var _events = this.__events[_type];
         if (!_events){
             this.__events[_type] = _event;
-            return this;
+            return;
         }
         if (!_u._$isArray(_events)){
             this.__events[_type] = [_events];
         }
         this.__events[_type].push(_event);
-        return this;
     };
     /**
      * 调用事件，一般在控件实现的具体业务逻辑中使用
@@ -635,7 +621,7 @@ var f = function(){
      *   _widget._$dispatchEvent('onok');
      *   
      *   // 在控件实现的业务逻辑中使用
-     *   _proWidget.__doSomething = function(){
+     *   _pro.__doSomething = function(){
      *       // TODO something
      *       // 触发onok事件
      *       this._$dispatchEvent('onok');
@@ -644,18 +630,20 @@ var f = function(){
      * @method {_$dispatchEvent}
      * @param  {String}   事件类型，不区分大小写
      * @param  {Variable} 事件可接受参数，具体看调用时的业务逻辑
-     * @return {nej.ut._$$Event} 控件实例
+     * @return {Void}
      */
-    _proEvent._$dispatchEvent = function(_type){
-        var _event = this.__events[(_type||'').toLowerCase()];
-        if (!_event) return this;
+    _pro._$dispatchEvent = function _$dispatchEvent(_type){
+        var _type = (_type||'').toLowerCase(),
+            _event = this.__events[_type];
+        if (!_event) return;
         var _args = _r.slice.call(arguments,1);
         // single event
-        if (!_u._$isArray(_event))
+        if (!_u._$isArray(_event)){
             return _event.apply(this,_args);
+        }
         // event list
-        _u._$forEach(_event,
-            function(_handler){
+        _u._$forEach(
+            _event,function(_handler){
                 try{
                     _handler.apply(this,_args);
                 }catch(ex){
@@ -663,7 +651,8 @@ var f = function(){
                     console.error(ex.message);
                     console.error(ex.stack);
                 }
-            },this);
+            },this
+        );
         return this;
     };
     /**
@@ -707,6 +696,7 @@ var f = function(){
         };
     })();
 };
-NEJ.define('{lib}util/event.js',
-      ['{lib}base/event.js'
-      ,'{lib}base/util.js'],f);
+NEJ.define([
+    '{lib}base/event.js',
+    '{lib}base/util.js'
+],f);
