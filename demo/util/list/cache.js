@@ -39,14 +39,28 @@ var f = function(){
      * @return {Void}
      */
     _proCustomCache.__doDeleteItem = function(_options){
-    	
+    	/*
+    	_j._$request(
+    	    '/rest/data/delete',{
+    	        // ...
+    	        onload:function(_json){
+    	            // remove from cache
+    	            var _event = _options.onload(!0);
+    	            // refresh list view
+                    _v._$dispatchEvent(
+                        _p._$$CustomCache,
+                        'listchange',_event
+                    );
+    	        }
+    	    }
+    	);
+    	*/
     	// for test
     	window.setTimeout(function(){
     		var _event = _options.onload(!0);
     		_v._$dispatchEvent(
     			_p._$$CustomCache,'listchange',_event);
     	},500);
-    	
     };
 
     /**
@@ -70,12 +84,12 @@ var f = function(){
         },500);
         
     };
-	/*
+	
 	_t._$$CustomEvent._$allocate({
 		element:_p._$$CustomCache,
 		event:'listchange'
-	})
-	*/
+	});
+	
 };
 define('{pro}cache.js',
       ['{lib}util/event/event.js'

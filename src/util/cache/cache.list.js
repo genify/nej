@@ -266,6 +266,27 @@ var f = function(){
         return _item;
     };
     /**
+     * 从缓存列表删除项
+     * @protected
+     * @method {__doRemoveItemInCache}
+     * @param  {String} 列表标识
+     * @param  {Object} 项标识
+     * @return {Object} 删除项
+     */
+    _pro.__doRemoveItemFromList = function(_lkey,_id){
+        var _result = null,
+            _pkey = this.__key,
+            _list = this._$getListInCache(_lkey),
+            _index = _u._$indexOf(_list,function(_itm){
+                return !!_itm&&_itm[_pkey]==_id;
+            });
+        if (_index>=0){
+            _result = _list[_index];
+            _list.splice(_index,1);
+        }
+        return _result;
+    };
+    /**
      * 格式化数据项，子类实现具体业务逻辑
      * @protected
      * @method {__doFormatItem}
@@ -787,14 +808,9 @@ var f = function(){
         var _item,
             _key = _options.key;
         if (!!_isok){
-            _item = this._$getItemInCache(_options.id)||null;
-            var _id = _options.id,
-                _pkey = this.__key,
-                _list = this._$getListInCache(_key),
-                _index = _u._$indexOf(_list,function(_itm){
-                    return !!_itm&&_itm[_pkey]==_id;
-                });
-            if (_index>=0) _list.splice(_index,1);
+            var _id = _options.id;
+            _item = this._$getItemInCache(_id)||null;
+            this.__doRemoveItemFromList(_key,_id);
         }
         var _event = {
                 key:_key,
