@@ -696,7 +696,8 @@ var f = function(){
         };
     })();
 };
-NEJ.define([
+NEJ.define(
+    '{lib}util/event.js',[
     '{lib}base/event.js',
     '{lib}base/util.js'
 ],f);
