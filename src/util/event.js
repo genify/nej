@@ -293,7 +293,7 @@ var f = function(){
      * @method {__init}
      * @return {Void}
      */
-    _pro.__init = function __init(){
+    _pro.__init = function(){
         this.__events = {};
         this.__events_dom = {};
         this.id = _u._$uniqueID();
@@ -319,7 +319,7 @@ var f = function(){
      * @param  {Object} 配置参数，根据控件实际情况提供配置参数支持
      * @return {Void}
      */
-    _pro.__reset = function __reset(_options){
+    _pro.__reset = function(_options){
         this._$batEvent(_options);
     };
     /**
@@ -351,7 +351,7 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _pro.__destroy = function __destroy(){
+    _pro.__destroy = function(){
         this._$clearEvent();
         this.__doClearDomEvent();
     };
@@ -381,7 +381,7 @@ var f = function(){
             this.__events_dom['de-'+_u._$uniqueID()] = _args;
             _v._$addEvent.apply(_v,_args);
         };
-        return function __doInitDomEvent(_list){
+        return function(_list){
             _u._$forEach(_list,_doAttach,this);
         };
     })();
@@ -398,7 +398,7 @@ var f = function(){
             delete _map[_key];
             _v._$delEvent.apply(_v,_args);
         };
-        return function __doClearDomEvent(){
+        return function(){
             _u._$forIn(this.__events_dom,_doRemoveEvent);
         };
     })();
@@ -409,7 +409,7 @@ var f = function(){
      * @param  {Function} 过滤接口
      * @return {Void}
      */
-    _pro.__doClearComponent = function __doClearComponent(_filter){
+    _pro.__doClearComponent = function(_filter){
         _filter = _filter||_f;
         _u._$forIn(this,function(_inst,_key,_map){
             if (!!_inst&&!!_inst._$recycle&&!_filter(_inst)){
@@ -428,7 +428,7 @@ var f = function(){
      * @method {_$recycle}
      * @return {Void}
      */
-    _pro._$recycle = function _$recycle(){
+    _pro._$recycle = function(){
         this.constructor._$recycle(this);
     };
     /**
@@ -447,7 +447,7 @@ var f = function(){
      * @param  {String}  事件类型
      * @return {Boolean} 是否注册了事件回调
      */
-    _pro._$hasEvent = function _$hasEvent(_type){
+    _pro._$hasEvent = function(_type){
         var _type = (_type||'').toLowerCase(),
             _event = this.__events[_type];
         return !!_event&&_event!==_f;
@@ -461,7 +461,7 @@ var f = function(){
      * @param  {Function} 事件处理函数
      * @return {Void}
      */
-    _pro._$addEvent = function _$addEvent(_type,_event){
+    _pro._$addEvent = function(_type,_event){
         this._$setEvent.apply(this,arguments);
     };
     /**
@@ -471,7 +471,7 @@ var f = function(){
      * @param  {Function} 事件处理函数
      * @return {Void}
      */
-    _pro._$delEvent = function _$delEvent(_type,_event){
+    _pro._$delEvent = function(_type,_event){
         var _type = (_type||'').toLowerCase(),
             _events = this.__events[_type];
         if (!_u._$isArray(_events)){
@@ -506,7 +506,7 @@ var f = function(){
      * @param  {Function} 事件处理函数
      * @return {Void}
      */
-    _pro._$setEvent = function _$setEvent(_type,_event){
+    _pro._$setEvent = function(_type,_event){
         if (!!_type&&_u._$isFunction(_event)){
             this.__events[_type.toLowerCase()] = _event;
         }
@@ -535,7 +535,7 @@ var f = function(){
         var _doSetEvent = function(_event,_type){
             this._$setEvent(_type,_event);
         };
-        return function _$batEvent(_events){
+        return function(_events){
             _u._$forIn(_events,_doSetEvent,this);
         };
     })();
@@ -561,7 +561,7 @@ var f = function(){
         var _doClearEvent = function(_event,_type){
             this._$clearEvent(_type);
         };
-        return function _$clearEvent(_type){
+        return function(_type){
             var _type = (_type||'').toLowerCase();
             if (!!_type){
                 delete this.__events[_type];
@@ -591,7 +591,7 @@ var f = function(){
      * @param  {Function} 事件处理函数
      * @return {Void}
      */
-    _pro._$pushEvent = function _$pushEvent(_type,_event){
+    _pro._$pushEvent = function(_type,_event){
         // check type and event
         if (!_type||!_u._$isFunction(_event)){
             return;
@@ -632,7 +632,7 @@ var f = function(){
      * @param  {Variable} 事件可接受参数，具体看调用时的业务逻辑
      * @return {Void}
      */
-    _pro._$dispatchEvent = function _$dispatchEvent(_type){
+    _pro._$dispatchEvent = function(_type){
         var _type = (_type||'').toLowerCase(),
             _event = this.__events[_type];
         if (!_event) return;
