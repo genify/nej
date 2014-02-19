@@ -8,11 +8,13 @@
 var f = function(){
     // variable declaration
     var _  = NEJ.P,
+        _r = NEJ.R,
         _h = _('nej.h'),
         _e = _('nej.e'),
         _u = _('nej.u'),
         _v = _('nej.v'),
         _x = _('nej.x'),
+        _reg = /\s+/,
         // {id:{type:[{type:'click',func:function,sfun:function,capt:true},...]}}
         // id   - element id
         // type - event name, no on prefix
@@ -20,6 +22,24 @@ var f = function(){
         // capt - capture flag
         // sfun - event before wrapper
         _cache = {};
+    /*
+     * 检查事件批量添加或删除
+     * @return {Void}
+     */
+    var _doCheckBatchEvent = function(_added){
+        var _arr = (arguments[2]||'').split(_reg);
+        if (_arr.length>1){
+            var _args = _r.slice.call(arguments,1);
+            _u._$forEach(
+                _arr,function(_value){
+                    _args[1] = _value;
+                    !_added ? _v._$delEvent.apply(_v,_args)
+                            : _v._$addEvent.apply(_v,_args);
+                }
+            );
+            return !0;
+        }
+    };
     /*
      * 清理节点事件缓存
      * @param  {String|Node} 节点
@@ -54,22 +74,29 @@ var f = function(){
      *   var _v = NEJ.P('nej.v');
      *   // 添加系统预定义事件
      *   _v._$addEvent(
-     *       'abc','mouseover',
-     *       function(_event){
+     *       'abc','mouseover',function(_event){
      *           // TODO something
-     *       },false);
+     *       },false
+     *   );
      *   // 添加自定义事件
      *   _v._$addEvent(
-     *       'abc','custom',
+     *       'abc','custom',function(_event){
+     *           // TODO something
+     *       },false
+     *   );
+     *   // 添加多个事件
+     *   _v._$addEvent(
+     *       'abc','mouseover click mousedown',
      *       function(_event){
      *           // TODO something
-     *       },false);
+     *       },false
+     *   );
      * [/code]
      * 
      * @see    {#_$delEvent}
      * @api    {nej.v._$addEvent}
      * @param  {String|Node} 节点ID或者对象
-     * @param  {String}      事件类型，不带on前缀，不区分大小写
+     * @param  {String}      事件类型，不带on前缀，不区分大小写，多个事件用空格分隔
      * @param  {Function}    事件处理函数
      * @param  {Boolean}     是否捕获阶段事件，IE低版本浏览器忽略此参数
      * @return {nej.v}
@@ -100,6 +127,13 @@ var f = function(){
             return _args.slice(0,4);
         };
         return function(){
+            // check batch event add
+            var _args = _r.slice.call(arguments,0);
+            _args.unshift(!0);
+            if (_doCheckBatchEvent.apply(null,_args)){
+                return;
+            }
+            // add one event
             var _args = _doAddEventInCache
                         .apply(null,arguments);
             if (!!_args) 
@@ -127,23 +161,25 @@ var f = function(){
      * 
      *   // 添加事件
      *   _v._$addEvent('abc','mouseover',_doCallback,false);
-     *
      *   // 删除事件，这里参数必须保持完全一致
      *   _v._$delEvent('abc','mouseover',_doCallback,false);
      *
      *   // 比如以下方式虽然回调的业务逻辑一致，但是无法删除之前添加的事件
      *   _v._$delEvent(
-     *       'abc',"mouseover",
-     *       function(_event){
+     *       'abc',"mouseover",function(_event){
      *           // TODO something
      *           alert('0');
-     *       },false);
+     *       },false
+     *   );
+     * 
+     *   // 删除多个事件
+     *   _v._$delEvent('abc','mouseover click mouseup',_doCallback,false);
      * [/code]
      * 
      * @see    {#_$addEvent}
      * @api    {nej.v._$delEvent}
      * @param  {String|Node} 节点ID或者对象
-     * @param  {String}      事件类型，不带on前缀，不区分大小写
+     * @param  {String}      事件类型，不带on前缀，不区分大小写，多个事件用空格分隔
      * @param  {Function}    事件处理函数
      * @param  {Boolean}     是否捕获阶段事件
      * @return {nej.v}
@@ -180,6 +216,13 @@ var f = function(){
                    ];
         };
         return function(){
+            // check batch event delete
+            var _args = _r.slice.call(arguments,0);
+            _args.unshift(!1);
+            if (_doCheckBatchEvent.apply(null,_args)){
+                return;
+            }
+            // delete one event
             var _args = _doDelEventInCache
                         .apply(null,arguments);
             if (!!_args){
