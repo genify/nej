@@ -315,6 +315,21 @@ if (_p._$KERNEL.release=='5.0'){
                 _doCallback(_id,_event);
             }
         };
+        var _doFocusUpdate = function(_event){
+            var _node = _v._$getElement(_event),
+                _key = _e._$id(_node)+'-focused';
+            _hmap[_key] = _event.type=='focus';
+        };
+        var _doValueChange = function(_event){
+            var _node = _v._$getElement(_event),
+                _id = _e._$id(_node),
+                _key = _id+'-focused';
+            if (!!_hmap[_key]||
+                _event.propertyName!='value'){
+                return;
+            }
+            _doCallback(_id,_event);
+        };
         var _doCallback = function(_id,_event){
             _u._$forEach(
                 _hmap[_id],function(_handler){
@@ -342,6 +357,9 @@ if (_p._$KERNEL.release=='5.0'){
                     delete _hmap[_id+'-last'];
                     _v._$delEvent(_id,'keyup',_doEventCheck);
                     _v._$delEvent(_id,'keydown',_doEventCheck);
+                    _v._$delEvent(_id,'focus',_doFocusUpdate);
+                    _v._$delEvent(_id,'blur',_doFocusUpdate);
+                    _v._$delEvent(_id,'propertychange',_doValueChange);
                 }
             }
         });
@@ -355,6 +373,9 @@ if (_p._$KERNEL.release=='5.0'){
                 _hmap[_id].push(_args[2]);
                 _v._$addEvent(_id,'keyup',_doEventCheck);
                 _v._$addEvent(_id,'keydown',_doEventCheck);
+                _v._$addEvent(_id,'focus',_doFocusUpdate);
+                _v._$addEvent(_id,'blur',_doFocusUpdate);
+                _v._$addEvent(_id,'propertychange',_doValueChange);
             }
         });
     })();

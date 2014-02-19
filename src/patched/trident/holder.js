@@ -26,14 +26,25 @@ var f = function(){
         // input foucs hide placeholder
         var _onFocus = function(_event){
             var _input = _v._$getElement(_event);
+            _cache[_input.id] = 2;
             if (!!_input.value) return;
             _e._$setStyle(_e._$wrapInline(_input),'display','none');
         };
         // input blur check placeholder show
         var _onBlur = function(_event){
             var _input = _v._$getElement(_event);
+            _cache[_input.id] = 1;
             if (!!_input.value) return;
             _e._$setStyle(_e._$wrapInline(_input),'display','');
+        };
+        // input value change
+        var _onInput = function(_event){
+            var _input = _v._$getElement(_event);
+            if (_cache[_input.id]==2) return;
+            _e._$setStyle(
+                _e._$wrapInline(_input),
+                'display',!_input.value?'':'none'
+            );
         };
         // wrapper input control
         var _doWrapInput = function(_input,_clazz){
@@ -59,13 +70,14 @@ var f = function(){
                     var _args = _event.args,
                         _input = _e._$get(_args[0]);
                     // has been placeholded
-                    if (!!_cache[_input.id])
+                    if (_cache[_input.id]!=null)
                         return;
                     _doWrapInput(_input,_args[1]);
-                    _cache[_input.id] = !0;
+                    _cache[_input.id] = 1;
                     // listen blur and focus event
                     _v._$addEvent(_input,'blur',_onBlur._$bind(null));
                     _v._$addEvent(_input,'focus',_onFocus._$bind(null));
+                    _v._$addEvent(_input,'input',_onInput._$bind(null));
                });
     })();
 //    
