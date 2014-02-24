@@ -105,11 +105,11 @@ var f = function(){
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
         if (!!this.__page){
             this.__page._$recycle();
             delete this.__page;
         }
+        this.__supDestroy();
         delete this.__bopt;
         delete this.__popt;
         this._$unbind();
