@@ -208,6 +208,9 @@ var f = function(){
             // check result
             if (_index<0) return;
             var _emap = _tmp1.splice(_index,1)[0];
+            if (!_tmp1.length){
+                delete _cache[_tmp0][_type];
+            }
             return !_emap?null:[
                        _e._$get(_tmp0),
                        _emap.type,
