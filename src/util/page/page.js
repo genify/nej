@@ -90,10 +90,8 @@ var f = function(){
      * @return {Void}
      */
     _pro.__init = function(){
+        this.__ndot = [];
         this.__supInit();
-        var _node = _e._$create('span','zdot');
-        _node.innerText = '...';
-        this.__ndot = [_node.cloneNode(true),_node];
     };
     /**
      * 控件销毁
@@ -111,10 +109,17 @@ var f = function(){
      * @method {__doRecycleDotNode}
      * @return {Void}
      */
-    _pro.__doRecycleDotNode = function(){
-        _e._$removeByEC(this.__ndot[0]);
-        _e._$removeByEC(this.__ndot[1]);
-    };
+    _pro.__doRecycleDotNode = (function(){
+        var _doRecycle = function(_node,_index,_list){
+            _e._$remove(_node);
+            _list.splice(_index,1);
+        };
+        return function(){
+            _u._$reverseEach(
+                this.__ndot,_doRecycle
+            );
+        };
+    })();
     /**
      * 刷新页码列表算法
      * @protected
@@ -151,8 +156,11 @@ var f = function(){
                 _start = Math.min(_start,_mxbeg);
             }
             if (_start>2){
+                var _node = _e._$create('span','zdot');
+                this.__ndot.push(_node);
+                _node.innerText = '...';
                 this.__list[0].insertAdjacentElement(
-                    'afterEnd',this.__ndot[0]
+                    'afterEnd',_node
                 );
                 this.__extdata.first = !0;
             }
@@ -177,8 +185,11 @@ var f = function(){
                 );
             }
             if (_index<this.__total){
+                var _node = _e._$create('span','zdot');
+                this.__ndot.push(_node);
+                _node.innerText = '...';
                 this.__list[_point].insertAdjacentElement(
-                    'beforeBegin',this.__ndot[1]
+                    'beforeBegin',_node
                 );
                 this.__extdata.last = !0;
             }
