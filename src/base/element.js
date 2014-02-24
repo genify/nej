@@ -1718,6 +1718,13 @@ var f = function(){
     // init
     if (!document.head)
          document.head = document.getElementsByTagName('head')[0]||document.body;
+    /**
+     * 导出dom事件缓存对象，仅用于调试
+     * @return {Void}
+     */
+    _('dbg').dumpEL = function(){
+        return _empol;
+    };
     _x.isChange = !0;
 };
 NEJ.define('{lib}base/element.js',
