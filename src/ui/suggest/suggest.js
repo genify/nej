@@ -12,20 +12,10 @@ var f = function(){
         _u = _('nej.u'),
         _t = _('nej.ut'),
         _p = _('nej.ui'),
-        _proSuggest,
-        _supSuggest;
+        _seed_css,
+        _seed_item,
+        _pro;
     if (!!_p._$$Suggest) return;
-    // ui css text
-    var _seed_css = _e._$pushCSSText('\
-        .#<uispace>-parent{position:relative;}\
-        .#<uispace>{position:absolute;border:1px solid #aaa;background:#fff;text-align:left;visibility:hidden;}\
-        .#<uispace> .zitm{height:20px;line-height:20px;cursor:default;}\
-        .#<uispace> .js-selected{background:#1257F9;}');
-    // item html
-    var _seed_item = _e._$addHtmlTemplate('\
-        {if defined("xlist")&&!!xlist.length}\
-          {list xlist as x}<div class="zitm">${x}</div>{/list}\
-        {/if}');
     /**
      * 提示建议控件<br />
      * 页面结构举例
@@ -70,15 +60,14 @@ var f = function(){
      * 
      */
     _p._$$Suggest = NEJ.C();
-      _proSuggest = _p._$$Suggest._$extend(_p._$$Abstract);
-      _supSuggest = _p._$$Suggest._$supro;
+    _pro = _p._$$Suggest._$extend(_p._$$Abstract);
     /**
      * 控件初始化
      * @protected
      * @method {__init}
      * @return {Void}
      */
-    _proSuggest.__init = function(){
+    _pro.__init = function(){
         this.__sopt = {
             onchange:this.__onChange._$bind(this)
            ,onselect:this.__onSelect._$bind(this)
@@ -92,7 +81,7 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proSuggest.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
         this.__sopt.input = _e._$get(_options.input);
         this.__sopt.input.insertAdjacentElement('afterEnd',this.__body);
@@ -104,10 +93,12 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proSuggest.__destroy = function(){
+    _pro.__destroy = function(){
+        if (!!this.__suggest){
+            this.__suggest._$recycle();
+            delete this.__suggest;
+        }
         this.__supDestroy();
-        this.__suggest._$recycle();
-        delete this.__suggest;
         delete this.__sopt.input;
     };
     /**
@@ -116,7 +107,7 @@ var f = function(){
      * @method {__initXGui}
      * @return {Void}
      */
-    _proSuggest.__initXGui = function(){
+    _pro.__initXGui = function(){
         this.__seed_css = _seed_css;
     };
     /**
@@ -125,7 +116,7 @@ var f = function(){
      * @method {__initNode}
      * @return {Void}
      */
-    _proSuggest.__initNode = function(){
+    _pro.__initNode = function(){
         this.__supInitNode();
         this.__sopt.body = this.__body;
     };
@@ -136,7 +127,7 @@ var f = function(){
      * @param  {String} 输入内容
      * @return {Void}
      */
-    _proSuggest.__onChange = function(_value){
+    _pro.__onChange = function(_value){
         this._$dispatchEvent('onchange',_value);
     };
     /**
@@ -146,7 +137,7 @@ var f = function(){
      * @param  {String} 选中值
      * @return {Void}
      */
-    _proSuggest.__onSelect = function(_value,_options){
+    _pro.__onSelect = function(_value,_options){
         this._$dispatchEvent('onselect',_value,_options);
     };
     /**
@@ -161,7 +152,7 @@ var f = function(){
      * @param  {String}       列表项标识样式
      * @return {nej.ui._$$Suggest}
      */
-    _proSuggest._$setList = function(_html,_clazz){
+    _pro._$setList = function(_html,_clazz){
         if (_u._$isArray(_html))
             _html = _e._$getHtmlTemplate(
                     _seed_item,{xlist:_html});
@@ -171,7 +162,22 @@ var f = function(){
             : _e._$getByClassName(this.__body,_clazz));
         return this;
     };
+    // ui css text
+    _seed_css = _e._$pushCSSText('\
+        .#<uispace>-parent{position:relative;}\
+        .#<uispace>{position:absolute;border:1px solid #aaa;background:#fff;text-align:left;visibility:hidden;}\
+        .#<uispace> .zitm{height:20px;line-height:20px;cursor:default;}\
+        .#<uispace> .js-selected{background:#1257F9;}\
+    ');
+    // item html
+    _seed_item = _e._$addHtmlTemplate('\
+        {if defined("xlist")&&!!xlist.length}\
+          {list xlist as x}<div class="zitm">${x}</div>{/list}\
+        {/if}\
+    ');
 };
-NEJ.define('{lib}ui/suggest/suggest.js',
-      ['{lib}ui/base.js'
-      ,'{lib}util/suggest/suggest.js'],f);
+NEJ.define(
+    '{lib}ui/suggest/suggest.js',[
+    '{lib}ui/base.js',
+    '{lib}util/suggest/suggest.js'
+],f);
