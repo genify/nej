@@ -139,6 +139,7 @@ var f = function(){
         delete this.__last;
         delete this.__total;
         delete this.__index;
+        delete this.__extdata;
         delete this.__selected;
         delete this.__disabled;
     };
