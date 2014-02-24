@@ -17,8 +17,7 @@ var f = function(){
         _h = _('nej.h'),
         _x = _('nej.x'),
         _cspol,       // css text pool
-        _empol = {},  // id:instance for elements not append to page
-        _cache = document.createDocumentFragment();
+        _empol = {};  // id:instance for elements not append to page
     /**
      * 为节点设置一个唯一的ID<br/>
      * 
@@ -885,11 +884,17 @@ var f = function(){
      * @return {nej.e}
      */
     _e._$removeByEC = 
-    _x._$removeByEC = function(_element){
-        _element = _e._$get(_element);
-        if (!!_element) _cache.appendChild(_element);
-        return this;
-    };
+    _x._$removeByEC = (function(){
+        var _cache = document.createDocumentFragment();
+        _('dbg').dumpFRG = function(){
+            return _cache;
+        };
+        return function(_element){
+            _element = _e._$get(_element);
+            if (!!_element) _cache.appendChild(_element);
+            return this;
+        };
+    })();
     /**
      * 清除所有子节点
      * @chainable
