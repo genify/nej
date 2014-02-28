@@ -809,10 +809,23 @@ var f = function(){
     _u._$object2string = function(_object,_split,_encode){
         if (!_object) return '';
         var _arr = [];
-        for(var x in _object){
-            _arr.push(encodeURIComponent(x)+'='+(!!_encode?
-                      encodeURIComponent(_object[x]):_object[x]));
-        }
+        _u._$forIn(
+            _object,function(_value,_key){
+                if (_u._$isFunction(_value)){
+                    return;
+                }
+                if (_u._$isDate(_value)){
+                    _value = _value.getTime();
+                }else if(_u._$isArray(_value)||
+                         _u._$isObject(_value)){
+                    _value = JSON.stringify(_value);
+                }
+                if (!!_encode){
+                    _value = encodeURIComponent(_value);
+                }
+                _arr.push(encodeURIComponent(_key)+'='+_value);
+            }
+        );
         return _arr.join(_split||',');
     };
     /**
