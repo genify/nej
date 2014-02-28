@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>test api</title>
+    <meta charset="utf-8"/>
+    <script>
+        function log(m){
+            var p = document.createElement('p');
+            p.innerHTML = m;
+            document.body.appendChild(p);
+        }
+    </script>
+  </head>
+  <body>
+    <script src="../../src/define.js?pro=./"></script>
+    <script>
+      define(['{lib}base/util.js',
+              '{patch}json.js'],
+      function(){
+          var v = nej.u._$object2query({
+              a:'aaaaaaa',
+              b:11,
+              c:true,
+              d:new Date,
+              e:{rr:'rrrrrrrr'},
+              f:[1,2,3],
+              g:function(){}
+          });
+          log(v);
+          log(decodeURIComponent(v));
+      });
+    </script>
+  </body>
+</html>
