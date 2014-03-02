@@ -606,9 +606,10 @@
     var attrNode = node.getAttributeNode(key);
     // 对于selected checked 当返回为bool值时  将其标准化为 selected = "selected"
     // 方便后续处理
-    return typeof node[key] === "boolean" ?
     // 很多时候null可以作为标志位，nes中大部分特殊flag都用null标示
-    node[key] ? key : null : attrNode && attrNode.specified && attrNode.value || null;
+    return typeof node[key] === "boolean" 
+            ? node[key] ? key : null
+            : (attrNode && attrNode.specified ?attrNode.value : null);
   };
   // __数组去重__
 
