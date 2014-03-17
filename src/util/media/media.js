@@ -104,6 +104,12 @@ var f = function(){
      * @config {Float} duration 总时长，单位秒
      * 
      * [hr]
+     * 音量变化触发事件
+     * @event  {onvolumechange} 
+     * @param  {Object} 可选配置参数
+     * @config {Float} volume 当前音量，0-100之间的数值
+     * 
+     * [hr]
      * 播放错误触发事件
      * @event  {onerror}
      * @param  {Object} 错误信息
@@ -169,6 +175,27 @@ var f = function(){
      */
     _pro.__setCurrentTime = _f;
     /**
+     * 获取播放时间
+     * @protected
+     * @method {__getCurrentTime}
+     * @return {Number} 当前时间
+     */
+    _pro.__getCurrentTime = _f;
+    /**
+     * 设置音量
+     * @protected
+     * @method {__setVolume}
+     * @return {Void}
+     */
+    _pro.__setVolume = _f;
+    /**
+     * 获取音量
+     * @protected
+     * @method {__getVolume}
+     * @return {Number} 音量
+     */
+    _pro.__getVolume = _f;
+    /**
      * 修改媒体播放状态
      * @protected
      * @method {__doStateChange}
@@ -185,61 +212,87 @@ var f = function(){
         );
     };
     /**
+     * 音量变化触发事件
+     * @protected
+     * @method {__onVolumeChange}
+     * @return {Void}
+     */
+    _pro.__onVolumeChange = function(){
+        this._$dispatchEvent(
+            'onvolumechange',{
+                volume:this.__getVolume()
+            }
+        );
+    };
+    /**
      * 更新多媒体文件地址
      * @method {_$source}
      * @param  {String} 文件地址
-     * @return {nej.ut._$$Media}
+     * @return {Void}
      */
     _pro._$source = function(_url){
         _url = _url||'';
         if (!_url) return;
         this._$stop();
         this.__source = _url;
-        return this;
     };
     /**
      * 播放
      * @method {_$play}
-     * @return {nej.ut._$$Media}
+     * @return {Void}
      */
     _pro._$play = function(){
         // only stop and pause can do play
         if (this.__state==0||this.__state==3){
             this.__doPlay();
         }
-        return this;
     };
     /**
      * 暂停
      * @method {_$pause}
-     * @return {nej.ut._$$Media}
+     * @return {Void}
      */
     _pro._$pause = function(){
         // only buffer and play can do pause
         if (this.__state==1||this.__state==2){
             this.__doPause();
         }
-        return this;
     };
     /**
      * 停止
      * @method {_$stop}
-     * @return {nej.ut._$$Media}
+     * @return {Void}
      */
     _pro._$stop = function(){
         // only buffer,play and pause can do stop
         if (this.__state!=0){
             this.__doStop();
         }
-        return this;
     };
     /**
      * 定位到播放位置
-     * @param  {Number} 播放时间
-     * @return {Void}
+     * @method {_$seek}
+     * @param  {Number} 播放时间，不传此参数表示获取播放时间
+     * @return {Number} 播放时间
      */
     _pro._$seek = function(_time){
-        this.__setCurrentTime(_time);
+        if (_time!=null){
+            this.__setCurrentTime(_time);
+        }
+        return this.__getCurrentTime();
+    };
+    /**
+     * 设置/获取音量
+     * @method {_$volume}
+     * @param  {Number} 音量大小，0-100之间的数值，不传此参数表示获取音量值
+     * @return {Number} 音量大小，0-100之间的数值
+     */
+    _pro._$volume = function(_volume){
+        if (_volume!=null){
+            var _volume = Math.max(0,Math.min(_volume,100));
+            this.__setVolume(_volume);
+        }
+        return this.__getVolume();
     };
 };
 NEJ.define(

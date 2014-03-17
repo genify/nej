@@ -68,6 +68,7 @@ var f = function(){
                 onseking:this.__onLoading._$bind(this),
                 onprogress:this.__onLoading._$bind(this),
                 ontimeupdate:this.__onPlaying._$bind(this),
+                onvolumechange:this.__onVolumeChange._$bind(this),
                 onerror:this.__onError._$bind(this)
             });
         };
@@ -181,6 +182,15 @@ var f = function(){
     _pro.__setCurrentTime = function(_time){
         if (this.__state==1) return;
         this.__audio.nej_seek(_time||0);
+    };
+    /**
+     * 设置音量
+     * @protected
+     * @method {__setVolume}
+     * @return {Void}
+     */
+    _pro.__setVolume = function(_volume){
+        this.__audio.nej_flash_set_volume(_volume);
     };
 };
 NEJ.define(

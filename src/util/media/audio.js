@@ -62,6 +62,9 @@ var f = function(){
             this.__audio,'pause',
             this.__onPause._$bind(this)
         ],[
+            this.__audio,'volumechange',
+            this.__onVolumeChange._$bind(this)
+        ],[
             this.__audio,'ended',
             this.__onStop._$bind(this)
         ],[
@@ -87,9 +90,9 @@ var f = function(){
      * @return {Void}
      */
     _pro.__doPlay = function(){
-        if (this.__audio.currentSrc!=this.__source){
+        if (this.__audio.src!=this.__source){
             this.__audio.src = this.__source;
-            this.__source = this.__audio.currentSrc;
+            this.__source = this.__audio.src;
         }
         this.__audio.play();
     };
@@ -110,8 +113,10 @@ var f = function(){
      */
     _pro.__doStop = function(){
         this.__stopped = !0;
-        this.__setCurrentTime(0);
         this.__doPause();
+        if (this.__state==3){
+            this.__onPause();
+        }
     };
     /**
      * 文件载入触发事件
@@ -134,6 +139,9 @@ var f = function(){
         var _state = !this.__stopped?3:0;
         this.__stopped = !1;
         this.__doStateChange(_state);
+        if (_state==0){
+            this.__audio.removeAttribute('src');
+        }
     };
     /**
      * 播放停止触发事件
@@ -149,6 +157,11 @@ var f = function(){
      * @return {Void}
      */
     _pro.__onPlaying = function(){
+        // for stop
+        if (this.__audio.paused){
+            return;
+        }
+        // for playing
         this.__doStateChange(2);
         this._$dispatchEvent(
             'ontimeupdate',{
@@ -178,6 +191,33 @@ var f = function(){
     _pro.__setCurrentTime = function(_time){
         if (this.__state==1) return;
         this.__audio.currentTime = _time||0;
+    };
+    /**
+     * 获取播放时间
+     * @protected
+     * @method {__getCurrentTime}
+     * @return {Number} 当前时间
+     */
+    _pro.__getCurrentTime = function(){
+        return this.__audio.currentTime;
+    };
+    /**
+     * 设置音量
+     * @protected
+     * @method {__setVolume}
+     * @return {Void}
+     */
+    _pro.__setVolume = function(_volume){
+        this.__audio.volume = _volume/100;
+    };
+    /**
+     * 获取音量
+     * @protected
+     * @method {__getVolume}
+     * @return {Number} 音量值
+     */
+    _pro.__getVolume = function(){
+        return this.__audio.volume*100;
     };
 };
 NEJ.define(
