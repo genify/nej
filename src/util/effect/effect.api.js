@@ -104,9 +104,9 @@ var f = function() {
                         }
                     ],
                     styles:['opacity:'+_opacity],
-                    onstop:function(_state){
+                    onstop:function(_state,_flag){
                         _node.effect = _p._$$Effect._$recycle(_node.effect);
-                        _options.onstop.call(null,_state);
+                        _options.onstop.call(null,_state,_flag);
                     },
                     onplaystate:_options.onplaystate._$bind(_node.effect)
                 }
@@ -254,9 +254,9 @@ var f = function() {
                     }
                 ],
                 styles:['top:'+_top,'left:'+_left],
-                onstop:function(_state){
+                onstop:function(_state,_flag){
                     _node.effect = _p._$$Effect._$recycle(_node.effect);
-				    _options.onstop.call(null,_state);
+				    _options.onstop.call(null,_state,_flag);
                 },
                 onplaystate:_options.onplaystate._$bind(_node.effect)
             }
@@ -314,9 +314,9 @@ var f = function() {
                         }
                     ],
                     styles:_styles,
-                    onstop:function(_state){
+                    onstop:function(_state,_flag){
                         _node.effect = _p._$$Effect._$recycle(_node.effect);
-                        _options.onstop.call(null,_state);
+                        _options.onstop.call(null,_state,_flag);
                     },
                     onplaystate:_options.onplaystate._$bind(_node.effect)
                 }
@@ -380,9 +380,9 @@ var f = function() {
                             }
                         ],
                         styles:[_type + ':' + _value],
-                        onstop:function(_state){
+                        onstop:function(_state,_flag){
                             _node.effect = _p._$$Effect._$recycle(_node.effect);
-                            _options.onstop.call(null,_state);
+                            _options.onstop.call(null,_state,_flag);
                             _sto = window.clearTimeout(_sto);
                         },
                         onplaystate:_options.onplaystate._$bind(_node.effect)
@@ -402,11 +402,11 @@ var f = function() {
                             }
                         ],
                         styles:[_type + ':' + 0],
-                        onstop:function(_state){
+                        onstop:function(_state,_flag){
                             _e._$setStyle(_node,'visibility','hidden');
                             _e._$setStyle(_node,_type,'auto');
                             _node.effect = _p._$$Effect._$recycle(_node.effect);
-                            _options.onstop.call(null,_state);
+                            _options.onstop.call(null,_state,_flag);
                             _sto = window.clearTimeout(_sto);
                         },
                         onplaystate:_options.onplaystate._$bind(_node.effect)
