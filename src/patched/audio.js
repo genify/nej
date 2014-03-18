@@ -13,11 +13,20 @@ var f = function(){
         _t = _('nej.ut');
     /**
      * 取音频播放器实例
-     * @return {Object} 配置信息
+     * @param {Object} 配置信息
      * @return {nej.ut._$$Media} 音频播放器实例
      */
     _h.__getAudioInst = function(_options){
         return _t._$$MediaAudio._$allocate(_options);
+    };
+    /**
+     * 取音频播放器实例
+     * @api    {nej.e._$audio}
+     * @param {Object} 配置信息
+     * @return {nej.ut._$$Media} 音频播放器实例
+     */
+    _e._$audio = function(_options){
+        return _h.__getAudioInst(_options);
     };
     /**
      * 播放音频，代码示例
