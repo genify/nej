@@ -251,9 +251,9 @@ var f = function(){
      * @method {nej.e._$stop}
      * @return {nej.ut}
      */
-    _proEffect._$stop = function(){
+    _proEffect._$stop = function(_flag){
         this.__intvl = window.clearInterval(this.__intvl);
-        _h.__onStop(this.__node,this.__propMap,this.__onstop);
+        _h.__onStop(this.__node,this.__propMap,this.__onstop,_flag);
         return this;
     };
 

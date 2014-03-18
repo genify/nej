@@ -48,10 +48,10 @@ var f = function(){
      * @param  {String} 节点目标样式
      * @return {nej.h}
      */
-    _h.__onStop = function(_node,_state,_stop){
+    _h.__onStop = function(_node,_state,_stop,_flag){
         _e._$style(_node,_state);
         _e._$setStyle(_node,'transition','none');
-        _stop.call(null,_state);
+        _stop.call(null,_state,_flag);
         return this;
     };
 

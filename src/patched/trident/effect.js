@@ -140,7 +140,7 @@ var f = function(){
     	var _list = _event.args;
     	var _node = _list[0];
   		_u._$forEach(_node.effects,function(_o){
-  			_o._$stop();
+        if(_o) _o._$stop();
   		});
   		return this;
     });

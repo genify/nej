@@ -233,6 +233,12 @@ var f = function() {
             $._$implement(nej.x, {"statics": true});
             _x.isChange = false;
         }
+        if (typeof _selector === 'string' && _selector.trim().indexOf("<") == 0) {
+        var container = document.createElement('div');
+            container.innerHTML = _selector;
+            var res = $(container.childNodes);
+            return res;
+        }
         return new _$$NodeList(_selector, _context);
     };
 
@@ -647,7 +653,7 @@ var f = function() {
         _$add:function(_node){
             if(!_node) return;
             // TODO: 把window 排除在外
-            if(typeof _node.length !== "number" || _node === window) _node = [_node];
+            if(_node.tagName || typeof _node.length !== "number" || _node === window ) _node = [_node];
             $._merge(this, _node, function(_nodum){
                 if(!_isAcceptedNode(_nodum)) return false;
                 var _uid = $._$uid(_nodum); 
