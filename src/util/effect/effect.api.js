@@ -1,6 +1,6 @@
 var f = function() {
-	var _  = NEJ.P,
-		_f = NEJ.F,
+    var _  = NEJ.P,
+        _f = NEJ.F,
         _u = _('nej.u'),
         _e = _('nej.e'),
         _u = _('nej.u'),
@@ -11,10 +11,10 @@ var f = function() {
      * @return {Object} 特效参数
      */
     _e.__initOptions = function(_options){
-    	_options = _options||{};
-    	_options.onstop = _options.onstop||_f;
-    	_options.onplaystate = _options.onplaystate||_f;
-    	return _options;
+        _options = _options||{};
+        _options.onstop = _options.onstop||_f;
+        _options.onplaystate = _options.onplaystate||_f;
+        return _options;
     };
 
     /**
@@ -196,7 +196,7 @@ var f = function() {
      */
     _e._$stopEffect = function(_node){
         _node = _e._$get(_node);
-        if(_node.effect && _node.effect._$stop()){
+        if(_node.effect && _node.effect._$stop(true)){
             return this;
         }
         return this;
@@ -233,10 +233,10 @@ var f = function() {
         _node = _e._$get(_node);
         if(!!_node.effect) return !1;
         if(!_e.__doBeforeStart(_node,_position)) return !1;
-    	_options = _e.__initOptions(_options);
+        _options = _e.__initOptions(_options);
         _options.duration = _options.duration||[];
-    	var _top = _position.top||0,_left= _position.left||0;
-    	_node.effect = _p._$$Effect._$allocate(
+        var _top = _position.top||0,_left= _position.left||0;
+        _node.effect = _p._$$Effect._$allocate(
             {
                 node:_node,
                 transition:[
@@ -256,7 +256,7 @@ var f = function() {
                 styles:['top:'+_top,'left:'+_left],
                 onstop:function(_state,_flag){
                     _node.effect = _p._$$Effect._$recycle(_node.effect);
-				    _options.onstop.call(null,_state,_flag);
+                    _options.onstop.call(null,_state,_flag);
                 },
                 onplaystate:_options.onplaystate._$bind(_node.effect)
             }
