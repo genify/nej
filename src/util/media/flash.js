@@ -184,6 +184,15 @@ var f = function(){
         this.__audio.nej_seek(_time||0);
     };
     /**
+     * 获取播放时间
+     * @protected
+     * @method {__getCurrentTime}
+     * @return {Number} 当前时间
+     */
+    _pro.__getCurrentTime = function(){
+        return this.__audio.nej_flash_get_currentTime();
+    };
+    /**
      * 设置音量
      * @protected
      * @method {__setVolume}
@@ -191,6 +200,15 @@ var f = function(){
      */
     _pro.__setVolume = function(_volume){
         this.__audio.nej_flash_set_volume(_volume);
+    };
+    /**
+     * 获取音量
+     * @protected
+     * @method {__getVolume}
+     * @return {Number} 音量值
+     */
+    _pro.__getVolume = function(){
+        return this.__audio.nej_flash_get_volume();
     };
 };
 NEJ.define(

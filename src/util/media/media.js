@@ -220,7 +220,7 @@ var f = function(){
     _pro.__onVolumeChange = function(){
         this._$dispatchEvent(
             'onvolumechange',{
-                volume:this.__getVolume()
+                volume:this._$volume()
             }
         );
     };
@@ -290,9 +290,9 @@ var f = function(){
     _pro._$volume = function(_volume){
         if (_volume!=null){
             var _volume = Math.max(0,Math.min(_volume,100));
-            this.__setVolume(_volume);
+            this.__setVolume(_volume/100);
         }
-        return this.__getVolume();
+        return this.__getVolume()*100;
     };
 };
 NEJ.define(

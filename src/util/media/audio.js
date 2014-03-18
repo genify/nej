@@ -157,8 +157,9 @@ var f = function(){
      * @return {Void}
      */
     _pro.__onPlaying = function(){
-        // for stop
-        if (this.__audio.paused){
+        var _duration = this.__audio.duration;
+        // for stop or loading
+        if (this.__audio.paused||isNaN(_duration)){
             return;
         }
         // for playing
@@ -208,7 +209,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__setVolume = function(_volume){
-        this.__audio.volume = _volume/100;
+        this.__audio.volume = _volume;
     };
     /**
      * 获取音量
@@ -217,7 +218,7 @@ var f = function(){
      * @return {Number} 音量值
      */
     _pro.__getVolume = function(){
-        return this.__audio.volume*100;
+        return this.__audio.volume;
     };
 };
 NEJ.define(
