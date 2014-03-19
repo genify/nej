@@ -12,24 +12,22 @@ var f = function(){
         _e = _('nej.e'),
         _v = _('nej.v'),
         _u = _('nej.u'),
-        _b = _('nej.p'),
         _p = _('nej.ut'),
-        _proSuggest,
-        _supSuggest;
+        _pro;
     if (!!_p._$$Suggest) return;
     /**
      * 建议提示控件<br />
      * 页面结构举例
      * [code type="html"]
      *   <style type="text/css">
-     *       .box{position:relative;width:100px;}
-     *       .xuanzhong{background:pink;}
-     *       #suggest-input{height:24px;line-height:24px;}
-     *       #card0{position:absolute;top:40px;left:0;width:100%;height:auto;background:#ccc;}
+     *     .box{position:relative;width:100px;}
+     *     .xuanzhong{background:pink;}
+     *     #suggest-input{height:24px;line-height:24px;}
+     *     #card0{position:absolute;top:40px;left:0;width:100%;height:auto;background:#ccc;}
      *   </style>
      *   <div class="box">
-     *       <input id="suggest-input"  type="text" />
-     *       <div id="card0"></div>
+     *     <input id="suggest-input"  type="text" />
+     *     <div id="card0"></div>
      *   </div>
      * [/code]
      * 脚本举例
@@ -77,8 +75,7 @@ var f = function(){
      * @param  {String}   节点的data-value值，没有则取节点的value
      */
     _p._$$Suggest = NEJ.C();
-      _proSuggest = _p._$$Suggest._$extend(_p._$$Event);
-      _supSuggest = _p._$$Suggest._$supro;
+    _pro = _p._$$Suggest._$extend(_p._$$Event);
     /**
      * 控件重置
      * @protected
@@ -86,7 +83,7 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proSuggest.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
         this.__body  = _e._$get(_options.body);
         this.__input = _e._$get(_options.input);
@@ -131,13 +128,13 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proSuggest.__destroy = function(){
+    _pro.__destroy = function(){
         this.__supDestroy();
         this.__doDestroyList();
         delete this.__selected;
         delete this.__input;
         delete this.__body;
-        delete this.__hkie9;
+        //delete this.__hkie9;
         delete this.__hkie;
     };
     /**
@@ -147,7 +144,7 @@ var f = function(){
      * @param  {Node}    节点
      * @return {Boolean} 是否建议项
      */
-    _proSuggest.__isSuggestItem = function(_element){
+    _pro.__isSuggestItem = function(_element){
         return _element.flag!=null;
     };
     /**
@@ -156,7 +153,7 @@ var f = function(){
      * @method {__doDestroyList}
      * @return {Void}
      */
-    _proSuggest.__doDestroyList = (function(){
+    _pro.__doDestroyList = (function(){
         var _deFlag = function(_node){
             _u._$safeDelete(_node,'flag');
         };
@@ -173,7 +170,7 @@ var f = function(){
      * @param  {Number} 索引值
      * @return {Void}
      */
-    _proSuggest.__doSelectItem = function(_index){
+    _pro.__doSelectItem = function(_index){
         if (this.__index===_index) 
             return;
         this.__index = _index;
@@ -187,7 +184,7 @@ var f = function(){
      * @param  {Number} 索引值
      * @return {Void}
      */
-    _proSuggest.__deSelectItem = function(_index){
+    _pro.__deSelectItem = function(_index){
         if (this.__index!==_index)
             return;
         _e._$delClassName(this.__list
@@ -200,7 +197,7 @@ var f = function(){
      * @method {__doFinishSelect}
      * @return {Void}
      */
-    _proSuggest.__doFinishSelect = function(_type){
+    _pro.__doFinishSelect = function(_type){
         this.__stb = setTimeout(function(){
             if (!this.__list) return;
             var _item = this.__list[
@@ -223,7 +220,7 @@ var f = function(){
      * @method {__onInput}
      * @return {Void}
      */
-    _proSuggest.__onInput = function(){
+    _pro.__onInput = function(){
         var _value = this.__input.value.trim();
         if (!_value){
             this._$setList();
@@ -239,7 +236,7 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    _proSuggest.__onMouseOver = function(_event){
+    _pro.__onMouseOver = function(_event){
         var _element = _v._$getElement(
                        _event,this.__isSuggestItem);
         if (!!_element){
@@ -251,7 +248,7 @@ var f = function(){
      * 点击suggest窗体
      * @return {[type]} [description]
      */
-    _proSuggest.__onClick = function(){
+    _pro.__onClick = function(){
         if(this.__stb){
             this.__stb = clearTimeout(this.__stb);
         }
@@ -264,7 +261,7 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    _proSuggest.__onKeyBoardSelect = function(_event){
+    _pro.__onKeyBoardSelect = function(_event){
         var _flag = 0,
             _code = _event.keyCode;
         if (_code==38) _flag = -1;
@@ -286,7 +283,7 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    _proSuggest.__onKeyBoardEnter = function(_event){
+    _pro.__onKeyBoardEnter = function(_event){
         var _type = 'enter';
         if (_event.keyCode==13) this.__doFinishSelect(_type);
     };
@@ -296,7 +293,7 @@ var f = function(){
      * @method {__doHackIE9Input}
      * @param  {Event} 事件对象
      * @return {Void}
-    _proSuggest.__doHackIE9Input = function(_event){
+    _pro.__doHackIE9Input = function(_event){
         if (_event.type=='keydown'){
             this.__hkie9 = this.__input.value;
         }else if(this.__hkie9!=this.__input.value&&!!this.__list){
@@ -315,7 +312,7 @@ var f = function(){
      * @param  {Array} 建议项节点列表
      * @return {nej.ut._$$Suggest}
      */
-    _proSuggest._$setList = (function(){
+    _pro._$setList = (function(){
         var _doFlag = function(_node,_index){
             _node.flag = _index;
         };
