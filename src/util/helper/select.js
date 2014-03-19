@@ -32,7 +32,7 @@ var f = function(){
      *    nej.ut._$$SelectHelper._$allocate({
      *        parent:'xxx',
      *        loopable:!0,
-     *        onselectionchange:function(_event){
+     *        onchange:function(_event){
      *            // _event.last
      *            // _event.target
      *            console.log('selectionchange -> '+_event.target.innerText);
@@ -54,7 +54,7 @@ var f = function(){
      * 
      * [hr]
      * 选择项变化触发事件
-     * @event   {onselectionchange}
+     * @event   {onchange}
      * @param   {Object} 选择信息
      * @config  {Node} target  当前选中项
      * @config  {Node} last    上次选中项
