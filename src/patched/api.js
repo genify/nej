@@ -116,6 +116,22 @@ var f = function(){
     _h.__getElementsByClassName = function(_element,_class){
         return _h.__col2array(_element.getElementsByClassName(_class));
     };
+    /**
+     * 取下一个兄弟节点
+     * @param  {Node}  节点对象
+     * @return {Node}  节点
+     */
+    _h.__nextSibling = function(_element){
+        return _element.nextElementSibling;
+    };
+    /**
+     * 取上一个兄弟节点
+     * @param  {Node}  节点对象
+     * @return {Node}  节点
+     */
+    _h.__previousSibling = function(_element){
+        return _element.previousElementSibling;
+    };
     /*
      * 根据选择器取节点列表
      * @param  {Node}   _element  相对节点，默认为document

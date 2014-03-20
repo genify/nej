@@ -54,6 +54,42 @@ var f = function(){
         _event.value = _arr;
     });
     /**
+     * 取下一个兄弟节点
+     * @param  {Node}  节点对象
+     * @return {Node}  节点
+     */
+    _h.__nextSibling = 
+    _h.__nextSibling._$aop(function(_event){
+        var _element = _event.args[0];
+        if (!('nextElementSibling' in _element)){
+            _event.stopped = !0;
+            while(_element=_element.nextSibling){
+                if (_element.nodeType==1){
+                    _event.value = _element;
+                    break;
+                }
+            }
+        }
+    });
+    /**
+     * 取上一个兄弟节点
+     * @param  {Node}  节点对象
+     * @return {Node}  节点
+     */
+    _h.__previousSibling = 
+    _h.__previousSibling._$aop(function(_event){
+        var _element = _event.args[0];
+        if (!('previousElementSibling' in _element)){
+            _event.stopped = !0;
+            while(_element=_element.previousSibling){
+                if (_element.nodeType==1){
+                    _event.value = _element;
+                    break;
+                }
+            }
+        }
+    });
+    /**
      * 取节点属性值
      * @param  {Node}   节点
      * @param  {String} 属性名

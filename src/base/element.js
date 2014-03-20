@@ -146,6 +146,58 @@ var f = function(){
                __getElementsByClassName(_element,_class.trim());
     };
     /**
+     * 根据从兄弟节点中搜索符合条件的节点<br/>
+     * 
+     * 页面结构举例
+     * [code type="html"]
+     *   <div id="abc">
+     *     <p class="item">1</p>
+     *     <p class="item">2</p>
+     *     <p class="item">3</p>
+     *   </div>
+     * [/code]
+     * 脚本举例
+     * [code]
+     *   
+     * [/code]
+     * 
+     * @chainable
+     * @api    {nej.e._$search}
+     * @param  {String|Node}       节点ID或者对象
+     * @param  {Function|Object}   如果是函数则表示过滤器，否则为配置信息
+     * @config {Boolean}  backward 是否后向搜索，默认前向搜索
+     * @config {Function} filter   节点过滤器，返回true表示需要返回的节点，找到第一个即返回
+     * @return {Node}              符合条件的节点
+     */
+    _e._$getSibling = 
+    _x._$getSibling = (function(){
+        var _doFilter = function(){
+            return !0;
+        };
+        return function(_element,_filter){
+            _element = _e._$get(_element);
+            if (!_element) return;
+            var _conf = {
+                backward:!1,
+                filter:_doFilter
+            };
+            if (_u._$isFunction(_filter)){
+                _conf.filter = _filter;
+            }else{
+                _conf = NEJ.X(_conf,_filter);
+            }
+            var _next = _conf.backward
+                      ? _h.__previousSibling
+                      : _h.__nextSibling;
+            while(_element=_next(_element)){
+                if (_conf.filter(_element)){
+                    break;
+                }
+            }
+            return _element;
+        };
+    })();
+    /**
      * 取页面滚动视窗<br/>
      * 
      * 页面结构举例
@@ -752,12 +804,8 @@ var f = function(){
      * @config {String}               name    框架名称
      * @config {String|Node|Function} parent  父节点或者框架加入父容器的执行函数
      * @config {Boolean}              visible 是否可见
+     * @config {Function}             onload  框架载入回调
      * @return {Node}                         框架节点
-     * 
-     * [hr]
-     * 载入回调
-     * @event  {onload}   框架载入回调
-     * @param  {Variable} load事件对象
      */
     _e._$createXFrame = (function(){
         var _getFrameSrc = function(){
