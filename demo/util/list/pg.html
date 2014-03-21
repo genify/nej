@@ -15,7 +15,8 @@
   <body>
   	<div class="fl xx">
   	  <h1>JST模版</h1>
-  	  <input type="button" value="refresh" id="xxx"/>
+  	  <input type="button" value="allocate" id="xxx"/>
+  	  <input type="button" value="recycle" id="yyy"/>
   	  <div id="page-box-00"></div>
   	  <div id="list-box-0"></div>
   	  <div id="page-box-01"></div>
@@ -55,7 +56,7 @@
     <script>
       define(['{lib}util/template/tpl.js'
              ,'{lib}util/list/module.pager.js'
-             ,'{pro}cache.js','{pro}item.js'],
+             ,'{pro}cache.js'],
       function(){
           var _  = NEJ.P,
               _e = _('nej.e'),
@@ -64,29 +65,35 @@
           
           _e._$parseTemplate('template-box');
           
-          var _module = _t._$$ListModulePG._$allocate({
-              limit:10,
-              //first:12,
-              item:'jst-list',
-              parent:'list-box-0',
-              pager:{parent:['page-box-00','page-box-01'],index:3,limit:10},
-              cache:{klass:_x._$$CustomCache,lkey:'abc'/*,list:test_data*/,total:40,clear:!0,autogc:!0},
-              onupdate:function(_event){
-                  console.log('update from jst -> '+_event.data.id);
-                  this._$update({
-                      id:_event.data.id,
-                      name:'xxx-'+(+new Date),
-                      loginTime:+new Date
-                  });
-              },
-              ondelete:function(_event){
-                  console.log('delete from jst -> '+_event.data.id);
-                  this._$delete(_event.data);
-              }
-          });
-          
+          var _module;
           nej.v._$addEvent(
               'xxx','click',function(){
+                  if (!!_module) return;
+                  _module = _t._$$ListModulePG._$allocate({
+                      limit:10,
+                      //first:12,
+                      item:'jst-list',
+                      parent:'list-box-0',
+                      pager:{parent:['page-box-00','page-box-01'],index:3,limit:10},
+                      cache:{/*klass:_x._$$CustomCache,*/lkey:'abc',list:test_data/*,total:40,clear:!0,autogc:!0*/},
+                      onupdate:function(_event){
+                          console.log('update from jst -> '+_event.data.id);
+                          this._$update({
+                              id:_event.data.id,
+                              name:'xxx-'+(+new Date),
+                              loginTime:+new Date
+                          });
+                      },
+                      ondelete:function(_event){
+                          console.log('delete from jst -> '+_event.data.id);
+                          this._$delete(_event.data);
+                      }
+                  });
+              }
+          );
+          nej.v._$addEvent(
+              'yyy','click',function(){
+                  if (!_module) return;
                   _module = _module._$recycle();
               }
           );

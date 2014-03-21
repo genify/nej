@@ -59,8 +59,8 @@ var f = function(){
      * @extends {nej.ut._$$Event}
      * 
      * @param   {Object} _options 可选配置参数
-     * @config  {Node|Object}  xbar    水平滚动条节点或者配置信息，配置如{body:'bar-id',min:10,speed:1,left:10,right:10}
-     * @config  {Node|Object}  ybar    垂直滚动条节点或者配置信息，配置如{body:'bar-id',min:10,speed:1,top:10,bottom:10}
+     * @config  {Node|Object}  xbar    水平滚动条节点或者配置信息，如果不配置min值则默认取body的初始宽度，配置如{body:'bar-id',min:10,speed:1,left:10,right:10}
+     * @config  {Node|Object}  ybar    垂直滚动条节点或者配置信息，如果不配置min值则默认取body的初始高度，配置如{body:'bar-id',min:10,speed:1,top:10,bottom:10}
      * @config  {String|Node}  parent  滚动容器节点，默认为滚动条的父容器，滚动过程触发该节点上的onscroll事件
      * @config  {String|Node}  trigger 滚动条显示隐藏触点，不传表示不做显示隐藏切换
      */
@@ -101,7 +101,7 @@ var f = function(){
     _pro.__reset = (function(){
         var _bcnf = {
             x:{
-                min:10,
+                min:0,
                 speed:1,
                 left:0,
                 right:0,
@@ -114,7 +114,7 @@ var f = function(){
                 dr:'right'
             },
             y:{
-                min:10,
+                min:0,
                 speed:1,
                 top:0,
                 bottom:0,
@@ -136,6 +136,9 @@ var f = function(){
                 NEJ.X({},_bcnf[_name]),_conf
             );
             _result.body = _e._$get(_result.body);
+            if (!_result.min){
+                _result.min = _result.body[_result.ob]||10;
+            }
             return _result;
         };
         var _doInitBarDrag = function(_name,_body){

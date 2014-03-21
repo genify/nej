@@ -97,7 +97,10 @@
 		 * 隐藏控件
 		 */
 		function hide(){
-			cmp&&cmp._$hide();
+			//cmp&&cmp._$hide();
+			cmp.__editor.__copt.area._$execCommand(
+			    'inserthtml','<a href="#">aaaaaaaaaa</a><a href="#">bbbbbbbb</a>'
+			);
 		}
 		/**
 		 * 页面初始化函数

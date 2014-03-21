@@ -49,5 +49,5 @@ var f = function(){
 };
 define(
     '{lib}util/async/async.js',[
-    ''
+    '{lib}util/async/node.js'
 ],f);

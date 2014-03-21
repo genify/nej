@@ -6,6 +6,13 @@
     <style>
         span{position:relative;background:#f00;word-wrap:normal;white-space:nowrap;}
     </style>
+    <script>
+        function log(m){
+            var p = document.createElement('p');
+            p.innerHTML = m;
+            document.body.appendChild(p);
+        }
+    </script>
   </head>
   <body>
     <input type="button" value="play" id="play"/>
@@ -27,13 +34,13 @@
                         extra:+new Date,
                         retry:5,
                         onstatechange:function(_event){
-                            console.log(_event.state+' -> '+_event.data);
+                            log(_event.state+' -> '+_event.data);
                         },
                         onerror:function(_event){
-                            console.log('play error -> '+_event.data+':'+_event.code);
+                            log('play error -> '+_event.data+':'+_event.code);
                         },
                         ontimeupdate:function(_event){
-                            console.log(_event.data+' -> '+_event.current+':'+_event.duration);
+                            log(_event.data+' -> '+_event.current+':'+_event.duration);
                         }
                     });
                 }
