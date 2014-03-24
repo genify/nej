@@ -86,6 +86,7 @@ var f = function(){
             },
             duration:_durtReal,
             onupdate:function(_offset){
+              if(_node.isStop) return;
               var _value = _offset.offset;
               if(!_h.__doCheckProp(_prop)){
                 _value = _doAdap(_value,_prop);
@@ -94,13 +95,15 @@ var f = function(){
                     _e._$setStyle(_node,_prop,_value + 'px');
                 }
             },
-            onstop:function(_prop){
+            onstop:function(_prop,_args){
                 var _effect = _node.effects[_index];
                 if(!_effect) return;
                     _effect = _cutr._$recycle(_effect);
                     _node.effects[_index] = _effect;
-                if(_node.isLastOne === _index)
-                  _stop.apply(this);
+                if(_node.isLastOne === _index){
+                  _stop.apply(this,_args);
+                }
+                  
             }._$bind(this,_index)
           };
         return _options;
@@ -112,6 +115,7 @@ var f = function(){
             _rules= _list[1],
             _anim = _list[2],
             _stop = _list[3];
+        _node.isStop = false;
         _node.sumTime = 0,_node.isLastOne = 0;
         var _effects   = [];
         if(_anim.indexOf('all') > -1)
@@ -126,8 +130,7 @@ var f = function(){
         _u._$forEach(_effects,function(_item,_index){
           var _effect = _item.c._$allocate(_item.o);
           _node.effects[_index] = _effect;
-          console.log(_item.o.delay);
-          setTimeout(function(){_effect._$play();},_item.o.delay);
+          _effect._$play();
         });
         return this;
       });
@@ -144,7 +147,8 @@ var f = function(){
       var _list = _event.args;
       var _node = _list[0];
       _u._$forEach(_node.effects,function(_o){
-        if(_o)  _o._$stop(_list[3]||false);
+        _node.isStop = true;
+        if(_o)  _o._$stop(_list[1],_list[3]||false);
       });
       return this;
     });
