@@ -194,9 +194,9 @@ var f = function(){
         };
         // calculate last and target
         this.__nopt.backward = _code==38;
-        var _list = _e._$getChildren(
-                this.__parent,this.__clazz
-            ),
+        var _list = !this.__clazz
+                  ? _e._$getChildren(this.__parent)
+                  : _e._$getByClassName(this.__parent,this.__clazz),
             _next = this.__nopt.backward
                   ? _list[_list.length-1]
                   : _list[0];
