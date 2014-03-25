@@ -35,7 +35,7 @@ var f = function(){
      *        onchange:function(_event){
      *            // _event.last
      *            // _event.target
-     *            console.log('selectionchange -> '+_event.target.innerText);
+     *            console.log('selection change -> '+_event.target.innerText);
      *        },
      *        onselect:function(_event){
      *            // _event.target
@@ -168,7 +168,7 @@ var f = function(){
         if (_class==this.__selected&&
             _event.last!=_event.target){
             this._$dispatchEvent(
-                'onselectionchange',_event
+                'onchange',_event
             );
         }
     };
