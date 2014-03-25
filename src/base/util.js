@@ -472,10 +472,15 @@ var f = function(){
      * @return {String}  编码后的串
      */
     _u._$escape = (function(){
-        var _map = {r:/\<|\>|\&|\r|\n|\s|\'|\"/g,
-                   '<':'&lt;','>':'&gt;','&':'&amp;',' ':'&nbsp;','"':'&quot;',"'":'&#39;','\n':'<br/>','\r':''};
+        var _reg = /<br\/?>$/,
+            _map = {
+                r:/\<|\>|\&|\r|\n|\s|\'|\"/g,
+                '<':'&lt;','>':'&gt;','&':'&amp;',' ':'&nbsp;',
+                '"':'&quot;',"'":'&#39;','\n':'<br/>','\r':''
+            };
         return function(_content){
-            return _u._$encode(_map,_content);
+            _content = _u._$encode(_map,_content);
+            return _content.replace(_reg,'<br/><br/>');
         };
     })();
     /**
