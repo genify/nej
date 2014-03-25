@@ -46,7 +46,7 @@ var f = function(){
      * @class   {nej.ut._$$SelectHelper} 音频播放控件
      * @extends {nej.ut._$$Event}
      * @param   {Object} 可选配置参数，已处理参数列表如下所示
-     * @config  {String|Node} parent   容器节点，如果该节点设置的tabindex大于1000则键盘上下响应事件为该节点，否则为document
+     * @config  {String|Node} parent   容器节点，从该容器开始往上遍历找到设置了tabindex大于1000的节点来响应键盘上下事件，找不到为document
      * @config  {String}      clazz    用于标识可选择的节点，不传则为body下的子节点
      * @config  {String}      selected 选中节点样式标识，默认为js-selected
      * @config  {String}      hover    鼠标移入样式标识，默认同selected，如果hover样式和selected不一样，确保selected样式优先级高于hover
@@ -86,13 +86,14 @@ var f = function(){
             this.__clazz = _options.clazz;
         }
         // init event
-        var _parent = this.__hasKeyBoardEvent()
-                    ? this.__parent:document;
+        this.__kbody = this.__getKeyBoardParent(
+            this.__parent
+        );
         this.__doInitDomEvent([[
-            _parent,'keydown',
+            this.__kbody,'keydown',
             this.__doCheckKBAction._$bind(this)
         ],[
-            _parent,'enter',
+            this.__kbody,'enter',
             this.__doCheckKBEnter._$bind(this)
         ],[
             this.__parent,'click',
@@ -114,6 +115,7 @@ var f = function(){
         delete this.__selected;
         delete this.__hovered;
         delete this.__parent;
+        delete this.__kbody;
         delete this.__clazz;
         delete this.__nopt;
         delete this.__loop;
@@ -132,13 +134,16 @@ var f = function(){
         return _element.parentNode==this.__parent;
     };
     /**
-     * 判断父容器是否响应键盘事件
-     * @return {Boolean} 是否响应键盘事件
+     * 取键盘检测节点
+     * @return {Node} 节点
      */
-    _pro.__hasKeyBoardEvent = (function(){
+    _pro.__getKeyBoardParent = (function(){
         var _max = 1000;
-        return function(){
-            return this.__parent.tabIndex>_max;
+        return function(_element){
+            while(_element.tabIndex<=_max){
+                _element = _element.parentNode;
+            }
+            return _element||document;
         };
     })();
     /**
@@ -255,9 +260,7 @@ var f = function(){
         this.__doSyncSelection(
             _eopt,this.__hovered
         );
-        if (this.__hasKeyBoardEvent()){
-            this.__parent.focus();
-        }
+        this.__kbody.focus();
     };
     /**
      * 鼠标移出事件
