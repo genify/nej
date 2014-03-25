@@ -137,7 +137,7 @@ var f = function(){
             );
             _result.body = _e._$get(_result.body);
             if (!_result.min){
-                _result.min = _result.body[_result.ob]||10;
+                _result.min = !_result.body?10:(_result.body[_result.ob]||10);
             }
             return _result;
         };
