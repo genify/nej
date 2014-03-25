@@ -57,8 +57,8 @@ var f = function() {
                 }
             });
         };
-        var _silde = function(){
-            // _e._$silde(_box,'left:+=300',{
+        var _slide = function(){
+            // _e._$slide(_box,'left:+=300',{
             //     timing:'ease-out',
             //     delay:0,
             //     duration:2,
@@ -80,7 +80,7 @@ var f = function() {
             })
         }
         var _nochange = function(){
-            _e._$silde('box2','bottom:-=300',{
+            _e._$slide('box2','bottom:-=300',{
                 timing:'ease-out',
                 delay:0,
                 duration:5,
@@ -97,7 +97,7 @@ var f = function() {
     	_v._$addEvent(_button[1],'click',_fdi);
     	_v._$addEvent(_button[2],'click',_moveTo);
         _v._$addEvent(_button[3],'click',_toggle);
-        _v._$addEvent(_button[4],'click',_silde);
+        _v._$addEvent(_button[4],'click',_slide);
         _v._$addEvent(_button[5],'click',_nochange);
         _v._$addEvent(_button[6],'click',_fadeStop);
     });

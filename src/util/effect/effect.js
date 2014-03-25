@@ -113,10 +113,7 @@ var f = function(){
         this.__transition = _options.transition||[];
         this.__propMap = {};
         this.__animRule= this.__doParseStyle();
-        // IE10只触发一次hack
-        if(!!_h.__onTransitionEnd && _h.__onTransitionEnd()){
-            setTimeout(this.__onTransitionEnd._$bind(this),this.__sumtime * 1000);
-        }else{
+        if(nej.p._$KERNEL.engine != 'trident'){
             this.__doInitDomEvent([
                 [this.__node,'transitionend',this.__onTransitionEnd._$bind(this)]
             ]);
@@ -148,12 +145,6 @@ var f = function(){
      * @return {Void}  
      */
     _proEffect.__onTransitionEnd = function(_event){
-        // IE10只触发一次hack
-        if(!!_h.__onTransitionEnd && _h.__onTransitionEnd()){
-            this.__start = !1;
-            this._$stop();
-            return;
-        }
         if(!!this.__start&&this.__isLast(_event)){
             this.__start = !1;
             this._$stop();
