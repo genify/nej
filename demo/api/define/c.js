@@ -121,4 +121,4 @@ var c = 'cccccc';
 var c = 'cccccc';
 var c = 'cccccc';
 var c = 'cccccc';
-console.log('cccccc');
+log('cccccc');

@@ -80,6 +80,57 @@ var _doParseConfig = function(_uri){
         _root[x] = _obj[x];
     if (!_root.pro)
         _root.pro = '../javascript/';
+    if (!!_obj.d){
+        document.write('<script src="'+_obj.d+'"></scr'+'ipt>');
+    }
+};
+/*
+ * 解析列表依赖关系
+ * @return {Array} 列表
+ */
+var _doParseDependency = (function(){
+    var _dependency = function(_list,_dmap,_test){
+        if (!_list||!_list.length) 
+            return null;
+        var _result = [];
+        for(var i=0,l=_list.length,_file,_files;i<l;i++){
+            _file = _list[i];
+            if (!!_test[_file])
+                continue;
+            _test[_file] = !0;
+            _files = _dependency(_dmap[_file],_dmap,_test);
+            if (!!_files&&_files.length>0)
+                _result.push.apply(_result,_files);
+            _result.push(_file);
+        }
+        return _result;
+    };
+    return function(_list,_dmap){
+        return _dependency(_list,_dmap,{});
+    };
+})();
+/*
+ * 序列化配置依赖关系
+ * @return {Void}
+ */
+var _doSerializeDepList = function(_map){
+    if (!_map) return;
+    // format url
+    var _xlist = [],
+        _result = {};
+    for(var x in _map){
+        _doParsePatched(_map[x]);
+        var _list = _map[x],
+            _file = _doFormatURI(x);
+        _xlist.push(_file);
+        _result[_file] = _list;
+        if (!_list||!_list.length) continue;
+        for(var i=0,l=_list.length;i<l;i++){
+            _list[i] = _doFormatURI(_list[i]);
+        }
+    }
+    // merge result
+    return _doParseDependency(_xlist,_result);
 };
 /*
  * 初始化平台信息
@@ -520,6 +571,21 @@ NEJ.define = function(_uri,_deps,_callback){
     // for other 
     __stack.push(_args);
     _doAddAllListener();
+};
+/*
+ * 载入依赖配置
+ * @return {Void}
+ */
+NEJ.config = function(_map){
+    var _list = _doSerializeDepList(_map);
+    if (!_list||!_list.length) return;
+    var _arr = [];
+    for(var i=0,l=_list.length,_it;i<l;i++){
+        _it = _list[i];
+        _arr.push('<script src="'+_it+'"></scr'+'ipt>');
+        __cache[_it] = 2;
+    }
+    document.writeln(_arr.join(''));
 };
 // init
 _doInit();

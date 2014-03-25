@@ -3188,4 +3188,4 @@ var b = 'bbbbb';
 var b = 'bbbbb';
 var b = 'bbbbb';
 var b = 'bbbbb';
-console.log('bbbbbb');
+log('bbbbbb');

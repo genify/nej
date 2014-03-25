@@ -3,13 +3,20 @@
   <head>
     <title>test</title>
     <meta charset="utf-8"/>
+    <script>
+        function log(m){
+            var p = document.createElement('p');
+            p.innerHTML = m;
+            document.body.appendChild(p);
+        }
+    </script>
   </head>
   <body>
     <!-- @DEFINE -->
     <script src="../../../src/define.js?d=./deps.js&pro=./"></script>
     <script>
         define(['{pro}a.js','{pro}e.js'],function(){
-            console.log('app');
+            log('app');
         });
     </script>
   </body>

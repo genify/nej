@@ -43,4 +43,4 @@ var d = 'dddddd';
 var d = 'dddddd';
 var d = 'dddddd';
 var d = 'dddddd';
-console.log('dddddddd');
+log('dddddddd');

@@ -1114,4 +1114,4 @@ var a = '';
 var a = '';
 var a = '';
 var a = '';
-console.log('aaaaa');
+log('aaaaa');
