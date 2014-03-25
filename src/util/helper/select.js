@@ -167,9 +167,29 @@ var f = function(){
         // trigger onselectionchange
         if (_class==this.__selected&&
             _event.last!=_event.target){
+            this.__doScrollToView(_event.target);
             this._$dispatchEvent(
                 'onchange',_event
             );
+        }
+    };
+    /**
+     * 节点滚动至可视区域
+     * @return {Void}
+     */
+    _pro.__doScrollToView = function(_element){
+        var _parent = _e._$getScrollViewPort(_element),
+            _offset = _e._$offset(_element,_parent);
+        // item out of top
+        if (_offset.y-_parent.scrollTop<0){
+            _parent.scrollTop = _offset.y;
+            return;
+        }
+        // item out of bottom
+        var _delta = _offset.y+
+            _element.offsetHeight-_parent.clientHeight;
+        if (_delta>_parent.scrollTop){
+            _parent.scrollTop = _delta;
         }
     };
     /**
