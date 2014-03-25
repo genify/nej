@@ -191,7 +191,7 @@ var f = function(){
      */
     _pro._$stop = function(){
         this.__timer = cancelRequestAnimationFrame(this.__timer);
-        this._$dispatchEvent('onstop');
+        this._$dispatchEvent('onstop',arguments);
         return this;
     };
 };
