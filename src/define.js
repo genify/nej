@@ -75,13 +75,17 @@ var _doParseConfig = function(_uri){
     delete _obj.g;
     _doParsePlatform(_obj.p);
     delete _obj.p;
+    var _deps = _obj.d;
+    delete _obj.d;
     var _root = __config.root;
-    for(var x in _obj)
+    for(var x in _obj){
         _root[x] = _obj[x];
-    if (!_root.pro)
+    }
+    if (!_root.pro){
         _root.pro = '../javascript/';
-    if (!!_obj.d){
-        document.write('<script src="'+_obj.d+'"></scr'+'ipt>');
+    }
+    if (!!_deps){
+        document.write('<script src="'+_deps+'"></scr'+'ipt>');
     }
 };
 /*
@@ -576,9 +580,22 @@ NEJ.define = function(_uri,_deps,_callback){
  * 载入依赖配置
  * @return {Void}
  */
-NEJ.config = function(_map){
+NEJ.config = function(_map,_entry){
     var _list = _doSerializeDepList(_map);
     if (!_list||!_list.length) return;
+    // ignore entry list
+    var _map = {};
+    if (!!_entry&&_entry.length>0){
+        for(var i=0,l=_entry.length;i<l;i++){
+            _map[_doFormatURI(_entry[i])] = !0;
+        }
+    }
+    for(var i=_list.length-1;i>=0;i--){
+        if (!!_map[_list[i]]){
+            _list.splice(i,1);
+        }
+    }
+    // load script
     var _arr = [];
     for(var i=0,l=_list.length,_it;i<l;i++){
         _it = _list[i];
