@@ -576,8 +576,51 @@ NEJ.define = function(_uri,_deps,_callback){
     __stack.push(_args);
     _doAddAllListener();
 };
-/*
- * 载入依赖配置
+/**
+ * 载入依赖配置，对于老项目或者使用第三方框架的项目，可以使用此接口配置
+ * 
+ * 项目某个页面加载的脚本列表
+ * [code type="html"]
+ *   <script src="./a.js"></script>
+ *   <script src="./b.js"></script>
+ *   <script src="./c.js"></script>
+ *   <script src="./d.js"></script>
+ *   <script src="./e.js"></script>
+ *   <script src="./f.js"></script>
+ * [/code]
+ * 
+ * 根据脚本规则提取文件的依赖关系，没有依赖其他文件可不配置，假设页面入口文件为f.js
+ * [code]
+ *   var deps = {
+ *       '{pro}f.js':['{pro}d.js'],
+ *       '{pro}e.js':['{pro}a.js','{pro}b.js','{pro}c.js'],
+ *       '{pro}c.js':['{pro}b.js'],
+ *       '{pro}b.js':['{pro}a.js']
+ *   };
+ * [/code]
+ * 
+ * 通过NEJ.config配置依赖关系，假设以下配置文件的路径为./deps.js
+ * [code]
+ *   NEJ.config(deps,['{pro}f.js']);
+ * [/code]
+ * 
+ * 修改页面使用文件依赖管理，使用d参数配置依赖文件地址
+ * [code type="html"]
+ *   <script src="http://nej.netease.com/nej/src/define.js?d=./deps.js&pro=./"></script>
+ *   <script src="./f.js"></script>
+ * [/code]
+ * 
+ * 之后项目只需要维护deps.js中的依赖配置信息即可
+ * 说明：
+ * 开发阶段deps.js中配置的文件均会被载入页面中，
+ * 发布上线时仅提取页面使用到的脚本，
+ * 比如上例中页面只用到f.js，
+ * 通过配置文件可以发现f.js只依赖了d.js，
+ * 因此这个页面最终发布时只会导出d.js和f.js
+ * 
+ * @api    {NEJ.config}
+ * @param  {Object}   依赖映射表，如'{pro}a.js':['{pro}b.js','{pro}c.js']
+ * @param  {Array}    入口屏蔽文件列表，页面载入依赖配置文件中的文件时不载入此列表中的文件，多为页面入口文件
  * @return {Void}
  */
 NEJ.config = function(_map,_entry){
