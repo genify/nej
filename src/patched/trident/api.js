@@ -266,35 +266,45 @@ var f = function(){
      * @param  {Node}     事件添加节点
      * @return {Function} 变化后的事件执行函数
      */
-    _h.__checkEventHandler = 
-    _h.__checkEventHandler._$aop(function(_evt){
-        var _args = _evt.args,
-            _handler = _args[1];
-        switch(_args[0]){
-            case 'readystatechange':
-                _evt.stopped = !0;
-                _evt.value = function(_event){
-                    var _element = _v._$getElement(_event)||this;
-                    if (_element.readyState=='loaded'||
-                        _element.readyState=='complete'){
-                        _event.target = _element;
-                        _handler.call(_element,_event);
-                    }
-                };
-            break;
-            case 'propertychange':
-                _evt.stopped = !0;
-                _evt.value = function(_event){
-                    var _element = _v._$getElement(_event)||this;
-                    if (('value' in _element)&&
-                        _event.propertyName=='value'){
-                        _event.target = _element;
-                        _handler.call(_element,_event);
-                    }
-                };
-            break;
-        }
-    });
+    _h.__checkEventHandler = (function(){
+        var _lmap = {};
+        return _h.__checkEventHandler._$aop(function(_evt){
+            var _args = _evt.args,
+                _handler = _args[1];
+            switch(_args[0]){
+                case 'readystatechange':
+                    _evt.stopped = !0;
+                    _evt.value = function(_event){
+                        var _element = _v._$getElement(_event)||this;
+                        if (_element.readyState=='loaded'||
+                            _element.readyState=='complete'){
+                            _event.target = _element;
+                            _handler.call(_element,_event);
+                        }
+                    };
+                break;
+                case 'propertychange':
+                    _evt.stopped = !0;
+                    _evt.value = function(_event){
+                        var _element = _v._$getElement(_event)||this;
+                        if (('value' in _element)&&
+                            _event.propertyName=='value'){
+                            var _id = _e._$id(_element);
+                            // lock cycle trigger
+                            if (!!_lmap[_id]){
+                                return;
+                            }
+                            _lmap[_id] = !0;
+                            _event.target = _element;
+                            _handler.call(_element,_event);
+                            delete _lmap[_id];
+                        }
+                    };
+                break;
+            }
+        });
+    })();
+    
     /**
      * 添加节点事件
      * @param  {Node}     _element 节点对象
