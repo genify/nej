@@ -109,5 +109,5 @@ NEJ.define(
     '{lib}patched/message.js',
     '{lib}base/util.js',
     '{lib}util/event/event.js',
-    '{lib}util/encode/json.js'
+    '{patch}json.js'
 ],f);

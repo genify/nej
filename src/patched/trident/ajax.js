@@ -62,6 +62,8 @@ var f = function(){
                });
     })();
 };
-NEJ.define('{lib}patched/trident/ajax.js',
-      ['{lib}patched/ajax.js'
-      ,'{lib}util/encode/json.js'],f);
+NEJ.define(
+    '{lib}patched/trident/ajax.js',[
+    '{lib}patched/ajax.js',
+    '{patch}json.js'
+],f);
