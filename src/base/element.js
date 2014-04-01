@@ -1780,9 +1780,11 @@ var f = function(){
     };
     _x.isChange = !0;
 };
-NEJ.define('{lib}base/element.js',
-          ['{lib}base/constant.js'
-          ,'{lib}base/event.js'
-          ,'{lib}base/util.js'
-          ,'{patch}api.js'
-          ,'{patch}json.js'],f);
+NEJ.define(
+    '{lib}base/element.js',[
+    '{lib}base/constant.js',
+    '{lib}base/event.js',
+    '{lib}base/util.js',
+    '{patch}api.js',
+    '{patch}json.js'
+],f);
