@@ -47,5 +47,7 @@ var f = function(){
         );
     };
 };
-NEJ.define('{lib}patched/message.js',
-      ['{lib}base/platform.js'],f);
+NEJ.define(
+    '{lib}patched/message.js',[
+    '{lib}base/platform.js'
+],f);
