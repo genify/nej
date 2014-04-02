@@ -26,7 +26,7 @@ var f = function(){
      * @config  {Number}        limit  每页显示数量，默认10项
      * @config  {Number}        first  首页显示数量，默认为limit的值
      * @config  {String|Object} item   列表JST模版标识或者Item配置，{clazz:'xxx',klass:_$$Item||'jst key',prefix:'xxx'}
-     * @config  {Object}        cache  缓存配置信息，{key:'primary key',lkey:'list key',data:{},klass:_$$ListCache,list:[],clear:true,total:200}
+     * @config  {Object}        cache  缓存配置信息，{key:'primary key',lkey:'list key',data:{},ext:{},klass:_$$ListCache,list:[],clear:true,total:200}
      * @config  {Object}        pager  分页器配置信息，{parent:'xxx',klass:_$$Pager,index:2,fixed:true}
      * 
      * [hr]
@@ -106,7 +106,6 @@ var f = function(){
      * @param  {Object}  事件信息
      * @config {String} id   列表项标识
      * @config {String} key  列表标识
-     * @config {Object} ext  扩展数据
      * @config {Object} data 列表项数据
      * 
      * [hr]
@@ -114,7 +113,6 @@ var f = function(){
      * @event  {onafterdelete}
      * @param  {Object}  事件信息
      * @config {String}  key     列表标识
-     * @config {Object}  ext     扩展数据
      * @config {Object}  data    删除的列表项数据
      * @config {Boolean} stopped 是否阻止列表刷新逻辑
      * 
@@ -130,7 +128,6 @@ var f = function(){
      * @param  {Object}  事件信息
      * @config {String} id   列表项标识
      * @config {String} key  列表标识
-     * @config {Object} ext  扩展数据
      * @config {Object} data 列表项数据
      * 
      * [hr]
@@ -138,7 +135,6 @@ var f = function(){
      * @event  {onafterupdate}
      * @param  {Object}  事件信息
      * @config {String}  key     列表标识
-     * @config {Object}  ext     扩展数据
      * @config {Object}  data    删除的列表项数据
      * @config {Boolean} stopped 是否阻止列表刷新逻辑
      * 
@@ -275,7 +271,8 @@ var f = function(){
     _pro.__doResetCache = function(_cache){
         var _klass = _cache.klass,
             _copt  = NEJ.X({},_cache);
-        this.__ropt.key  = _copt.lkey;
+        this.__ropt.key = _copt.lkey;
+        this.__ropt.ext = _copt.ext;
         this.__ropt.data = _copt.data||{};
         this.__ropt.clear = !!_copt.clear;
         this.__iopt.pkey = _copt.key||'id';
