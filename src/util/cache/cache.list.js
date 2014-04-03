@@ -248,22 +248,35 @@ var f = function(){
      * 缓存列表项
      * @protected
      * @method {__doSaveItemToCache}
-     * @param  {Object} 列表项
-     * @param  {String} 列表标识
-     * @return {Object} 缓存中列表项
+     * @param  {Object|Array} 列表项或列表
+     * @param  {String}       列表标识
+     * @return {Object|Array} 缓存中列表项或列表
      */
     _pro.__doSaveItemToCache = function(_item,_lkey){
-        _item = this.__doFormatItem
-               (_item,_lkey)||_item;
-        if (!_item) return null;
-        var _key = _item[this.__key];
-        if (_key!=null){
-            var _itm = this.__getHash()[_key];
-            if (!!_itm) _item = NEJ.X(_itm,_item);
-            this.__getHash()[_key] = _item;
+        // save item to cache
+        if (!_u._$isArray(_item)){
+            _item = this.__doFormatItem
+                   (_item,_lkey)||_item;
+            if (!_item) return null;
+            var _key = _item[this.__key];
+            if (_key!=null){
+                var _itm = this.__getHash()[_key];
+                if (!!_itm) _item = NEJ.X(_itm,_item);
+                this.__getHash()[_key] = _item;
+            }
+            delete _item.__dirty__;
+            return _item;
         }
-        delete _item.__dirty__;
-        return _item;
+        // batch save to cache
+        var _result = [];
+        _u._$forEach(
+            _item,function(_it){
+                _result.push(
+                    this.__doSaveItemToCache(_it,_lkey)
+                );
+            },this
+        );
+        return _result;
     };
     /**
      * 从缓存列表删除项
