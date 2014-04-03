@@ -309,7 +309,7 @@ var f = function(){
         _u._$forEach(
             _id,function(_item){
                 _result.push(
-                    this.__doRemoveItemFromList(_item)
+                    this.__doRemoveItemFromList(_lkey,_item)
                 );
             },this
         );
