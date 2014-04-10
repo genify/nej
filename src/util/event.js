@@ -463,6 +463,7 @@ var f = function(){
      */
     _pro._$addEvent = function(_type,_event){
         this._$setEvent.apply(this,arguments);
+        return this;
     };
     /**
      * 删除事件
