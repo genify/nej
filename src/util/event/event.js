@@ -211,7 +211,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__doEventDispatch = function(_type,_event){
-        _event = _event||{noargs:!0};
+        _event = NEJ.X({},_event||{noargs:!0});
         _event.type = _type;
         this._$dispatchEvent('ondispatch',_event);
         if (!!_event.stopped) return;
