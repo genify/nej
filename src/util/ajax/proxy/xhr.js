@@ -12,8 +12,7 @@ var f = function(){
         _g = _('nej.g'),
         _u = _('nej.u'),
         _p = _('nej.ut.j'),
-        _cache = {},
-        _proXHRProxy;
+        _pro;
     if (!!_p._$$XHRProxy) return;
     /**
      * Ajax代理对象
@@ -24,14 +23,14 @@ var f = function(){
      * @param   {Object}  构造配置参数
      */
     _p._$$XHRProxy = NEJ.C();
-      _proXHRProxy = _p._$$XHRProxy._$extend(_p._$$Proxy);
+    _pro = _p._$$XHRProxy._$extend(_p._$$Proxy);
     /**
      * 控件销毁
      * @protected
      * @method {__destroy}
      * @return {Void}
      */
-    _proXHRProxy.__destroy = function(){
+    _pro.__destroy = function(){
         this.__supDestroy();
         window.clearTimeout(this.__timer);
         delete this.__timer;
@@ -50,7 +49,7 @@ var f = function(){
      * @param  {Object} 请求信息
      * @return {Void}
      */
-    _proXHRProxy.__doSendRequest = (function(){
+    _pro.__doSendRequest = (function(){
         var _doSetHeader = function(_value,_key){
             this.__xhr.setRequestHeader(_key,_value);
         };
@@ -96,7 +95,7 @@ var f = function(){
      * @param  {Number} 状态变化类型
      * @return {Void}
      */
-    _proXHRProxy.__onStateChange = function(_type){
+    _pro.__onStateChange = function(_type){
         switch(_type){
             // upload progress
             case 1 :
@@ -117,14 +116,26 @@ var f = function(){
         }
     };
     /**
+     * 取头信息，子类实现具体业务逻辑
+     * @protected
+     * @method {__getResponseHeader}
+     * @param  {String}  要取的头信息名称
+     * @return {String} 头信息结果或集合
+     */
+    _pro.__getResponseHeader = function(_key){
+        return !this.__xhr?'':this.__xhr.getResponseHeader(_key);
+    };
+    /**
      * 中断请求
      * @method {_$abort}
      * @return {nej.ut.j._$$XHRProxy}
      */
-    _proXHRProxy._$abort = function(){
+    _pro._$abort = function(){
         this.__onLoadRequest({status:0});
         return this;
     };
 };
-NEJ.define('{lib}util/ajax/proxy/xhr.js',
-      ['{lib}util/ajax/proxy/proxy.js'],f);
+NEJ.define(
+    '{lib}util/ajax/proxy/xhr.js',[
+    '{lib}util/ajax/proxy/proxy.js'
+],f);

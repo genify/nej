@@ -62,15 +62,17 @@ var f = function(){
      *      }
      *  });
      *  _j._$request('xxxx',{
-     *          type:'json',
-     *          method:'POST',
-     *          data:{name:'cheng-lin'},
-     *          timeout:3000,
-     *          onload:function(_data){
-     *          },
-     *          onerror:function(_error){
-     *          }}
-     *      );
+     *      type:'json',
+     *      method:'POST',
+     *      data:{name:'cheng-lin'},
+     *      timeout:3000,
+     *      onload:function(_data){
+     *          // TODO
+     *      },
+     *      onerror:function(_error){
+     *          // TODO
+     *      }
+     *  });
      * [/code]
      * 
      * @api    {nej.j._$filter}
@@ -122,16 +124,20 @@ var f = function(){
      *                             1 - 高版本使用HTML5的CORS协议，低版本采用Flash代理方式<br/>
      *                             2 - 全部使用Frame代理方式<br/>
      *                             3 - 全部使用Flash代理方式
+     * @config {Object}   result  onload回调输入时需包含的额外信息，已处理额外数据
+     *                            headers  服务器返回头信息，如{headers:'x-res-0'}或者{headers:['x-res-0','x-res-1']}
      * @return {String} 分配给请求的ID
      * 
      * [hr]
-     * 
-     * @event  {onload}   载入回调
-     * @param  {Variable} 请求返回数据，根据请求时type指定格式返回
+     * 载入回调
+     * @event  {onload}
+     * @param  {Variable|Object} 请求返回数据，根据请求时type指定格式返回，
+     *                           如果请求时指定了result参数，则此处输入为包含额外信息的对象，
+     *                           数据结果从此对象的data属性中取，如{headers:{'x-res-0':'12345', ...},data:{a:'aaa', ...}}
      * 
      * [hr]
-     * 
-     * @event  {onerror}  出错回调
+     * 出错回调
+     * @event  {onerror}  
      * @param  {Object}   错误信息
      * @config {Number}   code    错误代码
      * @config {String}   message 错误描述
@@ -162,6 +168,19 @@ var f = function(){
                 return _p._$$XHRProxy._$allocate(_options);
             return _h.__getProxyByMode(_options.mode,_upload,_options);
         };
+        // parse ext result
+        var _doParseExtData = function(_cache,_result){
+            var _data = {
+                data:_result
+            };
+            // parse ext headers
+            var _keys = _cache.result.headers;
+            if (!!_keys){
+                _data.headers = _cache.req._$header(_keys);
+            }
+            // TODO parse other ext data
+            return _data;
+        };
         // clear cache
         var _doClear = function(_sn){
             var _cache = _xcache[_sn];
@@ -174,15 +193,20 @@ var f = function(){
         var _doCallback = function(_sn,_type){
             var _cache = _xcache[_sn];
             if (!_cache) return;
+            var _data = arguments[2];
+            if (_type=='onload'&&!!_cache.result){
+                _data = _doParseExtData(_cache,_data);
+            }
             _doClear(_sn);
             try{
                 var _event = {
                     type:_type,
-                    result:arguments[2]
+                    result:_data
                 };
                 _doFilter(_event);
-                if (!_event.stopped)
+                if (!_event.stopped){
                    (_cache[_type]||_f)(_event.result);
+                }
             }catch(ex){
                 // ignore
                 console.error(ex.message);
@@ -201,9 +225,12 @@ var f = function(){
         return function(_url,_options){
             _options = _options||{};
             // cache request callback
-            var _sn = _u._$randNumberString(),
-                _cache = {onload:_options.onload||_f,
-                          onerror:_options.onerror||_f};
+            var _sn = _u._$uniqueID(),
+                _cache = {
+                    result:_options.result,
+                    onload:_options.onload||_f,
+                    onerror:_options.onerror||_f
+                };
             _xcache[_sn] = _cache;
             _options.onload = _onLoad._$bind(null,_sn);
             _options.onerror = _onError._$bind(null,_sn);
