@@ -1,6 +1,9 @@
 /*
  * ------------------------------------------
  * SHA/MD5编解码接口实现文件
+ * 参考：http://pajhome.org.uk/crypt/md5/
+ *  MD5：http://www.ietf.org/rfc/rfc1321.txt
+ * HMAC：http://www.ietf.org/rfc/rfc2104.txt
  * @version  1.0
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
