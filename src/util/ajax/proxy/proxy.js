@@ -196,7 +196,7 @@ var f = function(){
      */
     _pro._$header = function(_key){
         if (!_u._$isArray(_key)){
-            return this.__getResponseHeader(_key);
+            return this.__getResponseHeader(_key)||'';
         }
         var _result = {};
         _u._$forEach(
