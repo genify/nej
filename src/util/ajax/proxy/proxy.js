@@ -11,6 +11,7 @@ var f = function(){
         _c = _('nej.c'),
         _g = _('nej.g'),
         _e = _('nej.e'),
+        _u = _('nej.u'),
         _j = _('nej.j'),
         _t = _('nej.ut'),
         _p = _('nej.ut.j'),
@@ -179,12 +180,40 @@ var f = function(){
      * @return {Void}
      */
     _pro._$abort = _f;
+    /**
+     * 取头信息，子类实现具体业务逻辑
+     * @protected
+     * @method {__getResponseHeader}
+     * @param  {String}  要取的头信息名称
+     * @return {String} 头信息结果或集合
+     */
+    _pro.__getResponseHeader = _f;
+    /**
+     * 取头信息
+     * @method {_$header}
+     * @param  {String|Array}  要取的头信息名称
+     * @return {String|Object} 头信息结果或集合
+     */
+    _pro._$header = function(_key){
+        if (!_u._$isArray(_key)){
+            return this.__getResponseHeader(_key)||'';
+        }
+        var _result = {};
+        _u._$forEach(
+            _key,function(_value){
+                _result[_value] = this._$header(_value);
+            },this
+        );
+        return _result;
+    };
 };
-NEJ.define('{lib}util/ajax/proxy/proxy.js',
-          ['{patch}config.js'
-          ,'{lib}base/util.js'
-          ,'{lib}base/event.js'
-          ,'{lib}base/constant.js'
-          ,'{lib}base/element.js'
-          ,'{lib}util/event.js'
-          ,'{lib}util/cache/cookie.js'],f);
+NEJ.define(
+    '{lib}util/ajax/proxy/proxy.js',[
+    '{patch}config.js',
+    '{lib}base/util.js',
+    '{lib}base/event.js',
+    '{lib}base/constant.js',
+    '{lib}base/element.js',
+    '{lib}util/event.js',
+    '{lib}util/cache/cookie.js'
+],f);
