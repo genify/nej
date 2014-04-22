@@ -55,7 +55,7 @@ var f = function(){
      * [code]
      *   var _j = NEJ.P('nej.j');
      *   _j._$filter(function(_event){
-     *          // 过滤掉404的异常，如果type是onload不做处理
+     *      // 过滤掉404的异常，如果type是onload不做处理
      *      if(_event.type == 'onerror'){
      *          if(_event.result.data == 404)
      *              _event.stopped = false;
