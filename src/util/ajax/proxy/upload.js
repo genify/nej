@@ -15,7 +15,8 @@ var f = function(){
         _j = _('nej.j'),
         _p = _('nej.ut.j'),
         _cache = {},
-        _proUploadProxy;
+        _flag = 'NEJ-UPLOAD-RESULT:',
+        _pro;
     if (!!_p._$$UploadProxy) return;
     /**
      * 文件上传代理
@@ -26,14 +27,13 @@ var f = function(){
      * 
      */
     _p._$$UploadProxy = NEJ.C();
-      _proUploadProxy = _p._$$UploadProxy._$extend(_p._$$Proxy);
+    _pro = _p._$$UploadProxy._$extend(_p._$$Proxy);
     /**
      * 控件初始化
      * @return {Void}
      */
-    _proUploadProxy.__init = (function(){
-        var _flag = 'NEJ-UPLOAD-RESULT:',
-            _init = !1;
+    _pro.__init = (function(){
+        var _init = !1;
         // receive message callback
         var _doReceiveMessage = function(_event){
             var _data = _event.data;
@@ -63,7 +63,7 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proUploadProxy.__destroy = function(){
+    _pro.__destroy = function(){
         this.__supDestroy();
         _e._$remove(this.__frame);
         delete this.__frame;
@@ -77,7 +77,7 @@ var f = function(){
      * @param  {String} 数据信息
      * @return {Void}
      */
-    _proUploadProxy.__onLoadRequest = function(_text){
+    _pro.__onLoadRequest = function(_text){
         var _json;
         try{
             _json = JSON.parse(_text);
@@ -96,7 +96,7 @@ var f = function(){
      * @param  {Object} 请求信息
      * @return {Void}
      */
-    _proUploadProxy.__doSendRequest = (function(){
+    _pro.__doSendRequest = (function(){
         // same domain upload result check
         var _doCheckResult = function(){
             var _body,_text;
@@ -104,7 +104,7 @@ var f = function(){
                 var _body = this.__frame.contentWindow.document.body,
                     _text = (_body.innerText||_body.textContent||'').trim();
                 // check result for same domain with upload proxy html
-                if (!_text&&_body.innerHTML.indexOf('NEJ-UPLOAD-RESULT')>=0){
+                if (!_text&&_body.innerHTML.indexOf(_flag)>=0){
                     // use post message path
                     return;
                 }
@@ -169,7 +169,7 @@ var f = function(){
      * @method {_$abort}
      * @return {Void}
      */
-    _proUploadProxy._$abort = function(){
+    _pro._$abort = function(){
         this._$dispatchEvent('onerror',{
             code:_g._$CODE_ERRABRT,
             message:'客户端终止文件上传'
@@ -177,6 +177,8 @@ var f = function(){
         return this;
     };
 };
-NEJ.define('{lib}util/ajax/proxy/upload.js',
-      ['{lib}util/ajax/message.js'
-      ,'{lib}util/ajax/proxy/proxy.js'],f);
+NEJ.define(
+    '{lib}util/ajax/proxy/upload.js',[
+    '{lib}util/ajax/message.js',
+    '{lib}util/ajax/proxy/proxy.js'
+],f);
