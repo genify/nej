@@ -104,7 +104,8 @@ var f = function(){
                 var _body = this.__frame.contentWindow.document.body,
                     _text = (_body.innerText||_body.textContent||'').trim();
                 // check result for same domain with upload proxy html
-                if (!_text&&_body.innerHTML.indexOf(_flag)>=0){
+                if (_text.indexOf(_flag)>=0||
+                    _body.innerHTML.indexOf(_flag)>=0){
                     // use post message path
                     return;
                 }
