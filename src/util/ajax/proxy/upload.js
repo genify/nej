@@ -102,7 +102,12 @@ var f = function(){
             var _body,_text;
             try{
                 var _body = this.__frame.contentWindow.document.body,
-                    _text = _body.innerText||_body.textContent;
+                    _text = (_body.innerText||_body.textContent||'').trim();
+                // check result for same domain with upload proxy html
+                if (!_text&&_body.innerHTML.indexOf('NEJ-UPLOAD-RESULT')>=0){
+                    // use post message path
+                    return;
+                }
             }catch(e){
                 // ignore if not same domain
                 return;
