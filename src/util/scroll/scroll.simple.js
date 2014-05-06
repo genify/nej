@@ -197,10 +197,18 @@ var f = function(){
             var _conf = this.__dopt[_key];
             delete _conf.view;
             delete _conf.body;
+            
+        };
+        var _doClearBarStyle = function(_conf,_key,_map){
+            if (!_conf.body) return;
+            var _style = {};
+            _style[_conf.ss] = '';
+            _style[_conf.sp] = '';
+            _e._$style(_conf.body,_style);
+            delete _conf.body;
         };
         return function(){
             this.__supDestroy();
-            delete this.__bar;
             delete this.__isout;
             delete this.__parent;
             delete this.__dragging;
@@ -209,6 +217,11 @@ var f = function(){
                 this.__dragger,
                 _doClearDragger._$bind(this)
             );
+            _u._$forIn(
+                this.__bar,
+                _doClearBarStyle._$bind(this)
+            );
+            delete this.__bar;
         };
     })();
     /**
