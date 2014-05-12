@@ -11,7 +11,7 @@ var f = function(){
         _u = _('nej.u'),
         _p = _('nej.ut'),
         _e = _('nej.e'),
-        _proEditor;
+        _pro;
     if (!!_p._$$Editor) return;
     /**
      * 富媒体编辑器封装
@@ -22,14 +22,14 @@ var f = function(){
      * @config  {nej.ut._$$EditorToolbar} toolbar 编辑器工具栏
      */
     _p._$$Editor = NEJ.C();
-      _proEditor = _p._$$Editor._$extend(_p._$$Event);
+    _pro = _p._$$Editor._$extend(_p._$$Event);
     /**
      * 控件初始化
      * @protected
      * @method {__init}
      * @return {Void}
      */
-    _proEditor.__init = function(){
+    _pro.__init = function(){
         this.__copt = {};
         this.__impl = {};
         this.__supInit();
@@ -41,7 +41,7 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proEditor.__reset = (function(){
+    _pro.__reset = (function(){
         var _doRegist = function(){
             this._$registCommand(
                  _p._$$EditorCommand
@@ -79,7 +79,7 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proEditor.__destroy = (function(){
+    _pro.__destroy = (function(){
         var _doClearImpl = function(_impl,_key,_map){
             if (_impl instanceof _p._$$EditorCommand)
                 _impl._$recycle();
@@ -105,7 +105,7 @@ var f = function(){
      * @param  {String}                     命令名称
      * @return {nej.ut._$$EditorCommand} 命令实现实例
      */
-    _proEditor.__getCommandImpl = function(_command){
+    _pro.__getCommandImpl = function(_command){
         var _impl = this.__impl[_command];
         if (!_impl) return null;
         if (!(_impl instanceof _p._$$EditorCommand)){
@@ -121,7 +121,7 @@ var f = function(){
      * @param  {Object} 命令信息
      * @return {Void}
      */
-    _proEditor.__onCommand = function(_event){
+    _pro.__onCommand = function(_event){
         this.__getCommandImpl(_event.name)
             ._$execute({target:_event.node});
     };
@@ -131,7 +131,7 @@ var f = function(){
      * @method {__onSelectionChange}
      * @return {Void}
      */
-    _proEditor.__onSelectionChange = (function(){
+    _pro.__onSelectionChange = (function(){
         var _doSyncToolbar = function(_node,_command){
             var _impl = this.__getCommandImpl(_command);
             if (!_impl) return;
@@ -157,7 +157,7 @@ var f = function(){
      * @param  {Array|nej.ut._$$EditorCommand} 命令实现类构造
      * @return {nej.ut._$$Editor}
      */
-    _proEditor._$registCommand = function(_class){
+    _pro._$registCommand = function(_class){
         if (!_u._$isArray(_class)){
             var _name = (_class||_o).command;
             if (!!_name)
@@ -173,7 +173,7 @@ var f = function(){
      * @param  {String} 编辑内容
      * @return {nej.ut._$$Editor}
      */
-    _proEditor._$setContent = function(_content){
+    _pro._$setContent = function(_content){
         if (!!this.__copt.area)
               this.__copt.area
                   ._$setContent(_content);
@@ -184,7 +184,7 @@ var f = function(){
      * @method {_$getContent}
      * @return {String} 编辑内容
      */
-    _proEditor._$getContent = function(_filter){
+    _pro._$getContent = function(_filter){
         return !this.__copt.area ? ''
                :this.__copt.area._$getContent(_filter);
     };
@@ -194,12 +194,30 @@ var f = function(){
      * @method {_$getTextContent}
      * @return {String} 编辑内容
      */
-    _proEditor._$getTextContent = function(){
+    _pro._$getTextContent = function(){
         return !this.__copt.area ? ''
                :this.__copt.area._$getTextContent();
     };
+    /**
+     * 取编辑区实例
+     * @method {_$getArea}
+     * @return {nej.ut._$$EditorArea}
+     */
+    _pro._$getArea = function(){
+        return this.__copt.area;
+    };
+    /**
+     * 取工具条实例
+     * @method {_$getToolbar}
+     * @return {nej.ut._$$EditorToolbar}
+     */
+    _pro._$getToolbar = function(){
+        return this.__copt.toolbar;
+    };
 };
-NEJ.define('{lib}util/editor/editor.js',
-      ['{lib}util/editor/area.js'
-      ,'{lib}util/editor/toolbar.js'
-      ,'{lib}util/editor/command.js'],f);
+NEJ.define(
+    '{lib}util/editor/editor.js',[
+    '{lib}util/editor/area.js',
+    '{lib}util/editor/toolbar.js',
+    '{lib}util/editor/command.js'
+],f);
