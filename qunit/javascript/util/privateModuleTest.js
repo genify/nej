@@ -46,7 +46,7 @@ var f = function(){
             equal('c1',_chlidren[0].id);
             equal('c2',_chlidren[1].id);
             start();
-        },1000);
+        },10000);
     });
 }
 module('依赖模块');
