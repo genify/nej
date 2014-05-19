@@ -253,6 +253,7 @@ var f = function(){
     _pro._$execCommand = function(_command,_value,_css){
         var _document = this._$getDocument();
         if (!_document) return this;
+        this._$focus(2);
         _h.__execCommand(_document,'styleWithCSS',false);
         _h.__execCommand(_document,_command,_value);
         this._$focus(2);
