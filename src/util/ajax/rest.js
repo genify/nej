@@ -61,6 +61,7 @@ var f = function(){
      * @config {String}   method  请求方式,GET/POST/PUT/DELETE
      * @config {Number}   timeout 超时时间,0 禁止超时监测
      * @config {Object}   headers 头信息
+     * @config {Object}   result  onload回调输入时需包含的额外信息
      * @return {nej.j}
      * 
      * [hr]

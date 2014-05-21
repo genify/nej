@@ -1276,7 +1276,7 @@
     module.exports = nes;
     // 支持amd
   } else if (typeof define === 'function' && define.amd) {
-    define(function() {
+/* */define(function() {
       return nes;
     });
   } else {
