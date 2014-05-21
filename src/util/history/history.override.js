@@ -26,7 +26,7 @@ var f = function(){
      * @return {history}
      */
     history.go = function(_step){
-        if (history.length<2) return this;
+        if (history.size<2) return this;
         var _index = history.index+_step;
         history.index = Math.max(0,
                         Math.min(_index,
@@ -87,5 +87,7 @@ var f = function(){
             }
         });
 };
-NEJ.define('{lib}util/history/history.override.js',
-          ['{lib}util/history/history.js'],f);
+NEJ.define(
+    '{lib}util/history/history.override.js',[
+    '{lib}util/history/history.js'
+],f);
