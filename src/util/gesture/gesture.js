@@ -12,7 +12,7 @@ var f = function(){
         _u = _('nej.u'),
         _t = _('nej.ut'),
         _p = _('nej.ut.g'),
-        _proGesture;
+        _pro;
     if (!!_p._$$Gesture) return;
     /**
      * 触摸手势基类
@@ -24,14 +24,14 @@ var f = function(){
      * 
      */
     _p._$$Gesture = NEJ.C();
-      _proGesture = _p._$$Gesture._$extend(_t._$$Event);
+    _pro = _p._$$Gesture._$extend(_t._$$Event);
     /**
      * 控件初始化
      * @protected
      * @method {__init}
      * @return {Void}
      */
-    _proGesture.__init = function(){
+    _pro.__init = function(){
         this.__supInit();
         this.__number = 1;
         _v._$addEvent(
@@ -58,7 +58,7 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proGesture.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
         this.__tlist = [];
     };
@@ -68,7 +68,7 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proGesture.__destroy = function(){
+    _pro.__destroy = function(){
         this.__supDestroy();
         delete this.__tlist;
     };
@@ -79,7 +79,7 @@ var f = function(){
      * @param  {Event} 事件信息
      * @return {Void}
      */
-    _proGesture.__doParseTouch = (function(){
+    _pro.__doParseTouch = (function(){
         // get touch id
         var _getId = function(_touch){
             if (!_touch) return;
@@ -189,7 +189,7 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    _proGesture.__onTouchStart = function(_event){
+    _pro.__onTouchStart = function(_event){
         var _touches = this.__doParseTouch(_event);
         if (!!_touches) this.__doTouchStart(_touches,_event);
     };
@@ -201,7 +201,7 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    _proGesture.__doTouchStart = _f;
+    _pro.__doTouchStart = _f;
     /**
      * 移动触点事件
      * @protected
@@ -209,7 +209,7 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    _proGesture.__onTouchMove = function(_event){
+    _pro.__onTouchMove = function(_event){
         var _touches = this.__doParseTouch(_event,2);
         if (!!_touches) this.__doTouchMove(_touches,_event);
     };
@@ -221,7 +221,7 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    _proGesture.__doTouchMove = _f;
+    _pro.__doTouchMove = _f;
     /**
      * 结束触摸事件
      * @protected
@@ -229,7 +229,7 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    _proGesture.__onTouchEnd = function(_event){
+    _pro.__onTouchEnd = function(_event){
         var _touches = this.__doParseTouch(_event,1);
         if (!!_touches) this.__doTouchEnd(_touches,_event);
     };
@@ -241,7 +241,7 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    _proGesture.__doTouchEnd = _f;
+    _pro.__doTouchEnd = _f;
     /**
      * 触摸取消事件
      * @protected
@@ -249,7 +249,7 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    _proGesture.__onTouchCancel = function(_event){
+    _pro.__onTouchCancel = function(_event){
         var _touches = this.__doParseTouch(_event,1);
         if (!!_touches) this.__doTouchCancel(_touches,_event);
     };
@@ -261,7 +261,7 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    _proGesture.__doTouchCancel = _f;
+    _pro.__doTouchCancel = _f;
     /**
      * 触发事件
      * @protected
@@ -271,13 +271,15 @@ var f = function(){
      * @param  {Object} 
      * @return {Void}
      */
-    _proGesture.__doDispatchEvent = function(_type,_touch,_options){
+    _pro.__doDispatchEvent = function(_type,_touch,_options){
         _v._$dispatchEvent(
             _v._$getElement(
                 _touch),_type,_options);
     };
 };
-NEJ.define('{lib}util/gesture/gesture.js',
-      ['{lib}base/event.js'
-      ,'{lib}base/element.js'
-      ,'{lib}util/event.js'],f);
+NEJ.define(
+    '{lib}util/gesture/gesture.js',[
+    '{lib}base/event.js',
+    '{lib}base/element.js',
+    '{lib}util/event.js'
+],f);

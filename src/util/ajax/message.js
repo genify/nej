@@ -7,13 +7,14 @@
  */
 var f = function(){
     var _  = NEJ.P,
+        _o = NEJ.O,
         _h = _('nej.h'),
         _e = _('nej.e'),
         _j = _('nej.j');
     /**
      * 发送跨文档的消息
      * [code type="html"]
-     *   <!-- 注意需要通过source进行双向交互的frame节点必须设置name属性作为标识 -->
+     *   <!-- 注意需要通过source进行双向交互的frame节点必须设置name/id属性作为标识 -->
      *   <iframe name="targetFrame" src="http://a.b.com/a.html"></iframe>
      * [/code]
      * [code]
@@ -75,7 +76,8 @@ var f = function(){
         return function(_target,_options){
             if (typeof(_target)=='string'){
                 _target = _wmap[_target]||
-                          window.frames[_target];
+                          window.frames[_target]||
+                         (_e._$get(_target)||_o).contentWindow;
                 if (!_target) return this;
             }
             // check data

@@ -505,7 +505,7 @@ var f = function(){
      *   var _p = NEJ.P('nej.u');
      *   // 输入数据0，输出十六进制串
      *   // 30000000
-     *   _p._$md52str('0');
+     *   _p._$str2hex('0');
      * [/code]
      * @api    {nej.u._$str2hex}
      * @param  {String} 字符串
