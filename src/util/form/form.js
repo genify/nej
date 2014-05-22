@@ -761,6 +761,7 @@ var f = function(){
      * @return {Void}
      */
     _proWebForm.__doShowMessage = (function(){
+        var _kmap = {tp:'tip',ok:'pass',er:'error'};
         var _getVisible = function(_type1,_type2){
             return _type1==_type2?'block':'none';
         };
@@ -771,9 +772,8 @@ var f = function(){
             return _holder;
         };
         var _getHolderNode = function(_node,_type){
-            var _holder;
-            if (_type=='tp')
-                _holder = _e._$get(_node.name+'-tip');
+            // try get node with id = xxx-tip or xxx-pass or xxx-error 
+            var _holder = _e._$get(_node.name+'-'+_kmap[_type]);
             if (!_holder)
                 _holder = _e._$getByClassName(_node.parentNode,this.__wopt[_type].nid)[0];
             return _holder;
@@ -1002,8 +1002,10 @@ var f = function(){
         return _result;
     };
 };
-NEJ.define('{lib}util/form/form.js',
-      ['{lib}base/util.js'
-      ,'{lib}util/event.js'
-      ,'{lib}util/counter/counter.js'
-      ,'{lib}util/placeholder/placeholder.js'],f);
+NEJ.define(
+    '{lib}util/form/form.js',[
+    '{lib}base/util.js',
+    '{lib}util/event.js',
+    '{lib}util/counter/counter.js',
+    '{lib}util/placeholder/placeholder.js'
+],f);
