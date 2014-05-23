@@ -180,7 +180,8 @@ var f = function(){
      * @return {Void}
      */
     _pro.__doCheckScroll = function(_element){
-        if (this.__endskr||!_element) return;
+        if (this.__endskr||!_element||
+           !this.__lbox.clientHeight) return;
         if (!_element.scrollHeight)
             _element = _e._$getPageBox();
         var _offset = _e._$offset(this.__lbox),
