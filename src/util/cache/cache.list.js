@@ -515,8 +515,15 @@ var f = function(){
      * @param  {Array}  数据列表
      * @return {Void}
      */
-    _pro.__pullRefresh = function(_options,_list){
-        this.__doUnshiftToList(_options.key,_list);
+    _pro.__pullRefresh = function(_options,_result){
+        // list with total
+        // {total:12,result:[]} 或者 {total:13,list:[]}
+        var _total = parseInt(_result.total),
+            _list = _result.list||_result.result;
+        if (!isNaN(_total)&&!!_list){
+            this._$setTotal(_total);
+        }
+        this.__doUnshiftToList(_options.key,_list||_result);
         this.__doCallbackRequest(_options.rkey,'onpullrefresh',_options);
     };
     /**
