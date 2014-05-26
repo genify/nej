@@ -521,7 +521,7 @@ var f = function(){
         var _total = parseInt(_result.total),
             _list = _result.list||_result.result;
         if (!isNaN(_total)&&!!_list){
-            this._$setTotal(_options.key,_total);
+            this._$setTotal(_options.key,_total); 
         }
         this.__doUnshiftToList(_options.key,_list||_result);
         this.__doCallbackRequest(_options.rkey,'onpullrefresh',_options);
