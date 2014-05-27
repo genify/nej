@@ -334,7 +334,6 @@ var f = function() {
      * @return {[type]}        [description]
      */
     __proMP3Player.__onAudioTimeupdate = function(_event){
-        console.log(1)
         if(!!this.__timelineMouseDown) return;
         this.__duration = _event.duration;
         this.__ztags[7].innerHTML = this.__formatSecond(this.__currentTime);
