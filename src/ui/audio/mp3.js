@@ -155,7 +155,7 @@ var f = function() {
     __proMP3Player.__destroy = function(){
     	this.__supDestroy();
     	if(!!this.__playlist)
-    		this.__playlist = _ut._$$PlayList._$recycle(this.__playlist)
+    		this.__playlist = this.__playlist._$recycle();
     	if(!!this.__audio) 
     		this.__audio = this.__audio._$recycle();
     	if(!!this.__timeSlider) 
