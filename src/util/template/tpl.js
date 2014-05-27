@@ -320,7 +320,7 @@ var f = function(){
      *   };
      *  
      *   _proMyItem.__initXGui = function(){
-     *       this.__seed_html = _e._$getNodeTemplate(_html_key);
+     *       this.__seed_html = _html_key;
      *   };
      *   
      *   // 第二步：_$getItemTemplate接口生成item列表

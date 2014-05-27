@@ -10,7 +10,7 @@ var f = function(){
         _o = NEJ.O,
         _f = NEJ.F,
         _p = _('nej.ui'),
-        _pro;
+        _pro; 
     if (!!_p._$$Item) return;
     /**
      * 列表项控件基类<br />
@@ -39,7 +39,7 @@ var f = function(){
      *   };
      *
      *   _proMyItem.__initXGui = function(){
-     *       this.__seed_html = _e._$getNodeTemplate(_html_key);
+     *       this.__seed_html = _html_key;
      *   };
      *   
      *   // 第二步：生成item列表
