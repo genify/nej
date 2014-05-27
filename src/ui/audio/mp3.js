@@ -153,15 +153,8 @@ var f = function() {
      * @return {[type]} [description]
      */
     __proMP3Player.__destroy = function(){
+        this.__doClearComponent();
     	this.__supDestroy();
-    	if(!!this.__playlist)
-    		this.__playlist = this.__playlist._$recycle();
-    	if(!!this.__audio) 
-    		this.__audio = this.__audio._$recycle();
-    	if(!!this.__timeSlider) 
-    		this.__timeSlider = this.__timeSlider._$recycle();
-    	if(!!this.__volSlider) 
-    		this.__volSlider = this.__volSlider._$recycle();
     };
 
     /**
@@ -211,6 +204,9 @@ var f = function() {
 		}else if(this.__state == 2){
 			this.__audio._$pause();
 		}
+        if(!this.__state){
+            this._$play();
+        }
     };
 
     /**
@@ -298,8 +294,6 @@ var f = function() {
 	    if(parseInt(_time) === 0){
 	    	this.__refreshTime(_event);
 	    }
-        
-        // if(this.__currentTime && parseInt(this.__currentTime) == parseInt(_time)) return;
         this.__currentTime = _time;
 	    this.__onAudioTimeupdate(_event);
     };
@@ -340,6 +334,7 @@ var f = function() {
      * @return {[type]}        [description]
      */
     __proMP3Player.__onAudioTimeupdate = function(_event){
+        console.log(1)
         if(!!this.__timelineMouseDown) return;
         this.__duration = _event.duration;
         this.__ztags[7].innerHTML = this.__formatSecond(this.__currentTime);
@@ -423,6 +418,7 @@ var f = function() {
      * @return {[type]} [description]
      */
     __proMP3Player._$play = function(){
+        if(!this.__audio) return;
     	this.__autostart = !0;
     	this.__loadMusic(this.__cururl);
     };
