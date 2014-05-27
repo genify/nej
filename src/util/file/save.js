@@ -65,7 +65,7 @@ var f = function(){
      * @param  {Object}      可选配置参数
      * @config {String|Function} url  下载文件地址或者地址生成函数
      * @config {String}          name 保存的文件名称，没有指定name则取url中文件名
-     * 
+     * @return {Void}
      */
     _e._$bindSaveAsAction = function(_button,_options){
         var _id = _e._$id(_button);
