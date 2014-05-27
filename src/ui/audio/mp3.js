@@ -55,7 +55,7 @@ var f = function() {
 								<div class="ctl">\
 									<span class="f-ib m-pre ztag">&nbsp;</span> <span class="f-ib ztag m-play">&nbsp;</span> <span class="f-ib m-next ztag" value="next">&nbsp;</span><span class="m-vol">\
 										<span class="f-ib m-timeline m-timeline-1 ztag"> <span class="f-ib m-cur2 ztag">&nbsp;</span></span></span><span class="m-volicn f-ib "><span class="f-ib ztag m-volminc" style="opacity: 1;">&nbsp;</span><span class="f-ib ztag m-volmaxc" style="opacity: 100;">&nbsp;</span>\
-									</span><span class="m-curtime ztag">00:01</span>\
+									</span><span class="m-curtime ztag">00:00</span>\
 								</div>\
 								<div class="timeline">\
 									<div class="m-timeline ztag">\
@@ -63,7 +63,7 @@ var f = function() {
 									</div>\
 								</div>\
 								<div class="loop">\
-									<span class="m-time ztag">4:36</span><span class="m-repeatb m-repeatd ztag">&nbsp;</span>\
+									<span class="m-time ztag">00:00</span><span class="m-repeatb m-repeatd ztag">&nbsp;</span>\
 								</div>\
 							</div>\
 						</div>\
@@ -71,7 +71,20 @@ var f = function() {
     if (!!_p._$$MP3Player) return;
     /**
      * 音频播放器
-     * @type {[type]}
+     * @class   {nej.ui._$$MP3Player} 音频播放器
+     * @uses    {nej.ut._$$SliderX}
+     * @extends {nej.ui._$$Abstract}
+     * @param   {Object}  可选配置参数，已处理参数列表如下：
+     * @config  {String|Node}       父节点
+     * @config  {String}  mode      播放模式，默认是列表循环
+     * @config  {String}  list      歌曲列表
+     * @config  {Boolean} autostart 自动开始播放
+     * 
+     * [hr]
+     * 
+     * @event  {onstatechange} 状态变化事件
+     * @param  {Object}        事件对象
+     * 
      */
     _p._$$MP3Player = NEJ.C();
     __proMP3Player = _p._$$MP3Player._$extend(_p._$$Abstract);
@@ -79,7 +92,9 @@ var f = function() {
 
     /**
      * 初始化播放器结构
-     * @return {[type]} [description]
+     * @protected
+     * @method {__initXGui}
+     * @return {Void}
      */
     __proMP3Player.__initXGui = function(){
     	this.__seed_css = _seed_css;
@@ -87,18 +102,23 @@ var f = function() {
     };
 
     /**
-     * [__init description]
-     * @param  {[type]} _options [description]
-     * @return {[type]}          [description]
+     * 初始化方法
+     * @protected
+     * @param  {Object} _options 可选配置参数
+     * @method {__init}
+     * @return {Void}
      */
     __proMP3Player.__init = function(_options){
     	this.__supInit(_options);
-    	this.__isAutoStopped = true;
+    	this.__autoNext = !0;
+    	this.__autostart = _options.autostart;
     };
 
     /**
-     * [__initNode description]
-     * @return {[type]} [description]
+     * 初始化结构
+     * @protected
+     * @method {__initNode}
+     * @return {Void}
      */
     __proMP3Player.__initNode = function(){
     	this.__supInitNode();
@@ -112,32 +132,20 @@ var f = function() {
     };
 
     /**
-     * [__reset description]
-     * @param  {[type]} _options [description]
-     * @return {[type]}          [description]
+     * 重置控件
+     * @param  {Objec} _options 可选配置参数
+     * @param  {Array} 
+     * @return {void}          
      */
     __proMP3Player.__reset = function(_options){
     	this.__supReset(_options);
-	    if(!this.__audio)
-	        this.__audio =  _e._$audio({
-		        preload:_options.preload||false,
-		        onstatechange:this.__onStateChange._$bind(this),
-		        ontimeupdate:this.__onTimeUpdate._$bind(this),
-		        onvolumechange:this.__onVolumeChange._$bind(this)
-		    });
-    	if(!this.__timeSlider)
-	    	this.__timeSlider = _ut._$$SliderX._$allocate({
-	            slide:this.__ztags[9],
-	            track:this.__ztags[8],
-	            onchange:this.__onTimeSlideChange._$bind(this)
-	        });
-	    if(!this.__volSlider)
-		    this.__volSlider = _ut._$$SliderX._$allocate({
-	            slide:this.__ztags[4],
-	            track:this.__ztags[3],
-	            onchange:this.__onVolSlideChange._$bind(this)
-	        });
-		this._$refreshList(_options.list,_options.mode);
+        if(!this.__volSlider)
+            this.__volSlider = _ut._$$SliderX._$allocate({
+                slide:this.__ztags[4],
+                track:this.__ztags[3],
+                onchange:this.__onVolSlideChange._$bind(this)
+            });
+		this._$refreshList(_options);
     };
 
     /**
@@ -146,16 +154,25 @@ var f = function() {
      */
     __proMP3Player.__destroy = function(){
     	this.__supDestroy();
-    	if(!!this.__audio) this.__audio = this.__audio._$recycle();
-    	if(!!this.__timeSlider) this.__timeSlider = this.__timeSlider._$recycle();
-    	if(!!this.__volSlider) this.__volSlider = this.__volSlider._$recycle();
+    	if(!!this.__playlist)
+    		this.__playlist = _ut._$$PlayList._$recycle(this.__playlist)
+    	if(!!this.__audio) 
+    		this.__audio = this.__audio._$recycle();
+    	if(!!this.__timeSlider) 
+    		this.__timeSlider = this.__timeSlider._$recycle();
+    	if(!!this.__volSlider) 
+    		this.__volSlider = this.__volSlider._$recycle();
     };
 
     /**
      * [__onVolumeChange description]
      * @return {[type]} [description]
      */
-    __proMP3Player.__onVolumeChange = f;
+    __proMP3Player.__onVolumeChange = function(_event){
+        var _value = _event.volume;
+            _value = this.__ztags[3].clientWidth  * (_value/100) - 10;
+        _e._$setStyle(this.__ztags[4],'left',_value + 'px');
+    };
 
     /**
      * [__onChangeState description]
@@ -163,13 +180,13 @@ var f = function() {
      */
     __proMP3Player.__onChangeState = function(_event){
     	var _node = _v._$getElement(_event);
-    	if(_e._$hasClassName(_node,'m-repeatd')){
+    	if(this.__mode == 0){
     		_e._$replaceClassName(_node,'m-repeatb m-repeatd','m-shuffleb m-shuffled');
     		this.__playlist._$setPlayMode(2);
-    	}else if(_e._$hasClassName(_node,'m-shuffled')){
+    	}else if(this.__mode == 2){
     		_e._$replaceClassName(_node,'m-shuffleb m-shuffled','m-repeatb-1 m-repeatd-1');
     		this.__playlist._$setPlayMode(1);
-    	}else if(_e._$hasClassName(_node,'m-repeatd-1')){
+    	}else if(this.__mode == 1){
     		_e._$replaceClassName(_node,'m-repeatb-1 m-repeatd-1','m-repeatb m-repeatd');
     		this.__playlist._$setPlayMode(0);
     	}
@@ -180,7 +197,7 @@ var f = function() {
      * @return {[type]} [description]
      */
     __proMP3Player.__onPre = function(){
-    	this.__isAutoStopped = false;
+    	this.__autoNext = !1;
     	this.__playlist._$next();
     };
 
@@ -193,8 +210,6 @@ var f = function() {
 			this.__audio._$play();
 		}else if(this.__state == 2){
 			this.__audio._$pause();
-		}else if(this.__state == 0){
-			this.__musicPlay();
 		}
     };
 
@@ -203,7 +218,7 @@ var f = function() {
      * @return {[type]} [description]
      */
     __proMP3Player.__onNext = function(){
-    	this.__isAutoStopped = false;
+    	this.__autoNext = !1;
     	this.__playlist._$prev();
     };
 
@@ -249,7 +264,7 @@ var f = function() {
 			// 当前停止状态
 			this.__audio._$seek(0);
 			// 是否歌曲自己播放完了,如果是，自动播放下一首
-			if(this.__isAutoStopped){
+			if(this.__autoNext){
 				if(this.__playlist._$getPlayMode() == 1){
 					// 单曲循环的情况
 					var _index = this.__playlist._$getPlayIndex();
@@ -261,7 +276,8 @@ var f = function() {
 		}else if(this.__state == 2){
     		// 当前播放状态
 			// 播放的时候，设置歌曲自己播放完
-			this.__isAutoStopped = true;
+            this.__refreshVolume(); 
+			this.__autoNext = true;
 		}
     };
 
@@ -271,24 +287,30 @@ var f = function() {
      * @return {[type]}        [description]
      */
     __proMP3Player.__onTimeUpdate = function(_event){
+        if(!this.__timeSlider)
+            this.__timeSlider = _ut._$$SliderX._$allocate({
+                slide:this.__ztags[9],
+                track:this.__ztags[8],
+                onchange:this.__onTimeSlideChange._$bind(this)
+            });
+        var _time = _event.current;
     	// 播放第二首的current有问题
-	    if(parseInt(_event.current) === 0){
-	    	this.__onAudioLoaded(_event);
+	    if(parseInt(_time) === 0){
+	    	this.__refreshTime(_event);
 	    }
+        
+        // if(this.__currentTime && parseInt(this.__currentTime) == parseInt(_time)) return;
+        this.__currentTime = _time;
 	    this.__onAudioTimeupdate(_event);
     };
 
     /**
-     * [__onAudioLoaded description]
+     * [__refreshTime description]
      * @return {[type]} [description]
      */
-    __proMP3Player.__onAudioLoaded = function(_event){
-		var _time = _event.duration;
+    __proMP3Player.__refreshTime = function(_event){
 		this.__ztags[7].innerHTML ='00:00';
-		this.__ztags[10].innerHTML =  this.__formatSecond(_time);
-		var _left = Math.floor(this.__ztags[3].clientWidth - 10) + 'px';
-		_e._$setStyle(this.__ztags[4],'left',_left);
-		this.__refreshVolume(this.__audio._$volume());
+		this.__ztags[10].innerHTML =  this.__formatSecond(_event.duration);
     };
 
     /**
@@ -319,10 +341,8 @@ var f = function() {
      */
     __proMP3Player.__onAudioTimeupdate = function(_event){
         if(!!this.__timelineMouseDown) return;
-        var _time = _event.current;
-        this.__currentTime = _time;
         this.__duration = _event.duration;
-        this.__ztags[7].innerHTML = this.__formatSecond(_time);
+        this.__ztags[7].innerHTML = this.__formatSecond(this.__currentTime);
         var _played = this.__currentTime / this.__duration;
         var _left = Math.floor((this.__ztags[8].clientWidth - 10) * _played) + 'px';
         _e._$setStyle(this.__ztags[9],'left',_left);
@@ -353,53 +373,94 @@ var f = function() {
      */
     __proMP3Player.__onVolSlideChange = function(_event){
     	var _value = _event.x.value;
-    	_e._$setStyle(this.__ztags[4],'left',_value + 'px');
-    	var _volume = (_value - 10)/(this.__ztags[3].clientWidth);
-	    this.__refreshVolume(_volume);
+    	this.__volume = (_value + 10)/(this.__ztags[3].clientWidth);
+	    this.__refreshVolume();
     };
 
     /**
-     * [__refreshVolume description]
+     * 刷新音量
      * @param  {[type]} _volume [description]
      * @return {[type]}         [description]
      */
-    __proMP3Player.__refreshVolume = function(_volume){
-		this.__audio._$volume(_volume * 100);
-		if(_volume < 0.5){
+    __proMP3Player.__refreshVolume = function(){
+		if(this.__volume < 0.5){
 			_e._$replaceClassName(this.__ztags[5],'m-volmin','m-volminc');
 			_e._$replaceClassName(this.__ztags[6],'m-volmaxc','m-volmax');
-			this.__ztags[5].style.opacity = 1;
-			if(_volume / 0.5 < 0.3){
+            _e._$setStyle(this.__ztags[5],'opacity',1);
+			if(this.__volume / 0.5 < 0.3){
 			  _e._$replaceClassName(this.__ztags[5],'m-volminc','m-volmin');
-			  this.__ztags[5].style.opacity = 1;
-			}else
-			  this.__ztags[5].style.opacity = _volume / 0.5;
+			}else{
+                _e._$setStyle(this.__ztags[5],'opacity', this.__volume / 0.5);
+            }
 		}else{
 			_e._$replaceClassName(this.__ztags[5],'m-volmin','m-volminc');
 			_e._$replaceClassName(this.__ztags[6],'m-volmax','m-volmaxc');
 			_e._$setStyle(this.__ztags[5],'opacity',1);
-			_e._$setStyle(this.__ztags[6],'opacity',_volume);
+			_e._$setStyle(this.__ztags[6],'opacity',this.__volume);
 		}
+        if(!!this.__audio){
+            this.__volume = this.__volume||1;
+            this.__audio._$volume(this.__volume * 100);
+        }
     };
 
     /**
-     * [_$refreshList description]
+     * [__setModeStyle description]
+     * @return {[type]} [description]
+     */
+    __proMP3Player.__setModeStyle = function(){
+        if(this.__mode == 0){
+            _e._$replaceClassName(this.__ztags[11],'m-repeatb-1 m-repeatd-1','m-repeatb m-repeatd');
+        }else if(this.__mode == 1){
+            _e._$replaceClassName(this.__ztags[11],'m-shuffleb m-shuffled','m-repeatb-1 m-repeatd-1');
+        }else{
+            _e._$replaceClassName(this.__ztags[11],'m-repeatb m-repeatd','m-shuffleb m-shuffled');
+        }
+    };
+
+    /**
+     * 开始播放
+     * @return {[type]} [description]
+     */
+    __proMP3Player._$play = function(){
+    	this.__autostart = !0;
+    	this.__loadMusic(this.__cururl);
+    };
+
+    /**
+     * 刷新播放列表
      * @param  {[type]} _list [description]
      * @return {[type]}       [description]
      */
-    __proMP3Player._$refreshList = function(_list,_mode){
-    	if(!!this.__playlist)
-    		_ut._$$PlayList._$recycle(this.__playlist)
-		this.__playlist = _ut._$$PlayList._$allocate({
-			mode:_mode||0,
-			list:_list||[],
-			onmodechange:function(_event){
-			},
-			onmediachange:function(_event){
-				var _url = _event.list[_event.index];
-				this.__loadMusic(_url);
+    __proMP3Player._$refreshList = function(_options){
+        var _mode = _options.mode,
+            _list = _options.list;
+    	if(!this.__playlist){
+    		this.__playlist = _ut._$$PlayList._$allocate({
+				mode:_mode,
+				list:_list,
+				onmodechange:function(_event){
+                    this.__mode = _event.mode;
+                    this.__setModeStyle();
+				}._$bind(this),
+				onmediachange:function(_event){
+					this.__cururl = _event.list[_event.index];
+                    if(!this.__audio)
+                        this.__audio =  _e._$audio({
+                            preload:_options.preload||false,
+                            onstatechange:this.__onStateChange._$bind(this),
+                            ontimeupdate:this.__onTimeUpdate._$bind(this),
+                            onvolumechange:this.__onVolumeChange._$bind(this)
+                        });
+					if(!!this.__autostart){
+						this.__loadMusic(this.__cururl);
+					}
 				}._$bind(this)
 			});
+    	}else{
+    		this.__playlist._$setPlayMode(_mode);
+    		this.__playlist._$setPlayList(_list);
+    	}
     };
 };
 NEJ.define('{lib}ui/audio/mp3.js',
