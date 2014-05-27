@@ -433,8 +433,8 @@ var f = function() {
      * @return {[type]}       [description]
      */
     __proMP3Player._$refreshList = function(_options){
-        var _mode = _options.mode,
-            _list = _options.list;
+        var _mode = _options.mode||0,
+            _list = _options.list||[];
     	if(!this.__playlist){
     		this.__playlist = _ut._$$PlayList._$allocate({
 				mode:_mode,
