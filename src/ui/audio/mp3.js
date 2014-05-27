@@ -172,15 +172,12 @@ var f = function() {
      * @return {[type]} [description]
      */
     __proMP3Player.__onChangeState = function(_event){
-    	var _node = _v._$getElement(_event);
-    	if(this.__mode == 0){
-    		_e._$replaceClassName(_node,'m-repeatb m-repeatd','m-shuffleb m-shuffled');
+        var _mode = this.__playlist._$getPlayMode();
+    	if(_mode == 0){
     		this.__playlist._$setPlayMode(2);
-    	}else if(this.__mode == 2){
-    		_e._$replaceClassName(_node,'m-shuffleb m-shuffled','m-repeatb-1 m-repeatd-1');
+    	}else if(_mode == 2){
     		this.__playlist._$setPlayMode(1);
-    	}else if(this.__mode == 1){
-    		_e._$replaceClassName(_node,'m-repeatb-1 m-repeatd-1','m-repeatb m-repeatd');
+    	}else if(_mode == 1){
     		this.__playlist._$setPlayMode(0);
     	}
     };
@@ -402,10 +399,10 @@ var f = function() {
      * [__setModeStyle description]
      * @return {[type]} [description]
      */
-    __proMP3Player.__setModeStyle = function(){
-        if(this.__mode == 0){
+    __proMP3Player.__setModeStyle = function(_mode){
+        if(_mode == 0){
             _e._$replaceClassName(this.__ztags[11],'m-repeatb-1 m-repeatd-1','m-repeatb m-repeatd');
-        }else if(this.__mode == 1){
+        }else if(_mode == 1){
             _e._$replaceClassName(this.__ztags[11],'m-shuffleb m-shuffled','m-repeatb-1 m-repeatd-1');
         }else{
             _e._$replaceClassName(this.__ztags[11],'m-repeatb m-repeatd','m-shuffleb m-shuffled');
@@ -435,8 +432,7 @@ var f = function() {
 				mode:_mode,
 				list:_list,
 				onmodechange:function(_event){
-                    this.__mode = _event.mode;
-                    this.__setModeStyle();
+                    this.__setModeStyle(_event.mode);
 				}._$bind(this),
 				onmediachange:function(_event){
 					this.__cururl = _event.list[_event.index];

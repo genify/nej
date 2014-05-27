@@ -32,7 +32,7 @@ var f = function(){
                 mode:1,
                 list:['../../../qunit/res/开始懂了 - 豆瓣FM.mp3']
             });
-        }._$bind(this),1000);
+        }._$bind(this),3000);
 
         // setTimeout(function(){
         //     _p._$$MP3Player._$recycle(_mp3);
