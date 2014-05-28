@@ -29,6 +29,7 @@ var f = function(){
      *           // 1 | 当前缓冲状态
      *           // 2 | 当前播放状态
      *           // 3 | 当前暂停状态
+     *           // 4 | 播放结束状态
      *       }
      *   });
      *   // 开始播放
@@ -117,7 +118,7 @@ var f = function(){
     _pro.__doStop = function(){
         if (!!this.__audio){
             this.__audio.nej_stop();
-            this.__onStop();
+            this.__doStateChange(0);
         }else{
             this.__action = this.__doStop;
         }
@@ -154,13 +155,6 @@ var f = function(){
                 current:_event.currentTime
             }
         );
-    };
-    /**
-     * 播放停止触发事件
-     * @return {Void}
-     */
-    _pro.__onStop = function(){
-        this.__doStateChange(0);
     };
     /**
      * 播放错误事件

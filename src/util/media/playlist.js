@@ -256,6 +256,20 @@ var f = function(){
         this._$play(1);
     };
     /**
+     * 自动播放下一首歌曲
+     * @method {_$autoNext}
+     * @return {Void}
+     */
+    _pro._$autoNext = function(){
+        if (this.__mode==1){
+            this._$setPlayIndex(
+                this._$getPlayIndex()
+            );
+        }else{
+            this._$next();
+        }
+    };
+    /**
      * 播放上一首歌曲
      * @method {_$prev}
      * @return {Void}

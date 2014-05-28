@@ -67,6 +67,7 @@ var f = function(){
      *           // 1 | 当前缓冲状态
      *           // 2 | 当前播放状态
      *           // 3 | 当前暂停状态
+     *           // 4 | 播放结束状态
      *       }
      *   });
      *   // 开始播放
@@ -81,7 +82,8 @@ var f = function(){
      * @extends {nej.ut._$$Event}
      * 
      * @param   {Object} 可选配置参数
-     * @config  {String} url 多媒体文件地址
+     * @config  {String} url    多媒体文件地址
+     * @config  {Number} volume 音量大小，0-100之间的数值
      * 
      * [hr] 
      * 状态变化触发事件
@@ -93,6 +95,7 @@ var f = function(){
      *   1 | 当前缓冲状态
      *   2 | 当前播放状态
      *   3 | 当前暂停状态
+     *   4 | 播放结束状态
      * [/ntb]
      * @config  {Object} target 播放信息
      * 
@@ -127,6 +130,9 @@ var f = function(){
     _pro.__reset = function(_options){
         this.__state = 0;
         this._$source(_options.url);
+        if (_options.volume!=null){
+            this._$volume(_options.volume);
+        }
         this.__supReset(_options);
     };
     /**
@@ -160,6 +166,14 @@ var f = function(){
      * @return {Void}
      */
     _pro.__doStop = _f;
+    /**
+     * 播放停止触发事件
+     * @return {Void}
+     */
+    _pro.__onStop = function(){
+        this.__doStateChange(4);
+        this.__doStateChange(0);
+    };
     /**
      * 播放错误
      * @return {Void}

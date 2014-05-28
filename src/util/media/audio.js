@@ -27,6 +27,7 @@ var f = function(){
      *           // 1 | 当前缓冲状态
      *           // 2 | 当前播放状态
      *           // 3 | 当前暂停状态
+     *           // 4 | 播放结束状态
      *       }
      *   });
      *   // 开始播放
@@ -142,13 +143,6 @@ var f = function(){
         if (_state==0){
             this.__audio.removeAttribute('src');
         }
-    };
-    /**
-     * 播放停止触发事件
-     * @return {Void}
-     */
-    _pro.__onStop = function(){
-        this.__doStateChange(0);
     };
     /**
      * 播放过程触发事件
