@@ -22,7 +22,7 @@ var f = function(){
         //           '../../../qunit/res/海阔天空 - 豆瓣FM.mp3',
         //           '../../../qunit/res/开始懂了 - 豆瓣FM.mp3']
         // });
-        // // 2秒后开始播放
+        // 2秒后开始播放
         // setTimeout(function(){
         //     _mp3._$play();
         // }._$bind(this),2000);
