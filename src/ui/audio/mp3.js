@@ -18,7 +18,7 @@ var f = function() {
       .#<uispace> .m-pre, .#<uispace> .m-play, .#<uispace> .m-next, .#<uispace> .m-cur, .#<uispace> .m-pause, .#<uispace> .m-volmin,\
       .#<uispace> .m-volminc, .#<uispace> .m-shuffled, .#<uispace> .m-repeatd-1, .#<uispace> .m-shufflec, .#<uispace> .m-repeatd, .#<uispace> .m-repeatc,\
       .#<uispace> .m-volmax, .#<uispace> .m-volmaxc{background:url('+_c._$get('root')+'audio_sprite.png) no-repeat 9999px 9999px;}\
-      .#<uispace> .m-player{height:40px;min-width:530px;background:-webkit-gradient(linear,0% 0%, 0% 100%, from(#606060), to(#4e4e4e));background:-moz-linear-gradient(top, #606060, #4e4e4e);cursor:default}\
+      .#<uispace> .m-player{height:40px;min-width:530px;background:#606060;cursor:default}\
       .#<uispace> .m-player .ctl{width:300px; float:left;}\
       .#<uispace> .m-pre{height:30px;width:25px;background-position:0 0;float:left;margin-top:8px;margin-left: 10px;}\
       .#<uispace> .m-pre:active, .#<uispace> .m-preatv{background-position:-104px -1px;}\
@@ -40,7 +40,7 @@ var f = function() {
       .#<uispace> .m-vmax .m-volminc{background-position:-40px -186px;width:5px;height:20px;float:left;}\
       .#<uispace> .m-vmin .m-volmaxc{background-position:-7px -185px;width:7px;margin-left:-1px;height:20px;float:left;}\
       .#<uispace> .m-vmax .m-volmaxc{background-position:-50px -186px;width:7px;margin-left:-1px;height:20px;float:left;}\
-      .#<uispace> .m-timeline{position:absolute;width:100%;height:8px;border-radius:4px;background:-webkit-gradient(linear,0% 0%, 0% 100%, from(#2b2b2b), to(#3b3b3b));border-top:1px solid #212121;border-bottom:1px solid #636363}\
+      .#<uispace> .m-timeline{position:absolute;width:100%;height:8px;border-radius:4px;background:#3b3b3b;border-top:1px solid #212121;border-bottom:1px solid #636363}\
       .#<uispace> .m-timelinei{width:0%;}\
       .#<uispace> .m-timeline-1{margin-top:0px;width:90px;position:absolute;}\
       .#<uispace> .m-progress{background:green;margin-top:-1px;}\
@@ -183,29 +183,26 @@ var f = function() {
      * @param  {[type]} _event [description]
      * @return {void}
      */
-    _pro.__onAction = (function(){
+    _pro.__onAction = function(_event){
         var _action;
-        return function(_event){
-            _v._$getElement(_event,function(_node){
-                _action = _e._$dataset(_node,'name');
-                return !!_action;
-            });
-            if(!!_action){
-                if(_action == 'mode'){
-                    this.__onModeChange();
-                }
-                if(!this.__audio) return;
-                this.__autostart = !0;
-                if(_action == 'pre'){
-                    this.__onPre();
-                }else if(_action == 'play'){
-                    this.__onPlay();
-                }else if(_action == 'next'){
-                    this.__onNext();
-                } 
-            }
-        };
-    })();
+        var _node = _v._$getElement(_event,function(_node){
+            _action = _e._$dataset(_node,'name');
+            return !!_action;
+        });
+        if(!_node) return;
+        if(_action == 'mode'){
+            this.__doModeChange();
+        }
+        if(!this.__audio) return;
+        this.__autostart = !0;
+        if(_action == 'pre'){
+            this.__onPre();
+        }else if(_action == 'play'){
+            this.__onPlay();
+        }else if(_action == 'next'){
+            this.__onNext();
+        } 
+    };
 
     /**
      * 更新音量大小图标
@@ -217,22 +214,22 @@ var f = function() {
         return function(_event){
             this.__volSlider._$setPosition(_event.volume/this.__vslide.value);
             var _value = _event.volume;
-            if(_value < 25){
+            if(_value == 0){
                 _value = 2;
-            }else if(_value < 70){
+            }else if(_value < 50){
                 _value = 1;
             }else{
                 _value = 0;
             }
             _e._$replaceClassName(this.__nvol,_old,_map[_value]);
-        }
+        };
     })();
 
     /**
      * 播放模式切换
      * @return {void}
      */
-    _pro.__onModeChange = function(_event){
+    _pro.__doModeChange = function(_event){
         var _mode = this.__playlist._$getPlayMode();
         this.__playlist._$setPlayMode((_mode+1)%3);
     };
@@ -283,9 +280,7 @@ var f = function() {
             _e._$replaceClassName(this.__nplay,'m-pause','m-play');
         }
         if(_state == 0 || _state == 4){
-            this.__duration = null;
-            this.__nctime.innerHTML = '00:00';
-            this.__timeSlider._$setPosition(0);
+            this.__onTimeUpdate({current:0,duration:0});
         }
         if(_state == 4){
             this.__playlist._$autoNext();
@@ -306,10 +301,9 @@ var f = function() {
 	    if(parseInt(_current) === 0){
 	    	this.__nctime.innerHTML = '00:00';
             this.__nstime.innerHTML = this.__doFormatSecond(_duration);
-            this.__duration = _duration;
 	    }
 	    this.__nctime.innerHTML = this.__doFormatSecond(_current);
-        var _played = _current / _duration;
+        var _played = _current / (_duration ? _duration : 1);
         this.__timeSlider._$setPosition(_played);
     };
 
@@ -332,9 +326,9 @@ var f = function() {
      * @return {void}
      */
     _pro.__onTimeSlideStop = function(_event){
-    	if(!this.__duration) return;
+        if(!this.__audio._$duration()) return;
         var _value = _event.ratio;
-        this.__audio._$seek(_value * this.__duration);
+        this.__audio._$seek(_value * this.__audio._$duration());
     };
 
     /**
@@ -353,7 +347,7 @@ var f = function() {
     };
 
     /**
-     * 切换播放模式
+     * 更新播放模式
      * @return {void}
      */
     _pro.__onModeChange = (function(){
@@ -361,7 +355,7 @@ var f = function() {
             _old = _map.join(' ');
         return function(_event){
             _e._$replaceClassName(this.__nmode,_old,_map[_event.mode]);
-        }
+        };
     })();
 
     /**
@@ -371,6 +365,17 @@ var f = function() {
      * @return {void}
      */
     _pro.__onMediaChange = function(_options,_event){
+        if(_event.index < 0){
+            if(!!this.__audio){
+                this.__audio = this.__audio._$recycle();
+            }
+            this.__onTimeUpdate({current:0,duration:0});
+            this.__onStateChange({state:0});
+            if(!!this.__timeSlider){
+                this.__timeSlider = this.__timeSlider._$recycle();
+            }
+            return;
+        }
         var _url = _event.list[_event.index];
         if(!this.__audio){
             var _volume = this.__volSlider._$getPosition() * this.__vslide.value;
