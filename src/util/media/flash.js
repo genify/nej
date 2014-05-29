@@ -158,6 +158,12 @@ var f = function(){
                 current:_event.currentTime
             }
         );
+        // check volume
+        if (this.__dtvol!=null){
+            var _volume = this.__dtvol;
+            delete this.__dtvol;
+            this.__setVolume(_volume);
+        }
     };
     /**
      * 播放错误事件
@@ -196,8 +202,15 @@ var f = function(){
      * @return {Void}
      */
     _pro.__setVolume = function(_volume){
-        if (!this.__audio) return;
-        this.__audio.nej_flash_set_volume(_volume);
+        if (!this.__audio){
+            this.__dtvol = _volume;
+            return;
+        }
+        try{
+            this.__audio.nej_flash_set_volume(_volume);
+        }catch(e){
+            this.__dtvol = _volume;
+        }
     };
     /**
      * 获取音量
