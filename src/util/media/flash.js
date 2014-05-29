@@ -90,7 +90,10 @@ var f = function(){
      */
     _pro.__doPlay = function(){
         if (!!this.__audio){
-            this.__audio.nej_setSrc(this.__source);
+            if (!!this.__source){
+                this.__audio.nej_setSrc(this.__source);
+                delete this.__source;
+            }
             this.__audio.nej_play();
         }else{
             this.__action = this.__doPlay;
