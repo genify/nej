@@ -239,6 +239,12 @@ var f = function(){
         );
     };
     /**
+     * 取媒体总时长
+     * @method {_$duration}
+     * @return {Number} 媒体总时长
+     */
+    _pro._$duration = _f;
+    /**
      * 更新多媒体文件地址
      * @method {_$source}
      * @param  {String} 文件地址

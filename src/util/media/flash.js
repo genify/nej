@@ -209,6 +209,14 @@ var f = function(){
         if (!this.__audio) return;
         return this.__audio.nej_flash_get_volume();
     };
+    /**
+     * 取媒体总时长
+     * @method {_$duration}
+     * @return {Number} 媒体总时长
+     */
+    _pro._$duration = function(){
+        return !this.__audio?0:this.__audio.nej_flash_get_duration();
+    };
 };
 NEJ.define(
     '{lib}util/media/flash.js',[

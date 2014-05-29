@@ -214,6 +214,14 @@ var f = function(){
     _pro.__getVolume = function(){
         return this.__audio.volume;
     };
+    /**
+     * 取媒体总时长
+     * @method {_$duration}
+     * @return {Number} 媒体总时长
+     */
+    _pro._$duration = function(){
+        return !this.__audio?0:this.__audio.duration;
+    };
 };
 NEJ.define(
     '{lib}util/media/audio.js',[
