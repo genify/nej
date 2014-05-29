@@ -188,6 +188,7 @@ var f = function() {
         return function(_event){
             _v._$getElement(_event,function(_node){
                 _action = _e._$dataset(_node,'name');
+                return !!_action;
             });
             if(!!_action){
                 if(_action == 'mode'){
