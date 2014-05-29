@@ -54,6 +54,14 @@ var f = function(){
      * @config {Array}   list  播放列表
      * 
      * [hr]
+     * 多媒体追加触发事件，如果处理过程中将data置空则不追加
+     * @event  {onbeforeappend}
+     * @param  {Object}   媒体信息
+     * @config {Variable} data  媒体对象
+     * @config {Array}    list  播放列表
+     * @config {Number}   index 当前媒体索引
+     * 
+     * [hr]
      * 播放模式变化事件
      * @event  {onmodechange}
      * @param  {Object}  模式信息
@@ -219,6 +227,63 @@ var f = function(){
         return this.__index;
     };
     /**
+     * 追加多媒体项
+     * @method {_$appendMedia}
+     * @param  {Variable} 多媒体项
+     * @return {Void}
+     */
+    _pro._$appendMedia = function(_media){
+        var _event = {
+            data:_media,
+            list:this.__list,
+            index:this.__index
+        };
+        // for media filter
+        this._$dispatchEvent('onbeforeappend',_event);
+        _media = _event.data;
+        if (!!_media){
+            this.__list.push(_media);
+            if (this.__mode==2){
+                this.__doGenRandList();
+            }
+        }
+        this._$dispatchEvent('onafterappend',_event);
+    };
+    /**
+     * 删除多媒体项，索引值越界不做任何处理
+     * @method {_$removeMedia}
+     * @param  {Number} 媒体索引
+     * @return {Void}
+     */
+    _pro._$removeMedia = function(_index){
+        var _length = this.__list.length;
+        if (_index<0||_index>=_legnth) return;
+        this.__list.splice(_index,1);
+        // re-gen rand list
+        if (this.__mode==2){
+            this.__doGenRandList();
+        }
+        // check list
+        var _length = this.__list.length;
+        if (!_length){
+            var _event = {
+                index:-1,
+                list:this.__list,
+                last:this.__index
+            };
+            this.__index = 0;
+            this._$dispatchEvent('onmediachange',_event);
+            return;
+        }
+        // remove current media
+        if(_index==this.__index){
+            if (this.__index>=_length){
+                this.__index = _length-1;
+            }
+            this._$play();
+        }
+    };
+    /**
      * 播放指定偏移量的歌曲
      * @method {_$play}
      * @param  {Number} 索引偏移量，可以为0，正数，负数
@@ -248,14 +313,6 @@ var f = function(){
         };
     })();
     /**
-     * 播放下一首歌曲
-     * @method {_$next}
-     * @return {Void}
-     */
-    _pro._$next = function(){
-        this._$play(1);
-    };
-    /**
      * 自动播放下一首歌曲
      * @method {_$autoNext}
      * @return {Void}
@@ -268,6 +325,14 @@ var f = function(){
         }else{
             this._$next();
         }
+    };
+    /**
+     * 播放下一首歌曲
+     * @method {_$next}
+     * @return {Void}
+     */
+    _pro._$next = function(){
+        this._$play(1);
     };
     /**
      * 播放上一首歌曲
