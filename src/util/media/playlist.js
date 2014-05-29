@@ -206,16 +206,21 @@ var f = function(){
     _pro._$setPlayIndex = function(_index){
         // check playlist and index
         var _length = this.__list.length;
-        if (!_length) return;
         _index = parseInt(_index);
-        if (_index<0||_index>=_length) return;
-        // save index
+        var _current = _index,
+            _last = this.__index;
+        if (_index<0||_index>=_length){
+            _current = -1;
+        }else{
+            // save index
+            this.__index = _index;
+        }
+        // onmediachange
         var _event = {
-            index:_index,
-            list:this.__list,
-            last:this.__index
+            last:_last,
+            index:_current,
+            list:this.__list
         };
-        this.__index = _index;
         this._$dispatchEvent('onmediachange',_event);
     };
     /**
@@ -262,18 +267,6 @@ var f = function(){
         // re-gen rand list
         if (this.__mode==2){
             this.__doGenRandList();
-        }
-        // check list
-        var _length = this.__list.length;
-        if (!_length){
-            var _event = {
-                index:-1,
-                list:this.__list,
-                last:this.__index
-            };
-            this.__index = 0;
-            this._$dispatchEvent('onmediachange',_event);
-            return;
         }
         // remove current media
         if(_index==this.__index){
