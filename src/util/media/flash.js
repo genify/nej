@@ -193,6 +193,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__setVolume = function(_volume){
+        if (!this.__audio) return;
         this.__audio.nej_flash_set_volume(_volume);
     };
     /**
@@ -202,6 +203,7 @@ var f = function(){
      * @return {Number} 音量值
      */
     _pro.__getVolume = function(){
+        if (!this.__audio) return;
         return this.__audio.nej_flash_get_volume();
     };
 };
