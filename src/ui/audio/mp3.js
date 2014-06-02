@@ -320,6 +320,17 @@ var f = function() {
     };
 
     /**
+     * 指定播放歌曲
+     * @param  {Number}  歌曲列表的下标，默认为0
+     * @return {void}
+     */
+    _pro._$playByIndex = function(_index){
+        _index = _index || 0;
+        this.__autostart = !0;
+        this.__playlist._$setPlayIndex(_index);
+    };
+
+    /**
      * 开始播放
      * @return {void}
      */
@@ -366,9 +377,9 @@ var f = function() {
       .#<uispace> .m-player .loop{width:120px;float:right}\
       .#<uispace> .m-curtime{float: right;margin-right: 10px;color:#fff;line-height: 40px;}\
       .#<uispace> .m-time{float: left;margin-left: 10px;color:#fff;line-height: 40px;}\
-      .#<uispace> .m-player .timeline{height:40px;position:absolute;left:300px;right:120px;bottom:0;top:0;min-width:135px;padding-top:15px;}\
+      .#<uispace> .m-player .timeline{height:25px;position:absolute;left:315px;right:120px;bottom:0;top:0;width:135px;padding-top:15px;}\
       .#<uispace> .m-vol{height:27px;width:90px;padding:13px 0 0 20px;float:left;}\
-      .#<uispace> .m-volicn{width:12px;height:20px;margin:10px 0 0 4px;float:left}\
+      .#<uispace> .m-volicn{width:12px;height:20px;margin:10px 0 0 10px;float:left}\
       .#<uispace> .m-vzero .m-volminc{background-position:1px -185px;width:5px;height:20px;float:left;}\
       .#<uispace> .m-vzero .m-volmaxc{background-position:-8px -185px;width:7px;height:20px;float:left;}\
       .#<uispace> .m-vmin .m-volminc{background-position:-40px -186px;width:5px;height:20px;float:left;}\

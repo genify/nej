@@ -8,16 +8,15 @@ var f = function(){
     //开始单元测试
     test('mp3',function(){
     	expect(0);
-        var _mp3 = _p._$$MP3Player._$allocate({
-            parent:'box',
-            list:[]
-        });
+        // var _mp3 = _p._$$MP3Player._$allocate({
+        //     parent:'box',
+        //     list:[]
+        // });
 
-        _mp3 = _p._$$MP3Player._$recycle(_mp3);
+        // _mp3 = _p._$$MP3Player._$recycle(_mp3);
         var _mp3 = _p._$$MP3Player._$allocate({
             parent:'box',
-            mode:0,
-            autostart:0,
+            mode:1,
             list:['../../../qunit/res/开始懂了 - 豆瓣FM.mp3',
                   '../../../qunit/res/海阔天空 - 豆瓣FM.mp3']
         });
