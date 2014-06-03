@@ -80,6 +80,6 @@ NEJ.define(
     '{lib}util/editor/command/justifycenter.js',
     '{lib}util/editor/command/justifyright.js',
     '{lib}util/editor/command/link.js',
-    '{lib}util/editor/command/uploadImage.js',
+    '{lib}util/editor/command/uploadimage.js',
     '{lib}util/editor/command/blockquote.js'
 ],f);
