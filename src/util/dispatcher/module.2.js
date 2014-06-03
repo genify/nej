@@ -11,8 +11,9 @@ var f = function(){
         _o = NEJ.O,
         _f = NEJ.F,
         _e = _('nej.e'),
+        _u = _('nej.u'),
         _p = _('nej.ut'),
-        _proModule;
+        _pro;
     if (!!_p._$$Module) return;
     /**
      * 模块基类对象
@@ -22,14 +23,14 @@ var f = function(){
      * @config {String} umi 当前模块的统一模块标识符
      */
     _p._$$Module = NEJ.C();
-      _proModule = _p._$$Module._$extend(_p._$$Event);
+    _pro = _p._$$Module._$extend(_p._$$Event);
     /**
      * 控件初始化
      * @protected
      * @method {__init}
      * @return {Void}
      */
-    _proModule.__init = function(){
+    _pro.__init = function(){
         this.__export = {};
         this.__supInit();
         this.__doBuild();
@@ -41,7 +42,7 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proModule.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
         this.__umi = _options.umi||'';
         this.__dispatcher = _options.dispatcher;
@@ -61,7 +62,7 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proModule.__destroy = function(){
+    _pro.__destroy = function(){
         delete this.__umi;
         this.__export = {};
         this.__supDestroy();
@@ -73,7 +74,7 @@ var f = function(){
      * @param  {Object} _event 事件对象
      * @return {Void}
      */
-    _proModule.__stop = function(_event){
+    _pro.__stop = function(_event){
         if (!!_event)
             _event.stopped = !0;
     };
@@ -83,7 +84,7 @@ var f = function(){
      * @method {__doBuild}
      * @return {Void}
      */
-    _proModule.__doBuild = _f;
+    _pro.__doBuild = _f;
     /**
      * 显示模块触发事件，子类实现具体逻辑
      * @protected
@@ -91,14 +92,14 @@ var f = function(){
      * @param  {Object} _event 事件对象
      * @return {Void}
      */
-    _proModule.__onShow = _f;
+    _pro.__onShow = _f;
     /**
      * 隐藏模块触发事件，子类实现具体逻辑
      * @protected
      * @method {__onHide}
      * @return {Void}
      */
-    _proModule.__onHide = _f;
+    _pro.__onHide = _f;
     /**
      * 刷新模块触发事件，子类实现具体逻辑
      * @protected
@@ -106,7 +107,7 @@ var f = function(){
      * @param  {Object} _event 事件对象
      * @return {Void}
      */
-    _proModule.__onRefresh = _f;
+    _pro.__onRefresh = _f;
     /**
      * 接受到消息触发事件，子类实现具体逻辑
      * @protected
@@ -114,7 +115,7 @@ var f = function(){
      * @param  {Object} _event 事件对象
      * @return {Void}
      */
-    _proModule.__onMessage = _f;
+    _pro.__onMessage = _f;
     /**
      * 模块退出前触发事件，通过阻止输入的事件做退出验证，子类实现具体逻辑
      * @protected
@@ -122,7 +123,7 @@ var f = function(){
      * @param  {Object} _event 事件对象
      * @return {Void}
      */
-    _proModule.__onBeforeHide = _f;
+    _pro.__onBeforeHide = _f;
     /**
      * 封装消息对象
      * @protected
@@ -131,7 +132,7 @@ var f = function(){
      * @param  {Variable} 消息内容
      * @param  {Number}   消息模式
      * @return {Object}   消息对象
-    _proModule.__doWrapMessage = function(_to,_message,_mode){
+    _pro.__doWrapMessage = function(_to,_message,_mode){
         return {
                     to:_to,
                     mode:_mode||0,
@@ -149,7 +150,7 @@ var f = function(){
      * @param  {Number}   消息模式
      * @return {Void}
      */
-    _proModule.__doSendMessage = function(_to,_message,_mode){
+    _pro.__doSendMessage = function(_to,_message,_mode){
         this.__dispatcher._$message({
             to:_to,
             mode:_mode||0,
@@ -165,7 +166,7 @@ var f = function(){
      * @param  {Object} 消息信息
      * @return {Void}
      */
-    _proModule.__doPublishMessage = function(_type,_data){
+    _pro.__doPublishMessage = function(_type,_data){
         this.__dispatcher._$publish(
             _type,{
                 from:this.__umi,
@@ -180,7 +181,7 @@ var f = function(){
      * @param  {Function} 消息处理回调
      * @return {Void}
      */
-    _proModule.__doSubscribeMessage = function(){
+    _pro.__doSubscribeMessage = function(){
         this.__dispatcher._$subscribe
             .apply(this.__dispatcher,arguments);
     };
@@ -189,7 +190,7 @@ var f = function(){
      * @method {_$getExportData}
      * @return {Object} 对外开放的数据信息
      */
-    _proModule._$getExportData = function(){
+    _pro._$getExportData = function(){
         return this.__export;
     };
     /**
@@ -199,12 +200,30 @@ var f = function(){
      * @param  {nej.ut._$$Module} 模块构造函数
      * @return {Void}
      */
-    _e._$regist = function(){
-        if (!!window.dispatcher){
-            dispatcher._$loaded.
-                apply(dispatcher,arguments);
-        }
-    };
+    _e._$regist = (function(){
+        var _modules;
+        // dump modules for dispatcher startup
+        _e._$dumpModules = function(){
+            if (!_modules) return;
+            _u._$forIn(_modules,function(_module,_umi){
+                dispatcher._$loaded(_umi,_module);
+            });
+            _modules = null;
+        };
+        return function(_umi,_module){
+            if (!!window.dispatcher){
+                dispatcher._$loaded.
+                    apply(dispatcher,arguments);
+            }else{
+                if (!_modules){
+                    _modules = {};
+                }
+                _modules[_umi] = _module;
+            }
+        };
+    })();
 };
-NEJ.define('{lib}util/dispatcher/module.2.js',
-          ['{lib}util/event.js'],f);
+NEJ.define(
+    '{lib}util/dispatcher/module.2.js',[
+    '{lib}util/event.js'
+],f);

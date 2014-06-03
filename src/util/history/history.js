@@ -171,7 +171,9 @@ var f = function(){
        ,event:['beforeurlchange','urlchange']
     });
 };
-NEJ.define('{lib}util/history/history.js',
-          ['{lib}util/event/event.js'
-          ,'{lib}util/timer/animation.js'
-          ,'{patch}api.js'],f);
+NEJ.define(
+    '{lib}util/history/history.js',[
+    '{lib}util/event/event.js',
+    '{lib}util/timer/animation.js',
+    '{patch}api.js'
+],f);
