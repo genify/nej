@@ -49,7 +49,8 @@ var f = function(){
                      ,{cmd:'hiliteColor',txt:'背景颜色',icn:'z-i-122'}],
             _tlist = [{cmd:'justifyLeft',txt:'左对齐',icn:'z-i-50'}
                      ,{cmd:'justifyCenter',txt:'居中对齐',icn:'z-i-51'}
-                     ,{cmd:'justifyRight',txt:'右对齐',icn:'z-i-52'}];
+                     ,{cmd:'justifyRight',txt:'右对齐',icn:'z-i-52'}
+                     ,{cmd:'uploadImage',txt:'照片上传',icn:'z-i-82'}];
         return function(){
             _seed_html = _e._$addNodeTemplate(
                 this.__doGenEditorXhtml({
@@ -79,5 +80,6 @@ NEJ.define(
     '{lib}util/editor/command/justifycenter.js',
     '{lib}util/editor/command/justifyright.js',
     '{lib}util/editor/command/link.js',
+    '{lib}util/editor/command/uploadImage.js',
     '{lib}util/editor/command/blockquote.js'
 ],f);

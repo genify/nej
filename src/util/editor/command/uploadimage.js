@@ -45,7 +45,13 @@ var f = function(){
      * @return {Void}
      */
     _proUploadImage.__doShowCard = function(){
-        this.__onShowCard();
+        if (!!this.__onShowCard){
+            this.__onShowCard();
+        }else{
+            _i._$$UploadImageCard._$allocate({
+                onchange:this.__onChange._$bind(this)
+            })._$show();
+        }
     };
     
     /**
@@ -58,28 +64,28 @@ var f = function(){
      */
     _proUploadImage.__onChange = function(_commend,_photoObj){
         this.__editor._$focus();
-        this.__id = 0;
+        var _id = 0,_url;
         if(!!_photoObj.ourl && _photoObj.ourl.indexOf('.gif') > 0){
             //gif图片
-            this.__url= _photoObj.ourl;
+            _url= _photoObj.ourl;
             if(!!_photoObj.photoGarbageIds){
                 var _ids = _photoObj.photoGarbageIds.split(',');
                 _u._$forEach(_ids,function(_item,_index){
                     if(_item.search('ourl') >= 0)
-                        this.__id = _item.split(':')[1];
+                        _id = _item.split(':')[1];
                 },this);
             }
         }else{
-            this.__url = _photoObj.userDef2Url;
+            _url = _photoObj.userDef2Url;
             if(!!_photoObj.photoGarbageIds){
                 var _ids = _photoObj.photoGarbageIds.split(',');
                 _u._$forEach(_ids,function(_item,_index){
                     if(_item.search('userdef2url') >= 0)
-                        this.__id = _item.split(':')[1];
+                        _id = _item.split(':')[1];
                 },this);
             }
         }
-        var _html = '<img style="max-width:520px;" src=' + this.__url + ' id='+ this.__id +' />';
+        var _html = '<img style="max-width:520px;" src=' + _url + ' id='+ _id +' />';
         this.__editor._$execCommand(_commend,_html);
     };
     
