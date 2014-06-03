@@ -22,7 +22,7 @@ var f = function(){
      * @param   {Object}  可选配置参数，已处理参数列表如下所示
      */
     _p._$$AbstractModule = NEJ.C();
-      _pro = _p._$$AbstractModule._$extend(_p._$$Module);
+    _pro = _p._$$AbstractModule._$extend(_p._$$Module);
     /**
      * 解析模块所在容器节点
      * @param  {Object} 配置信息

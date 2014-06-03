@@ -11,6 +11,7 @@ var f = function(){
         _o = NEJ.O,
         _f = NEJ.F,
         _e = _('nej.e'),
+        _u = _('nej.u'),
         _p = _('nej.ut'),
         _pro;
     if (!!_p._$$Module) return;
@@ -22,7 +23,7 @@ var f = function(){
      * @config {String} umi 当前模块的统一模块标识符
      */
     _p._$$Module = NEJ.C();
-      _pro = _p._$$Module._$extend(_p._$$Event);
+    _pro = _p._$$Module._$extend(_p._$$Event);
     /**
      * 控件初始化
      * @protected
@@ -199,12 +200,28 @@ var f = function(){
      * @param  {nej.ut._$$Module} 模块构造函数
      * @return {Void}
      */
-    _e._$regist = function(){
-        if (!!window.dispatcher){
-            dispatcher._$loaded.
-                apply(dispatcher,arguments);
-        }
-    };
+    _e._$regist = (function(){
+        var _modules;
+        // dump modules for dispatcher startup
+        _e._$dumpModules = function(){
+            if (!_modules) return;
+            _u._$forIn(_modules,function(_module,_umi){
+                dispatcher._$loaded(_umi,_module);
+            });
+            _modules = null;
+        };
+        return function(_umi,_module){
+            if (!!window.dispatcher){
+                dispatcher._$loaded.
+                    apply(dispatcher,arguments);
+            }else{
+                if (!_modules){
+                    _modules = {};
+                }
+                _modules[_umi] = _module;
+            }
+        };
+    })();
 };
 NEJ.define(
     '{lib}util/dispatcher/module.2.js',[
