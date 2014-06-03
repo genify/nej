@@ -13,7 +13,7 @@ var f = function(){
         _e = _('nej.e'),
         _u = _('nej.u'),
         _p = _('nej.ut'),
-        _proAbstractModule;
+        _pro;
     if (!!_p._$$AbstractModule) return;
     /**
      * 项目模块基类对象
@@ -22,13 +22,13 @@ var f = function(){
      * @param   {Object}  可选配置参数，已处理参数列表如下所示
      */
     _p._$$AbstractModule = NEJ.C();
-      _proAbstractModule = _p._$$AbstractModule._$extend(_p._$$Module);
+      _pro = _p._$$AbstractModule._$extend(_p._$$Module);
     /**
      * 解析模块所在容器节点
      * @param  {Object} 配置信息
      * @return {Node}   模块所在容器节点
      */
-    _proAbstractModule.__doParseParent = function(_options){
+    _pro.__doParseParent = function(_options){
         // try get parent
         // check input first
         var _parent;
@@ -52,7 +52,7 @@ var f = function(){
      * @param  {Object} 事件对象
      * @return {Void}
      */
-    _proAbstractModule.__onShow = function(_options){
+    _pro.__onShow = function(_options){
         var _parent = this.__doParseParent(_options);
         // show and refresh module
         if (!!_parent&&!!this.__body) 
@@ -68,7 +68,7 @@ var f = function(){
      * @param  {Object} 事件对象
      * @return {Void}
      */
-    _proAbstractModule.__onRefresh = function(_options){
+    _pro.__onRefresh = function(_options){
         this.__supOnRefresh(_options);
         this.__doApplyComposite('onrefresh',_options);
     };
@@ -78,7 +78,7 @@ var f = function(){
      * @method {__onHide}
      * @return {Void}
      */
-    _proAbstractModule.__onHide = function(){
+    _pro.__onHide = function(){
         this.__supOnHide();
         this.__doHideComposite();
         _e._$removeByEC(this.__body);
@@ -87,7 +87,7 @@ var f = function(){
      * 是否忽略模块组合
      * @return {Boolean} 是否忽略
      */
-    _proAbstractModule.__isEscapedComposite = (function(){
+    _pro.__isEscapedComposite = (function(){
         var _reg0 = /^onshow|onrefresh|delay$/;
         return function(_umi){
             return _reg0.test(_umi);    
@@ -99,14 +99,14 @@ var f = function(){
      * @param  {Object} 输入信息
      * @return {Object} 参数信息
      */
-    _proAbstractModule.__doGenCompositeParam = _f;
+    _pro.__doGenCompositeParam = _f;
     /**
      * 应用组合模块
      * @param  {String} 类型，onshow/onrefresh
      * @param  {Object} 事件对象
      * @return {Void}
      */
-    _proAbstractModule.__doApplyComposite = (function(){
+    _pro.__doApplyComposite = (function(){
         var _doRedirect = function(_query,_options,_umi,_pid){
             if (this.__isEscapedComposite(_pid)) return;
             if (!!_query) _umi += (_umi.indexOf('?')>1?'&':'?')+_query;
@@ -141,7 +141,7 @@ var f = function(){
      * 隐藏组合模块
      * @return {Void}
      */
-    _proAbstractModule.__doHideComposite = (function(){
+    _pro.__doHideComposite = (function(){
         var _doHide = function(_umi,_pid){
             if (!this.__isEscapedComposite(_pid))
                  this.__dispatcher._$hide(_umi);
@@ -153,5 +153,7 @@ var f = function(){
         };
     })();
 };
-NEJ.define('{lib}util/dispatcher/module.base.js',
-          ['{lib}util/dispatcher/module.2.js'],f);
+NEJ.define(
+    '{lib}util/dispatcher/module.base.js',[
+    '{lib}util/dispatcher/module.2.js'
+],f);
