@@ -23,5 +23,5 @@ var f = function(){
 }
 module('依赖模块');
 test('define',function(){expect(0);
-    define('{pro}customTest.js',['{lib}ui/editor/custom.js','{lib}base/element.js','{pro}log.js'],f);
+    define('{pro}ui/customTest.js',['../../../../src/ui/editor/custom.js','{lib}/base/element.js','{pro}log.js'],f);
 });

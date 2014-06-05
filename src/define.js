@@ -247,6 +247,8 @@ var _doStr2Obj = function(_query){
 var _doFormatURI = (function(){
     var _xxx = !1,
         _reg = /{(.*?)}/gi,
+        _reg2 = /\.\//,
+        _reg3 = /[\/][^\/]*\..*/,
         _anchor = d.createElement('a');
     var _absolute = function(_uri){
         return _uri.indexOf('://')>0;
@@ -257,13 +259,19 @@ var _doFormatURI = (function(){
         _anchor.style.display = 'none';
         document.body.appendChild(_anchor);
     };
-    return function(_uri){
+    var _getRoot = function(_uri) {
+        return _uri.replace(_reg3,'/');
+    };
+    return function(_uri,_baseuri){
         _append();
         if (!_uri) return '';
         if (_absolute(_uri)) return _uri;
         var _uri = _uri.replace(_reg,function($1,$2){
                        return __config.root[$2]||$2;
                    });
+        if (_baseuri && !_absolute(_uri) && _uri.search(_reg2) > -1){
+            _uri = _getRoot(_baseuri) + _uri;
+        }
         _anchor.href = _uri;
         _uri = _anchor.href;
         return _absolute(_uri) ? _uri :
@@ -505,7 +513,7 @@ var _doDefine = (function(){
         // load dependence
         if (!!_deps&&!!_deps.length)
             for(var i=0,l=_deps.length,_item;i<l;i++){
-                _item = _doFormatURI(_deps[i]);
+                _item = _doFormatURI(_deps[i],_uri);
                 _deps[i] = _item;
                 _doLoadScript(_item);
             }
