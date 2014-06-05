@@ -6,14 +6,13 @@
  * ------------------------------------------
  */
 var f = function(){
-    var o = NEJ.O,
-        f = NEJ.F,
-        e = NEJ.P('nej.e'),
-        u = NEJ.P('nej.u'),
-        p = NEJ.P('nej.ut'),
-        __proRangeSelector,
-        __supRangeSelector;
-    if (!!p._$$RangeSelector) return;
+    var _  = NEJ.P,
+        _f = NEJ.F,
+        _e = _('nej.e'),
+        _u = _('nej.u'),
+        _p = _('nej.ut'),
+        _pro;
+    if (!!_p._$$RangeSelector) return;
     /**
      * 多选控件带范围选择<br />
      * 页面结构举例
@@ -66,9 +65,8 @@ var f = function(){
      * @param   {Object} 可选配置参数，已处理参数列表如下所示
      * @config  {nej.ut._$$Range|nej.ui._$$Range} range 范围选择器实例
      */
-    p._$$RangeSelector = NEJ.C();
-    __proRangeSelector = p._$$RangeSelector._$extend(p._$$MultiSelector);
-    __supRangeSelector = p._$$RangeSelector._$supro;
+    _p._$$RangeSelector = NEJ.C();
+    _pro = _p._$$RangeSelector._$extend(_p._$$MultiSelector);
     /**
      * 控件重置
      * @protected
@@ -76,7 +74,7 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    __proRangeSelector.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
         this.__range = _options.range;
         if (!this.__range) return;
@@ -92,14 +90,14 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    __proRangeSelector.__destroy = (function(){
+    _pro.__destroy = (function(){
         var _clear = function(_item){
-            u._$safeDelete(_item,['box','last']);
+            _u._$safeDelete(_item,['box','last']);
         };
         return function(){
-            u._$forEach(this.__list,_clear);
+            _u._$forEach(this.__list,_clear);
             this.__supDestroy();
-            this.__range._$setEvent('onchange',f);
+            this.__range._$setEvent('onchange',_f);
             delete this.__range;
         };
     })();
@@ -111,7 +109,7 @@ var f = function(){
      * @param  {Object}  位置
      * @return {Boolean} 交集
      */
-    __proRangeSelector.__hasInterSection = function(_pos0,_pos1){
+    _pro.__hasInterSection = function(_pos0,_pos1){
         return Math.max(_pos0.left,_pos1.left)<
                Math.min(_pos0.left+_pos0.width,
                         _pos1.left+_pos1.width)&&
@@ -125,9 +123,9 @@ var f = function(){
      * @method {__doRefreshListPosition}
      * @return {Void}
      */
-    __proRangeSelector.__doRefreshListPosition = (function(){
+    _pro.__doRefreshListPosition = (function(){
         var _calculate = function(_item){
-            var _offset = e._$offset(_item);
+            var _offset = _e._$offset(_item);
             _item.box = {
                 top:_offset.y
                ,left:_offset.x
@@ -136,7 +134,7 @@ var f = function(){
             };
         };
         return function(){
-            u._$forEach(this.__list,_calculate);
+            _u._$forEach(this.__list,_calculate);
         };
     })();
     /**
@@ -146,7 +144,7 @@ var f = function(){
      * @param  {Node} 节点
      * @return {Void}
      */
-    __proRangeSelector.__doRefreshItemSelect = function(_event,_item){
+    _pro.__doRefreshItemSelect = function(_event,_item){
         var _id = _item.flag,
             _ctrl = _event.ctrlKey,
             _shift = _event.shiftKey,
@@ -173,8 +171,8 @@ var f = function(){
      * @param  {Node} 节点
      * @return {Void}
      */
-    __proRangeSelector.__doAdjustLastItem = function(_item){
-        u._$safeDelete(_item,'last');
+    _pro.__doAdjustLastItem = function(_item){
+        _u._$safeDelete(_item,'last');
         var _id = _item.flag;
         if (this.__last<0&&
             this.__isItemSelected(_id))
@@ -187,13 +185,13 @@ var f = function(){
      * @param  {Object} 范围信息
      * @return {Void}
      */
-    __proRangeSelector.__onRangeChange = function(_event){
+    _pro.__onRangeChange = function(_event){
         // selection clear first
         _event.ctrlKey = _event.event.ctrlKey;
         _event.shiftKey = _event.event.shiftKey;
         delete _event.event;
         window.setTimeout(
-             u._$forEach._$bind(u,this.__list,this
+             _u._$forEach._$bind(_u,this.__list,this
               .__doRefreshItemSelect._$bind(this,_event)),0);
     };
     /**
@@ -202,10 +200,12 @@ var f = function(){
      * @method {__onAfterRangeChange}
      * @return {Void}
      */
-    __proRangeSelector.__onAfterRangeChange = function(){
-        u._$forEach(this.__list,this.__doAdjustLastItem,this);
+    _pro.__onAfterRangeChange = function(){
+        _u._$forEach(this.__list,this.__doAdjustLastItem,this);
     };
 };
-NEJ.define('{lib}util/selector/selector.range.js',
-      ['{lib}util/selector/selector.js'
-      ,'{lib}util/range/range.js'],f);
+NEJ.define(
+    '{lib}util/selector/selector.range.js',[
+    '{lib}util/selector/selector.js',
+    '{lib}util/range/range.js'
+],f);

@@ -12,7 +12,7 @@ var f = function(){
         _u = _('nej.u'),
         _p = _('nej.ut'),
         _tkey = 'test-'+(+new Date),
-        _proMultiSelector;
+        _pro;
     if (!!_p._$$MultiSelector) return;
     /**
      * 多选控件<br />
@@ -59,7 +59,7 @@ var f = function(){
      * 
      */
     _p._$$MultiSelector = NEJ.C();
-      _proMultiSelector = _p._$$MultiSelector._$extend(_p._$$Event);
+      _pro = _p._$$MultiSelector._$extend(_p._$$Event);
     /**
      * 控件重置
      * @protected
@@ -67,7 +67,7 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proMultiSelector.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
         this.__last = _tkey;
         this.__selection = {count:0};
@@ -106,7 +106,7 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proMultiSelector.__destroy = function(){
+    _pro.__destroy = function(){
         this.__supDestroy();
         this.__doItemClear();
         delete this.__last;
@@ -122,7 +122,7 @@ var f = function(){
      * @param  {String}  节点标识
      * @return {Boolean} 是否选中
      */
-    _proMultiSelector.__isItemSelected = function(_id){
+    _pro.__isItemSelected = function(_id){
         return !!this.__selection[_id];
     };
     /**
@@ -133,7 +133,7 @@ var f = function(){
      * @param  {Node}   节点对象
      * @return {Void}
      */
-    _proMultiSelector.__doItemAddToSelection = function(_id,_element){
+    _pro.__doItemAddToSelection = function(_id,_element){
         if (!!this.__selection[_id]) return;
         _e._$addClassName(_element,this.__selected);
         this.__selection[_id] = _e._$id(_element);
@@ -147,7 +147,7 @@ var f = function(){
      * @param  {Node}   节点对象
      * @return {Void}
      */
-    _proMultiSelector.__doItemDelFromSelection = function(_id,_element){
+    _pro.__doItemDelFromSelection = function(_id,_element){
         if (!this.__selection[_id]) return;
         _e._$delClassName(_element,this.__selected);
         delete this.__selection[_id];
@@ -160,7 +160,7 @@ var f = function(){
      * @param  {String} 保留节点ID
      * @return {Void}
      */
-    _proMultiSelector.__doItemClear = function(_id){
+    _pro.__doItemClear = function(_id){
         _u._$forIn(
             this.__selection,
             function(_node,_key){
@@ -179,7 +179,7 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    _proMultiSelector.__onItemClear = function(_event){
+    _pro.__onItemClear = function(_event){
         if (_event.ctrlKey||
             _event.shiftKey)
             return;
@@ -192,7 +192,7 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    _proMultiSelector.__onItemSelect = function(_event){
+    _pro.__onItemSelect = function(_event){
         // check element
         var _element = _v._$getElement(
             _event,'c:'+this.__kfcls
@@ -245,7 +245,7 @@ var f = function(){
      * 检查元素选中情况
      * @return {Void}
      */
-    _proMultiSelector.__onItemSelectCheck = function(_event){
+    _pro.__onItemSelectCheck = function(_event){
         // check element
         var _element = _v._$getElement(
             _event,'c:'+this.__kfcls
@@ -269,7 +269,7 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    _proMultiSelector.__onItemSelectAll = function(_event){
+    _pro.__onItemSelectAll = function(_event){
         if (!_event.ctrlKey||
              _event.keyCode!=65) 
             return;
@@ -293,7 +293,7 @@ var f = function(){
      * @method {_$clear}
      * @return {nej.ut._$$MultiSelector}
      */
-    _proMultiSelector._$clear = function(){
+    _pro._$clear = function(){
         this.__doItemClear();
         this._$dispatchEvent('onchange');
         return this;
@@ -308,7 +308,7 @@ var f = function(){
      * @method {_$getList}
      * @return {Array} 列表
      */
-    _proMultiSelector._$getList = function(){
+    _pro._$getList = function(){
         return this.__list;
     };
     /**
@@ -322,7 +322,7 @@ var f = function(){
      * @param  {Boolean} 是否需要排序
      * @return {Object}  当前选中信息
      */
-    _proMultiSelector._$getSelection = function(_sorted){
+    _pro._$getSelection = function(_sorted){
         var _result = NEJ.X({},this.__selection);
         if (!!_sorted){
             _list = [];
@@ -338,5 +338,7 @@ var f = function(){
         return _result;
     };
 };
-NEJ.define('{lib}util/selector/selector.js',
-          ['{lib}util/event.js'],f);
+NEJ.define(
+    '{lib}util/selector/selector.js',[
+    '{lib}util/event.js'
+],f);

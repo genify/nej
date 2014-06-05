@@ -821,8 +821,9 @@ var f = function(){
                 }
                 if (_u._$isDate(_value)){
                     _value = _value.getTime();
-                }else if(_u._$isArray(_value)||
-                         _u._$isObject(_value)){
+                }else if(_u._$isArray(_value)){
+                    _value = _value.join(',');
+                }else if(_u._$isObject(_value)){
                     _value = JSON.stringify(_value);
                 }
                 if (!!_encode){
