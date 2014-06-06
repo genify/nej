@@ -111,10 +111,12 @@ var f = function(){
      */
     _h.__removeIFrameKeepHistory = 
     _h.__removeIFrameKeepHistory._$aop(function(_event){
-        // bug for chrome 35+ when history back for removed iframe
+        // bug for chrome 35 when history back for removed iframe
         // do nothing
         _event.stopped = !0;
     });
 };
-NEJ.define('{lib}patched/webkit/api.js',
-      ['{lib}patched/com/api.js'],f);
+NEJ.define(
+    '{lib}patched/webkit/api.js',[
+    '{lib}patched/com/api.js'
+],f);
