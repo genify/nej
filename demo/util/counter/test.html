@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>test counter</title>
+    <meta charset="utf-8"/>
+  </head>
+  <body>
+    <input type="text" id="input-id-0" maxlength="100"/>
+    <script src="../../../src/define.js?pro=./"></script>
+    <script>
+      define(['{lib}util/counter/counter.js'],
+      function(){
+          nej.e._$counter('input-id-0');
+      });
+    </script>
+  </body>
+</html>
