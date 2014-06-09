@@ -247,11 +247,15 @@ var _doStr2Obj = function(_query){
 var _doFormatURI = (function(){
     var _xxx = !1,
         _reg = /{(.*?)}/gi,
-        _reg2 = /\.\//,
-        _reg3 = /[\/][^\/]*\..*/,
+        _reg1= /([^\:]\/:?)\/+/ig,
+        _reg2= /\.\//,
+        _reg3= /[^\/]*$/,
         _anchor = d.createElement('a');
     var _absolute = function(_uri){
         return _uri.indexOf('://')>0;
+    };
+    var _delBackslash = function(_uri){
+        return _uri.replace(_reg1,function($1,$2){return $2;})
     };
     var _append = function(){
         if (_xxx) return;
@@ -260,9 +264,16 @@ var _doFormatURI = (function(){
         document.body.appendChild(_anchor);
     };
     var _getRoot = function(_uri) {
-        return _uri.replace(_reg3,'/');
+        return _uri.replace(_reg3,'');
     };
     return function(_uri,_baseuri){
+        if(_isTypeOf(_uri,'Array')){
+            var _list = [];
+            for(var i = 0; i < _uri.length; i++){
+                _list.push(_doFormatURI(_uri[i]));
+            }
+            return _list;
+        }
         _append();
         if (!_uri) return '';
         if (_absolute(_uri)) return _uri;
@@ -272,6 +283,7 @@ var _doFormatURI = (function(){
         if (_baseuri && !_absolute(_uri) && _uri.search(_reg2) > -1){
             _uri = _getRoot(_baseuri) + _uri;
         }
+        _uri = _delBackslash(_uri);
         _anchor.href = _uri;
         _uri = _anchor.href;
         return _absolute(_uri) ? _uri :
@@ -477,6 +489,45 @@ var _doFindScriptRunning = function(){
             return _script;
     }
 };
+/**
+ * 解析平台依赖的文件
+ * @return {[type]} [description]
+ */
+var _doMergePlatform = (function(){
+    var _platform  = {td:'trident.js',gk:'gecko.js',wk:'webkit.js'},
+        _reg = /[^\/]*$/,
+        _reg1= /[^}]*$/,
+        _reg2= /\//ig;
+    var _parsePlatformFiles = function(_uri){
+        var _prefix,
+            _list = [],
+            _hackname = _uri.match(_reg1)[0].replace(_reg2,'');
+        _prefix = __config.root.platform || './platform/';
+        _prefix = _uri.replace('{platform}',_prefix).replace(_reg,'/');
+        for (var h in _platform){
+            if (__config.p.toString().indexOf(h) >= 0){
+                _list.push(_prefix + _platform[h]);
+            }
+        }
+        _list.unshift(_prefix + _hackname);
+        return _list;
+    };
+    return function(_deps,_uri){
+        var _ndeps = _deps;
+        for(var k=0;k<_deps.length;k++){
+            if (_deps[k].indexOf('{platform}')>=0){
+                var _list = _parsePlatformFiles(_deps[k]);
+                _deps.splice(k,1);
+                if (k>0){
+                    _ndeps = _deps.slice(0,k).concat(_list,_deps.slice(k,_deps.length));
+                }else{
+                    _ndeps = _list.concat(_deps);
+                }
+            }
+        }
+        return _ndeps;
+    };
+})();
 /*
  * 执行模块定义
  * @param  {String}   _uri      当前所在文件，确定文件中模块不会被其他文件依赖时可以不用传此参数，比如入口文件
@@ -501,6 +552,9 @@ var _doDefine = (function(){
             _deps = null;
             _uri = ''+_seed++;
         }
+        if(_isTypeOf(_deps,'Array')){
+            _deps = _doMergePlatform(_deps,_uri);
+        }
         _doParsePatched(_deps);
 //        console.log(_uri+' -> ['+(_deps||[]).join(',')+']')
         // check module defined in file 
@@ -511,12 +565,13 @@ var _doDefine = (function(){
         __queue.push({n:_uri,d:_deps,f:_callback});
 //        console.log('define -> '+_uri);
         // load dependence
-        if (!!_deps&&!!_deps.length)
+        if (!!_deps&&!!_deps.length){
             for(var i=0,l=_deps.length,_item;i<l;i++){
                 _item = _doFormatURI(_deps[i],_uri);
                 _deps[i] = _item;
                 _doLoadScript(_item);
             }
+        }
         _doCheckLoading();
     };
 })();
