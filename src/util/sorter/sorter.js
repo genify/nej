@@ -6,14 +6,14 @@
  * ------------------------------------------
  */
 var f = function(){
-    var _o = NEJ.O,
+    var _  = NEJ.P,
+        _o = NEJ.O,
         _f = NEJ.F,
-        _e = NEJ.P('nej.e'),
-        _v = NEJ.P('nej.v'),
-        _u = NEJ.P('nej.u'),
-        _p = NEJ.P('nej.ut'),
-        __proSorter,
-        __supSorter;
+        _e = _('nej.e'),
+        _v = _('nej.v'),
+        _u = _('nej.u'),
+        _p = _('nej.ut'),
+        _pro;
     if (!!_p._$$Sorter) return;
     /**
      * 拖拽排序器控件
@@ -34,33 +34,33 @@ var f = function(){
      * @config  {nej.ut._$$MultiSelector}   selector 选择器控件
      * 
      * [hr]
-     * 
-     * @event  {onbeforesort} 排序开始触发事件
+     * 排序开始触发事件
+     * @event  {onbeforesort} 
      * @param  {Object} 可选配置参数
      * @config {Node|String} mover 移动示意节点
      * @config {Number}      count 选中的节点总数量
-     * [hr]
-     * 
-     * @event  {onaftersort} 排序结束触发事件
      * 
      * [hr]
+     * 排序结束触发事件
+     * @event  {onaftersort} 
      * 
-     * @event  {onsort} 排序过程触发事件
+     * [hr]
+     * 排序过程触发事件
+     * @event  {onsort} 
      * @param  {Object} 可选配置参数
      * @config {Number} x 节点横坐标
      * @config {Number} y 节点纵坐标
      * 
      */
     _p._$$Sorter = NEJ.C();
-    __proSorter = _p._$$Sorter._$extend(_p._$$Event);
-    __supSorter = _p._$$Sorter._$supro;
+    _pro = _p._$$Sorter._$extend(_p._$$Event);
     /**
      * 控件初始化
      * @protected
      * @method {__init}
      * @return {Void}
      */
-    __proSorter.__init = function(){
+    _pro.__init = function(){
         this.__eopt = {
             end:this.__onSortEnd._$bind(this)
            ,move:this.__onSortCheck._$bind(this)
@@ -74,7 +74,7 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    __proSorter.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
         this.__selector = _options.selector;
         this.__holder = _e._$get(_options.holder);
@@ -93,7 +93,7 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    __proSorter.__destroy = function(){
+    _pro.__destroy = function(){
         this.__supDestroy();
         delete this.__flag;
         delete this.__drag;
@@ -109,7 +109,7 @@ var f = function(){
      * @method {__doCalculateGrid}
      * @return {Void}
      */
-    __proSorter.__doCalculateGrid = (function(){
+    _pro.__doCalculateGrid = (function(){
         var _docalculate = function(_node){
             var _offset = _e._$offset(_node);
             _node.rng = {
@@ -132,7 +132,7 @@ var f = function(){
      * @param  {Number} 左侧偏移
      * @return {Void}
      */
-    __proSorter.__doCalculateHolderPosition = (function(){
+    _pro.__doCalculateHolderPosition = (function(){
         var _inrange = function(_pointer,_range){
             return _pointer.x>=_range.left&&
                    _pointer.x<=_range.right&&
@@ -158,9 +158,10 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    __proSorter.__onSortFlag = function(_event){
-        if (!_event) return;
-        this.__drag = !0;
+    _pro.__onSortFlag = function(_event){
+        //if (!_event) return;
+        var _smap = this.__selector._$getSelection();
+        this.__drag = _smap.count>0;
     };
     /**
      * 排序检测
@@ -169,10 +170,10 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    __proSorter.__onSortCheck = function(_event){
+    _pro.__onSortCheck = function(_event){
         if (!this.__drag) return;
         var _list = this.__selector._$getSelection();
-        if (!_list.length) return;
+        if (!_list.count) return;
         if (!this.__flag)
             this.__onSortStart(_event);
         this.__onSorting(_event);
@@ -184,7 +185,7 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    __proSorter.__onSortStart = function(_event){
+    _pro.__onSortStart = function(_event){
         this.__flag = !0;
         var _list = this.__selector._$getSelection(true).list,
             _options = {mover:this.__mover
@@ -201,7 +202,7 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    __proSorter.__onSorting = function(_event){
+    _pro.__onSorting = function(_event){
         var _offset  = {x:_v._$pageX(_event)
                        ,y:_v._$pageY(_event)},
             _options = {x:_offset.x,y:_offset.y},
@@ -220,7 +221,7 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    __proSorter.__onSortEnd =(function(){
+    _pro.__onSortEnd =(function(){
         // 检查顺序有没有改变
         var _doCheckSort = function(){
             _u._$forEach(this.__list,function(_item,_i){
@@ -251,5 +252,7 @@ var f = function(){
         };
     })();
 };
-NEJ.define('{lib}util/sorter/sorter.js',
-      ['{lib}util/event.js'],f);
+NEJ.define(
+    '{lib}util/sorter/sorter.js',[
+    '{lib}util/event.js'
+],f);

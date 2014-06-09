@@ -154,6 +154,12 @@ var f = function(){
             }
             return _value;
         };
+        // pre convert array
+        var _doCheckData = function(_data,_key,_map){
+            if (_u._$isArray(_data)){
+                _map[_key] = JSON.stringify(_data);
+            }
+        };
         return function(_url,_options){
             _options = NEJ.X({},_options);
             var _exist = {},
@@ -193,6 +199,7 @@ var f = function(){
             // add params to url with GET/HEAD/DELETE method
             _options.method = _options.method||'GET';
             if (_reg1.test(_options.method.trim())){
+                _u._$forIn(_data,_doCheckData);
                 _options.query = _data;
                 _data = null;
             }else if (_jsn.test(_content)){

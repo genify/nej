@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>test sorter</title>
+    <meta charset="utf-8"/>
+    <style>
+       *{margin:0;padding:0;border:0;outline:none;user-select:none;-webkit-user-select:none;}
+       .sbox{position:relative;width:560px;margin:50px;overflow:hidden;border:1px solid #00A0E9;}
+       .sbox .it{float:left;width:100px;height:100px;margin:5px;border:1px solid #ddd;background:#fdc;cursor:move;}
+       .sbox .hld{position:absolute;top:0;left:0;height:102px;width:10px;background:#f00;}
+       .sbox .mov{position:absolute;top:0;left:0;height:100px;width:100px;border:1px dotted #aaa;}
+       .sbox .js-selected{border-color:#f00;}
+    </style>
+  </head>
+  <body>
+    <div class="sbox" id="xbox">
+      <div class="it js-item" data-id="1">1</div>
+      <div class="it js-item" data-id="2">2</div>
+      <div class="it js-item" data-id="3">3</div>
+      <div class="it js-item" data-id="4">4</div>
+      <div class="it js-item" data-id="5">5</div>
+      <div class="it js-item" data-id="6">6</div>
+      <div class="it js-item" data-id="7">7</div>
+      <div class="it js-item" data-id="8">8</div>
+      <div class="it js-item" data-id="9">9</div>
+      <div class="it js-item" data-id="a">a</div>
+      <div class="it js-item" data-id="b">b</div>
+      <div class="it js-item" data-id="c">c</div>
+      <div class="hld" id="xhld">&nbsp;</div>
+      <div class="mov" id="xmov">&nbsp;</div>
+    </div>
+    <script src="../../../src/define.js?pro=./"></script>
+    <script>
+      define(['{lib}util/sorter/sorter.js',
+              '{lib}util/selector/selector.js'],
+      function(){
+          var _sorter = nej.ut._$$Sorter._$allocate({
+              mover:'xmov',
+              holder:'xhld',
+              selector:nej.ut._$$MultiSelector._$allocate({
+                  parent:'xbox'
+              })
+          });
+      });
+    </script>
+  </body>
+</html>

@@ -125,6 +125,21 @@ var f = function(){
      */
     _pro.__onBeforeHide = _f;
     /**
+     * 清除所有组合控件，除了调度器控件
+     * @protected
+     * @method {__doClearComponentExDsp}
+     * @return {Void}
+     */
+    _pro.__doClearComponentExDsp = (function(){
+        var _doCheck = function(_component){
+            return !!_p._$$Dispatcher&&
+                    (_component instanceof _p._$$Dispatcher);
+        };
+        return function(){
+            this.__doClearComponent(_doCheck);
+        };
+    })();
+    /*
      * 封装消息对象
      * @protected
      * @method {__doWrapMessage}

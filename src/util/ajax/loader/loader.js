@@ -14,7 +14,7 @@ var f = function(){
         _u = _('nej.u'),
         _t = _('nej.ut'),
         _p = _('nej.ut.j'),
-        _proLoader,
+        _pro,
         _timeout = 60000; // default timeout
     if (!!_p._$$Loader) return;
     /**
@@ -40,14 +40,14 @@ var f = function(){
      * 
      */
     _p._$$Loader = NEJ.C();
-      _proLoader = _p._$$Loader._$extend(_t._$$Event);
+      _pro = _p._$$Loader._$extend(_t._$$Event);
     /**
      * 控件初始化
      * @protected
      * @method {__init}
      * @return {Void}
      */
-    _proLoader.__init = function(){
+    _pro.__init = function(){
         this.__supInit();
         this.__qopt = {onerror:this.__onQueueError._$bind(this),
                        onloaded:this.__onQueueLoaded._$bind(this)};
@@ -63,7 +63,7 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proLoader.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
         this.__version = _options.version;
         this.__timeout = _options.timeout;
@@ -77,7 +77,7 @@ var f = function(){
      * @param  {String} 标识
      * @return {Object} 加载信息
      */
-    _proLoader.__delLoadData = function(_key){
+    _pro.__delLoadData = function(_key){
         delete this.constructor.__cache[_key];
     };
     /**
@@ -87,7 +87,7 @@ var f = function(){
      * @param  {String} 标识
      * @return {Object} 加载信息
      */
-    _proLoader.__getLoadData = function(_key){
+    _pro.__getLoadData = function(_key){
         return this.constructor.__cache[_key];
     };
     /**
@@ -98,7 +98,7 @@ var f = function(){
      * @param  {Object} 加载信息
      * @return {Void}
      */
-    _proLoader.__setLoadData = function(_key,_data){
+    _pro.__setLoadData = function(_key,_data){
         this.constructor.__cache[_key] = _data;
     };
     /**
@@ -107,7 +107,7 @@ var f = function(){
      * @method {__getRequest}
      * @return {Script|Link} 控件
      */
-    _proLoader.__getRequest = _f;
+    _pro.__getRequest = _f;
     /**
      * 清理控件
      * @protected
@@ -115,7 +115,7 @@ var f = function(){
      * @param  {Script|Link} 控件
      * @return {Void}
      */
-    _proLoader.__clearRequest = function(_request){
+    _pro.__clearRequest = function(_request){
         _v._$clearEvent(_request);
     };
     /**
@@ -125,7 +125,7 @@ var f = function(){
      * @param  {Script|Link} _request 控件
      * @return {Void}
      */
-    _proLoader.__doRequest = function(_request){
+    _pro.__doRequest = function(_request){
         _request.src = this.__url;
         document.head.appendChild(_request);
     };
@@ -135,7 +135,7 @@ var f = function(){
      * @method {__doClear}
      * @return {Void}
      */
-    _proLoader.__doClear = function(){
+    _pro.__doClear = function(){
         var _cache = this.__getLoadData(this.__url);
         if (!_cache) return;
         window.clearTimeout(_cache.timer);
@@ -153,7 +153,7 @@ var f = function(){
      * @param  {String} 回调名称
      * @return {Void}
      */
-    _proLoader.__doCallback = function(_name){
+    _pro.__doCallback = function(_name){
         var _cache = this.__getLoadData(this.__url);
         if (!_cache) return;
         var _list = _cache.bind;
@@ -180,7 +180,7 @@ var f = function(){
      * @param  {Object} 错误信息
      * @return {Void}
      */
-    _proLoader.__onError = function(_error){
+    _pro.__onError = function(_error){
         this.__doCallback('onerror',_error);
     };
     /**
@@ -189,7 +189,7 @@ var f = function(){
      * @method {__onLoaded}
      * @return {Void}
      */
-    _proLoader.__onLoaded = function(){
+    _pro.__onLoaded = function(){
         this.__doCallback('onloaded');
     };
     /**
@@ -199,7 +199,7 @@ var f = function(){
      * @param  {String} 资源地址
      * @return {Void}
      */
-    _proLoader.__doLoadQueue = function(_url){
+    _pro.__doLoadQueue = function(_url){
         this.constructor._$allocate(this.__qopt)._$load(_url);
     };
     /**
@@ -208,7 +208,7 @@ var f = function(){
      * @method {__onQueueCheck}
      * @return {Void}
      */
-    _proLoader.__onQueueCheck = function(_error){
+    _pro.__onQueueCheck = function(_error){
         var _cache = this.__getLoadData(this.__key);
         if (!_cache) return;
         if (!!_error) 
@@ -225,7 +225,7 @@ var f = function(){
      * @param  {Object} 错误信息
      * @return {Void}
      */
-    _proLoader.__onQueueError = function(_error){
+    _pro.__onQueueError = function(_error){
         this.__onQueueCheck(!0);
     };
     /**
@@ -234,7 +234,7 @@ var f = function(){
      * @method {__onQueueLoaded}
      * @return {Void}
      */
-    _proLoader.__onQueueLoaded = function(){
+    _pro.__onQueueLoaded = function(){
         this.__onQueueCheck();
     };
     /**
@@ -271,7 +271,7 @@ var f = function(){
      * @param  {String} 资源地址
      * @return {nej.ut.j._$$Loader}
      */
-    _proLoader._$load = function(_url){
+    _pro._$load = function(_url){
         _url = _u._$absolute(_url);
         if (!_url){
             this._$dispatchEvent('onerror',{
@@ -337,7 +337,7 @@ var f = function(){
      * @param  {Array} 资源地址队列
      * @return {nej.ut.j._$$Loader}
      */
-    _proLoader._$queue = function(_list){
+    _pro._$queue = function(_list){
         if (!_list||!_list.length){
             this._$dispatchEvent('onerror',{
                 code:_g._$CODE_NOTASGN,
@@ -359,7 +359,9 @@ var f = function(){
         return this;
     };
 };
-NEJ.define('{lib}util/ajax/loader/loader.js',
-      ['{lib}base/constant.js'
-      ,'{lib}base/event.js'
-      ,'{lib}util/event.js'],f);
+NEJ.define(
+    '{lib}util/ajax/loader/loader.js',[
+    '{lib}base/constant.js',
+    '{lib}base/event.js',
+    '{lib}util/event.js'
+],f); 

@@ -63,7 +63,7 @@ var f = function(){
         var _onChange = function(_id){
             var _conf  = _cache[_id],
                 _node1 = _e._$get(_id),
-                _node2 = _e._$get(_id+'-counter');
+                _node2 = _e._$get(_conf.xid);
             if (!_node1||!_conf) return;
             var _event = {
                 input:_node1.value
@@ -94,12 +94,13 @@ var f = function(){
                 nid:_conf.nid||'js-counter',
                 clazz:_conf.clazz
             });
-            _conf.xid = _id+'-counter';
-            _node.id = _conf.xid;
+            _conf.xid = _e._$id(_node);
             _onChange(_id);
         };
     })();
 };
-NEJ.define('{lib}util/counter/counter.js',
-          ['{lib}base/element.js'
-          ,'{lib}base/event.js'],f);
+NEJ.define(
+    '{lib}util/counter/counter.js',[
+    '{lib}base/element.js',
+    '{lib}base/event.js'
+],f);

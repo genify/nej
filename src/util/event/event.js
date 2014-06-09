@@ -8,6 +8,7 @@
 var f = function(){
     // variable declaration
     var _  = NEJ.P,
+        _o = NEJ.O,
         _f = NEJ.F,
         _e = _('nej.e'),
         _v = _('nej.v'),
@@ -211,7 +212,8 @@ var f = function(){
      * @return {Void}
      */
     _pro.__doEventDispatch = function(_type,_event){
-        _event = NEJ.X({},_event||{noargs:!0});
+        _event = _event||{noargs:!0};
+        if (_event==_o) _event = {};
         _event.type = _type;
         this._$dispatchEvent('ondispatch',_event);
         if (!!_event.stopped) return;
