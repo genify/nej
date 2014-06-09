@@ -494,8 +494,7 @@ var _doFindScriptRunning = function(){
  * @return {[type]} [description]
  */
 var _doMergePlatform = (function(){
-    var _platform  = {td:'trident.js',gk:'gecko.js',wk:'webkit.js'},
-        _reg = /[^\/]*$/,
+    var _reg = /[^\/]*$/,
         _reg1= /[^}]*$/,
         _reg2= /\//ig;
     var _parsePlatformFiles = function(_uri){
@@ -504,12 +503,8 @@ var _doMergePlatform = (function(){
             _hackname = _uri.match(_reg1)[0].replace(_reg2,'');
         _prefix = __config.root.platform || './platform/';
         _prefix = _uri.replace('{platform}',_prefix).replace(_reg,'/');
-        for (var h in _platform){
-            if (__config.p.toString().indexOf(h) >= 0){
-                _list.push(_prefix + _platform[h]);
-            }
-        }
-        _list.unshift(_prefix + _hackname);
+        _list.push(_prefix + _hackname);
+        _list.push(_prefix + 'patch.js');
         return _list;
     };
     return function(_deps,_uri){
