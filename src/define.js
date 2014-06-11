@@ -197,6 +197,63 @@ var _doParsePatched = function(_list){
     }
 };
 /*
+ * 解析平台识别表达式
+ * @param  {String} 平台识别串
+ * @return {Object} 平台信息，{engine:'trident',key:'release',isok:function(version){}}
+ */
+var _doParsePatchExp = (function(){
+    var _reg0 = /\s/g,
+        _reg1 = /(TR|WR|GR|TV|WV|GV)/i,
+        _reg2 = /([<>=]=?)/,
+        _pkey = '[VERSION]',
+        _emap = {
+            TR:{engine:'trident',key:'release'},
+            WR:{engine:'webkit',key:'release'},
+            GR:{engine:'gecko',key:'release'},
+            TV:{engine:'trident',key:'version'},
+            WV:{engine:'webkit',key:'version'},
+            GV:{engine:'gecko',key:'version'}
+        };
+    var _doCloneObj = function(_obj){
+        var _result = {};
+        for(var x in _obj){
+            _result[x] = _obj[x];
+        }
+        return _result;
+    };
+    var _doParseVersion = function(_exp){
+        return _exp.replace(_reg2,"'$1'");
+    };
+    return function(_exp){
+        _exp = (_exp||'').replace(_reg0,'');
+        if (!_reg1.test(_exp)){
+            return null;
+        }
+        var _key = RegExp.$1,
+            _result = _doCloneObj(_emap[_key]),
+            _arr = _exp.split(_key),
+            _left = "'"+_doParseVersion(_arr[0])+_pkey+"'",
+            _right = "'"+_pkey+_doParseVersion(_arr[1])+"'";
+        _result.isok = function(_version){
+            var _lrtn,_rrtn;
+            if (!!_left){
+                _lrtn = eval(_left.replace(_pkey,_version));
+            }
+            if (!!_right){
+                _rrtn = eval(_right.replace(_pkey,_version));
+            }
+            if (_left==null){
+                return !!_rrtn;
+            }
+            if (_right==null){
+                return !!_lrtn;
+            }
+            return !!(_lrtn&&_rrtn);
+        };
+        return _result;
+    };
+})();
+/*
  * 根据给定地址指定请求编码
  * @param  {String} _uri 地址
  * @return {String}      编码方式
