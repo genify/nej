@@ -197,6 +197,58 @@ var _doParsePatched = function(_list){
     }
 };
 /*
+ * 解析平台识别表达式
+ * @param  {String} 平台识别串
+ * @return {Object} 平台信息，{pkey:'engine',isEngOK:function(_engine){},vkey:'release',isVerOK:function(version){}}
+ */
+var _doParsePatchExp = (function(){
+    var _reg0 = /\s/g,
+        _reg1 = /(TR|WR|GR|TV|WV|GV)/i,
+        _reg2 = /([<>=]=?)/,
+        _pkey = '[VERSION]',
+        _emap = {T:'trident',W:'webkit',G:'gecko'},
+        _vmap = {R:'release',V:'version'};
+    var _doParseVersion = function(_exp){
+        return _exp.replace(_reg2,"'$1'");
+    };
+    return function(_exp){
+        _exp = (_exp||'').replace(_reg0,'');
+        if (!_reg1.test(_exp)){
+            return null;
+        }
+        var _key = RegExp.$1,
+            _brr = _key.split(''),
+            _result = {
+                pkey:'engine',
+                vkey:_vmap[_brr[1]]
+            },
+            _pstr = _emap[_brr[0]];
+        _result.isEngOK = function(_platform){
+            return _platform==_pstr;
+        };
+        var _arr = _exp.split(_key),
+            _left = "'"+_doParseVersion(_arr[0])+_pkey+"'",
+            _right = "'"+_pkey+_doParseVersion(_arr[1])+"'";
+        _result.isVerOK = function(_version){
+            var _lrtn,_rrtn;
+            if (!!_left){
+                _lrtn = eval(_left.replace(_pkey,_version));
+            }
+            if (!!_right){
+                _rrtn = eval(_right.replace(_pkey,_version));
+            }
+            if (_left==null){
+                return !!_rrtn;
+            }
+            if (_right==null){
+                return !!_lrtn;
+            }
+            return !!(_lrtn&&_rrtn);
+        };
+        return _result;
+    };
+})();
+/*
  * 根据给定地址指定请求编码
  * @param  {String} _uri 地址
  * @return {String}      编码方式
