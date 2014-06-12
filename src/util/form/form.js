@@ -13,7 +13,7 @@ var f = function(){
         _v = _('nej.v'),
         _u = _('nej.u'),
         _p = _('nej.ut'),
-        _proWebForm;
+        _pro;
     if (!!_p._$$WebForm) return;
     /**
      * WEB表单验证封装对象，HTML代码中支持以下属性配置：
@@ -204,6 +204,7 @@ var f = function(){
      * @event   {oncheck}
      * @param   {Object} 验证基本信息
      * @config  {Node}   target 当前验证节点
+     * @config  {Node}   form   表单对象
      * @config  {Number} value  验证返回结果
      * 
      * [hr]
@@ -235,14 +236,14 @@ var f = function(){
      * @return  {Void}
      */
     _p._$$WebForm = NEJ.C();
-      _proWebForm = _p._$$WebForm._$extend(_p._$$Event);
+      _pro = _p._$$WebForm._$extend(_p._$$Event);
     /**
      * 控件初始化
      * @protected
      * @method {__init}
      * @return {Void}
      */
-    _proWebForm.__init = function(){
+    _pro.__init = function(){
         this.__supInit();
         this.__wopt = {
             tp:{nid:'js-nej-tp'},
@@ -257,7 +258,7 @@ var f = function(){
      * @param  {Object} 配置参数
      * @return {Void}
      */
-    _proWebForm.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__supReset(_options);
         this.__form = document.forms[_options.form]||
                      _e._$get(_options.form);
@@ -287,8 +288,9 @@ var f = function(){
         // refresh validate node
         this._$refresh();
         // auto focus node
-        if (!!this.__fnode) 
+        if (!!this.__fnode){
             this.__fnode.focus();
+        }
     };
     /**
      * 控件销毁
@@ -296,7 +298,7 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proWebForm.__destroy = function(){
+    _pro.__destroy = function(){
         this.__supDestroy();
         delete this.__message;
         delete this.__fnode;
@@ -313,7 +315,7 @@ var f = function(){
      * @param  {Number} 类型，0-字符，1-数值，2-布尔，3-日期
      * @return {String} 值 
      */
-    _proWebForm.__dataset = function(_node,_attr,_type){
+    _pro.__dataset = function(_node,_attr,_type){
         var _value = _e._$dataset(_node,_attr);
         switch(_type){
             case 1: return parseInt(_value);
@@ -330,7 +332,7 @@ var f = function(){
      * @param  {String} 类型
      * @return {Number} 数值
      */
-    _proWebForm.__number = function(_value,_type){
+    _pro.__number = function(_value,_type){
         if (_type=='date')
             return this.__doParseDate(_value);
         return parseInt(_value);
@@ -342,7 +344,7 @@ var f = function(){
      * @param  {Node}    节点
      * @return {Boolean} 是否需要验证
      */
-    _proWebForm.__isValidElement = (function(){
+    _pro.__isValidElement = (function(){
         var _reg1 = /^button|submit|reset|image|hidden|file$/i;
         return function(_node){
             // with name attr
@@ -360,7 +362,7 @@ var f = function(){
      * @param  {Node}    节点
      * @return {Boolean} 是否需要验证
      */
-    _proWebForm.__isValueElement = (function(){
+    _pro.__isValueElement = (function(){
         var _reg1 = /^hidden$/i;
         return function(_node){
             if (this.__isValidElement(_node))
@@ -377,7 +379,7 @@ var f = function(){
      * @param  {String} 日期字符串
      * @return {Number} 日期毫秒数
      */
-    _proWebForm.__doParseDate = (function(){
+    _pro.__doParseDate = (function(){
         // yyyy-MM-dd --> MM/dd/yyyy
         var _reg = /[-\/]/;
         var _doFormatDate = function(_value){
@@ -397,7 +399,7 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    _proWebForm.__onCheckEnter = function(_event){
+    _pro.__onCheckEnter = function(_event){
         if (_event.keyCode!=13) return;
         this._$dispatchEvent('onenter',_event);
     };
@@ -409,7 +411,7 @@ var f = function(){
      * @param  {String} 规则属性
      * @return {Void}
      */
-    _proWebForm.__doCheckString = function(_id,_name){
+    _pro.__doCheckString = function(_id,_name){
         var _rule = this.__vfun[_name],
             _value = this.__dataset(_id,_name);
         if (!_value||!_rule) return;
@@ -424,7 +426,7 @@ var f = function(){
      * @param  {String} 规则属性
      * @return {Void}
      */
-    _proWebForm.__doCheckPattern = function(_id,_name){
+    _pro.__doCheckPattern = function(_id,_name){
         try{
             var _pattern = this.__dataset(_id,_name);
             if (!_pattern) return;
@@ -443,11 +445,11 @@ var f = function(){
      * @param  {String} 规则属性
      * @return {Void}
      */
-    _proWebForm.__doCheckBoolean = function(_id,_name){
+    _pro.__doCheckBoolean = function(_id,_name){
         var _rule = this.__vfun[_name];
-        if (!!_rule&&
-            this.__dataset(_id,_name,2))
+        if (!!_rule&&this.__dataset(_id,_name,2)){
             this.__doPushValidRule(_id,_rule);
+        }
     };
     /**
      * 解析数值类型规则属性
@@ -458,7 +460,7 @@ var f = function(){
      * @param  {String} 规则值
      * @return {Void}
      */
-    _proWebForm.__doCheckNumber = function(_id,_name,_value){
+    _pro.__doCheckNumber = function(_id,_name,_value){
         _value = parseInt(_value);
         if (isNaN(_value)) return;
         this.__doSaveValidInfo(_id,_name,_value);
@@ -472,9 +474,8 @@ var f = function(){
      * @param  {String} 规则属性
      * @return {Void}
      */
-    _proWebForm.__doCheckDSNumber = function(_id,_name){
-        this.__doCheckNumber(
-             _id,_name,this.__dataset(_id,_name));
+    _pro.__doCheckDSNumber = function(_id,_name){
+        this.__doCheckNumber(_id,_name,this.__dataset(_id,_name));
     };
     /**
      * 解析属性中数值类型规则属性
@@ -484,9 +485,8 @@ var f = function(){
      * @param  {String} 规则属性
      * @return {Void}
      */
-    _proWebForm.__doCheckATNumber = function(_id,_name){
-        this.__doCheckNumber(
-              _id,_name,_e._$attr(_id,_name));
+    _pro.__doCheckATNumber = function(_id,_name){
+        this.__doCheckNumber(_id,_name,_e._$attr(_id,_name));
     };
     /**
      * 解析dataset中数值类型规则属性
@@ -496,7 +496,7 @@ var f = function(){
      * @param  {String} 规则属性
      * @return {Void}
      */
-    _proWebForm.__doCheckTPNumber = function(_id,_name,_type){
+    _pro.__doCheckTPNumber = function(_id,_name,_type){
         var _value = this.__number(
                      this.__dataset(_id,_name),
                      this.__dataset(_id,'type'));
@@ -509,7 +509,7 @@ var f = function(){
      * @param  {Node} 表单元素节点
      * @return {Void}
      */
-    _proWebForm.__doPrepareElement = (function(){
+    _pro.__doPrepareElement = (function(){
         var _reg0 = /^input|textarea$/i;
         // onfocus
         var _onFocus = function(_event){
@@ -587,7 +587,7 @@ var f = function(){
      * @param  {Object} 配置信息
      * @return {Void}
      */
-    _proWebForm.__doInitValidRule = (function(){
+    _pro.__doInitValidRule = (function(){
         // type regexp map
         var _rmap = {
                 number:/^[\d]+$/i,
@@ -661,14 +661,26 @@ var f = function(){
                     return -7;
             }
         };
+        // merge extend
+        var _doMerge = function(_smap,_new,_key,_dmap){
+            var _old = _smap[_key];
+            if (_u._$isFunction(_new)&&
+                _u._$isFunction(_old)){
+                _smap[_key] = _old._$aop(_new);
+                return;
+            }
+            _smap[_key] = _new;
+        };
         return function(_options){
-            this.__treg = NEJ.X(
-                NEJ.X({},_rmap),
-                _options.type
+            this.__treg = NEJ.X({},_rmap);
+            _u._$forIn(
+                _options.type,
+                _doMerge._$bind(null,this.__treg)
             );
-            this.__vfun = NEJ.X(
-                NEJ.X({},_vfun),
-                _options.attr
+            this.__vfun = NEJ.X({},_vfun);
+            _u._$forIn(
+                _options.attr,
+                _doMerge._$bind(null,this.__vfun)
             );
         };
     })();
@@ -680,7 +692,7 @@ var f = function(){
      * @param  {Function} 验证规则
      * @return {Void}
      */
-    _proWebForm.__doPushValidRule = function(_id,_valid){
+    _pro.__doPushValidRule = function(_id,_valid){
         if (!_u._$isFunction(_valid)) return;
         var _info = this.__vinfo[_id];
         if (!_info||!_info.func){
@@ -699,7 +711,7 @@ var f = function(){
      * @param  {Variable} 信息内容
      * @return {Void}
      */
-    _proWebForm.__doSaveValidInfo = function(_id,_name,_value){
+    _pro.__doSaveValidInfo = function(_id,_name,_value){
         if (!_name) return;
         var _info = this.__vinfo[_id];
         if (!_info||!_info.data){
@@ -716,7 +728,7 @@ var f = function(){
      * @param  {String|Node} 节点
      * @return {Boolean}     是否通过验证
      */
-    _proWebForm.__doCheckValidity = function(_node){
+    _pro.__doCheckValidity = function(_node){
         // check node validate
         _node = this._$get(_node)||_node;
         var _info = this.__vinfo[_e._$id(_node)];
@@ -741,13 +753,16 @@ var f = function(){
             _event.code = _result;
             this._$dispatchEvent('oninvalid',_event);
             if (!_event.stopped){
-                this._$showMsgError(_node,_event.value||
-                    this.__message[_node.name+_result]);
+                this._$showMsgError(
+                    _node,_event.value||
+                    this.__message[_node.name+_result]
+                );
             }
         }else{
             this._$dispatchEvent('onvalid',_event);
-            if (!_event.stopped)
+            if (!_event.stopped){
                 this._$showMsgPass(_node,_event.value);
+            }
         }
         return _result==null;
     };
@@ -760,7 +775,7 @@ var f = function(){
      * @param  {String}      信息类型
      * @return {Void}
      */
-    _proWebForm.__doShowMessage = (function(){
+    _pro.__doShowMessage = (function(){
         var _kmap = {tp:'tip',ok:'pass',er:'error'};
         var _getVisible = function(_type1,_type2){
             return _type1==_type2?'block':'none';
@@ -803,9 +818,11 @@ var f = function(){
      * @param  {String}      显示信息
      * @return {nej.ut._$$WebForm}
      */
-    _proWebForm._$showTip = function(_node,_message){
-        this.__doShowMessage(_node,_message||
-            this.__message[_node.name+'-tip'],'tp');
+    _pro._$showTip = function(_node,_message){
+        this.__doShowMessage(
+            _node,_message||
+            this.__message[_node.name+'-tip'],'tp'
+        );
         return this;
     };
     /**
@@ -815,10 +832,12 @@ var f = function(){
      * @param  {String}      显示信息
      * @return {nej.ut._$$WebForm}
      */
-    _proWebForm._$showMsgPass = function(_node,_message){
-        this.__doShowMessage(_node,_message||
+    _pro._$showMsgPass = function(_node,_message){
+        this.__doShowMessage(
+            _node,_message||
             this.__message[_node.name+'-pass']||
-            this.__message.pass,'ok');
+            this.__message.pass,'ok'
+        );
         return this;
     };
     /**
@@ -828,7 +847,7 @@ var f = function(){
      * @param  {String}      显示信息
      * @return {nej.ut._$$WebForm}
      */
-    _proWebForm._$showMsgError = function(_node,_message){
+    _pro._$showMsgError = function(_node,_message){
         this.__doShowMessage(_node,_message||
             this.__message[_node.name+'-error'],'er');
         return this;
@@ -840,7 +859,7 @@ var f = function(){
      * @param  {String} 值
      * @return {Void}
      */
-    _proWebForm._$setValue = (function(){
+    _pro._$setValue = (function(){
         var _reg0 = /^(?:radio|checkbox)$/i;
         // get value
         var _getValue = function(_value){
@@ -878,7 +897,7 @@ var f = function(){
      * @param  {String} 控件名称
      * @return {Node}   表单控件对象
      */
-    _proWebForm._$get = function(_name){
+    _pro._$get = function(_name){
         return this.__form.elements[_name];
     };
     /**
@@ -886,7 +905,7 @@ var f = function(){
      * @method {_$form}
      * @return  {Node} 当前封装的表单节点
      */
-    _proWebForm._$form = function(){
+    _pro._$form = function(){
         return this.__form;
     };
     /**
@@ -894,7 +913,7 @@ var f = function(){
      * @method {_$data}
      * @return {Object} 数据集合
      */
-    _proWebForm._$data = (function(){
+    _pro._$data = (function(){
         var _reg0 = /^radio|checkbox$/i,
             _reg1 = /^number|date$/;
         var _doParseValue = function(_map,_node){
@@ -926,8 +945,9 @@ var f = function(){
             _u._$forEach(
                 this.__form.elements,
                 function(_node){
-                    if (this.__isValueElement(_node))
+                    if (this.__isValueElement(_node)){
                         _doParseValue.call(this,_result,_node);
+                    }
                 },this);
             return _result;
         };
@@ -937,10 +957,11 @@ var f = function(){
      * @method {_$reset}
      * @return {nej.ut._$$WebForm}
      */
-    _proWebForm._$reset = (function(){
+    _pro._$reset = (function(){
         var _doShowTip = function(_node){
-            if (this.__isValidElement(_node))
+            if (this.__isValidElement(_node)){
                 this._$showTip(_node);
+            }
         };
         return function(){
             this.__form.reset();
@@ -956,7 +977,7 @@ var f = function(){
      * @method {_$submit}
      * @return {nej.ut._$$WebForm}
      */
-    _proWebForm._$submit = function(){
+    _pro._$submit = function(){
         this.__form.submit();
         return this;
     };
@@ -965,18 +986,21 @@ var f = function(){
      * @method {_$refresh}
      * @return {nej.ut._$$WebForm} 
      */
-    _proWebForm._$refresh = (function(){
+    _pro._$refresh = (function(){
         var _doPrepareElement = function(_node){
-            if (this.__isValidElement(_node)) 
+            if (this.__isValidElement(_node)){
                 this.__doPrepareElement(_node);
+            }
         };
         return function(){
             // id:{func:[],data:{}}
             // func  - validate function list
             // data  - validate information
             this.__vinfo = {};
-            _u._$forEach(this.__form.elements,
-                        _doPrepareElement,this);
+            _u._$forEach(
+                this.__form.elements,
+                _doPrepareElement,this
+            );
             return this;
         };
     })();
@@ -986,11 +1010,12 @@ var f = function(){
      * @param  {String|Node} 表单控件，没有输入表示验证整个表单
      * @return {Boolean}     表单是否通过验证
      */
-    _proWebForm._$checkValidity = function(_node){
+    _pro._$checkValidity = function(_node){
         _node = this._$get(_node)||_node;
         // check single form element
-        if (!!_node)
+        if (!!_node){
             return this.__doCheckValidity(_node);
+        }
         // check all form elements
         var _result = !0;
         _u._$forEach(
