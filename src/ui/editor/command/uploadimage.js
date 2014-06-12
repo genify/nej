@@ -9,6 +9,7 @@ var f = function(){
     var _  = NEJ.P,
         _o = NEJ.O,
         _f = NEJ.F,
+        _c = _('nej.c'),
         _e = _('nej.e'),
         _v = _('nej.v'),
         _p = _('nej.ui.cmd'),
@@ -102,7 +103,7 @@ var f = function(){
                           + "&stampstring=" + encodeURIComponent(_options.stampstring || '')
                           + "&sitefrom=" + _options.sitefrom || 'study');
         this.__hopt = {
-            src: _options.swfUrl || '/res/nej_upload_image.swf',
+            src: _options.swfUrl || _c._$get('upload.image.swf'),
             hidden: false,
             parent: _e._$getByClassName(this.__body,'choose_file')[0],
             width: _options.flashWidth || 100,

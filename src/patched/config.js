@@ -80,7 +80,8 @@ var f = function(){
             'chart.swf':{name:'chart',dft:'nej_flex_chart.swf'},
             'audio.swf':{name:'audio',dft:'nej_player_audio.swf'},
             'video.swf':{name:'video',dft:'nej_player_video.swf'},
-            'clipboard.swf':{name:'clipboard',dft:'nej_clipboard.swf'}
+            'clipboard.swf':{name:'clipboard',dft:'nej_clipboard.swf'},
+            'upload.image.swf':{name:'uploadimage',dft:'nej_upload_image.swf'}
         };
         return function(_config){
             // check path config

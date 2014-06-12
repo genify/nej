@@ -22,12 +22,21 @@ var f = function(){
     });
 }
 module('依赖模块');
+
 test('define',function(){expect(0);
     define('{pro}src/ui/customTest.js',[
-        '{lib}base/platform.js',
-        '../mywidget/{platform}hack.js',
+        '{lib}widget/A/src/a.js',
         '../../..////../src/ui/editor/custom.js',
         '{lib}/base/element.js',
         '{pro}log.js'
         ],f);
 });
+// test('define',function(){expect(0);
+//     define('{pro}src/ui/customTest.js',[
+//         '{lib}base/platform.js',
+//         '../mywidget/{platform}hack.js',
+//         '../../..////../src/ui/editor/custom.js',
+//         '{lib}/base/element.js',
+//         '{pro}log.js'
+//         ],f);
+// });
