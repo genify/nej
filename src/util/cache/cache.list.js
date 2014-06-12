@@ -412,7 +412,7 @@ var f = function(){
      * @return {nej.ut._$$ListCache}
      */
     _pro._$setLoaded = function(_key,_loaded){
-        this._$getListInCache(_key).loaded = _loaded!=!1;
+        this._$getListInCache(_key).loaded = _loaded!==!1;
         return this;
     };
     /**
@@ -518,12 +518,14 @@ var f = function(){
     _pro.__pullRefresh = function(_options,_result){
         // list with total
         // {total:12,result:[]} 或者 {total:13,list:[]}
-        var _total = parseInt(_result.total),
+        var _key = _options.key,
+            _total = parseInt(_result.total),
             _list = _result.list||_result.result;
+        this.__doUnshiftToList(_key,_list||_result);
         if (!isNaN(_total)&&!!_list){
-            this._$setTotal(_options.key,_total); 
+            this._$getListInCache(_key).length = _total;
+            this._$setLoaded(_key);
         }
-        this.__doUnshiftToList(_options.key,_list||_result);
         this.__doCallbackRequest(_options.rkey,'onpullrefresh',_options);
     };
     /**
