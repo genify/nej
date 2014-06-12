@@ -329,13 +329,13 @@ var _doFormatURI = (function(){
         _append();
         if (!_uri) return '';
         if (_absolute(_uri)) return _uri;
-        var _uri = _uri.replace(_reg,function($1,$2){
-                       return __config.root[$2]||$2;
-                   });
         if (_baseuri && !_absolute(_uri) && _uri.search(_reg2) > -1){
             _uri = _getRoot(_baseuri) + _uri;
         }
         _uri = _delBackslash(_uri);
+        var _uri = _uri.replace(_reg,function($1,$2){
+                       return __config.root[$2]||$2;
+                   });
         _anchor.href = _uri;
         _uri = _anchor.href;
         return _absolute(_uri) ? _uri :
@@ -560,21 +560,53 @@ var _doMergePlatform = (function(){
         return _list;
     };
     return function(_deps,_uri){
-        var _ndeps = _deps;
         for(var k=0;k<_deps.length;k++){
             if (_deps[k].indexOf('{platform}')>=0){
                 var _list = _parsePlatformFiles(_deps[k]);
-                _deps.splice(k,1);
-                if (k>0){
-                    _ndeps = _deps.slice(0,k).concat(_list,_deps.slice(k,_deps.length));
-                }else{
-                    _ndeps = _list.concat(_deps);
-                }
+                _list.unshift(1);
+                _list.unshift(k);
+                _deps.splice.apply(_deps,_list);
             }
         }
-        return _ndeps;
+        return _deps;
     };
 })();
+
+/**
+ * [_doMergeDefine description]
+ * @param  {[type]} _deps     [description]
+ * @param  {[type]} _callback [description]
+ * @return {[type]}           [description]
+ */
+var _doMergeDefine = (function(){
+    var _reg0 =  /\r\n/g,
+        _reg1 = /\s/g,
+        _reg2 = /,\[.*\],/,
+        _reg3 = /['|"].*['|"]/,
+        _reg4 = /'|"/g;
+    return function(_deps,_callback){
+        _callback = _callback.toString();
+        if (_callback.indexOf('patch(')<0){
+            return _deps;
+        }
+        if (!_deps){
+            _deps = [];
+        }
+        var _phs = _callback.match(/patch\([^)]*/g);
+        for(var i=0,l=_phs.length; i<l; i++){
+            _phs[i] = _phs[i].replace(_reg0,'').replace(_reg1,'');
+            var _list = _phs[i].match(_reg2);
+            if (_list){
+                _list = _list[0].match(_reg3)[0];
+                _list = _list.replace(_reg4,'').split(',');
+                if(_list.length>0)
+                    _deps = _deps.concat(_list)
+            }
+        }
+        return _deps;
+    };
+})();
+ 
 /*
  * 执行模块定义
  * @param  {String}   _uri      当前所在文件，确定文件中模块不会被其他文件依赖时可以不用传此参数，比如入口文件
@@ -603,6 +635,7 @@ var _doDefine = (function(){
             _deps = _doMergePlatform(_deps,_uri);
         }
         _doParsePatched(_deps);
+        _deps = _doMergeDefine(_deps,_callback);
 //        console.log(_uri+' -> ['+(_deps||[]).join(',')+']')
         // check module defined in file 
         _uri = _doFormatURI(_uri);
@@ -685,6 +718,26 @@ NEJ.define = function(_uri,_deps,_callback){
     // for other 
     __stack.push(_args);
     _doAddAllListener();
+};
+/**
+ * 根据条件判断是否在当前平台执行
+ * @param  {[type]} _exp      条件:6<TR<9
+ * @param  {[type]} _deps     [description]
+ * @param  {[type]} _callback [description]
+ * @return {[type]}           [description]
+ */
+NEJ.patch = function(_exp,_deps,_callback){
+    var _kernel = nej.p._$KERNEL,
+        _engine = _kernel.engine,
+        _release= _kernel.release;
+    if (!_callback || !_exp) return;
+    if (!_deps && !_callback) return;
+    if (_doParsePatchExp(_exp).isVerOK(_release) && _doParsePatchExp(_exp).isEngOK(_engine)){
+        if (_isTypeOf(_deps,'Function')){
+            _callback = _deps;
+        }
+        _callback();
+    }
 };
 /**
  * 载入依赖配置，对于老项目或者使用第三方框架的项目，可以使用此接口配置
