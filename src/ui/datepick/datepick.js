@@ -212,7 +212,7 @@ var f = function(){
         <table class="zday">\
           <tr>{list ["日","一","二","三","四","五","六"] as x}<th>${x}</th>{/list}</tr>\
           {list 1..6 as x}\
-          <tr>{list 1..7 as y}<td><a href="#" class="js-ztag"></a></td>{/list}</tr>\
+          <tr>{list 1..7 as y}<td><a href="javascript:void(0);" class="js-ztag"></a></td>{/list}</tr>\
           {/list}\
         </table>\
     ');
