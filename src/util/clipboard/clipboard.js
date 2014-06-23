@@ -12,15 +12,14 @@ var f = function(){
         _e = _('nej.e'),
         _v = _('nej.v'),
         _u = _('nej.u'),
-        _x = _('nej.x'),
-        _b = _('nej.e.cb');
+        _x = _('nej.x');
     /*
      * 覆盖剪切操作功能按钮
      * @param  {Node}   按钮
      * @param  {String} 参数
      * @return {Void}
      */
-    var _doCoverClipboard = function(_element,_vars){
+    var _doCoverClipboard = function(_element,_vars,_options){
         // build holder
         var _box = _e._$wrapInline(_element),
             _height = _element.offsetHeight;
@@ -31,13 +30,13 @@ var f = function(){
             top:Math.floor((_box.parentNode.offsetHeight-_height)/2)+'px'
         });
         // cover flash
-        _e._$flash({
+        _e._$flash(NEJ.X({
             parent:_box,
             target:_element,
             width:'100%',height:'100%',
             src:_c._$get('clipboard.swf'),
             params:{wmode:'transparent',flashvars:_vars}
-        });
+        },_options));
     };
     /**
      * 绑定复制操作，服务器放置剪切板操作Flash nej_clipboard.swf
@@ -73,12 +72,12 @@ var f = function(){
     _x._$bindCopyAction = function(_element,_content){
         _element = _e._$get(_element);
         if (!_element) return;
-        // bind callback
-        var _key = 'set_'+_u._$randNumberString();
-        _b[_key] = function(){
-            return _u._$isFunction(_content)?_content():(_content||'');
-        };
-        _doCoverClipboard(_element,'cb=nej.e.cb.'+_key+'&op=0');
+        // bind flash
+        _doCoverClipboard(_element,'op=0',{
+            onbeforecopy:function(){
+                return _u._$isFunction(_content)?_content():(_content||'');
+            }
+        });
         return this;
     };
     /*
@@ -111,13 +110,10 @@ var f = function(){
 //    _e._$bindPasteAction = function(_element,_callback){
 //        _element = _e._$get(_element);
 //        if (!_element) return;
-//        _v._$addEvent(_element,'click',function(){
-//            alert('请使用Ctrl+V粘贴内容至指定位置！');
+//        // bind flash
+//        _doCoverClipboard(_element,'op=1',{
+//            onpaste:_callback||_f
 //        });
-//        // bind callback
-//        var _key = 'get_'+_u._$randNumberString();
-//        _b[_key] = _callback||_f;
-//        _doCoverClipboard(_element,'cb=nej.e.cb.'+_key+'&op=1');
 //        return this;
 //    };
     /**
@@ -153,8 +149,10 @@ var f = function(){
     };
     _x.isChange = !0;
 };
-NEJ.define('{lib}util/clipboard/clipboard.js',
-      ['{patch}config.js'
-      ,'{lib}base/util.js'
-      ,'{lib}base/event.js'
-      ,'{lib}util/flash/flash.js'],f);
+NEJ.define(
+    '{lib}util/clipboard/clipboard.js',[
+    '{patch}config.js',
+    '{lib}base/util.js',
+    '{lib}base/event.js',
+    '{lib}util/flash/flash.js'
+],f);

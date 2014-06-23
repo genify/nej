@@ -13,7 +13,6 @@ var f = function(){
         _v = _('nej.v'),
         _h = _('nej.h'),
         _x = _('nej.x'),
-        _w = _('nej.ut.j.cb'),
         _seed_html;
     if (!!_e._$flash) return;
     /**
@@ -69,18 +68,23 @@ var f = function(){
         window.onflashevent = function(_event){
             var _id = decodeURIComponent(_event.target),
                 _type = _event.type.toLowerCase();
-            // check id-type handler
-            var _handler = _cache[_id+'-on'+_type];
-            if (!!_handler){
-                try{_handler(_event);}catch(e){}
-                return;
-            }
             // check mouse event bubble
             var _target = _cache[_id+'-tgt'];
             if (!!_target&&_reg0.test(_type)){
                 _doMouseEventBubble(
                     _target,_event
                 );
+            }
+            // check id-type handler
+            var _handler = _cache[_id+'-on'+_type];
+            if (!!_handler){
+                var _result = '';
+                try{
+                    _result = _handler(_event);
+                }catch(e){
+                    // ignore
+                }
+                return _result;
             }
         };
         // append flash element
@@ -132,10 +136,7 @@ var f = function(){
             if (!_options.hidden&&(!!_options.target||
                  _h.__canFlashEventBubble(_params.wmode))){
                 var _tid = _e._$id(_options.target)||
-                           _e._$id(_options.parent),
-                    _cid = _u._$uniqueID();
-                _w['cb'+_cid] = _doMouseEventBubble._$bind(null,_tid);
-                _vars += '&onevent=nej.ut.j.cb.cb'+_cid;
+                           _e._$id(_options.parent);
                 _cache[_id+'-tgt'] = _tid;
             }
             _params.flashvars = _vars;
@@ -149,7 +150,7 @@ var f = function(){
         return function(_options){
             _options = NEJ.X({},_options);
             if (!_options.src) return;
-            var _id = 'flash_'+_u._$uniqueID();
+            var _id = _u._$uniqueID();
             _options.id = _id;
             // delegate event
             _doInitFlashEvent(_options);
