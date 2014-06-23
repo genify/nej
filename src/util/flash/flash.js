@@ -75,7 +75,7 @@ var f = function(){
                     _target,_event
                 );
             }
-            // check id-type handler
+            // check id-type handler 
             var _handler = _cache[_id+'-on'+_type];
             if (!!_handler){
                 var _result = '';
