@@ -56,7 +56,7 @@ var f = function() {
                 _list = {};
             return {
                 extend:function(_name, _fn){
-                    _list[_name] = _proto._name;//先保存之前的
+                    _list[_name] = _proto[_name];//先保存之前的
                     _proto[_name] = _fn;
                     return this;
                 },
