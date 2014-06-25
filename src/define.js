@@ -556,7 +556,7 @@ var _doMergePlatform = (function(){
         _prefix = __config.root.platform || './platform/';
         _prefix = _uri.replace('{platform}',_prefix).replace(_reg,'/');
         _list.push(_prefix + _hackname);
-        _list.push(_prefix + 'patch.js');
+        _list.push(_prefix + _hackname + '.patch.js');
         return _list;
     };
     return function(_deps,_uri){

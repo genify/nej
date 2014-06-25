@@ -24,6 +24,7 @@ var f = function() {
      * @config  {String}      mode       播放模式，0:列表(默认)，1:单曲，2:随机
      * @config  {Array}       list       歌曲列表
      * @config  {Boolean}     autostart  是否自动开始，0:不自动，1:自动(默认)
+     * @return  {nej.ui._$$MP3Player}   播放器实例
      */
     _i._$$MP3Player = NEJ.C();
     _pro = _i._$$MP3Player._$extend(_i._$$Abstract);

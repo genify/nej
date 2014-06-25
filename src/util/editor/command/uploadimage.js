@@ -67,7 +67,7 @@ var f = function(){
         var _id = 0,_url;
         if(!!_photoObj.ourl && _photoObj.ourl.indexOf('.gif') > 0){
             //gif图片
-            _url= _photoObj.ourl;
+            _url = _photoObj.ourl;
             if(!!_photoObj.photoGarbageIds){
                 var _ids = _photoObj.photoGarbageIds.split(',');
                 _u._$forEach(_ids,function(_item,_index){

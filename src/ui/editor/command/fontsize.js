@@ -32,11 +32,11 @@ var f = function(){
      * @type Array
      */
     _p._$$FontSizeCard.list = 
-      [{name:'小',tip:'12px',style:'x-small',value:1}
-      ,{name:'标准',tip:'14px',style:'small',value:2}
-      ,{name:'大',tip:'16px',style:'medium',value:3}
-      ,{name:'特大',tip:'18px',style:'large',value:4}
-      ,{name:'极大',tip:'24px',style:'x-large',value:5}];
+      [{name:'小',style:'x-small',value:1}
+      ,{name:'标准',style:'small',value:2}
+      ,{name:'大',style:'medium',value:3}
+      ,{name:'特大',style:'large',value:4}
+      ,{name:'极大',style:'x-large',value:5}];
     /**
      * 初始化外观信息
      * @protected
