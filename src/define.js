@@ -308,7 +308,7 @@ var _doMergePlatform = (function(){
                 _it = _doParsePlatformURI(_it);
                 _it.unshift(i,1);
                 _deps.splice.apply(_deps,_it);
-                console.log('--------\n'+_deps.join('\n')+'\n--------');
+                //console.log('--------\n'+_deps.join('\n')+'\n--------');
             }
         }
         return _deps;
@@ -342,7 +342,7 @@ var _doMergePatched = function(_deps,_callback){
     };
     _callback();
     NEJ.patch = _tmp;
-    console.log('++++++++++++++\n'+_deps.join('\n')+'\n++++++++++++++');
+    //console.log('++++++++++++++\n'+_deps.join('\n')+'\n++++++++++++++');
     return _deps;
 };
 /*
