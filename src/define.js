@@ -157,7 +157,7 @@ var _doParsePlatform = (function(){
         // hybrid development
         if (_reg0.test(_config)){
             var _name = RegExp.$1;
-            _root.platform = /W/i;
+            _root.platform = _name=='win'?/T/i:/W/i;
             _root.native = '{lib}native/'+_name+'/';
             _root.patch  = '{lib}patched/'+(_pmap[_name]||'webkit')+'/';
             return;
