@@ -541,25 +541,32 @@ var _doFindScriptRunning = function(){
             return _script;
     }
 };
-/**
+/*
  * 解析平台依赖的文件
- * @return {[type]} [description]
+ * @param  {List} 依赖文件列表
+ * @return {List} 解析后的依赖文件列表
  */
 var _doMergePlatform = (function(){
     var _reg = /[^\/]*$/,
         _reg1= /[^}]*$/,
-        _reg2= /\//ig;
+        _reg2= /\//ig,
+        _reg3= /\/\/+/g;
     var _parsePlatformFiles = function(_uri){
         var _prefix,
             _list = [],
             _hackname = _uri.match(_reg1)[0].replace(_reg2,'');
-        _prefix = __config.root.platform || './platform/';
+        if(_hackname.indexOf('/')>=0){
+            var _arr = _hackname.split('/');
+            _hackname = _arr[_arr.length-1];
+        }
+        _prefix = (__config.root.platform || './platform') + '/';
         _prefix = _uri.replace('{platform}',_prefix).replace(_reg,'/');
+        _prefix = _prefix.replace(_reg3,'/');
         _list.push(_prefix + _hackname);
-        _list.push(_prefix + _hackname + '.patch.js');
+        _list.push(_prefix + _hackname.split('.')[0] + '.patch.js');
         return _list;
     };
-    return function(_deps,_uri){
+    return function(_deps){
         for(var k=0;k<_deps.length;k++){
             if (_deps[k].indexOf('{platform}')>=0){
                 var _list = _parsePlatformFiles(_deps[k]);
@@ -572,15 +579,14 @@ var _doMergePlatform = (function(){
     };
 })();
 
-/**
- * [_doMergeDefine description]
- * @param  {[type]} _deps     [description]
- * @param  {[type]} _callback [description]
- * @return {[type]}           [description]
+/*
+ * 根据执行文件添加patch需要依赖的文件
+ * @param  {List}     原依赖列表
+ * @param  {Function} 回调方法
+ * @return {List}     新的依赖列表
  */
 var _doMergeDefine = (function(){
-    var _reg0 =  /\r\n/g,
-        _reg1 = /\s/g,
+    var _reg0 =  /\r\n|\s/g,
         _reg2 = /,\[.*\],/,
         _reg3 = /['|"].*['|"]/,
         _reg4 = /'|"/g;
@@ -594,7 +600,7 @@ var _doMergeDefine = (function(){
         }
         var _phs = _callback.match(/patch\([^)]*/g);
         for(var i=0,l=_phs.length; i<l; i++){
-            _phs[i] = _phs[i].replace(_reg0,'').replace(_reg1,'');
+            _phs[i] = _phs[i].replace(_reg0,'');
             var _list = _phs[i].match(_reg2);
             if (_list){
                 _list = _list[0].match(_reg3)[0];
@@ -632,7 +638,7 @@ var _doDefine = (function(){
             _uri = ''+_seed++;
         }
         if(_isTypeOf(_deps,'Array')){
-            _deps = _doMergePlatform(_deps,_uri);
+            _deps = _doMergePlatform(_deps);
         }
         _doParsePatched(_deps);
         _deps = _doMergeDefine(_deps,_callback);
