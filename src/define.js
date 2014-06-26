@@ -1,5 +1,5 @@
 (function(d,p){
-var __config = {root:{/*lib,pro*/}/*patch,native,charset,global*/},
+var __config = {root:{/*lib,pro*/}/*patch,native,charset,global,platform*/},
     __queue  = [], // item:{n:'filename',d:[],f:function}
     __cache  = {}, // uri:STATE   0-loading  1-waiting  2-defined
     __stack  = []; // for define stack
@@ -142,35 +142,51 @@ var _doSerializeDepList = function(_map){
  * @param  {String} _config 平台配置信息
  * @return {Void}
  */
-var _doParsePlatform = function(_config){
-    if (!_config)
-        _config = 'td|gk|wk|pt';
-    var _root = __config,
+var _doParsePlatform = (function(){
+    var _reg0 = /(cef|ios|win|android)/,
         _pmap = {win:'trident-1'},
-        _bmap = {td:['trident-0','trident-1','trident'],
-                'td-0':['trident-1','trident'],
-                'td-1':'trident-1',gk:'gecko',wk:'webkit',pt:'presto'},
-        _reg0 = /(cef|ios|win|android)/;
-    // hybrid development
-    if (_reg0.test(_config)){
-        var _name = RegExp.$1;
-        _root['native'] = '{lib}native/'+_name+'/';
-        _root['patch']  = '{lib}patched/'+(_pmap[_name]||'webkit')+'/';
-        return;
-    }
-    // browser development
-    _root.patch = [];
-    var _arr = _config.split('|');
-    for(var i=0,l=_arr.length,_name;i<l;i++){
-        _name = _bmap[_arr[i]];
-        if (!_name) continue;
-        if (_isTypeOf(_name,'Array'))
-            for(var j=0,k=_name.length;j<k;j++)
-                _root.patch.push('{lib}patched/'+_name[j]+'/');
-        else
-            _root.patch.push('{lib}patched/'+_name+'/');
-    }
-};
+        _emap = {gk:'G',wk:'W',td:'T',pt:'P'},
+        _bmap = {
+            gk:'gecko',wk:'webkit',pt:'presto',
+            td:['trident-0','trident-1','trident'],
+           'td-0':['trident-1','trident'],'td-1':'trident-1'
+        };
+    return function(_config){
+        _config = _config||'td|gk|wk|pt';
+        var _root = __config;
+        // hybrid development
+        if (_reg0.test(_config)){
+            var _name = RegExp.$1;
+            _root.platform = /W/i;
+            _root.native = '{lib}native/'+_name+'/';
+            _root.patch  = '{lib}patched/'+(_pmap[_name]||'webkit')+'/';
+            return;
+        }
+        // browser development
+        _root.patch = [];
+        // parse patch root
+        var _arr = _config.split('|');
+        for(var i=0,l=_arr.length,_name;i<l;i++){
+            _name = _bmap[_arr[i]];
+            if (!_name) continue;
+            if (_isTypeOf(_name,'Array')){
+                for(var j=0,k=_name.length;j<k;j++){
+                    _root.patch.push('{lib}patched/'+_name[j]+'/');
+                }
+            }else{
+                _root.patch.push('{lib}patched/'+_name+'/');
+            }
+        }
+        // parse platform
+        var _reg = [];
+        for(var x in _emap){
+            if (_config.indexOf(x)>=0){
+                _reg.push(_emap[x]);
+            }
+        }
+        _root.platform = new RegExp(_reg.join('|'),'i');
+    };
+})();
 /*
  * 依赖列表平台补丁处理
  * @param  {Array} _list 依赖列表
@@ -310,12 +326,18 @@ var _doMergePatched = function(_deps,_callback){
         return _deps;
     }
     _deps = _deps||[];
-    var _tmp = NEJ.patch;
+    var _tmp = NEJ.patch,
+        _reg = __config.platform;
     NEJ.patch = function(){
         var _args = _doFormatARG.apply(
             null,arguments
         );
-        if (!_args[0]||!_args[1]) return;
+        // check platform
+        if (!_args[0]||!_args[1]||
+            !_reg.test(_args[0])){
+            return;
+        }
+        // merge dependency
         _deps.push.apply(_deps,_args[1]);
     };
     _callback();
@@ -745,7 +767,7 @@ NEJ.define = function(_uri,_deps,_callback){
  * [ntb]
  * 标识符 | 说明
  * --------------------------
- *  T    | Trident引擎，如IE
+ *  T    | Trident引擎，如ie
  *  W    | Webkit引擎，如chrome
  *  G    | Gecko引擎，如firefox
  * [/ntb]
@@ -804,9 +826,10 @@ NEJ.patch = function(_exp,_deps,_callback){
     // check platform
     var _kernel = nej.p._$KERNEL,
         _result = _doParsePatchExp(_args[0]);
-    if (_result.isEngOK(_kernel.engine)&&
-        _result.isVerOK(_kernel.release)){
-        !_args[2]||(_args[2]());
+    if (!!_result&&!!_args[2]&&
+        _result.isEngOK(_kernel[_result.pkey])&&
+        _result.isVerOK(_kernel[_result.vkey])){
+        _args[2]();
     }
 };
 /**
