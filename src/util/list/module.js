@@ -915,7 +915,7 @@ var f = function(){
         return this.__doSplitDirty(_data);
     };
     /**
-     * 刷新模块，子类实现具体业务逻辑
+     * 刷新模块
      * @method {_$refresh}
      * @param  {Number} 刷新到的页码
      * @return {Void}
@@ -923,6 +923,15 @@ var f = function(){
     _pro._$refresh = function(){
         this.__doClearListBox();
         this.__doRefreshByPager();
+    };
+    /**
+     * 先清数据再刷新模块
+     * @method {_$refreshWithClear}
+     * @return {Void}
+     */
+    _pro._$refreshWithClear = function(){
+        this.__cache._$clearListInCache(this.__ropt.key);
+        this._$refresh();
     };
     /**
      * 前向刷新列表，子类实现具体业务逻辑
