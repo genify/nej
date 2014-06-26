@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <head>
+    <title>test</title>
+    <meta charset="utf-8"/>
+    <script>
+        function log(m){
+            var p = document.createElement('p');
+            p.innerHTML = m;
+            document.body.appendChild(p);
+        }
+    </script>
+  </head>
+  <body>
+    <!-- @DEFINE -->
+    <script src="../../../src/define.js?pro=./src/"></script>
+    <script>
+        define(['{pro}widget.js'],function(){
+            console.log('app ok');
+        });
+    </script>
+  </body>
+</html>

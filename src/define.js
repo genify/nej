@@ -81,6 +81,7 @@ var _doParseConfig = function(_uri){
     for(var x in _obj){
         _root[x] = _obj[x];
     }
+    _root.platform = './platform/';
     if (!_root.pro){
         _root.pro = '../javascript/';
     }
@@ -257,6 +258,72 @@ var _doParseCharset = function(_uri){
     return _uri.indexOf(__config.root.lib)>=0?'utf-8':__config.charset;
 };
 /*
+ * 解析平台依赖的文件
+ * @param  {Array} 依赖列表
+ * @return {Array} 合并了平台信息后的依赖列表
+ */
+var _doMergePlatform = (function(){
+    var _reg0 = /\\|\//;
+    // {platform}xxx -> ['./platform/xxx','./platform/xxx.patch']
+    // {platform}xxx.yy -> ['./platform/xxx.yy','./platform/xxx.patch.yy']
+    var _doParsePlatformURI = function(_uri){
+        _uri = (_uri||'').replace(
+            '{platform}',
+            __config.root.platform
+        );
+        var _arr = _uri.split(_reg0),
+            _name = _arr.pop(),
+            _path = _arr.join('/')+'/',
+            _patch = _name.split('.'),
+            _sufix = '';
+        if (_patch.length>1){
+            _sufix = '.'+_patch.pop();
+        }
+        _patch.join('.');
+        return [
+            _path+_name,
+            _path+_patch+'.patch'+_sufix
+        ];
+    };
+    return function(_deps){
+        for(var i=0,l=_deps.length,_it;i<l;i++){
+            _it = _deps[i];
+            if (_it.indexOf('{platform}')>=0){
+                _it = _doParsePlatformURI(_it);
+                _it.unshift(i,1);
+                _deps.splice.apply(_deps,_it);
+                console.log('--------\n'+_deps.join('\n')+'\n--------');
+            }
+        }
+        return _deps;
+    };
+})();
+/*
+ * 从NEJ.patch中提取依赖列表合并至define依赖列表中
+ * @param  {Array}     define中的依赖列表
+ * @param  {Function}  define执行函数
+ * @return {Array}     合并了patch后的依赖列表
+ */
+var _doMergePatched = function(_deps,_callback){
+    var _func = _callback.toString();
+    if (_func.indexOf('NEJ.patch')<0){
+        return _deps;
+    }
+    _deps = _deps||[];
+    var _tmp = NEJ.patch;
+    NEJ.patch = function(){
+        var _args = _doFormatARG.apply(
+            null,arguments
+        );
+        if (!_args[0]||!_args[1]) return;
+        _deps.push.apply(_deps,_args[1]);
+    };
+    _callback();
+    NEJ.patch = _tmp;
+    console.log('++++++++++++++\n'+_deps.join('\n')+'\n++++++++++++++');
+    return _deps;
+};
+/*
  * 判断是否字符串
  * @param  {Varable} _data 数据
  * @param  {String}  _type 类型
@@ -307,7 +374,7 @@ var _doFormatURI = (function(){
         return _uri.indexOf('://')>0;
     };
     var _delBackslash = function(_uri){
-        return _uri.replace(_reg1,function($1,$2){return $2;})
+        return _uri.replace(_reg1,function($1,$2){return $2;});
     };
     var _append = function(){
         if (_xxx) return;
@@ -342,6 +409,29 @@ var _doFormatURI = (function(){
                _anchor.getAttribute('href',4); // ie6/7
     };
 })();
+/*
+ * 格式化输入参数
+ * @param  {String}   字符串
+ * @param  {Array}    数组
+ * @param  {Function} 函数
+ * @return {Array}    格式化后的参数列表
+ */
+var _doFormatARG = function(_str,_arr,_fun){
+    if (_isTypeOf(_arr,'Function')){
+        _fun = _arr;
+        _arr = null;
+    }
+    if (_isTypeOf(_str,'Array')){
+        _arr = _str;
+        _str = '';
+    }
+    if (_isTypeOf(_str,'Function')){
+        _fun = _str;
+        _arr = null;
+        _str = '';
+    }
+    return [_str,_arr,_fun];
+};
 /*
  * 侦测脚本载入情况
  * @param  {Node} _script 脚本节点
@@ -541,72 +631,6 @@ var _doFindScriptRunning = function(){
             return _script;
     }
 };
-/**
- * 解析平台依赖的文件
- * @return {[type]} [description]
- */
-var _doMergePlatform = (function(){
-    var _reg = /[^\/]*$/,
-        _reg1= /[^}]*$/,
-        _reg2= /\//ig;
-    var _parsePlatformFiles = function(_uri){
-        var _prefix,
-            _list = [],
-            _hackname = _uri.match(_reg1)[0].replace(_reg2,'');
-        _prefix = __config.root.platform || './platform/';
-        _prefix = _uri.replace('{platform}',_prefix).replace(_reg,'/');
-        _list.push(_prefix + _hackname);
-        _list.push(_prefix + _hackname + '.patch.js');
-        return _list;
-    };
-    return function(_deps,_uri){
-        for(var k=0;k<_deps.length;k++){
-            if (_deps[k].indexOf('{platform}')>=0){
-                var _list = _parsePlatformFiles(_deps[k]);
-                _list.unshift(1);
-                _list.unshift(k);
-                _deps.splice.apply(_deps,_list);
-            }
-        }
-        return _deps;
-    };
-})();
-
-/**
- * [_doMergeDefine description]
- * @param  {[type]} _deps     [description]
- * @param  {[type]} _callback [description]
- * @return {[type]}           [description]
- */
-var _doMergeDefine = (function(){
-    var _reg0 =  /\r\n/g,
-        _reg1 = /\s/g,
-        _reg2 = /,\[.*\],/,
-        _reg3 = /['|"].*['|"]/,
-        _reg4 = /'|"/g;
-    return function(_deps,_callback){
-        _callback = _callback.toString();
-        if (_callback.indexOf('patch(')<0){
-            return _deps;
-        }
-        if (!_deps){
-            _deps = [];
-        }
-        var _phs = _callback.match(/patch\([^)]*/g);
-        for(var i=0,l=_phs.length; i<l; i++){
-            _phs[i] = _phs[i].replace(_reg0,'').replace(_reg1,'');
-            var _list = _phs[i].match(_reg2);
-            if (_list){
-                _list = _list[0].match(_reg3)[0];
-                _list = _list.replace(_reg4,'').split(',');
-                if(_list.length>0)
-                    _deps = _deps.concat(_list)
-            }
-        }
-        return _deps;
-    };
-})();
- 
 /*
  * 执行模块定义
  * @param  {String}   _uri      当前所在文件，确定文件中模块不会被其他文件依赖时可以不用传此参数，比如入口文件
@@ -615,27 +639,23 @@ var _doMergeDefine = (function(){
  * @return {Void}
  */
 var _doDefine = (function(){
-    var _seed = new Date().getTime();
+    var _seed = +new Date;
     return function(_uri,_deps,_callback){
         // check input
-        if (_isTypeOf(_deps,'Function')){
-            _callback = _deps;
-            _deps = null;
-        }
-        if (_isTypeOf(_uri,'Array')){
-            _deps = _uri;
-            _uri = ''+_seed++;
-        }
-        if (_isTypeOf(_uri,'Function')){
-            _callback = _uri;
-            _deps = null;
-            _uri = ''+_seed++;
-        }
-        if(_isTypeOf(_deps,'Array')){
-            _deps = _doMergePlatform(_deps,_uri);
+        var _args = _doFormatARG.apply(
+            null,arguments
+        );
+        _uri = _args[0]||(''+(_seed++));
+        _deps = _args[1];
+        _callback = _args[2];
+        // merge platform and patch
+        if (!!_deps){
+            _doMergePlatform(_deps);
         }
         _doParsePatched(_deps);
-        _deps = _doMergeDefine(_deps,_callback);
+        if (!!_callback){
+            _deps = _doMergePatched(_deps,_callback);
+        }
 //        console.log(_uri+' -> ['+(_deps||[]).join(',')+']')
         // check module defined in file 
         _uri = _doFormatURI(_uri);
@@ -720,23 +740,73 @@ NEJ.define = function(_uri,_deps,_callback){
     _doAddAllListener();
 };
 /**
- * 根据条件判断是否在当前平台执行
- * @param  {[type]} _exp      条件:6<TR<9
- * @param  {[type]} _deps     [description]
- * @param  {[type]} _callback [description]
- * @return {[type]}           [description]
+ * 根据条件判断是否在当前平台执行，
+ * 平台支持TR|WR|GR，没有比较操作符表示支持当前内核所有release版本
+ * [ntb]
+ * 标识符 | 说明
+ * --------------------------
+ *  T    | Trident引擎，如IE
+ *  W    | Webkit引擎，如chrome
+ *  G    | Gecko引擎，如firefox
+ * [/ntb]
+ * 平台内置的Trident引擎版本对应的IE版本关系：
+ * [ntb]
+ * Trident版本 | IE版本
+ * --------------------
+ *  2.0       | 6
+ *  3.0       | 7
+ *  4.0       | 8
+ *  5.0       | 9
+ *  6.0       | 10
+ *  7.0       | 11
+ * [/ntb]
+ * 代码举例：
+ * [code]
+ *     NEJ.define(['./hack.js'],
+ *     function(){
+ *         // 针对trident平台的处理逻辑
+ *         NEJ.patch('TR',function(){
+ *             // TODO
+ *             console.log('from inline ie');
+ *          });
+ *          // 针对webkit平台的处理逻辑
+ *          NEJ.patch('WR',['./hack.chrome.js'],function(){
+ *              // TODO
+ *              console.log('from inline chrome');
+ *          });
+ *          // 针对gecko平台的处理逻辑
+ *          NEJ.patch('GR',['./hack.firefox.js'],function(){
+ *              // TODO
+ *              console.log('from inline firefox');
+ *          });
+ *       
+ *          // 针对IE6平台的处理逻辑
+ *          NEJ.patch('TR==2.0',['./hack.ie6.js']);
+ *       
+ *          // 针对IE7-IE9的处理逻辑
+ *          NEJ.patch('3.0<=TR<=5.0',function(){
+ *              // TODO
+ *              console.log('from inline ie7-ie9');
+ *          });
+ *   });
+ * [/code]
+ * @api    {NEJ.patch}
+ * @param  {String}    平台识别条件，如：6<=TR<=9
+ * @param  {Array}     依赖文件列表
+ * @param  {Function}  执行函数
+ * @return {Void}  
  */
 NEJ.patch = function(_exp,_deps,_callback){
+    var _args = _doFormatARG.apply(
+        null,arguments
+    );
+    if (!_args[0]) return;
+    // check platform
     var _kernel = nej.p._$KERNEL,
-        _engine = _kernel.engine,
-        _release= _kernel.release;
-    if (!_callback || !_exp) return;
-    if (!_deps && !_callback) return;
-    if (_doParsePatchExp(_exp).isVerOK(_release) && _doParsePatchExp(_exp).isEngOK(_engine)){
-        if (_isTypeOf(_deps,'Function')){
-            _callback = _deps;
-        }
-        _callback();
+        _result = _doParsePatchExp(_args[0]);
+    if (_result.isEngOK(_kernel.engine)&&
+        _result.isVerOK(_kernel.release)){
+        !_args[2]||(_args[2]());
     }
 };
 /**
