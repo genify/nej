@@ -295,15 +295,13 @@ var _doMergePlatform = (function(){
         if (_patch.length>1){
             _sufix = '.'+_patch.pop();
         }
-        _patch.join('.');
         return [
             _path+_name,
-            _path+_patch+'.patch'+_sufix
+            _path+_patch.join('.')+'.patch'+_sufix
         ];
     };
     return function(_deps){
-        for(var i=0,l=_deps.length,_it;i<l;i++){
-            _it = _deps[i];
+        for(var i=0,_it;_it=_deps[i];i++){
             if (_it.indexOf('{platform}')>=0){
                 _it = _doParsePlatformURI(_it);
                 _it.unshift(i,1);
