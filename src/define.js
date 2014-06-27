@@ -437,20 +437,22 @@ var _doFormatURI = (function(){
  * @return {Array}    格式化后的参数列表
  */
 var _doFormatARG = function(_str,_arr,_fun){
-    if (_isTypeOf(_arr,'Function')){
-        _fun = _arr;
-        _arr = null;
+    var _args = [null,null,null],
+        _kfun = [
+            function(_arg){return _isTypeOf(_arg,'String');},
+            function(_arg){return _isTypeOf(_arg,'Array');},
+            function(_arg){return _isTypeOf(_arg,'Function');}
+        ];
+    for(var i=0,l=arguments.length,_it;i<l;i++){
+        _it = arguments[i];
+        for(var j=0,k=_kfun.length;j<k;j++){
+            if (_kfun[j](_it)){
+                _args[j] = _it;
+                break;
+            }
+        }
     }
-    if (_isTypeOf(_str,'Array')){
-        _arr = _str;
-        _str = '';
-    }
-    if (_isTypeOf(_str,'Function')){
-        _fun = _str;
-        _arr = null;
-        _str = '';
-    }
-    return [_str,_arr,_fun];
+    return _args;
 };
 /*
  * 侦测脚本载入情况
@@ -613,7 +615,7 @@ var _doCheckLoading = function(){
         }
         __queue.splice(i,1);
         if (__cache[_item.n]!==2){
-            _item.f();
+            !_item.f||_item.f();
             __cache[_item.n] = 2;
             console.log('do '+_item.n);
         }
@@ -622,7 +624,7 @@ var _doCheckLoading = function(){
     // check circular reference
     if (__queue.length>0&&_isFinishLoaded()){
         var _item = _doFindCircularRef()||__queue.pop();
-        _item.f();
+        !_item.f||_item.f();
         __cache[_item.n] = 2;
         console.log('do+ '+_item.n);
         _doCheckLoading();
@@ -695,52 +697,58 @@ var _doDefine = (function(){
         _doCheckLoading();
     };
 })();
+window.NEJ = {};
 /**
  * 模块定义，单个文件内模块依赖关系自行解决，使用方式如
  * 
  * 脚本举例：
  * [code]
  * 
+ *  // 定义自己的文件标识为{lib}base/event.js
  *  // 依赖{lib}base/global.js和{lib}base/util.js
- *  // 可能被其他文件依赖
  *  define('{lib}base/event.js',
- *        ['{lib}base/global.js'
- *        ,'{lib}base/util.js'],
+ *        ['{lib}base/global.js',
+ *         '{lib}base/util.js'],
  *  function(){
  *      // TODO something
  *  });
  * 
- *  // 不会被其他模块依赖
  *  // 依赖于{lib}base/global.js文件
  *  define(['{lib}base/global.js'],
  *  function(){
  *      // TODO something
  *  });
- * 
+ *  
+ *  // 定义自己的文件标识为{lib}base/event.js
  *  // 没有依赖其他文件
- *  // 可能被其他文件依赖
  *  define('{lib}base/event.js',
  *  function(){
  *      // TODO something
  *  });
  * 
  *  // 不依赖其他文件
- *  // 不会被其他文件依赖
  *  // 等价于直接执行(function(){})()
  *  define(
  *  function(){
  *      // TODO something
  *  });
+ *  
+ *  // 仅用于引入依赖文件列表而不执行业务逻辑
+ *  define(['{lib}base/global.js']);
+ *  
+ *  // 定义自己的文件标识为{lib}base/event.js
+ *  // 仅用于引入依赖文件列表而不执行业务逻辑
+ *  define('{lib}base/event.js',
+ *        ['{lib}base/global.js']);
  * 
  * [/code]
  * 
  * @api    {NEJ.define}
- * @param  {String}   当前所在文件，确定文件中模块不会被其他文件依赖时可以不用传此参数，比如入口文件
+ * @param  {String}   当前文件路径标识，不传自动解析
  * @param  {Array}    模块依赖的其他模块文件，没有依赖其他文件可不传此参数
- * @param  {Function} 模块定义回调【必须】
+ * @param  {Function} 模块定义回调
  * @return {Void}
  */
-window.NEJ = {};
 NEJ.define = function(_uri,_deps,_callback){
     // has uri
     if (_isTypeOf(_uri,'String'))
