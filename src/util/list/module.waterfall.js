@@ -379,7 +379,9 @@ var f = function(){
         // without pager
         var _id = _event.data[this.__iopt.pkey];
         if (!!this.__items){
-            var _item = _e._$getItemById(_id),
+            var _item = _e._$getItemById(
+                    this.__getItemId(_id)
+                ),
                 _index = _u._$indexOf(this.__items,_item);
             if (_index>=0){
                 this.__items.splice(_index,1);

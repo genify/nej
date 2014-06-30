@@ -199,8 +199,17 @@ var f = function(){
      * @return {String} 节点ID
      */
     _pro.__getItemBodyId = function(_id){
+        return this.__getItemId(_id)+
+               _e._$getHtmlTemplateSeed();
+    };
+    /**
+     * 取项标识
+     * @param  {String} 数据标识
+     * @return {String} 项标识
+     */
+    _pro.__getItemId = function(_id){
         var _prefix = (this.__iopt||_o).prefix||'';
-        return _prefix+_id+_e._$getHtmlTemplateSeed();
+        return _prefix+_id;
     };
     /**
      * 取当前偏移量的分页信息
@@ -764,7 +773,9 @@ var f = function(){
         if (_event.stopped) return;
         var _id = _event.data[this.__iopt.pkey];
         if (!!this.__items){
-            var _item = _e._$getItemById(_id);
+            var _item = _e._$getItemById(
+                this.__getItemId(_id)
+            );
             if (!!_item) _item._$refresh(_event.data);
         }else{
             var _node = this._$getItemBody(_id);
@@ -981,7 +992,9 @@ var f = function(){
             );
         }else{
             // render by item
-            var _item = _e._$getItemById(_id);
+            var _item = _e._$getItemById(
+                this.__getItemId(_id)
+            );
             if (!!_item){
                 return _item._$getBody();
             }
