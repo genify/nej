@@ -33,7 +33,7 @@ var f = function(){
      *     {list beg..end as y}
      *       {var x=xlist[y]}
      *       <div class="item">
-               <a data-id="${x.id|x.name}" data-action="delete">删除</a>
+               <a data-id="${x.id}" data-action="delete">删除</a>
      *         <p>姓名：${x.name}</p>
      *         <p>联系方式：${x.mobile}</p>
      *       </div>
