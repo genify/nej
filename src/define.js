@@ -247,20 +247,14 @@ var _doParsePatchExp = (function(){
             _left = "'"+_doParseVersion(_arr[0])+_pkey+"'",
             _right = "'"+_pkey+_doParseVersion(_arr[1])+"'";
         _result.isVerOK = function(_version){
-            var _lrtn,_rrtn;
+            var _arr = ['true'];
             if (!!_left){
-                _lrtn = eval(_left.replace(_pkey,_version));
+                _arr.push(_left.replace(_pkey,_version));
             }
             if (!!_right){
-                _rrtn = eval(_right.replace(_pkey,_version));
+                _arr.push(_right.replace(_pkey,_version));
             }
-            if (_left==null){
-                return !!_rrtn;
-            }
-            if (_right==null){
-                return !!_lrtn;
-            }
-            return !!(_lrtn&&_rrtn);
+            return eval(_arr.join('&&'));
         };
         return _result;
     };
