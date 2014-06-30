@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>卡片控件 - 前端实例</title>
+    <style>
+        html,body{height:100%;width:100%;}
+        body{border:1px solid #f00;}
+        
+        .reveal-modal{border:1px solid #abc;}
+        
+    </style>
+  </head>
+  <body>
+    <textarea id="abc" style="display:none;">
+       <div id="myModal" class="reveal-modal" style="top: 100px; opacity: 1; visibility: visible;">
+         <h1>jquery导出层</h1>
+         <a href="http://www.baidu.com">百度</a>
+         <p>This is a default modal in all its glory, but any of the styles here can easily be changed in the CSS.</p>
+         <a class="close-reveal-modal">×</a>
+       </div>
+    </textarea>
+    <script src="http://nej.netease.com/nej/src/define.js?pro=./"></script>
+    <script>
+        define(['{lib}ui/layer/card.js'], function () {
+            var _ = NEJ.P,
+                _e = _('nej.e'),
+                _p = _('nej.ui');
+            
+            var _card = _p._$$Card._$allocate({
+                parent:document.body,
+                content:_e._$get('abc').value
+            });
+            
+            _card._$showByReference({
+                fitable:!0,
+                align:'top right',
+                target:document.body,
+                delta:{top:10,right:20}
+            });
+        });
+    </script>
+  </body>
+</html>
