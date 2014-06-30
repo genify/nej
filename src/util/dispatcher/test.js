@@ -35,7 +35,7 @@ var f = function(){
      * @return {Void}
      */
     _e._$testByTemplate = function(_tid){
-        _e._$parseTemplate('template-box');
+        _e._$parseTemplate(_tid||'template-box');
     };
 };
 NEJ.define('{lib}util/dispatcher/test.js',
