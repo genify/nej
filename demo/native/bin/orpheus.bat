@@ -1,1 +1,0 @@
-"%~dp0orpheus.exe"   --enable-dev-tools --enable-invoke-trace  --native-package-dir=%~dp0\script --orpheus-package-dir=%~dp0..\..\webapp
