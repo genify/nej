@@ -55,8 +55,9 @@ var _doInit = function(){
             ? _doParseConfig(_script.src)
             : _doScriptLoaded(_script,!0);
     }
-    if (!__config.global)
+    if (!__config.global&&!p.define){
         p.define = NEJ.define;
+    }
 };
 /*
  * 解析地址
@@ -380,15 +381,14 @@ var _doStr2Obj = function(_query){
 var _doFormatURI = (function(){
     var _xxx = !1,
         _reg = /{(.*?)}/gi,
-        _reg1= /([^\:]\/:?)\/+/ig,
-        _reg2= /\.\//,
+        _reg1= /([^:])\/+/g,
         _reg3= /[^\/]*$/,
         _anchor = d.createElement('a');
     var _absolute = function(_uri){
         return _uri.indexOf('://')>0;
     };
-    var _delBackslash = function(_uri){
-        return _uri.replace(_reg1,function($1,$2){return $2;});
+    var _slash = function(_uri){
+        return _uri.replace(_reg1,'$1/');
     };
     var _append = function(){
         if (_xxx) return;
@@ -396,7 +396,7 @@ var _doFormatURI = (function(){
         _anchor.style.display = 'none';
         document.body.appendChild(_anchor);
     };
-    var _getRoot = function(_uri) {
+    var _root = function(_uri) {
         return _uri.replace(_reg3,'');
     };
     return function(_uri,_baseuri){
@@ -410,10 +410,10 @@ var _doFormatURI = (function(){
         _append();
         if (!_uri) return '';
         if (_absolute(_uri)) return _uri;
-        if (_baseuri && _uri.search(_reg2) > -1){
-            _uri = _getRoot(_baseuri) + _uri;
+        if (_baseuri&&_uri.indexOf('.')==0){
+            _uri = _root(_baseuri)+_uri;
         }
-        _uri = _delBackslash(_uri);
+        _uri = _slash(_uri);
         var _uri = _uri.replace(_reg,function($1,$2){
                        return __config.root[$2]||$2;
                    });
