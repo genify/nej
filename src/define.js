@@ -410,7 +410,7 @@ var _doFormatURI = (function(){
         _append();
         if (!_uri) return '';
         if (_absolute(_uri)) return _uri;
-        if (_baseuri && !_absolute(_uri) && _uri.search(_reg2) > -1){
+        if (_baseuri && _uri.search(_reg2) > -1){
             _uri = _getRoot(_baseuri) + _uri;
         }
         _uri = _delBackslash(_uri);
