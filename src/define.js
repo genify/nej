@@ -666,6 +666,7 @@ var _doDefine = (function(){
     var _doComplete = function(_list,_base){
         if (!_list||!_list.length) return;
         for(var i=0,l=_list.length;i<l;i++){
+            if(_list[i].indexOf('{patch}') >= 0) continue;
             _list[i] = _doFormatURI(_list[i],_base);
         }
     };
