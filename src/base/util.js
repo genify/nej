@@ -5,7 +5,7 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
+var f = function(){ 
     // variable declaration
     var _  = NEJ.P,
         _o = NEJ.O,
