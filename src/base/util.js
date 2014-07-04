@@ -5,7 +5,7 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){ 
+var f = function(){
     // variable declaration
     var _  = NEJ.P,
         _o = NEJ.O,
@@ -615,9 +615,11 @@ var f = function(){
      */
     _u._$var2date = function(_time){
         var _date = _time;
-        if (_u._$isString(_time))
+        if (_u._$isString(_time)){
+            _time = _time.replace(/-/g,'/');
             _date = new Date(Date.parse(_time));
-        if (!_u._$isDate(_time))
+        }
+        if (!_u._$isDate(_date))
             _date = new Date(_time);
         return _date;
     };
