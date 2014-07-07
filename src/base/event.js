@@ -619,6 +619,38 @@ var f = function(){
         };
     })();
     /**
+     * 取事件相对于页面的位置
+     * 
+     * 页面结构举例
+     * [code type="html"]
+     *   <div id="abc" style="width:100%;height:100%;">123</div>
+     * [/code]
+     * 
+     * 脚本举例
+     * [code]
+     *   var _v = NEJ.P('nej.v');
+     *   // 回调中取鼠标位置
+     *   _v._$addEvent(
+     *       'abc','click',
+     *       function(_event){
+     *           // 获取鼠标事件触发的水平、垂直位置
+     *           var _pos = _v._$page(_event);
+     *       },false);
+     * [/code]
+     * 
+     * @see    {#_$pageX}
+     * @see    {#_$pageY}
+     * @api    {nej.v._$page}
+     * @param  {Event}  事件对象
+     * @return {Object} 位置信息，{x:10,y:10}
+     */
+    _v._$page = function(_event){
+        return {
+            x:_v._$pageX(_event),
+            y:_v._$pageY(_event)
+        };
+    };
+    /**
      * 取事件相对于页面左侧的位置
      * 
      * 页面结构举例

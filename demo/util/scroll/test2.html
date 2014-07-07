@@ -7,7 +7,11 @@
       .xbc{position:relative;width:300px;margin:10px auto;border:1px solid #aaa;}
       .abc{height:600px;overflow:hidden;}
       .abc p{height:80px;line-height:80px;}
-      .bar{position:absolute;background:#aaa;overflow:hidden;cursor:default;}
+      .trk{position:absolute;background:#aaa;}
+      .trk:hover{width:20px;}
+      .trk:hover .y{right:5px;}
+      .ty{top:0;bottom:0;right:0;width:10px;height:100%;}
+      .bar{position:absolute;background:#f00;overflow:hidden;cursor:default;}
       .x{left:0;bottom:0;height:10px;width:50px;}
       .y{top:0;right:0;width:10px;height:50px;}
       p{background:#fdc;}
@@ -16,7 +20,7 @@
   <body>
     <div class="xbc" id="bbox">
       <div class="bar x" id="xbar">&nbsp;</div>
-      <div class="bar y" id="ybar">&nbsp;</div>
+      <div class="trk ty"><div class="bar y" id="ybar">&nbsp;</div></div>
       <div class="abc" id="box">
       <script>
           var a = [];
@@ -36,8 +40,8 @@
                 _t = _('nej.ut');
             
             _t._$$SimpleScroll._$allocate({
-                xbar:'xbar',
-                ybar:{body:'ybar',top:15,bottom:5},
+                xbar:{body:'xbar'},
+                ybar:{body:'ybar',track:':parent'},
                 parent:'box',
                 trigger:'bbox'
             });

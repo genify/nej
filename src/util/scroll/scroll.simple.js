@@ -59,8 +59,8 @@ var f = function(){
      * @extends {nej.ut._$$Event}
      * 
      * @param   {Object} _options 可选配置参数
-     * @config  {Node|Object}  xbar    水平滚动条节点或者配置信息，如果不配置min值则默认取body的初始宽度，配置如{body:'bar-id',min:10,speed:1,left:10,right:10}
-     * @config  {Node|Object}  ybar    垂直滚动条节点或者配置信息，如果不配置min值则默认取body的初始高度，配置如{body:'bar-id',min:10,speed:1,top:10,bottom:10}
+     * @config  {Node|Object}  xbar    水平滚动条节点或者配置信息，如果不配置min值则默认取body的初始宽度，配置如{body:'bar-id',track:':parent',min:10,speed:1,left:10,right:10,step:10}
+     * @config  {Node|Object}  ybar    垂直滚动条节点或者配置信息，如果不配置min值则默认取body的初始高度，配置如{body:'bar-id',track:'parent-id',min:10,speed:1,top:10,bottom:10,step:10}
      * @config  {String|Node}  parent  滚动容器节点，默认为滚动条的父容器，滚动过程触发该节点上的onscroll事件
      * @config  {String|Node}  trigger 滚动条显示隐藏触点，不传表示不做显示隐藏切换
      */
@@ -103,6 +103,8 @@ var f = function(){
             x:{
                 min:0,
                 speed:1,
+                step:50,
+                interval:50,
                 left:0,
                 right:0,
                 sb:'scrollWidth',
@@ -116,6 +118,8 @@ var f = function(){
             y:{
                 min:0,
                 speed:1,
+                interval:50,
+                step:50,
                 top:0,
                 bottom:0,
                 sb:'scrollHeight',
@@ -136,6 +140,12 @@ var f = function(){
                 NEJ.X({},_bcnf[_name]),_conf
             );
             _result.body = _e._$get(_result.body);
+            if (!!_result.body&&!!_result.track){
+                if (_result.track==':parent'){
+                    _result.track = _result.body.parentNode;
+                }
+                _result.track = _e._$get(_result.track);
+            }
             if (!_result.min){
                 _result.min = !_result.body?10:(_result.body[_result.ob]||10);
             }
@@ -163,6 +173,12 @@ var f = function(){
             ],[
                 this.__parent,'scroll',
                 this.__doSyncScrollBar._$bind(this)
+            ],[
+                this.__bar.x.track,'mousedown',
+                this.__onTrackDown._$bind(this,'x')
+            ],[
+                this.__bar.y.track,'mousedown',
+                this.__onTrackDown._$bind(this,'y')
             ]]);
             var _node = _e._$get(_options.trigger);
             if (!!_node){
@@ -197,7 +213,6 @@ var f = function(){
             var _conf = this.__dopt[_key];
             delete _conf.view;
             delete _conf.body;
-            
         };
         var _doClearBarStyle = function(_conf,_key,_map){
             if (!_conf.body) return;
@@ -236,17 +251,18 @@ var f = function(){
             _cbox = _cbox-_conf[_conf.sp]
                     -_conf[_conf.dr],
             _delta = _sbox-_cbox,
-            _style = {};
+            _style = {},
+            _oshow = {};
         if (_sdlt<=0){
             _conf.ratio = 0;
-            _style.visibility = 'hidden';
+            _oshow.visibility = 'hidden';
             _style[_conf.ss] = _cbox+'px';
         }else{
             var _size = Math.ceil(Math.max(
                 _conf.min,
                 _cbox-_cbox/_sbox*_delta
             ));
-            _style.visibility = 'visible';
+            _oshow.visibility = 'visible';
             _style[_conf.ss] = _size+'px';
             _conf.max = Math.ceil(
                 _cbox-_size+
@@ -260,6 +276,7 @@ var f = function(){
                 _conf.body[_conf.ob]-
                 _conf.body[_conf.cb];
         }
+        _e._$style(_conf.track||_conf.body,_oshow);
         _e._$style(_conf.body,_style);
     };
     /**
@@ -306,9 +323,14 @@ var f = function(){
      */
     _pro.__doAnimScrollBar = function(){
         this.__doStopBarOpacity();
+        var _tmp = this.__bar.y,
+            _body = _tmp.track||_tmp.body;
+        if (!_body){
+            _tmp = this.__bar.x;
+            _body = _tmp.track||_tmp.body;
+        }
         this.__aopt.from.offset = _e._$getStyle(
-            this.__bar.y.body||
-            this.__bar.x.body,'opacity'
+            _body,'opacity'
         );
         this.__anim = _p._$$AnimEaseInOut.
                       _$allocate(this.__aopt);
@@ -320,8 +342,16 @@ var f = function(){
      */
     _pro.__doUpdateBarOpacity = function(_event){
         var _value = _event.offset;
-        _e._$setStyle(this.__bar.x.body,'opacity',_value);
-        _e._$setStyle(this.__bar.y.body,'opacity',_value);
+        _e._$setStyle(
+            this.__bar.x.track||
+            this.__bar.x.body,
+            'opacity',_value
+        );
+        _e._$setStyle(
+            this.__bar.y.track||
+            this.__bar.y.body,
+            'opacity',_value
+        );
     };
     /**
      * 清理显示动画
@@ -369,6 +399,65 @@ var f = function(){
         this.__aopt.to.offset = 0;
         this.__doAnimScrollBar();
     };
+    /**
+     * 轨道点击事件
+     * @param  {String} 类型
+     * @param  {Event}  事件对象
+     * @return {Void}
+     */
+    _pro.__onTrackDown = (function(){
+        var _fmap = {
+            x:function(_delta){
+                this.__doUpdateScrollBar(_delta,0);
+            },
+            y:function(_delta){
+                this.__doUpdateScrollBar(0,_delta);
+            }
+        };
+        var _timer,_onstop,_count;
+        var _doClearScroll = function(_conf){
+            _count = 1;
+            _onstop = null;
+            _timer = window.clearTimeout(_timer);
+            _v._$delEvent(_conf.track,'mouseup',_onstop);
+        };
+        var _doAutoScroll = function(_type,_point,_size){
+            var _conf = this.__bar[_type],
+                _left = parseInt(_e._$getStyle(
+                    _conf.body,_conf.sp
+                )),
+                _right = _left+_size;
+            // stop scroll
+            if (_left<=_point&&_point<=_right){
+                _doClearScroll(_conf);
+                return;
+            }
+            // init stop event
+            if (!_onstop){
+                _onstop = _doClearScroll._$bind(this,_conf);
+                _v._$addEvent(_conf.track,'mouseup',_onstop);
+            }
+            // update scrollbar
+            _fmap[_type].call(this,(_point<_left?1:-1)*_conf.step*_count);
+            // next scrollbar
+            _timer = window.setTimeout(
+                _doAutoScroll._$bind(this,_type,_point,_size),
+                _conf.interval
+            );
+            _count++;
+        };
+        return function(_type,_event){
+            var _conf = this.__bar[_type],
+                _offset = _e._$offset(_conf.track)[_type],
+                _pointer = _v._$page(_event)[_type],
+                _size = _conf.body[_conf.ob];
+            _doClearScroll(_conf);
+            _doAutoScroll.call(
+                 this,_type,
+                _pointer-_offset,_size
+            );
+        };
+    })();
     /**
      * 更新水平滚动条
      * @param  {Object} 拖拽信息
