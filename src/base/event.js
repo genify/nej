@@ -722,6 +722,16 @@ var f = function(){
                 _args[0],_args[1],_options);
         return this;
     };
+
+    /**
+     * 判断是否需要对Flash事件做代理，
+     * 主要fix flash上的鼠标事件没法响应到DOM节点上的问题
+     * @return {Boolean} 是否做代理
+     */
+    _v._$canFlashEventBubble =
+    _x._$canFlashEventBubble = function(_wmode){
+        return _h.__canFlashEventBubble(_wmode);
+    };
     /**
      * 导出dom事件缓存对象，仅用于调试
      * @return {Void}
@@ -735,5 +745,5 @@ NEJ.define(
     '{lib}base/event.js',[
     '{lib}base/element.js',
     '{lib}base/util.js',
-    '{patch}api.js'
+    '{platform}event.js'
 ],f);

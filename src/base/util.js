@@ -610,17 +610,24 @@ var f = function(){
      * [/code]
      * 
      * @api    {nej.u._$var2date}
+     * @param  {String}              日期格式
      * @param  {Number|String|Date}  时间
      * @return {Date}                日期
      */
-    _u._$var2date = function(_time){
-        var _date = _time;
-        if (_u._$isString(_time))
-            _date = new Date(Date.parse(_time));
-        if (!_u._$isDate(_time))
-            _date = new Date(_time);
-        return _date;
-    };
+    _u._$var2date = (function(){
+        return function(_time){
+            var _date = _time;
+            if (_u._$isString(_time)){
+                if(_time.indexOf('-') < 0 && _time.indexOf('/') < 0)
+                    _time = '';
+                _time = _time.replace(/-/g,'/');
+                _date = new Date(Date.parse(_time));
+            }
+            if (!_u._$isDate(_date))
+                _date = new Date(_time);
+            return _date;
+        };
+    })();
     /**
      * 浮点数值保留指定位数小数点<br/>
      * 

@@ -209,7 +209,7 @@ var f = function(){
 };
 NEJ.define(
     '{lib}util/ajax/proxy/proxy.js',[
-    '{patch}config.js',
+    '{lib}base/config.js',
     '{lib}base/util.js',
     '{lib}base/event.js',
     '{lib}base/constant.js',

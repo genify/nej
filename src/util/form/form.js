@@ -30,6 +30,7 @@ var f = function(){
      *   data-pattern    | RegExp                | 正则匹配表达式，字符串格式
      *   data-min        | String/Number         | 输入值必须大于此设置，适用于number/date型
      *   data-max        | String/Number         | 输入值必须小于此设置，适用于number/date型
+     *   data-format     | String                | 规范date类型的格式，用/或者-来连接日期，用：来连接时间，至少应该有MM/dd/yyyy，默认值为yyyy-MM-dd，适用于date型(yyyy:年，MM:月，dd:日，HH:小时，mm:分钟,ss:秒)
      *   data-max-length | Number                | 输入长度必须小于此设置，一个中文算两个字符，适用于text/textarea
      *   data-min-length | Number                | 输入长度必须大于此设置，一个中文算两个字符，适用于text/textarea
      *   maxlength       | Number                | 输入长度必须小于此设置，一个中文算一个字符，适用于text/textarea
@@ -65,7 +66,7 @@ var f = function(){
      *     <input name="n11" type="text" 
      *            data-type="email" data-message="Email地址不合法！"/>
      *     <input name="n12" type="text" 
-     *            data-type="date" data-message="日期格式不正确！"/>
+     *            data-type="date" data-format="yyyy-MM-dd HH:mm:ss" data-message="日期格式不正确！"/>
      *     <input name="n12" type="text" 
      *            data-type="number" data-message="只能输入数字！"/>
      *     <!-- 正则匹配输入信息，注意pattern值必须符合正则表达式规则 -->
@@ -379,21 +380,11 @@ var f = function(){
      * @param  {String} 日期字符串
      * @return {Number} 日期毫秒数
      */
-    _pro.__doParseDate = (function(){
-        // yyyy-MM-dd --> MM/dd/yyyy
-        var _reg = /[-\/]/;
-        var _doFormatDate = function(_value){
-            if (!_value) return '';
-            _value = _value.split(_reg);
-            _value.push(_value.shift());
-            return _value.join('/');
-        };
-        return function(_value){
-            if ((_value||'').toLowerCase()=='now')
-                return +new Date;
-            return Date.parse(_doFormatDate(_value));
-        };
-    })();
+    _pro.__doParseDate = function(_value){
+        if ((_value||'').toLowerCase()=='now')
+            return +new Date;
+        return _u._$var2date(_value);
+    };
     /**
      * 回车操作检测
      * @param  {Event} 事件对象
@@ -596,8 +587,9 @@ var f = function(){
                 // xxx@xx.xx.xxx
                 email:/^[\w-\.]+@(?:[\w-]+\.)+[a-z]{2,6}$/i,
                 // xx-x-xx or xxxx-xx-x
-                date:function(v){
-                    return !v||!isNaN(this.__doParseDate(v));
+                date:function(v,node){
+                    var format = this.__dataset(node,'format')||'yyyy-MM-dd';
+                    return !v||(!isNaN(this.__doParseDate(v)) && _u._$format(this.__doParseDate(v),format) == v);
                 }
             };
         // validate function map
@@ -616,7 +608,7 @@ var f = function(){
                 var _reg = this.__treg[_options.type],
                     _val = _node.value.trim(),
                     _tested = !!_reg.test&&!_reg.test(_val),
-                    _funced = _u._$isFunction(_reg)&&!_reg.call(this,_val);
+                    _funced = _u._$isFunction(_reg)&&!_reg.call(this,_val,_node);
                 if (_tested||_funced) return -2;
             },
             // pattern check

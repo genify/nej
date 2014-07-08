@@ -284,7 +284,7 @@ var f = function(){
 };
 NEJ.define(
     '{lib}ui/editor/editor.js',[
-    '{patch}config.js',
+    '{lib}base/config.js',
     '{lib}ui/base.js',
     '{lib}util/editor/editor.js'
 ],f);

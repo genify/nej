@@ -94,5 +94,5 @@ var f = function(){
 NEJ.define(
     '{lib}util/ajax/message.js',[
     '{lib}base/element.js',
-    '{patch}message.js'
+    '{platform}message.js'
 ],f);

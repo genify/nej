@@ -310,5 +310,5 @@ var f = function(){
 NEJ.define(
     '{lib}util/editor/area.js',[
     '{lib}util/event.js',
-    '{patch}editor.js'
+    '{platform}editor.js'
 ],f);

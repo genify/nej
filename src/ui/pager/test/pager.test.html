@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>pager测试页</title>
+  		<link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.14.0.css" type="text/css" media="screen" />
+		<script type="text/javascript" src="http://code.jquery.com/qunit/qunit-1.14.0.js"></script>
+		<style type="text/css">
+			.js-selected{color:pink;}
+		</style>
+	</head>
+	<body>
+		<h1 id="qunit-header">Qunit pager test</h1>
+		<h2 id="qunit-banner"></h2>
+		<div id="qunit-testrunner-toolbar"></div>
+		<h2 id="qunit-userAgent"></h2>
+		<ol id="qunit-tests"></ol>
+ 		<div id="qunit-fixture"></div>
+		<div id="pagerCnt">page</div>
+		<div id="pagerCnt2">page</div>
+		<div id="pagerCnt3">page</div>
+		<div id="page">
+			<a href="#" class="zbtn sbtn">首页</a>
+	        <a href="#" class="zbtn zprv">上一页</a>
+            <a href="#" class="zpgi"></a>
+			<a href="#" class="zpgi"></a>
+			<a href="#" class="zpgi"></a>
+			<a href="#" class="zpgi"></a>
+            <a href="#" class="zpgi"></a>
+            <a href="#" class="zpgi"></a>
+			<a href="#" class="zpgi"></a>
+            <a href="#" class="zpgi"></a>
+            <a href="#" class="zpgi"></a>
+            <a href="#" class="zbtn znxt">下一页</a>
+			<a href="#" class="zbtn ebtn">末页</a>
+		</div>
+		<div id="pagebox">
+            <a href="#" class="zbtn zprv">上一页</a>
+            <a href="#" class="zpgi"></a>
+            <a href="#" class="zpgi"></a>
+            <a href="#" class="zpgi"></a>
+            <a href="#" class="zpgi"></a>
+            <a href="#" class="zpgi"></a>
+            <a href="#" class="zpgi"></a>
+            <a href="#" class="zpgi"></a>
+            <a href="#" class="zpgi"></a>
+            <a href="#" class="zpgi"></a>
+            <a href="#" class="zbtn znxt">下一页</a>
+		</div>
+		<script src="../../../define.js?pro=./"></script>
+		<script type="text/javascript" src="./pager.test.js"></script>
+	</body>
+</html>

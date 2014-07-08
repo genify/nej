@@ -75,5 +75,5 @@ var f = function(){
     };
 };
 NEJ.define('{lib}util/ajax/loader/html.js',
-          ['{patch}api.js'
+          ['{platform}html.js'
           ,'{lib}util/ajax/loader/loader.js'],f);

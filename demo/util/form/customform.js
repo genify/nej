@@ -20,7 +20,7 @@ var f = function(){
      *                          form      [Node|String]     - 表单节点|表单名称，默认为文档的第一个表单
      */
     t._$$CustomForm = NEJ.C();
-    __proForm = t._$$CustomForm._$extend(ut._$$Form);
+    __proForm = t._$$CustomForm._$extend(ut._$$WebForm);
     /**
      * 页面初始化函数
      */
@@ -39,7 +39,7 @@ var f = function(){
      */
     __proForm.__reset = function(_options){
         this.__supReset(_options);
-        this._$focus();
+        // this._$focus();
         v._$addEvent(this.__form, 'submit', this.__onSubmit._$bind(this));
     };
     /**

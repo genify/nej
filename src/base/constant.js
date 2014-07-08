@@ -91,6 +91,6 @@ var f = function(){
 };
 NEJ.define(
     '{lib}base/constant.js',[
-    '{lib}base/global.js',
-    '{patch}config.js'
+    '{lib}base/config.js',
+    '{lib}base/global.js'
 ],f);

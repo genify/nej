@@ -62,5 +62,5 @@ var f = function(){
 };
 NEJ.define(
     '{lib}util/placeholder/placeholder.js',[
-    '{patch}holder.js'
+    '{platform}holder.js'
 ],f);

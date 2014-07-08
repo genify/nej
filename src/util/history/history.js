@@ -1,6 +1,6 @@
-ï»¿/*
+/*
  * ------------------------------------------
- * HTML5 - History APIå°è£…å®ç°æ–‡ä»¶
+ * HTML5 - History API·â×°ÊµÏÖÎÄ¼ş
  * @version  1.0
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
@@ -18,9 +18,9 @@ var f = function(){
         _hack = !history.pushState||
                 _b._$IS.android||!history.auto;
     /*
-     * è®¾ç½®åœ°å€
-     * @param  {String}  _url      é¡µé¢åœ°å€
-     * @param  {Boolean} _replaced æ˜¯å¦ä¸ä¿å­˜å†å²
+     * ÉèÖÃµØÖ·
+     * @param  {String}  _url      Ò³ÃæµØÖ·
+     * @param  {Boolean} _replaced ÊÇ·ñ²»±£´æÀúÊ·
      * @return {Void}
      */
     var _setLocation = function(_url,_replaced){
@@ -29,8 +29,8 @@ var f = function(){
                 (null,document.title,_url);
     };
     /*
-     * å–ä½ç½®ä¿¡æ¯
-     * @return {Object} ä½ç½®ä¿¡æ¯
+     * È¡Î»ÖÃĞÅÏ¢
+     * @return {Object} Î»ÖÃĞÅÏ¢
      */
     var _getLocation = function(){
         return location.parse(_ctxt.location.href);
@@ -56,10 +56,10 @@ var f = function(){
         _event.value = location.parse(_hash.replace(_reg1,''));
     });
     /**
-     * é‡å®šå‘è·¯å¾„
+     * ÖØ¶¨ÏòÂ·¾¶
      * @api    {location.redirect}
-     * @param  {String}  è·¯å¾„
-     * @param  {Boolean} æ˜¯å¦æ›¿æ¢åŸæ¥çš„å†å²
+     * @param  {String}  Â·¾¶
+     * @param  {Boolean} ÊÇ·ñÌæ»»Ô­À´µÄÀúÊ·
      * @return {location}
      */
     location.redirect = function(_url,_replaced){
@@ -67,7 +67,7 @@ var f = function(){
         return this;
     };
     /**
-     * å¯åŠ¨åœ°å€æ£€æµ‹
+     * Æô¶¯µØÖ·¼ì²â
      * @api    {location.active}
      * @return {location}
      */
@@ -126,13 +126,13 @@ var f = function(){
         };
     })();
     /**
-     * è§£æåœ°å€ä¿¡æ¯
+     * ½âÎöµØÖ·ĞÅÏ¢
      * @api    {location.parse}
-     * @param  {String} åœ°å€
-     * @return {Object} åœ°å€ä¿¡æ¯
-     * @config {String} path  è·¯å¾„ä¿¡æ¯ï¼Œä¸å¸¦æŸ¥è¯¢å‚æ•°
-     * @config {String} href  å®Œæ•´è·¯å¾„ï¼Œå¸¦æŸ¥è¯¢å‚æ•°
-     * @config {Object} query æŸ¥è¯¢å‚æ•°è§£æå‡ºæ¥çš„å¯¹è±¡
+     * @param  {String} µØÖ·
+     * @return {Object} µØÖ·ĞÅÏ¢
+     * @config {String} path  Â·¾¶ĞÅÏ¢£¬²»´ø²éÑ¯²ÎÊı
+     * @config {String} href  ÍêÕûÂ·¾¶£¬´ø²éÑ¯²ÎÊı
+     * @config {Object} query ²éÑ¯²ÎÊı½âÎö³öÀ´µÄ¶ÔÏó
      */
     location.parse = (function(){
         var _reg0 = /^https?:\/\/.*?\//i,
@@ -157,10 +157,10 @@ var f = function(){
         };
     })();
     /**
-     * åˆ¤æ–­è·¯å¾„å’Œå½“å‰åœ°å€æ è·¯å¾„æ˜¯å¦ä¸€è‡´
+     * ÅĞ¶ÏÂ·¾¶ºÍµ±Ç°µØÖ·À¸Â·¾¶ÊÇ·ñÒ»ÖÂ
      * @api    {location.same}
-     * @param  {String}  è·¯å¾„
-     * @return {Boolean} æ˜¯å¦ä¸€è‡´
+     * @param  {String}  Â·¾¶
+     * @return {Boolean} ÊÇ·ñÒ»ÖÂ
      */
     location.same = function(_url){
         return _getLocation().href==_url;
@@ -175,5 +175,5 @@ NEJ.define(
     '{lib}util/history/history.js',[
     '{lib}util/event/event.js',
     '{lib}util/timer/animation.js',
-    '{patch}api.js'
+    '{platform}history.js'
 ],f);

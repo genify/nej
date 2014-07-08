@@ -270,7 +270,7 @@ var f = function(){
     ');
 };
 NEJ.define('{lib}ui/portrait/portrait.js',
-          ['{patch}config.js'
+          ['{lib}base/config.js'
           ,'{lib}base/constant.js'
           ,'{lib}ui/pager/pager.simple.js'
           ,'{lib}util/list/module.pager.js'],f);

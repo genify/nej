@@ -268,5 +268,5 @@ var f = function(){
 };
 NEJ.define('{lib}util/effect/effect.js',
       ['{lib}base/element.js'
-      ,'{patch}effect.js'
+      ,'{platform}effect.js'
       ,'{lib}util/event.js'],f);
