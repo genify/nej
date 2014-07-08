@@ -113,11 +113,9 @@ var f = function(){
         this.__transition = _options.transition||[];
         this.__propMap = {};
         this.__animRule= this.__doParseStyle();
-        if(nej.p._$KERNEL.engine != 'trident'){
-            this.__doInitDomEvent([
-                [this.__node,'transitionend',this.__onTransitionEnd._$bind(this)]
-            ]);
-        }
+        this.__doInitDomEvent([
+            [this.__node,'transitionend',this.__onTransitionEnd._$bind(this)]
+        ]);
     };
 
     /**
@@ -157,8 +155,12 @@ var f = function(){
      * @return {Boolean}  是否是最后结束的属性
      */
     _proEffect.__isLast = function(_event){
-        var _name = _event.propertyName;
-        if((_name === this.__lastProp)||(_name.indexOf(this.__lastProp) > -1))
+        var _name = _event.propertyName,
+            _flag = false;
+        _u._$forIn(this.__lastProp,function(_value){
+            _flag = _name.indexOf(_value) > -1;
+        }._$bind(this));
+        if(_flag || !!this.__lastProp[_name])
             return !0;
         else
             return !1;
@@ -196,15 +198,19 @@ var f = function(){
                 return '';
             var _rule = this.__transition[_index],
                 _t = _rule.duration + _rule.delay;
-            if( _t >= this.__sumtime){
+            if( _t > this.__sumtime){
+                this.__lastProp = {};
                 this.__sumtime = _t;
-                this.__lastProp = _rule.property;
+                this.__lastProp[_rule.property] = _rule.property;
+            }else if(_t == this.__sumtime){
+                this.__lastProp[_rule.property] = _rule.property;
             }
             return _rule.property + ' ' + _rule.duration + 's ' + _rule.timing + ' ' + _rule.delay + 's,';
         };
         return function(){
             var _animRule = '';
             this.__sumtime = 0;
+            this.__lastProp = {}
             _u._$forEach(this.__styles,function(_style,_index){
                 _doParseStyle.call(this,_style);
                 _animRule += _doParseAnim.call(this,_index);

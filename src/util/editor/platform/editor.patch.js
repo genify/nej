@@ -184,7 +184,31 @@ var f = function(){
 	            return _html;
 	        return _html.replace(__reg_nwrd,'');
 	    };
+	});
+
+	NEJ.patch('TR>=7.0',function(){
+		var _  = NEJ.P,
+	        _u = _('nej.u'),
+	        _h = _('nej.h');
 	    /**
+	     * 保存当前选择状态
+	     * @param  {Node} _node 节点
+	     * @return {Void}
+	     */
+	    _h.__saveRange = 
+	    _h.__saveRange._$aop(function(_event){
+	    	// if have selection patched is on editor.td.js
+	        if (!document.selection){
+	            _event.stopped = !0;
+	            var _node = _event.args[0],
+	                _doc = _h.__getDocument(_node),
+	                _id = _e._$id(_doc);
+	            _rcache[_id] = _h.__getRange(
+	                _h.__getWindow(_doc)
+	            );
+	        }
+	    });
+		/**
 	     * 插入html命令处理
 	     * @param {Object} _document 文档对象
 	     * @param {Object} _html
@@ -192,29 +216,38 @@ var f = function(){
 	    _h.__insertHtml = 
 	    _h.__insertHtml._$aop(function(_event){
 	        // inserthtml for ie11
-	        if (_p._$KERNEL.release>='7.0'){
-	            _event.stopped = !0;
-	            var _args = _event.args,
-	                _doc = _args[0],
-	                _win = _h.__getWindow(_doc),
-	                _range = _h.__getRange(_win);
-	            var _node = _doc.createElement('div');
-	            _node.innerHTML = _args[1];
-	            // insert content
-	            _range.deleteContents();
-	            _u._$reverseEach(
-	                _node.childNodes,
-	                function(_elm){
-	                    _range.insertNode(_elm);
-	                }
-	            );
-	            // set focus
-	            var _selection = _h.__getSelection(_win);
-	            _selection.collapseToEnd();
-	            _win.focus();
-	        }
+            _event.stopped = !0;
+            var _args = _event.args,
+                _doc = _args[0],
+                _win = _h.__getWindow(_doc),
+                _range = _h.__getRange(_win);
+            var _node = _doc.createElement('div');
+            _node.innerHTML = _args[1];
+            // insert content
+            _range.deleteContents();
+            _u._$reverseEach(
+                _node.childNodes,
+                function(_elm){
+                    _range.insertNode(_elm);
+                }
+            );
+            // set focus
+            var _selection = _h.__getSelection(_win);
+            _selection.collapseToEnd();
+            _win.focus();
 	    });
 	});
+
+	// ie8-
+	NEJ.patch('TR<=4.0',function(){
+        var _  = NEJ.P,
+            _h = _('nej.h');
+        _h.__getSelectText = function(_document){
+            var _range = _h.__getRange(_document);
+            if (!_range) return '';
+            return _range.text;
+        };
+    });
 
 	// webkit editor patch
 	NEJ.patch('WV',function(){

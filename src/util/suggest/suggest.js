@@ -108,19 +108,6 @@ var f = function(){
             document,'keypress',
             this.__onKeyBoardEnter._$bind(this)
         ]]);
-        // bugfix in input event
-        /*
-        // fix ie9 bug
-        if (_b._$KERNEL.release=='5.0'){
-            this.__doInitDomEvent([[
-                this.__input,'keydown',
-                this.__doHackIE9Input._$bind(this)
-            ],[
-                this.__input,'keyup',
-                this.__doHackIE9Input._$bind(this)
-            ]]);
-        }
-        */
     };
     /**
      * 控件销毁
@@ -287,20 +274,6 @@ var f = function(){
         var _type = 'enter';
         if (_event.keyCode==13) this.__doFinishSelect(_type);
     };
-    /**
-     * IE9删除文字不触发onchange事件
-     * @protected
-     * @method {__doHackIE9Input}
-     * @param  {Event} 事件对象
-     * @return {Void}
-    _pro.__doHackIE9Input = function(_event){
-        if (_event.type=='keydown'){
-            this.__hkie9 = this.__input.value;
-        }else if(this.__hkie9!=this.__input.value&&!!this.__list){
-            this.__onInput();
-        }
-    };
-     */
     /**
      * 设置列表<br />
      * 脚本举例

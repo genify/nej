@@ -13,14 +13,6 @@ var f = function(){
         _t = _('nej.ut');
     /**
      * 取音频播放器实例
-     * @param {Object} 配置信息
-     * @return {nej.ut._$$Media} 音频播放器实例
-     */
-    _h.__getAudioInst = function(_options){
-        return _t._$$MediaAudio._$allocate(_options);
-    };
-    /**
-     * 取音频播放器实例
      * @api    {nej.e._$audio}
      * @param {Object} 配置信息
      * @return {nej.ut._$$Media} 音频播放器实例
@@ -184,8 +176,4 @@ var f = function(){
         };
     })();
 };
-NEJ.define(
-    '{lib}ui/audio/platform/audio.js',[
-    '{lib}base/platform.js',
-    '{lib}util/media/audio.js'
-],f);
+NEJ.define('{lib}util/audio/audio.js',['{platform}audio.js'],f);

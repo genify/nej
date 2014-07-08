@@ -11,7 +11,6 @@ var f = function(){
         _e = _('nej.e'),
         _h = _('nej.h'),
         _rcache = {};  // range cache
-    if (_p._$KERNEL.engine!='trident') return;
     /**
      * 执行编辑命令
      * @param  {Node}   _document 文档对象
@@ -37,8 +36,7 @@ var f = function(){
      */
     _h.__saveRange = 
     _h.__saveRange._$aop(function(_event){
-        if (!!document.selection||
-            _p._$KERNEL.release>='7.0'){
+        if (!!document.selection){
             _event.stopped = !0;
             var _node = _event.args[0],
                 _doc = _h.__getDocument(_node),

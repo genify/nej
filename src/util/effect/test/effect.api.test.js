@@ -12,7 +12,7 @@ var f = function() {
     	var _fdo = function(){
 	    	_e._$fadeOut(_box,{
                 delay:1,
-                duration:5,
+                duration:3,
                 opacity:0.01,
 	    		onstop:function(_event){
                     console.log('fadeout stop')
@@ -26,7 +26,7 @@ var f = function() {
     	var _fdi = function(){
 	    	_e._$fadeIn(_box,{
                 delay:1,
-                duration:2,
+                duration:3,
 	    		onstop:function(_event){
                     console.log('fadein stop')
 	    			_fdo(_box);
@@ -38,9 +38,9 @@ var f = function() {
     	};
     	var _moveTo = function(){
     		_e._$moveTo(_box,{top:300,left:500},{
-                duration:[3,1],
+                duration:[1,1],
                 onstop:function(_event){
-                    alert('moveTo stop')
+                    console.log('moveTo stop')
                 },
                 onplaystate:function(_event){
                     console.log('moveTo state')

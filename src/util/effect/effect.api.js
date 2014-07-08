@@ -4,6 +4,7 @@ var f = function() {
         _u = _('nej.u'),
         _e = _('nej.e'),
         _u = _('nej.u'),
+        _h = _('nej.h'),
         _p = _('nej.ut');
     /**
      * 初始化特效参数
@@ -24,42 +25,23 @@ var f = function() {
      */
     _e.__doBeforeStart = (function(){
         // 如果有一个属性是没有变化的，此属性的回调不会发生，避免此情况
-        var _doCheckState = function(_node,_objs,_isLowerIE){
-            var _number,_flag = true;
-            if(!!_isLowerIE){
-                // IE6-8
-                _u._$forIn(_objs,function(_value,_name){
-                    if(_name === 'opacity'){
-                        _name = 'filter';
-                        var _filter = _e._$getStyle(_node,_name);
-                        // 没设置透明度默认为100
-                        if(_filter === ''){
-                            _e._$setStyle(_node,'filter','alpha(opacity=100)');
-                            _number = 100;
-                        }else{
-                            _number = parseFloat(_filter.split('=')[1])||0;
-                        }
-                        _value = _value * 100;
-                    }else{
-                        _number = _e._$getStyle(_node,_name);
-                    }
-                    // 属性没有变化是不允许的
-                    if(parseInt(_number) === _value)
-                        _flag = false;
-                }._$bind(this));
-            }else{
-                _u._$forIn(_objs,function(_value,_name){
+        var _doCheckState = function(_node,_objs){
+            var _number,_flag=true;
+            _u._$forIn(_objs,function(_value,_name){
+                if(_name === 'opacity'){
+                    _number = _h.__formatNumber ? _h.__formatNumber(_node) : _e._$getStyle(_node,_name);
+                    _value = _h.__formatTo ? _h.__formatTo(_value) : _value;
+                }else{
                     _number = _e._$getStyle(_node,_name);
-                    // 属性没有变化是不允许的
-                    if(parseInt(_number) === _value)
-                        _flag = false;
-                }._$bind(this));
-            }
+                }
+                // 属性没有变化是不允许的
+                if(parseInt(_number) === _value)
+                    _flag = false;
+            }._$bind(this));
             return _flag;
         };
         return function(_node,_objs){
-            var _isLowerIE = (nej.p._$KERNEL.engine === 'trident' && (nej.p._$KERNEL.release - 5) < 0);
-            if(!_doCheckState(_node,_objs,_isLowerIE)) return !1;
+            if(!_doCheckState(_node,_objs)) return !1;
             return !0;
         };
     })();

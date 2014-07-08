@@ -441,33 +441,6 @@ var f = function() {
 	        _event.value = _sheet.rules[_length];
 	    });
 	    /**
-	     * 节点focus行为
-	     * @param  {String|Node} 节点
-	     * @param  {Number}      模式
-	     * @param  {String}      样式
-	     * @return {Void}
-	     */
-	    _h.__focusElement = (function(){
-	        // remove classname onblur
-	        var _onBlur = function(_clazz,_event){
-	            _e._$delClassName(
-	                _v._$getElement(_event),_clazz);
-	        };
-	        return _h.__focusElement._$aop(
-	               function(_event){
-	                    // ie8+ support css :focus
-	                    if (_p._$KERNEL.release>='4.0')
-	                        return;
-	                    // patch ie6-7 :focus
-	                    var _args = _event.args;
-	                    if (_args[1]!=1){
-	                        _v._$addEvent(_args[0],'blur',
-	                            _onBlur._$bind(null,_args[2]));
-	                        _args[1] = -1;
-	                    }
-	               });
-	    })();
-	    /**
 	     * 取节点属性值
 	     * @param  {Node}   节点
 	     * @param  {String} 属性名
@@ -490,6 +463,38 @@ var f = function() {
 	    });
 	    // cache background image
 	    try{document.execCommand('BackgroundImageCache',!1,!0);}catch(e){}
+	});
+
+	NEJ.patch('2.0<=TR<=3.0',function(){
+		// variable declaration
+	    var _  = NEJ.P,
+	        _e = _('nej.e'),
+	        _v = _('nej.v'),
+	        _h = _('nej.h');
+		/**
+	     * 节点focus行为
+	     * @param  {String|Node} 节点
+	     * @param  {Number}      模式
+	     * @param  {String}      样式
+	     * @return {Void}
+	     */
+	    _h.__focusElement = (function(){
+	        // remove classname onblur
+	        var _onBlur = function(_clazz,_event){
+	            _e._$delClassName(
+	                _v._$getElement(_event),_clazz);
+	        };
+	        return _h.__focusElement._$aop(
+	               function(_event){
+	                    // patch ie6-7 :focus
+	                    var _args = _event.args;
+	                    if (_args[1]!=1){
+	                        _v._$addEvent(_args[0],'blur',
+	                            _onBlur._$bind(null,_args[2]));
+	                        _args[1] = -1;
+	                    }
+	               });
+	    })();
 	});
 
 	// ie6 api patch

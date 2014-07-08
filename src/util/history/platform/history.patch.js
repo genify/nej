@@ -2,6 +2,7 @@ var f = function(){
 	// ie6-8
 	NEJ.patch('2.0<TR<=4.0',function(){
 		var _  = NEJ.P,
+			_e = _('nej.e'),
 			_h = _('nej.h');
 		/**
 	     * 将Hash推入历史
@@ -45,7 +46,8 @@ var f = function(){
 	                      (!_iframe&&!_hash)) return;
 	                   _queue.push(_hash);
 	                   if (!_iframe)
-	                       _iframe = _e._$createXFrame();
+	                       _iframe = 
+	                   	_e = _e._$createXFrame();
 	                   _doCheckQueue();
 	                });
 	    })();

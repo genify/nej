@@ -25,7 +25,7 @@ var f = function(){
 	});
 
 	// ie系列 effect patch
-	NEJ.patch('TV',['{lib}util/animation/linear.js',
+	NEJ.patch('TR<=5.0',['{lib}util/animation/linear.js',
 					'{lib}util/animation/easein.js',
 					'{lib}util/animation/easeout.js',
 					'{lib}util/animation/easeinout.js'],
@@ -91,13 +91,10 @@ var f = function(){
 		      _node.sumTime = _durt;
 		      _node.isLastOne = _index;
 		    }
-		    // IE6-8
-		    var _isLowerIE = (nej.p._$KERNEL.engine === 'trident' && (nej.p._$KERNEL.release - 5) < 0);
-		    if(_prop === 'opacity' && _isLowerIE){
-		      _prop = 'filter';
-		      var _filter = _e._$getStyle(_node,_prop);
-		      _from = parseFloat(_filter.split('=')[1])||0;
-		      _to   = _to * 100;
+		    if(_prop === 'opacity'){
+		    	_prop = _h.__formatOpacity ? _h.__formatOpacity():_prop;
+		    	_from = _h.__formatFrom ? _h.__formatFrom(_node):_from;
+		    	_to   = _h.__formatTo ? _h.__formatTo(_to):_to;
 		    }
 		    var _options = {
 		        delay:_delay,
@@ -195,6 +192,39 @@ var f = function(){
 		    return this;
 		};*/
 
-		})
+		});
+	
+	// ie8-
+	NEJ.patch('TR<=4.0',function(){
+		var _  = NEJ.P,
+		    _e = _('nej.e'),
+		    _h = _('nej.h');
+		_h.__formatOpacity = function(_value){
+			return 'filter';
+		};
+
+		_h.__formatFrom = function(_node){
+			var _filter = _e._$getStyle(_node,'filter'),
+		    	_from = parseFloat(_filter.split('=')[1])||0;
+		    return _from;
+		};
+
+		_h.__formatTo = function(_to){
+			return _to * 100;
+		};
+
+		_h.__formatNumber = function(_node){
+            var _filter = _e._$getStyle(_node,'filter');
+            // 没设置透明度默认为100
+            if(_filter === ''){
+                _e._$setStyle(_node,'filter','alpha(opacity=100)');
+                _number = 100;
+            }else{
+                _number = parseFloat(_filter.split('=')[1])||0;
+            }
+            return _number;
+		};
+
+	});
 };
 define(['./effect.js'],f);
