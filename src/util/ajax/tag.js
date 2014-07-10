@@ -183,8 +183,44 @@ var f = function(){
         _p._$$HtmlLoader._$allocate(_options)._$load(_url);
         return this;
     };
+    /**
+     * 载入HTML文件<br/>
+     * [code]
+     *   var _j = nej.j;
+     *   _j._$loadText('http://123.163.com/a.txt',{
+     *       onloaded:function(){
+     *           // 载入成功的回调方法
+     *       },
+     *       onerror:function(_error){
+     *           // 异常回调方法
+     *       }
+     *   });
+     * [/code]
+     * @api    {nej.j._$loadText}
+     * @param  {String} 文件地址
+     * @param  {Object} 可选配置参数，已处理参数列表如下
+     * @config {String} version 版本信息
+     * @return {nej.j}
+     * 
+     * [hr]
+     * 载入完成回调函数
+     * @event  {onloaded} 
+     * 
+     * [hr]
+     * 载入出错回调函数
+     * @event  {onerror} 
+     * @param  {Object}  错误信息
+     * 
+     */
+    _j._$loadText = function(_url,_options){
+        _p._$$TextLoader._$allocate(_options)._$load(_url);
+        return this;
+    };
 };
-NEJ.define('{lib}util/ajax/tag.js',
-      ['{lib}util/ajax/loader/html.js',
-       '{lib}util/ajax/loader/style.js',
-       '{lib}util/ajax/loader/script.js'],f);
+NEJ.define(
+    '{lib}util/ajax/tag.js',[
+    '{lib}util/ajax/loader/text.js',
+    '{lib}util/ajax/loader/html.js',
+    '{lib}util/ajax/loader/style.js',
+    '{lib}util/ajax/loader/script.js'
+],f);
