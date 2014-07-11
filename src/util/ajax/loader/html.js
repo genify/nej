@@ -44,8 +44,8 @@ var f = function(){
      * @return {Void}
      */
     _proHtmlLoader.__doRequest = function(_request){
-        _request.src = this.__url;
         document.body.appendChild(_request);
+        _request.src = this.__url;
     };
     /**
      * 资源载入异常事件
@@ -69,6 +69,7 @@ var f = function(){
     _proHtmlLoader.__onLoaded = function(){
         var _body = null,
             _iframe = (this.__getLoadData(this.__url)||_o).request;
+        if (_iframe.src!=this.__url) return;
         try{_body = _iframe.contentWindow.document.body;}catch(ex){}
         this.__doCallback('onloaded',_body);
         _h.__removeIFrameKeepHistory(_iframe);
