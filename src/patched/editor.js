@@ -16,9 +16,9 @@ var f = function(){
         __reg_cls1 = /(?:class|lang)='(mso)?[^']*'/gi,
         __reg_cls2 = /(?:class|lang)=(mso)?[^>\s]*/gi,// IE7/8 hack
         __reg_ccm  = /(?:<!--)[^>]*(?:-->)/gi,
-        __reg_st0  = /(?:<[^>]* style)="([^"]*)"/gi,
-        __reg_st1  = /(?:<[^>]* style)='([^']*)'/gi,
-        __reg_st2  = /(?:<[^>]* style)=([^>\s]*)/gi,
+        __reg_st0  = /(?:<[^>]* style)="([^"]*)"/i,
+        __reg_st1  = /(?:<[^>]* style)='([^']*)'/i,
+        __reg_st2  = /(?:<[^>]* style)=([^>\s]*)/i,
         __reg_bgc  = /(?:background-color:|text-align:|color:)([^;]*)(;)*/gi;//clear class,lang
     /**
      * 取节点所在的窗体对象
@@ -201,6 +201,7 @@ var f = function(){
             if(__reg_st0.test(_html)){
                 _html = _doFilter(__reg_st0,_html);
             }else if(__reg_st1.test(_html)){
+                __reg_st1.lastIndex = -1;
                 _html = _doFilter(__reg_st1,_html);
             }else{
                 _html = _doFilter(__reg_st2,_html);

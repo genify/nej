@@ -17,7 +17,10 @@ var f = function(){
             clazz:'mycustom'
         });
         this._v._$addEvent(_getcnt,'click',function(){
-            alert(_custom.__editor.__copt.area._$getSelectText());
+            debugger;
+            var x = _custom.__editor.__copt.area._$getContent();
+            alert(x);
+            // alert(_custom.__editor.__copt.area._$getSelectText());
         }._$bind(this));
     });
 }
