@@ -50,6 +50,7 @@ var f = function(){
             _tlist = [{cmd:'justifyLeft',txt:'左对齐',icn:'z-i-50'}
                      ,{cmd:'justifyCenter',txt:'居中对齐',icn:'z-i-51'}
                      ,{cmd:'justifyRight',txt:'右对齐',icn:'z-i-52'}
+                     ,{cmd:'link',txt:'超链接',icn:'z-i-42'}
                      ,{cmd:'uploadImage',txt:'照片上传',icn:'z-i-82'}];
         return function(){
             _seed_html = _e._$addNodeTemplate(

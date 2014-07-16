@@ -45,13 +45,18 @@ var f = function(){
      * @return {Void}
      */
     _proUploadImage.__doShowCard = function(){
-        if (!!this.__onShowCard){
-            this.__onShowCard();
-        }else{
-            _i._$$UploadImageCard._$allocate({
+        this.__onShowCard();
+    };
+
+    /**
+     * 子类实现显示具体卡片
+     * @return {Void}
+     */
+    _proUploadImage.__onShowCard = function(){
+        if (!this.__uploadCard)
+        this.__uploadCard = _i._$$UploadImageCard._$allocate({
                 onchange:this.__onChange._$bind(this)
             })._$show();
-        }
     };
     
     /**

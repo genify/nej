@@ -78,8 +78,9 @@ var f = function(){
         return (!!document.selection && parseFloat(_p._$KERNEL.release)<5.0)?_range.text:_range.toString()||_range.cloneContents().textContent||_range.commonAncestorContainer.data;
     };
     /**
-     * 获取选中内容的html,并删除原来内容
-     * @param {Object} _document
+     * 获取选中内容的html
+     * @param  {Object} _document
+     * @return {String} 选中内容的html
      */
     _h.__getSelectHtml = function(_document){
         var _range = this.__getRange(_document);
@@ -92,6 +93,27 @@ var f = function(){
         _ntmp.appendChild(_range.cloneContents());
         return _ntmp.innerHTML;
     };
+    /**
+     * 获取选中内容的父节点
+     * @param  {Object} _document
+     * @return {Node|String} 选中内容的父节点
+     */
+    _h.__getSelectNode = (function(){
+        var _checkNodeType = function(_node){
+            if (_node.nodeType == 1){
+                return _node;
+            }else{
+                _node = _node.parentNode;
+                return _checkNodeType(_node);
+            }
+        };
+        return function(_document){
+            var _range = this.__getRange(_document),
+                _node = _range.commonAncestorContainer||_range.parentElement();
+            if (!_range || !_node) return '';
+            return _checkNodeType(_node);
+        };
+    })();
     /**
      * 保存当前选择状态
      * @param  {Node} _node 节点
