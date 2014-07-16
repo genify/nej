@@ -86,12 +86,10 @@ var f = function(){
         if (!_range) return '';
         if (!!document.selection){
             var _html = _range.htmlText;
-            _document.execCommand('delete',!1,null);            
             return _html||'';
         }    
         var _ntmp = _e._$create('div');
         _ntmp.appendChild(_range.cloneContents());
-        _range.deleteContents();
         return _ntmp.innerHTML;
     };
     /**
