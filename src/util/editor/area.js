@@ -291,6 +291,15 @@ var f = function(){
         return _h.__getSelectHtml(this._$getDocument());
     };
     /**
+     * 获取选择内容的父节点
+     * @method {_$getSelectHtml}
+     * @return {Node} 父节点
+     */
+    _pro._$getSelectNode = function(){
+        this._$focus(2);
+        return _h.__getSelectNode(this._$getDocument());
+    };
+    /**
      * 取编辑区域容器位置大小信息
      * @return {Object} 位置大小信息
      * [ntb]

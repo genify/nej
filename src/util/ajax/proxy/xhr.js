@@ -58,8 +58,7 @@ var f = function(){
             _u._$reverseEach(
                 _form.getElementsByTagName('input'),
                 function(_input){
-                    if (_input.type!='file'||
-                       !_input.files||_input.files.length<=1){
+                    if (_input.type!='file'){
                         return;
                     }
                     _u._$forEach(_input.files,function(_file){
