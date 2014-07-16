@@ -54,6 +54,7 @@ var f = function(){
     _proLink.__doShowCard = function(){
         this.__fopt.name = this.__editor._$getSelectText();
         this.__linkCard = this.__onShowCard();
+        this.__linkCard._$show();
         this.__linkCard._$doFocus();
     };
     
@@ -63,7 +64,25 @@ var f = function(){
      * @method {__onShowCard}
      * @return {Void}
      */
-    _proLink.__onShowCard = _f;
+    _proLink.__onShowCard = function(){
+        return _i._$$LinkCard._$allocate({
+            draggable: true,
+            destroyable: true,
+            maskclazz: 'm-mask',
+            name: this.__fopt.name,
+            title: '添加超链接',
+            onchange: this.__onChange._$bind(this),
+            onErrorLink: this.__onError._$bind(this)
+        });
+    };
+    /**
+     * 链接错误提示
+     * @param  {Object} type 错误类型
+     * @return {Void}
+     */
+    _proLink.__onError = function(){
+        this.__linkCard.__showErrorTips('请输入合法的链接地址（http://或https://）');
+    };
     
     // regist command implemention
     _p._$$Link._$regist();

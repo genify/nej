@@ -122,6 +122,8 @@ var f = function(){
         this.__doInitDomEvent([
             [this.__btns[1],'click',this.__onOK._$bind(this)],
             [this.__btns[0],'click',this.__onCancel._$bind(this)],
+            [this.__inputs[0],'keypress',this.__onKeyPress._$bind(this)],
+            [this.__inputs[1],'keypress',this.__onKeyPress._$bind(this)],
             [this.__inputs[0],'focus',this.__showErrorTips._$bind(this,'')],
             [this.__inputs[1],'focus',this.__showErrorTips._$bind(this,'')]
         ]);
@@ -146,6 +148,17 @@ var f = function(){
      */
     _proLinkCard.__destroy = function(){
         this.__supDestroy();
+    };  
+    /**
+     * 控件回收
+     * @protected
+     * @method {__destroy}
+     * @return {Void}
+     */
+    _proLinkCard.__onKeyPress = function(_event){
+        if (_event.keyCode == 13){
+            this.__onOK();
+        }
     };
 
     /**
@@ -171,10 +184,11 @@ var f = function(){
     // ui css seed
     var _seed_css = _e._$pushCSSText('.#<uispace>{padding:20px 20px \
         32px 20px;}\
-        .#<uispace> .u-title{color:#ccc;height:35px;line-height:35px;margin:0 8px 0 10px;}\
+        .#<uispace> .u-title{color:#ccc;height:35px;line-height:35px;border-bottom: solid 1px #ccc;}\
         .#<uispace> .u-row{margin-bottom:10px;}\
-        .#<uispace> .u-error{color:red;padding-top:10px;}\
+        .#<uispace> .u-error{color:red;padding-top:10px;font-size:12px;height:2em;}\
         .#<uispace> .u-edit{position: relative;z-index: 101;background: #FAFAFA;border: 1px solid #DFDFDF;-webkit-box-shadow: inset 1px 1px 2px #DFDFDF;-moz-box-shadow: inset 1px 1px 2px #dfdfdf;box-shadow: inset 1px 1px 2px #DFDFDF;}\
+        .#<uispace> .btn a{border:solid 1px #ccc;padding:5px;}\
         .#<uispace> .ipt{display:block;font-size: 14px;position: relative;z-index: 101;line-height:35px;height:35px;width: 290px;resize: none;background: transparent;border: none;color: #444;overflow:hidden;}');
 };
 NEJ.define('{lib}ui/editor/command/link.js',
