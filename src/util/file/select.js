@@ -81,14 +81,18 @@ var f = function(){
             }
             _cch.pid = _e._$id(_parent);
         };
-        var _doAppendFile = function(_id,_accept){
-            _accept = _accept||'';
+        var _doAppendFile = function(_id,_cch){
+            var _accept = _cch.accept||'';
             if (!!_accept){
                 _accept = 'accept="'+_accept+'"';
             }
+            var _multiple = '';
+            if (!!_cch.multiple){
+                _multiple = 'multiple="true"';
+            }
             var _cch = _cache[_id],
                 _fid = _id+"-"+_cch.nmb,
-                _file = _e._$html2node('<input type="file" '+_accept+' contenteditable="false" id="'+_fid+'"/>');
+                _file = _e._$html2node('<input type="file" '+_multiple+' '+_accept+' contenteditable="false" id="'+_fid+'"/>');
             _cch.nmb++;
             _e._$get(_cch.pid).appendChild(_file);
             _v._$addEvent(_file,'change',_onFileChange);
@@ -103,7 +107,7 @@ var f = function(){
             if (!_element.value) return;
             if (_cch.multiple){
                 _e._$get(_cch.lab).htmlFor = 
-                    _doAppendFile(_arr[0],_cch.accept);
+                    _doAppendFile(_arr[0],_cch);
             }else if(!!_cch.name){
                 _element.name = _cch.name;
             }
@@ -133,7 +137,7 @@ var f = function(){
             _cch.multiple = !!_options.multiple;
             _cch.onchange = _options.onchange||_f;
             _element.htmlFor = 
-                _doAppendFile(_id,_cch.accept);
+                _doAppendFile(_id,_cch);
             _h.__handleFileLabelClick(_element);
             return _id;
         };
