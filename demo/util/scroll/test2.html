@@ -7,13 +7,13 @@
       .xbc{position:relative;width:300px;margin:10px auto;border:1px solid #aaa;}
       .abc{height:600px;overflow:hidden;}
       .abc p{height:80px;line-height:80px;}
-      .trk{position:absolute;background:#aaa;}
-      .trk:hover{width:20px;}
-      .trk:hover .y{right:5px;}
       .ty{top:0;bottom:0;right:0;width:10px;height:100%;}
       .bar{position:absolute;background:#f00;overflow:hidden;cursor:default;}
       .x{left:0;bottom:0;height:10px;width:50px;}
       .y{top:0;right:0;width:10px;height:50px;}
+      .trk{position:absolute;background:#aaa;}
+      .trk:hover,.j-hover{width:20px;}
+      .trk:hover .y,.j-hover .y{right:5px;}
       p{background:#fdc;}
     </style>
   </head>
@@ -41,7 +41,7 @@
             
             _t._$$SimpleScroll._$allocate({
                 xbar:{body:'xbar'},
-                ybar:{body:'ybar',track:':parent'},
+                ybar:{body:'ybar',track:':parent',hover:'j-hover'},
                 parent:'box',
                 trigger:'bbox'
             });

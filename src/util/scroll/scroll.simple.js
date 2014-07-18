@@ -59,8 +59,8 @@ var f = function(){
      * @extends {nej.ut._$$Event}
      * 
      * @param   {Object} _options 可选配置参数
-     * @config  {Node|Object}  xbar    水平滚动条节点或者配置信息，如果不配置min值则默认取body的初始宽度，配置如{body:'bar-id',track:':parent',min:10,speed:1,left:10,right:10,step:10}
-     * @config  {Node|Object}  ybar    垂直滚动条节点或者配置信息，如果不配置min值则默认取body的初始高度，配置如{body:'bar-id',track:'parent-id',min:10,speed:1,top:10,bottom:10,step:10}
+     * @config  {Node|Object}  xbar    水平滚动条节点或者配置信息，如果不配置min值则默认取body的初始宽度，配置如{body:'bar-id',track:':parent',min:10,speed:1,left:10,right:10,step:10,hover:'js-hover'}
+     * @config  {Node|Object}  ybar    垂直滚动条节点或者配置信息，如果不配置min值则默认取body的初始高度，配置如{body:'bar-id',track:'parent-id',min:10,speed:1,top:10,bottom:10,step:10,hover:'js-hover'}
      * @config  {String|Node}  parent  滚动容器节点，默认为滚动条的父容器，滚动过程触发该节点上的onscroll事件
      * @config  {String|Node}  trigger 滚动条显示隐藏触点，不传表示不做显示隐藏切换
      */
@@ -81,12 +81,12 @@ var f = function(){
         this.__dopt = {
             x:{
                 direction:1,
-                ondragend:this.__onUpdateBarEnd._$bind(this),
+                ondragend:this.__onUpdateBarEnd._$bind(this,'x'),
                 onbeforechange:this.__onBeforeUpdateBar._$bind(this,'x')
             },
             y:{
                 direction:2,
-                ondragend:this.__onUpdateBarEnd._$bind(this),
+                ondragend:this.__onUpdateBarEnd._$bind(this,'y'),
                 onbeforechange:this.__onBeforeUpdateBar._$bind(this,'y')
             }
         };
@@ -107,6 +107,7 @@ var f = function(){
                 interval:50,
                 left:0,
                 right:0,
+                hover:'js-hover',
                 sb:'scrollWidth',
                 cb:'clientWidth',
                 ob:'offsetWidth',
@@ -122,6 +123,7 @@ var f = function(){
                 step:50,
                 top:0,
                 bottom:0,
+                hover:'js-hover',
                 sb:'scrollHeight',
                 cb:'clientHeight',
                 ob:'offsetHeight',
@@ -179,6 +181,12 @@ var f = function(){
             ],[
                 this.__bar.y.track,'mousedown',
                 this.__onTrackDown._$bind(this,'y')
+            ],[
+                this.__bar.x.track,'mousewheel',
+                this.__onMouseWheel._$bind(this)
+            ],[
+                this.__bar.y.track,'mousewheel',
+                this.__onMouseWheel._$bind(this)
             ]]);
             var _node = _e._$get(_options.trigger);
             if (!!_node){
@@ -477,16 +485,23 @@ var f = function(){
             (_offset-_delta)/_conf.ratio
         );
         _event[_conf.sp] = _offset;
+        _e._$addClassName(
+            _conf.track,_conf.hover
+        );
     };
     /**
      * 拖拽滚动结束
      * @return {Void}
      */
-    _pro.__onUpdateBarEnd = function(){
+    _pro.__onUpdateBarEnd = function(_name){
         this.__dragging = !1;
         if (this.__isout){
             this.__onMouseLeave();
         }
+        var _conf = this.__bar[_name];
+        _e._$delClassName(
+            _conf.track,_conf.hover
+        );
     };
     /**
      * 容器大小变化执行逻辑
