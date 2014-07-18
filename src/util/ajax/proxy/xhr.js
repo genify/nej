@@ -53,6 +53,22 @@ var f = function(){
         var _doSetHeader = function(_value,_key){
             this.__xhr.setRequestHeader(_key,_value);
         };
+        var _doSplitMultFiles = function(_form){
+            var _result = [];
+            _u._$reverseEach(
+                _form.getElementsByTagName('input'),
+                function(_input){
+                    if (_input.type!='file'){
+                        return;
+                    }
+                    _u._$forEach(_input.files,function(_file){
+                        _result.push(_file);
+                    });
+                    _input.parentNode.removeChild(_input);
+                }
+            );
+            return _result.length>0?_result:null;
+        };
         return function(_options){
             var _request = _options.request,
                 _headers = _options.headers;
@@ -63,8 +79,13 @@ var f = function(){
                 delete _headers[_g._$HEAD_CT];
                 this.__xhr.upload.onprogress = 
                     this.__onStateChange._$bind(this,1);
-                if (_request.data.tagName==='FORM')
+                if (_request.data.tagName==='FORM'){
+                    var _files = _doSplitMultFiles(_request.data);
                     _request.data = new FormData(_request.data);
+                    _u._$forEach(_files,function(_file){
+                        _request.data.append(_file.name||'',_file);
+                    });
+                }
             }
             // state change
             this.__xhr.onreadystatechange = 

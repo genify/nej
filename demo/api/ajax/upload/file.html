@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+  <head>
+    <title>file demo</title>
+    <meta charset="UTF-8"/>
+    <style>
+      .b{display:block;width:150px;height:30px;line-height:30px;margin:5px 0;text-align:center;}
+      .b1{background:#f00;}
+      .b2{background:#fdc;}
+    </style>
+  </head>
+  <body>
+    <label class="b b1" id="btn-s1">选择文件按钮1</label>
+    <label class="b b1" id="btn-u1">上传文件按钮1</label>
+    
+    <form id="xfom">
+      <label class="b b2" id="btn-s2">选择文件按钮2</label>
+      <label class="b b2" id="btn-u2">上传文件按钮2</label>
+    </form>
+    
+    <script src="../../../../src/define.js?pro=./"></script>
+    <script>
+        define(['{lib}util/file/select.js',
+                '{lib}util/ajax/xdr.js'],
+        function(){
+            var _  = NEJ.P,
+                _e = _('nej.e'),
+                _v = _('nej.v'),
+                _j = _('nej.j');
+
+            /**
+             * nej.e._$file
+             * 最新代码：https://github.com/NetEaseWD/NEJ.git
+             * 
+             * 文件选择按钮封装
+             * 
+             * 结构举例
+             * [code type="html"]
+             *   <p><label id="abc">选择文件</label></p>
+             * [/code]
+             * 
+             * 脚本举例
+             * [code]
+             *   // 统一定义名字空间简写
+             *   var _  = NEJ.P,
+             *       _e = _('nej.e');
+             *   // 绑定文件选择按钮
+             *   _e._$file('abc',{
+             *       multiple:true,
+             *       onchange:function(_event){
+             *           // _event.form
+             *           // _event.id
+             *           // 如果要删除某个文件选择节点必须使用以下接口
+             *           _e._$remove(_event.id);
+             *       }
+             *   });
+             * [/code]
+             * 
+             * @api    {nej.e._$file}
+             * @param  {String|Node} 绑定选择文件的节点，必须为label节点，且未设置for属性
+             * @param  {Object}      配置参数
+             * @config {String|Node} form     文件选择控件所在的表单，默认全新生成一个
+             * @config {String}      name     单个文件选择支持指定提交时文件名称
+             * @config {String}      clazz    表单样式名称，可用于控制表单位置
+             * @config {Boolean}     multiple 是否允许多选，默认单选
+             * @config {String}      accept   文件类型过滤，如image/*或者.png，多个类型用逗号分隔
+             * @config {Function}    onchange 文件选择变化触发回调，{form:form,id:'xxx'}
+             *                                - form 文件选择控件封装表单对象
+             *                                - id   当前变化的文件选择控件的ID
+             */
+            
+            // 第一种方式：隐藏form
+            // 使用局部变量缓存待上传的表单节点
+            var _form1; 
+            var _onUploadFile1 = function(){
+                if (!_form1) return;
+                _form1.action = '/rest/upload/';
+                _j._$upload(_form1,{
+                    onload:function(_event){
+                        // TODO
+                    },
+                    onuploading:function(_event){
+                        // _event.progress/_event.total
+                    }
+                });
+            };
+            _e._$file('btn-s1',{
+                onchange:function(_event){
+                    // 这里的_event包含这些信息
+                    // form - 待上传的表单节点对象
+                    // id   - 当前变化的文件选择控件的ID
+                    _form1 = _event.form;
+                    console.log('file node id -> '+_event.id);
+                    // TODO 图片预览
+                }
+            });
+            _v._$addEvent('btn-u1','click',_onUploadFile1);
+            
+            
+            // 第二种方式：自带form
+            var _onUploadFile2 = function(){
+                // 直接使用自带的表单上传
+                var _form = _e._$get('xfom');
+                _form.action = '/rest/upload/';
+                _j._$upload(_form,{
+                    onload:function(_event){
+                        // TODO
+                    }
+                });
+            };
+            _e._$file('btn-s2',{
+                form:'xfom',
+                onchange:function(_event){
+                    // 这里的_event包含这些信息
+                    // form - 待上传的表单节点对象
+                    // id   - 当前变化的文件选择控件的ID
+                    console.log('file node id -> '+_event.id);
+                    // TODO 图片预览
+                }
+            });
+            _v._$addEvent('btn-u2','click',_onUploadFile2);
+        });
+    </script>
+  </body>
+</html>
