@@ -37,11 +37,11 @@ var f = function(){
      * @return {nej.ui._$$CardWrapper} 卡片实例
      */
     _proColor.__doShowCard = function(){
-        _i._$$ColorCard._$allocate(this.__fopt)._$show();
+        _i._$$SimpleColorCard._$allocate(this.__fopt)._$show();
     };
     // regist command implemention
     _p._$$Color._$regist();
 };
 NEJ.define('{lib}util/editor/command/color.js',
           ['{lib}util/editor/command/card.js'
-          ,'{lib}ui/editor/command/color.js'],f);
+          ,'{lib}ui/editor/command/color.simple.js'],f);

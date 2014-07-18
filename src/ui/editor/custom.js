@@ -51,6 +51,7 @@ var f = function(){
                      ,{cmd:'justifyCenter',txt:'居中对齐',icn:'z-i-51'}
                      ,{cmd:'justifyRight',txt:'右对齐',icn:'z-i-52'}
                      ,{cmd:'link',txt:'超链接',icn:'z-i-42'}
+                     ,{cmd:'format',txt:'清除格式',icn:'z-i-72'}
                      ,{cmd:'uploadImage',txt:'照片上传',icn:'z-i-82'}];
         return function(){
             _seed_html = _e._$addNodeTemplate(
@@ -81,6 +82,7 @@ NEJ.define(
     '{lib}util/editor/command/justifycenter.js',
     '{lib}util/editor/command/justifyright.js',
     '{lib}util/editor/command/link.js',
+    '{lib}util/editor/command/format.js',
     '{lib}util/editor/command/uploadimage.js',
     '{lib}util/editor/command/blockquote.js'
 ],f);

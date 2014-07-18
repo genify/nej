@@ -196,15 +196,17 @@ var f = function(){
         return _html;
     };
 
-
     /**
      * 过滤除了background-color以外的所有样式
      * @param  {[type]} _html [description]
      * @return {[type]}       [description]
      */
     _h.__filterContentStyle = (function(){
+        var _regMap = { 0:/(?:<[^>]* style)="([^"]*)"/gi,
+                        1:/(?:<[^>]* style)='([^']*)'/gi,
+                        2:/(?:<[^>]* style)=([^>\s]*)/gi};
         var _doFilter = function(_reg,_html){
-            _html = _html.replace(_reg,function(_a,_b,_c){
+            _html = _html.replace(_regMap[_reg],function(_a,_b,_c){
                 var _prefix = _a.split('style')[0];
                 if(_b.match(__reg_bgc)!=null){
                     var _str0 = '';
@@ -221,12 +223,12 @@ var f = function(){
         };
         return function(_html){
             if(__reg_st0.test(_html)){
-                _html = _doFilter(__reg_st0,_html);
+                _html = _doFilter(0,_html);
             }else if(__reg_st1.test(_html)){
                 __reg_st1.lastIndex = -1;
-                _html = _doFilter(__reg_st1,_html);
+                _html = _doFilter(1,_html);
             }else{
-                _html = _doFilter(__reg_st2,_html);
+                _html = _doFilter(2,_html);
             }
             return _html;
         };
