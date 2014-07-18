@@ -55,7 +55,7 @@ var f = function(){
         var _cnttpl = '<head><base href="#<BSUL>"/><style>html,body{margin:0;padding:0;border:0;cursor:text;font-size:14px;font-family:Arial;word-wrap:break-word;}#<UDCS></style></head><body contenteditable="true"></body>';
         return function(_options){
             this.__supReset(_options);
-            this.__focus = !!_options.focus;
+            this.__focus = _options.focus;
             this.__content = _cnttpl
                 .replace('#<UDCS>',_options.style||'')
                 .replace('#<BSUL>',_options.base||location.href);
@@ -127,7 +127,7 @@ var f = function(){
         if (!!this.__initcnt){
             this._$setContent(this.__initcnt);
         }
-        if (this.__focus){
+        if (!!this.__focus){
             this._$focus();
             delete this.__focus;
         }
@@ -156,7 +156,7 @@ var f = function(){
      * 输入事件
      * @return {[type]} [description]
      */
-    _pro.__onInputCheck = function(){
+    _pro.__onInputCheck = function(_event){
         if (!!this.__timer){
             window.clearTimeout(this.__timer);
         }
@@ -180,6 +180,22 @@ var f = function(){
             });
         }
     };
+
+    /**
+     * 过滤整个style标签
+     * @return {[type]} [description]
+     */
+    _pro.__doRemoveStyle = (function(){
+        var _reg0 = /style="[^"]*"/gi,
+            _reg1 = /style='[^']*'/gi,
+            _reg2 = /style=[^>\s]*/gi,
+            _reg3 = /class="[^"]*"/gi,
+            _reg4 = /class='[^']*'/gi,
+            _reg5 = /class=[^>\s]*/gi;
+        return function(_html){
+            return _html.replace(_reg0,'').replace(_reg1,'').replace(_reg2,'').replace(_reg3,'').replace(_reg4,'').replace(_reg5,'');
+        };
+    })();
     /**
      * 聚焦编辑器
      * @method {_$focus}
@@ -207,13 +223,17 @@ var f = function(){
     };
     /**
      * 取编辑内容
+     * @param  {Boolean|Number} 是否只保留background-color,font-size,color样式
+     * @param  {Boolean|Number} 是否删除所有style 
      * @method {_$getContent}
      * @return {String} 内容
      */
-    _pro._$getContent = function(_filter){
+    _pro._$getContent = function(_filter,_nostyle){
         var _document = this._$getDocument();
         _html = _h.__filterContent(!_document?'':_document.body.innerHTML);
-        if(!_filter){
+        if (!!_nostyle){
+            _html = this.__doRemoveStyle(_html);
+        }else if (!_filter){
             _html = _h.__filterContentStyle(_html);
         }
         return !_h.__filterWordContent?_html:_h.__filterWordContent(_html);
@@ -228,6 +248,14 @@ var f = function(){
             _text = _document.body.innerText||
                     _document.body.textContent;
         return !_document?'':_text;
+    };
+    /**
+     * [_$setContentNoStyle description]
+     * @return {[type]} [description]
+     */
+    _pro._$setContentNoStyle = function(){
+        var _content = this._$getContent(1,1);
+        this._$setContent(_content);
     };
     /**
      * 设置内容
