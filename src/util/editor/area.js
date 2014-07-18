@@ -228,12 +228,10 @@ var f = function(){
      * @method {_$getContent}
      * @return {String} 内容
      */
-    _pro._$getContent = function(_filter,_nostyle){
+    _pro._$getContent = function(_filter){
         var _document = this._$getDocument();
         _html = _h.__filterContent(!_document?'':_document.body.innerHTML);
-        if (!!_nostyle){
-            _html = this.__doRemoveStyle(_html);
-        }else if (!_filter){
+        if (!_filter){
             _html = _h.__filterContentStyle(_html);
         }
         return !_h.__filterWordContent?_html:_h.__filterWordContent(_html);
@@ -254,7 +252,14 @@ var f = function(){
      * @return {[type]} [description]
      */
     _pro._$setContentNoStyle = function(){
-        var _content = this._$getContent(1,1);
+        var _node = this._$getSelectNode();
+        if(!_node) return;
+        var _document = this._$getDocument(),
+            _outer = _node.outerHTML;
+        var _html = !_document?'':_document.body.innerHTML;
+        _html = _html.replace(_outer,this.__doRemoveStyle(_outer));
+        _html = _h.__filterContent(_html);
+        var _content = !_h.__filterWordContent?_html:_h.__filterWordContent(_html);
         this._$setContent(_content);
     };
     /**
