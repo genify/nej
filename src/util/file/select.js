@@ -48,6 +48,7 @@ var f = function(){
      * @config {String}      clazz    表单样式名称，可用于控制表单位置
      * @config {Boolean}     multiple 是否允许多选，默认单选
      * @config {String}      accept   文件类型过滤，如image/*或者.png，多个类型用逗号分隔
+     * @config {Object}      param    参数集合，以input.hidden的形式放置在form中提交
      * @config {Function}    onchange 文件选择变化触发回调，{form:form,id:'xxx'}
      *                                - form 文件选择控件封装表单对象
      *                                - id   当前变化的文件选择控件的ID
@@ -63,8 +64,17 @@ var f = function(){
             }
             return _cch;
         };
+        // init param
+        var _doInitParam = function(_form,_param){
+            if (!_param) return;
+            var _arr = [];
+            _u._$forIn(_param,function(_value,_key){
+                _arr.push('<input type="hidden" name="'+_key+'" value="'+_value+'">');
+            });
+            _form.insertAdjacentHTML('afterBegin',_arr.join(''));
+        };
         // build parent
-        var _doBuildParent = function(_id,_form,_clazz){
+        var _doBuildParent = function(_id,_form,_clazz,_param){
             var _parent,
                 _cch = _cache[_id],
                 _cls = _class+' '+(_clazz||'');
@@ -73,9 +83,11 @@ var f = function(){
                 _parent = _e._$create('div',_cls);
                 _form.appendChild(_parent);
                 _e._$dataset(_form,'id',_id);
+                _doInitParam(_form,_param);
             }else{
                 _parent = _e._$create('form',_cls);
                 _e._$dataset(_parent,'id',_id);
+                _doInitParam(_parent,_param);
                 document.body.appendChild(_parent);
             }
             _cch.pid = _e._$id(_parent);
@@ -127,7 +139,8 @@ var f = function(){
             _doBuildParent(
                 _id,
                 _options.form,
-                _options.clazz
+                _options.clazz,
+                _options.param
             );
             _cch.nmb = 0;
             _cch.name = _options.name;
