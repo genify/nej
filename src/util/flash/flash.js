@@ -11,7 +11,6 @@ var f = function(){
         _u = _('nej.u'),
         _e = _('nej.e'),
         _v = _('nej.v'),
-        _h = _('nej.h'),
         _x = _('nej.x'),
         _seed_html;
     if (!!_e._$flash) return;
@@ -134,7 +133,7 @@ var f = function(){
             _vars += (!_vars?'':'&')+('id='+_id);
             // delegate mouse event bubble
             if (!_options.hidden&&(!!_options.target||
-                 _h.__canFlashEventBubble(_params.wmode))){
+                 _v._$canFlashEventBubble(_params.wmode))){
                 var _tid = _e._$id(_options.target)||
                            _e._$id(_options.parent);
                 _cache[_id+'-tgt'] = _tid;

@@ -134,5 +134,5 @@ var f = function(){
     };
 };
 NEJ.define('{lib}util/data/portrait/portrait.js',
-          ['{patch}config.js'
+          ['{lib}base/config.js'
           ,'{lib}util/cache/cache.list.base.js'],f);

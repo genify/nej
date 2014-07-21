@@ -441,8 +441,8 @@ var f = function() {
 NEJ.define(
     '{lib}ui/audio/mp3.js',[
     '{lib}ui/base.js',
-    '{patch}audio.js',
-    '{patch}config.js',
+    '{lib}util/audio/audio.js',
+    '{lib}base/config.js',
     '{lib}util/media/playlist.js',
     '{lib}util/slider/slider.simple.js'
 ],f);

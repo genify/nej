@@ -610,12 +610,15 @@ var f = function(){
      * [/code]
      * 
      * @api    {nej.u._$var2date}
+     * @param  {String}              日期格式
      * @param  {Number|String|Date}  时间
      * @return {Date}                日期
      */
     _u._$var2date = function(_time){
         var _date = _time;
         if (_u._$isString(_time)){
+            if(_time.indexOf('-') < 0 && _time.indexOf('/') < 0)
+                _time = '';
             _time = _time.replace(/-/g,'/');
             _date = new Date(Date.parse(_time));
         }

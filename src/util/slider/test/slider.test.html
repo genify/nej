@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>slider测试页</title>
+        <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.14.0.css" type="text/css" media="screen" />
+        <script type="text/javascript" src="http://code.jquery.com/qunit/qunit-1.14.0.js"></script>
+        <style type="text/css">
+        	#slide{position:absolute;top:0;height:20px;line-height:20px;width:20px;background:green;}
+			#track{position:relative;height:20px;line-height:20px;width:100%;background:pink;}
+			#slide1{position:absolute;top:0;height:20px;line-height:20px;width:20px;background:green;}
+            #track1{position:relative;height:200px;line-height:20px;width:20px;background:pink;}
+			#slide2{position:absolute;top:0;height:20px;line-height:20px;width:20px;background:green;}
+            #track2{position:relative;height:200px;line-height:20px;width:100%;background:pink;}
+        </style>
+	</head>
+    <body>
+        <h1 id="qunit-header">Qunit slider test</h1>
+        <h2 id="qunit-banner"></h2>
+        <div id="qunit-testrunner-toolbar"></div>
+        <h2 id="qunit-userAgent"></h2>
+        <ol id="qunit-tests"></ol>
+        <div id="qunit-fixture"></div>
+		<div id="track"><div id="slide"></div></div>
+		<br />
+		<div id="track1"><div id="slide1"></div></div>
+		<br />
+		<div id="track2"><div id="slide2"></div></div>
+        <script src="../../../define.js?pro=./"></script>
+        <script type="text/javascript" src="./slider.test.js"></script>
+    </body>
+</html>

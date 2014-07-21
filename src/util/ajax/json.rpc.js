@@ -73,6 +73,6 @@ var f = function(){
 };
 NEJ.define(
     '{lib}util/ajax/json.rpc.js',[
-    '{patch}json.js',
+    '{lib}util/encode/json.js',
     '{lib}util/ajax/xdr.js'
 ],f);

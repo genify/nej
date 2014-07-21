@@ -13,7 +13,6 @@ var f = function(){
         _v = _('nej.v'),
         _u = _('nej.u'),
         _x = _('nej.x'),
-        _h = _('nej.h'),
         _cache = {},  // {id:{lab:'label',pid:'parent'}}
         _class = _e._$pushCSSText('.#<class>{position:absolute;top:0;left:0;width:0;height:0;overflow:hidden;}');
     /**
@@ -138,7 +137,7 @@ var f = function(){
             _cch.onchange = _options.onchange||_f;
             _element.htmlFor = 
                 _doAppendFile(_id,_cch);
-            _h.__handleFileLabelClick(_element);
+            _e._$handleFileLabelClick(_element);
             return _id;
         };
     })();

@@ -151,7 +151,7 @@ var f = function(){
 };
 NEJ.define(
     '{lib}util/clipboard/clipboard.js',[
-    '{patch}config.js',
+    '{lib}base/config.js',
     '{lib}base/util.js',
     '{lib}base/event.js',
     '{lib}util/flash/flash.js'

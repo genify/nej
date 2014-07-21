@@ -175,6 +175,6 @@ var f = function(){
 };
 NEJ.define(
     '{lib}util/cache/storage.js',[
-    '{patch}storage.js',
+    '{platform}storage.js',
     '{lib}util/event/event.js'
 ],f);

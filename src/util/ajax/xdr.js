@@ -338,5 +338,5 @@ NEJ.define(
     '{lib}util/ajax/xdr.js',[
     '{lib}base/constant.js',
     '{lib}base/util.js',
-    '{patch}ajax.js'
+    '{platform}ajax.js'
 ],f);

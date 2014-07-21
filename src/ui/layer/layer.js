@@ -11,7 +11,6 @@ var f = function(){
         _f = NEJ.F,
         _e = _('nej.e'),
         _u = _('nej.u'),
-        _h = _('nej.h'),
         _p = _('nej.ui'),
         _proLayer,
         _supLayer;
@@ -143,7 +142,7 @@ var f = function(){
     _proLayer.__doHide = function(){
         _e._$removeByEC(this.__body);
         if (!!this.__mask){
-            this.__mask = _h.__unmask(this.__body);
+            this.__mask = _e._$unmask(this.__body);
             delete this.__mask;
         }
     };
@@ -211,7 +210,7 @@ var f = function(){
         this.__doPositionAlign();
         _e._$setStyle(this.__body,'visibility','');
         if (!this.__nohack){
-            this.__mask = _h.__mask(this.__body);
+            this.__mask = _e._$mask(this.__body);
         }
         return this;
     };

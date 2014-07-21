@@ -8,7 +8,6 @@
 var f = function(){
     var _  = NEJ.P,
         _g = _('nej.g'),
-        _h = _('nej.h'),
         _e = _('nej.e'),
         _u = _('nej.u'),
         _v = _('nej.v'),
@@ -88,7 +87,7 @@ var f = function(){
      * @return {nej.ui._$$Mask}
      */
     _proMask._$show = function(){
-        _h.__fullScreen(this.__body);
+        _e._$fullScreen(this.__body);
         _supMask._$show.apply(this,arguments);
         return this;
     };

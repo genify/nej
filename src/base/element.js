@@ -1768,6 +1768,50 @@ var f = function(){
     _x._$hasClassName = function(){
         return _h.__hasClassName.apply(_h,arguments);
     };
+
+    /**
+     * 节点占全屏
+     * @param  {Node} _element 节点
+     * @return {nej.e}
+     */
+    _e._$fullScreen = 
+    _x._$fullScreen = function(_element){
+        _h.__fullScreen(_element);
+        return this;
+    };
+
+    /**
+     * 为节点增加用于盖select/flash等控件的层
+     * @param  {Node} _element 节点
+     * @return {Node}          盖层节点   
+     */
+    _e._$mask = 
+    _x._$mask = function(_element){
+        // do nothing
+        return _h.__mask(_element);
+    };
+
+    /**
+     * 为节点移除用于盖select/flash等控件的层
+     * @param  {Node} _element 节点
+     * @return {Node}          盖层节点
+     */
+    _e._$unmask = 
+    _x._$unmask = function(_element){
+        // do nothing
+        return _h.__unmask(_element);
+    };
+
+    /**
+     * 处理文件选择控件点击事件
+     * @param  {String|Node} 节点
+     * @return {nej.e}
+     */
+    _e._$handleFileLabelClick = function(_element){
+        _h.__handleFileLabelClick(_element);
+        return this;
+    };
+
     // init
     if (!document.head)
          document.head = document.getElementsByTagName('head')[0]||document.body;
@@ -1785,6 +1829,6 @@ NEJ.define(
     '{lib}base/constant.js',
     '{lib}base/event.js',
     '{lib}base/util.js',
-    '{patch}api.js',
-    '{patch}json.js'
+    '{platform}element.js',
+    '{lib}util/encode/json.js'
 ],f);

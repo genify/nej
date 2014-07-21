@@ -233,7 +233,7 @@ var f = function(){
 };
 NEJ.define(
     '{lib}util/media/flash.js',[
-    '{patch}config.js',
+    '{lib}base/config.js',
     '{lib}base/event.js',
     '{lib}util/media/media.js',
     '{lib}util/flash/flash.js'
