@@ -137,7 +137,7 @@ var f = function(){
             _cch.onchange = _options.onchange||_f;
             _element.htmlFor = 
                 _doAppendFile(_id,_cch);
-            _e._$handleFileLabelClick(_element);
+            _e.__handleFileLabelClick(_element);
             return _id;
         };
     })();
@@ -180,5 +180,6 @@ NEJ.define(
     '{lib}util/file/select.js',[
     '{lib}base/element.js',
     '{lib}base/event.js',
-    '{lib}base/util.js'
+    '{lib}base/util.js',
+    '{platform}select.js'
 ],f);

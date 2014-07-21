@@ -141,20 +141,6 @@ var f = function() {
 	            HTMLElement.prototype['__defineSetter__']("innerText",function(_content){this.textContent = _content;});
 	        }
 	    };
-	    /**
-	     * 处理文件选择控件点击事件
-	     * @param  {String|Node} 节点
-	     * @return {Void}
-	     */
-	    _h.__handleFileLabelClick = (function(){
-	        var _doLabelClick = function(_event){
-	            _v._$stop(_event);
-	            _v._$getElement(_event).control.click();
-	        };
-	        return function(_element){
-	            _v._$addEvent(_element,'click',_doLabelClick);
-	        };
-	    })();
 	    // init patch
 	    _doInit();
 	});

@@ -16,9 +16,9 @@ var f = function(){
         __reg_cls1 = /(?:class|lang)='(mso)?[^']*'/gi,
         __reg_cls2 = /(?:class|lang)=(mso)?[^>\s]*/gi,// IE7/8 hack
         __reg_ccm  = /(?:<!--)[^>]*(?:-->)/gi,
-        __reg_st0  = /(?:<[^>]* style)="([^"]*)"/gi,
-        __reg_st1  = /(?:<[^>]* style)='([^']*)'/gi,
-        __reg_st2  = /(?:<[^>]* style)=([^>\s]*)/gi,
+        __reg_st0  = /(?:<[^>]* style)="([^"]*)"/i,
+        __reg_st1  = /(?:<[^>]* style)='([^']*)'/i,
+        __reg_st2  = /(?:<[^>]* style)=([^>\s]*)/i,
         __reg_bgc  = /(?:background-color:|text-align:|color:)([^;]*)(;)*/gi;//clear class,lang
     /**
      * 取节点所在的窗体对象
@@ -75,25 +75,45 @@ var f = function(){
     _h.__getSelectText = function(_document){
         var _range = this.__getRange(_document);
         if (!_range) return '';
-        return _range.toString()||_range.cloneContents().textContent||_range.commonAncestorContainer.data;
+        return (!!document.selection && parseFloat(_p._$KERNEL.release)<5.0)?_range.text:_range.toString()||_range.cloneContents().textContent||_range.commonAncestorContainer.data;
     };
     /**
-     * 获取选中内容的html,并删除原来内容
-     * @param {Object} _document
+     * 获取选中内容的html
+     * @param  {Object} _document
+     * @return {String} 选中内容的html
      */
     _h.__getSelectHtml = function(_document){
         var _range = this.__getRange(_document);
         if (!_range) return '';
         if (!!document.selection){
             var _html = _range.htmlText;
-            _document.execCommand('delete',!1,null);            
             return _html||'';
         }    
         var _ntmp = _e._$create('div');
         _ntmp.appendChild(_range.cloneContents());
-        _range.deleteContents();
         return _ntmp.innerHTML;
     };
+    /**
+     * 获取选中内容的父节点
+     * @param  {Object} _document
+     * @return {Node|String} 选中内容的父节点
+     */
+    _h.__getSelectNode = (function(){
+        var _checkNodeType = function(_node){
+            if (_node.nodeType == 1){
+                return _node;
+            }else{
+                _node = _node.parentNode;
+                return _checkNodeType(_node);
+            }
+        };
+        return function(_document){
+            var _range = this.__getRange(_document),
+                _node = _range.commonAncestorContainer||_range.parentElement();
+            if (!_range || !_node) return '';
+            return _checkNodeType(_node);
+        };
+    })();
     /**
      * 保存当前选择状态
      * @param  {Node} _node 节点
@@ -176,15 +196,17 @@ var f = function(){
         return _html;
     };
 
-
     /**
      * 过滤除了background-color以外的所有样式
      * @param  {[type]} _html [description]
      * @return {[type]}       [description]
      */
     _h.__filterContentStyle = (function(){
+        var _regMap = { 0:/(?:<[^>]* style)="([^"]*)"/gi,
+                        1:/(?:<[^>]* style)='([^']*)'/gi,
+                        2:/(?:<[^>]* style)=([^>\s]*)/gi};
         var _doFilter = function(_reg,_html){
-            _html = _html.replace(_reg,function(_a,_b,_c){
+            _html = _html.replace(_regMap[_reg],function(_a,_b,_c){
                 var _prefix = _a.split('style')[0];
                 if(_b.match(__reg_bgc)!=null){
                     var _str0 = '';
@@ -201,11 +223,12 @@ var f = function(){
         };
         return function(_html){
             if(__reg_st0.test(_html)){
-                _html = _doFilter(__reg_st0,_html);
+                _html = _doFilter(0,_html);
             }else if(__reg_st1.test(_html)){
-                _html = _doFilter(__reg_st1,_html);
+                __reg_st1.lastIndex = -1;
+                _html = _doFilter(1,_html);
             }else{
-                _html = _doFilter(__reg_st2,_html);
+                _html = _doFilter(2,_html);
             }
             return _html;
         };

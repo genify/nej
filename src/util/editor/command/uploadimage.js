@@ -56,7 +56,8 @@ var f = function(){
         if (!this.__uploadCard)
         this.__uploadCard = _i._$$UploadImageCard._$allocate({
                 onchange:this.__onChange._$bind(this)
-            })._$show();
+            });
+        this.__uploadCard._$show();
     };
     
     /**

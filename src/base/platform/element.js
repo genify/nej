@@ -462,14 +462,6 @@ var f = function(){
         
     };
     /**
-     * 处理文件选择控件点击事件
-     * @param  {String|Node} 节点
-     * @return {Void}
-     */
-    _h.__handleFileLabelClick = function(_element){
-        // do nothing
-    };
-    /**
      * 取节点属性值
      * @param  {Node}   节点
      * @param  {String} 属性名

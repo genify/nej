@@ -1801,17 +1801,6 @@ var f = function(){
         // do nothing
         return _h.__unmask(_element);
     };
-
-    /**
-     * 处理文件选择控件点击事件
-     * @param  {String|Node} 节点
-     * @return {nej.e}
-     */
-    _e._$handleFileLabelClick = function(_element){
-        _h.__handleFileLabelClick(_element);
-        return this;
-    };
-
     // init
     if (!document.head)
          document.head = document.getElementsByTagName('head')[0]||document.body;

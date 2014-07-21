@@ -256,7 +256,7 @@ var f = function(){
         if(!_node) return;
         var _document = this._$getDocument(),
             _outer = _node.outerHTML;
-        var _html = !_document?'':_document.body.innerHTML;
+        var _html = !_document?'':_document.body.outerHTML;
         _html = _html.replace(_outer,this.__doRemoveStyle(_outer));
         _html = _h.__filterContent(_html);
         var _content = !_h.__filterWordContent?_html:_h.__filterWordContent(_html);
