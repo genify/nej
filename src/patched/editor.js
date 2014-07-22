@@ -85,7 +85,7 @@ var f = function(){
     _h.__getSelectHtml = function(_document){
         var _range = this.__getRange(_document);
         if (!_range) return '';
-        if (!!document.selection){
+        if (!!document.selection && parseFloat(_p._$KERNEL.release)<5.0){
             var _html = _range.htmlText;
             return _html||'';
         }    
