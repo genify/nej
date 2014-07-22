@@ -241,11 +241,18 @@ var f = function(){
 	// ie8-
 	NEJ.patch('TR<=4.0',function(){
         var _  = NEJ.P,
+        	_e = _('nej.e'),
             _h = _('nej.h');
         _h.__getSelectText = function(_document){
             var _range = _h.__getRange(_document);
             if (!_range) return '';
             return _range.text;
+        };
+        _h.__getSelectHtml = function(_document){
+            var _range = _h.__getRange(_document);
+	        if (!_range) return '';
+	        var _html = _range.htmlText;
+            return _html||'';
         };
     });
 
@@ -276,5 +283,7 @@ var f = function(){
 	        return _html.replace(__reg_nwrd,'');
 	    };
 	});
+
+
 };
 define(['./editor.js'],f);

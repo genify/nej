@@ -18,8 +18,9 @@ var f = function(){
             clazz:'mycustom'
         });
         this._v._$addEvent(_getcnt,'click',function(){
-            var x = _custom.__editor.__copt.area._$getContent();
-            alert(_custom.__editor.__copt.area._$getSelectText());
+            // alert(_custom.__editor.__copt.area._$getSelectHtml());
+            // var x = _custom.__editor.__copt.area._$getContent();
+            // alert(_custom.__editor.__copt.area._$getSelectText());
         }._$bind(this));
     });
     // test('生成一个富文本编辑器',function(){

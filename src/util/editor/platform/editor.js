@@ -75,7 +75,7 @@ var f = function(){
     _h.__getSelectText = function(_document){
         var _range = this.__getRange(_document);
         if (!_range) return '';
-        return (!!document.selection && parseFloat(_p._$KERNEL.release)<5.0)?_range.text:_range.toString()||_range.cloneContents().textContent||_range.commonAncestorContainer.data;
+        return _range.toString()||_range.cloneContents().textContent||_range.commonAncestorContainer.data;
     };
     /**
      * 获取选中内容的html
@@ -85,10 +85,6 @@ var f = function(){
     _h.__getSelectHtml = function(_document){
         var _range = this.__getRange(_document);
         if (!_range) return '';
-        if (!!document.selection){
-            var _html = _range.htmlText;
-            return _html||'';
-        }    
         var _ntmp = _e._$create('div');
         _ntmp.appendChild(_range.cloneContents());
         return _ntmp.innerHTML;
