@@ -386,7 +386,8 @@ var f = function(){
                     _exmap = {
                         'c':_e._$hasClassName,
                         'd':_e._$dataset,
-                        'a':_e._$attr
+                        'a':_e._$attr,
+                        't':function(n,v){(n.tagName||'').toLowerCase()===v;}
                     };
                 var _check = _exmap[_arr[0]];
                 if (!!_check) 

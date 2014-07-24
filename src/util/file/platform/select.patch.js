@@ -12,7 +12,7 @@ var f = function(){
 	    _e.__handleFileLabelClick = (function(){
 	    	var _doLabelClick = function(_event){
 	            _v._$stop(_event);
-	            _v._$getElement(_event).control.click();
+	            _v._$getElement(_event,'t:label').control.click();
 	        };
 	    	return _e.__handleFileLabelClick._$aop(
 		        function(_event){
