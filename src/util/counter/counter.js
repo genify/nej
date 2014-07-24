@@ -8,6 +8,7 @@
 var f = function(){
     var _  = NEJ.P,
         _f = NEJ.F,
+        _h = _('nej.h'),
         _e = _('nej.e'),
         _v = _('nej.v'),
         _u = _('nej.u');
@@ -53,11 +54,10 @@ var f = function(){
      * @return {Void}
      */
     _e._$counter = (function(){
-        var _reg0 = /[\r\n]/gi,
-            _cache = {}; // {id:{max:123,id:'xxx',onchange:function,onlength:function}}
+        var _cache = {}; // {id:{max:123,id:'xxx',onchange:function,onlength:function}}
         // calculate string length
         var _doLength = function(_str){
-            return (_str||'').replace(_reg0,'aa').length;
+            return _h.__length(_str);
         };
         // input change
         var _onChange = function(_id){
@@ -71,7 +71,7 @@ var f = function(){
             _event.length = _conf.onlength(_event.input);
             _event.delta = _conf.max-_event.length;
             _conf.onchange(_event);
-            _node2.innerHTML = _event.value||('剩余'+_event.delta+'个字');
+            _node2.innerHTML = _event.value||('剩余'+Math.max(0,_event.delta)+'个字');
         };
         return function(_element,_options){
             var _id = _e._$id(_element);
@@ -102,5 +102,6 @@ var f = function(){
 NEJ.define(
     '{lib}util/counter/counter.js',[
     '{lib}base/element.js',
-    '{lib}base/event.js'
+    '{lib}base/event.js',
+    '{platform}counter.js'
 ],f);

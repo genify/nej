@@ -5,12 +5,15 @@
     <meta charset="utf-8"/>
   </head>
   <body>
-    <input type="text" id="input-id-0" maxlength="100"/>
+    <p><input type="text" id="input-id-0" maxlength="100"/></p>
+    <p><textarea maxlength="10" id="input-id-1" rows="20"></textarea></p>
+    
     <script src="../../../src/define.js?pro=./"></script>
     <script>
       define(['{lib}util/counter/counter.js'],
       function(){
           nej.e._$counter('input-id-0');
+          nej.e._$counter('input-id-1');
       });
     </script>
   </body>
