@@ -5,13 +5,18 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    // variable declaration
-    var _b = NEJ.P('nej.p'),
-        _p = window,
+var f = function(_b,_p){
+    if (CMPT){
+        // variable declaration
+        var _b = NEJ.P('nej.p'),
+            _p = window,
+            _is = _b._$IS,
+            // ipad/iphone not fire 
+            // requestAnimationFrame when html page change
+            _es = _is.ipad||_is.iphone;
+    }
+    var _p  = window,
         _is = _b._$IS,
-        // ipad/iphone not fire 
-        // requestAnimationFrame when html page change
         _es = _is.ipad||_is.iphone;
     // implement animation frame interface
     if (!_es&&!!_p.requestAnimationFrame&&
@@ -23,7 +28,7 @@ var f = function(){
         !!_p[_prefix+'CancelRequestAnimationFrame']){
         _p.requestAnimationFrame = _p[_prefix+'RequestAnimationFrame'];
         _p.cancelRequestAnimationFrame = _p[_prefix+'CancelRequestAnimationFrame'];
-        return;
+        return _p;
     }
     // requestAnimationFrame/cancelRequestAnimationFrame implementation
     var _fps = _is.desktop?80:(_is.ios?50:30);
@@ -60,6 +65,7 @@ var f = function(){
         window.clearTimeout(_id);
         return this;
     };
+    return _p;
 };
 NEJ.define('{lib}util/timer/animation.js',
           ['{lib}base/platform.js'],f);

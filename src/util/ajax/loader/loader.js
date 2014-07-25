@@ -5,18 +5,24 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    // variable declaration
-    var _  = NEJ.P,
-        _f = NEJ.F,
-        _g = _('nej.g'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _t = _('nej.ut'),
-        _p = _('nej.ut.j'),
-        _pro,
-        _timeout = 60000; // default timeout
-    if (!!_p._$$Loader) return;
+var f = function(NEJ,_g,_v,_u,_t,_p){
+    if (CMPT){
+        // variable declaration
+        var _  = NEJ.P,
+            _f = NEJ.F,
+            _g = _('nej.g'),
+            _v = _('nej.v'),
+            _u = _('nej.u'),
+            _t = _('nej.ut'),
+            _p = _('nej.ut.j'),
+            _pro,
+            _timeout = 60000; // default timeout
+        if (!!_p._$$Loader) return;
+    }
+    var _f = NEJ.F,
+        _timeout = 60000,
+        _pro;
+
     /**
      * 资源加载器
      * @class   {nej.ut.j._$$Loader} 资源加载器
@@ -361,7 +367,9 @@ var f = function(){
 };
 NEJ.define(
     '{lib}util/ajax/loader/loader.js',[
+    '{lib}base/global.js',
     '{lib}base/constant.js',
     '{lib}base/event.js',
+    '{lib}base/util.js',
     '{lib}util/event.js'
 ],f); 

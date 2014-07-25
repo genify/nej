@@ -1,6 +1,10 @@
-var f = function(){
-    var _c = NEJ.P('nej.c'),
-        _cache = {};
+NEJ.define(['{lib}base/global.js'
+],function(NEJ,_c){
+    var _cache = {};
+    if (CMPT){
+        var _c = NEJ.P('nej.c');
+    }
+   
     /*
      * URL地址转源信息
      * http://a.b.com:8080/a/bc/ -> http://a.b.com:8080
@@ -107,5 +111,5 @@ var f = function(){
 
     // init
     _doInit(window.NEJ_CONF||NEJ.O);
-};
-NEJ.define('{lib}base/platform/config.js',['{lib}base/platform.js'],f);
+    return  _c;
+});

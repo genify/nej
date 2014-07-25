@@ -1,15 +1,16 @@
-var f = function(){
+var f = function(_h,_u,_v,_t,_p){
 	// ie6-9
 	NEJ.patch('2.0<=TR<=5.0',['{lib}base/util.js',
 					    	  '{lib}util/event/event.js',
 					    	  '{lib}util/encode/json.js'],
 	function(){
-	    var _  = NEJ.P,
-	        _p = _('nej.p'),
-	        _h = _('nej.h'),
-	        _u = _('nej.u'),
-	        _v = _('nej.v'),
-	        _t = _('nej.ut');
+		if (CMPT){
+			var _  = NEJ.P,
+		        _h = _('nej.h'),
+		        _u = _('nej.u'),
+		        _v = _('nej.v'),
+		        _t = _('nej.ut');
+		}
 	    // ie8-9 only support string data
 	    if (!!window.postMessage){
 	        /**

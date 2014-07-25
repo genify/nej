@@ -42,14 +42,16 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _c = NEJ.P('nej.c');
+var f = function(_c,_cp,_p){
+    if (CMPT){
+        var _c = NEJ.P('nej.c');
+    }
     /**
      * 取Frame跨域Ajax代理文件
      * @param  {String} 请求地址或者域名
      * @return {String} 代理文件地址
      */
-    _c._$getFrameProxy = function(_url){
+    _p._$getFrameProxy = function(_url){
         return _c.__getFrameProxy(_url);
     };
     /**
@@ -57,7 +59,7 @@ var f = function(){
      * @param  {String} 请求地址或者域名
      * @return {String} 代理文件地址
      */
-    _c._$getFlashProxy = function(_url){
+    _p._$getFlashProxy = function(_url){
         return _c.__getFlashProxy(_url);
     };
 
@@ -65,7 +67,7 @@ var f = function(){
      * ie 7-9获取域名
      * @type {[type]}
      */
-    _c._$getProxyURL = function(_url){
+    _p._$getProxyURL = function(_url){
         return _c.__getProxyURL ? _c.__getProxyURL(_url) : _url;
     };
 
@@ -74,8 +76,9 @@ var f = function(){
      * @param  {String} _key 配置标识
      * @return {Variable}    配置信息
      */
-    _c._$get = function(_key){
+    _p._$get = function(_key){
         return _c.__get(_key);
     };
+    return _p;
 };
 NEJ.define('{lib}base/config.js',['{platform}config.js'],f);

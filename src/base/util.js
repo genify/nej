@@ -5,15 +5,20 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    // variable declaration
-    var _  = NEJ.P,
-        _o = NEJ.O,
+var f = function(NEJ,_e,_h,_eh,_u){
+    if (CMPT){
+        // variable declaration
+        var _  = NEJ.P,
+            _o = NEJ.O,
+            _r = NEJ.R,
+            _f = NEJ.F,
+            _e = _('nej.e'),
+            _h = _('nej.h'),
+            _u = _('nej.u');
+    }
+    var _o = NEJ.O,
         _r = NEJ.R,
-        _f = NEJ.F,
-        _e = _('nej.e'),
-        _h = _('nej.h'),
-        _u = _('nej.u');
+        _f = NEJ.F;
     /*
      * 查看数据是否指定类型
      * @param  {Variable} 数据
@@ -1044,9 +1049,12 @@ var f = function(){
             return ''+(_seed++);
         };
     })();
+
+    return _u;
 };
 NEJ.define(
     '{lib}base/util.js',[
     '{lib}base/global.js',
-    '{lib}base/element.js'
+    '{lib}base/element.js',
+    '{platform}element.js'
 ],f);

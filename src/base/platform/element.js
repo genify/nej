@@ -5,17 +5,20 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    // variable declaration
-    var _  = NEJ.P,
-        _r = NEJ.R,
-        _p = _('nej.p'),
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _h = _('nej.h');
-    var _prefix = _p._$KERNEL.prefix,
-        _suport = _p._$SUPPORT,
+var f = function(NEJ,_e,_v,_u,_h){
+    if(CMPT){
+        // variable declaration
+        var _  = NEJ.P,
+            _r = NEJ.R,
+            _p = _('nej.p'),
+            _e = _('nej.e'),
+            _v = _('nej.v'),
+            _u = _('nej.u'),
+            _h = _('nej.h');
+    }
+    var _r = NEJ.R;
+    var _prefix = NEJ._$KERNEL.prefix,
+        _suport = NEJ._$SUPPORT,
         _2dmap  = {scale:'scale({x|1},{y|1})'
                   ,rotate:'rotate({a})'
 //                ,matrix:'matrix({m11},{m12},{m21},{m22},{m41},{m42})'
@@ -474,6 +477,10 @@ var f = function(){
     };
     // init
     _doInit();
+    return _h;
 };
 NEJ.define('{lib}base/platform/element.js',
-          ['{lib}base/platform.js'],f);
+          ['{lib}base/platform.js',
+           '{lib}base/element.js',
+           '{lib}base/event.js',
+           '{lib}base/util.js'],f);

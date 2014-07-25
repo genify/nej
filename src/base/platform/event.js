@@ -5,16 +5,19 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    // variable declaration
-    var _  = NEJ.P,
-        _r = NEJ.R,
-        _p = _('nej.p'),
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _h = _('nej.h');
-    var _prefix = _p._$KERNEL.prefix;
+var f = function(NEJ,_e,_v,_u,_p,_h){
+    if (CMPT){
+        // variable declaration
+        var _  = NEJ.P,
+            _r = NEJ.R,
+            _p = _('nej.p'),
+            _e = _('nej.e'),
+            _v = _('nej.v'),
+            _u = _('nej.u'),
+            _h = _('nej.h');
+    }
+    var _r = NEJ.R,
+        _prefix = _p._$KERNEL.prefix;
     // ---------- begin dom event patch api ---------
     /**
      * 集合转数组
@@ -221,6 +224,12 @@ var f = function(){
     _h.__canFlashEventBubble = function(_wmode){
         return (_wmode||'').toLowerCase()!='transparent';
     };
+
+    return _h;
 };
 NEJ.define('{lib}base/platform/event.js',
-          ['{lib}base/platform.js'],f);
+          ['{lib}base/global.js',
+          '{lib}base/element.js',
+          '{lib}base/event.js',
+          '{lib}base/util.js',
+          '{lib}base/platform.js'],f);

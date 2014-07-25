@@ -2,6 +2,8 @@
 var __config = {root:{/*lib,pro*/}/*patch,native,charset,global,platform*/},
     __queue  = [], // item:{n:'filename',d:[],f:function}
     __cache  = {}, // uri:STATE   0-loading  1-waiting  2-defined
+    __xcache = {},
+    __xqueue = {},
     __stack  = []; // for define stack
 /*
  * 显示日志
@@ -313,31 +315,47 @@ var _doMergePlatform = (function(){
  * @param  {Function}  define执行函数
  * @return {Array}     合并了patch后的依赖列表
  */
-var _doMergePatched = function(_deps,_callback){
-    var _func = _callback.toString();
-    if (_func.indexOf('NEJ.patch')<0){
-        return _deps;
-    }
-    _deps = _deps||[];
-    var _tmp = NEJ.patch,
-        _reg = __config.platform;
-    NEJ.patch = function(){
-        var _args = _doFormatARG.apply(
-            null,arguments
-        );
-        // check platform
-        if (!_args[0]||!_args[1]||
-            !_reg.test(_args[0])){
-            return;
+var _doMergePatched = (function(){
+    var _uniq = function(_list){
+        var _temp = {},
+            _array= [];
+        for (var i = 0,l = _list.length; i < l; i++){
+            var _t = _list[i];
+            if (!_temp[_t]){
+                _temp[_t] = 1;
+                Array.prototype.push.call(_array,_t);
+            }
         }
-        // merge dependency
-        _deps.push.apply(_deps,_args[1]);
+        return _array;
     };
-    _callback();
-    NEJ.patch = _tmp;
-    //console.log('++++++++++++++\n'+_deps.join('\n')+'\n++++++++++++++');
-    return _deps;
-};
+    return function(_uri,_deps,_callback){
+        var _func = _callback.toString();
+        if (_func.indexOf('NEJ.patch')<0){
+            return _deps;
+        }
+        _deps = _deps||[];
+        var _tmp = NEJ.patch,
+            _reg = __config.platform;
+        NEJ.patch = function(){
+            var _args = _doFormatARG.apply(
+                null,arguments
+            );
+            // check platform
+            if (!_args[0]||!_args[1]||
+                !_reg.test(_args[0])){
+                return;
+            }
+            debugger;
+            // merge dependency
+            _deps.push.apply(_deps,_args[1]);
+        };
+        _callback();
+        NEJ.patch = _tmp;
+        _deps = _uniq(_deps);
+        //console.log('++++++++++++++\n'+_deps.join('\n')+'\n++++++++++++++');
+        return _deps;
+    };
+})();
 /*
  * 判断是否字符串
  * @param  {Varable} _data 数据
@@ -602,6 +620,30 @@ var _doFindCircularRef = (function(){
         //return _loop(__queue[__queue.length-1]);
     };
 })();
+
+var _doCallback = (function(){
+    var _getspace = function(_uri){
+        if (!__xcache[_uri]){
+            __xcache[_uri] = {};
+        }
+        return __xcache[_uri];
+    };
+    var _doMerge = function(_x,_uri){
+        return _x||{};
+    };
+    return function(_item){
+        var _deps = [];
+        if (_item.d){
+            for (var i = 0; i < _item.d.length; i++){
+                var _uri = _item.d[i];
+                _deps.push(_getspace(_uri));
+            }
+        }
+        _deps.push({});
+        var x = !_item.f||_item.f.apply(null,_deps);
+        __xcache[_item.n] = _doMerge(x,_item.n);
+    };
+})();
 /*
  * 检查依赖载入情况
  * @return {Void}
@@ -616,7 +658,7 @@ var _doCheckLoading = function(){
         }
         __queue.splice(i,1);
         if (__cache[_item.n]!==2){
-            !_item.f||_item.f();
+            _doCallback(_item);
             __cache[_item.n] = 2;
             console.log('do '+_item.n);
         }
@@ -625,7 +667,7 @@ var _doCheckLoading = function(){
     // check circular reference
     if (__queue.length>0&&_isFinishLoaded()){
         var _item = _doFindCircularRef()||__queue.pop();
-        !_item.f||_item.f();
+        _doCallback(_item);
         __cache[_item.n] = 2;
         console.log('do+ '+_item.n);
         _doCheckLoading();
@@ -684,7 +726,7 @@ var _doDefine = (function(){
             _doMergePlatform(_deps,_uri);
         }
         if (!!_callback){
-            _deps = _doMergePatched(_deps,_callback);
+            _deps = _doMergePatched(_uri,_deps,_callback);
         }
         _doComplete(_deps,_uri);
         _doParsePatched(_deps);
@@ -695,6 +737,7 @@ var _doDefine = (function(){
         if (_state===2) return; // duplication
         __cache[_uri] = 1;
         __queue.push({n:_uri,d:_deps,f:_callback});
+        __xqueue[_uri] = {d:_deps,f:_callback};
 //        console.log('define -> '+_uri);
         // load dependence
         if (!!_deps&&!!_deps.length){
@@ -834,13 +877,13 @@ NEJ.define = function(_uri,_deps,_callback){
  * @param  {Function}  执行函数
  * @return {Void}  
  */
-NEJ.patch = function(_exp,_deps,_callback){
+NEJ.patch = function(_m,_exp,_deps,_callback){
     var _args = _doFormatARG.apply(
         null,arguments
     );
     if (!_args[0]) return;
     // check platform
-    var _kernel = nej.p._$KERNEL,
+    var _kernel = _m._$KERNEL,
         _result = _doParsePatchExp(_args[0]);
     if (!!_result&&!!_args[2]&&
         _result.isEngOK(_kernel[_result.pkey])&&
@@ -920,5 +963,6 @@ NEJ.config = function(_map,_entry){
     document.writeln(_arr.join(''));
 };
 // init
+CMPT = false;
 _doInit();
 })(document,window);

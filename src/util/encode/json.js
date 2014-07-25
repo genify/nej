@@ -1,4 +1,4 @@
-var f = function(){
-
-};
-define('{lib}util/encode/json.js',['{platform}json.js'],f);
+define(['{platform}json.js'
+],function(_j,_jp,_p){
+    return _p;   
+});

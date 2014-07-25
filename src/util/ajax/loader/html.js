@@ -5,15 +5,18 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    // variable declaration
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _e = _('nej.e'),
-        _h = _('nej.h'),
-        _p = _('nej.ut.j'),
-        _proHtmlLoader;
-    if (!!_p._$$HtmlLoader) return;
+var f = function(NEJ,_h,_eh,_l,_p){
+    if (CMPT){
+         // variable declaration
+        var _  = NEJ.P,
+            _o = NEJ.O,
+            _e = _('nej.e'),
+            _h = _('nej.h'),
+            _p = _('nej.ut.j'),
+            _proHtmlLoader;
+        if (!!_p._$$HtmlLoader) return;
+    }
+    var _proHtmlLoader;
     /**
      * HTML资源加载器
      * @class   {nej.ut.j._$$HtmlLoader} HTML资源加载器
@@ -22,7 +25,7 @@ var f = function(){
      * 
      */
     _p._$$HtmlLoader = NEJ.C(); 
-      _proHtmlLoader = _p._$$HtmlLoader._$extend(_p._$$Loader);
+    _proHtmlLoader = _p._$$HtmlLoader._$extend(_l._$$Loader);
     /**
      * 取资源载入控件
      * @protected
@@ -74,7 +77,10 @@ var f = function(){
         this.__doCallback('onloaded',_body);
         _h.__removeIFrameKeepHistory(_iframe);
     };
+
+    return _p;
 };
 NEJ.define('{lib}util/ajax/loader/html.js',
-          ['{platform}html.js'
-          ,'{lib}util/ajax/loader/loader.js'],f);
+          ['{lib}base/global.js',
+           '{platform}html.js',
+           '{lib}util/ajax/loader/loader.js'],f);

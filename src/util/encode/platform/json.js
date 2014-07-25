@@ -5,7 +5,7 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-	
+var f = function(_m,_p){
+	return _p;
 };
 NEJ.define('{lib}util/encode/platform/json.js',['{lib}base/platform.js'],f);

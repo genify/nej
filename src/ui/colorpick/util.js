@@ -5,11 +5,14 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _u = _('nej.u'),
-        _p = _('nej.ut.c');
-    if (!!_p._$isColor) return;
+var f = function(_u,_p){
+
+    if (CMPT){
+        var _  = NEJ.P,
+            _u = _('nej.u'),
+            _p = _('nej.ut.c');
+        if (!!_p._$isColor) return;
+    }
     /**
      * 判断色值是否合法
      * @api    {nej.ut.c._$isColor}
@@ -149,6 +152,8 @@ var f = function(){
     _p._$color2hsl = function(_color){
         return _p._$rgb2hsl(_p._$color2rgb(_color));
     };
+
+    return _p;
 };
 NEJ.define('{lib}ui/colorpick/util.js',
       ['{lib}base/util.js'],f);

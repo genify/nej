@@ -26,9 +26,11 @@
  * @author   genify(caijf@corp.netease.com)
  * --------------------------------------------
  */
-var f = function(){
-    // NEJ namespace
-    window.NEJ = window.NEJ||{};
+NEJ.define(function(NEJ){
+    if (CMPT){
+        // NEJ namespace
+        window.NEJ = window.NEJ||{};    
+    }
     /**
      * 空对象实例，使用过程中不允许对其做设置操作<br/>
      * @const {NEJ.O}
@@ -402,7 +404,5 @@ var f = function(){
         NEJ.P('console').log = NEJ.F;
         NEJ.P('console').error = NEJ.F;
     }
-    // void generating these name when deploy
-    var lt,gt,amp,nbsp,quot,apos,copy,reg;
-};
-NEJ.define('{lib}base/global.js',f);
+    return NEJ;
+});

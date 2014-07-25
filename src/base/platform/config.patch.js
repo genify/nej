@@ -2,13 +2,18 @@
  * 配置信息实现文件
  * @return {[type]} [description]
  */
-var f = function() {
+var f = function(NEJ,_m,_c,_p) {
+	window.NEJ.patch(_m,'WV',function(NEJ,_m,_c){
+		debugger;
+	});
 	// ie6-9
-	NEJ.patch('2.0<=TR<=5.0',function(){
-	    var _  = NEJ.P,
-	        _p = _('nej.p'),
-	        _c = _('nej.c'),
-	        _config = window.NEJ_CONF||NEJ.O;
+	window.NEJ.patch(_m,'2.0<=TR<=5.0',function(){
+		if (CMPT){
+			var _  = NEJ.P,
+		        _c = _('nej.c'),
+		        _config = window.NEJ_CONF||NEJ.O;
+		}
+		var _config = window.NEJ_CONF||NEJ.O;
 	    // storage flash url
 	    _c.__set('storage.swf',_config.storage||
 	            (_c.__get('root')+'nej_storage.swf'));
@@ -44,12 +49,16 @@ var f = function() {
 	});
 	
 	// ie 7- data uri not available
-	NEJ.patch('TR<=3.0',function(){
-		var _  = NEJ.P,
-	        _c = _('nej.c'),
-	        _config = window.NEJ_CONF||NEJ.O;
+	window.NEJ.patch(_m,'TR<=3.0',function(){
+		if (CMPT){
+			var _  = NEJ.P,
+		        _c = _('nej.c'),
+		        _config = window.NEJ_CONF||NEJ.O;
+		}
+		var _config = window.NEJ_CONF||NEJ.O;
         _c.__set('blank.png',_config.blank||
                 (_c.__get('root')+'nej_blank.gif'));
 	});
+	return _p;
 };
-define(['./config.js'],f);
+define(['{lib}base/global.js','{lib}base/platform.js','./config.js'],f);

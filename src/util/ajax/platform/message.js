@@ -5,10 +5,14 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _h = _('nej.h');
+NEJ.define(['{lib}base/global.js'
+],function(NEJ,_h){
+    if (CMPT){
+        var _  = NEJ.P,
+            _o = NEJ.O,
+            _h = _('nej.h');
+    }
+    var _o = NEJ.O;
     /**
      * 格式化源信息
      * @param  {String} 源
@@ -46,5 +50,5 @@ var f = function(){
             _h.__formatOrigin(_options.origin)
         );
     };
-};
-NEJ.define('{lib}util/ajax/platform/message.js',['{lib}base/platform.js'],f);
+    return _h;
+});

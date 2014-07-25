@@ -5,12 +5,14 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
+NEJ.define(['{lib}base/global.js'
+],function(NEJ,_p){
     // variable declaration
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _p = _('nej.p'),
-        _platform  = window.navigator.platform,
+    if (CMPT){
+        var _  = NEJ.P,
+            _p = _('nej.p');
+    }
+    var _platform  = window.navigator.platform,
         _useragent = window.navigator.userAgent;
     /**
      * 平台判断信息
@@ -149,8 +151,5 @@ var f = function(){
        // fix for ie6-ie9
        ,trident  : _notd||_kernel.release>='6.0'
     };
-};
-NEJ.define(
-    '{lib}base/platform.js',[
-    '{lib}base/global.js'
-],f);
+    return _p;
+});

@@ -5,10 +5,13 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var o = NEJ.O,
-        u = NEJ.P('nej.u'),
-        j = NEJ.P('nej.j');
+var f = function(NEJ,_u,_j){
+    if (CMPT){
+        var _o = NEJ.O,
+            _u = NEJ.P('nej.u'),
+            _j = NEJ.P('nej.j');
+    }
+    var _o = NEJ.O;
     /**
      * 设置或者获取cookie<br/>
      * 没有输入第二个参数则表示返回已有cookie<br/>
@@ -33,7 +36,7 @@ var f = function(){
      * @config {Number}        expires 过期时间偏移，单位天，负值表示删除cookie
      * @return {String}                cookie值
      */
-    j._$cookie = (function(){
+    _j._$cookie = (function(){
         var _date = new Date(),
             _crut = +_date,   // current time milliseconds
             _days = 86400000; // milliseconds of one day
@@ -50,24 +53,27 @@ var f = function(){
         return function(_name,_data){
             if (_data===undefined)
                 return _getcookie(_name);
-            if (u._$isString(_data)){
+            if (_u._$isString(_data)){
                 if (!!_data){
                     document.cookie = _name+'='+_data+';';
                     return _data;
                 }
                 _data = {expires:-100};
             }
-            _data = _data||o;
+            _data = _data||_o;
             var _cookie = _name+'='+(_data.value||'')+';';
             delete _data.value;
             if (_data.expires!==undefined){
                 _date.setTime(_crut+_data.expires*_days);
                 _data.expires = _date.toGMTString();
             }
-            _cookie += u._$object2string(_data,';');
+            _cookie += _u._$object2string(_data,';');
 //            console.log('set cookie '+_cookie);
             document.cookie = _cookie;
         };
     })();
+
+    return _j;
 };
-NEJ.define('{lib}util/cache/cookie.js',['{lib}base/util.js'],f);
+NEJ.define('{lib}util/cache/cookie.js',['{lib}base/global.js',
+    '{lib}base/util.js'],f);

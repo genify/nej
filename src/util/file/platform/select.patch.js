@@ -19,7 +19,7 @@ var f = function(){
 		            _v._$addEvent(_event.args[0],'click',_doLabelClick);
 		        }
 	    	);
-	    })(); 
+	    })();
 	});
     
 };

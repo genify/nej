@@ -5,17 +5,20 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    // variable declaration
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _f = NEJ.F,
-        _g = _('nej.g'),
-        _e = _('nej.e'),
-        _u = _('nej.u'),
-        _v = _('nej.v'),
-        _h = _('nej.h'),
-        _x = _('nej.x'),
+var f = function(_g,_u,_v,_j,_h,_eh,_e){
+    if (CMPT){
+        // variable declaration
+        var _  = NEJ.P,
+            _g = _('nej.g'),
+            _e = _('nej.e'),
+            _u = _('nej.u'),
+            _v = _('nej.v'),
+            _h = _('nej.h'),
+            _x = _('nej.x'),
+            _cspol,       // css text pool
+            _empol = {};  // id:instance for elements not append to page
+    }
+    var _x = _e,
         _cspol,       // css text pool
         _empol = {};  // id:instance for elements not append to page
     /**
@@ -934,7 +937,8 @@ var f = function(){
     _e._$removeByEC = 
     _x._$removeByEC = (function(){
         var _cache = document.createDocumentFragment();
-        _('dbg').dumpFRG = function(){
+        window.dbg = {};
+        window.dbg.dumpFRG = function(){
             return _cache;
         };
         return function(_element){
@@ -1808,16 +1812,18 @@ var f = function(){
      * 导出dom事件缓存对象，仅用于调试
      * @return {Void}
      */
-    _('dbg').dumpEL = function(){
+    window.dbg.dumpEL = function(){
         return _empol;
     };
     _x.isChange = !0;
+
+    return _e;
 };
 NEJ.define(
     '{lib}base/element.js',[
     '{lib}base/constant.js',
-    '{lib}base/event.js',
     '{lib}base/util.js',
-    '{platform}element.js',
-    '{lib}util/encode/json.js'
+    '{lib}base/event.js',
+    '{lib}util/encode/json.js',
+    '{platform}element.js'
 ],f);

@@ -1,19 +1,17 @@
-var f = function(){
+var f = function(_m,_e,_u,_h,_p){
 
 	// gecko editor patch
-	NEJ.patch('GV',function(){
-	    var _  = NEJ.P,
-	        _p = _('nej.p'),
-	        _e = _('nej.e'),
-	        _h = _('nej.h');
+	NEJ.patch(_m,'GV',function(){
+		if (CMPT){
+			var _  = NEJ.P,
+		        _e = _('nej.e'),
+		        _h = _('nej.h');
+		}
+	    
 	    /**
 	     * 基本内容过滤
 	     */
-	    var __empty = /(?:<(p|div)>(?:\&nbsp\;|<br\/?>)<\/\1>|<br\/?>|\&nbsp\;|\s)+$/gi; // empty content
-	    /**
-	     * word内容过滤
-	     */
-	    var // below for clear format
+	    var __empty    = /(?:<(p|div)>(?:\&nbsp\;|<br\/?>)<\/\1>|<br\/?>|\&nbsp\;|\s)+$/gi,
 	        __reg_flnh = /\f/g,//换页符
 	        __reg_flns = /\n|\r/g,//换行符或回车符
 	        __reg_fzag = /<(style|script).*?>.*?<\/\1>/gi,//style和script标签
@@ -56,13 +54,15 @@ var f = function(){
 	});
 
 	// ie6-9 editor patch
-	NEJ.patch('PV',function(){
-	    // variable declaration
-	    var _  = NEJ.P,
-	        _p = _('nej.p'),
-	        _h = _('nej.h');
+	NEJ.patch(_m,'PV',function(){
+		if (CMPT){
+			// variable declaration
+		    var _  = NEJ.P,
+		        _h = _('nej.h');
+		}
+	    
 	    var __reg_nwrd = /<\/?[\w]+:[\w]+.*?>/gi,
-	        __opspc = '';
+	        __opspc    = '';
 	    /**
 	     * 执行编辑命令
 	     * @param  {Node}   _document 文档对象
@@ -160,10 +160,11 @@ var f = function(){
 
 	// ie10+ editor patch
 	NEJ.patch('TR>=6.0',['./editor.td.js'],function(){
-	    var _  = NEJ.P,
-	        _u = _('nej.u'),
-	        _p = _('nej.p'),
-	        _h = _('nej.h');
+		if (CMPT){
+			var _  = NEJ.P,
+		        _u = _('nej.u'),
+		        _h = _('nej.h');
+		}
 	    var __reg_nwrd = /<\/?[\w]+:[\w]+.*?>/gi;
 	    /**
 	     * 验证trident1下内容是否来自Word
@@ -187,9 +188,11 @@ var f = function(){
 	});
 
 	NEJ.patch('TR>=7.0',function(){
-		var _  = NEJ.P,
-	        _u = _('nej.u'),
-	        _h = _('nej.h');
+		if (CMPT){
+			var _  = NEJ.P,
+		        _u = _('nej.u'),
+		        _h = _('nej.h');
+		}
 	    /**
 	     * 保存当前选择状态
 	     * @param  {Node} _node 节点
@@ -240,9 +243,12 @@ var f = function(){
 
 	// ie8-
 	NEJ.patch('TR<=4.0',function(){
-        var _  = NEJ.P,
-        	_e = _('nej.e'),
-            _h = _('nej.h');
+		if (CMPT){
+			var _  = NEJ.P,
+	        	_e = _('nej.e'),
+	            _h = _('nej.h');
+		}
+        
         _h.__getSelectText = function(_document){
             var _range = _h.__getRange(_document);
             if (!_range) return '';
@@ -258,10 +264,12 @@ var f = function(){
 
 	// webkit editor patch
 	NEJ.patch('WV',function(){
-	    var _  = NEJ.P,
-	        _p = _('nej.p'),
-	        _e = _('nej.e'),
-	        _h = _('nej.h');
+		if (CMPT){
+			var _  = NEJ.P,
+		        _e = _('nej.e'),
+		        _h = _('nej.h');
+		}
+	   
 	    var __reg_nwrd = /<\/?[\w]+:[\w]+.*?>/gi;
 	    /**
 	     * 验证webkit下内容是否来自Word
@@ -284,6 +292,7 @@ var f = function(){
 	    };
 	});
 
-
+	return _p;
 };
-define(['./editor.js'],f);
+define(['{lib}base/platform.js','{lib}base/element.js',
+	'{lib}base/util.js','./editor.js'],f);

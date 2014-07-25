@@ -1,9 +1,12 @@
-var f = function() {
+var f = function(NEJ,_m,_e,_v,_h,_p) {
 	// ie api patch
-	NEJ.patch('TV',function(){
-		var _  = NEJ.P,
-		    _e = _('nej.e'),
-		    _h = _('nej.h');
+	window.NEJ.patch('TV',function(){
+		if (CMPT){
+			var _  = NEJ.P,
+			    _e = _('nej.e'),
+			    _h = _('nej.h');
+		}
+		
 	    /*
 	     * 判断是否有内置的样式操作接口
 	     * @return {Boolean} 是否有内置的样式操作接口
@@ -99,14 +102,17 @@ var f = function() {
 	});
 
 	// gecko api patch
-	NEJ.patch('GV',function(){
-	    // variable declaration
-	    var _  = NEJ.P,
-	        _v = _('nej.v'),
-	        _e = _('nej.e'),
-	        _h = _('nej.h'),
-	        _p = _('nej.p'),
-	        _support = _p._$SUPPORT;
+	window.NEJ.patch('GV',function(){
+		if (CMPT){
+			// variable declaration
+		    var _  = NEJ.P,
+		        _v = _('nej.v'),
+		        _e = _('nej.e'),
+		        _h = _('nej.h'),
+		        _p = _('nej.p'),
+		        _support = _p._$SUPPORT;
+		}
+	    var _support = _m._$SUPPORT;
 	    /*
 	     * 初始化补丁
 	     * @return {Void}
@@ -146,16 +152,18 @@ var f = function() {
 	});
 
 	// ie6-9 api patch
-	NEJ.patch('2.0<=TR<=5.0',function(){
-	    // variable declaration
-	    var _  = NEJ.P,
-	        _o = NEJ.O,
-	        _p = _('nej.p'),
-	        _e = _('nej.e'),
-	        _v = _('nej.v'),
-	        _u = _('nej.u'),
-	        _h = _('nej.h'),
-	        _omap = {}; // event must use attach/detach method
+	window.NEJ.patch('2.0<=TR<=5.0',function(){
+		if (CMPT){
+			 // variable declaration
+		    var _  = NEJ.P,
+		        _o = NEJ.O,
+		        _e = _('nej.e'),
+		        _v = _('nej.v'),
+		        _u = _('nej.u'),
+		        _h = _('nej.h'),
+		        _omap = {}; // event must use attach/detach method
+		}
+	    var _omap = {};
 	    /**
 	     * 集合转数组
 	     * @param  {Object} _list 集合
@@ -451,12 +459,14 @@ var f = function() {
 	    try{document.execCommand('BackgroundImageCache',!1,!0);}catch(e){}
 	});
 
-	NEJ.patch('2.0<=TR<=3.0',function(){
-		// variable declaration
-	    var _  = NEJ.P,
-	        _e = _('nej.e'),
-	        _v = _('nej.v'),
-	        _h = _('nej.h');
+	window.NEJ.patch('2.0<=TR<=3.0',function(){
+		if (CMPT){
+			// variable declaration
+		    var _  = NEJ.P,
+		        _e = _('nej.e'),
+		        _v = _('nej.v'),
+		        _h = _('nej.h');
+		}
 		/**
 	     * 节点focus行为
 	     * @param  {String|Node} 节点
@@ -484,13 +494,15 @@ var f = function() {
 	});
 
 	// ie6 api patch
-	NEJ.patch('TR==2.0',function(){
-	    // variable declaration
-	    var _  = NEJ.P,
-	        _e = _('nej.e'),
-	        _v = _('nej.v'),
-	        _p = _('nej.p'),
-	        _h = _('nej.h');
+	window.NEJ.patch('TR==2.0',function(){
+		if (CMPT){
+			// variable declaration
+		    var _  = NEJ.P,
+		        _e = _('nej.e'),
+		        _v = _('nej.v'),
+		        _p = _('nej.p'),
+		        _h = _('nej.h');
+		}
 	    var _seed  = +new Date;
 	        _cache = {};
 	    /**
@@ -593,5 +605,11 @@ var f = function() {
 	        if (!!_mask) _e._$removeByEC(_mask);
 	    });
 	});
+	
+	return _p;
 };
-define(['./element.js'],f);
+define(['{lib}base/global.js',
+	    '{lib}base/platform.js',
+		'{lib}base/element.js',
+		'{lib}base/event.js',
+		'./element.js'],f);

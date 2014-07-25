@@ -5,22 +5,28 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    // variable declaration
-    var _  = NEJ.P,
-        _r = NEJ.R,
-        _h = _('nej.h'),
-        _e = _('nej.e'),
-        _u = _('nej.u'),
-        _v = _('nej.v'),
-        _x = _('nej.x'),
+var f = function(NEJ,_h,_eh,_e,_u,_v){
+    if (CMPT){
+        // variable declaration
+        var _  = NEJ.P,
+            _r = NEJ.R,
+            _h = _('nej.h'),
+            _e = _('nej.e'),
+            _u = _('nej.u'),
+            _v = _('nej.v'),
+            _x = _('nej.x'),
+            _reg = /\s+/,
+            // {id:{type:[{type:'click',func:function,sfun:function,capt:true},...]}}
+            // id   - element id
+            // type - event name, no on prefix
+            // func - event after wrapper
+            // capt - capture flag
+            // sfun - event before wrapper
+            _cache = {};
+    }
+    var _r     = NEJ.R,
+        _x     = _v,
         _reg = /\s+/,
-        // {id:{type:[{type:'click',func:function,sfun:function,capt:true},...]}}
-        // id   - element id
-        // type - event name, no on prefix
-        // func - event after wrapper
-        // capt - capture flag
-        // sfun - event before wrapper
         _cache = {};
     /*
      * 检查事件批量添加或删除
@@ -768,14 +774,17 @@ var f = function(){
      * 导出dom事件缓存对象，仅用于调试
      * @return {Void}
      */
-    _('dbg').dumpEV = function(){
+    window.dbg.dumpEV = function(){
         return _cache;
     };
     _x.isChange = !0;
+
+    return _v;
 };
 NEJ.define(
     '{lib}base/event.js',[
+    '{lib}base/global.js',
+    '{platform}event.js',
     '{lib}base/element.js',
-    '{lib}base/util.js',
-    '{platform}event.js'
+    '{lib}base/util.js'
 ],f);

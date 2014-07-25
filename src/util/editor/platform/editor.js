@@ -5,12 +5,13 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _p = _('nej.p'),
-        _e = _('nej.e'),
-        _u = _('nej.u'),
-        _h = _('nej.h');
+var f = function(_e,_h){
+    if (CMPT){
+        var _  = NEJ.P,
+            _e = _('nej.e'),
+            _h = _('nej.h');
+    }
+   
     var __empty    = /(?:<(p|div)>(?:\&nbsp\;|<br\/?>)<\/\1>|<br\/?>|\&nbsp\;|\s)+$/gi, // empty content
         __reg_cls0 = /(?:class|lang)="(mso)?[^"]*"/gi,
         __reg_cls1 = /(?:class|lang)='(mso)?[^']*'/gi,
@@ -230,5 +231,6 @@ var f = function(){
         };
     })();
     
+    return _h;
 };
-NEJ.define(['{lib}base/platform.js','{lib}base/element.js'],f);
+NEJ.define(['{lib}base/element.js'],f);

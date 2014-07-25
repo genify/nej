@@ -5,11 +5,13 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _c = _('nej.c'),
-        _p = _('nej.g'),
-        _seed = +new Date;
+var f = function(_c,_p){
+    if (CMPT){
+        var _  = NEJ.P,
+            _c = _('nej.c'),
+            _p = _('nej.g'),
+            _seed = +new Date;
+    }
     /**
      * 找不到指定内容的错误码<br/>
      * @const {nej.g._$CODE_NOTFUND}
@@ -88,9 +90,10 @@ var f = function(){
      * @type  {String}
      */
     _p._$BLANK_IMAGE  = _c._$get('blank.png')||'data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
+
+    return _p;
 };
 NEJ.define(
     '{lib}base/constant.js',[
-    '{lib}base/config.js',
-    '{lib}base/global.js'
+    '{lib}base/config.js'
 ],f);

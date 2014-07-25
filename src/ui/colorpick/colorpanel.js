@@ -5,19 +5,25 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _c = _('nej.c'),
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _t = _('nej.ut'),
-        _x = _('nej.ut.c'),
-        _p = _('nej.ui'),
+var f = function(NEJ,_c,_e,_v,_u,_y,_xy,_x,_p){
+    if (CMPT){
+        var _  = NEJ.P,
+            _o = NEJ.O,
+            _c = _('nej.c'),
+            _e = _('nej.e'),
+            _v = _('nej.v'),
+            _u = _('nej.u'),
+            _t = _('nej.ut'),
+            _x = _('nej.ut.c'),
+            _p = _('nej.ui'),
+            _proColorPanel,
+            _supColorPanel;
+        if (!!_p._$$ColorPanel) return;
+    }
+    var _o = NEJ.O,
+        _t = NEJ.X(_y,_xy),
         _proColorPanel,
         _supColorPanel;
-    if (!!_p._$$ColorPanel) return;
     // ui css text
     var _seed_css = _e._$pushCSSText('\
         .#<uispace>{width:160px;margin:0 auto;overflow:hidden;$<user-select>:none;}\
@@ -211,7 +217,11 @@ var f = function(){
     };
 };
 NEJ.define('{lib}ui/colorpick/colorpanel.js',
-      ['{lib}ui/base.js'
-      ,'{lib}util/slider/slider.y.js'
-      ,'{lib}util/slider/slider.xy.js'
-      ,'{lib}ui/colorpick/util.js'],f);
+      ['{lib}base/global.js',
+       '{lib}base/config.js',
+       '{lib}base/element.js',
+       '{lib}base/event.js',
+       '{lib}base/util.js',
+       '{lib}util/slider/slider.y.js',
+       '{lib}util/slider/slider.xy.js',
+       '{lib}ui/colorpick/util.js'],f);

@@ -1,13 +1,16 @@
-var f = function() {
+var f = function(NEJ,_m,_e,_v,_u,_h,_p) {
 	// gecko api patch
-	NEJ.patch('GV',function(){
-	    // variable declaration
-	    var _  = NEJ.P,
-	        _v = _('nej.v'),
-	        _e = _('nej.e'),
-	        _h = _('nej.h'),
-	        _p = _('nej.p'),
-	        _support = _p._$SUPPORT;
+	window.NEJ.patch(_m,'GV',function(){
+		if (SMPT){
+			 // variable declaration
+		    var _  = NEJ.P,
+		        _v = _('nej.v'),
+		        _e = _('nej.e'),
+		        _h = _('nej.h'),
+		        _p = _('nej.p'),
+		        _support = _p._$SUPPORT;
+		}
+	    var _support = _m._$SUPPORT;
 	    /**
 	     * 检查事件信息
 	     * @param  {Node}     _element 节点对象
@@ -75,16 +78,20 @@ var f = function() {
 	});
 
 	// ie6-9 api patch
-	NEJ.patch('2.0<=TR<=5.0',function(){
-	    // variable declaration
-	    var _  = NEJ.P,
-	        _o = NEJ.O,
-	        _p = _('nej.p'),
-	        _e = _('nej.e'),
-	        _v = _('nej.v'),
-	        _u = _('nej.u'),
-	        _h = _('nej.h'),
-	        _omap = {}; // event must use attach/detach method
+	window.NEJ.patch(_m,'2.0<=TR<=5.0',function(){
+		if (CMPT){
+			// variable declaration
+		    var _  = NEJ.P,
+		        _o = NEJ.O,
+		        _p = _('nej.p'),
+		        _e = _('nej.e'),
+		        _v = _('nej.v'),
+		        _u = _('nej.u'),
+		        _h = _('nej.h'),
+		        _omap = {}; // event must use attach/detach method
+		}
+	    var _o = NEJ.O,
+	    	_omap = {};
 	    /**
 	     * 集合转数组
 	     * @param  {Object} _list 集合
@@ -252,16 +259,18 @@ var f = function() {
 	});
 
 	// ie9
-	NEJ.patch('TR==5.0',function(){
-		// variable declaration
-	    var _  = NEJ.P,
-	        _o = NEJ.O,
-	        _p = _('nej.p'),
-	        _e = _('nej.e'),
-	        _v = _('nej.v'),
-	        _u = _('nej.u'),
-	        _h = _('nej.h');
-
+	window.NEJ.patch(_m,'TR==5.0',function(){
+		if (CMPT){
+			// variable declaration
+		    var _  = NEJ.P,
+		        _o = NEJ.O,
+		        _p = _('nej.p'),
+		        _e = _('nej.e'),
+		        _v = _('nej.v'),
+		        _u = _('nej.u'),
+		        _h = _('nej.h');
+		}
+		var _o = NEJ.O;
 		_h.__addEvent = (function(){
 	        var _hmap = {},
 	            _kmap = {8:1,46:1},
@@ -349,11 +358,13 @@ var f = function() {
 	});
 
 	// ie10+ api patch
-	NEJ.patch('TR>=6.0',function(){
-	    var _  = NEJ.P,
-	        _p = _('nej.p'),
-	        _e = _('nej.e'),
-	        _h = _('nej.h');
+	window.NEJ.patch(_m,'TR>=6.0',function(){
+		if (CMPT){
+			var _  = NEJ.P,
+		        _p = _('nej.p'),
+		        _e = _('nej.e'),
+		        _h = _('nej.h');
+		}
 	    /**
 	     * 检查事件类型
 	     * @param  {Node}   节点
@@ -382,13 +393,16 @@ var f = function() {
 	});
 	
 	// webkit api patch
-	NEJ.patch('WV',function(){
-	    // variable declaration
-	    var _  = NEJ.P,
-	        _e = _('nej.e'),
-	        _v = _('nej.v'),
-	        _p = _('nej.p'),
-	        _h = _('nej.h');
+	window.NEJ.patch(_m,'WV',function(){
+		if (CMPT){
+			// variable declaration
+		    var _  = NEJ.P,
+		        _e = _('nej.e'),
+		        _v = _('nej.v'),
+		        _p = _('nej.p'),
+		        _h = _('nej.h');
+		}
+	    
 	    /**
 	     * 检查事件类型
 	     * @param  {Node}   节点
@@ -489,4 +503,10 @@ var f = function() {
 	    };
 	});
 };
-define(['./event.js'],f);
+define([
+	'{lib}base/global.js',
+	'{lib}base/platform.js',
+	'{lib}base/element.js',
+	'{lib}base/event.js',
+	'{lib}base/util.js',
+	'./event.js'],f);

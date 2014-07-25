@@ -1,8 +1,11 @@
-var f = function(){
+var f = function(_m,_e,_h,_p){
 	// ie6 html patch
-	NEJ.patch('TR==2.0',function(){
-		var _  = NEJ.P,
-			_h = _('nej.h');
+	NEJ.patch(_m,'TR==2.0',function(){
+		if (CMPT){
+			var _  = NEJ.P,
+				_e = _('nej.e'),
+				_h = _('nej.h');
+		}
 		/**
 	     * 删除IFrame节点，保留历史
 	     * @param  {Node} iframe节点
@@ -16,5 +19,6 @@ var f = function(){
 	        try{_iframe.contentWindow.document.body.innerHTML = '&nbsp;';}catch(ex){}
 	    });
 	});
+	return _p;
 };
-define(['./html.js'],f);
+define(['{lib}base/platform.js','{lib}base/element.js','./html.js'],f);
