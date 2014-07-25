@@ -76,7 +76,7 @@ var f = function(){
      * @return {Void}
      */
     _proEditorToolbar.__onCommand = function(_command){
-        _v._$stop(arguments[1]);
+        _v._$stopBubble(arguments[1]);
         var _node = this.__command[_command];
         this._$dispatchEvent('oncommand',{
             name:_command
