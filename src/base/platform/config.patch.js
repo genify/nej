@@ -4,7 +4,6 @@
  */
 var f = function(NEJ,_m,_c,_p) {
 	window.NEJ.patch(_m,'WV',function(NEJ,_m,_c){
-		debugger;
 	});
 	// ie6-9
 	window.NEJ.patch(_m,'2.0<=TR<=5.0',function(){

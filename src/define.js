@@ -345,7 +345,6 @@ var _doMergePatched = (function(){
                 !_reg.test(_args[0])){
                 return;
             }
-            debugger;
             // merge dependency
             _deps.push.apply(_deps,_args[1]);
         };
