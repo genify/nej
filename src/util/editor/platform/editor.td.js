@@ -18,7 +18,7 @@ var f = function(){
      * @param  {String} _value    命令值
      * @return {Void}
      */
-    _h.__execCommand = 
+    _h.__execCommand =
     _h.__execCommand._$aop(function(_event){
         var _args = _event.args;
         if (_args[1]=='styleWithCSS'){
@@ -34,7 +34,7 @@ var f = function(){
      * @param  {Node} _node 节点
      * @return {Void}
      */
-    _h.__saveRange = 
+    _h.__saveRange =
     _h.__saveRange._$aop(function(_event){
         if (!!document.selection){
             _event.stopped = !0;
@@ -51,7 +51,7 @@ var f = function(){
      * @param  {Node} _node 节点
      * @return {Void}
      */
-    _h.__focusRange = 
+    _h.__focusRange =
     _h.__focusRange._$aop(null,function(_event){
         var _doc = _h.__getDocument(_event.args[0]),
             _id = _e._$id(_doc),
@@ -74,13 +74,21 @@ var f = function(){
      * @param  {Node} _node 节点
      * @return {Void}
      */
-    _h.__clearRange = 
+    _h.__clearRange =
     _h.__clearRange._$aop(null,function(_event){
         var _id = _e._$id(
             _h.__getDocument(_event.args[0])
         );
         delete _rcache[_id];
     });
+
+    /**
+     * 获取range cache
+     * @return {Object} range cache对象
+     */
+    _h.__getRcache = function(){
+        return _rcache;
+    };
 };
 NEJ.define(
     '{lib}util/editor/platform/editor.td.js',[

@@ -19,7 +19,7 @@ var f = function(){
 	        __reg_fzag = /<(style|script).*?>.*?<\/\1>/gi,//style和script标签
 	        __reg_ftag = /<\/?(?:meta|link|!--\[.+?\]--|[\w]+:[\w]+).*?>/gi,
 	        __reg_fimg = /<img(\n|\r|\s|[^>])*?src="data:image\/png;base64[^>]*?>/gi;//FF需要干掉base64的图片数据
-	    
+
 	    /**
 	     * 验证gecko下内容是否来自Word
 	     * @param  {String} _html 内容
@@ -28,7 +28,7 @@ var f = function(){
 	    var __isFromWord = function(_html){
 	        return (_html||'').indexOf('<w:WordDocument>')>=0;
 	    };
-	    
+
 	    /**
 	     * gecko清除word过来的冗余内容
 	     * @param  {String} _html 内容
@@ -44,7 +44,7 @@ var f = function(){
 	                    .replace(__reg_fimg,'')
 	                    .replace(__empty,'');
 	    };
-	    
+
 	    /**
 	     * gecko特殊过滤
 	     * @param {Object} _html
@@ -70,13 +70,13 @@ var f = function(){
 	     * @param  {String} _value    命令值
 	     * @return {Void}
 	     */
-	    _h.__execCommand = 
+	    _h.__execCommand =
 	    _h.__execCommand._$aop(function(_event){
 	        var _args = _event.args;
 	        if (_args[1]=='hiliteColor')
 	            _args[1] = 'backColor';
 	    });
-	    
+
 	    /**
 	     * 验证presto下内容是否来自Word
 	     * @param  {String} _html 内容
@@ -85,7 +85,7 @@ var f = function(){
 	    var __isFromWord = function(_html){
 	        return (_html||'').search('</?[\\w]+:[\\w]+.*?>')>=0;
 	    };
-	    
+
 	    /**
 	     * presto清除word过来的冗余内容
 	     * @param  {String} _html 内容
@@ -96,7 +96,7 @@ var f = function(){
 	            return _html;
 	        return _html.replace(__reg_nwrd,'');
 	    };
-	    
+
 	    /**
 	     * presto特殊过滤
 	     * @param {Object} _html
@@ -136,7 +136,7 @@ var f = function(){
 	                   }
 	               });
 	    })();
-	    
+
 	    /**
 	     * 验证trident下内容是否来自Word
 	     * @param  {String} _html 内容
@@ -145,7 +145,7 @@ var f = function(){
 	    var __isFromWord = function(_html){
 	        return (_html||'').search('</?[\\w]+:[\\w]+.*?>')>=0;
 	    };
-	    
+
 	    /**
 	     * trident清除word过来的冗余内容
 	     * @param  {String} _html 内容
@@ -173,7 +173,7 @@ var f = function(){
 	    var __isFromWord = function(_html){
 	        return (_html||'').search('</?[\\w]+:[\\w]+.*?>')>=0;
 	    };
-	    
+
 	    /**
 	     * trident1清除word过来的冗余内容
 	     * @param  {String} _html 内容
@@ -186,23 +186,26 @@ var f = function(){
 	    };
 	});
 
-	NEJ.patch('TR>=7.0',function(){
+	// ie11+ editor patch
+	NEJ.patch('TR>=7.0',['./editor.td.js'],function(){
 		var _  = NEJ.P,
 	        _u = _('nej.u'),
+	        _e = _('nej.e'),
 	        _h = _('nej.h');
 	    /**
 	     * 保存当前选择状态
 	     * @param  {Node} _node 节点
 	     * @return {Void}
 	     */
-	    _h.__saveRange = 
+	    _h.__saveRange =
 	    _h.__saveRange._$aop(function(_event){
 	    	// if have selection patched is on editor.td.js
 	        if (!document.selection){
 	            _event.stopped = !0;
 	            var _node = _event.args[0],
 	                _doc = _h.__getDocument(_node),
-	                _id = _e._$id(_doc);
+	                _id = _e._$id(_doc),
+	                _rcache = _h.__getRcache();
 	            _rcache[_id] = _h.__getRange(
 	                _h.__getWindow(_doc)
 	            );
@@ -213,7 +216,7 @@ var f = function(){
 	     * @param {Object} _document 文档对象
 	     * @param {Object} _html
 	     */
-	    _h.__insertHtml = 
+	    _h.__insertHtml =
 	    _h.__insertHtml._$aop(function(_event){
 	        // inserthtml for ie11
             _event.stopped = !0;
@@ -271,7 +274,7 @@ var f = function(){
 	    var __isFromWord = function(_html){
 	        return (_html||'').search('</?[\\w]+:[\\w]+.*?>')>=0;
 	    };
-	    
+
 	    /**
 	     * webkit清除word过来的冗余内容
 	     * @param  {String} _html 内容
@@ -283,7 +286,5 @@ var f = function(){
 	        return _html.replace(__reg_nwrd,'');
 	    };
 	});
-
-
 };
 define(['./editor.js'],f);
