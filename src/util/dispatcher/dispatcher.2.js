@@ -351,7 +351,8 @@ var f = function(){
      */
     _pro.__onURLChange = (function(){
         var _trim = /(?:^\/+)|(?:\/+$)/gi,
-            _reg0 = /#(\$.*?)$/;
+            _reg0 = /#(\$.*?)$/,
+            _reg1 = /\/$/;
         var _doParseRestParam = function(_umi,_node){
             var _path = _node._$getPath(),
                 _umi = _umi.replace(_path,'')
@@ -387,24 +388,32 @@ var f = function(){
                 ),
                 _gid = this.__config.mg[_umi];
             // try umi from rest path
-            if (!_gid&&this.__rest)
+            if (!_gid&&this.__rest){
                 _gid = _doTryGroupId(
                        _umi,this.__config.mg);
+            }
             // public umi not registed
             if (!_gid&&!_d._$isUMIPrivate(_umi)){
                 _umi = this.__config.rr['404'];
                 _gid = this.__config.mg[_umi];
             }
-            // try umi from rest path
-            if (!_gid&&this.__rest)
+            // try 404 umi from rest path
+            if (!_gid&&this.__rest){
                 _gid = _doTryGroupId(
                        _umi,this.__config.mg);
+            }
             if (!_gid) return;
             // save dispatch event
-            var _node = _d._$getNodeByUMI(this.__root,_umi),
-                _prst = null;
-            if (this.__rest)
+            var _prst = null,
+                _node = _d._$getNodeByUMI(this.__root,_umi);
+            if (this.__rest){
                 _prst = _doParseRestParam(_umi,_node);
+                // try rest umi end with /
+                if (!_reg1.test(_umi)&&
+                    !!this.__config.mg[_umi+'/']){
+                    _node = _node._$getChildByName('/');
+                }
+            }
             // fix umi for module
             var _source = _umi;
             _umi = _node._$getPath();
