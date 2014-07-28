@@ -1,6 +1,6 @@
 /*
  * --------------------------------------------
- * 接口实现文件
+ * 原生对象接口扩展实现文件
  * 
  * @version  1.0
  * @author   genify(caijf@corp.netease.com)
@@ -14,26 +14,27 @@ NEJ.define(function(_p,_o,_f,_r){
         b = b||_o;
         for(var x in b){
             a[x] = b[x];
-        }
-    };
+                }
+        return a;
+        };
     // extend native object method
     var _extpro = Function.prototype;
-    /**
+        /**
      * AOP增强操作，增强操作接受一个输入参数包含以下信息
-     * 
+          * 
      * [ntb]
-     *  参数名称       | 参数类型          | 参数描述
-     *  ------------------------------------
+          *  参数名称     | 参数类型      | 参数描述
+          *  ------------------------------------
      *  args    | Array    | 函数调用时实际输入参数，各增强操作中可以改变值后将影响至后续的操作
      *  stopped | Boolean  | 是否结束操作，终止后续操作
      *  value   | Variable | 输出结果
      * [/ntb]
-     * 
+          * 
      * @api    {Function.prototype._$aop}
      * @param  {Function} 之前操作，接受一个输入参数，见描述信息
      * @param  {Function} 之后操作，接受一个输入参数，见描述信息
      * @return {Function} 增强后操作函数
-     */
+          */
     _extpro._$aop = function(_before,_after){
         var _after = _after||_f,
             _before = _before||_f,
@@ -42,13 +43,12 @@ NEJ.define(function(_p,_o,_f,_r){
             var _event = {args:_r.slice.call(arguments,0)};
             _before(_event);
             if (!_event.stopped){
-                _event.value = _handler
-                      .apply(this,_event.args);
+                _event.value = _handler.apply(this,_event.args);
                 _after(_event);
-            } 
+                        } 
             return _event.value;
+                };
         };
-    };
     /**
      * 绑定接口及参数，使其的调用对象保持一致<br/>
      * 
