@@ -51,7 +51,7 @@ var f = function(){
             this.__supReset(_options);
             // check editor toolbar
             var _toolbar = _options.toolbar,
-                _isok = _toolbar instanceof 
+                _isok = _toolbar instanceof
                         _p._$$EditorToolbar;
             !_isok ? _toolbar = null
                    : this.__copt.toolbar = _toolbar;
@@ -63,7 +63,7 @@ var f = function(){
             }
             // check editor area
             var _area = _options.area,
-                _isok = _area instanceof 
+                _isok = _area instanceof
                         _p._$$EditorArea;
             !_isok ? _area = null
                    : this.__copt.area = _area;
@@ -124,6 +124,7 @@ var f = function(){
     _pro.__onCommand = function(_event){
         this.__getCommandImpl(_event.name)
             ._$execute({target:_event.node});
+        this.__copt.area._$focus(2);
     };
     /**
      * 编辑器选择内容变化触发事件
@@ -188,7 +189,7 @@ var f = function(){
         return !this.__copt.area ? ''
                :this.__copt.area._$getContent(_filter);
     };
-    
+
      /**
      * 取纯文本编辑内容
      * @method {_$getTextContent}
