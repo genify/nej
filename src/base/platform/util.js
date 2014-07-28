@@ -7,7 +7,7 @@
  */
 NEJ.define([
     '{lib}base/global.js'
-],function(_g,_p,_o,_f,_r){
+],function(NEJ,_p,_o,_f,_r){
     /**
      * 遍历对象
      * @param  {Object}   对象

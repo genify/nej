@@ -6,9 +6,8 @@
  * ------------------------------------------
  */
 NEJ.define([
-    './global.js',
-    '{platform}util.js'
-],function(NEJ,_u,_p,_o,_f,_r){
+    './global.js'
+],function(NEJ,_p,_o,_f,_r){
     var _platform  = this.navigator.platform,
         _useragent = this.navigator.userAgent;
     /**
@@ -41,9 +40,9 @@ NEJ.define([
         android : _useragent
     };
     _p._$IS = _is;
-    _u.__forIn(_is,function(v,k,m){
-        m[k] = new RegExp(k,'i').test(v);
-    });
+    for(var x in _is){
+        _is[x] = new RegExp(x,'i').test(_is[x]);
+    }
     _is.ios = _is.ipad||_is.iphone||_is.ipod;
     _is.tablet = _is.ipad;
     _is.desktop = _is.mac||_is.win||(_is.linux&&!_is.android);
