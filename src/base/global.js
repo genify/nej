@@ -1,40 +1,70 @@
 /*
  * --------------------------------------------
  * 原生对象接口扩展实现文件
- * 
  * @version  1.0
  * @author   genify(caijf@corp.netease.com)
  * --------------------------------------------
  */
 NEJ.define(function(_p,_o,_f,_r){
     // copy object properties
-    // only for nej
+    // only for nej compatiable
     this.copy = function(a,b){
         a = a||{};
         b = b||_o;
         for(var x in b){
-            a[x] = b[x];
-                }
+            if (b.hasOwnProperty(x)){
+                a[x] = b[x];
+            }
+        }
         return a;
-        };
+    };
+    /**
+     * 返回指定的命名空间，如果不存在则新建一个命名空间，
+     * 注意：命名空间不要使用浏览器保留的关键字
+     * 
+     * 代码举例：
+     * [code]
+     *   NEJ.define([
+     *       '{lib}base/global.js'
+     *   ],function(_g){
+     *      // 以下两者都将建立 window.ui, 然后返回 window.ui.package
+     *      var p1 = _g._$namespace("ui.package");
+     *      var p2 = _g._$namespace("window.ui.package");
+     *   });
+     * [/code]
+     * 
+     * @api    {_$namespace}
+     * @param  {String} 命名空间的名称，大小写敏感
+     * @return {Object} 生成的命名空间对象
+     */
+    _p._$namespace = function(_namespace){
+        if (!_namespace||!_namespace.length){
+            return null;
+        }
+        var _package = this;
+        for(var a=_namespace.split('.'),
+                l=a.length,i=(a[0]=='window')?1:0;i<l;
+                _package=_package[a[i]]=_package[a[i]]||{},i++);
+        return  _package;
+    };
     // extend native object method
     var _extpro = Function.prototype;
-        /**
+    /**
      * AOP增强操作，增强操作接受一个输入参数包含以下信息
-          * 
+     * 
      * [ntb]
-          *  参数名称     | 参数类型      | 参数描述
-          *  ------------------------------------
+     *  参数名称 | 参数类型   | 参数描述
+     *  ------------------------------------
      *  args    | Array    | 函数调用时实际输入参数，各增强操作中可以改变值后将影响至后续的操作
      *  stopped | Boolean  | 是否结束操作，终止后续操作
      *  value   | Variable | 输出结果
      * [/ntb]
-          * 
+     * 
      * @api    {Function.prototype._$aop}
      * @param  {Function} 之前操作，接受一个输入参数，见描述信息
      * @param  {Function} 之后操作，接受一个输入参数，见描述信息
      * @return {Function} 增强后操作函数
-          */
+     */
     _extpro._$aop = function(_before,_after){
         var _after = _after||_f,
             _before = _before||_f,
@@ -45,17 +75,16 @@ NEJ.define(function(_p,_o,_f,_r){
             if (!_event.stopped){
                 _event.value = _handler.apply(this,_event.args);
                 _after(_event);
-                        } 
+            } 
             return _event.value;
-                };
         };
+    };
     /**
      * 绑定接口及参数，使其的调用对象保持一致<br/>
      * 
      * 脚本举例
      * [code]
-     *   var _v = NEJ.P("nej.v"),
-     *       _obj = {a:0};
+     *   var _obj = {a:0};
      *   var _f = function(_a,_b){
      *       // 第一个参数 ：1
      *       console.log(_a);
@@ -81,19 +110,17 @@ NEJ.define(function(_p,_o,_f,_r){
             // not use slice for chrome 10 beta and Array.apply for android
             var _argc = _r.slice.call(_args,1);
             _r.push.apply(_argc,arguments);
-            return _function.apply(_object||window,_argc);
+            return _function.apply(_object||null,_argc);
         };
     };
     /**
      * 绑定接口及参数，使其的调用对象保持一致，
      * 该接口与_$bind接口的差别在于绑定时参数和调用时参数的顺序不一样，
-     * _$bind优先传入绑定时参数
-     * _$bind2优先传入调用时参数<br/>
+     * _$bind优先传入绑定时参数，_$bind2优先传入调用时参数<br/>
      * 
      * 脚本举例
      * [code]
-     *   var _v = NEJ.P("nej.v"),
-     *       _obj = {a:0};
+     *   var _obj = {a:0};
      *   var _f = function(_a,_b){
      *       // 第一个参数 ：2
      *       console.log(_a);
@@ -117,7 +144,7 @@ NEJ.define(function(_p,_o,_f,_r){
             _function = this;
         return function(){
             _r.push.apply(arguments,_args);
-            return _function.apply(_object||window,arguments);
+            return _function.apply(_object||null,arguments);
         };
     };
     // for compatiable
@@ -138,16 +165,20 @@ NEJ.define(function(_p,_o,_f,_r){
     }
 
     if (CMPT){
-
         // NEJ namespace
-        _p.O = _o;
-        _p.R = _r;
-        _p.F = _f;
-        this.NEJ = copy(this.NEJ||{},_p);
-        
+        this.NEJ = this.copy(
+            this.NEJ,{
+                O:_o,
+                R:_r,
+                F:_f,
+                P:_p._$namespace
+            }
+        );
         // mwf adaptation
         if (!this.MWF) this.MWF = this.NEJ;
         if (!this.mwf) this.mwf = this.nej;
+        
+        return this.NEJ;
     }
 
     return _p;

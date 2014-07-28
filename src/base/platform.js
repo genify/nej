@@ -5,20 +5,17 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-NEJ.define(['{lib}base/global.js'
-],function(NEJ,_p){
-    // variable declaration
-    if (CMPT){
-        var _  = NEJ.P,
-            _p = _('nej.p');
-    }
-    var _platform  = window.navigator.platform,
-        _useragent = window.navigator.userAgent;
+NEJ.define([
+    './global.js',
+    '{platform}util.js'
+],function(NEJ,_u,_p,_o,_f,_r){
+    var _platform  = this.navigator.platform,
+        _useragent = this.navigator.userAgent;
     /**
      * 平台判断信息
      * 
      * [ntb]
-     *  参数名称       | 参数类型          | 参数描述
+     *  名称          | 类型              | 描述
      *  ------------------------------------
      *  mac      | Boolean    | is mac os
      *  win      | Boolean    | is windows os
@@ -31,21 +28,22 @@ NEJ.define(['{lib}base/global.js'
      *  desktop  | Boolean    | is desktop env
      * [/ntb]
      * 
-     * @const  {nej.p._$IS}
-     * @type   {Object}
+     * @const {_$IS}
+     * @type  {Object}
      */
     var _is = {
-        mac        : _platform,
-        win        : _platform,
-        linux      : _platform,
-        ipad       : _useragent,
-        ipod       : _useragent,
-        iphone     : _platform,
-        android    : _useragent
+        mac     : _platform,
+        win     : _platform,
+        linux   : _platform,
+        ipad    : _useragent,
+        ipod    : _useragent,
+        iphone  : _platform,
+        android : _useragent
     };
     _p._$IS = _is;
-    for(var x in _is)
-        _is[x] = new RegExp(x,'i').test(_is[x]);
+    _u.__forIn(_is,function(v,k,m){
+        m[k] = new RegExp(k,'i').test(v);
+    });
     _is.ios = _is.ipad||_is.iphone||_is.ipod;
     _is.tablet = _is.ipad;
     _is.desktop = _is.mac||_is.win||(_is.linux&&!_is.android);
@@ -54,7 +52,7 @@ NEJ.define(['{lib}base/global.js'
      * 引擎内核信息
      * 
      * [ntb]
-     *  参数名称       | 参数类型          | 参数描述
+     *  名称          | 类型         | 描述
      *  ------------------------------------
      *  engine   | String  | layout engine, trident/webkit/gecko/presto...
      *  release  | Number  | layout engine version
@@ -63,8 +61,8 @@ NEJ.define(['{lib}base/global.js'
      *  prefix   | Object  | prefix for html5/css3 attribute/method/constructor name
      * [/ntb]
      * 
-     * @const  {nej.p._$KERNEL}
-     * @type   {Object}
+     * @const {_$KERNEL}
+     * @type  {Object}
      */
     var _kernel = {
         engine:'unknow',
@@ -116,16 +114,23 @@ NEJ.define(['{lib}base/global.js'
         }
     }
     /**
-     * 引擎属性支持信息<br/>
-     * css3d - can support css 3d effect
-     * @const  {nej.p._$SUPPORT}
-     * @type   {Object}
+     * 引擎属性支持信息
+     * 
+     * [ntb]
+     *  名称       | 类型          | 描述
+     *  ------------------------------------
+     *  css3d  | Boolean  | 是否支持CSS3 3D动画
+     * [/ntb]
+     * 
+     * @const {_$SUPPORT}
+     * @type  {Object}
      */
     _p._$SUPPORT = {};
     /**
      * 平台补丁判断信息
+     * 
      * [ntb]
-     *  参数名称       | 参数类型          | 参数描述
+     *  名称       | 类型          | 描述
      *  ------------------------------------
      *  gecko    | Boolean  | not gecko
      *  webkit   | Boolean  | not webkit
@@ -134,22 +139,28 @@ NEJ.define(['{lib}base/global.js'
      *  trident0 | Boolean  | not trident0(ie6-)
      *  trident1 | Boolean  | not trident1(ie10+)
      * [/ntb]
-     * @const  {nej.p._$NOT_PATCH}
+     * 
+     * @const  {_$NOT_PATCH}
      * @type   {Object}
      */
     var _notd = _kernel.engine!='trident';
     _p._$NOT_PATCH = {
-        gecko : _kernel.engine!='gecko'
-       ,webkit: _kernel.engine!='webkit'
-       ,presto: _kernel.engine!='presto'
-       // fix for ie6-
-       ,trident0 : _notd||_kernel.release>'2.0'
-       // fix for ie10+ (html5/css3 support)
-       ,trident1 : _notd||_kernel.release<'6.0'
-       // fix for ie7-
-       ,trident2 : _notd||_kernel.release>'3.0'
-       // fix for ie6-ie9
-       ,trident  : _notd||_kernel.release>='6.0'
+        gecko : _kernel.engine!='gecko',
+        webkit: _kernel.engine!='webkit',
+        presto: _kernel.engine!='presto',
+        // fix for ie6-
+        trident0 : _notd||_kernel.release>'2.0',
+        // fix for ie10+ (html5/css3 support)
+        trident1 : _notd||_kernel.release<'6.0',
+        // fix for ie7-
+        trident2 : _notd||_kernel.release>'3.0',
+        // fix for ie6-ie9
+        trident  : _notd||_kernel.release>='6.0'
     };
+    
+    if (CMPT){
+        this.copy(NEJ.P('nej.p'),_p);
+    }
+    
     return _p;
 });

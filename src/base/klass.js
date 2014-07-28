@@ -1,114 +1,206 @@
+/*
+ * --------------------------------------------
+ * NEJ类模型实现文件
+ * @version  1.0
+ * @author   genify(caijf@corp.netease.com)
+ * --------------------------------------------
+ */
+NEJ.define([
+    './global.js',
+    '{platform}util.js'
+],function(NEJ,_u,_p,_o,_f,_r){
     /**
      * 定义类，通过此api定义的类具有以下特性：<br/>
      *
      * [ul]
-     *   具有静态扩展接口_$extend
+     *   _$extend作为类的静态扩展方法
      *   __init作为类的初始化函数
-     *   
+     *   __super作为子类调用父类的同名函数
      * [/ul]
      *
      * [code]
      *   NEJ.define([
-     *       '{lib}base/global.js'
+     *       '{lib}base/klass.js'
      *   ],function(_p){
+     *     
      *       // 定义类A
      *      var A = _p._$klass();
+     *      var pro = A.prototype;
      *      // 初始化
-     *      A.prototype.__init = function(){
+     *      pro.__init = function(){
      *           // do init
      *      };
-     *      
+     *      // 类接口
+     *      pro.__doSomething = function(a){
+     *          // TODO something
+     *      };
+     * 
      *      // 定义类B，并继承自A
-     *      // _$extend接口第二个参数控制是否继承父类静态接口，默认继承，传false禁止继承
-     *      var B = NEJ.C();
-     *      B._$extend(A);
-     *      // B._$extend(A,false); // 不继承父类静态接口
+     *      var B = _p._$klass();
+     *      var pro = B._$extend(A);
      *      // 初始化
-     *      B.prototype.__init = function(){
+     *      pro.__init = function(){
      *          // 调用A的初始化逻辑
      *          this.__super();
      *          // TODO B的初始化逻辑
      *      };
+     *      // 类接口
+     *      pro.__doSomething = function(a){
+     *          // 调用A的__doSomething接口
+     *          this.__super(a);
+     *          // TODO B的逻辑
+     *      };
+     * 
      *   });
      * [/code]
      *
-     * @api    {NEJ.C}
+     * @api    {_$klass}
      * @return {Function} 返回创建的类
      */
     _p._$klass = (function(){
         var _isNotFunction = function(){
             return _o.toString.call(arguments[0])!=='[object Function]';
         };
-        var _getMethodName = function(_value,_map){
-            for(var x in _map)
-                if (_value==_map[x])
-                    return x;
-            return null;
+        var _doFindIn = function(_method,_klass){
+            while(!!_klass){
+                var _pro = _klass.prototype,
+                    _key = _u.__forIn(_pro,function(v){
+                        return _method===v;
+                    });
+                if (_key!=null){
+                    return {
+                        name:_key,
+                        klass:_klass
+                    };
+                }
+                _klass = _klass._$super;
+            }
         };
-        // build super for method
-        var _mmap = {__init:0,__reset:1,__destroy:2,__initNode:3,
-                     __doBuild:4,__onShow:5,__onHide:6,__onRefresh:7},
-            _umap = {__supInit:0,__supReset:1,__supDestroy:2,__supInitNode:3,
-                     __supDoBuild:4,__supOnShow:5,__supOnHide:6,__supOnRefresh:7};
         return function(){
             // class constructor
-            var _class = function(){
-                this.__cp__();
+            var _Klass = function(){
                 return this.__init.apply(this,arguments);
             };
-            // class inherit
-            _class.prototype.__cp__ = NEJ.F;
-            _class.prototype.__init = NEJ.F;
-            _class._$extend = function(_super,_static){
-                if (_isNotFunction(_super)) return;
-                // extend static methods
-                if (_static==null||!!_static) 
-                    NEJ.X(this,_super,_isNotFunction);
-                // extend instance properties and methods
+            _Klass.prototype.__init = _f;
+            /**
+             * 子类继承父类
+             * 
+             * [code]
+             *   NEJ.define([
+             *       '{lib}base/klass.js'
+             *   ],function(_p){
+             *     
+             *       // 定义类A
+             *      var A = _p._$klass();
+             *      var pro = A.prototype;
+             *      // 初始化
+             *      pro.__init = function(){
+             *           // do init
+             *      };
+             *      // 类接口
+             *      pro.__doSomething = function(a){
+             *          // TODO something
+             *      };
+             * 
+             *      // 定义类B，并继承自A
+             *      var B = _p._$klass();
+             *      var pro = B._$extend(A);
+             *      // 初始化
+             *      pro.__init = function(){
+             *          // 调用A的初始化逻辑
+             *          this.__super();
+             *          // TODO B的初始化逻辑
+             *      };
+             *      // 类接口
+             *      pro.__doSomething = function(a){
+             *          // 调用A的__doSomething接口
+             *          this.__super(a);
+             *          // TODO B的逻辑
+             *      };
+             * 
+             *   });
+             * [/code]
+             * 
+             * @api    {_$extend}
+             * @param  {Function} 父类
+             * @param  {Boolean}  是否拷贝父类的静态方法
+             * @return {Object}   扩展类的prototype对象
+             */
+            _Klass._$extend = function(_super,_static){
+                if (_isNotFunction(_super)){
+                    return;
+                }
+                // for static method
+                var _this = this;
+                if (_static!==!1){
+                    _u.__forIn(_super,function(v,k){
+                        if (!_isNotFunction(v)){
+                            _this[k] = v;
+                        }
+                    });
+                }
+                // do inherit
                 this._$super = _super;
-                this._$supro = _super.prototype;
                 var _parent = function(){};
                 _parent.prototype = _super.prototype;
                 this.prototype = new _parent();
-                var _prototype = this.prototype;
-                _prototype.constructor = this;
-                var _tmp;
-                // for common method
-                for(var x in _mmap){
-                    _tmp = _getMethodName(_mmap[x],_umap);
-                    if (!_tmp||!this._$supro[x]) continue;
-                    _prototype[x] = (function(_name){
-                        return function(){
-                            this[_name].apply(this,arguments);
-                        };
-                    })(_tmp);
-                }
-                // for super method
-                var _pmap = {};
-                for(var x in _umap){
-                    _tmp = _getMethodName(_umap[x],_mmap);
-                    if (!_tmp||!this._$supro[_tmp]) continue;
-                    _pmap[_tmp] = _super;
-                    _prototype[x] = (function(_name){
-                        return function(){
-                            var _result,
-                                _parent = this.__ancestor__[_name],
-                                _method = _parent.prototype[_name];
-                            this.__ancestor__[_name] = _parent._$super||_super;
-                            if (!!_method)
-                                _result = _method.apply(this,arguments);
-                            this.__ancestor__[_name] = _super; // fix broken chain
-                            return _result;
-                        };
-                    })(_tmp);
-                }
-                _prototype.__cp__ = function(){
-                    this.__ancestor__ = NEJ.X({},_pmap);
+                this.prototype.constructor = this;
+                // for super method call
+                var _stack = [],
+                    _phash = {};
+                var _doUpdateCache = function(_method,_klass){
+                    var _result = _doFindIn(_method,_klass);
+                    if (!_result) return;
+                    // save state
+                    if (_stack[_stack.length-1]!=_result.name){
+                        _stack.push(_result.name);
+                    }
+                    _phash[_result.name] = _result.klass._$super;
                 };
-                _prototype.__super = _prototype.__supInit;
-                return _prototype;
+                this.prototype.__super = function(){
+                    var _name = _stack[_stack.length-1],
+                        _method = arguments.callee.caller;
+                    if (!_name){
+                        _name = _doUpdateCache(_method,this.constructor);
+                    }else{
+                        // switch caller name
+                        if (_method!=_phash[_name].prototype[_name]){
+                            _name = _doUpdateCache(_method,this.constructor);
+                        }else{
+                            _phash[_name] = _phash[_name]._$super;
+                        }
+                    }
+                    // call parent method
+                    var _ret = _phash[_name].prototype[_name].apply(this,arguments);
+                    // exit super
+                    if (_name==_stack[_stack.length-1]){
+                        _stack.pop();
+                        delete _phash[_name];
+                    }
+                    return _ret;
+                };
+                
+                if (CMPT){
+                    var _pro = this.prototype;
+                    _pro.__supInit      = _pro.__super;
+                    _pro.__supReset     = _pro.__super;
+                    _pro.__supDestroy   = _pro.__super;
+                    _pro.__supInitNode  = _pro.__super;
+                    _pro.__supDoBuild   = _pro.__super;
+                    _pro.__supOnShow    = _pro.__super;
+                    _pro.__supOnHide    = _pro.__super;
+                    _pro.__supOnRefresh = _pro.__super;
+                }
+                
+                return this.prototype;
             };
-            return _class;
+            return _Klass;
         };
     })();
-
+    
+    if (CMPT){
+        NEJ.C = _p._$klass;
+    }
+    
+    return _p;
+});
