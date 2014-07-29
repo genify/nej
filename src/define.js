@@ -906,15 +906,15 @@
         if (!!_result&&!!_args[2]&&
             _result.isEngOK(_kernel[_result.pkey])&&
             _result.isVerOK(_kernel[_result.vkey])){
-            var _args = [],
+            var _argc = [],
                 _deps = _args[1];
             if (!!_deps){
                 var _xmap = arguments.callee.caller.kmap||{};
                 for(var i=0,l=_deps.length;i<l;i++){
-                    _args.push(__rcache[_xmap[_deps[i]]]||{});
+                    _argc.push(__rcache[_xmap[_deps[i]]]||{});
                 }
             }
-            _args[2].apply(null,_args);
+            _args[2].apply(null,_argc);
         }
     };
     /**
