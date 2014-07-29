@@ -632,6 +632,8 @@
                 _result = _item.f.apply(null,_args);
                 _doMergeResult(_item.n,_result);
             }
+            __scache[_item.n] = 2;
+            console.log('do '+_item.n);
         };
     })();
     /*
@@ -652,17 +654,13 @@
             __xqueue.splice(i,1);
             if (__scache[_item.n]!==2){
                 _doExecFunction(_item);
-                __scache[_item.n] = 2;
-                console.log('do '+_item.n);
             }
             i = __xqueue.length-1;
         }
         // check circular reference
         if (__xqueue.length>0&&_isFinishLoaded()){
             var _item = _doFindCircularRef()||__xqueue.pop();
-            _doCallback(_item);
-            __scache[_item.n] = 2;
-            console.log('do+ '+_item.n);
+            _doExecFunction(_item);
             _doCheckLoading();
         }
     };

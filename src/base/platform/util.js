@@ -32,6 +32,32 @@ NEJ.define([
         }
         return null;
     };
+    /**
+     * 遍历列表
+     * @param  {Array}    列表
+     * @param  {Function} 迭代回调
+     * @param  {Object}   回调执行对象
+     * @return {Void}
+     */
+    _p.__forEach = function(_list,_callback,_this){
+        _list.forEach(_callback,_this);
+    };
+    /**
+     * 集合转数组
+     * @param  {Object} 集合
+     * @return {Array}  数组
+     */
+    _p.__col2array = function(_list){
+        return _r.slice.call(_list,0);
+    };
+    /**
+     * YYYY-MM-DDTHH:mm:ss.sssZ格式时间串转时间戳
+     * @param  {String} 时间串
+     * @return {Number} 时间戳
+     */
+    _p.__str2time = function(_str){
+        return Date.parse(_str);
+    };
     
     return _p;
 });

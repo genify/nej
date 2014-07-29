@@ -5,20 +5,10 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(NEJ,_e,_h,_eh,_u){
-    if (CMPT){
-        // variable declaration
-        var _  = NEJ.P,
-            _o = NEJ.O,
-            _r = NEJ.R,
-            _f = NEJ.F,
-            _e = _('nej.e'),
-            _h = _('nej.h'),
-            _u = _('nej.u');
-    }
-    var _o = NEJ.O,
-        _r = NEJ.R,
-        _f = NEJ.F;
+NEJ.define([
+    './global.js',
+    '{platform}util.js'
+],function(NEJ,_h,_p,_o,_f,_r){
     /*
      * 查看数据是否指定类型
      * @param  {Variable} 数据
@@ -40,18 +30,21 @@ var f = function(NEJ,_e,_h,_eh,_u){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’);
-     *   // 返回false
-     *   _u._$isFunction(123);
-     *   // 返回true
-     *   _u._$isFunction(fucntion(){});
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       // 返回false
+     *       var _is = _p._$isFunction(123);
+     *       // 返回true
+     *       var _is = _p._$isFunction(fucntion(){});
+     *   });
      * [/code]
      * 
-     * @api    {nej.u._$isFunction}
+     * @api    {_$isFunction}
      * @param  {Variable} 数据
      * @return {Boolean}  是否函数类型
      */
-    _u._$isFunction = function(_data){
+    _p._$isFunction = function(_data){
         return _isTypeOf(_data,'function');
     };
     /**
@@ -59,18 +52,21 @@ var f = function(NEJ,_e,_h,_eh,_u){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’);
-     *   // 返回false
-     *   _u._$isString(123);
-     *   // 返回true
-     *   _u._$isString("123");
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       // 返回false
+     *       var _is = _p._$isString(123);
+     *       // 返回true
+     *       var _is = _p._$isString("123");
+     *   });
      * [/code]
      * 
-     * @api    {nej.u._$isString}
+     * @api    {_$isString}
      * @param  {Variable} 数据
      * @return {Boolean}  是否字符串
      */
-    _u._$isString = function(_data){
+    _p._$isString = function(_data){
         return _isTypeOf(_data,'string');
     };
     /**
@@ -78,20 +74,23 @@ var f = function(NEJ,_e,_h,_eh,_u){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’);
-     *   // 返回false
-     *   _u._$isNumber("123");
-     *   // 返回true
-     *   _u._$isNumber(123);
-     *   _u._$isNumber(-123);
-     *   _u._$isNumber(Number.MAX_VALUE);
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       // 返回false
+     *       var _is = _p._$isNumber("123");
+     *       // 返回true
+     *       var _is = _p._$isNumber(123);
+     *       var _is = _p._$isNumber(-123);
+     *       var _is = _p._$isNumber(Number.MAX_VALUE);
+     *   });
      * [/code]
      * 
-     * @api    {nej.u._$isNumber}
+     * @api    {_$isNumber}
      * @param  {Variable} 数据
-     * @return {Boolean}  是否数字
+     * @return {Boolean}  是否数值
      */
-    _u._$isNumber = function(_data){
+    _p._$isNumber = function(_data){
         return _isTypeOf(_data,'number');
     };
     /**
@@ -99,18 +98,21 @@ var f = function(NEJ,_e,_h,_eh,_u){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’);
-     *   // 返回false
-     *   _u._$isBoolean(0);
-     *   // 返回true
-     *   _u._$isBoolean(false);
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       // 返回false
+     *       var _is = _p._$isBoolean(0);
+     *       // 返回true
+     *       var _is = _p._$isBoolean(false);
+     *   });
      * [/code]
      * 
-     * @api    {nej.u._$isBoolean}
+     * @api    {_$isBoolean}
      * @param  {Variable} 数据
      * @return {Boolean}  是否布尔值
      */
-    _u._$isBoolean = function(_data){
+    _p._$isBoolean = function(_data){
         return _isTypeOf(_data,'boolean');
     };
     /**
@@ -118,18 +120,21 @@ var f = function(NEJ,_e,_h,_eh,_u){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’);
-     *   // 返回false
-     *   _u._$isDate(0);
-     *   // 返回true
-     *   _u._$isDate(new Date());
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       // 返回false
+     *       var _is = _p._$isDate(0);
+     *       // 返回true
+     *       var _is = _p._$isDate(new Date());
+     *   });
      * [/code]
      * 
-     * @api    {nej.u._$isDate}
+     * @api    {_$isDate}
      * @param  {Variable} 数据
      * @return {Boolean}  是否日期
      */
-    _u._$isDate = function(_data){
+    _p._$isDate = function(_data){
         return _isTypeOf(_data,'date');
     };
     /**
@@ -137,18 +142,21 @@ var f = function(NEJ,_e,_h,_eh,_u){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’);
-     *   // 返回false
-     *   _u._$isArray(0);
-     *   // 返回true
-     *   _u._$isArray([1,2]);
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       // 返回false
+     *       var _is = _p._$isArray(0);
+     *       // 返回true
+     *       var _is = _p._$isArray([1,2]);
+     *   });
      * [/code]
      * 
-     * @api    {nej.u._$isArray}
+     * @api    {_$isArray}
      * @param  {Variable} 数据
      * @return {Boolean}  是否数组
      */
-    _u._$isArray = function(_data){
+    _p._$isArray = function(_data){
         return _isTypeOf(_data,'array');
     };
     /**
@@ -156,19 +164,22 @@ var f = function(NEJ,_e,_h,_eh,_u){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’);
-     *   // 返回false
-     *   _u._$isObject(function(){});
-     *   // 返回true
-     *   _u._$isObject({});
-     *   _u._$isObject({a:"a"});
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       // 返回false
+     *       var _is = _p._$isObject(function(){});
+     *       // 返回true
+     *       var _is = _p._$isObject({});
+     *       var _is = _p._$isObject({a:"a"});
+     *   });
      * [/code]
      * 
-     * @api    {nej.u._$isObject}
+     * @api    {_$isObject}
      * @param  {Variable} 数据
      * @return {Boolean}  是否对象
      */
-    _u._$isObject = function(_data){
+    _p._$isObject = function(_data){
         return _isTypeOf(_data,'object');
     };
     /**
@@ -176,17 +187,19 @@ var f = function(NEJ,_e,_h,_eh,_u){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’),
-     *       _str = "你i他";
-     *   // 字符串实际长度为5
-     *   _u._$length(_str);
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       // 字符串长度为5
+     *       var _len = _p._$length('你i他');
+     *   });
      * [/code]
      * 
-     * @api    {nej.u._$length}
+     * @api    {_$length}
      * @param  {String} 字符串
      * @return {Number} 字符串长度
      */
-    _u._$length = (function(){
+    _p._$length = (function(){
         var _reg = /[^\x00-\xfff]/g;
         return function(_content){
             return (''+(_content||'')).replace(_reg,'**').length;
@@ -197,28 +210,31 @@ var f = function(NEJ,_e,_h,_eh,_u){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’),
-     *       _list = ["你","我","他"];
-     *   // 返回下标1
-     *   _u._$indexOf(_list,"我");
-     *   // 没有找到，返回-1
-     *   _u._$indexOf(_list,"他们");
-     *   // 如果第二个参数是过滤接口，根据接口的规则查找
-     *   // 以下规则排除第一个下标
-     *   _u._$indexOf(_list,function(_item,_index,_list){
-     *       return _index > 0;
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       var _list = ["你","我","他"];
+     *       // 返回下标1
+     *       var _index = _p._$indexOf(_list,"我");
+     *       // 没有找到，返回-1
+     *       var _index = _p._$indexOf(_list,"他们");
+     *       // 如果第二个参数是过滤接口，根据接口的规则查找
+     *       // 以下规则排除第一个下标
+     *       var _index = _p._$indexOf(_list,function(_item,_index,_list){
+     *           return _item==='他';
+     *       });
      *   });
      * [/code]
      * 
-     * @api    {nej.u._$indexOf}
+     * @api    {_$indexOf}
      * @param  {Array}    待搜索列表
      * @param  {Variable} 指定项，如果为function则表示过滤接口
      * @return {Number}   给定项所在的位置索引，以0开始，没有项返回-1
      */
-    _u._$indexOf = function(_list,_item){
-        var _filter = _u._$isFunction(_item) ? _item
+    _p._$indexOf = function(_list,_item){
+        var _filter = _p._$isFunction(_item) ? _item
                     : function(_value){return _value===_item;},
-            _index  = _u._$forIn(_list,_filter);
+            _index  = _p._$forIn(_list,_filter);
         return _index!=null?_index:-1;
     };
     /**
@@ -226,26 +242,29 @@ var f = function(NEJ,_e,_h,_eh,_u){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’),
-     *       _list = [1,2,3];
-     *   // 从有序列表里查找2，如果有返回下标1，没有返回-1
-     *   _u._$binSearch(_list,function(_value){
-     *       return _value - 2;
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       // 二分查找id为2的项的索引值
+     *       var _list = [{id:1,name:'aaa'},{id:2,name:'bbbb'},...];
+     *       var _index = _p._$binSearch(_list,function(_item){
+     *           return _item.id-2;
+     *       });
      *   });
      * [/code]
      * 
-     * @api    {nej.u._$binSearch}
+     * @api    {_$binSearch}
      * @param  {Array}    待查找列表
      * @param  {Function} 验证函数
      * [ntb]
-     *  输入 | Variable | 中间值
-     *  输出 | Number   | <0 - 值在小区间
+     *  输入  | Variable | 中间值
+     *  输出  | Number   | <0 - 值在小区间
      *       | Number   | 0 - 匹配到值
      *       | Number   | >0 - 值在大区间
      * [/ntb]
      * @return {Number}   找到匹配项索引，找不到返回-1
      */
-    _u._$binSearch = (function(){
+    _p._$binSearch = (function(){
         var _docheck;
         // do binary search
         var _doSearch = function(_list,_low,_high){
@@ -264,196 +283,154 @@ var f = function(NEJ,_e,_h,_eh,_u){
         };
     })();
     /**
-     * 逆序遍历列表<br/>
+     * 逆序遍历列表，支持中断<br/>
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’),
-     *       _list = [1,2,3];
-     *   // 从有序列表里逆序查找2，如果有返回下标1，没有返回null
-     *   _u._$reverseEach(_list,function(_item,_index,_this){
-     *       return _item == 2;
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       // 删除id为3的项，并退出循环
+     *       var _list = [{id:1,name:'aaa'},{id:2,name:'bbbb'},...];
+     *       _p._$reverseEach(_list,function(_item,_index,_list){
+     *           if (_item.id==3){
+     *               _list.splice(_index,1);
+     *               return !0;
+     *           }
+     *       });
      *   });
      * [/code]
      * 
      * @see    {#_$forEach}
-     * @api    {nej.u._$reverseEach}
+     * @api    {_$reverseEach}
      * @param  {Array}     列表
      * @param  {Function}  回调，如果返回true，则中断遍历
      * [ntb]
-     *  输入 | Variable | value
+     *  输入  | Variable | 值
      *       | Number   | 下标
-     *       | Object   | 当前this对象
-     *  输出 | Boolean  | 是否匹配
+     *       | Object   | 列表对象
+     *  输出  | Boolean  | 是否匹配
      * [/ntb]
      * @param  {Object}    回调函数调用时this对象
      * @return {Number}    返回遍历中断时的索引值，没有中断则返回null
      */
-    _u._$reverseEach = function(_list,_callback,_this){
-        if (!_list||!_list.length||
-            !_u._$isFunction(_callback))
-            return null;
-        for(var i=_list.length-1;i>=0;i--)
-            if (!!_callback.call(
-                  _this,_list[i],i,_list))
-                return i;
+    _p._$reverseEach = function(_list,_callback,_this){
+        if (!!_list&&!!_list.length&&_p._$isFunction(_callback)){
+            for(var i=_list.length-1;i>=0;i--){
+                if (!!_callback.call(_this,_list[i],i,_list)){
+                    return i;
+                }
+            }
+        }
         return null;
     };
     /**
-     * 遍历列表<br/>
+     * 正序遍历列表，不支持中断<br/>
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’),
-     *       _list = [1,2,3];
-     *   // 从有序列表里查找2，如果有返回下标1，没有返回null
-     *   _u._$forEach(_list,function(_item,_index,_this){});
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       var _list = [1,2,3];
+     *       _p._$forEach(_list,function(_item,_index,_list){
+     *           // TODO somthing
+     *       });
+     *   });
      * [/code]
      * 
      * @see    {#_$reverseEach}
-     * @api    {nej.u._$forEach}
+     * @api    {_$forEach}
      * @param  {Array}     列表
      * @param  {Function}  回调
      * [ntb]
-     *  输入 | Variable | value
+     *  输入  | Variable | 值
      *       | Number   | 下标
-     *       | Object   | 当前this对象
+     *       | Object   | 列表对象
      * [/ntb]
      * @param  {Object}    回调函数调用时this对象
-     * @return {nej.u}
+     * @return {THIS}      调用对象
      */
-    _u._$forEach = function(_list,_callback,_this){
-        if (!_list||!_list.length||
-            !_u._$isFunction(_callback))
-            return this;
-        if (!!_list.forEach){
-            _list.forEach(_callback,_this);
-            return this;
+    _p._$forEach = function(_list,_callback,_this){
+        if (!!_list&&!!_list.length&&
+            _p._$isFunction(_callback)){
+            _h.__forEach(_list,_callback,_this);
         }
-        for(var i=0,l=_list.length;i<l;i++)
-            _callback.call(_this,_list[i],i,_list);
         return this;
     };
     /**
-     * 遍历列表或对象<br/>
+     * 遍历列表或对象，支持中断退出<br/>
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’),
-     *       _list = [1,2,3],
-     *       _object = {a:1,b:2,c:3};
-     *   // 从有序列表里查找2，如果有返回下标1，没有返回null
-     *   _u._$forIn(_list,function(_item,_index,_this){
-     *       return _item == 2;
-     *   });
-     *   // 从对象里查找3，如果有返回下标2，没有返回null
-     *   _u._$forIn(_object,function(_item,_index,_this){
-     *       return _item == 3;
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       // 从有序列表里查找id为2的元素，如果有则返回索引，没有返回null
+     *       var _list = [{id:1,name:'a'},{id:2,name:'b'},...];
+     *       var _index = _p._$forIn(_list,function(_item){
+     *           return _item.id==2;
+     *       });
+     * 
+     *       // 从对象里查找id为2的元素，如果有返回KEY，没有返回null
+     *       var _obj = {a:{id:1,name:'a'},b:{id:2,name:'b'},...};
+     *       var _key = _p._$forIn(_obj,function(_item){
+     *           return _item.id==2;
+     *       });
      *   });
      * [/code]
      * 
-     * @api    {nej.u._$forIn}
+     * @api    {_$forIn}
      * @param  {Object|Array}  列表或者对象
      * @param  {Function}      回调函数，如果返回结果为true，则中断后续递归返回当前索引或者标识
      * [ntb]
-     *  输入 | Variable | value
-     *       | Number   | 下标
-     *       | Object   | 当前this对象
+     *  输入 | Variable | 值
+     *      | Number   | 下标或者KEY
+     *      | Object   | 列表或者集合对象
      *  输出 | Boolean  | 是否匹配
      * [/ntb]
      * @param  {Object}        回调函数调用时this对象
      * @return {String|Number} 返回中断时的索引或者标识，没有中断则统一返回null
      */
-    _u._$forIn = function(_list,_callback,_this){
-        if (!_list||
-            !_u._$isFunction(_callback))
+    _p._$forIn = function(_list,_callback,_this){
+        if (!_list||!_p._$isFunction(_callback)){
             return null;
-        // list is array
-        if (_list.length!=null){
-            if (_list.length>0)
-                for(var i=0,l=_list.length;i<l;i++)
-                    if (!!_callback.call(
-                          _this,_list[i],i,_list))
-                        return i;
         }
         // list is object
-        if (_u._$isObject(_list)){
-            for(var x in _list)
-                if (_list.hasOwnProperty(x)&&
-                  !!_callback.call(_this,_list[x],x,_list))
-                    return x;
+        if (_p._$isObject(_list)){
+            return _h.__forIn(_list,_callback,_this);
+        }
+        // list is array
+        if (_list.length!=null&&_list.length>0){
+            for(var i=0,l=_list.length;i<l;i++){
+                if (!!_callback.call(_this,_list[i],i,_list)){
+                    return i;
+                }
+            }
         }
         return null;
     };
     /**
-     * 合并列表，修改原始列表<br/>
+     * 编码字符串，
+     * 编码规则对象中r正则表达式参数提取字符串需要编码的内容，
+     * 然后使用编码规则对象中的映射表进行替换<br/>
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’),
-     *       _list = [1,2,3],
-     *       _list2 = [4,5,6];
-     *   // 合并列表，把列表2加到列表1的起始位子，列表1从2开始截断
-     *   // 生成结果[4,5,6,2,3]
-     *   _u._$mergeList(_list,_list2,{union:true,
-     *     begin:true,compare:function(_item){
-     *         return _item == '2';
-     *     }
-     *  });
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       // 把字符串99999根据规则9替换成t，结果：ttttt
+     *       var _str = _p._$encode({r:/\d/g,'9':'t'},'99999');
+     *   });
      * [/code]
      * 
-     * @api    {nej.u._$mergeList}
-     * @param  {Array}    原始列表
-     * @param  {Array}    对比列表
-     * @param  {Object}   可选参数
-     * @config {Boolean}  union   是否取并集，对应为合并列表
-     * @config {Boolean}  begin   合并列表时是否追加至起始位置
-     * @config {Function} compare 搜索匹配接口，默认列表项匹配
-     * [ntb]
-     *  输入 | Variable | value
-     *  输出 | Number   | 下标
-     * [/ntb]
-     * @return {Array}            合并后列表
-     */
-    _u._$mergeList = function(_slist,_dlist,_options){
-        _slist = _slist||[];
-        _options = _options||_o;
-        var _added = !!_options.union,
-            _begin = !!_options.begin,
-            _compare = _options.compare,
-            _floop = _added&&_begin
-                   ? _u._$reverseEach
-                   : _u._$forEach;
-        _floop(_dlist,
-            function(_item){
-                if (!!_compare)
-                    _compare = _compare._$bind2(_item);
-                var _index = _u._$indexOf(_slist,_compare||_item);
-                // remove item to list
-                if (_index>=0)
-                    _slist.splice(_index,1);
-                // add item to list
-                if (_added)
-                    _slist[_begin?'unshift':'push'](_item);
-            });
-        return _slist;
-    };
-    /**
-     * 编码字符串<br/>
-     * 
-     * 脚本举例
-     * [code]
-     *   var _u = NEJ.P(‘nej.u’);
-     *   // 把字符串99999根据规则9替换成t，结果：ttttt
-     *   _u._$encode({r:/\d/g,'9':'t'},'99999');
-     * [/code]
-     * 
-     * @api    {nej.u._$encode}
+     * @api    {_$encode}
      * @param  {Object}  编码规则
      * @param  {String}  待编码的字串
      * @return {String}  编码后的字串
      */
-    _u._$encode = function(_map,_content){
+    _p._$encode = function(_map,_content){
         if (!_map||!_content||!_content.replace) 
             return _content||'';
         return _content.replace(_map.r,function($1){
@@ -466,52 +443,63 @@ var f = function(NEJ,_e,_h,_eh,_u){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’);
-     *   // 编码，结果：&lt;a&gt;util&lt;/a&gt;&amp;
-     *   _u._$escape('<a>util</a>&');
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       // 编码，结果：&lt;a&gt;util&lt;/a&gt;&amp;
+     *       var _str = _p._$escape('<a>util</a>&');
+     *   });
      * [/code]
      * 
      * @see    {#_$unescape}
-     * @api    {nej.u._$escape}
+     * @api    {_$escape}
      * @param  {String}  待编码串
      * @return {String}  编码后的串
      */
-    _u._$escape = (function(){
+    _p._$escape = (function(){
         var _reg = /<br\/?>$/,
             _map = {
                 r:/\<|\>|\&|\r|\n|\s|\'|\"/g,
-                '<':'&lt;','>':'&gt;','&':'&amp;',' ':'&nbsp;',
-                '"':'&quot;',"'":'&#39;','\n':'<br/>','\r':''
+                '<':'&lt;','>':'&gt;','&':'&amp;',
+                ' ':'&nbsp;','"':'&quot;',"'":'&#39;','\n':'<br/>','\r':''
             };
         return function(_content){
-            _content = _u._$encode(_map,_content);
+            _content = _p._$encode(_map,_content);
             return _content.replace(_reg,'<br/><br/>');
         };
     })();
     /**
-     * 反编码html代码，'&lt;' -> '<'<br/>
+     * 反编码html代码，'&lt;' -> '<' <br/>
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’);
-     *   // 反编码，结果：<&a>util</a>
-     *   _u._$unescape('&lt;&amp;a&gt;util&lt;/a&gt;');
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       // 反编码，结果：<&a>util</a>
+     *       var _str = _p._$unescape('&lt;&amp;a&gt;util&lt;/a&gt;');
+     *   });
      * [/code]
      * 
      * @see    {#_$escape}
-     * @api    {nej.u._$unescape}
+     * @api    {_$unescape}
      * @param  {String}  待编码串
      * @return {String}  编码后的串
      */
-    _u._$unescape = (function(){
-        var _map = {r:/\&(?:lt|gt|amp|nbsp|#39|quot)\;|\<br\/\>/gi,
-                   '&lt;':'<','&gt;':'>','&amp;':'&','&nbsp;':' ','&#39;':"'",'&quot;':'"','<br/>':'\n'};
+    _p._$unescape = (function(){
+        var _map = {
+            r:/\&(?:lt|gt|amp|nbsp|#39|quot)\;|\<br\/\>/gi,
+            '&lt;':'<','&gt;':'>','&amp;':'&',
+            '&nbsp;':' ','&#39;':"'",'&quot;':'"','<br/>':'\n'
+        };
         return function(_content){
-            return _u._$encode(_map,_content);
+            return _p._$encode(_map,_content);
         };
     })();
     /**
      * 格式化时间，yyyy|yy|MM|cM|eM|M|dd|d|HH|H|mm|ms|ss|m|s|w<br/>
+     * 
+     * 各标识说明：
      * [ntb]
      *   标识         |  名称
      * ----------------------------
@@ -534,19 +522,23 @@ var f = function(NEJ,_e,_h,_eh,_u){
      *   cM    |  中文月份，如三
      *   eM    |  英文月份，如Mar
      * [/ntb]
+     * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’);
-     *   // 根据格式输出时间，比如:2012-01-11,连接符可自定义
-     *   _u._$format(new Date(),'yyyy-MM-dd');
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       // 根据格式输出时间，比如:2012-01-11,连接符可自定义
+     *       var _str = _p._$format(new Date(),'yyyy-MM-dd');
+     *   });
      * [/code]
      * 
-     * @api    {nej.u._$format}
+     * @api    {_$format}
      * @param  {Number|String|Date}  时间
      * @param  {String}              格式
      * @return {String}              指定格式的时间串
      */
-    _u._$format = (function(){
+    _p._$format = (function(){
         var _map = {i:!0,r:/\byyyy|yy|MM|cM|eM|M|dd|d|HH|H|mm|ms|ss|m|s|w|ct|et\b/g},
             _12cc = ['上午','下午'],
             _12ec = ['A.M.','P.M.'],
@@ -563,7 +555,7 @@ var f = function(NEJ,_e,_h,_eh,_u){
         return function(_time,_format,_12time){
             if (!_time||!_format) 
                 return '';
-            _time = _u._$var2date(_time);
+            _time = _p._$var2date(_time);
             _map.yyyy = _time.getFullYear();
             _map.yy   = (''+_map.yyyy).substr(2);
             _map.M    = _time.getMonth()+1;
@@ -586,12 +578,13 @@ var f = function(NEJ,_e,_h,_eh,_u){
             if (!!_12time){
                 _map.H = _map.H%12;
             }
-            return _u._$encode(_map,_format);
+            return _p._$encode(_map,_format);
         };
     })();
     /**
-     * 转日期对象<br/>
-     * 字符串日期格式同ECMA规范定义：YYYY-MM-DDTHH:mm:ss.sssZ
+     * 日期字符串转日期对象<br/>
+     * 字符串日期格式同ECMA规范定义：YYYY-MM-DDTHH:mm:ss.sssZ<br/>
+     * 
      * [ntb]
      *   YYYY | the decimal digits of the year 0000 to 9999 in the Gregorian calendar
      *   -    | appears literally twice  in the string
@@ -609,26 +602,34 @@ var f = function(NEJ,_e,_h,_eh,_u){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’);
-     *   // 输入字符串，数字或日期，生成日期对象
-     *   _u._$var2date(new Date());
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       // 输入YYYY-MM-DDTHH:mm:ss.sssZ格式字符串，生成日期对象
+     *       var _date = _p._$var2date('2013-07-29T13:12:45.300');
+     * 
+     *       // 输入YYYY-MM-DDTHH:mm:ss格式字符串，生成日期对象
+     *       var _date = _p._$var2date('2013-07-29T13:12:45');
+     * 
+     *       // 输入YYYY-MM-DD格式字符串，生成日期对象
+     *       var _date = _p._$var2date('2013-07-29');
+     *   });
      * [/code]
      * 
-     * @api    {nej.u._$var2date}
-     * @param  {String}              日期格式
-     * @param  {Number|String|Date}  时间
-     * @return {Date}                日期
+     * @api    {_$var2date}
+     * @param  {String} 日期串
+     * @return {Date}   日期对象
      */
-    _u._$var2date = function(_time){
+    _p._$var2date = function(_time){
         var _date = _time;
-        if (_u._$isString(_time)){
-            if(_time.indexOf('-') < 0 && _time.indexOf('/') < 0)
-                _time = '';
-            _time = _time.replace(/-/g,'/');
-            _date = new Date(Date.parse(_time));
+        if (_p._$isString(_time)){
+            _date = new Date(
+                _h.__str2time(_time)
+            );
         }
-        if (!_u._$isDate(_date))
+        if (!_p._$isDate(_date)){
             _date = new Date(_time);
+        }
         return _date;
     };
     /**
@@ -636,17 +637,20 @@ var f = function(NEJ,_e,_h,_eh,_u){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’);
-     *   // 保留2位小数
-     *   _u._$fixed(3.14159,2);
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       // 保留2位小数，返回3.14
+     *       var _value = _p._$fixed(3.14159,2);
+     *   });
      * [/code]
      * 
-     * @api    {nej.u._$fixed}
+     * @api    {_$fixed}
      * @param  {Float}  浮点数
      * @param  {Number} 小数位
      * @return {Number} 浮点数
      */
-    _u._$fixed = function(_float,_fraction){
+    _p._$fixed = function(_float,_fraction){
         return new Number(_float).toFixed(_fraction);
     };
     /**
@@ -654,17 +658,21 @@ var f = function(NEJ,_e,_h,_eh,_u){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’);
-     *   // 相对路径./a/b.html转绝对路径http://root/a/b.html
-     *   _u._$absolute("./a/b.html","root");
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       // 相对路径../a/b.html转绝对路径http://a.b.com:8010/a/b.html
+     *       var _root = 'http://a.b.com:8010/z/';
+     *       var _url = _p._$absolute("../a/b.html",_root);
+     *   });
      * [/code]
      * 
-     * @api    {nej.u._$absolute}
+     * @api    {_$absolute}
      * @param  {String}  相对路径
      * @param  {String}  绝对路径ROOT，必须以http://开始，默认为location目录
      * @return {String}  绝对路径地址
      */
-    _u._$absolute = (function(){
+    _p._$absolute = (function(){
         var _reg0 = /([^\/:])\/.*$/,
             _reg1 = /\/[^\/]+$/,
             _reg2 = /[#\?]/,
@@ -706,16 +714,20 @@ var f = function(NEJ,_e,_h,_eh,_u){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’);
-     *   //  提前url地址的源信息，返回http://a.b.com:8080
-     *   _u._$url2origin("http://a.b.com:8080/a/b/");
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       // 提取url地址的源信息
+     *       // 返回http://a.b.com:8080
+     *       var _origin = _p._$url2origin("http://a.b.com:8080/a/b/");
+     *   });
      * [/code]
      * 
-     * @api    {nej.u._$url2origin}
+     * @api    {_$url2origin}
      * @param  {String} URL地址
      * @return {String} 源信息
      */
-    _u._$url2origin = (function(){
+    _p._$url2origin = (function(){
         var _reg = /^([\w]+?:\/\/.*?(?=\/|$))/i;
         return function(_url){
             if (_reg.test(_url||''))
@@ -724,74 +736,27 @@ var f = function(NEJ,_e,_h,_eh,_u){
         };
     })();
     /**
-     * dom节点转对象<br/>
-     * 
-     * 页面结构举例
-     * [code type="html"]
-     *   <div id="abc">123</div>
-     * [/code]
-     * 
-     * 脚本举例
-     * [code]
-     *   var _u = NEJ.P(‘nej.u’),
-     *       _e = NEJ.P(nej.e);
-     *   // 返回对象{div:"123"}
-     *   _u._$dom2object(_e._$get("abc"),{});
-     * [/code]
-     * 
-     * @api    {nej.u._$dom2object}
-     * @param  {Node}    节点
-     * @param  {Object}  接受数据的对象
-     * @return {Object}  转换完成的对象
-     */
-     _u._$dom2object = function(_dom,_obj){
-        if (!_dom) return _obj;
-        var _name = _dom.tagName.toLowerCase(),
-            _list = _e._$getChildren(_dom);
-        if (!_list||!_list.length){
-            _obj[_name] = _dom.textContent||_dom.text||'';
-            return _obj;
-        }
-        var _tmp = {};
-        _obj[_name] = _tmp;
-        _u._$forEach(_list,
-            function(_node){
-                _u._$dom2object(_node,_tmp);
-            });
-        return _obj;
-    };
-    /**
-     * XML转对象<br/>
-     * @api    {nej.u._$xml2object}
-     * @param  {String}  xml代码
-     * @return {Object}  对象
-     */
-    _u._$xml2object = function(_xml){
-        try{
-            return _u._$dom2object(_e._$xml2dom(_xml),{});
-        }catch(ex){
-            return null;
-        }
-    };
-    /**
      * key-value字符串转对象<br/>
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’),
-     *       _str = "abc=abc,123=123";
-     *   // 返回对象{abc:"abc",123:"123"}
-     *   _u._$string2object(_str,",");
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       var _str = "abc=abc,123=123";
+     *       // 返回对象{abc:"abc",123:"123"}
+     *       var _obj = _p._$string2object(_str,",");
+     *   });
      * [/code]
      * 
-     * @api    {nej.u._$string2object}
+     * @api    {_$string2object}
      * @param  {String}         待处理数据
      * @param  {String|RegExp}  分隔符
-     * @return {Object}         hash表
+     * @return {Object}         转换后对象
      */
-    _u._$string2object = function(_string,_split){
+    _p._$string2object = function(_string,_split){
         var _obj = {};
-        _u._$forEach(
+        _p._$forEach(
             (_string||'').split(_split),
             function(_name){
                 var _brr = _name.split('=');
@@ -805,35 +770,65 @@ var f = function(NEJ,_e,_h,_eh,_u){
         return _obj;
     };
     /**
-     * key-value对象转成key=value对后用分隔符join<br/>
+     * key-value对象转成key=value对后用分隔符join，
+     * 对象中不同类型的取值规则如下：<br/>
+     * 
+     * [ntb]
+     *   类型            |  取值规则
+     *   ------------------------
+     *   Function  |  过滤掉，不输出
+     *   Date      |  转成时间戳，getTime取值
+     *   Array     |  值用逗号分隔，如[1,2,3] -> 1,2,3
+     *   Object    |  使用JSON转成字符串
+     * [/ntb]
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’),
-     *       _obj = {abc:"abc",123:"123"};
-     *   // 返回数组[{abc:"abc"},{123:"123"}],不编码
-     *   _u._$object2string(_obj,",",false);
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *     
+     *       // 返回字符串 abc=abc,123=123
+     *       var _obj = {
+     *           abc:"abc",
+     *           123:"123"
+     *       };
+     *       var _str = _p._$object2string(_obj);
+     * 
+     *       // 返回字符串
+     *       // a=1871406603152186&b=1,2,3&d={"a":"a","b":"b"}&e=e&f=1&g=true
+     *       var _obj = {
+     *           a:new Date,
+     *           b:[1,2,3],
+     *           c:function(){},
+     *           d:{a:'a',b:'b'},
+     *           e:'e',
+     *           f:1,
+     *           g:true
+     *       };
+     *       var _str = _p._$object2string(_obj,'&');
+     *   });
      * [/code]
      * 
-     * @api    {nej.u._$object2string}
+     * @api    {_$object2string}
      * @param  {Object}  对象
      * @param  {String}  分隔符，默认为逗号
      * @param  {Boolean} 是否编码
      * @return {String}  key-value串
      */
-    _u._$object2string = function(_object,_split,_encode){
+    _p._$object2string = function(_object,_split,_encode){
         if (!_object) return '';
         var _arr = [];
-        _u._$forIn(
+        _p._$forIn(
             _object,function(_value,_key){
-                if (_u._$isFunction(_value)){
+                if (_p._$isFunction(_value)){
                     return;
                 }
-                if (_u._$isDate(_value)){
+                if (_p._$isDate(_value)){
                     _value = _value.getTime();
-                }else if(_u._$isArray(_value)){
+                }else if(_p._$isArray(_value)){
                     _value = _value.join(',');
-                }else if(_u._$isObject(_value)){
+                }else if(_p._$isObject(_value)){
                     _value = JSON.stringify(_value);
                 }
                 if (!!_encode){
@@ -849,92 +844,136 @@ var f = function(NEJ,_e,_h,_eh,_u){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’);
-     *   // 返回对象{abc:"abc",123:"123"}
-     *   _u._$query2object("abc=abc&123=123");
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       // 返回对象{abc:"abc",123:"123"}
+     *       var _obj = _p._$query2object("abc=abc&123=123");
+     *   });
      * [/code]
      * 
-     * @api    {nej.u._$query2object}
+     * @api    {_$query2object}
      * @param  {String}  查询串
      * @return {Object}  对象
      */
-    _u._$query2object = function(_query){
-        return _u._$string2object(_query,'&');
+    _p._$query2object = function(_query){
+        return _p._$string2object(_query,'&');
     };
     /**
-     * 查询串转对象<br/>
+     * 对象转查询串<br/>
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’);
-     *   // 返回对象123=123&abc=abc
-     *   _u._$object2query({abc:"abc",123:"123"});
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       // 返回对象123=123&abc=abc
+     *       var _query = _p._$object2query({abc:"abc",123:"123"});
+     *   });
      * [/code]
      * 
-     * @api    {nej.u._$object2query}
-     * @param  {String}  查询串
-     * @return {Object}  对象
+     * @api    {_$object2query}
+     * @param  {Object}  对象
+     * @return {String}  查询串
      */
-    _u._$object2query = function(_object){
-        return _u._$object2string(_object,'&',!0);
+    _p._$object2query = function(_object){
+        return _p._$object2string(_object,'&',!0);
     };
     /**
-     * 节点集合转数组，针对低版本<br/>
+     * 集合转数组，集合具有length属性<br/>
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’),
-     *       _map = {0:'0',1:'1',2:'2',length:3};
-     *   // 返回数组['1','2','3']
-     *   _u._$object2array(_map);
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       var _map = {0:'0',1:'1',2:'2',length:3};
+     *       // 返回数组['1','2','3']
+     *       var _arr = _p._$object2array(_map);
+     *       
+     *       // 多用于对节点集合的转换
+     *       var _nodes = document.body.childNodes;
+     *       var _arr = _p._$object2array(_nodes);
+     *   });
      * [/code]
      *
-     * @api    {nej.u._$object2array}
+     * @api    {_$object2array}
      * @param  {Object}  集合
      * @return {Array}   数组
      */
-    _u._$object2array = function(_object){
+    _p._$object2array = function(_object){
         return _h.__col2array(_object);
     };
     /**
-     * 数组转对象
-     * @api    {nej.u._$array2object}
+     * 数组转对象，将列表中元素按照指定KEY组成对象<br/>
+     * 
+     * 脚本举例
+     * [code]
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       var _arr = [{id:1,name:'a'},{id:2,name:'b'},...];
+     *       // 输出结果为 {2:{id:2,name:'b'},...}
+     *       var _obj = _p._$array2object(
+     *           _arr,function(_item){
+     *               // 过滤name为a的项
+     *               if (_item.name=='a'){
+     *                   return;
+     *               }
+     *               // 组对象的KEY用每项的id
+     *               return _item.id;
+     *           }
+     *       );
+     *       
+     *       // 默认使用每项的值组对象
+     *       var _brr = ['a','b','c',...];
+     *       // 输出 {a:'a',b:'b',c:'c',...}
+     *       var _obj = _p._$array2object(_brr);
+     *   });
+     * [/code]
+     * 
+     * @api    {_$array2object}
      * @param  {Array}    列表
-     * @param  {Function} 过滤函数
+     * @param  {Function} 过滤函数，返回每一项的KEY，没有返回则过滤当前项
      * @return {Object}   对象
      */
-    _u._$array2object = function(_list,_filter){
+    _p._$array2object = function(_list,_filter){
         var _result = {};
-        _u._$forEach(
+        _p._$forEach(
             _list,function(_item){
                 var _key = _item;
                 if (!!_filter){
                     _key = _filter(_item);
                 }
-                _result[_key] = _item;
+                if (_key!=null){
+                    _result[_key] = _item;
+                }
             }
         );
         return _result;
     };
     /**
-     * 格式化数字为指定位数<br/>
+     * 格式化数字为指定位数，不足位数前面用0补足<br/>
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’);
-     *   // 2    -> 002
-     *   // 22   -> 022
-     *   // 222  -> 222
-     *   // 2222 -> 2222
-     *   var _str = _u._$number2string(2,3);
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       // 2    -> 002
+     *       // 22   -> 022
+     *       // 222  -> 222
+     *       // 2222 -> 2222
+     *       var _str = _p._$number2string(2,3);
+     *   });
      * [/code]
      * 
-     * @api    {nej.u._$number2string}
+     * @api    {_$number2string}
      * @param  {Number} 数值
      * @param  {Number} 位数，至少1位
      * @return {String} 格式化后字符串
      */
-    _u._$number2string = function(_number,_limit){
+    _p._$number2string = function(_number,_limit){
         var _len1 = (''+_number).length,
             _len2 = Math.max(1,parseInt(_limit)||0),
             _delta = _len2-_len1;
@@ -944,23 +983,44 @@ var f = function(NEJ,_e,_h,_eh,_u){
         return ''+_number;
     };
     /**
-     * 安全删除属性<br/>
-     * @api    {nej.u._$safeDelete}
-     * @param  {Object}        对象
-     * @param  {String|Array}  属性
-     * @return {nej.u}
+     * 安全删除属性，
+     * 部分浏览器（如低版本IE）禁止直接delete节点上的属性<br/>
+     * 
+     * 脚本举例
+     * [code]
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       // 节点上保存的数据
+     *       _node.data = {a:'aaaaa',b:'bbbbb'};
+     *       _node.test = 'aaaaa';
+     *       
+     *       // 删除单个属性
+     *       _p._$safeDelete(_node,'test');
+     *       // 批量删除
+     *       _p._$safeDelete(_node,['test','data']);
+     *   });
+     * [/code]
+     * 
+     * @api    {_$safeDelete}
+     * @param  {Object}       对象
+     * @param  {String|Array} 属性
+     * @return {THIS}         方法调用者
      */
-    _u._$safeDelete = function(_object,_name){
-        if (!_u._$isArray(_name)){
+    _p._$safeDelete = function(_object,_name){
+        if (!_p._$isArray(_name)){
             try{
                 delete _object[_name];
             }catch(e){
                 _object[_name] = undefined;
             }
-            return this;
+        }else{
+            _p._$forEach(
+                _name,function(_item){
+                    _p._$safeDelete(_object,_item);
+                }
+            );
         }
-        _u._$forEach(_name,_u
-          ._$safeDelete._$bind(_u,_object));
         return this;
     };
     /**
@@ -968,16 +1028,19 @@ var f = function(NEJ,_e,_h,_eh,_u){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’);
-     *   // 可能返回"13d1r1dt2"
-     *   _u._$randString(9);
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       // 可能返回"13d1r1dt2"
+     *       _p._$randString(9);
+     *   });
      * [/code]
      * 
-     * @api    {nej.u._$randString}
+     * @api    {_$randString}
      * @param  {String}  字符串长度
      * @return {String}  随机字符串
      */
-    _u._$randString = (function(){
+    _p._$randString = (function(){
         var _chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';
         return function(_length){
             _length = _length||10;
@@ -994,18 +1057,21 @@ var f = function(NEJ,_e,_h,_eh,_u){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’);
-     *   // 可能返回3
-     *   _u._$randNumber(0,9);
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       // 可能返回3
+     *       _p._$randNumber(0,9);
+     *   });
      * [/code]
      * 
      * @see    {#_$randNumberString}
-     * @api    {nej.u._$randNumber}
+     * @api    {_$randNumber}
      * @param  {Number}  小区间，包含
      * @param  {Number}  大区间，不包含
      * @return {Number}  随机整数
      */
-    _u._$randNumber = function(_min,_max){
+    _p._$randNumber = function(_min,_max){
         return Math.floor(Math.random()*(_max-_min)+_min);
     };
     /**
@@ -1013,48 +1079,52 @@ var f = function(NEJ,_e,_h,_eh,_u){
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’);
-     *   // 可能返回123456789
-     *   _u._$randNumberString(9);
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       // 可能返回123456789
+     *       _p._$randNumberString(9);
+     *   });
      * [/code]
      * 
      * @see    {#_$randNumber}
-     * @api    {nej.u._$randNumberString}
+     * @api    {_$randNumberString}
      * @param  {Number}  随机字符串的长度[1,30]
      * @return {String}  随机生成的字符串
      */
-    _u._$randNumberString = function(_length){
+    _p._$randNumberString = function(_length){
         _length = Math.max(0,Math.min(_length||8,30));
         var _min = Math.pow(10,_length-1),_max = _min*10;
-        return _u._$randNumber(_min,_max).toString();
+        return _p._$randNumber(_min,_max).toString();
     };
     /**
-     * 生成系统中的唯一标识，每次调用均生成一个新的标识
+     * 生成系统中的唯一标识，每次调用均生成一个新的标识<br/>
      * 
      * 脚本举例
      * [code]
-     *   var _u = NEJ.P(‘nej.u’);
-     *   // 可能返回123456789
-     *   var _id1 = _u._$uniqueID(),
-     *       _id2 = _u._$uniqueID();
-     *   // _id1 != _id2
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *      // 可能返回123456789
+     *      var _id1 = _p._$uniqueID(),
+     *          _id2 = _p._$uniqueID();
+     *      // _id1 != _id2
+     *   });
      * [/code]
      * 
-     * @api    {nej.u._$uniqueID}
+     * @api    {_$uniqueID}
      * @return {String} 唯一标识
      */
-    _u._$uniqueID = (function(){
+    _p._$uniqueID = (function(){
         var _seed = +new Date;
         return function(){
             return ''+(_seed++);
         };
     })();
-
-    return _u;
-};
-NEJ.define(
-    '{lib}base/util.js',[
-    '{lib}base/global.js',
-    '{lib}base/element.js',
-    '{platform}element.js'
-],f);
+    
+    if (CMPT){
+        this.copy(NEJ.P('nej.u'),_p);
+    }
+    
+    return _p;    
+});
