@@ -21,7 +21,7 @@ NEJ.define(function(_p,_o,_f,_r){
     /**
      * 返回指定的命名空间，如果不存在则新建一个命名空间，
      * 注意：命名空间不要使用浏览器保留的关键字
-     * 
+     *
      * 代码举例：
      * [code]
      *   NEJ.define([
@@ -32,7 +32,7 @@ NEJ.define(function(_p,_o,_f,_r){
      *      var p2 = _g._$namespace("window.ui.package");
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$namespace}
      * @param  {String} 命名空间的名称，大小写敏感
      * @return {Object} 生成的命名空间对象
@@ -41,7 +41,7 @@ NEJ.define(function(_p,_o,_f,_r){
         if (!_namespace||!_namespace.length){
             return null;
         }
-        var _package = this;
+        var _package = window;
         for(var a=_namespace.split('.'),
                 l=a.length,i=(a[0]=='window')?1:0;i<l;
                 _package=_package[a[i]]=_package[a[i]]||{},i++);
@@ -51,7 +51,7 @@ NEJ.define(function(_p,_o,_f,_r){
     var _extpro = Function.prototype;
     /**
      * AOP增强操作，增强操作接受一个输入参数包含以下信息
-     * 
+     *
      * [ntb]
      *  参数名称 | 参数类型   | 参数描述
      *  ------------------------------------
@@ -59,7 +59,7 @@ NEJ.define(function(_p,_o,_f,_r){
      *  stopped | Boolean  | 是否结束操作，终止后续操作
      *  value   | Variable | 输出结果
      * [/ntb]
-     * 
+     *
      * @api    {Function.prototype._$aop}
      * @param  {Function} 之前操作，接受一个输入参数，见描述信息
      * @param  {Function} 之后操作，接受一个输入参数，见描述信息
@@ -75,13 +75,13 @@ NEJ.define(function(_p,_o,_f,_r){
             if (!_event.stopped){
                 _event.value = _handler.apply(this,_event.args);
                 _after(_event);
-            } 
+            }
             return _event.value;
         };
     };
     /**
      * 绑定接口及参数，使其的调用对象保持一致<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   var _obj = {a:0};
@@ -90,12 +90,12 @@ NEJ.define(function(_p,_o,_f,_r){
      *       console.log(_a);
      *       // 第二个参数 ： 2
      *       consoel.log(_b);
-     *       // 当前this.a ： 0 
+     *       // 当前this.a ： 0
      *       console.log(this.a);
      *   }._$bind(_obj,"1");
      *   _f(2);
      * [/code]
-     * 
+     *
      * @see    {#_$bind2}
      * @api    {Function.prototype._$bind}
      * @param  {Object}   _object 需要保持一致的对象，null表示window对象
@@ -117,7 +117,7 @@ NEJ.define(function(_p,_o,_f,_r){
      * 绑定接口及参数，使其的调用对象保持一致，
      * 该接口与_$bind接口的差别在于绑定时参数和调用时参数的顺序不一样，
      * _$bind优先传入绑定时参数，_$bind2优先传入调用时参数<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   var _obj = {a:0};
@@ -126,12 +126,12 @@ NEJ.define(function(_p,_o,_f,_r){
      *       console.log(_a);
      *       // 第二个参数 ： 1
      *       consoel.log(_b);
-     *       // 当前this.a ： 0 
+     *       // 当前this.a ： 0
      *       console.log(this.a);
      *   }._$bind2(_obj,"1");
      *   _f(2);
      * [/code]
-     * 
+     *
      * @see    {#_$bind}
      * @api    {Function.prototype._$bind2}
      * @param  {Object}   需要保持一致的对象，null表示window对象
@@ -177,7 +177,7 @@ NEJ.define(function(_p,_o,_f,_r){
         // mwf adaptation
         if (!this.MWF) this.MWF = this.NEJ;
         if (!this.mwf) this.mwf = this.nej;
-        
+
         return this.NEJ;
     }
 

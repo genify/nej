@@ -1,13 +1,13 @@
 var f = function(){
     //定义测试模块
     module('global');
-    
+
     //开始单元测试
     test('Function prototype',function(){
         equal(typeof(Function.prototype._$bind),'function','函数对象加入了_$bind方法');
         equal(typeof(Function.prototype._$bind2),'function','函数对象加入了_$bind2方法');
     });
-    
+
     test('window.MWF', function() {
         deepEqual(NEJ.O,{},'只读空对象实例');
         deepEqual(NEJ.R,[],'只读空数组实例');
@@ -77,17 +77,14 @@ var f = function(){
         NEJ.EX(_obj,_obj2);
         equal(_obj.num,_obj2.num,'拷贝对象通过过滤接口属性,测试Number.MIN_VALUE');
     });
-    
+
     test('NEJ.P',function(){
         equal(NEJ.P('a.b.c'),a.b.c,'字符串a.b.c生成命名空间');
         equal(NEJ.P('window.a.b.c'),window.a.b.c,'字符串window.a.b.c生成命名空间');
-        raises(function(){
-            throw new Error("failing test");
-        },'failing test','抛出了异常');
         deepEqual(NEJ.P('0.2.3'),{},'字符串0.2.3不能生成正确命名空间');
         deepEqual(NEJ.P('function.for'),{},'关键字不能生成正确命名空间');
     });
-    
+
     test('NEJ.C',function(){
         var _f = NEJ.C();
         var _num = 0;
@@ -112,11 +109,11 @@ var f = function(){
         equal(_num,9,'父类__init后，子类__init会被调用');
         equal(_f2.__static(),'static','默认继承了静态方法，如不继承传入false参数');
     });
-    
+
     test('_$bind接口',function(){
         var _f = NEJ.C();
         _f.prototype.__init = function(){
-            
+
         };
         var _f2 = NEJ.C();
         var _obj = {num:3};
@@ -134,7 +131,7 @@ var f = function(){
         };
         var _f22 = new _f2();
     });
-    
+
     test('trim接口',function(){
         equal('  dfdf @$#%^  dfdf  '.trim(),'dfdf @$#%^  dfdf','测试trim接口前后去空格');
         equal('  function  '.trim(),'function','关键字');
@@ -142,7 +139,7 @@ var f = function(){
         equal('  \\\*function()\*\\{return 0;}  '.trim(),'\\\*function()\*\\{return 0;}','转义字符');
         equal('  &lt;  '.trim(),'&lt;','转义字符');
     });
-    
+
     test('aop增强接口',function(){
         var _obj = {a:0};
         var _f = function(){
@@ -162,7 +159,7 @@ var f = function(){
         equal(_obj.a,3,'aop增强操作');
         equal(_value,'aop增强操作3','aop增强操作返回值是某个增强操作的返回值');
     });
-    
+
     test('aop增强接口,stopped',function(){
         var _obj = {a:0};
         var _f = function(){

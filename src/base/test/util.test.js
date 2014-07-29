@@ -84,6 +84,7 @@ var f = function(){
     </album>\
 </albums>\
 </netease>';
+debugger;
         equal(_util._$xml2object(_xml2).netease.albums.album.auth,'2','XML转对象');
         var _obj2 = {123:"123",abc:"abc"};
         equal(_util._$string2object('abc=abc,123=123',',').abc,_obj2.abc,'key-value字符串转对象');

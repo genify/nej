@@ -6,8 +6,9 @@
  * ------------------------------------------
  */
 NEJ.define([
+    '{lib}base/platform.js',
     './config.js'
-],function(_c,_p,_o,_f,_r){
+],function(_m,_c,_p,_o,_f,_r){
     // for ie
     NEJ.patch('TR',function(){
         _c.__set(
@@ -17,13 +18,13 @@ NEJ.define([
         );
     });
     // for ie7- data uri not available
-    NEJ.patch('TR<4.0',function(){
+    NEJ.patch('TR<=3.0',function(){
         _c.__set(
             'blank.png',
             (this.NEJ_CONF||_o).blank||
             (_c._$get('root')+'nej_blank.gif')
         );
     });
-    
+
     return _c;
 });
