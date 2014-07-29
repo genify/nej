@@ -1121,9 +1121,142 @@ NEJ.define([
             return ''+(_seed++);
         };
     })();
+    /**
+     * 读取上下文中指定名字空间的值<br/>
+     * 
+     * 脚本举例
+     * [code]
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       var obj = {
+     *           a:{
+     *               b:{
+     *                   c:{
+     *                       d:'ddddd'
+     *                   }
+     *               }
+     *           }
+     *       };
+     *       // 输出 ddddd
+     *       var _value = _p._$query(obj,'a.b.c.d');
+     *       // 输出 undefined
+     *       var _value = _p._$query(null,'a.b.c.d');
+     *   });
+     * [/code]
+     * 
+     * @api    {_$query}
+     * @param  {Object}   上下文
+     * @param  {String}   名字空间
+     * @return {Varaible} 值
+     */
+    _p._$query = function(_context,_namespace){
+        _context = _context||_o;
+        var _arr = (_namespace||'').split('.');
+        for(var i=0,l=_arr.length;i<l;i++){
+            _context = _context[_arr[i]];
+            if (!_context) break;
+        }
+        return _context;
+    };
+    /**
+     * 合并数据，同名属性右侧覆盖左侧，
+     * 最后一个如果是函数则用做数据过滤，
+     * 第一个参数作为合并数据结果集对象，如果为空则新建对象<br/>
+     *  
+     * 脚本举例
+     * [code]
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       // 合并多个数据至_obj0中
+     *       var _obj0 = {a:0,b:1},
+     *           _obj1 = {a:"a",b:"b",c:"c"},
+     *           _obj2 = {c:"c",d:"d",e:"f"},
+     *           ... ;
+     *       var _obj = _p._$merge(_obj0,_obj1,_obj2,...);
+     * 
+     *       // 带过滤接口合并
+     *       // 阻止a属性的覆盖
+     *       var _obj = _p._$merge(
+     *           _obj0,_obj1,_obj2,...,
+     *           function(_value,_key){
+     *               return _key=='a';
+     *           }
+     *       );
+     *   });
+     * [/code]
+     * 
+     * @api    {_$merge}
+     * @param  {Object}   原始对象
+     * @param  {Object}   待拷贝对象
+     * @param  {Function} 过滤接口
+     * [ntb]
+     *  输入  | Variable | 值
+     *       | String   | 键
+     *  输出  | Boolean  | 是否过滤
+     * [/ntb]
+     * @return {Object}   拷贝后对象
+     */
+    _p._$merge = function(){
+        var _last = arguments.length-1,
+            _filter = arguments[_last];
+        // check filter function for last args
+        if (_p._$isFunction(_filter)){
+            _last -= 1;
+        }else{
+            _filter = _f;
+        }
+        // args0 as result
+        var _result = arguments[0]||{};
+        // merge
+        for(var i=1;i<=_last;i++){
+            _u._$forIn(arguments[i],function(v,k){
+                if (!_filter(v,k)){
+                    _result[k] = v;
+                }
+            });
+        }
+        return _result;
+    };
+    /**
+     * 根据原始对象属性，从目标对象提取非空值<br/>
+     * 
+     * 脚本举例
+     * [code]
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       var _obj0 = {a:0,b:1},
+     *           _obj1 = {a:"a",b:"b",c:"c"};
+     *       // 根据_obj0的属性,从_obj1拷贝非null属性到_obj0中
+     *       // 结果是_obj0.a = "a",_obj.b = "b",没有拷贝c属性;
+     *       var _obj = _p._$fetch(_obj0,_obj1);
+     *   });
+     * [/code]
+     * 
+     * @api    {_$fetch}
+     * @param  {Object} 原始对象
+     * @param  {Object} 目标对象
+     * @return {Object} 合并后的对象
+     */
+    _p._$fetch = function(_object,_config){
+        if (!!_config){
+            _p._$forIn(_object,function(v,k,m){
+                var _value = _config[k];
+                if (_value!=null){
+                    m[k] = _value;
+                }
+            });
+        }
+        return _object;
+    };
     
     if (CMPT){
         this.copy(NEJ.P('nej.u'),_p);
+        NEJ.Q  = _p._$query;
+        NEJ.X  = _p._$merge;
+        NEJ.EX = _p._$fetch;
     }
     
     return _p;    

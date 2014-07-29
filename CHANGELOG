@@ -7,5 +7,5 @@ v0.0.1
 {lib}base/util.js
 - 删除_$mergeList
 - 迁移_$dom2object、_$xml2object至{lib}base/element.js
-
+- 增加接口_$query、_$merge、_$fetch替代原NEJ.Q、NEJ.X、NEJ.EX
 
