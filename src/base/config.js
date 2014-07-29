@@ -102,7 +102,7 @@ NEJ.define([
             var _map = {};
             if (!_list||!_list.length){
                 return _map;
-            } 
+            }
             for(var i=0,l=_list.length,_path;i<l;i++){
                 _path = _list[i];
                 if (_path.indexOf('://')>0)
@@ -125,6 +125,7 @@ NEJ.define([
                     param:'AntiCSRF'
                 };
             }
+            _csrf = _csrf || _o;
             _c.__set('csrf',{
                 param:_csrf.param||'',
                 cookie:_csrf.cookie||''
@@ -136,10 +137,10 @@ NEJ.define([
         };
     })();
     _doInit(this.NEJ_CONF||_o);
-    
+
     if (CMPT){
         this.copy(NEJ.P('nej.c'),_c);
     }
-    
+
     return _c;
 });
