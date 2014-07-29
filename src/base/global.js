@@ -6,47 +6,6 @@
  * --------------------------------------------
  */
 NEJ.define(function(_p,_o,_f,_r){
-    // copy object properties
-    // only for nej compatiable
-    this.copy = function(a,b){
-        a = a||{};
-        b = b||_o;
-        for(var x in b){
-            if (b.hasOwnProperty(x)){
-                a[x] = b[x];
-            }
-        }
-        return a;
-    };
-    /**
-     * 返回指定的命名空间，如果不存在则新建一个命名空间，
-     * 注意：命名空间不要使用浏览器保留的关键字
-     *
-     * 代码举例：
-     * [code]
-     *   NEJ.define([
-     *       '{lib}base/global.js'
-     *   ],function(_g){
-     *      // 以下两者都将建立 window.ui, 然后返回 window.ui.package
-     *      var p1 = _g._$namespace("ui.package");
-     *      var p2 = _g._$namespace("window.ui.package");
-     *   });
-     * [/code]
-     *
-     * @api    {_$namespace}
-     * @param  {String} 命名空间的名称，大小写敏感
-     * @return {Object} 生成的命名空间对象
-     */
-    _p._$namespace = function(_namespace){
-        if (!_namespace||!_namespace.length){
-            return null;
-        }
-        var _package = window;
-        for(var a=_namespace.split('.'),
-                l=a.length,i=(a[0]=='window')?1:0;i<l;
-                _package=_package[a[i]]=_package[a[i]]||{},i++);
-        return  _package;
-    };
     // extend native object method
     var _extpro = Function.prototype;
     /**
@@ -165,13 +124,32 @@ NEJ.define(function(_p,_o,_f,_r){
     }
 
     if (CMPT){
+        // copy object properties
+        // only for nej compatiable
+        this.copy = function(a,b){
+            a = a||{};
+            b = b||_o;
+            for(var x in b){
+                if (b.hasOwnProperty(x)){
+                    a[x] = b[x];
+                }
+            }
+            return a;
+        };
         // NEJ namespace
         this.NEJ = this.copy(
             this.NEJ,{
-                O:_o,
-                R:_r,
-                F:_f,
-                P:_p._$namespace
+                O:_o,R:_r,F:_f,
+                P:function(_namespace){
+                    if (!_namespace||!_namespace.length){
+                        return null;
+                    }
+                    var _package = window;
+                    for(var a=_namespace.split('.'),
+                            l=a.length,i=(a[0]=='window')?1:0;i<l;
+                            _package=_package[a[i]]=_package[a[i]]||{},i++);
+                    return  _package;
+                }
             }
         );
         // mwf adaptation
