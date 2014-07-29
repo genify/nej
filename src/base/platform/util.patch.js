@@ -6,9 +6,9 @@
  * ------------------------------------------
  */
 NEJ.define([
-    '{lib}base/platform.js',
-    './util.js'
-],function(_m,_h,_p,_o,_f,_r){
+    './util.js',
+    '{lib}base/platform.js'
+],function(_h,_m,_p,_o,_f,_r){
     // for ie8-
     NEJ.patch('TR<=4.0',function(){
         /**

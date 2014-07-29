@@ -5,9 +5,7 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-NEJ.define([
-    '{lib}base/global.js'
-],function(NEJ,_p,_o,_f,_r){
+NEJ.define(function(_p,_o,_f,_r){
     /**
      * 遍历对象
      * @param  {Object}   对象
