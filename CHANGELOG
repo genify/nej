@@ -1,11 +1,23 @@
 v0.0.1
 --------------------------------------------------------
 - 重构类模型，__super作为所有接口调用父类同名接口的方式
+- 独立类模型实现文件至{lib}base/klass.js
 - 增加依赖注入，保留兼容模式下名字空间形式
 - 独立平台适配，删除patched目录，独立到各API、控件
+
+define.js
+- NEJ.config接口名称改为NEJ.deps
+- 删除define.cmp.js兼容支持
 
 {lib}base/util.js
 - 删除_$mergeList
 - 迁移_$dom2object、_$xml2object至{lib}base/element.js
 - 增加接口_$query、_$merge、_$fetch替代原NEJ.Q、NEJ.X、NEJ.EX
+
+{lib}base/element.js
+- 交换_$getMaxBox接口输入参数顺序
+- 修改_$dom2object第二个参数为非必传参数
+
+
+
 
