@@ -15,7 +15,14 @@ NEJ.define([
      * @return {Node}     指定标识的节点
      */
     _p.__getElementById = function(_fragment,_id){
-        return _fragment.getElementById(''+_id);
+        if (!!_fragment.getElementById){
+            return _fragment.getElementById(''+_id);
+        }
+        try{
+            return _fragment.querySelector('#'+_id);
+        }catch(e){
+            return null;
+        }
     };
     /**
      * 取节点的子节点列表

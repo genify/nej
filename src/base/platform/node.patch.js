@@ -52,22 +52,6 @@ NEJ.define([
             };
         })();
     });
-    // for ie9+
-    NEJ.patch('TR>=5.0',function(){
-        /**
-         * 从DocumentFragment中取指定ID的节点
-         * @param  {Document} 文档对象
-         * @param  {String}   节点标识
-         * @return {Node}     指定标识的节点
-         */
-        _h.__getElementById = function(_fragment,_id){
-            try{
-                return _fragment.querySelector('#'+_id);
-            }catch(e){
-                return null;
-            }
-        };
-    });
     // for ie8-
     NEJ.patch('TR<=4.0',function(){
         /**
