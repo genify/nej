@@ -14,6 +14,7 @@ NEJ.define([
 ],function(NEJ,_g,_u,_v,_h,_p,_o,_f,_r){
     // variables
     var _cspol, // css text pool
+        _empol, // elements without id property, eg. document,window
         _fragment = document.createDocumentFragment(); // node in memory
     // init
     if (!document.head){
@@ -46,6 +47,9 @@ NEJ.define([
         if (!_element) return;
         var _id = !!_element.id ? _element.id
                 : 'auto-id-'+_u._$randString(16);
+        if (!('id' in _element)){
+            _empol[_id] = _element;
+        }
         _element.id = _id;
         return _id;
     };
@@ -72,14 +76,24 @@ NEJ.define([
      * @return {Node}        节点对象
      */
     _p._$get = function(_element){
+        // for document/window
+        var _node = _empol[_element];
+        if (!!_node){
+            return _node;
+        }
+        // node in memory
         var _node = _h.__getElementById(
             _fragment,_element
         );
-        if (!!_node) return _node;
+        if (!!_node){
+            return _node;
+        }
+        // element is node
         if (!_u._$isString(_element)&&
             !_u._$isNumber(_element)){
             return _element;
         }
+        // element is id
         return document.getElementById(_element);
     };
     /**
