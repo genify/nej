@@ -1,512 +1,237 @@
-var f = function(NEJ,_m,_e,_v,_u,_h,_p) {
-	// gecko api patch
-	window.NEJ.patch(_m,'GV',function(){
-		if (SMPT){
-			 // variable declaration
-		    var _  = NEJ.P,
-		        _v = _('nej.v'),
-		        _e = _('nej.e'),
-		        _h = _('nej.h'),
-		        _p = _('nej.p'),
-		        _support = _p._$SUPPORT;
-		}
-	    var _support = _m._$SUPPORT;
-	    /**
-	     * 检查事件信息
-	     * @param  {Node}     _element 节点对象
-	     * @param  {String}   _type    事件类型
-	     * @param  {Function} _event   事件处理函数
-	     * @param  {Boolean}  _capture 是否捕获阶段事件
-	     * @return {Array}             事件列表
-	     */
-	    _h.__checkEvent = (function(){
-	        var _reg0 = /^(?:transitionend|animationend|animationstart|animationiteration)$/i;
-	        return _h.__checkEvent._$aop(function(_event){
-	            var _args = _event.args;
-	            if (_reg0.test(_args[1]||'')){
-	                _event.stopped = !0;
-	                _event.value = _args;
-	            }
-	        });
-	    })();
-	    /**
-	     * 检查事件类型
-	     * @param  {Node}   节点
-	     * @param  {String} 事件类型
-	     * @return {String} 变化后的事件类型
-	     */
-	    _h.__checkEventType = (function(){
-	        var _emap = {
-	            mousewheel:'MozMousePixelScroll',
-	            MozMousePixelScroll:!0
-	        };
-	        return _h.__checkEventType._$aop(
-	            _h.__checkEventTypeWithConf._$bind(_h,_emap)
-	        );
-	    })();
-	    /**
-	     * 检查事件执行函数
-	     * @param  {String}   事件类型
-	     * @param  {Function} 事件执行函数
-	     * @param  {Node}     事件添加节点
-	     * @return {Function} 变化后的事件执行函数
-	     */
-	    _h.__checkEventHandler = (function(){
-	        var _doMouseWheel = function(_id,_handler,_event){
-	            var _element = _e._$get(_id);
-	            if (!!_element){
-	                var _delta = _event.detail;
-	                _event.wheelDelta = -_delta;
-	                _event.wheelDeltaY = -_delta;
-	                _event.wheelDeltaX = 0;
-	                _handler.call(_element,_event);
-	            }
-	        };
-	        return _h.__checkEventHandler._$aop(function(_event){
-	            var _args = _event.args,
-	                _type = _args[0],
-	                _handler = _args[1],
-	                _id = _e._$id(_args[2]);
-	            if (_type=='MozMousePixelScroll'){
-	                _event.stopped = !0;
-	                _event.value = _doMouseWheel._$bind(
-	                    null,_id,_handler
-	                );
-	            }
-	        });
-	    })();
-	});
-
-	// ie6-9 api patch
-	window.NEJ.patch(_m,'2.0<=TR<=5.0',function(){
-		if (CMPT){
-			// variable declaration
-		    var _  = NEJ.P,
-		        _o = NEJ.O,
-		        _p = _('nej.p'),
-		        _e = _('nej.e'),
-		        _v = _('nej.v'),
-		        _u = _('nej.u'),
-		        _h = _('nej.h'),
-		        _omap = {}; // event must use attach/detach method
-		}
-	    var _o = NEJ.O,
-	    	_omap = {};
-	    /**
-	     * 集合转数组
-	     * @param  {Object} _list 集合
-	     * @return {Array}        数组
-	     */
-	    _h.__col2array = 
-	    _h.__col2array._$aop(function(_event){
-	        _event.stopped = !0;
-	        var _list = _event.args[0];
-	        if (!_list){
-	            _event.value = null;
-	            return;
-	        }
-	        var _index = 0,
-	            _result = [];
-	        while(!!_list[_index]){
-	            _result.push(_list[_index++]);
-	        }
-	        _event.value = _result;
-	    });
-	    /**
-	     * 检查事件信息
-	     * @param  {Node}     _element 节点对象
-	     * @param  {String}   _type    事件类型
-	     * @param  {Function} _event   事件处理函数
-	     * @param  {Boolean}  _capture 是否捕获阶段事件
-	     * @return {Array}             事件列表
-	     */
-	    _h.__checkEvent = 
-	    _h.__checkEvent._$aop(null,function(_event){
-	        var _args = _event.value;
-	        if (!_args||!_args[0]||
-	            !_u._$isFunction(_args[2]))
-	            return;
-	        if (!_u._$isFunction(_args[5]))
-	            _args[5] = _args[2];
-	        _args[2] = _args[2]._$bind(_args[0]);
-	    });
-	    /**
-	     * 检查事件类型
-	     * @param  {Node}   节点
-	     * @param  {String} 事件类型
-	     * @return {String} 变化后的事件类型
-	     */
-	    _h.__checkEventType = (function(){
-	        var _emap = {
-	            'input':'propertychange',
-	            'load':'readystatechange'
-	        };
-	        for(var x in _emap) _omap[_emap[x]] = !0;
-	        return _h.__checkEventType._$aop(
-	            _h.__checkEventTypeWithConf._$bind(_h,_emap)
-	        );
-	    })();
-	    /**
-	     * 检查事件执行函数
-	     * @param  {String}   事件类型
-	     * @param  {Function} 事件执行函数
-	     * @param  {Node}     事件添加节点
-	     * @return {Function} 变化后的事件执行函数
-	     */
-	    _h.__checkEventHandler = (function(){
-	        var _lmap = {};
-	        return _h.__checkEventHandler._$aop(function(_evt){
-	            var _args = _evt.args,
-	                _handler = _args[1];
-	            switch(_args[0]){
-	                case 'readystatechange':
-	                    _evt.stopped = !0;
-	                    _evt.value = function(_event){
-	                        var _element = _v._$getElement(_event)||this;
-	                        if (_element.readyState=='loaded'||
-	                            _element.readyState=='complete'){
-	                            _event.target = _element;
-	                            _handler.call(_element,_event);
-	                        }
-	                    };
-	                break;
-	                case 'propertychange':
-	                    _evt.stopped = !0;
-	                    _evt.value = function(_event){
-	                        var _element = _v._$getElement(_event)||this;
-	                        if (('value' in _element)&&
-	                            _event.propertyName=='value'){
-	                            var _id = _e._$id(_element);
-	                            // lock cycle trigger
-	                            if (!!_lmap[_id]){
-	                                return;
-	                            }
-	                            _lmap[_id] = !0;
-	                            _event.target = _element;
-	                            _handler.call(_element,_event);
-	                            delete _lmap[_id];
-	                        }
-	                    };
-	                break;
-	            }
-	        });
-	    })();
-	    
-	    /**
-	     * 添加节点事件
-	     * @param  {Node}     _element 节点对象
-	     * @param  {String}   _type    事件类型
-	     * @param  {Function} _event   事件处理函数
-	     * @param  {Boolean}  _capture 是否捕获阶段事件
-	     * @return {Void}
-	     */
-	    _h.__addEvent = 
-	    _h.__addEvent._$aop(function(_event){
-	        var _args = _event.args;
-	        if (!!_omap[_args[1]]||
-	            !document.addEventListener){
-	            _event.stopped = !0;
-	            _args[0].attachEvent('on'+_args[1],_args[2]);
-	        }
-	    });
-	    /**
-	     * 删除节点事件
-	     * @param  {Node}     _element 节点对象
-	     * @param  {String}   _type    事件类型
-	     * @param  {Function} _event   事件处理函数
-	     * @param  {Boolean}  _capture 是否捕获阶段事件
-	     * @return {Void}
-	     */
-	    _h.__delEvent = 
-	    _h.__delEvent._$aop(function(_event){
-	        var _args = _event.args;
-	        if (!!_omap[_args[1]]||
-	            !document.removeEventListener){
-	            _event.stopped = !0;
-	            _args[0].detachEvent('on'+_args[1],_args[2]);
-	        }
-	    });
-	    /**
-	     * 触发对象的某个事件
-	     * @param  {String|Node} _element 节点ID或者对象
-	     * @param  {String}      _type    鼠标事件类型
-	     * @return {Void}
-	     */
-	    _h.__dispatchEvent = 
-	    _h.__dispatchEvent._$aop(function(_event){
-	        if (!document.createEvent){
-	            _event.stopped = !0;
-	            var _args = _event.args,
-	                _eobj = document.createEventObject();
-	            NEJ.X(_eobj,_args[2]);
-	            try{
-	                _args[0].fireEvent('on'+_args[1],_eobj);
-	            }catch(ex){
-	                // ignore unrecognized event name
-	                console.error(ex.message);
-	                console.error(ex.stack);
-	            }
-	        }
-	    });
-	    /**
-	     * 判断是否需要对Flash事件做代理，
-	     * 主要fix flash上的鼠标事件没法响应到DOM节点上的问题
-	     * @return {Boolean} 是否做代理
-	     */
-	    _h.__canFlashEventBubble = function(_wmode){
-	        return !0;
-	    };
-	});
-
-	// ie9
-	window.NEJ.patch(_m,'TR==5.0',function(){
-		if (CMPT){
-			// variable declaration
-		    var _  = NEJ.P,
-		        _o = NEJ.O,
-		        _p = _('nej.p'),
-		        _e = _('nej.e'),
-		        _v = _('nej.v'),
-		        _u = _('nej.u'),
-		        _h = _('nej.h');
-		}
-		var _o = NEJ.O;
-		_h.__addEvent = (function(){
-	        var _hmap = {},
-	            _kmap = {8:1,46:1},
-	            _cmap = {88:'ctrlKey'};
-	        var _doEventCheck = function(_event){
-	            // for backspace/delete/ctrl+x ...
-	            var _code = _event.keyCode,
-	                _key = _cmap[_code],
-	                _icut = !!_key&&_event[_key];
-	            if (!_kmap[_code]&&!_icut) return;
-	            // check change
-	            var _node = _v._$getElement(_event),
-	                _id = _e._$id(_node),
-	                _key = _id+'-last',
-	                _value = _node.value;
-	            if (_hmap[_key]!=_value){
-	                _hmap[_key] = _value;
-	                _doCallback(_id,_event);
-	            }
-	        };
-	        var _doFocusUpdate = function(_event){
-	            var _node = _v._$getElement(_event),
-	                _key = _e._$id(_node)+'-focused';
-	            _hmap[_key] = _event.type=='focus';
-	        };
-	        var _doValueChange = function(_event){
-	            var _node = _v._$getElement(_event),
-	                _id = _e._$id(_node),
-	                _key = _id+'-focused';
-	            if (!!_hmap[_key]||
-	                _event.propertyName!='value'){
-	                return;
-	            }
-	            _doCallback(_id,_event);
-	        };
-	        var _doCallback = function(_id,_event){
-	            _u._$forEach(
-	                _hmap[_id],function(_handler){
-	                    _handler.call(null,_event);
-	                }
-	            );
-	        };
-	        _h.__delEvent = 
-	        _h.__delEvent._$aop(null,function(_event){
-	            var _args = _event.args;
-	            if (_args[1]=='input'){
-	                var _id = _e._$id(_args[0]),
-	                    _func = _args[2];
-	                _u._$reverseEach(
-	                    _hmap[_id],function(_handler,_index,_list){
-	                        if (_func==_handler){
-	                            _list.splice(_index,1);
-	                            return !0;
-	                        }
-	                    }
-	                );
-	                var _list = _hmap[_id];
-	                if (!_list||!_list.length){
-	                    delete _hmap[_id];
-	                    delete _hmap[_id+'-last'];
-	                    _v._$delEvent(_id,'keyup',_doEventCheck);
-	                    _v._$delEvent(_id,'keydown',_doEventCheck);
-	                    _v._$delEvent(_id,'focus',_doFocusUpdate);
-	                    _v._$delEvent(_id,'blur',_doFocusUpdate);
-	                    _v._$delEvent(_id,'propertychange',_doValueChange);
-	                }
-	            }
-	        });
-	        return _h.__addEvent._$aop(null,function(_event){
-	            var _args = _event.args;
-	            if (_args[1]=='input'){
-	                var _id = _e._$id(_args[0]);
-	                if (!_hmap[_id]){
-	                    _hmap[_id] = [];
-	                }
-	                _hmap[_id].push(_args[2]);
-	                _v._$addEvent(_id,'keyup',_doEventCheck);
-	                _v._$addEvent(_id,'keydown',_doEventCheck);
-	                _v._$addEvent(_id,'focus',_doFocusUpdate);
-	                _v._$addEvent(_id,'blur',_doFocusUpdate);
-	                _v._$addEvent(_id,'propertychange',_doValueChange);
-	            }
-	        });
-	    })();
-	});
-
-	// ie10+ api patch
-	window.NEJ.patch(_m,'TR>=6.0',function(){
-		if (CMPT){
-			var _  = NEJ.P,
-		        _p = _('nej.p'),
-		        _e = _('nej.e'),
-		        _h = _('nej.h');
-		}
-	    /**
-	     * 检查事件类型
-	     * @param  {Node}   节点
-	     * @param  {String} 事件类型
-	     * @return {String} 变化后的事件类型
-	     */
-	    _h.__checkEventType = (function(){
-	        var _emap = {
-	            touchcancel:'MSPointerCancel',
-	            touchstart:'MSPointerDown',
-	            touchmove:'MSPointerMove',
-	            touchend:'MSPointerUp'
-	        };
-	        return _h.__checkEventType._$aop(
-	            _h.__checkEventTypeWithConf._$bind(_h,_emap)
-	        );
-	    })();
-	    /**
-	     * 判断是否需要对Flash事件做代理，
-	     * 主要fix flash上的鼠标事件没法响应到DOM节点上的问题
-	     * @return {Boolean} 是否做代理
-	     */
-	    _h.__canFlashEventBubble = function(_wmode){
-	        return !0;
-	    };
-	});
-	
-	// webkit api patch
-	window.NEJ.patch(_m,'WV',function(){
-		if (CMPT){
-			// variable declaration
-		    var _  = NEJ.P,
-		        _e = _('nej.e'),
-		        _v = _('nej.v'),
-		        _p = _('nej.p'),
-		        _h = _('nej.h');
-		}
-	    
-	    /**
-	     * 检查事件类型
-	     * @param  {Node}   节点
-	     * @param  {String} 事件类型
-	     * @return {String} 变化后的事件类型
-	     */
-	    _h.__checkEventType = (function(){
-	        var _emap = {
-	            mouseenter:'mouseover',
-	            mouseleave:'mouseout'
-	        };
-	        return _h.__checkEventType._$aop(
-	            _h.__checkEventTypeWithConf._$bind(_h,_emap)
-	        );
-	    })();
-	    /**
-	     * 检查事件执行函数
-	     * @param  {String}   事件类型
-	     * @param  {Function} 事件执行函数
-	     * @param  {Node}     事件添加节点
-	     * @return {Function} 变化后的事件执行函数
-	     */
-	    _h.__checkEventHandler = (function(){
-	        var _cache = {};
-	        var _doCheckElement = function(_id,_element){
-	            return _id==_element.id;
-	        };
-	        var _doCheckCache = function(_id,_state,_event){
-	            // clear out delay
-	            var _key = _id+'-timer';
-	            _cache[_key] = window.clearTimeout(
-	                _cache[_key]
-	            );
-	            // check element
-	            var _element = _v._$getElement(
-	                _event,_doCheckElement._$bind(null,_id)
-	            );
-	            if (!_element) return;
-	            _v._$stopBubble(_event);
-	            if (_cache[_id]!=_state){
-	                _cache[_id] = _state;
-	                return _element;
-	            }
-	        };
-	        var _doMouseEnter = function(_id,_handler,_event){
-	            var _element = _doCheckCache(_id,'over',_event);
-	            if (!!_element){
-	                _handler.call(_element,_event);
-	            }
-	        };
-	        var _doMouseLeave = function(_id,_handler,_event){
-	            var _element = _doCheckCache(_id,'out',_event);
-	            if (!!_element){
-	                // delay mouseout event
-	                _cache[_id+'-timer'] = window.setTimeout(
-	                    _doMouseLeaveCheck._$bind(
-	                        null,_id,_handler,
-	                        NEJ.X({},_event)
-	                    ),50
-	                );
-	            }
-	        };
-	        var _doMouseLeaveCheck = function(_id,_handler,_event){
-	            delete _cache[_id+'-timer'];
-	            if (_cache[_id]=='out'){
-	                var _element = _e._$get(_id);
-	                _handler.call(_element,_event);
-	            }
-	        };
-	        return _h.__checkEventHandler._$aop(function(_event){
-	            var _args = _event.args,
-	                _type = _args[0],
-	                _handler = _args[1],
-	                _id = _e._$id(_args[2]);
-	            switch(_type){
-	                case 'mouseover':
-	                    _event.stopped = !0;
-	                    _event.value = _doMouseEnter._$bind(
-	                        null,_id,_handler
-	                    );
-	                break;
-	                case 'mouseout':
-	                    _event.stopped = !0;
-	                    _event.value = _doMouseLeave._$bind(
-	                        null,_id,_handler
-	                    );
-	                break;
-	            }
-	        });
-	    })();
-	    /**
-	     * 判断是否需要对Flash事件做代理，
-	     * 主要fix flash上的鼠标事件没法响应到DOM节点上的问题
-	     * @return {Boolean} 是否做代理
-	     */
-	    _h.__canFlashEventBubble = function(_wmode){
-	        return !0;
-	    };
-	});
-};
-define([
-	'{lib}base/global.js',
-	'{lib}base/platform.js',
-	'{lib}base/element.js',
-	'{lib}base/event.js',
-	'{lib}base/util.js',
-	'./event.js'],f);
+/*
+ * ------------------------------------------
+ * 平台适配接口实现文件
+ * @version  1.0
+ * @author   genify(caijf@corp.netease.com)
+ * ------------------------------------------
+ */
+NEJ.define([
+    './event.js',
+    '{lib}base/util.js'
+],function(_h,_u,_p,_o,_f,_r){
+    // for ie10+
+    NEJ.patch('TR>=6.0',function(){
+        /**
+         * 验证事件信息
+         * @param  {Node}     节点
+         * @param  {String}   事件类型
+         * @param  {Function} 处理函数
+         * @return {Object}   验证后事件信息 type/handler
+         */
+        _h.__checkEvent = (function(){
+            var _emap = {
+                touchcancel:'MSPointerCancel',
+                touchstart:'MSPointerDown',
+                touchmove:'MSPointerMove',
+                touchend:'MSPointerUp'
+            };
+            return _h.__checkEvent._$aop(function(_event){
+                var _args = _event.args;
+                // check event convert
+                var _name = _tmap[_args[1]];
+                if (!!_name){
+                    _event.stopped = !0;
+                    _event.value = {
+                        type:_name,
+                        handler:_args[2]
+                    };
+                }
+            });
+        })();
+    });
+    // for ie9
+    NEJ.patch('TR==5.0',function(){
+        /**
+         * 验证事件信息
+         * @param  {Node}     节点
+         * @param  {String}   事件类型
+         * @param  {Function} 处理函数
+         * @return {Object}   验证后事件信息 type/handler
+         */
+        _h.__checkEvent = (function(){
+            var _vmap = {};
+            var _fmap = {
+                input:function(_element,_type,_handler){
+                    // fix input backspace/delete/ctrl+x bug
+                    return {
+                        type:_type,
+                        handler:function(_event){
+                            var _id = _element.id;
+                            _vmap[_id] = _element.value;
+                            _handler.call(_element,_event);
+                        },
+                        link:[[
+                            document,'selectionchange',
+                            function(_event){
+                                var _id = _element.id;
+                                if (_element!=document.activeElement){
+                                    delete _vmap[_id];
+                                    return;
+                                }
+                                if (_vmap[_id]!==_element.value){
+                                    _vmap[_id] = _element.value;
+                                    _handler.call(_element,_event);
+                                }
+                            }
+                        ]]
+                    };
+                }
+            };
+            return _h.__checkEvent._$aop(function(_event){
+                var _args = _event.args;
+                // check event update
+                var _func = _fmap[_args[1]];
+                if (!!_func){
+                    _event.stopped = !0;
+                    _event.value = _func.apply(null,_args);
+                }
+            });
+        })();
+    });
+    // for ie8-
+    NEJ.patch('TR<=4.0',function(){
+        /**
+         * 验证事件信息
+         * @param  {Node}     节点
+         * @param  {String}   事件类型
+         * @param  {Function} 处理函数
+         * @return {Object}   验证后事件信息 type/handler
+         */
+        _h.__checkEvent = (function(){
+            var _lmap = {};
+            var _fmap = {
+                input:function(_element,_type,_handler){
+                    return {
+                        type:'propertychange',
+                        handler:function(_event){
+                            // for input.value or textarea.value
+                            if (('value' in _element)&&
+                                _event.propertyName=='value'){
+                                var _id = _element.id;
+                                // lock cycle trigger
+                                if (!!_lmap[_id]){
+                                    return;
+                                }
+                                _lmap[_id] = !0;
+                                _handler.call(_element,_event);
+                                delete _lmap[_id];
+                            }
+                        }
+                    };
+                },
+                load:function(_element,_type,_handler){
+                    return {
+                        type:'readystatechange',
+                        handler:function(_event){
+                            if (_element.readyState=='loaded'||
+                                _element.readyState=='complete'){
+                                _handler.call(_element,_event);
+                            }
+                        }
+                    };
+                }
+            };
+            return _h.__checkEvent._$aop(function(_event){
+                var _args = _event.args;
+                // check event update
+                var _func = _fmap[_args[1]];
+                if (!!_func){
+                    _event.stopped = !0;
+                    _event.value = _func.apply(null,_args);
+                }
+            });
+        })();
+        /**
+         * 添加事件
+         * @param  {Node}     节点
+         * @param  {String}   事件
+         * @param  {Function} 处理函数
+         * @param  {Boolean}  是否捕捉阶段
+         * @return {Void}
+         */
+        _h.__addEvent = function(){
+            var _args = arguments;
+            if (DEBUG){
+                if (!(('on'+_args[1]) in _args[0])){
+                    console.log('not support event['+_args[1]+'] for '+_args[0]);
+                }
+            }
+            _args[0].attachEvent('on'+_args[1],_args[2]);
+        };
+        /**
+         * 删除事件
+         * @param  {Node}     节点
+         * @param  {String}   事件
+         * @param  {Function} 处理函数
+         * @param  {Boolean}  是否捕捉阶段
+         * @return {Void}
+         */
+        _h.__delEvent = function(){
+            var _args = arguments;
+            _args[0].detachEvent('on'+_args[1],_args[2]);
+        };
+        /**
+         * 触发对象的某个事件
+         * @param  {String|Node} 节点ID或者对象
+         * @param  {String}      鼠标事件类型
+         * @return {Void}
+         */
+        _h.__dispatchEvent = function(_element,_type,_options){
+            var _event = document.createEventObject();
+            try{
+                _u._$merge(_event,_options);
+                _element.fireEvent('on'+_type,_event);
+            }catch(ex){
+                // ignore unrecognized event name
+                console.error(ex.message);
+                console.error(ex.stack);
+            }
+        };
+    });
+    // for firefox
+    NEJ.patch('GR',function(){
+        /**
+         * 验证事件信息
+         * @param  {Node}     节点
+         * @param  {String}   事件类型
+         * @param  {Function} 处理函数
+         * @return {Object}   验证后事件信息 type/handler
+         */
+        _h.__checkEvent = (function(){
+            var _nreg = /^(?:transitionend|animationend|animationstart|animationiteration)$/i;
+            var _fmap = {
+                mousewheel:function(_element,_type,_handler){
+                    return {
+                        type:'MozMousePixelScroll',
+                        handler:function(_event){
+                            var _delta = _event.detail;
+                            _event.wheelDelta = -_delta;
+                            _event.wheelDeltaY = -_delta;
+                            _event.wheelDeltaX = 0;
+                            _handler.call(_element,_event);
+                        }
+                    };
+                }
+            };
+            return _h.__checkEvent._$aop(function(_event){
+                var _args = _event.args;
+                // check animation event
+                if (_nreg.test(_args[1])){
+                    _event.stopped = !0;
+                    _event.value = {
+                        type:_args[1],
+                        handler:_args[2]
+                    };
+                }
+                // check event update
+                var _func = _fmap[_args[1]];
+                if (!!_func){
+                    _event.stopped = !0;
+                    _event.value = _func.apply(null,_args);
+                }
+            });
+        })();
+    });
+    
+    return _h;
+});

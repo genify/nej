@@ -1251,6 +1251,53 @@ NEJ.define([
         }
         return _object;
     };
+    /**
+     * 判断对象自生是否包含属性
+     * 
+     * 脚本举例
+     * [code]
+     *   NEJ.define([
+     *       '{lib}base/util.js'
+     *   ],function(_p){
+     *       // 判断空对象是否有属性
+     *       // 输出 false
+     *       var _has = _p._$hasProperty({});
+     *       
+     *       // 判断非空对象是否有属性
+     *       // 输出 true
+     *       var _has = _p._$hasProperty({a:'a',b:'b',c:'c'});
+     *       
+     *       // 判断空数组是否有属性
+     *       // 输出 false
+     *       var _has = _p._$hasProperty([]);
+     *       
+     *       // 判断非空数组是否有属性
+     *       // 输出 true
+     *       var _has = _p._$hasProperty([1,2,3]);
+     *   });
+     * [/code]
+     * 
+     * @api    {_$hasProperty}
+     * @param  {Object|Array} 对象
+     * @return {Boolean}      是否包含属性
+     */
+    _p._$hasProperty = function(_obj){
+        // for null
+        if (!_obj){
+            return !1;
+        }
+        // for object with length
+        if (_obj.length!=null){
+            return _obj.length>0;
+        }
+        // for object
+        var _length = 0;
+        _p._$forIn(_obj,function(){
+            _length++;
+            return _length>0;
+        });
+        return _length>0;
+    };
     
     if (CMPT){
         NEJ.Q  = _p._$query;

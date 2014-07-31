@@ -989,6 +989,7 @@
         document.writeln(_arr.join(''));
     };
     // init
-    p.CMPT = true;
+    p.CMPT = !0;
+    p.DEBUG = !0;
     _doInit();
 })(document,window);

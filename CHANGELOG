@@ -18,6 +18,8 @@ define.js
 - 交换_$getMaxBox接口输入参数顺序
 - 修改_$dom2object第二个参数为非必传参数
 
+{lib}base/event.js
+- 删除接口_$stopClick
 
 
 
