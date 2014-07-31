@@ -137,7 +137,7 @@ NEJ.define([
                         // add event
                         _h.__addEvent(
                             _args.element,_argc.type,
-                            _argc.handler,args.capture
+                            _argc.handler,_args.capture
                         );
                         // add event link
                         _u._$forIn(
