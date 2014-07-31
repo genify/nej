@@ -27,7 +27,7 @@ var f = function(){
      * @type String
      */
     _p._$$UploadImage.command = 'uploadImage';
-    
+
     /**
      * 初始化方法
      * @protected
@@ -37,7 +37,7 @@ var f = function(){
     _proUploadImage.__init = function(){
         this.__supInit();
     };
-    
+
     /**
      * 显示卡片，一般子类重写
      * @protected
@@ -59,7 +59,7 @@ var f = function(){
             });
         this.__uploadCard._$show();
     };
-    
+
     /**
      * 卡片内容变化回调，子类实现具体业务逻辑
      * @protected
@@ -69,7 +69,7 @@ var f = function(){
      * @return {Void}
      */
     _proUploadImage.__onChange = function(_commend,_photoObj){
-        this.__editor._$focus();
+        this.__editor._$focus(2);
         var _id = 0,_url;
         if(!!_photoObj.ourl && _photoObj.ourl.indexOf('.gif') > 0){
             //gif图片
@@ -94,7 +94,7 @@ var f = function(){
         var _html = '<img style="max-width:520px;" src=' + _url + ' id='+ _id +' />';
         this.__editor._$execCommand(_commend,_html);
     };
-    
+
     // regist command implemention
     _p._$$UploadImage._$regist();
 };

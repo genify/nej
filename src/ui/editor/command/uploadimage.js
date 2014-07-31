@@ -41,25 +41,25 @@ var f = function(){
      * @config  {String}      stamptype      水印类型，默认无
      * @config  {String}      stampstring    水印内容，默认无
      * @config  {String}      sitefrom         产品名称
-     * 
+     *
      * [hr]
-     * 
+     *
      * @event  {oninitflash} Flash开始初始化
-     * 
+     *
      * [hr]
-     * 
+     *
      * @event  {onflashinited} Flash初始化完成
-     * 
+     *
      * [hr]
-     * 
+     *
      * @event  {onchange} 图片上传完成
      * @param  {String}   命令名称
      * @param  {Object}   Flash返回的图片对象
-     * 
+     *
      */
     _p._$$UploadImageCard = NEJ.C();
     _pro = _p._$$UploadImageCard._$extend(_u._$$WindowWrapper);
-    
+
     /**
      * 重置卡片
      * @protected
@@ -77,7 +77,7 @@ var f = function(){
         this.__supReset(_options);
         this.__onShowErrorTips('');
     };
-    
+
     /**
      * 初始化卡片
      * @protected
@@ -117,7 +117,7 @@ var f = function(){
         };
         _e._$flash(this.__hopt);
     };
-    
+
     /**
      * 初始化节点
      * @protected
@@ -165,7 +165,7 @@ var f = function(){
      * 注册flash回调方法
      * @protected
      * @method {__doRegiestFlashEvent}
-     * @param  {String} Flash回调方法的命名空间 
+     * @param  {String} Flash回调方法的命名空间
      * @return {Void}
      */
     _pro.__doRegiestFlashEvent = function(_space){
@@ -176,7 +176,7 @@ var f = function(){
         _namespace.uploadError = this.__uploadError._$bind(this);
         _namespace.showProgress = this.__showProgress._$bind(this);
     };
-    
+
     /**
      * 图片上传完成的回调
      * @protected
@@ -196,7 +196,7 @@ var f = function(){
             this._$hide();
         }
     };
-    
+
     /**
      * 上传图片出错信息设置
      * @protected
@@ -207,7 +207,7 @@ var f = function(){
     _pro.__onShowErrorTips = function(_message){
         this.__nerrorMsg.innerText = _message;
     };
-    
+
     /**
      * 开始图片上传
      * @protected
@@ -217,7 +217,7 @@ var f = function(){
     _pro.__onUploadStart = function(){
         this.__onbeforeupload();
     };
-    
+
     /**
      * flash加载完成回调
      * @protected
@@ -229,7 +229,7 @@ var f = function(){
         this.__flashObj = _flash;
         this._$dispatchEvent('onflashinited');
     };
-    
+
     /**
      * 提交网络图片
      * @protected
@@ -239,7 +239,7 @@ var f = function(){
     _pro.__onSubmitImgUrl = function(){
         this.__nimgBox.src = this.__nimgUrl.value.trim();
     };
-    
+
     /**
      * 图片链接错误
      * @protected
@@ -247,9 +247,11 @@ var f = function(){
      * @return {Void}
      */
     _pro.__onImgUrlError = function(){
-        this.__nerrorMsg.innerText = '无法获取链接中的图片，请检查链接或稍后重试';
+        if (this.__nimgBox.src != 'htpp://false'){
+            this.__nerrorMsg.innerText = '无法获取链接中的图片，请检查链接或稍后重试';
+        }
     };
-    
+
     /**
      * 图片链接正确
      * @protected
@@ -261,9 +263,10 @@ var f = function(){
             resultcode:999,
             userDef2Url:this.__nimgUrl.value
         };
+        this.__nimgBox.src = 'htpp://false';
         this.__onUploadComplete('webimg',_photoObj.resultcode,_photoObj);
     };
-    
+
     /**
      * 图片上传前操作，子类实现
      * @protected
@@ -271,7 +274,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__onbeforeupload = _f;
-    
+
     /**
      * 图片上传后操作，子类实现
      * @protected
@@ -279,7 +282,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__onafterupload = _f;
-    
+
     /**
      * 图片上传错误，子类实现
      * @protected
@@ -287,7 +290,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__uploadError = _f;
-    
+
     /**
      * 图片上传进程回调，子类实现
      * @protected
@@ -295,7 +298,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__showProgress = _f;
-    
+
     /**
      * 切换tab
      * @protected
