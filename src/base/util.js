@@ -27,7 +27,7 @@ NEJ.define([
     };
     /**
      * 判断是否函数类型<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -39,7 +39,7 @@ NEJ.define([
      *       var _is = _p._$isFunction(fucntion(){});
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$isFunction}
      * @param  {Variable} 数据
      * @return {Boolean}  是否函数类型
@@ -49,7 +49,7 @@ NEJ.define([
     };
     /**
      * 判断是否字符串<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -61,7 +61,7 @@ NEJ.define([
      *       var _is = _p._$isString("123");
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$isString}
      * @param  {Variable} 数据
      * @return {Boolean}  是否字符串
@@ -71,7 +71,7 @@ NEJ.define([
     };
     /**
      * 判断是否数字<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -85,7 +85,7 @@ NEJ.define([
      *       var _is = _p._$isNumber(Number.MAX_VALUE);
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$isNumber}
      * @param  {Variable} 数据
      * @return {Boolean}  是否数值
@@ -95,7 +95,7 @@ NEJ.define([
     };
     /**
      * 判断是否布尔值<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -107,7 +107,7 @@ NEJ.define([
      *       var _is = _p._$isBoolean(false);
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$isBoolean}
      * @param  {Variable} 数据
      * @return {Boolean}  是否布尔值
@@ -117,7 +117,7 @@ NEJ.define([
     };
     /**
      * 判断是否日期<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -129,7 +129,7 @@ NEJ.define([
      *       var _is = _p._$isDate(new Date());
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$isDate}
      * @param  {Variable} 数据
      * @return {Boolean}  是否日期
@@ -139,7 +139,7 @@ NEJ.define([
     };
     /**
      * 判断是否数组<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -151,7 +151,7 @@ NEJ.define([
      *       var _is = _p._$isArray([1,2]);
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$isArray}
      * @param  {Variable} 数据
      * @return {Boolean}  是否数组
@@ -161,7 +161,7 @@ NEJ.define([
     };
     /**
      * 判断是否对象<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -174,7 +174,7 @@ NEJ.define([
      *       var _is = _p._$isObject({a:"a"});
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$isObject}
      * @param  {Variable} 数据
      * @return {Boolean}  是否对象
@@ -184,7 +184,7 @@ NEJ.define([
     };
     /**
      * 计算字符串长度，中文算两个字符<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -194,7 +194,7 @@ NEJ.define([
      *       var _len = _p._$length('你i他');
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$length}
      * @param  {String} 字符串
      * @return {Number} 字符串长度
@@ -207,7 +207,7 @@ NEJ.define([
     })();
     /**
      * 线性查找指定项<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -225,7 +225,7 @@ NEJ.define([
      *       });
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$indexOf}
      * @param  {Array}    待搜索列表
      * @param  {Variable} 指定项，如果为function则表示过滤接口
@@ -239,7 +239,7 @@ NEJ.define([
     };
     /**
      * 二分法查找指定项<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -252,7 +252,7 @@ NEJ.define([
      *       });
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$binSearch}
      * @param  {Array}    待查找列表
      * @param  {Function} 验证函数
@@ -284,7 +284,7 @@ NEJ.define([
     })();
     /**
      * 逆序遍历列表，支持中断<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -300,7 +300,7 @@ NEJ.define([
      *       });
      *   });
      * [/code]
-     * 
+     *
      * @see    {#_$forEach}
      * @api    {_$reverseEach}
      * @param  {Array}     列表
@@ -326,7 +326,7 @@ NEJ.define([
     };
     /**
      * 正序遍历列表，不支持中断<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -338,7 +338,7 @@ NEJ.define([
      *       });
      *   });
      * [/code]
-     * 
+     *
      * @see    {#_$reverseEach}
      * @api    {_$forEach}
      * @param  {Array}     列表
@@ -360,7 +360,7 @@ NEJ.define([
     };
     /**
      * 遍历列表或对象，支持中断退出<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -371,7 +371,7 @@ NEJ.define([
      *       var _index = _p._$forIn(_list,function(_item){
      *           return _item.id==2;
      *       });
-     * 
+     *
      *       // 从对象里查找id为2的元素，如果有返回KEY，没有返回null
      *       var _obj = {a:{id:1,name:'a'},b:{id:2,name:'b'},...};
      *       var _key = _p._$forIn(_obj,function(_item){
@@ -379,7 +379,7 @@ NEJ.define([
      *       });
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$forIn}
      * @param  {Object|Array}  列表或者对象
      * @param  {Function}      回调函数，如果返回结果为true，则中断后续递归返回当前索引或者标识
@@ -414,7 +414,7 @@ NEJ.define([
      * 编码字符串，
      * 编码规则对象中r正则表达式参数提取字符串需要编码的内容，
      * 然后使用编码规则对象中的映射表进行替换<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -424,14 +424,14 @@ NEJ.define([
      *       var _str = _p._$encode({r:/\d/g,'9':'t'},'99999');
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$encode}
      * @param  {Object}  编码规则
      * @param  {String}  待编码的字串
      * @return {String}  编码后的字串
      */
     _p._$encode = function(_map,_content){
-        if (!_map||!_content||!_content.replace) 
+        if (!_map||!_content||!_content.replace)
             return _content||'';
         return _content.replace(_map.r,function($1){
                    var _result = _map[!_map.i?$1.toLowerCase():$1];
@@ -440,7 +440,7 @@ NEJ.define([
     };
     /**
      * 编码html代码，'<' -> '&lt;'<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -450,7 +450,7 @@ NEJ.define([
      *       var _str = _p._$escape('<a>util</a>&');
      *   });
      * [/code]
-     * 
+     *
      * @see    {#_$unescape}
      * @api    {_$escape}
      * @param  {String}  待编码串
@@ -470,7 +470,7 @@ NEJ.define([
     })();
     /**
      * 反编码html代码，'&lt;' -> '<' <br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -480,7 +480,7 @@ NEJ.define([
      *       var _str = _p._$unescape('&lt;&amp;a&gt;util&lt;/a&gt;');
      *   });
      * [/code]
-     * 
+     *
      * @see    {#_$escape}
      * @api    {_$unescape}
      * @param  {String}  待编码串
@@ -498,7 +498,7 @@ NEJ.define([
     })();
     /**
      * 格式化时间，yyyy|yy|MM|cM|eM|M|dd|d|HH|H|mm|ms|ss|m|s|w<br/>
-     * 
+     *
      * 各标识说明：
      * [ntb]
      *   标识         |  名称
@@ -522,7 +522,7 @@ NEJ.define([
      *   cM    |  中文月份，如三
      *   eM    |  英文月份，如Mar
      * [/ntb]
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -532,7 +532,7 @@ NEJ.define([
      *       var _str = _p._$format(new Date(),'yyyy-MM-dd');
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$format}
      * @param  {Number|String|Date}  时间
      * @param  {String}              格式
@@ -553,7 +553,7 @@ NEJ.define([
             return _hour<12?0:1;
         };
         return function(_time,_format,_12time){
-            if (!_time||!_format) 
+            if (!_time||!_format)
                 return '';
             _time = _p._$var2date(_time);
             _map.yyyy = _time.getFullYear();
@@ -584,7 +584,7 @@ NEJ.define([
     /**
      * 日期字符串转日期对象<br/>
      * 字符串日期格式同ECMA规范定义：YYYY-MM-DDTHH:mm:ss.sssZ<br/>
-     * 
+     *
      * [ntb]
      *   YYYY | the decimal digits of the year 0000 to 9999 in the Gregorian calendar
      *   -    | appears literally twice  in the string
@@ -599,7 +599,7 @@ NEJ.define([
      *   sss  | the number of complete milliseconds since the start of the second as three decimal digits
      *   Z    | the time zone offset specified as ― Z(for UTC) or either + or - followed by  a time expression HH:mm
      * [/ntb]
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -607,15 +607,15 @@ NEJ.define([
      *   ],function(_p){
      *       // 输入YYYY-MM-DDTHH:mm:ss.sssZ格式字符串，生成日期对象
      *       var _date = _p._$var2date('2013-07-29T13:12:45.300');
-     * 
+     *
      *       // 输入YYYY-MM-DDTHH:mm:ss格式字符串，生成日期对象
      *       var _date = _p._$var2date('2013-07-29T13:12:45');
-     * 
+     *
      *       // 输入YYYY-MM-DD格式字符串，生成日期对象
      *       var _date = _p._$var2date('2013-07-29');
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$var2date}
      * @param  {String} 日期串
      * @return {Date}   日期对象
@@ -634,7 +634,7 @@ NEJ.define([
     };
     /**
      * 浮点数值保留指定位数小数点<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -644,7 +644,7 @@ NEJ.define([
      *       var _value = _p._$fixed(3.14159,2);
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$fixed}
      * @param  {Float}  浮点数
      * @param  {Number} 小数位
@@ -655,7 +655,7 @@ NEJ.define([
     };
     /**
      * 相对路径转绝对路径<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -666,7 +666,7 @@ NEJ.define([
      *       var _url = _p._$absolute("../a/b.html",_root);
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$absolute}
      * @param  {String}  相对路径
      * @param  {String}  绝对路径ROOT，必须以http://开始，默认为location目录
@@ -711,7 +711,7 @@ NEJ.define([
      * 从URL地址中提取源信息<br/>
      * http://a.b.com:8080/a/b/ -> http://a.b.com:8080<br/>
      * /a/b -> <br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -722,7 +722,7 @@ NEJ.define([
      *       var _origin = _p._$url2origin("http://a.b.com:8080/a/b/");
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$url2origin}
      * @param  {String} URL地址
      * @return {String} 源信息
@@ -737,7 +737,7 @@ NEJ.define([
     })();
     /**
      * key-value字符串转对象<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -748,7 +748,7 @@ NEJ.define([
      *       var _obj = _p._$string2object(_str,",");
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$string2object}
      * @param  {String}         待处理数据
      * @param  {String|RegExp}  分隔符
@@ -763,7 +763,7 @@ NEJ.define([
                 if (!_brr||!_brr.length) return;
                 var _key = _brr.shift();
                 if (!_key) return;
-                _obj[decodeURIComponent(_key)] = 
+                _obj[decodeURIComponent(_key)] =
                      decodeURIComponent(_brr.join('='));
             }
         );
@@ -772,7 +772,7 @@ NEJ.define([
     /**
      * key-value对象转成key=value对后用分隔符join，
      * 对象中不同类型的取值规则如下：<br/>
-     * 
+     *
      * [ntb]
      *   类型            |  取值规则
      *   ------------------------
@@ -781,20 +781,20 @@ NEJ.define([
      *   Array     |  值用逗号分隔，如[1,2,3] -> 1,2,3
      *   Object    |  使用JSON转成字符串
      * [/ntb]
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
      *       '{lib}base/util.js'
      *   ],function(_p){
-     *     
+     *
      *       // 返回字符串 abc=abc,123=123
      *       var _obj = {
      *           abc:"abc",
      *           123:"123"
      *       };
      *       var _str = _p._$object2string(_obj);
-     * 
+     *
      *       // 返回字符串
      *       // a=1871406603152186&b=1,2,3&d={"a":"a","b":"b"}&e=e&f=1&g=true
      *       var _obj = {
@@ -809,7 +809,7 @@ NEJ.define([
      *       var _str = _p._$object2string(_obj,'&');
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$object2string}
      * @param  {Object}  对象
      * @param  {String}  分隔符，默认为逗号
@@ -841,7 +841,7 @@ NEJ.define([
     };
     /**
      * 查询串转对象<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -851,7 +851,7 @@ NEJ.define([
      *       var _obj = _p._$query2object("abc=abc&123=123");
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$query2object}
      * @param  {String}  查询串
      * @return {Object}  对象
@@ -861,7 +861,7 @@ NEJ.define([
     };
     /**
      * 对象转查询串<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -871,7 +871,7 @@ NEJ.define([
      *       var _query = _p._$object2query({abc:"abc",123:"123"});
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$object2query}
      * @param  {Object}  对象
      * @return {String}  查询串
@@ -881,7 +881,7 @@ NEJ.define([
     };
     /**
      * 集合转数组，集合具有length属性<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -890,7 +890,7 @@ NEJ.define([
      *       var _map = {0:'0',1:'1',2:'2',length:3};
      *       // 返回数组['1','2','3']
      *       var _arr = _p._$object2array(_map);
-     *       
+     *
      *       // 多用于对节点集合的转换
      *       var _nodes = document.body.childNodes;
      *       var _arr = _p._$object2array(_nodes);
@@ -906,7 +906,7 @@ NEJ.define([
     };
     /**
      * 数组转对象，将列表中元素按照指定KEY组成对象<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -924,14 +924,14 @@ NEJ.define([
      *               return _item.id;
      *           }
      *       );
-     *       
+     *
      *       // 默认使用每项的值组对象
      *       var _brr = ['a','b','c',...];
      *       // 输出 {a:'a',b:'b',c:'c',...}
      *       var _obj = _p._$array2object(_brr);
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$array2object}
      * @param  {Array}    列表
      * @param  {Function} 过滤函数，返回每一项的KEY，没有返回则过滤当前项
@@ -954,7 +954,7 @@ NEJ.define([
     };
     /**
      * 格式化数字为指定位数，不足位数前面用0补足<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -967,7 +967,7 @@ NEJ.define([
      *       var _str = _p._$number2string(2,3);
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$number2string}
      * @param  {Number} 数值
      * @param  {Number} 位数，至少1位
@@ -985,7 +985,7 @@ NEJ.define([
     /**
      * 安全删除属性，
      * 部分浏览器（如低版本IE）禁止直接delete节点上的属性<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -994,14 +994,14 @@ NEJ.define([
      *       // 节点上保存的数据
      *       _node.data = {a:'aaaaa',b:'bbbbb'};
      *       _node.test = 'aaaaa';
-     *       
+     *
      *       // 删除单个属性
      *       _p._$safeDelete(_node,'test');
      *       // 批量删除
      *       _p._$safeDelete(_node,['test','data']);
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$safeDelete}
      * @param  {Object}       对象
      * @param  {String|Array} 属性
@@ -1025,7 +1025,7 @@ NEJ.define([
     };
     /**
      * 随机一个字符串<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -1035,7 +1035,7 @@ NEJ.define([
      *       _p._$randString(9);
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$randString}
      * @param  {String}  字符串长度
      * @return {String}  随机字符串
@@ -1054,7 +1054,7 @@ NEJ.define([
     })();
     /**
      * 随机生成一个给定范围的整数<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -1064,7 +1064,7 @@ NEJ.define([
      *       _p._$randNumber(0,9);
      *   });
      * [/code]
-     * 
+     *
      * @see    {#_$randNumberString}
      * @api    {_$randNumber}
      * @param  {Number}  小区间，包含
@@ -1076,7 +1076,7 @@ NEJ.define([
     };
     /**
      * 随机生成一个全部为数字的字符串<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -1086,7 +1086,7 @@ NEJ.define([
      *       _p._$randNumberString(9);
      *   });
      * [/code]
-     * 
+     *
      * @see    {#_$randNumber}
      * @api    {_$randNumberString}
      * @param  {Number}  随机字符串的长度[1,30]
@@ -1099,7 +1099,7 @@ NEJ.define([
     };
     /**
      * 生成系统中的唯一标识，每次调用均生成一个新的标识<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -1111,7 +1111,7 @@ NEJ.define([
      *      // _id1 != _id2
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$uniqueID}
      * @return {String} 唯一标识
      */
@@ -1123,7 +1123,7 @@ NEJ.define([
     })();
     /**
      * 读取上下文中指定名字空间的值<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -1144,7 +1144,7 @@ NEJ.define([
      *       var _value = _p._$query(null,'a.b.c.d');
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$query}
      * @param  {Object}   上下文
      * @param  {String}   名字空间
@@ -1163,7 +1163,7 @@ NEJ.define([
      * 合并数据，同名属性右侧覆盖左侧，
      * 最后一个如果是函数则用做数据过滤，
      * 第一个参数作为合并数据结果集对象，如果为空则新建对象<br/>
-     *  
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -1175,7 +1175,7 @@ NEJ.define([
      *           _obj2 = {c:"c",d:"d",e:"f"},
      *           ... ;
      *       var _obj = _p._$merge(_obj0,_obj1,_obj2,...);
-     * 
+     *
      *       // 带过滤接口合并
      *       // 阻止a属性的覆盖
      *       var _obj = _p._$merge(
@@ -1186,7 +1186,7 @@ NEJ.define([
      *       );
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$merge}
      * @param  {Object}   原始对象
      * @param  {Object}   待拷贝对象
@@ -1211,7 +1211,7 @@ NEJ.define([
         var _result = arguments[0]||{};
         // merge
         for(var i=1;i<=_last;i++){
-            _u._$forIn(arguments[i],function(v,k){
+            _p._$forIn(arguments[i],function(v,k){
                 if (!_filter(v,k)){
                     _result[k] = v;
                 }
@@ -1221,7 +1221,7 @@ NEJ.define([
     };
     /**
      * 根据原始对象属性，从目标对象提取非空值<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -1234,7 +1234,7 @@ NEJ.define([
      *       var _obj = _p._$fetch(_obj0,_obj1);
      *   });
      * [/code]
-     * 
+     *
      * @api    {_$fetch}
      * @param  {Object} 原始对象
      * @param  {Object} 目标对象
@@ -1304,10 +1304,7 @@ NEJ.define([
         NEJ.X  = _p._$merge;
         NEJ.EX = _p._$fetch;
         this.copy(NEJ.P('nej.u'),_p);
-        NEJ.Q  = _p._$query;
-        NEJ.X  = _p._$merge;
-        NEJ.EX = _p._$fetch;
     }
-    
-    return _p;    
+
+    return _p;
 });
