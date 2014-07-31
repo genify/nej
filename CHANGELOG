@@ -21,5 +21,14 @@ define.js
 {lib}base/event.js
 - 删除接口_$stopClick
 
+{lib}util/event.js
+- 删除_$addEvent接口
+- 删除_$api接口
+
+
+
+
+
+
 
 
