@@ -247,7 +247,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__onImgUrlError = function(){
-        if (this.__nimgBox.src != 'htpp://false'){
+        if (this.__nimgBox.src.indexOf('htpp://false')>0){
             this.__nerrorMsg.innerText = '无法获取链接中的图片，请检查链接或稍后重试';
         }
     };
