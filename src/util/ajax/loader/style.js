@@ -5,29 +5,29 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    // variable declaration
-    var _  = NEJ.P,
-        _e = _('nej.e'),
-        _p = _('nej.ut.j'),
-        _proStyleLoader;
-    if (!!_p._$$StyleLoader) return;
+NEJ.define([
+    './loader.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js'
+],function(_t,_k,_e,_p,_o,_f,_r){
+    var _pro;
     /**
      * 样式加载器
-     * @class   {nej.ut.j._$$StyleLoader} 样式加载器
-     * @extends {nej.ut._$$Loader}
-     * @param   {Object} 可选配置参数，已处理的参数列表如下所示
      * 
+     * @class   {_$$StyleLoader}
+     * @extends {_$$Loader}
+     * 
+     * @param   {Object} 可选配置参数，已处理的参数列表如下所示
      */
-    _p._$$StyleLoader = NEJ.C();
-      _proStyleLoader = _p._$$StyleLoader._$extend(_p._$$Loader);
+    _p._$$StyleLoader = _k._$klass();
+    _pro = _p._$$StyleLoader._$extend(_t._$$Loader);
     /**
      * 取资源载入控件
      * @protected
      * @method {__getRequest}
      * @return {Link} 控件
      */
-    _proStyleLoader.__getRequest = function(){
+    _pro.__getRequest = function(){
         return _e._$create('link');
     };
     /**
@@ -37,10 +37,10 @@ var f = function(){
      * @param  {Script} 控件
      * @return {Void}
      */
-    _proStyleLoader.__doRequest = function(_request){
+    _pro.__doRequest = function(_request){
         _request.href = this.__url;
         document.head.appendChild(_request);
     };
-};
-NEJ.define('{lib}util/ajax/loader/style.js',
-      ['{lib}util/ajax/loader/loader.js'],f);
+    
+    return _p;
+});

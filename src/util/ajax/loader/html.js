@@ -5,34 +5,30 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(NEJ,_h,_eh,_l,_p){
-    if (CMPT){
-         // variable declaration
-        var _  = NEJ.P,
-            _o = NEJ.O,
-            _e = _('nej.e'),
-            _h = _('nej.h'),
-            _p = _('nej.ut.j'),
-            _proHtmlLoader;
-        if (!!_p._$$HtmlLoader) return;
-    }
-    var _proHtmlLoader;
+NEJ.define([
+    './loader.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{platform}html.js'
+],function(_t,_k,_e,_h,_p,_o,_f,_r){
+    var _pro;
     /**
      * HTML资源加载器
-     * @class   {nej.ut.j._$$HtmlLoader} HTML资源加载器
-     * @extends {nej.ut._$$Loader}
-     * @param   {Object} 可选配置参数，已处理的参数列表如下所示
      * 
+     * @class   {_$$HtmlLoader}
+     * @extends {_$$Loader}
+     * 
+     * @param   {Object} 可选配置参数，已处理的参数列表如下所示
      */
-    _p._$$HtmlLoader = NEJ.C(); 
-    _proHtmlLoader = _p._$$HtmlLoader._$extend(_l._$$Loader);
+    _p._$$HtmlLoader = _k._$klass(); 
+    _pro = _p._$$HtmlLoader._$extend(_t._$$Loader);
     /**
      * 取资源载入控件
      * @protected
      * @method {__getRequest}
      * @return {Link} 控件
      */
-    _proHtmlLoader.__getRequest = function(){
+    _pro.__getRequest = function(){
         var _iframe = _e._$create('iframe');
         _iframe.width = 0;
         _iframe.height = 0;
@@ -46,7 +42,8 @@ var f = function(NEJ,_h,_eh,_l,_p){
      * @param  {Script} 控件
      * @return {Void}
      */
-    _proHtmlLoader.__doRequest = function(_request){
+    _pro.__doRequest = function(_request){
+        // append first for history bug
         document.body.appendChild(_request);
         _request.src = this.__url;
     };
@@ -57,9 +54,10 @@ var f = function(NEJ,_h,_eh,_l,_p){
      * @param  {Object} 错误信息
      * @return {Void}
      */
-    _proHtmlLoader.__onError = function(_error){
-        var _iframe = (this.__getLoadData
-                      (this.__url)||_o).request;
+    _pro.__onError = function(_error){
+        var _iframe = (
+            this.__getLoadData(this.__url)||_o
+        ).request;
         this.__doCallback('onerror',_error);
         _h.__removeIFrameKeepHistory(_iframe);
     };
@@ -69,7 +67,7 @@ var f = function(NEJ,_h,_eh,_l,_p){
      * @method {__onLoaded}
      * @return {Void}
      */
-    _proHtmlLoader.__onLoaded = function(){
+    _pro.__onLoaded = function(){
         var _body = null,
             _iframe = (this.__getLoadData(this.__url)||_o).request;
         if (_iframe.src!=this.__url) return;
@@ -79,8 +77,4 @@ var f = function(NEJ,_h,_eh,_l,_p){
     };
 
     return _p;
-};
-NEJ.define('{lib}util/ajax/loader/html.js',
-          ['{lib}base/global.js',
-           '{platform}html.js',
-           '{lib}util/ajax/loader/loader.js'],f);
+});

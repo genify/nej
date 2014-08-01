@@ -5,28 +5,21 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(NEJ,_g,_v,_u,_t,_p){
-    if (CMPT){
-        // variable declaration
-        var _  = NEJ.P,
-            _f = NEJ.F,
-            _g = _('nej.g'),
-            _v = _('nej.v'),
-            _u = _('nej.u'),
-            _t = _('nej.ut'),
-            _p = _('nej.ut.j'),
-            _pro,
-            _timeout = 60000; // default timeout
-        if (!!_p._$$Loader) return;
-    }
-    var _f = NEJ.F,
-        _timeout = 60000,
-        _pro;
-
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/constant.js',
+    '{lib}base/event.js',
+    '{lib}base/util.js',
+    '{lib}util/event.js'
+],function(NEJ,_k,_g,_v,_u,_t,_p,_o,_f,_r){
+    var _pro,
+        _timeout = 60000;
     /**
      * 资源加载器
-     * @class   {nej.ut.j._$$Loader} 资源加载器
-     * @extends {nej.ut._$$Event}
+     * 
+     * @class   {_$$Loader} 资源加载器
+     * @extends {_$$Event}
      * @param   {Object} 可选配置参数，已处理的参数列表如下所示
      * @config  {String} version 版本信息
      * @config  {Number} timeout 超时时间，0表示禁止超时监测
@@ -43,10 +36,9 @@ var f = function(NEJ,_g,_v,_u,_t,_p){
      * [hr]
      * 资源加载中回调
      * @event  {onloading} 
-     * 
      */
-    _p._$$Loader = NEJ.C();
-      _pro = _p._$$Loader._$extend(_t._$$Event);
+    _p._$$Loader = _k._$klass();
+    _pro = _p._$$Loader._$extend(_t._$$Event);
     /**
      * 控件初始化
      * @protected
@@ -54,13 +46,16 @@ var f = function(NEJ,_g,_v,_u,_t,_p){
      * @return {Void}
      */
     _pro.__init = function(){
-        this.__supInit();
-        this.__qopt = {onerror:this.__onQueueError._$bind(this),
-                       onloaded:this.__onQueueLoaded._$bind(this)};
-        if (!this.constructor.__cache)
-             // url : {request:script,timer:2,bind:[instance1,instance2 ... ]}
-             // key : {error:0,loaded:0,total:0,bind:[instance1,instance2 ... ]}
-             this.constructor.__cache = {loaded:{}};
+        this.__super();
+        this.__qopt = {
+            onerror:this.__onQueueError._$bind(this),
+            onloaded:this.__onQueueLoaded._$bind(this)
+        };
+        if (!this.constructor.__cache){
+            // url : {request:script,timer:2,bind:[instance1,instance2 ... ]}
+            // key : {error:0,loaded:0,total:0,bind:[instance1,instance2 ... ]}
+            this.constructor.__cache = {loaded:{}};
+        }
     };
     /**
      * 控件重置
@@ -70,7 +65,7 @@ var f = function(NEJ,_g,_v,_u,_t,_p){
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         this.__version = _options.version;
         this.__timeout = _options.timeout;
         this.__qopt.version = this.__version;
@@ -245,37 +240,49 @@ var f = function(NEJ,_g,_v,_u,_t,_p){
     };
     /**
      * 载入资源<br/>
+     * 
      * 脚本举例
      * [code]
-     *   var _p = NEJ.P('nej.ut.j');
-     *   // 载入指定html,10秒超时
-     *   var _loader = _p._$$HtmlLoader._$allocate({timeout:10000,
-     *       onloaded:function(){
-     *           // 载入资源成功的回调
-     *       }
-     *   });
-     *   // 绝对路径或者当前页面的相对路径
-     *   _loader._$load('../../../html/util/formTest.html');
-     *   // 载入指定script,20秒超时
-     *   var _loader = _p._$$ScriptLoader._$allocate({timeout:20000,
-     *       onloaded:function(){
-     *           // 载入资源成功的回调
-     *       }
-     *   });
-     *   // 绝对路径或者当前页面的相对路径
-     *   _loader._$load('../../../javascript/log.js');
-     *   // 载入指定style,30秒超时
-     *   var _loader = _p._$$StyleLoader._$allocate({timeout:30000,
-     *       onloaded:function(){
-     *           // 载入资源成功的回调
-     *       }
-     *   // 绝对路径或者当前页面的相对路径
-     *   _loader._$load('../../../base/qunit.css');
+     *   NEJ.define([
+     *       '{lib}util/ajax/loader/html.js',
+     *       '{lib}util/ajax/loader/style.js',
+     *       '{lib}util/ajax/loader/script.js'
+     *   ],function(_p0,_p1,_p2){
+     *       // 载入指定html,10秒超时
+     *       var _loader = _p0._$$HtmlLoader._$allocate({
+     *           timeout:10000,
+     *           onloaded:function(){
+     *               // 载入资源成功的回调
+     *           }
+     *       });
+     *       // 绝对路径或者当前页面的相对路径
+     *       _loader._$load('../../../html/util/formTest.html');
+     * 
+     *       // 载入指定script,20秒超时
+     *       var _loader = _p2._$$ScriptLoader._$allocate({
+     *           timeout:20000,
+     *           onloaded:function(){
+     *               // 载入资源成功的回调
+     *           }
+     *       });
+     *       // 绝对路径或者当前页面的相对路径
+     *       _loader._$load('../../../javascript/log.js');
+     * 
+     *       // 载入指定style,30秒超时
+     *       var _loader = _p1._$$StyleLoader._$allocate({
+     *           timeout:30000,
+     *           onloaded:function(){
+     *               // 载入资源成功的回调
+     *           }
+     *       });
+     *       // 绝对路径或者当前页面的相对路径
+     *       _loader._$load('../../../base/qunit.css');
      *   });
      * [/code]
+     * 
      * @method {_$load}
      * @param  {String} 资源地址
-     * @return {nej.ut.j._$$Loader}
+     * @return {Void}
      */
     _pro._$load = function(_url){
         _url = _u._$absolute(_url);
@@ -284,11 +291,12 @@ var f = function(NEJ,_g,_v,_u,_t,_p){
                 code:_g._$CODE_NOTASGN,
                 message:'请指定要载入的资源地址！'
             });
-            return this;
+            return;
         };
         this.__url = _url;
-        if (!!this.__version)
+        if (!!this.__version){
             this.__url += (this.__url.indexOf('?')<0?'?':'&')+this.__version;
+        }
         if (this.__getLoadData('loaded')[this.__url]){
             try{
                 this._$dispatchEvent('onloaded');
@@ -298,7 +306,7 @@ var f = function(NEJ,_g,_v,_u,_t,_p){
                 console.error(ex.stack);
             }
             this._$recycle();
-            return this;
+            return;
         }
         var _cache = this.__getLoadData(this.__url),_request;
         if (!!_cache){
@@ -308,40 +316,57 @@ var f = function(NEJ,_g,_v,_u,_t,_p){
             _request = this.__getRequest();
             _cache = {request:_request,bind:[this]};
             this.__setLoadData(this.__url,_cache);
-            _v._$addEvent(_request,'load',this.__onLoaded._$bind(this));
-            _v._$addEvent(_request,'error',this.__onError._$bind(this,{
-                code:_g._$CODE_ERRSERV,
-                message:'无法加载指定资源文件['+this.__url+']！'
-            }));
+            _v._$addEvent(
+                _request,'load',
+                this.__onLoaded._$bind(this)
+            );
+            _v._$addEvent(
+                _request,'error',
+                this.__onError._$bind(this,{
+                    code:_g._$CODE_ERRSERV,
+                    message:'无法加载指定资源文件['+this.__url+']！'
+                })
+            );
         }
-        if (this.__timeout!=0)
+        if (this.__timeout!=0){
             _cache.timer = window.setTimeout(
-                           this.__onError._$bind(this,{
-                               code:_g._$CODE_TIMEOUT,
-                               message:'指定资源文件['+this.__url+']载入超时！'
-                           }),this.__timeout||_timeout);
-        if (!!_request)
+                this.__onError._$bind(this,{
+                    code:_g._$CODE_TIMEOUT,
+                    message:'指定资源文件['+this.__url+']载入超时！'
+                }),
+                this.__timeout||_timeout
+            );
+        }
+        if (!!_request){
             this.__doRequest(_request);
+        }
         this._$dispatchEvent('onloading');
-        return this;
     };
     /**
      * 队列载入资源<br/>
+     * 
      * 脚本举例
      * [code]
-     *   var _p = NEJ.P('nej.ut.j');
-     *   var _loader = _p._$$HtmlLoader._$allocate({
-     *       onloaded:function(){
-     *           // 载入队列资源成功的回调
-     *       }
+     *   NEJ.define([
+     *       '{lib}util/ajax/loader/html.js'
+     *   ],function(_p){
+     *       var _loader = _p._$$HtmlLoader._$allocate({
+     *           onloaded:function(){
+     *               // 载入队列资源成功的回调
+     *           }
+     *       });
+     *       // 路径列表，可以是绝对路径也可以是当前页面的相对路径
+     *       var _list = [
+     *           '../../../html/util/formTest.html',
+     *           '../../../html/util/cacheTest.html'
+     *       ];
+     *       _loader._$queue(_list);
      *   });
-     *   // 路径列表，可以是绝对路径也可以是当前页面的相对路径
-     *   var _list = ['../../../html/util/formTest.html','../../../html/util/cacheTest.html']
-     *   _loader._$queue(_list);
      * [/code]
+     * 
      * @method {_$queue}
      * @param  {Array} 资源地址队列
-     * @return {nej.ut.j._$$Loader}
+     * @return {Void}
      */
     _pro._$queue = function(_list){
         if (!_list||!_list.length){
@@ -349,27 +374,22 @@ var f = function(NEJ,_g,_v,_u,_t,_p){
                 code:_g._$CODE_NOTASGN,
                 message:'请指定要载入的资源队列！'
             });
-            return this;
+            return;
         } 
-        this.__key = _u._$randNumberString();
+        this.__key = _u._$uniqueID();
         var _cache = {error:0,loaded:0,total:_list.length};
         this.__setLoadData(this.__key,_cache);
-        for(var i=0,l=_list.length;i<l;i++){
-            if (!_list[i]){
-                _cache.total--;
-                continue;
-            } 
-            this.__doLoadQueue(_list[i]);
-        }
+        _u._$forEach(
+            _list,function(v,i){
+                if (!v){
+                    _cache.total--;
+                    return;
+                }
+                this.__doLoadQueue(v);
+            },this
+        );
         this._$dispatchEvent('onloading');
-        return this;
     };
-};
-NEJ.define(
-    '{lib}util/ajax/loader/loader.js',[
-    '{lib}base/global.js',
-    '{lib}base/constant.js',
-    '{lib}base/event.js',
-    '{lib}base/util.js',
-    '{lib}util/event.js'
-],f); 
+    
+    return _p;
+});

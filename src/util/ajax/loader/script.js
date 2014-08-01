@@ -5,23 +5,24 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    // variable declaration
-    var _  = NEJ.P, 
-        _e = _('nej.e'),
-        _p = _('nej.ut.j'),
-        _proScriptLoader;
-    if (!!_p._$$ScriptLoader) return;
+NEJ.define([
+    './loader.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js'
+],function(_t,_k,_e,_p,_o,_f,_r){
+    var _pro;
     /**
      * 脚本加载器
-     * @class   {nej.ut.j._$$ScriptLoader} 脚本加载器
-     * @extends {nej.ut._$$Loader}
+     * 
+     * @class   {_$$ScriptLoader}
+     * @extends {_$$Loader}
+     * 
      * @param   {Object} 可选配置参数，已处理的参数列表如下所示
      * @config  {Boolean} async   异步载入并立刻执行，默认为!0
      * @config  {String}  charset 脚本编码
      */
-    _p._$$ScriptLoader = NEJ.C();
-      _proScriptLoader = _p._$$ScriptLoader._$extend(_p._$$Loader);
+    _p._$$ScriptLoader = _k._$klass();
+    _pro = _p._$$ScriptLoader._$extend(_t._$$Loader);
     /**
      * 控件重置
      * @protected
@@ -29,8 +30,8 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proScriptLoader.__reset = function(_options){
-        this.__supReset(_options);
+    _pro.__reset = function(_options){
+        this.__super(_options);
         this.__async = _options.async;
         this.__charset = _options.charset;
         this.__qopt.async = !1;
@@ -42,12 +43,14 @@ var f = function(){
      * @method {__getRequest}
      * @return {Script} 控件
      */
-    _proScriptLoader.__getRequest = function(){
+    _pro.__getRequest = function(){
         var _request = _e._$create('script');
-        if (this.__async!=null)
+        if (this.__async!=null){
             _request.async = !!this.__async;
-        if (this.__charset!=null)
+        }
+        if (this.__charset!=null){
             _request.charset = this.__charset;
+        }
         return _request;
     };
     /**
@@ -57,9 +60,9 @@ var f = function(){
      * @param  {Script|Link} 控件
      * @return {Void}
      */
-    _proScriptLoader.__clearRequest = function(_request){
+    _pro.__clearRequest = function(_request){
         _e._$remove(_request);
     };
-};
-NEJ.define('{lib}util/ajax/loader/script.js',
-      ['{lib}util/ajax/loader/loader.js'],f);
+    
+    return _p;
+});

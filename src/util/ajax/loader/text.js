@@ -5,24 +5,22 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    // variable declaration
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _e = _('nej.e'),
-        _j = _('nej.j'),
-        _p = _('nej.ut.j'),
-        _pro;
-    if (!!_p._$$TextLoader) return;
+NEJ.define([
+    './loader.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{lib}util/ajax/xdr.js'
+],function(_t,_k,_e,_j,_p,_o,_f,_r){
     /**
      * 文本资源加载器
-     * @class   {nej.ut.j._$$TextLoader} HTML资源加载器
-     * @extends {nej.ut._$$Loader}
-     * @param   {Object} 可选配置参数，已处理的参数列表如下所示
      * 
+     * @class   {_$$TextLoader}
+     * @extends {_$$Loader}
+     * 
+     * @param   {Object} 可选配置参数，已处理的参数列表如下所示
      */
-    _p._$$TextLoader = NEJ.C(); 
-    _pro = _p._$$TextLoader._$extend(_p._$$Loader);
+    _p._$$TextLoader = _k._$klass(); 
+    _pro = _p._$$TextLoader._$extend(_t._$$Loader);
     /**
      * 取资源载入控件
      * @protected
@@ -59,9 +57,6 @@ var f = function(){
             content:_text
         });
     };
-};
-NEJ.define(
-    '{lib}util/ajax/loader/text.js',[
-    '{lib}util/ajax/xdr.js',
-    '{lib}util/ajax/loader/loader.js'
-],f);
+    
+    return _p;
+});
