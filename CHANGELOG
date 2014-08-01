@@ -7,28 +7,30 @@ v0.0.1
 - 清理没用控件及API
   * 删除xmpp
   * 删除gesture
+  * 删除util/ajax/connect.js
 
 define.js
 - NEJ.config接口名称改为NEJ.deps
 - 删除define.cmp.js兼容支持
 
-{lib}base/util.js
+base/util.js
 - 删除_$mergeList
 - 迁移_$dom2object、_$xml2object至{lib}base/element.js
 - 增加接口_$query、_$merge、_$fetch替代原NEJ.Q、NEJ.X、NEJ.EX
 
-{lib}base/element.js
+base/element.js
 - 交换_$getMaxBox接口输入参数顺序
 - 修改_$dom2object第二个参数为非必传参数
 
-{lib}base/event.js
+base/event.js
 - 删除接口_$stopClick
 
-{lib}util/event.js
+util/event.js
 - 删除_$addEvent接口，同功能接口_$setEvent代替
 - 删除_$api接口
 
-
+util/ajax/dwr.js
+- 删除_$setProxy接口
 
 
 

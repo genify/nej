@@ -5,18 +5,16 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    // variable declaration
-    var _ = NEJ.P,
-        o = NEJ.O,
-        f = NEJ.F,
-        g = _('nej.g'),
-        j = _('nej.j'),
-        u = _('nej.u'),
-        w = _('dwr.engine'),
-        __batchid,      // 请求ID标识
-        __filter= f,    // 全局异常过滤器
-        __proxy = {},   // 交互代理
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/constant.js',
+    '{lib}base/util.js',
+    '{lib}util/ajax/xdr.js',
+    '{lib}util/ajax/tag.js',
+    '{lib}util/cache/cookie.js'
+],function(NEJ,_g,_u,_j0,_j1,_j2,_p,_o,_f,_r){
+    var __batchid,      // 请求ID标识
+        __filter= _f,   // 全局异常过滤器
         __cache = {},   // 请求缓存
         __cname = 'JSESSIONID',
         __batch = null; // 请求临时构造对象，范例 
@@ -32,114 +30,145 @@ var f = function(){
      * 
      * 脚本举例
      * [code]
-     *   // 所有请求对错误码是401的情况不做处理
-     *   nej.j._$setFilter(function(_code){
-     *       return _code == 401;
+     *   NEJ.define([
+     *       '{lib}util/ajax/dwr.js'
+     *   ],function(_p){
+     *       // 所有请求对错误码是401的情况不做处理
+     *       _p._$setFilter(function(_code){
+     *           return _code == 401;
+     *       });
      *   });
      * [/code]
-     * @api    {nej.j._$setFilter}
+     * 
+     * @api    {_$setFilter}
      * @param  {Function}  过滤器,过滤器返回值
      * [ntb]
-     *  输出 |  Boolean   | true  - 不继续执行后续错误处理接口
-     *       | Boolean    | false - 继续执行后续错误处理接口
+     *  输出 | Boolean    | true  - 不继续执行后续错误处理接口
+     *      | Boolean    | false - 继续执行后续错误处理接口
      * [/ntb]
-     *                     
-     * @return {nej.j}
+     * @return {Void}
      */
-    j._$setFilter = function(_filter){
-        __filter = u._$isFunction(_filter)?_filter:f;
-        return this;
+    _p._$setFilter = function(_filter){
+        __filter = _u._$isFunction(_filter)?_filter:_f;
     };
     /**
      * 设置CSRF使用的cookie名
-     * @api    {nej.j._$setCookieName}
+     * @api    {_$setCookieName}
      * @param  {String} cookie名
      * @return {Void}
      */
-    j._$setCookieName = function(_name){
+    _p._$setCookieName = function(_name){
         __cname = _name||__cname;
     };
     /**
-     * 设置DWR代理<br/>
-     * 脚本举例
-     * [code]
-     *   var j = nej.j;
-     *   // 用xmpp代理
-     *   j._$setProxy('xmpp',nej.ut.xmpp._$$SocketProxy._$allocate({}));
-     * [/code]
-     * @api    {nej.j._$setProxy}
-     * @param  {String} 代理标识
-     * @param  {Object} 交互代理
-     * @return {nej.j}
-     */
-    j._$setProxy = function(_key,_proxy){
-        __proxy[_key] = _proxy;
-        return this;
-    };
-    /**
      * 设置请求标识<br/>
+     * 
      * 脚本举例
      * [code]
-     *   var j = nej.j;
-     *   // 手动设置请求标识
-     *   j._$setBatchId('batchId-12345');
+     *   NEJ.define([
+     *       '{lib}util/ajax/dwr.js'
+     *   ],function(_p){
+     *       // 手动设置请求标识
+     *       _p._$setBatchId('batchId-12345');
+     *   });
      * [/code]
-     * @api    {nej.j._$setBatchId}
+     * 
+     * @api    {_$setBatchId}
      * @param  {String} 请求标识
-     * @return {nej.j}
+     * @return {Void}
      */
-    j._$setBatchId = function(_id){
+    _p._$setBatchId = function(_id){
         __batchid = _id||'';
-        return this;
     };
     /**
      * 开始批处理请求<br/>
+     * 
      * 脚本举例
      * [code]
-     *   var j = nej.j;
-     *   j._$beginBatch();
-     *   j._$requestByDWR('DownloadBean.getDownloadUrlByBrandAndModel',
-     *          {path:'http://123.163.com/webmail/dwr/call/plaincall/',
-     *           script:false,param:["nokia","n97"],onload:function(data){
-     *           },onerror:function(error){
-     *           }});
-     *   j._$requestByDWR('DownloadBean.getDownloadUrlByBrandAndModel',
-     *          {path:'http://123.163.com/webmail/dwr/call/plaincall/',
-     *           script:false,param:["nokia","n98"],onload:function(data){
-     *           },onerror:function(error){
-     *           }});
-     *   // 最后做一次请求发送
-     *   j._$endBatch();
+     *   NEJ.define([
+     *       '{lib}util/ajax/dwr.js'
+     *   ],function(_p){
+     *       _p._$beginBatch();
+     *       _p._$requestByDWR(
+     *           'DownloadBean.getDownloadUrlByBrandAndModel1',{
+     *               path:'/dwr/call/plaincall/',
+     *               script:false,
+     *               param:["nokia","n97"],
+     *               onload:function(data){
+     *                   // TODO
+     *               },onerror:function(error){
+     *                   // TODO
+     *               }
+     *           }
+     *       );
+     *       _p._$requestByDWR(
+     *           'DownloadBean.getDownloadUrlByBrandAndModel2',{
+     *               path:'/dwr/call/plaincall/',
+     *               script:false,
+     *               param:["nokia","n98"],
+     *               onload:function(data){
+     *                   // TODO
+     *               },onerror:function(error){
+     *                   // TODO
+     *               }
+     *           }
+     *       );
+     *       // 最后做一次请求发送
+     *       _p._$endBatch();
+     *   });
      * [/code]
-     * @see    {#._$endBatch}
-     * @api    {nej.j._$beginBatch}
-     * @return {nej.j}
+     * 
+     * @api    {_$beginBatch}
+     * @see    {#_$endBatch}
+     * @return {Void}
      */
-    j._$beginBatch = function(){
-        if (!!__batch) return this;
-        __batch = {h:{},p:0,
-                   m:{callCount:0,scriptSessionId:'${scriptSessionId}190',httpSessionId:j._$cookie(__cname)},
-                   r:{script:!1,sync:!1,method:'POST',timeout:null,proxy:!0,cookie:!1,onbeforerequest:null}};
-        return this;
+    _p._$beginBatch = function(){
+        if (!!__batch) return;
+        __batch = {
+            h:{},p:0,
+            m:{
+                callCount:0,
+                scriptSessionId:'${scriptSessionId}190',
+                httpSessionId:_j2._$cookie(__cname)
+            },
+            r:{
+                script:!1,
+                sync:!1,
+                method:'POST',
+                timeout:null,
+                proxy:!0,
+                cookie:!1,
+                onbeforerequest:null
+            }
+        };
     };
     /**
      * 使用DWR方式载入数据<br/>
      * 
      * 脚本举例
      * [code]
-     *   var j = nej.j;
-     *   j._$requestByDWR('LogBean.log',
-     *      {path:'http://123.163.com/webmail/dwr/call/plaincall/',
-     *       script:true,param:{},onload:function(data){
-     *           // 正常回调方法
-     *       },onerror:function(error){
-     *           // 异常回调
-     *       },onbeforerequest:function(data){
-     *          // 请求发送前对请求数据进行处理
-     *       }
-     *       });
+     *   NEJ.define([
+     *       '{lib}util/ajax/dwr.js'
+     *   ],function(_p){
+     *       _p._$requestByDWR(
+     *           'LogBean.log',{
+     *               path:'/dwr/call/plaincall/',
+     *               script:true,param:{},
+     *               onload:function(data){
+     *                   // 正常回调方法
+     *               },
+     *               onerror:function(error){
+     *                   // 异常回调
+     *               },
+     *               onbeforerequest:function(data){
+     *                  // 请求发送前对请求数据进行处理
+     *               }
+     *           }
+     *       );
+     *   });
      * [/code]
-     * @api    {nej.j._$requestByDWR}
+     * 
+     * @api    {_$requestByDWR}
      * @param  {String}  请求地址,格式为class.method
      * @param  {Object}  可选配置参数,已处理参数列表如下：
      * @config {String}  path    请求路径,默认为/dwr/call/plaincall/
@@ -152,100 +181,134 @@ var f = function(){
      * @config {Number}  timeout 请求超时时间
      * @config {Object}  headers 头信息,批处理请求合并所有头信息,同名的头信息后面请求覆盖前面请求
      * @config {String}  session 
-     * @return {nej.j}
+     * @return {Void}
      * 
      * [hr]
      * 
-     * @event  {onload} 载入完成回调函数
-     * @param  {Object} 返回的数据
+     * 载入回调
+     * @event  {onload}
+     * @param  {Variable|Object} 请求返回数据，根据请求时type指定格式返回，
+     *                           如果请求时指定了result参数，则此处输入为包含额外信息的对象，
+     *                           数据结果从此对象的data属性中取，如{headers:{'x-res-0':'12345', ...},data:{a:'aaa', ...}}
      * 
      * [hr]
      * 
-     * @event  {onerror} 载入出错回调函数
-     * @param  {Object}  错误信息
+     * 出错回调
+     * @event  {onerror}  
+     * @param  {Object}   错误信息
+     * @config {Number}   code    错误代码
+     * @config {String}   message 错误描述
+     * @config {Variable} data    出错时携带数据
      * 
      * [hr]
      * 
-     * @event  {onbeforerequest} 请求之前对数据处理回调
-     * 
+     * 请求之前对数据处理回调
+     * @event  {onbeforerequest} 
+     * @param  {Object} 请求信息
+     * @config {Object} request 请求参数，数据信息 url/sync/cookie/type/method/timeout
+     * @config {Object} headers 请求头信息
      */
-    j._$requestByDWR = function(_url,_options){
+    _p._$requestByDWR = function(_url,_options){
         var _info = (_url||'').split('.');
-        if (!_info||_info.length!=2) return this;
+        if (!_info||_info.length!=2) return;
         var _single = !1;
-        _options = _options||o;
+        _options = _options||_o;
         if (!__batch){
             _single = !0;
-            j._$beginBatch();
+            _p._$beginBatch();
             if (!!_options.session){
-                __batch.m.httpSessionId = j._$cookie(_options.session);
+                __batch.m.httpSessionId = _j2._$cookie(_options.session);
             }
         }
         __batch.u = (_options.path||'/dwr/call/plaincall/')+
                     (_options.query&&('?'+_options.query)||'');
-        NEJ.EX(__batch.r,_options);
-        var _headers = __batch.r.headers||{};
-        if (!!_options.headers)
-            for(var x in _options.headers)
-                _headers[x] = _options.headers[x];
-        _headers[g._$HEAD_CT] = g._$HEAD_CT_PLAN;
+        _u._$fetch(__batch.r,_options);
+        var _headers = _u._$merge(
+            __batch.r.headers,_options.headers
+        );
+        _headers[_g._$HEAD_CT] = _g._$HEAD_CT_PLAN;
         __batch.r.headers = _headers;
         var _prefix = 'c'+__batch.m.callCount;
         __batch.m[_prefix+'-scriptName'] = _info[0];
         __batch.m[_prefix+'-methodName'] = _info[1];
         __batch.m[_prefix+'-id'] = __batch.m.callCount;
-        __batch.h[__batch.m.callCount] = {c:_options.onload||f,
-                                          e:_options.onerror||f};
-        var _params = _options.param;
-        if (!!_params&&_params.length>0)
-            for(var i=0,l=_params.length,_value;i<l;i++){
-                _value = __serialize(_params[i],_prefix);
-                !!_value&&(__batch.m[_prefix+'-param'+i]=_value);
+        __batch.h[__batch.m.callCount] = {
+            c:_options.onload||_f,
+            e:_options.onerror||_f
+        };
+        _u._$forEach(
+            _options.param,function(v,i){
+                var _value = __doSerialize(v,_prefix);
+                if (!!_value){
+                    __batch.m[_prefix+'-param'+i] = _value;
+                }
             }
+        );
         __batch.m.callCount++;
-        if (_single) j._$endBatch();
-        return this;
+        if (_single){
+            _p._$endBatch();
+        }
     };
     /**
      * 结束请求批处理，正式发送请求<br/>
+     * 
      * 脚本举例
      * [code]
-     *   j._$beginBatch();
-     *   j._$requestByDWR('DownloadBean.getDownloadUrlByBrandAndModel',
-     *          {path:'http://123.163.com/webmail/dwr/call/plaincall/',
-     *           script:false,param:["nokia","n97"],onload:function(data){
-     *           },onerror:function(error){
-     *           }});
-     *   j._$requestByDWR('DownloadBean.getDownloadUrlByBrandAndModel',
-     *          {path:'http://123.163.com/webmail/dwr/call/plaincall/',
-     *           script:false,param:["nokia","n98"],onload:function(data){
-     *           },onerror:function(error){
-     *           }});
-     *   // 最后做一次请求发送
-     *   j._$endBatch();
+     *   NEJ.define([
+     *       '{lib}util/ajax/dwr.js'
+     *   ],function(_p){
+     *       _p._$beginBatch();
+     *       _p._$requestByDWR(
+     *           'DownloadBean.getDownloadUrlByBrandAndModel1',{
+     *               path:'/dwr/call/plaincall/',
+     *               script:false,
+     *               param:["nokia","n97"],
+     *               onload:function(data){
+     *                   // TODO
+     *               },onerror:function(error){
+     *                   // TODO
+     *               }
+     *           }
+     *       );
+     *       _p._$requestByDWR(
+     *           'DownloadBean.getDownloadUrlByBrandAndModel2',{
+     *               path:'/dwr/call/plaincall/',
+     *               script:false,
+     *               param:["nokia","n98"],
+     *               onload:function(data){
+     *                   // TODO
+     *               },onerror:function(error){
+     *                   // TODO
+     *               }
+     *           }
+     *       );
+     *       // 最后做一次请求发送
+     *       _p._$endBatch();
+     *   });
      * [/code]
-     * @see    {#._$beginBatch}
-     * @api    {nej.j._$endBatch}
-     * @return {nej.j}
+     * 
+     * @api    {_$endBatch}
+     * @see    {#_$beginBatch}
+     * @return {Void}
      */
-    j._$endBatch = function(){
+    _p._$endBatch = function(){
         if (!__batch||!__batch.u){
-            __batch = null; return this;
+            __batch = null;
+            return;
         }
-        var _bid = __batchid||u._$randNumberString(6);
+        var _bid = __batchid||_u._$uniqueID();
         __batchid = 0;
         __batch.m.batchId = _bid;
         __cache[_bid] = __batch;
         __batch = null;
         __doRequest(_bid);
-        return this;
     };
     /*
      * 销毁请求对象
-     * @param  {String} _bid 请求对象标识
+     * @param  {String} 请求对象标识
      * @return {Void}
      */
-    var __destroyBatch = function(_bid){
+    var __doDestroyBatch = function(_bid){
         var _batch = __cache[_bid];
         if (!_batch) return;
         delete _batch.h;
@@ -254,26 +317,35 @@ var f = function(){
     };
     /*
      * 序列化数据
-     * @param  {Variable} _data   数据
-     * @param  {String}   _prefix 前缀
-     * @return {String}           序列化后的字串
+     * @param  {Variable} 数据
+     * @param  {String}   前缀
+     * @return {String}   序列化后的字串
      */
-    var __serialize = function(_data,_prefix){
-        if (_data==null) return 'null:null';
-        if (u._$isBoolean(_data))
+    var __doSerialize = function(_data,_prefix){
+        if (_data==null){
+            return 'null:null';
+        }
+        if (_u._$isBoolean(_data)){
             return 'boolean:'+!!_data;
-        if (u._$isNumber(_data))
+        }
+        if (_u._$isNumber(_data)){
             return 'number:'+_data;
-        if (u._$isString(_data))
+        }
+        if (_u._$isString(_data)){
             return 'string:'+encodeURIComponent(_data);
-        if (u._$isDate(_data))
+        }
+        if (_u._$isDate(_data)){
             return 'Date:'+_data.getTime();
-        if (u._$isArray(_data))
-            return __serializeArray(_data,_prefix);
-        if (u._$isObject(_data))
-            return __serializeObject(_data,_prefix);
-        if (u._$isFunction(_data,'function'))
+        }
+        if (_u._$isArray(_data)){
+            return __doSerializeArray(_data,_prefix);
+        }
+        if (_u._$isObject(_data)){
+            return __doSerializeObject(_data,_prefix);
+        }
+        if (_u._$isFunction(_data,'function')){
             return '';
+        }
         return 'default:'+_data;
     };
     /*
@@ -282,16 +354,18 @@ var f = function(){
      * @param  {String} _prefix 前缀
      * @return {String}         序列化后的字串
      */
-    var __serializeArray = function(_list,_prefix){
+    var __doSerializeArray = function(_list,_prefix){
         var _arr = [];
-        for(var i=0,l=_list.length,_ref,_value;i<l;i++){
-            __batch.p++;
-            _ref = _prefix+'-e'+__batch.p;
-            _value = __serialize(_list[i],_prefix);
-            if (!_value) continue;
-            __batch.m[_ref] = _value;
-            _arr.push('reference:'+_ref);
-        }
+        _u._$forEach(
+            _list,function(v,i){
+                __batch.p++;
+                var _ref = _prefix+'-e'+__batch.p,
+                    _value = __doSerialize(v,_prefix);
+                if (!_value) return;
+                __batch.m[_ref] = _value;
+                _arr.push('reference:'+_ref);
+            }
+        );
         return 'Array:['+_arr.join(',')+']';
     };
     /*
@@ -300,16 +374,18 @@ var f = function(){
      * @param  {String} _prefix 前缀
      * @return {String}         序列化后的字串
      */
-    var __serializeObject = function(_object,_prefix){
-        var _arr = [],_ref,_value;
-        for(var p in _object){
-            __batch.p++;
-            _ref = _prefix+'-e'+__batch.p;
-            _value = __serialize(_object[p],_prefix);
-            if (!_value) continue;
-            __batch.m[_ref] = _value;
-            _arr.push(encodeURIComponent(p)+':reference:'+_ref);
-        }
+    var __doSerializeObject = function(_object,_prefix){
+        var _arr = [];
+        _u._$forIn(
+            _object,function(v,k){
+                __batch.p++;
+                var _ref = _prefix+'-e'+__batch.p,
+                    _value = __doSerialize(v,_prefix);
+                if (!_value) return;
+                __batch.m[_ref] = _value;
+                _arr.push(encodeURIComponent(k)+':reference:'+_ref);
+            }
+        );
         return 'Object_Object:{'+_arr.join(',')+'}';
     };
     /*
@@ -318,13 +394,18 @@ var f = function(){
      * @param  {String} _sep  数据分隔符
      * @return {String}       数据字符串
      */
-    var __serializeSendData = function(_data,_sep){
+    var __doSerializeSendData = function(_data,_sep){
         if (!_data) return null;
-        var _arr=[],_and=_sep=='&';
-        for(var p in _data)
-            _arr.push(!_and?(p+'='+_data[p]):
-                     (encodeURIComponent(p)+'='+
-                      encodeURIComponent(_data[p])));
+        var _arr = [],
+            _and = _sep=='&';
+        _u._$forIn(
+            _data,function(v,k){
+                _arr.push(
+                    !_and ? (p+'='+_data[p]) :
+                    (encodeURIComponent(p)+'='+encodeURIComponent(_data[p]))
+                );
+            }
+        );
         return _arr.join(_sep||'\n');
     };
     /*
@@ -341,15 +422,7 @@ var f = function(){
                    :_batch.m['c0-scriptName']+'.'+
                     _batch.m['c0-methodName'])+'.dwr$1');
         var _option = _batch.r,
-            _proxy  = __proxy[_option.proxy];
-        // use xmpp proxy
-        if (!!_proxy){
-            _proxy._$rpc({url:_batch.u,
-                          param:__serializeSendData(_batch.m,'&amp;')});
-            delete _batch.r;
-            return;
-        }
-        var _script = !!_option.script,
+            _script = !!_option.script,
             _ispost = _option.method=='POST';
         delete _batch.r;
         delete _option.script;
@@ -357,14 +430,14 @@ var f = function(){
         _option.onerror = __onErrorWithReq._$bind(null,_bid);
         if (_script||!_ispost){
             _batch.u += (_batch.u.indexOf('?')>=0?'&':'?')
-                        +__serializeSendData(_batch.m,'&');
+                        +__doSerializeSendData(_batch.m,'&');
         }
         if (_script){
-            j._$loadScript(_batch.u,_option);
+            _j1._$loadScript(_batch.u,_option);
         }else{
             _option.onload = __onLoadWithXDR._$bind(null,_bid);
-            _option.data = _ispost?__serializeSendData(_batch.m):null;
-            j._$request(_batch.u,_option);
+            _option.data = _ispost?__doSerializeSendData(_batch.m):null;
+            _j0._$request(_batch.u,_option);
         }
     };
     /*
@@ -396,9 +469,11 @@ var f = function(){
     var __onErrorAll = function(_bid,_error){
         var _batch = __cache[_bid];
         if (!_batch) return;
-        var _handler = _batch.h;
-        for(var x in _handler)
-            __onError(_bid,x,_error);
+        _u._$forIn(
+            _batch.h,function(v,k){
+                __onError(_bid,k,_error);
+            }
+        );
     };
     /*
      * 数据加载成功回调函数
@@ -413,9 +488,12 @@ var f = function(){
         try{
             (_batch.h[_cid].c||f)(_data);
         }catch(ex){
-            __onError(_bid,_cid,
-                     {code:g._$CODE_ERRCABK
-                     ,message:'DWR回调执行异常：'+ex.message||ex});
+            __onError(
+                _bid,_cid,{
+                    code:_g._$CODE_ERRCABK,
+                    message:'DWR回调执行异常：'+ex.message||ex
+                }
+            );
         }
     };
     /*
@@ -428,13 +506,17 @@ var f = function(){
         try{
             !!_text&&_text.search('//#DWR')>=0
             ? (new Function(_text))()
-            : __onErrorAll(_bid,{code:g._$CODE_ERRSERV
-                                ,message:'DWR请求返回数据不合法!'});
+            : __onErrorAll(_bid,{
+                  code:_g._$CODE_ERRSERV,
+                  message:'DWR请求返回数据不合法!'
+              });
         }catch(ex){
-            __onErrorAll(_bid,{code:g._$CODE_ERREVAL
-                              ,message:'DWR返回脚本执行异常：'+(ex.message||ex)});
+            __onErrorAll(_bid,{
+                code:_g._$CODE_ERREVAL,
+                message:'DWR返回脚本执行异常：'+(ex.message||ex)
+            });
         }finally{
-            __destroyBatch(_bid);
+            __doDestroyBatch(_bid);
         }
     };
     /*
@@ -445,23 +527,25 @@ var f = function(){
      */
     var __onErrorWithReq = function(_bid,_error){
         __onErrorAll(_bid,_error);
-        __destroyBatch(_bid);
+        __doDestroyBatch(_bid);
     };
+
     // DWR2 Adapter
+    this.dwr = this.dwr||{};
+    var w = dwr.engine = dwr.engine||{};
     w['_remoteHandleCallback'] = __onLoadFromDWR;
     w['_remoteHandleException'] = __onError;
     w['_remoteHandleBatchException'] = __onErrorAll;
     // DWR3 Adapter
-    _('dwr')['_'] = [{
+    dwr['_'] = [{
         handleCallback:w['_remoteHandleCallback'],
         handleException:w['_remoteHandleException'],
         handleBatchException:w['_remoteHandleBatchException']
     }];
-};
-NEJ.define(
-    '{lib}util/ajax/dwr.js',[
-    '{lib}base/constant.js',
-    '{lib}base/util.js',
-    '{lib}util/ajax/xdr.js',
-    '{lib}util/cache/cookie.js'
-],f);
+    
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.j'),_p);
+    }
+    
+    return _p;
+});
