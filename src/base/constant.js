@@ -103,7 +103,7 @@ NEJ.define([
     _p._$BLANK_IMAGE  = _c._$get('blank.png')||'data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
 
     if (CMPT){
-        this.copy(NEJ.P('nej.g'),_p);
+        NEJ.copy(NEJ.P('nej.g'),_p);
     }
 
     return _p;

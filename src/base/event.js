@@ -746,10 +746,9 @@ NEJ.define([
     if (CMPT){
         var _v = NEJ.P('nej.v'),
             _x = NEJ.P('nej.x');
-        this.copy(_v,_p);
-        this.copy(_x,_p);
+        NEJ.copy(_v,_p);
+        NEJ.copy(_x,_p);
         _x.isChange = !0;
-        return _v;
     }
     
     return _p;

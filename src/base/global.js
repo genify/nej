@@ -126,7 +126,7 @@ NEJ.define(function(_p,_o,_f,_r){
     if (CMPT){
         // copy object properties
         // only for nej compatiable
-        this.copy = function(a,b){
+        this.NEJ.copy = function(a,b){
             a = a||{};
             b = b||_o;
             for(var x in b){
@@ -137,7 +137,7 @@ NEJ.define(function(_p,_o,_f,_r){
             return a;
         };
         // NEJ namespace
-        this.NEJ = this.copy(
+        this.NEJ = this.NEJ.copy(
             this.NEJ,{
                 O:_o,R:_r,F:_f,
                 P:function(_namespace){

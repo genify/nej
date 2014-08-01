@@ -139,7 +139,7 @@ NEJ.define([
     _doInit(this.NEJ_CONF||_o);
 
     if (CMPT){
-        this.copy(NEJ.P('nej.c'),_c);
+        NEJ.copy(NEJ.P('nej.c'),_c);
     }
 
     return _c;

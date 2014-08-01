@@ -5,110 +5,122 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    // variable declaration
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _f = NEJ.F,
-        _h = _('nej.h'),
-        _g = _('nej.g'),
-        _u = _('nej.u'),
-        _j = _('nej.j'),
-        _p = _('nej.ut.j'),
-        // sn:{req:proxy,onload:function(){},onerror:function(){}}
-        _xcache = {},
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/util.js'
+],function(NEJ,_u,_p,_o,_f,_r){
+    // sn:{req:proxy,onload:function(){},onerror:function(){}}
+    var _xcache = {},
         _doFilter = _f;
     /**
      * 中断请求<br/>
+     * 
      * 脚本举例
      * [code]
-     *   var _j = NEJ.P('nej.j');
-     *   var _reqID = _j._$request('http://123.163.com/xhr/',{
-     *          type:'json',
-     *          method:'POST',
-     *          data:{name:'cheng-lin'},
-     *          timeout:60000,
-     *          onload:function(_data){
-     *          },
-     *          onerror:function(_error){
-     *          }
-     *      }
-     *   );
-     *   // 1秒后中断掉这个请求
-     *   setTimeout(function(){
-     *     _j._$abort(_reqID);
-     *   },1000);
+     *   NEJ.define([
+     *       '{lib}util/event.js'
+     *   ],function(_p){
+     *       var _id = _p._$request('http://123.163.com/xhr/',{
+     *           type:'json',
+     *           method:'POST',
+     *           data:{name:'ABC'},
+     *           timeout:60000,
+     *           onload:function(_data){
+     *               // TODO
+     *           },
+     *           onerror:function(_error){
+     *               // TODO
+     *           }
+     *       });
+     *       // 1秒后中断掉这个请求
+     *       setTimeout(function(){
+     *           _p._$abort(_id);
+     *       },1000);
+     *   });
      * [/code]
-     * @api    {nej.j._$abort}
+     * 
+     * @api    {_$abort}
      * @param  {String} 请求标识
-     * @return {nej.j}
+     * @return {THIS}   调用对象
      */
-    _j._$abort = function(_sn){
+    _p._$abort = function(_sn){
         var _cache = _xcache[_sn];
-        if (!_cache) return this;
-        _cache.req._$abort();
+        if (!!_cache){
+            _cache.req._$abort();
+        }
         return this;
     };
     /**
      * 全局请求过滤器，过滤器中可以通过设置输入事件对象的stopped值阻止继续回调<br/>
+     * 
      * 脚本举例
      * [code]
-     *   var _j = NEJ.P('nej.j');
-     *   _j._$filter(function(_event){
-     *      // 过滤掉404的异常，如果type是onload不做处理
-     *      if(_event.type == 'onerror'){
-     *          if(_event.result.data == 404)
-     *              _event.stopped = false;
-     *      }
-     *  });
-     *  _j._$request('xxxx',{
-     *      type:'json',
-     *      method:'POST',
-     *      data:{name:'cheng-lin'},
-     *      timeout:3000,
-     *      onload:function(_data){
-     *          // TODO
-     *      },
-     *      onerror:function(_error){
-     *          // TODO
-     *      }
-     *  });
+     *   NEJ.define([
+     *       '{lib}util/event.js'
+     *   ],function(_p){
+     *       _p._$filter(function(_event){
+     *           // 过滤掉404的异常，如果type是onload不做处理
+     *           if (_event.type == 'onerror'){
+     *               if (_event.result.data == 404){
+     *                   _event.stopped = false;
+     *               }
+     *           }
+     *       });
+     *       _p._$request('xxxx',{
+     *           type:'json',
+     *           method:'POST',
+     *           data:{name:'abc'},
+     *           timeout:3000,
+     *           onload:function(_data){
+     *               // TODO
+     *           },
+     *           onerror:function(_error){
+     *               // TODO
+     *           }
+     *       });
+     *   });
      * [/code]
      * 
-     * @api    {nej.j._$filter}
+     * @api    {_$filter}
      * @param  {Function} 过滤器
-     * @return {nej.j}
+     * @return {THIS}     调用对象
      */
-    _j._$filter = function(_filter){
+    _p._$filter = function(_filter){
         _doFilter = _filter||_f;
         return this;
     };
     /**
      * 发送ajax请求<br/>
+     * 
      * 脚本举例
      * [code]
-     *   var _url = 'http://123.163.com/webmail/dwr/call/plaincall/DownloadBean.getDownloadUrlByBrandAndModel.dwr';
-     *   var _j = NEJ.P('nej.j');
-     *   var _requestId = _j._$request(_url,{
-     *          sync:true,
-     *          type:'json',
-     *          data:'hello',
-     *          query:'a=1&b=2',
-     *          method:'post',
-     *          timeout:3000,
-     *          mode:0||1||2||3,
-     *          onload:function(_data){
-     *              // 正常回调处理
-     *          },
-     *          onerror:function(_error){
-     *              // 异常处理
-     *          },
-     *          onbeforerequest:function(_data){
-     *              // 请求发送前，对请求数据处理
-     *          }
-     *      });
+     *   NEJ.define([
+     *       '{lib}util/event.js'
+     *   ],function(_p){
+     *       var _id = _p._$request(
+     *           'http://a.b.com/api',{
+     *               sync:true,
+     *               type:'json',
+     *               data:'hello',
+     *               query:'a=1&b=2',
+     *               method:'post',
+     *               timeout:3000,
+     *               mode:0||1||2||3,
+     *               onload:function(_data){
+     *                   // 正常回调处理
+     *               },
+     *               onerror:function(_error){
+     *                   // 异常处理
+     *               },
+     *               onbeforerequest:function(_data){
+     *                   // 请求发送前，对请求数据处理
+     *               }
+     *           }
+     *       );
+     *   });
      * [/code]
-     * @api    {nej.j._$request}
+     * 
+     * @api    {_$request}
      * @param  {String}   请求地址
      * @param  {Object}   配置参数
      * @config {Boolean}  sync     是否同步请求
@@ -124,8 +136,8 @@ var f = function(){
      *                             1 - 高版本使用HTML5的CORS协议，低版本采用Flash代理方式<br/>
      *                             2 - 全部使用Frame代理方式<br/>
      *                             3 - 全部使用Flash代理方式
-     * @config {Object}   result  onload回调输入时需包含的额外信息，已处理额外数据
-     *                            headers  服务器返回头信息，如{headers:'x-res-0'}或者{headers:['x-res-0','x-res-1']}
+     * @config {Object}   result   onload回调输入时需包含的额外信息，已处理额外数据
+     *                             headers  服务器返回头信息，如{headers:'x-res-0'}或者{headers:['x-res-0','x-res-1']}
      * @return {String} 分配给请求的ID
      * 
      * [hr]
@@ -147,9 +159,8 @@ var f = function(){
      * 请求之前对数据处理回调
      * @event  {onbeforerequest} 
      * @param  {Object} 数据对象
-     * 
      */
-    _j._$request = (function(){
+    _p._$request = (function(){
         var _location = (location.protocol+'//'
                         +location.host).toLowerCase();
         // check cross-domain request
@@ -263,7 +274,7 @@ var f = function(){
      *   var _j = NEJ.P('nej.j');
      *   var _upload = this._e._$get('upload');
      *   var _progress = this._e._$get('progress');
-     *   _j._$upload(_upload,{
+     *   _p._$upload(_upload,{
      *   mode:2,
      *   cookie:true,
      *   onuploading:function(_data){
@@ -279,7 +290,7 @@ var f = function(){
      *       // 文件上传完成的回调,url为返回的地址
      *   }});
      * [/code]
-     * @api    {nej.j._$upload}
+     * @api    {_$upload}
      * @param  {HTMLFormElement}   表单对象，待上传的文件及目标地址信息封装在此对象中
      * @param  {Object}            可选配置参数,已处理参数列表如下：
      * @config {String}   type     返回数据格式
@@ -313,30 +324,30 @@ var f = function(){
      * @param  {Object} 数据对象
      * 
      */
-    _j._$upload = function(_form,_options){
+    _p._$upload = function(_form,_options){
         var _option = {
-                mode:0,
-                type:'json',
-                query:null,
-                cookie:!1,
-                headers:{},
-                onload:null,
-                onerror:null,
-                onuploading:null,
-                onbeforerequest:null
-            };
-        NEJ.EX(_option,_options);
+            mode:0,
+            type:'json',
+            query:null,
+            cookie:!1,
+            headers:{},
+            onload:null,
+            onerror:null,
+            onuploading:null,
+            onbeforerequest:null
+        };
+        _u._$fetch(_option,_options);
         _option.data = _form;
         _option.method = 'POST';
         _option.timeout = 0;
         _option.headers[_g._$HEAD_CT] = 
                         _g._$HEAD_CT_FILE;
-        return _j._$request(_form.action,_option);
+        return _p._$request(_form.action,_option);
     };
-};
-NEJ.define(
-    '{lib}util/ajax/xdr.js',[
-    '{lib}base/constant.js',
-    '{lib}base/util.js',
-    '{platform}ajax.js'
-],f);
+    
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.j'),_p);
+    }
+    
+    return _p;
+});

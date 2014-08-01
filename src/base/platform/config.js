@@ -29,7 +29,7 @@ NEJ.define([
     };
     
     if (CMPT){
-        return this.copy(NEJ.P('nej.c'),_p);
+        NEJ.copy(NEJ.P('nej.c'),_p);
     }
     
     return _p;

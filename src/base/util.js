@@ -1303,7 +1303,7 @@ NEJ.define([
         NEJ.Q  = _p._$query;
         NEJ.X  = _p._$merge;
         NEJ.EX = _p._$fetch;
-        this.copy(NEJ.P('nej.u'),_p);
+        NEJ.copy(NEJ.P('nej.u'),_p);
     }
 
     return _p;

@@ -158,7 +158,7 @@ NEJ.define([
     };
     
     if (CMPT){
-        this.copy(NEJ.P('nej.p'),_p);
+        NEJ.copy(NEJ.P('nej.p'),_p);
     }
     
     return _p;

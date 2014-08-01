@@ -4,6 +4,8 @@ v0.0.1
 - 独立类模型实现文件至{lib}base/klass.js
 - 增加依赖注入，保留兼容模式下名字空间形式
 - 独立平台适配，删除patched目录，独立到各API、控件
+- 清理没用控件及API
+  * 删除xmpp
 
 define.js
 - NEJ.config接口名称改为NEJ.deps
@@ -22,7 +24,7 @@ define.js
 - 删除接口_$stopClick
 
 {lib}util/event.js
-- 删除_$addEvent接口
+- 删除_$addEvent接口，同功能接口_$setEvent代替
 - 删除_$api接口
 
 

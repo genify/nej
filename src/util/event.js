@@ -744,9 +744,7 @@ NEJ.define([
     };
     
     if (CMPT){
-        var _ut = NEJ.P('nej.ut');
-        this.copy(_ut,_p);
-        return _ut;
+        NEJ.copy(NEJ.P('nej.ut'),_p);
     }
     
     return _p;
