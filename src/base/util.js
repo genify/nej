@@ -349,14 +349,13 @@ NEJ.define([
      *       | Object   | 列表对象
      * [/ntb]
      * @param  {Object}    回调函数调用时this对象
-     * @return {THIS}      调用对象
+     * @return {Void}
      */
     _p._$forEach = function(_list,_callback,_this){
         if (!!_list&&!!_list.length&&
             _p._$isFunction(_callback)){
             _h.__forEach(_list,_callback,_this);
         }
-        return this;
     };
     /**
      * 遍历列表或对象，支持中断退出<br/>
@@ -1005,7 +1004,7 @@ NEJ.define([
      * @api    {_$safeDelete}
      * @param  {Object}       对象
      * @param  {String|Array} 属性
-     * @return {THIS}         方法调用者
+     * @return {Void}
      */
     _p._$safeDelete = function(_object,_name){
         if (!_p._$isArray(_name)){
@@ -1021,7 +1020,6 @@ NEJ.define([
                 }
             );
         }
-        return this;
     };
     /**
      * 随机一个字符串<br/>

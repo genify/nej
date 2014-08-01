@@ -226,7 +226,9 @@ NEJ.define([
         };
         return function(_element,_filter){
             _element = _p._$get(_element);
-            if (!_element) return;
+            if (!_element){
+                return null;
+            }
             var _conf = {
                 backward:!1,
                 filter:_doFilter
@@ -286,7 +288,9 @@ NEJ.define([
                 }
                 _element = _element.parentNode;
             }
-            if (!!_element) return _element;
+            if (!!_element){
+                return _element;
+            }
         }
         var _tmp1 = document.body.scrollHeight,
             _tmp2 = document.documentElement.scrollHeight;
@@ -363,7 +367,7 @@ NEJ.define([
         };
         return function(_document){
             var _result = {},
-                _doc = _document||document,
+                _doc   = _document||document,
                 _body0 = _doc.body,
                 _body1 = _doc.documentElement;
             _u._$forEach(
@@ -452,12 +456,11 @@ NEJ.define([
      *
      * @api    {_$scrollTo}
      * @param  {Node|String} 节点
-     * @return {THIS}        调用对象
+     * @return {Void}
      */
     _p._$scrollTo = function(_element){
         var _offset = _p._$offset(_element);
         window.scrollTo(_offset.x,_offset.y);
-        return this;
     };
     /**
      * 计算在容器中对齐时的位置信息<br/>
@@ -557,7 +560,9 @@ NEJ.define([
         };
         return function(_from,_to){
             _from = _p._$get(_from);
-            if (!_from) return null;
+            if (!_from){
+                return null;
+            }
             _to = _p._$get(_to)||null;
             var _result = {x:0,y:0},
                 _isroot,_delta,_border;
@@ -694,7 +699,7 @@ NEJ.define([
      * @api    {_$hover}
      * @param  {String|Node} 节点
      * @param  {String}      样式，默认为js-hover
-     * @return {THIS}        调用对象
+     * @return {Void}
      */
     _p._$hover = function(_element,_clazz){
         _element = _p._$get(_element);
@@ -706,7 +711,6 @@ NEJ.define([
                 'js-hover'
             );
         }
-        return this;
     };
     /**
      * 节点鼠标或手势按下高亮行为，移动触摸反馈<br/>
@@ -737,7 +741,7 @@ NEJ.define([
      * @api    {_$highlight}
      * @param  {String|Node} 节点
      * @param  {String}      样式，默认为js-highlight
-     * @return {THIS}        调用对象
+     * @return {Void}
      */
     _p._$highlight = (function(){
         var _cache = {},
@@ -866,7 +870,7 @@ NEJ.define([
      * @config {String}      clazz    样式名称，默认为js-toggle
      * @config {String|Node} element  切换样式的节点，默认为父节点
      * @config {Function}    ontoggle 节点样式切换触发事件
-     * @return {THIS}
+     * @return {Void}
      */
     _p._$toggle = (function(){
         // click event
@@ -911,7 +915,6 @@ NEJ.define([
                     )
                 );
             }
-            return this;
         };
     })();
     /**
@@ -964,7 +967,7 @@ NEJ.define([
      * @param  {Object}       配置参数
      * @config {Number} mode  模式选择，默认为0
      * @config {String} clazz 聚焦样式，默认js-focus
-     * @return {THIS}         调用对象
+     * @return {Void}
      */
     _p._$focus = function(_element,_options){
         _element = _p._$get(_element);
@@ -994,7 +997,6 @@ NEJ.define([
             // do focus
             _h.__focusElement(_element,_mode,_clazz);
         }
-        return this;
     };
     /**
      * 创建节点<br/>
@@ -1152,7 +1154,7 @@ NEJ.define([
      * @api    {_$remove}
      * @param  {String|Node} 节点标识或者对象
      * @param  {Boolean}     是否禁止事件清理
-     * @return {THIS}        调用对象
+     * @return {Void}
      */
     _p._$remove = (function(){
         var _fmap = {
@@ -1195,7 +1197,6 @@ NEJ.define([
                     _element.parentNode.removeChild(_element);
                 }
             }
-            return this;
         };
     })();
     /**
@@ -1218,14 +1219,13 @@ NEJ.define([
      * @see    {#_$remove}
      * @api    {_$removeByEC}
      * @param  {String|Node} 节点标识或者对象
-     * @return {THIS}        调用对象
+     * @return {Void}
      */
     _p._$removeByEC = function(_element){
         _element = _p._$get(_element);
         if (!!_element){
             _fragment.appendChild(_element);
         }
-        return this;
     };
     /**
      * 清除所有子节点<br/>
@@ -1260,7 +1260,7 @@ NEJ.define([
      *
      * @api    {_$clearChildren}
      * @param  {String|Node} 容器节点
-     * @return {THIS}        调用对象
+     * @return {Void}
      */
     _p._$clearChildren = function(_element){
         _element = _p._$get(_element);
@@ -1272,7 +1272,6 @@ NEJ.define([
                 }
             );
         }
-        return this;
     };
     /**
      * 内联元素增加定位封装<br/>
@@ -1336,7 +1335,7 @@ NEJ.define([
         return function(_element,_options){
             _element = _p._$get(_element);
             if (!_element){
-                return;
+                return null;
             }
             // init style
             _doInitStyle();
@@ -1688,7 +1687,7 @@ NEJ.define([
      * @api    {_$style}
      * @param  {String|Node} 节点
      * @param  {Object}      样式信息{color:'red',width:'100px'}
-     * @return {THIS}        调用对象
+     * @return {Void}
      */
     _p._$style = function(_element,_map){
         _element = _p._$get(_element);
@@ -1697,7 +1696,6 @@ NEJ.define([
                 _p._$setStyle(_element,_name,_value);
             });
         }
-        return this;
     };
     /**
      * 设置单个样式<br/>
@@ -1726,7 +1724,7 @@ NEJ.define([
      * @param  {String|Node} 节点
      * @param  {String}      样式名称
      * @param  {String}      样式值
-     * @return {THIS}        调用对象
+     * @return {Void}
      */
     _p._$setStyle = function(_element,_name,_value){
         _element = _p._$get(_element);
@@ -1736,7 +1734,6 @@ NEJ.define([
                 _h.__processCSSText(_value)
             );
         }
-        return this;
     };
     /**
      * 取样式值<br/>
@@ -1795,7 +1792,7 @@ NEJ.define([
      *
      * @api    {_$addScript}
      * @param  {String} 脚本内容
-     * @return {THIS}   调用对象
+     * @return {Void}
      */
     _p._$addScript = function(_script){
         try{
@@ -1894,11 +1891,11 @@ NEJ.define([
      *   NEJ.define([
      *       '{lib}base/element.js'
      *   ],function(_p){
-     *       // 设置样式.item{width:300px;}到缓存中
-     *       _p._$pushCSSText('.item{width:300px;}');
+     *       // 设置样式到缓存中，自动生成样式名
+     *       _p._$pushCSSText('.#<class>{width:300px;}');
      *
-     *       // 把缓存中的样式内联到页面
-     *       _p._$dumpCSSText();
+     *       // 把缓存中的样式内联到页面，返回自动生成的类名#<class>
+     *       var _class = _p._$dumpCSSText();
      *   });
      * [/code]
      *
@@ -1942,14 +1939,13 @@ NEJ.define([
      *
      * @see    {#_$pushCSSText}
      * @api    {_$dumpCSSText}
-     * @return {THIS} 调用对象
+     * @return {Void}
      */
     _p._$dumpCSSText = function(){
         if (!!_cspol){
             _p._$addStyle(_cspol.join(' '));
             _cspol = null;
         }
-        return this;
     };
     /**
      * 追加CSS规则
@@ -2008,7 +2004,7 @@ NEJ.define([
      * @api    {_$addClassName}
      * @param  {String|Node} 要操作的节点标识或者节点对象
      * @param  {String}      要新增的样式类名称
-     * @return {THIS}        调用对象
+     * @return {Void}
      */
     _p._$addClassName = function(_element,_class){
         _element = _e._$get(_element);
@@ -2017,7 +2013,6 @@ NEJ.define([
                 _element,'add',_class
             );
         }
-        return this;
     };
     /**
      * 删除样式类，多个样式用空格分开<br/>
@@ -2046,7 +2041,7 @@ NEJ.define([
      * @api    {_$delClassName}
      * @param  {String|Node} 要操作的节点标识或者节点对象
      * @param  {String}      要删除的样式类名称
-     * @return {THIS}        调用对象
+     * @return {Void}
      */
     _p._$delClassName = function(_element,_class){
         _element = _e._$get(_element);
@@ -2055,7 +2050,6 @@ NEJ.define([
                 _element,'remove',_class
             );
         }
-        return this;
     };
     /**
      * 替换节点的样式类名称，多个样式用空格分隔<br/>
@@ -2086,7 +2080,7 @@ NEJ.define([
      * @param  {String|Node} 要操作的节点标识或者节点对象
      * @param  {String}      要删除的样式类名称
      * @param  {String}      要新增的样式类名称
-     * @return {THIS}
+     * @return {Void}
      */
     _p._$replaceClassName = function(_element,_del,_add){
         _element = _e._$get(_element);
@@ -2096,7 +2090,6 @@ NEJ.define([
                 _del,_add
             );
         }
-        return this;
     };
     /**
      * 检测节点是否包含指定样式，多个样式用空格分隔，检测时包含其中之一即表示包含<br/>
@@ -2176,7 +2169,7 @@ NEJ.define([
      * @param  {String|Node} 节点标识或者对象
      * @param  {String}      变换类型，matrix/translate/scale/rotate
      * @param  {Object}      变换值，{x:1,y:2,z:3,a:'30deg'}
-     * @return {THIS}        调用对象
+     * @return {Void}
      */
     _p._$css3d = function(_element,_name,_map){
         _element = _p._$get(_element);
@@ -2186,7 +2179,6 @@ NEJ.define([
                 _p._$setStyle(_element,'transform',_value);
             }
         }
-        return this;
     };
 
     if (CMPT){

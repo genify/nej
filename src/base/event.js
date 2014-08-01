@@ -106,7 +106,7 @@ NEJ.define([
      * @param  {String}      事件类型，不带on前缀，不区分大小写，多个事件用空格分隔
      * @param  {Function}    事件处理函数
      * @param  {Boolean}     是否捕获阶段事件，IE低版本浏览器忽略此参数
-     * @return {THIS}        调用对象
+     * @return {Void}
      */
     _p._$addEvent = (function(){
         // cache event
@@ -127,32 +127,30 @@ NEJ.define([
         };
         return function(){
             var _args = _doFormatArgs.apply(null,arguments);
-            if (!!_args){
-                _u._$forEach(
-                    _args.type,function(_name){
-                        var _argc = _h.__checkEvent(
-                            _args.element,
-                            _name,_args.handler
-                        );
-                        // add event
-                        _h.__addEvent(
-                            _args.element,_argc.type,
-                            _argc.handler,_args.capture
-                        );
-                        // add event link
-                        _u._$forIn(
-                            _argc.link,function(_item){
-                                _item[3] = !!_item[3];
-                                _h.__addEvent.apply(_h,_item);
-                                _item[0] = _e._$id(_item[0]);
-                            }
-                        );
-                        // cache event
-                        _doCacheEvent(_name,_args,_argc);
-                    }
-                );
-            }
-            return this;
+            if (!_args) return;
+            _u._$forEach(
+                _args.type,function(_name){
+                    var _argc = _h.__checkEvent(
+                        _args.element,
+                        _name,_args.handler
+                    );
+                    // add event
+                    _h.__addEvent(
+                        _args.element,_argc.type,
+                        _argc.handler,_args.capture
+                    );
+                    // add event link
+                    _u._$forIn(
+                        _argc.link,function(_item){
+                            _item[3] = !!_item[3];
+                            _h.__addEvent.apply(_h,_item);
+                            _item[0] = _e._$id(_item[0]);
+                        }
+                    );
+                    // cache event
+                    _doCacheEvent(_name,_args,_argc);
+                }
+            );
         };
     })();
     /**
@@ -201,7 +199,7 @@ NEJ.define([
      * @param  {String}      事件类型，不带on前缀，不区分大小写，多个事件用空格分隔
      * @param  {Function}    事件处理函数
      * @param  {Boolean}     是否捕获阶段事件
-     * @return {THIS}        调用对象
+     * @return {Void}
      */
     _p._$delEvent = (function(){
         var _unCacheEvent = function(_type,_conf){
@@ -238,19 +236,17 @@ NEJ.define([
         };
         return function(){
             var _args = _doFormatArgs.apply(null,arguments);
-            if (!!_args){
-                _u._$forEach(
-                    _args.type,function(_name){
-                        _u._$forEach(
-                            _unCacheEvent(_name,_args),
-                            function(_item){
-                                _h.__delEvent.apply(_h,_item);
-                            }
-                        );
-                    }
-                );
-            }
-            return this;
+            if (!_args) return;
+            _u._$forEach(
+                _args.type,function(_name){
+                    _u._$forEach(
+                        _unCacheEvent(_name,_args),
+                        function(_item){
+                            _h.__delEvent.apply(_h,_item);
+                        }
+                    );
+                }
+            );
         };
     })();
     /**
@@ -298,7 +294,7 @@ NEJ.define([
      * @api    {_$clearEvent}
      * @param  {String|Node} 节点ID或者对象
      * @param  {String}      事件类型，不带on前缀，不区分大小写，多个事件用空格分隔
-     * @return {THIS}        调用对象
+     * @return {Void}
      */
     _p._$clearEvent = (function(){
         var _doClearEvent = function(_id,_list){
@@ -313,28 +309,26 @@ NEJ.define([
         };
         return function(_element,_type){
             var _id = _e._$id(_element);
-            if (!!_id){
-                var _cch_id = _xcache[_id];
-                if (!!_cch_id){
-                    _type = _getTypeList(_type);
-                    if (!!_type){
-                        // clear event by type
-                        _u._$forEach(
-                            _type,function(_name){
-                                _doClearEvent(_id,_cch_id[_name]);
-                            }
-                        );
-                    }else{
-                        // clear all event
-                        _u._$forIn(
-                            _cch_id,function(_value,_name){
-                                _p._$clearEvent(_element,_name);
-                            }
-                        );
-                    }
+            if (!_id) return;
+            var _cch_id = _xcache[_id];
+            if (!!_cch_id){
+                _type = _getTypeList(_type);
+                if (!!_type){
+                    // clear event by type
+                    _u._$forEach(
+                        _type,function(_name){
+                            _doClearEvent(_id,_cch_id[_name]);
+                        }
+                    );
+                }else{
+                    // clear all event
+                    _u._$forIn(
+                        _cch_id,function(_value,_name){
+                            _p._$clearEvent(_element,_name);
+                        }
+                    );
                 }
             }
-            return this;
         };
     })();
     /**
@@ -378,7 +372,7 @@ NEJ.define([
      * @api    {_$dispatchEvent}
      * @param  {String|Node} 节点ID或者对象
      * @param  {String}      鼠标事件类型，不区分大小写，多个事件用空格分隔
-     * @return {THIS}        调用对象
+     * @return {Void}
      */
     _p._$dispatchEvent = function(_element,_type,_options){
         var _element = _e._$get(_element);
@@ -391,7 +385,6 @@ NEJ.define([
                 }
             );
         }
-        return this;
     };
     /**
      * 获取触发事件的节点，可以传入过滤接口来遍历父节点找到符合条件的节点<br/>
@@ -543,12 +536,11 @@ NEJ.define([
      * @see    {#_$stopDefault}
      * @api    {_$stop}
      * @param  {Event} 要阻止的事件对象
-     * @return {THIS}  调用对象
+     * @return {Void}
      */
     _p._$stop = function(_event){
         _p._$stopBubble(_event);
         _p._$stopDefault(_event);
-        return this;
     };
     /**
      * 阻止事件的冒泡传递<br/>
@@ -587,7 +579,7 @@ NEJ.define([
      * @see    {#_$stop}
      * @api    {_$stopBubble}
      * @param  {Event} 要阻止的事件对象
-     * @return {THIS}  调用对象
+     * @return {Void}
      */
     _p._$stopBubble = function(_event){
         if (!!_event){
@@ -595,7 +587,6 @@ NEJ.define([
             ? _event.stopPropagation()
             : _event.cancelBubble = !0;
         }
-        return this;
     };
     /**
      * 阻止标签的默认事件<br/>
@@ -633,7 +624,7 @@ NEJ.define([
      * @see    {#_$stop}
      * @api    {_$stopDefault}
      * @param  {Event} 要阻止的事件对象
-     * @return {THIS}  调用对象
+     * @return {Void}
      */
     _p._$stopDefault = function(_event) {
         if (!!_event){
@@ -641,7 +632,6 @@ NEJ.define([
             ? _event.preventDefault()
             : _event.returnValue = !1;
         }
-        return this;
     };
     /**
      * 取事件相对于页面的位置<br/>
