@@ -7,8 +7,10 @@
  */
 NEJ.define([
     '{lib}base/global.js',
-    '{lib}base/util.js'
-],function(NEJ,_u,_p,_o,_f,_r){
+    '{lib}base/util.js',
+    './proxy/xhr.js',
+    '{platform}xdr.js'
+],function(NEJ,_u,_t,_h,_p,_o,_f,_r){
     // sn:{req:proxy,onload:function(){},onerror:function(){}}
     var _xcache = {},
         _doFilter = _f;
@@ -41,14 +43,13 @@ NEJ.define([
      * 
      * @api    {_$abort}
      * @param  {String} 请求标识
-     * @return {THIS}   调用对象
+     * @return {Void}
      */
     _p._$abort = function(_sn){
         var _cache = _xcache[_sn];
         if (!!_cache){
             _cache.req._$abort();
         }
-        return this;
     };
     /**
      * 全局请求过滤器，过滤器中可以通过设置输入事件对象的stopped值阻止继续回调<br/>
@@ -83,11 +84,10 @@ NEJ.define([
      * 
      * @api    {_$filter}
      * @param  {Function} 过滤器
-     * @return {THIS}     调用对象
+     * @return {Void}
      */
     _p._$filter = function(_filter){
         _doFilter = _filter||_f;
-        return this;
     };
     /**
      * 发送ajax请求<br/>
@@ -141,6 +141,7 @@ NEJ.define([
      * @return {String} 分配给请求的ID
      * 
      * [hr]
+     * 
      * 载入回调
      * @event  {onload}
      * @param  {Variable|Object} 请求返回数据，根据请求时type指定格式返回，
@@ -148,6 +149,7 @@ NEJ.define([
      *                           数据结果从此对象的data属性中取，如{headers:{'x-res-0':'12345', ...},data:{a:'aaa', ...}}
      * 
      * [hr]
+     * 
      * 出错回调
      * @event  {onerror}  
      * @param  {Object}   错误信息
@@ -156,9 +158,12 @@ NEJ.define([
      * @config {Variable} data    出错时携带数据
      * 
      * [hr]
+     * 
      * 请求之前对数据处理回调
      * @event  {onbeforerequest} 
-     * @param  {Object} 数据对象
+     * @param  {Object} 请求信息
+     * @config {Object} request 请求参数，数据信息 url/sync/cookie/type/method/timeout
+     * @config {Object} headers 请求头信息
      */
     _p._$request = (function(){
         var _location = (location.protocol+'//'
@@ -176,7 +181,7 @@ NEJ.define([
         var _getProxy = function(_options){
             var _upload = _isUpload(_options.headers);
             if (!_isXDomain(_options.url)&&!_upload)
-                return _p._$$XHRProxy._$allocate(_options);
+                return _t._$$XHRProxy._$allocate(_options);
             return _h.__getProxyByMode(_options.mode,_upload,_options);
         };
         // parse ext result
@@ -261,7 +266,8 @@ NEJ.define([
     })();
     /**
      * 文件上传<br/>
-     * 页面结构举例
+     * 
+     * 结构举例
      * [code type="html"]
      *   <form id="upload" name="upload" action="http://123.163.com:3000/xhr/uploadCallback">
      *      <input type="text" id="progress" />
@@ -269,6 +275,7 @@ NEJ.define([
      *      <input type="hidden" name="nej_query" value="http://123.163.com:3000/xhr/progress" />
      *   </form>
      * [/code]
+     * 
      * 脚本举例
      * [code]
      *   var _j = NEJ.P('nej.j');
@@ -290,6 +297,7 @@ NEJ.define([
      *       // 文件上传完成的回调,url为返回的地址
      *   }});
      * [/code]
+     * 
      * @api    {_$upload}
      * @param  {HTMLFormElement}   表单对象，待上传的文件及目标地址信息封装在此对象中
      * @param  {Object}            可选配置参数,已处理参数列表如下：
@@ -302,12 +310,14 @@ NEJ.define([
      * 
      * [hr]
      * 
-     * @event  {onload}   载入回调
+     * 载入回调
+     * @event  {onload}   
      * @param  {Variable} 请求返回数据，根据请求时type指定格式返回
      * 
      * [hr]
      * 
-     * @event  {onerror}  出错回调
+     * 出错回调
+     * @event  {onerror}  
      * @param  {Object}   错误信息
      * @config {Number}   code    错误代码
      * @config {String}   message 错误描述
@@ -315,13 +325,17 @@ NEJ.define([
      * 
      * [hr]
      * 
-     * @event  {onuploading} 上传进度回调
+     * 上传进度回调
+     * @event  {onuploading} 
      * @param  {Object} 数据对象
      * 
      * [hr]
      * 
-     * @event  {onbeforerequest} 请求之前对数据处理回调
-     * @param  {Object} 数据对象
+     * 请求之前对数据处理回调
+     * @event  {onbeforerequest} 
+     * @param  {Object} 请求信息
+     * @config {Object} request 请求参数，数据信息 url/sync/cookie/type/method/timeout
+     * @config {Object} headers 请求头信息
      * 
      */
     _p._$upload = function(_form,_options){
