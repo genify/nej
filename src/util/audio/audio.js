@@ -5,19 +5,18 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _f = NEJ.F,
-        _e = _('nej.e'),
-        _h = _('nej.h'),
-        _t = _('nej.ut');
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/util.js',
+    '{platform}audio.js'
+],function(NEJ,_u,_h,_p,_o,_f,_r){
     /**
      * 取音频播放器实例
      * @api    {nej.e._$audio}
      * @param {Object} 配置信息
      * @return {nej.ut._$$Media} 音频播放器实例
      */
-    _e._$audio = function(_options){
+    _p._$audio = function(_options){
         return _h.__getAudioInst(_options);
     };
     /**
@@ -62,7 +61,7 @@ var f = function(){
      * @config {Function} onerror      播放异常回调事件
      * @return {Void}
      */
-    _e._$playBgSound = (function(){
+    _p._$playBgSound = (function(){
         // audio player cache
         // url   - audio url
         // conf  - play config
@@ -150,7 +149,7 @@ var f = function(){
          * @param  {String} 播放标识
          * @return {Void}
          */
-        _e._$stopBgSound = function(_key){
+        _p._$stopBgSound = function(_key){
             var _cch = _pcache[_key||'auto-audio'];
             if (!!_cch){
                 _cch.audio._$stop();
@@ -158,7 +157,7 @@ var f = function(){
         };
         return function(_url,_options){
             if (!_url) return;
-            var _playing = NEJ.X({},_options),
+            var _playing = _u._$merge({},_options),
                 _key = _playing.key||'auto-audio',
                 _cch = _pcache[_key];
             // stop last
@@ -175,5 +174,10 @@ var f = function(){
             _doPlayAction(_key);
         };
     })();
-};
-NEJ.define('{lib}util/audio/audio.js',['{platform}audio.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.e'),_p);
+    }
+
+    return _p;
+});

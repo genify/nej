@@ -1,16 +1,14 @@
-var f = function(){
+define([
+    './audio.js'
+],function(_h,_p,_o,_f,_r){
 	// ie6-8 audio patch
-	NEJ.patch('TR<=4.0',['{lib}util/media/flash.js'],function(){
-	    var _  = NEJ.P,
-	        _p = _('nej.p'),
-	        _h = _('nej.h'),
-	        _t = _('nej.ut');
+	NEJ.patch('TR<=4.0',['{lib}util/media/flash.js'],function(_t){
 	    /**
 	     * 取音频播放器实例
 	     * @return {Object} 配置信息
 	     * @return {nej.ut._$$Media} 音频播放器实例
 	     */
-	    _h.__getAudioInst = 
+	    _h.__getAudioInst =
 	    _h.__getAudioInst._$aop(function(_event){
 	        // use flash player for ie8-
             _event.stopped = !0;
@@ -18,5 +16,6 @@ var f = function(){
 	                           _$allocate(_event.args[0]);
 	    });
 	});
-};
-define(['./audio.js'],f);
+
+	return _h;
+});
