@@ -5,32 +5,32 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _c = _('nej.c'),
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _j = _('nej.j'),
-        _p = _('nej.ut.j'),
-        _cache = {},
-        _proFrameProxy;
-    if (!!_p._$$FrameProxy) return;
+NEJ.define([
+    './proxy.js',
+    '{lib}base/util.js',
+    '{lib}base/klass.js',
+    '{lib}base/event.js',
+    '{lib}base/config.js',
+    '{lib}base/element.js',
+    '{lib}util/ajax/message.js'
+],function(_t,_u,_k,_v,_c,_e,_j,_p,_o,_f,_r){
+    var _pro,
+        _cache = {};
     /**
      * Frame代理方式Ajax请求对象
      * 
-     * @class   {nej.ut.j._$$FrameProxy}
-     * @extends {nej.ut.j._$$Proxy}
+     * @class   {_$$FrameProxy}
+     * @extends {_$$Proxy}
      * 
-     * 
+     * @param   {Object}  构造配置参数
      */
-    _p._$$FrameProxy = NEJ.C();
-      _proFrameProxy = _p._$$FrameProxy._$extend(_p._$$Proxy);
+    _p._$$FrameProxy = _k._$klass();
+    _pro = _p._$$FrameProxy._$extend(_t._$$Proxy);
     /**
      * 控件初始化
      * @return {Void}
      */
-    _proFrameProxy.__init = (function(){
+    _pro.__init = (function(){
         var _flag = 'NEJ-AJAX-DATA:',
             _init = !1;
         // receive message
@@ -48,11 +48,14 @@ var f = function(){
         var _doInitMessage = function(){
             if (!_init){
                 _init = !0;
-                _v._$addEvent(window,'message',_doReceiveMessage);
+                _v._$addEvent(
+                    window,'message',
+                    _doReceiveMessage
+                );
             }
         };
         return function(){
-            this.__supInit();
+            this.__super();
             _doInitMessage();
         };
     })();
@@ -61,41 +64,50 @@ var f = function(){
      * @param  {Object} 请求信息
      * @return {Void}
      */
-    _proFrameProxy.__doSendRequest = function(_options){
+    _pro.__doSendRequest = function(_options){
         var _request = _options.request,
             _proxy = _c._$getFrameProxy(_request.url),
             _frame = _cache[_proxy];
         // callback list
         if (_u._$isArray(_frame)){
-            _frame.push(this.__doSendRequest
-                            ._$bind(this,_options));
+            _frame.push(
+                this.__doSendRequest.
+                    _$bind(this,_options)
+            );
             return;
         }
         // build frame proxy
         if (!_frame){
-            _cache[_proxy] = [this.__doSendRequest
-                                  ._$bind(this,_options)];
+            _cache[_proxy] = [
+                this.__doSendRequest.
+                    _$bind(this,_options)
+            ];
             _e._$createXFrame({
                 src:_proxy,visible:!1,
                 onload:function(_event){
                     var _list = _cache[_proxy];
-                    _cache[_proxy] = _v._$getElement(
-                                     _event).contentWindow;
-                    _u._$reverseEach(_list,
-                        function(_handler){
-                            try{_handler();}catch(e){}
-                        });
+                    _cache[_proxy] = _v.
+                        _$getElement(_event).contentWindow;
+                    _u._$reverseEach(
+                        _list,function(_handler){
+                            try{
+                                _handler();
+                            }catch(ex){
+                                // ignore
+                            }
+                        }
+                    );
                 }
             });
             return;
         }
         // send message to frame
-        this.__rkey = 'frm-'+_u._$randNumberString();
+        this.__rkey = _u._$uniqueID();
         _cache[this.__rkey] = this;
-        var _data = NEJ.EX({
-                url:'',data:null,
-                timeout:0,method:'GET'
-            },_request);
+        var _data = _u._$fetch({
+            url:'',data:null,
+            timeout:0,method:'GET'
+        },_request);
         _data.key = this.__rkey;
         _data.headers = _options.headers;
         _j._$postMessage(_cache[_proxy],{data:_data});
@@ -103,14 +115,12 @@ var f = function(){
     /**
      * 中断请求
      * @method {_$abort}
-     * @return {nej.ut.j._$$FrameProxy}
+     * @return {Void}
      */
-    _proFrameProxy._$abort = function(){
+    _pro._$abort = function(){
         delete _cache[this.__rkey];
         this.__onLoadRequest({status:0});
-        return this;
     };
-};
-NEJ.define('{lib}util/ajax/proxy/frame.js',
-      ['{lib}util/ajax/message.js'
-      ,'{lib}util/ajax/proxy/proxy.js'],f);
+    
+    return _p;
+});

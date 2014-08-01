@@ -6,11 +6,12 @@
  * ------------------------------------------
  */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/util.js',
     './proxy/xhr.js',
+    '{lib}base/util.js',
+    '{lib}base/global.js',
+    '{lib}base/element.js',
     '{platform}xdr.js'
-],function(NEJ,_u,_t,_h,_p,_o,_f,_r){
+],function(_t,_u,NEJ,_e,_h,_p,_o,_f,_r){
     // sn:{req:proxy,onload:function(){},onerror:function(){}}
     var _xcache = {},
         _doFilter = _f;
@@ -278,24 +279,26 @@ NEJ.define([
      * 
      * 脚本举例
      * [code]
-     *   var _j = NEJ.P('nej.j');
-     *   var _upload = this._e._$get('upload');
-     *   var _progress = this._e._$get('progress');
-     *   _p._$upload(_upload,{
-     *   mode:2,
-     *   cookie:true,
-     *   onuploading:function(_data){
-     *       // 后台处理http://123.163.com:3000/xhr/progress，返回一个json对象
-     *       // 前台会去轮询此接口获取进度
-     *       if(!!_data.total&&_data.progress){
-     *           _progress.value = _data.progress;
-     *       }
-     *   },
-     *   onload:function(_url){
-     *       // 此前会把进度轮询终止掉。如果要显示进度100%，可在此设置一次
-     *       // 后台处理http://123.163.com:3000/xhr/uploadCallback，返回url
-     *       // 文件上传完成的回调,url为返回的地址
-     *   }});
+     *   NEJ.define([
+     *       '{lib}util/event.js'
+     *   ],function(_p){
+     *       _p._$upload('upload',{
+     *           mode:2,
+     *           cookie:true,
+     *           onuploading:function(_data){
+     *               // 后台处理http://123.163.com:3000/xhr/progress，返回一个json对象
+     *               // 前台会去轮询此接口获取进度
+     *               if(!!_data.total&&_data.progress){
+     *                   _progress.value = _data.progress;
+     *               }
+     *           },
+     *           onload:function(_url){
+     *               // 此前会把进度轮询终止掉。如果要显示进度100%，可在此设置一次
+     *               // 后台处理http://123.163.com:3000/xhr/uploadCallback，返回url
+     *               // 文件上传完成的回调,url为返回的地址
+     *           }
+     *       });
+     *   });
      * [/code]
      * 
      * @api    {_$upload}
@@ -339,7 +342,12 @@ NEJ.define([
      * 
      */
     _p._$upload = function(_form,_options){
-        var _option = {
+        _form = _e._$get(_form);
+        if (!_form){
+            return '';
+        }
+        // init param
+        var _option = _u._$fetch({
             mode:0,
             type:'json',
             query:null,
@@ -349,8 +357,7 @@ NEJ.define([
             onerror:null,
             onuploading:null,
             onbeforerequest:null
-        };
-        _u._$fetch(_option,_options);
+        },_options);
         _option.data = _form;
         _option.method = 'POST';
         _option.timeout = 0;

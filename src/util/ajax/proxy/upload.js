@@ -5,31 +5,30 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _g = _('nej.g'),
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _j = _('nej.j'),
-        _p = _('nej.ut.j'),
+NEJ.define([
+    './proxy.js',
+    '{lib}base/util.js',
+    '{lib}base/element.js',
+    '{lib}base/constant.js',
+    '{lib}util/ajax/xdr.js',
+    '{lib}util/ajax/message.js'
+],function(_t,_u,_e,_g,_j0,_j1,_p,_o,_f,_r){
+    var _pro,
         _cache = {},
-        _flag = 'NEJ-UPLOAD-RESULT:',
-        _pro;
-    if (!!_p._$$UploadProxy) return;
+        _xflag = 'NEJ-UPLOAD-RESULT:';
     /**
      * 文件上传代理
      * 
-     * @class   {nej.ut.j._$$UploadProxy}
-     * @extends {nej.ut._$$Proxy}
-     * @param   {Object}  构造配置参数
+     * @class   {_$$UploadProxy}
+     * @extends {_$$Proxy}
      * 
+     * @param   {Object}  构造配置参数
      */
-    _p._$$UploadProxy = NEJ.C();
-    _pro = _p._$$UploadProxy._$extend(_p._$$Proxy);
+    _p._$$UploadProxy = _k._$klass();
+    _pro = _p._$$UploadProxy._$extend(_t._$$Proxy);
     /**
      * 控件初始化
+     * @method {__init}
      * @return {Void}
      */
     _pro.__init = (function(){
@@ -37,23 +36,27 @@ var f = function(){
         // receive message callback
         var _doReceiveMessage = function(_event){
             var _data = _event.data;
-            if (_data.indexOf(_flag)!=0) return;
-            _data = JSON.parse(_data.replace(_flag,''));
+            if (_data.indexOf(_xflag)!=0) return;
+            _data = JSON.parse(_data.replace(_xflag,''));
             var _proxy = _cache[_data.key];
             if (!_proxy) return;
             delete _cache[_data.key];
             _proxy.__onLoadRequest(
-                decodeURIComponent(_data.result));
+                decodeURIComponent(_data.result)
+            );
         };
         // init message listener
         var _doInitMessage = function(){
             if (!_init){
                 _init = !0;
-                _v._$addEvent(window,'message',_doReceiveMessage);
+                _v._$addEvent(
+                    window,'message',
+                    _doReceiveMessage
+                );
             }
         };
         return function(){
-            this.__supInit();
+            this.__super();
             _doInitMessage();
         };
     })();
@@ -64,7 +67,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         _e._$remove(this.__frame);
         delete this.__frame;
         window.clearTimeout(this.__timer);
@@ -82,7 +85,7 @@ var f = function(){
         try{
             _json = JSON.parse(_text);
             this._$dispatchEvent('onload',_json);
-        }catch(e){
+        }catch(ex){
             this._$dispatchEvent('onerror',{
                 code:_g._$CODE_ERREVAL,
                 message:_text
@@ -104,12 +107,12 @@ var f = function(){
                 var _body = this.__frame.contentWindow.document.body,
                     _text = (_body.innerText||_body.textContent||'').trim();
                 // check result for same domain with upload proxy html
-                if (_text.indexOf(_flag)>=0||
-                    _body.innerHTML.indexOf(_flag)>=0){
+                if (_text.indexOf(_xflag)>=0||
+                    _body.innerHTML.indexOf(_xflag)>=0){
                     // use post message path
                     return;
                 }
-            }catch(e){
+            }catch(ex){
                 // ignore if not same domain
                 return;
             }
@@ -117,7 +120,7 @@ var f = function(){
         };
         // check upload progress
         var _doProgress = function(_url,_mode,_cookie){
-            _j._$request(_url,{
+            _j0._$request(_url,{
                 type:'json',
                 method:'POST',
                 cookie:_cookie,
@@ -126,12 +129,18 @@ var f = function(){
                     if (!this.__timer) return;
                     this._$dispatchEvent('onuploading',_data);
                     this.__timer = window.setTimeout(
-                          _doProgress._$bind(this,_url,_mode,_cookie),1000);
+                        _doProgress._$bind(
+                            this,_url,_mode,_cookie
+                        ),1000
+                    );
                 }._$bind(this),
                 onerror:function(_error){
                     if (!this.__timer) return;
                     this.__timer = window.setTimeout(
-                          _doProgress._$bind(this,_url,_mode,_cookie),1000);
+                        _doProgress._$bind(
+                            this,_url,_mode,_cookie
+                        ),1000
+                    );
                 }._$bind(this)
             });
         };
@@ -139,7 +148,7 @@ var f = function(){
             var _request = _options.request,
                 _headers = _options.headers,
                 _form = _request.data,
-                _name = 'fom-'+_u._$randNumberString();
+                _name = _u._$uniqueID();
             _cache[_name]  = this;
             _form.target   = _name;
             _form.method   = 'POST';
@@ -152,15 +161,20 @@ var f = function(){
                 name:_name,
                 onload:function(_event){
                     var _frame = _v._$getElement(_event);
-                    _v._$addEvent(_frame,'load',
-                       _doCheckResult._$bind(this));
+                    _v._$addEvent(
+                        _frame,'load',
+                        _doCheckResult._$bind(this)
+                    );
                     _form.submit();
                     var _qurl = (_form.nej_query||_o).value;
                     if (!_qurl) return;
                     var _mode = (_form.nej_mode||_o).value,
-                        _cookie = (_form.nej_cookie||_o).value=='true';
+                        _cookie = (_form.nej_cookie||_o).value==='true';
                     this.__timer = window.setTimeout(
-                          _doProgress._$bind(this,_qurl,_mode,_cookie),100);
+                        _doProgress._$bind(
+                            this,_qurl,_mode,_cookie
+                        ),100
+                    );
                 }._$bind(this)
             });
         };
@@ -175,11 +189,7 @@ var f = function(){
             code:_g._$CODE_ERRABRT,
             message:'客户端终止文件上传'
         });
-        return this;
     };
-};
-NEJ.define(
-    '{lib}util/ajax/proxy/upload.js',[
-    '{lib}util/ajax/message.js',
-    '{lib}util/ajax/proxy/proxy.js'
-],f);
+    
+    return _p;
+});

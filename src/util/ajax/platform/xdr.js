@@ -12,13 +12,6 @@ NEJ.define([
     '../proxy/upload.js'
 ],function(_t0,_t1,_t2,_t3,_p,_o,_f,_r){
     /**
-     * 取XHR对象
-     * @return {XMLHttpRequest} XHR对象
-     */
-    _p.__getXMLHttpRequest = function(){
-        return new XMLHttpRequest();
-    };
-    /**
      * 根据模式返回代理实例，模式说明
      * 0 - 自动模式，高版本使用HTML5的CORS协议，低版本采用Frame代理方式
      * 1 - 高版本使用HTML5的CORS协议，普通请求低版本采用Flash代理方式

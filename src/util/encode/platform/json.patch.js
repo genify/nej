@@ -1,9 +1,9 @@
 var f = function(_m,_j,_3rd,_p){
-	// ie6-9
-	NEJ.patch(_m,'2.0<=TR<=5.0',['./3rd.json.js']);
+	// ie8-
+	NEJ.patch(_m,'TR<=5.0',['./3rd.json.js']);
 
 	// ie6 json patch
-    NEJ.patch(_m,'TR==2.0',['./3rd.json.js'],function(){
+    NEJ.patch(_m,'TR==2.0',['./3rd.json.js'],function(JSON){
 	    // eval for big string
 	    JSON.parse = (function(){
 	        // check save json string

@@ -5,23 +5,22 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _f = NEJ.F,
-        _c = _('nej.c'),
-        _g = _('nej.g'),
-        _e = _('nej.e'),
-        _u = _('nej.u'),
-        _j = _('nej.j'),
-        _t = _('nej.ut'),
-        _p = _('nej.ut.j'),
-        _pro;
-    if (!!_p._$$Proxy) return;
+NEJ.define([
+    '{lib}base/klass.js',
+    '{lib}base/util.js',
+    '{lib}base/element.js',
+    '{lib}base/config.js',
+    '{lib}base/constant.js',
+    '{lib}util/event.js',
+    '{lib}util/cache/cookie.js',
+    '{lib}util/encode/json.js'
+],function(_k,_u,_e,_c,_g,_t,_j,JSON,_p,_o,_f,_r){
+    var _pro;
     /**
      * Ajax代理对象
      * 
-     * @class   {nej.ut.j._$$Proxy}
-     * @extends {nej.ut._$$Event}
+     * @class   {_$$Proxy}
+     * @extends {_$$Event}
      * 
      * @param   {Object}  构造配置参数
      * @config  {String}  url     请求地址
@@ -32,22 +31,26 @@ var f = function(){
      * @config  {Object}  headers 头信息
      * 
      * [hr]
+     * 
      * 载入回调
      * @event {onload}
      * @param {Object} 数据信息
      * 
      * [hr]
+     * 
      * 异常回调
      * @event {onerror}
      * @param {Object}  数据信息
      * 
      * [hr]
+     * 
      * 请求之前对数据处理回调
      * @event {onbeforerequest}
-     * @param {Object}  数据信息
-     * 
+     * @param  {Object} 请求信息
+     * @config {Object} request 请求参数，数据信息 url/sync/cookie/type/method/timeout
+     * @config {Object} headers 请求头信息
      */
-    _p._$$Proxy = NEJ.C();
+    _p._$$Proxy = _k._$klass();
     _pro = _p._$$Proxy._$extend(_t._$$Event);
     /**
      * 控件重置
@@ -57,17 +60,16 @@ var f = function(){
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         // reset request information
-        this.__request = {
+        this.__request = _u._$fetch({
             url:'',
             sync:!1,
             cookie:!1,
             type:'text',
             method:'GET',
             timeout:60000
-        };
-        NEJ.EX(this.__request,_options);
+        },_options);
         // for csrf attack
         var _csrf = _c._$get('csrf');
         if (!!_csrf.cookie&&!!_csrf.param){
@@ -79,9 +81,9 @@ var f = function(){
         // reset headers
         this.__headers = _options.headers||{};
         var _content = this.__headers[_g._$HEAD_CT];
-        if (_content==null)
-            this.__headers[_g._$HEAD_CT] = 
-                           _g._$HEAD_CT_FORM;
+        if (_content==null){
+            this.__headers[_g._$HEAD_CT] = _g._$HEAD_CT_FORM;
+        }
     };
     /**
      * 回收控件
@@ -90,7 +92,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         delete this.__rkey;
         delete this.__request;
         delete this.__headers;
@@ -124,9 +126,12 @@ var f = function(){
             return;
         }
         // onload
-        this._$dispatchEvent('onload',
-             _e._$text2type(_event.result,
-                      this.__request.type));
+        this._$dispatchEvent(
+             'onload',_e._$text2type(
+                 _event.result,
+                 this.__request.type
+             )
+        );
     };
     /**
      * 往服务器发送请求，子类实现具体业务逻辑
@@ -137,10 +142,18 @@ var f = function(){
      */
     _pro.__doSendRequest = _f;
     /**
+     * 取头信息，子类实现具体业务逻辑
+     * @protected
+     * @method {__getResponseHeader}
+     * @param  {String} 要取的头信息名称
+     * @return {String} 头信息结果或集合
+     */
+    _pro.__getResponseHeader = _f;
+    /**
      * 发送请求
      * @method {_$send}
      * @param  {Variable} 要发送的数据
-     * @return {nej.ut.j._$$Proxy}
+     * @return {Void}
      */
     _pro._$send = function(_data){
         var _url = this.__request.url;
@@ -149,14 +162,14 @@ var f = function(){
                 code:_g._$CODE_NOTASGN,
                 message:'没有输入请求地址！'
             });
-            return this;
+            return;
         }
         try{
             this.__request.data = _data==null?null:_data;
             var _event = {
-                    request:this.__request,
-                    headers:this.__headers
-                };
+                request:this.__request,
+                headers:this.__headers
+            };
             // adjust param before request
             try{
                 this._$dispatchEvent('onbeforerequest',_event);
@@ -172,7 +185,6 @@ var f = function(){
                 message:'请求['+_url+']失败:'+e.message+'！'
             });
         }
-        return this;
     };
     /**
      * 中断请求，子类实现具体业务逻辑
@@ -180,14 +192,6 @@ var f = function(){
      * @return {Void}
      */
     _pro._$abort = _f;
-    /**
-     * 取头信息，子类实现具体业务逻辑
-     * @protected
-     * @method {__getResponseHeader}
-     * @param  {String}  要取的头信息名称
-     * @return {String} 头信息结果或集合
-     */
-    _pro.__getResponseHeader = _f;
     /**
      * 取头信息
      * @method {_$header}
@@ -206,14 +210,6 @@ var f = function(){
         );
         return _result;
     };
-};
-NEJ.define(
-    '{lib}util/ajax/proxy/proxy.js',[
-    '{lib}base/config.js',
-    '{lib}base/util.js',
-    '{lib}base/event.js',
-    '{lib}base/constant.js',
-    '{lib}base/element.js',
-    '{lib}util/event.js',
-    '{lib}util/cache/cookie.js'
-],f);
+    
+    return _p;
+});
