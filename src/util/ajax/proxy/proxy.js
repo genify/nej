@@ -31,19 +31,16 @@ NEJ.define([
      * @config  {Object}  headers 头信息
      * 
      * [hr]
-     * 
      * 载入回调
      * @event {onload}
      * @param {Object} 数据信息
      * 
      * [hr]
-     * 
      * 异常回调
      * @event {onerror}
      * @param {Object}  数据信息
      * 
      * [hr]
-     * 
      * 请求之前对数据处理回调
      * @event {onbeforerequest}
      * @param  {Object} 请求信息

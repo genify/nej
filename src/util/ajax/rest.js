@@ -5,54 +5,56 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    // variable declaration
-    var _ = NEJ.P,
-        _r = NEJ.R,
-        _o = NEJ.O,
-        _f = NEJ.F,
-        _g = _('nej.g'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _j = _('nej.j'),
-        _t = _('nej.ut'),
-        _cache = {};  // request cache - sn:{s:funciton(){},f:function(){}}
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/event.js',
+    '{lib}base/util.js',
+    '{lib}base/constant.js',
+    '{lib}util/ajax/xdr.js',
+    '{lib}util/event/event.js'
+],function(NEJ,_v,_u,_g,_j,_t,_p,_o,_f,_r){
     /**
      * 使用REST进行数据交互接口<br/>
      * 脚本举例
      * [code]
-     *   // 通用错误处理，所有请求异常均会调用此回调处理
-     *   nej.v._$addEvent(
-     *       window,'resterror',function(_error){
-     *           // _error.code
-     *           // _error.message
-     *           // _error.data
-     *           // 通过设置_error.stopped阻止事件回调到请求的onerror中
-     *       }
-     *   );
+     *   NEJ.define([
+     *       '{lib}base/event.js',
+     *       '{lib}util/ajax/rest.js'
+     *   ],function(_v,_p){
+     *       // 通用错误处理，所有请求异常均会调用此回调处理
+     *       _v._$addEvent(
+     *           window,'resterror',function(_error){
+     *               // _error.code
+     *               // _error.message
+     *               // _error.data
+     *               // 通过设置_error.stopped阻止事件回调到请求的onerror中
+     *           }
+     *       );
      * 
-     *   var url = "http://a.b.com/rest/list";
-     *   var opt = {
-     *        param:{brand:'nokia',model:'9'}
-     *       ,data:'123'
-     *       ,method:'post'
-     *       ,onload:function(_data){
-     *           // 请求正常回调
+     *       var url = "http://a.b.com/rest/list";
+     *       var opt = {
+     *            param:{brand:'nokia',model:'9'},
+     *            data:'123',
+     *            method:'post',
+     *            onload:function(_data){
+     *                // 请求正常回调
+     *            },
+     *            onerror:function(_error){
+     *                // _error.code
+     *                // _error.message
+     *                // _error.data
+     *                // 如果window的resterror回调中stopped了事件则不会进入此回调
+     *            },
+     *            onbeforerequest:function(_event){
+     *                // _event.request
+     *                // _event.headers
+     *            }
      *       }
-     *       ,onerror:function(_error){
-     *           // _error.code
-     *           // _error.message
-     *           // _error.data
-     *           // 如果window的resterror回调中stopped了事件则不会进入此回调
-     *       },
-     *       onbeforerequest:function(_event){
-     *           // _event.request
-     *           // _event.headers
-     *       }
-     *   }
-     *   nej.j._$requestByREST(url,opt);
+     *       _p._$requestByREST(url,opt);
+     *   });
      * [/code]
-     * @api    {nej.j._$requestByREST}
+     * 
+     * @api    {_$requestByREST}
      * @param  {String} 请求地址
      * @param  {Object} 可选配置参数，已处理参数列表如下
      * @config {Boolean}  sync    是否同步请求
@@ -62,7 +64,7 @@ var f = function(){
      * @config {Number}   timeout 超时时间,0 禁止超时监测
      * @config {Object}   headers 头信息
      * @config {Object}   result  onload回调输入时需包含的额外信息
-     * @return {nej.j}
+     * @return {Void}
      * 
      * [hr]
      * 载入完成回调函数
@@ -93,12 +95,12 @@ var f = function(){
      * @config {Variable} data    出错时携带数据
      * @config {Boolean}  stopped 是否阻止当个请求中的onerror回调
      */
-    _j._$requestByREST = (function(){
-        var _reg0 = /\{(.*?)\}/gi,
+    _p._$requestByREST = (function(){
+        var _cache = {},  // request cache - sn:{s:funciton(){},f:function(){}}
+            _reg0 = /\{(.*?)\}/gi,
             _reg1 = /^get|delete|head$/i,
             _jsn = /json/i,
-            _xml = /xml/i,
-            _seed = +new Date;
+            _xml = /xml/i;
         // clear request
         var _doClear = function(_key){
             var _request = _cache[_key];
@@ -137,7 +139,9 @@ var f = function(){
             }
             // do error filter
             // set error attr stopped=!0 will stop request error callback
-            _v._$dispatchEvent(window,'resterror',_error);
+            _v._$dispatchEvent(
+                window,'resterror',_error
+            );
             if (!!_error.stopped){
                 _doClear(_key);
                 return;
@@ -147,7 +151,8 @@ var f = function(){
         };
         // check default headers
         var _doCheckWithDefault = function(_headers,_key,_default){
-            var _value = _headers[_key]||_headers[_key.toLowerCase()];
+            var _value = _headers[_key]||
+                         _headers[_key.toLowerCase()];
             if (!_value){
                 _value = _default;
                 _headers[_key] = _value;
@@ -161,7 +166,7 @@ var f = function(){
             }
         };
         return function(_url,_options){
-            _options = NEJ.X({},_options);
+            _options = _u._$merge({},_options);
             var _exist = {},
                 _param = _options.param||_o;
             // parse uri template
@@ -191,7 +196,7 @@ var f = function(){
                 _type = 'xml';
             }
             // do request
-            var _key = 'rest-'+(_seed++);
+            var _key = _u._$uniqueID();
             _cache[_key] = {
                 s:_options.onload||_f,
                 f:_options.onerror||_f
@@ -211,19 +216,18 @@ var f = function(){
             _options.onload  = _onLoad._$bind(null,_key);
             _options.onerror = _onError._$bind(null,_key);
             _j._$request(_url,_options);
-            return this;
         };
     })();
+    
     // custom event on window.onresterror
     _t._$$CustomEvent._$allocate({
         element:window,
         event:'resterror'
     });
-};
-// define dependency
-NEJ.define(
-    '{lib}util/ajax/rest.js',[
-    '{lib}base/event.js',
-    '{lib}util/ajax/xdr.js',
-    '{lib}util/event/event.js'
-],f);
+    
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.j'),_p);
+    }
+    
+    return _p;
+});

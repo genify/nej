@@ -184,7 +184,6 @@ NEJ.define([
      * @return {Void}
      * 
      * [hr]
-     * 
      * 载入回调
      * @event  {onload}
      * @param  {Variable|Object} 请求返回数据，根据请求时type指定格式返回，
@@ -192,7 +191,6 @@ NEJ.define([
      *                           数据结果从此对象的data属性中取，如{headers:{'x-res-0':'12345', ...},data:{a:'aaa', ...}}
      * 
      * [hr]
-     * 
      * 出错回调
      * @event  {onerror}  
      * @param  {Object}   错误信息
@@ -201,7 +199,6 @@ NEJ.define([
      * @config {Variable} data    出错时携带数据
      * 
      * [hr]
-     * 
      * 请求之前对数据处理回调
      * @event  {onbeforerequest} 
      * @param  {Object} 请求信息
