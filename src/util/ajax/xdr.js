@@ -6,12 +6,12 @@
  * ------------------------------------------
  */
 NEJ.define([
-    './proxy/xhr.js',
-    '{lib}base/util.js',
     '{lib}base/global.js',
+    '{lib}base/util.js',
     '{lib}base/element.js',
+    './proxy/xhr.js',
     '{platform}xdr.js'
-],function(_t,_u,NEJ,_e,_h,_p,_o,_f,_r){
+],function(NEJ,_u,_e,_t,_h,_p,_o,_f,_r){
     // sn:{req:proxy,onload:function(){},onerror:function(){}}
     var _xcache = {},
         _doFilter = _f;
@@ -21,7 +21,7 @@ NEJ.define([
      * 脚本举例
      * [code]
      *   NEJ.define([
-     *       '{lib}util/event.js'
+     *       '{lib}util/ajax/xdr.js'
      *   ],function(_p){
      *       var _id = _p._$request('http://123.163.com/xhr/',{
      *           type:'json',
@@ -58,7 +58,7 @@ NEJ.define([
      * 脚本举例
      * [code]
      *   NEJ.define([
-     *       '{lib}util/event.js'
+     *       '{lib}util/ajax/xdr.js'
      *   ],function(_p){
      *       _p._$filter(function(_event){
      *           // 过滤掉404的异常，如果type是onload不做处理
@@ -96,7 +96,7 @@ NEJ.define([
      * 脚本举例
      * [code]
      *   NEJ.define([
-     *       '{lib}util/event.js'
+     *       '{lib}util/ajax/xdr.js'
      *   ],function(_p){
      *       var _id = _p._$request(
      *           'http://a.b.com/api',{
@@ -280,7 +280,7 @@ NEJ.define([
      * 脚本举例
      * [code]
      *   NEJ.define([
-     *       '{lib}util/event.js'
+     *       '{lib}util/ajax/xdr.js'
      *   ],function(_p){
      *       _p._$upload('upload',{
      *           mode:2,
