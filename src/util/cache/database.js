@@ -1,32 +1,50 @@
 /*
  * ------------------------------------------
- * 数据库管理器实现文件
+ * IndexedDB数据库管理器实现文件
  * @version  1.0
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    // variable declaration
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _r = NEJ.R,
-        _f = NEJ.F,
-        _u = _('nej.u'),
-        _j = _('nej.j'),
-        _p = _('nej.ut'),
-        _pro;
-    if (!!_p._$$DataBase) return;
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/util.js',
+    '{lib}util/event.js'
+],function(NEJ,_k,_u,_t,_p,_o,_f,_r){
     /**
-     * 数据库管理器
+     * IndexedDB数据库管理器<br/>
      * 
      * 代码举例：
      * [code]
-     *     
+     *   NEJ.define([
+     *       '{lib}util/cache/database.js'
+     *   ],function(_p){
+     *       // 使用控件取数据
+     *       var _db = _p._$$DataBase._$allocate({
+     *           namespace:'music.track'
+     *       });
+     *       _db._$get([1,2,3],{
+     *           onload:function(_result){
+     *               // result ->
+     *               // [{id:1,...},{id:2,...},{id:3,...}]
+     *           }
+     *       });
      * 
+     *       // 使用API取数据
+     *       _p._$requestByDB({
+     *           namespace:'music.track',
+     *           action:'get',
+     *           param:[1,2,3],
+     *           onload:function(_result){
+     *               // result ->
+     *               // [{id:1,...},{id:2,...},{id:3,...}]
+     *           }
+     *       });
+     *   });
      * [/code]
      * 
-     * @class   {nej.ut._$$DataBase}
-     * @extends {nej.ut._$$Event}
+     * @class   {_$$DataBase}
+     * @extends {_$$Event}
      * 
      * @param   {Object} 配置参数
      * @config  {String} namespace 名字空间，默认随机生成，格式[DB].[TB]，如 music.track
@@ -44,10 +62,12 @@ var f = function(){
      * @param   {Object}  错误信息
      * 
      */
-    _p._$$DataBase = NEJ.C();
-    _pro = _p._$$DataBase._$extend(_p._$$Event);
+    _p._$$DataBase = _k._$klass();
+    _pro = _p._$$DataBase._$extend(_t._$$Event);
     /**
      * 控件重置
+     * @protected
+     * @method {__reset}
      * @param  {Object} 配置参数
      * @return {Void}
      */
@@ -79,7 +99,7 @@ var f = function(){
             delete this.__queue;
         };
         return function(_options){
-            this.__supReset(_options);
+            this.__super(_options);
             var _arr = (_options.namespace||'').split('.'),
                 _dbname = _arr[0]||('db-'+_u._$uniqueID());
             this.__tbname = _arr[1]||('tb-'+_u._$uniqueID());
@@ -94,10 +114,12 @@ var f = function(){
     })();
     /**
      * 控件回收
+     * @protected
+     * @method {__destroy}
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         delete this.__dbname;
         delete this.__tbname;
         delete this.__queue;
@@ -109,6 +131,8 @@ var f = function(){
     };
     /**
      * 判断数据库是否已经准备好
+     * @protected
+     * @method {__isDBReady}
      * @return {Boolean} 是否已经准备好
      */
     _pro.__isDBReady = function(_method,_args){
@@ -125,6 +149,8 @@ var f = function(){
     };
     /**
      * 取存储操作对象
+     * @protected
+     * @method {__getTransaction}
      * @param  {Object}         配置信息
      * @return {IDBObjectStore} 存储操作对象
      */
@@ -145,6 +171,8 @@ var f = function(){
     };
     /**
      * 执行某个操作
+     * @protected
+     * @method {__doAction}
      * @param  {String}             操作名称，如put/delete
      * @param  {Object|Array}       操作的数据信息
      * @config {Function}  onload   成功回调
@@ -181,10 +209,12 @@ var f = function(){
         });
     };
     /**
-     * 异步取指定键的数据信息，代码示例：
+     * 异步取指定键的数据信息<br/>
+     * 
+     * 脚本举例
      * [code]
      *     // 取单个数据对象
-     *     db._$get('1234568',{
+     *     _db._$get('1234568',{
      *         onload:function(_data){
      *             // 数据对象
      *         },
@@ -193,8 +223,9 @@ var f = function(){
      *             // _error.message
      *         }
      *     });
+     * 
      *     // 取一批数据，以Map形式返回结果
-     *     db._$get({'123':null,'234':null,...},{
+     *     _db._$get({'123':null,'234':null,...},{
      *         onload:function(_map){
      *             // _map ->
      *             // {'123':{...},'234':{...}}
@@ -203,8 +234,9 @@ var f = function(){
      *             // 同上
      *         }
      *     });
+     * 
      *     // 取一批数据，以数组形式返回结果
-     *     db._$get(['123','234',...]},{
+     *     _db._$get(['123','234',...]},{
      *         onload:function(_result){
      *             // _result ->
      *             // [{...},{...},{...}]
@@ -214,6 +246,7 @@ var f = function(){
      *         }
      *     });
      * [/code]
+     * 
      * @method {_$get}
      * @param  {String|Object|Array} 指定数据的键
      * @param  {Object}              其他配置信息
@@ -276,11 +309,14 @@ var f = function(){
         };
     })();
     /**
-     * 添加单条记录，批量添加见_$import接口，代码示例：
+     * 添加单条记录，批量添加见_$import接口<br/>
+     * 
+     * 脚本举例
      * [code]
      *     // 添加记录
-     *     db._$add({id:'xxxx',name:'yyyyyy',...});
+     *     _db._$add({id:'xxxx',name:'yyyyyy',...});
      * [/code]
+     * 
      * @method {_$add}
      * @param  {Object|Array} 数据对象或者列表
      * @param  {Object}       其他配置信息
@@ -292,18 +328,21 @@ var f = function(){
         this._$update(_data,_options);
     };
     /**
-     * 更新数据，如果需要更新的数据是个HASH表，则可以使用_$import接口，代码示例：
+     * 更新数据，如果需要更新的数据是个HASH表，则可以使用_$import接口<br/>
+     * 
+     * 脚本举例
      * [code]
      *     // 更新单条记录
-     *     db._$update({id:'xxxx',name:'yyyyyy',...});
+     *     _db._$update({id:'xxxx',name:'yyyyyy',...});
      * 
      *     // 更新一个列表的数据
-     *     db._$update([
+     *     _db._$update([
      *         {id:'1111',name:'xxxx',...},
      *         {id:'2222',name:'ddddd',...},
      *         {id:'3333',name:'ggggggg',...}
      *     ]);
      * [/code]
+     * 
      * @method {_$update}
      * @param  {Array|Object} 数据对象或者数据列表
      * @param  {Object}       其他配置信息
@@ -317,15 +356,17 @@ var f = function(){
         this.__doAction('put',_data,_options);
     };
     /**
-     * 批量导入数据
-     * 代码示例：
+     * 批量导入数据<br/>
+     * 
+     * 代码举例
      * [code]
      *     // 数组形式批量添加记录
-     *     db._$import([
+     *     _db._$import([
      *         {id:'1111',name:'yyyyyy',...},
      *         {id:'2222',name:'yyyyyy',...},
      *         {id:'3333',name:'yyyyyy',...}
      *     ]);
+     * 
      *     // Hash表形式批量添加记录
      *     db._$import({
      *         1111:{id:'1111',name:'yyyyyy',...},
@@ -333,6 +374,7 @@ var f = function(){
      *         3333:{id:'3333',name:'yyyyyy',...}
      *     ]});
      * [/code]
+     * 
      * @method {_$import}
      * @param  {Array|Object} 数据集合或者数据列表
      * @param  {Object}       其他配置信息
@@ -343,14 +385,17 @@ var f = function(){
         this.__doAction('put',_hash,_options);
     };
     /**
-     * 删除记录，代码示例：
+     * 删除记录<br/>
+     * 
+     * 脚本举例
      * [code]
      *     // 删除单条记录
-     *     db._$delete('xxxx');
+     *     _db._$delete('xxxx');
      * 
      *     // 批量删除数据
-     *     db._$delete(['123','234']);
+     *     _db._$delete(['123','234']);
      * [/code]
+     * 
      * @method {_$delete}
      * @param  {String|Number|Array} 记录标识或者列表
      * @param  {Object}              其他配置信息
@@ -365,16 +410,19 @@ var f = function(){
         this.__doAction('delete',_ids,_options);
     };
     /**
-     * 清除表内容，代码示例：
+     * 清除表内容<br/>
+     * 
+     * 脚本举例
      * [code]
      *     // 清除表数据
-     *     db._$clear();
+     *     _db._$clear();
      * [/code]
-     * @method  {_$clear}
+     * 
+     * @method {_$clear}
      * @param  {Object}            其他配置信息
      * @config {Function}  onload  成功回调
      * @config {Function}  onerror 失败回调，输入结构{code:xxx,message:'xxxx'}
-     * @return  {Void}
+     * @return {Void}
      */
     _pro._$clear = function(_options){
         // remove all queue action
@@ -396,23 +444,27 @@ var f = function(){
         }).clear();
     };
     /**
-     * 请求数据库操作
-     * 从数据库请求数据，代码示例：
+     * 请求数据库操作，从数据库请求数据<br/>
+     * 
+     * 代码举例
      * [code]
-     *     var _  = NEJ.P,
-     *         _j = _('nej.j');
-     *     // 取数据
-     *     _j._$requestByDB({
-     *         namespace:'music.track',
-     *         action:'get',
-     *         param:[1,2,3],
-     *         onload:function(_result){
-     *             // result ->
-     *             // [{id:1,...},{id:2,...},{id:3,...}]
-     *         }
-     *     });
+     *   NEJ.define([
+     *       '{lib}util/cache/database.js'
+     *   ],function(_p){
+     *       // 取数据
+     *       _p._$requestByDB({
+     *           namespace:'music.track',
+     *           action:'get',
+     *           param:[1,2,3],
+     *           onload:function(_result){
+     *               // result ->
+     *               // [{id:1,...},{id:2,...},{id:3,...}]
+     *           }
+     *       });
+     *   });
      * [/code]
-     * @api    {nej.j._$requestByDB}
+     * 
+     * @api    {_$requestByDB}
      * @param  {Object}   可配置参数
      * @config {String}   namespace 名字空间
      * @config {String}   action    操作行为，支持get/add/clear/update/import/delete
@@ -423,8 +475,8 @@ var f = function(){
      * @config {Function} onerror   操作失败回调
      * @return {Void}
      */
-    _j._$requestByDB = function(_options){
-        var _opt = NEJ.X(
+    _p._$requestByDB = function(_options){
+        var _opt = _u._$merge(
             {},_options,function(_value){
                 return _u._$isFunction(_value);
             }
@@ -453,8 +505,10 @@ var f = function(){
             }
         });
     };
-};
-NEJ.define(
-    '{lib}util/cache/database.js',[
-    '{lib}util/event.js'
-],f);
+    
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.j'),_p);
+    }
+    
+    return _p;
+});
