@@ -23,18 +23,20 @@ NEJ.define([
      *   NEJ.define([
      *       '{lib}util/ajax/xdr.js'
      *   ],function(_p){
-     *       var _id = _p._$request('http://123.163.com/xhr/',{
-     *           type:'json',
-     *           method:'POST',
-     *           data:{name:'ABC'},
-     *           timeout:60000,
-     *           onload:function(_data){
-     *               // TODO
-     *           },
-     *           onerror:function(_error){
-     *               // TODO
+     *       var _id = _p._$request(
+     *           'http://123.163.com/xhr/',{
+     *               type:'json',
+     *               method:'POST',
+     *               data:{name:'ABC'},
+     *               timeout:60000,
+     *               onload:function(_data){
+     *                   // TODO
+     *               },
+     *               onerror:function(_error){
+     *                   // TODO
+     *               }
      *           }
-     *       });
+     *       );
      *       // 1秒后中断掉这个请求
      *       setTimeout(function(){
      *           _p._$abort(_id);
