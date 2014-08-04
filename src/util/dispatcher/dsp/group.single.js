@@ -5,36 +5,32 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _f = NEJ.F,
-        _e = _('nej.e'),
-        _p = _('nej.ut.p'),
-        _proSingleGroupManager;
-    if (!!_p._$$SingleGroupManager) return;
+NEJ.define([
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    './util.js',
+    './group.js'
+],function(_k,_e,_t0,_t1,_p,_o,_f,_r){
+    var _pro;
     /**
      * 模块分组管理器
      * 
-     * @class   {nej.ut.p._$$SingleGroupManager}
-     * @extends {nej.ut.p._$$GroupManager}
+     * @class   {_$$SingleGroupManager}
+     * @extends {_$$GroupManager}
      * 
      * @param  {Object}  可选配置参数
      * @config {Boolean} classed 是否需要切换样式
-     * 
-     * 
-     * 
      */
-    _p._$$SingleGroupManager = NEJ.C();
-      _proSingleGroupManager = _p._$$SingleGroupManager._$extend(_p._$$GroupManager);
+    _p._$$SingleGroupManager = _k._$klass();
+    _pro = _p._$$SingleGroupManager._$extend(_t1._$$GroupManager);
     /**
      * 控件重置
      * @protected
      * @method {__reset}
      * @return {Void}
      */
-    _proSingleGroupManager.__reset = function(_options){
-        this.__supReset(_options);
+    _pro.__reset = function(_options){
+        this.__super(_options);
         this.__classed = !!_options.classed;
     };
     /**
@@ -43,8 +39,8 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proSingleGroupManager.__destroy = function(){
-        this.__supDestroy();
+    _pro.__destroy = function(){
+        this.__super();
         delete this.__cmroot;
         delete this.__source;
     };
@@ -54,12 +50,15 @@ var f = function(){
      * @param  {Object}  目标信息
      * @return {Boolean} 是否允许退出当前模块
      */
-    _proSingleGroupManager._$exitable = function(_event){
-        if (!this.__source) return !0;
+    _pro._$exitable = function(_event){
+        if (!this.__source){
+            return !0;
+        }
         var _module = this.__source._$getData().module;
         // sure module has loaded
-        if (_p._$isModule(_module))
+        if (_t0._$isModule(_module)){
             _module._$dispatchEvent('onbeforehide',_event);
+        }
         return !_event.stopped;
     };
     /**
@@ -67,12 +66,13 @@ var f = function(){
      * @method {_$refresh}
      * @return {Void}
      */
-    _proSingleGroupManager._$refresh = function(){
+    _pro._$refresh = function(){
         if (!this.__source) return;
         // keep asynchronous for finishing last process
         window.setTimeout(
-            this._$dispatchUMI._$bind(this,
-                this.__source._$getPath()),0
+            this._$dispatchUMI._$bind(
+                this,this.__source._$getPath()
+            ),0
         );
     };
     /**
@@ -91,15 +91,15 @@ var f = function(){
      *   <li>需要调度的UMI上没有注册模块</li>
      * </ul>
      * @method {_$dispatchUMI}
-     * @param  {String}                 模块UMI
-     * @return {nej.ut._$$GroupManager} 分组管理器实例
+     * @param  {String} 模块UMI
+     * @return {Void}
      */
-    _proSingleGroupManager._$dispatchUMI = function(_umi){
-        if (!this._$hasUMI(_umi)) return this;
-        var _target = _p._$getNodeByUMI(this.__root,_umi),
+    _pro._$dispatchUMI = function(_umi){
+        if (!this._$hasUMI(_umi)) return;
+        var _target = _t0._$getNodeByUMI(this.__root,_umi),
             _data = _target._$getData();
         // no module registed in target
-        if (!_data.module) return this;
+        if (!_data.module) return;
         // update event information
         var _source = this.__source,
             _event  = _data.event,
@@ -113,18 +113,24 @@ var f = function(){
         // source==target do refresh
         if (_source==_target){
             this.__doModuleRefresh(this.__source);
-            return this;
+            return;
         }
         // hide source
-        this.__cmroot = _p._$getCommonRoot(this
-                          .__root,_source,_target);
+        this.__cmroot = _t0._$getCommonRoot(
+            this.__root,_source,_target
+        );
         if (_source!=null){
             // hide source -> common root
             if (_source!=this.__cmroot){
-                if (this.__classed)
+                if (this.__classed){
                     _e._$delClassName(
-                         document.body,_odata.clazz);
-                this.__doModuleHide(_source,this.__cmroot);
+                        document.body,
+                        _odata.clazz
+                    );
+                }
+                this.__doModuleHide(
+                    _source,this.__cmroot
+                );
             }
             // refresh common root -> root
             this.__doModuleRefresh(this.__cmroot);
@@ -134,30 +140,32 @@ var f = function(){
         }
         // show target
         if (_target!=this.__cmroot){
-            if (this.__classed)
-                _e._$addClassName(document.body,_event.clazz);
+            if (this.__classed){
+                _e._$addClassName(
+                    document.body,_event.clazz
+                );
+            }
             // show target -> common root
             this.__doModuleShow(_target,this.__cmroot);
         }
-        return this;
     };
     /**
      * 指定UMI的模块载入完成
      * @method {_$loadedUMI}
-     * @param  {String}                 模块UMI
-     * @return {nej.ut._$$GroupManager} 分组管理器实例
+     * @param  {String} 模块UMI
+     * @return {Void}
      */
-    _proSingleGroupManager._$loadedUMI = function(_umi){
-        if (this._$hasUMI(_umi))
+    _pro._$loadedUMI = function(_umi){
+        if (this._$hasUMI(_umi)){
             this.__doModuleAction(this.__source);
-        return this;
+        }
     };
     /**
      * 隐藏指定UMI的模块，不做任何处理
-     * @param  {String}                   模块UMI
-     * @return {nej.ut.p._$$GroupManager} 分组管理器实例
+     * @param  {String} 模块UMI
+     * @return {Void}
      */
-    _proSingleGroupManager._$hideUMI = _f;
-};
-NEJ.define('{lib}util/dispatcher/dsp/group.single.js',
-          ['{lib}util/dispatcher/dsp/group.js'],f);
+    _pro._$hideUMI = _f;
+    
+    return _p;
+});
