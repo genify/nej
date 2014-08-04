@@ -77,7 +77,7 @@ NEJ.define([
      * 脚本举例
      * [code]
      *   NEJ.define([
-     *       '/patch/to/custom/cache.js'
+     *       '/path/to/custom/cache.js'
      *   ],function(_p){
      *       // 实例化一个上面的对象
      *       var _cache = c._$$CacheListCustom._$allocate({
