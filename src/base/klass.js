@@ -156,6 +156,7 @@ NEJ.define([
                         _stack.push(_result.name);
                     }
                     _phash[_result.name] = _result.klass._$super;
+                    return _result.name;
                 };
                 this.prototype.__super = function(){
                     var _name = _stack[_stack.length-1],
