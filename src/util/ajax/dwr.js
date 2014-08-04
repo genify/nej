@@ -13,18 +13,18 @@ NEJ.define([
     '{lib}util/ajax/tag.js',
     '{lib}util/cache/cookie.js'
 ],function(NEJ,_g,_u,_j0,_j1,_j2,_p,_o,_f,_r){
-    var __batchid,      // 请求ID标识
-        __filter= _f,   // 全局异常过滤器
-        __cache = {},   // 请求缓存
-        __cname = 'JSESSIONID',
-        __batch = null; // 请求临时构造对象，范例 
-                        // {h:{0:{c:function(){},   // callback
-                        //        e:function(){}}}, // exception
-                        //  p:1,                    // param number
-                        //  u:'http://xxxx/x.x.dwr',// url
-                        //  r:{script:!1,sync:!1,method:'POST',timeout:null}
-                        //                          // request options
-                        //  m:{}}                   // send data
+    var _batchid,         // 请求ID标识
+        _doFilter = _f,   // 全局异常过滤器
+        _xcache   = {},   // 请求缓存
+        _cname    = 'JSESSIONID',
+        _xbatch   = null; // 请求临时构造对象，范例 
+                          // {h:{0:{c:function(){},   // callback
+                          //        e:function(){}}}, // exception
+                          //  p:1,                    // param number
+                          //  u:'http://xxxx/x.x.dwr',// url
+                          //  r:{script:!1,sync:!1,method:'POST',timeout:null}
+                          //                          // request options
+                          //  m:{}}                   // send data
     /**
      * 设置全局异常过滤器<br/>
      * 
@@ -49,7 +49,7 @@ NEJ.define([
      * @return {Void}
      */
     _p._$setFilter = function(_filter){
-        __filter = _u._$isFunction(_filter)?_filter:_f;
+        _doFilter = _u._$isFunction(_filter)?_filter:_f;
     };
     /**
      * 设置CSRF使用的cookie名
@@ -58,7 +58,7 @@ NEJ.define([
      * @return {Void}
      */
     _p._$setCookieName = function(_name){
-        __cname = _name||__cname;
+        _cname = _name||_cname;
     };
     /**
      * 设置请求标识<br/>
@@ -78,7 +78,7 @@ NEJ.define([
      * @return {Void}
      */
     _p._$setBatchId = function(_id){
-        __batchid = _id||'';
+        _batchid = _id||'';
     };
     /**
      * 开始批处理请求<br/>
@@ -123,13 +123,13 @@ NEJ.define([
      * @return {Void}
      */
     _p._$beginBatch = function(){
-        if (!!__batch) return;
-        __batch = {
+        if (!!_xbatch) return;
+        _xbatch = {
             h:{},p:0,
             m:{
                 callCount:0,
                 scriptSessionId:'${scriptSessionId}190',
-                httpSessionId:_j2._$cookie(__cname)
+                httpSessionId:_j2._$cookie(_cname)
             },
             r:{
                 script:!1,
@@ -210,26 +210,26 @@ NEJ.define([
         if (!_info||_info.length!=2) return;
         var _single = !1;
         _options = _options||_o;
-        if (!__batch){
+        if (!_xbatch){
             _single = !0;
             _p._$beginBatch();
             if (!!_options.session){
-                __batch.m.httpSessionId = _j2._$cookie(_options.session);
+                _xbatch.m.httpSessionId = _j2._$cookie(_options.session);
             }
         }
-        __batch.u = (_options.path||'/dwr/call/plaincall/')+
+        _xbatch.u = (_options.path||'/dwr/call/plaincall/')+
                     (_options.query&&('?'+_options.query)||'');
-        _u._$fetch(__batch.r,_options);
+        _u._$fetch(_xbatch.r,_options);
         var _headers = _u._$merge(
-            __batch.r.headers,_options.headers
+            _xbatch.r.headers,_options.headers
         );
         _headers[_g._$HEAD_CT] = _g._$HEAD_CT_PLAN;
-        __batch.r.headers = _headers;
-        var _prefix = 'c'+__batch.m.callCount;
-        __batch.m[_prefix+'-scriptName'] = _info[0];
-        __batch.m[_prefix+'-methodName'] = _info[1];
-        __batch.m[_prefix+'-id'] = __batch.m.callCount;
-        __batch.h[__batch.m.callCount] = {
+        _xbatch.r.headers = _headers;
+        var _prefix = 'c'+_xbatch.m.callCount;
+        _xbatch.m[_prefix+'-scriptName'] = _info[0];
+        _xbatch.m[_prefix+'-methodName'] = _info[1];
+        _xbatch.m[_prefix+'-id'] = _xbatch.m.callCount;
+        _xbatch.h[_xbatch.m.callCount] = {
             c:_options.onload||_f,
             e:_options.onerror||_f
         };
@@ -237,11 +237,11 @@ NEJ.define([
             _options.param,function(v,i){
                 var _value = __doSerialize(v,_prefix);
                 if (!!_value){
-                    __batch.m[_prefix+'-param'+i] = _value;
+                    _xbatch.m[_prefix+'-param'+i] = _value;
                 }
             }
         );
-        __batch.m.callCount++;
+        _xbatch.m.callCount++;
         if (_single){
             _p._$endBatch();
         }
@@ -289,15 +289,15 @@ NEJ.define([
      * @return {Void}
      */
     _p._$endBatch = function(){
-        if (!__batch||!__batch.u){
-            __batch = null;
+        if (!_xbatch||!_xbatch.u){
+            _xbatch = null;
             return;
         }
-        var _bid = __batchid||_u._$uniqueID();
-        __batchid = 0;
-        __batch.m.batchId = _bid;
-        __cache[_bid] = __batch;
-        __batch = null;
+        var _bid = _batchid||_u._$uniqueID();
+        _batchid = 0;
+        _xbatch.m.batchId = _bid;
+        _xcache[_bid] = _xbatch;
+        _xbatch = null;
         __doRequest(_bid);
     };
     /*
@@ -306,11 +306,11 @@ NEJ.define([
      * @return {Void}
      */
     var __doDestroyBatch = function(_bid){
-        var _batch = __cache[_bid];
+        var _batch = _xcache[_bid];
         if (!_batch) return;
         delete _batch.h;
         delete _batch.m;
-        delete __cache[_bid];
+        delete _xcache[_bid];
     };
     /*
      * 序列化数据
@@ -355,11 +355,11 @@ NEJ.define([
         var _arr = [];
         _u._$forEach(
             _list,function(v,i){
-                __batch.p++;
-                var _ref = _prefix+'-e'+__batch.p,
+                _xbatch.p++;
+                var _ref = _prefix+'-e'+_xbatch.p,
                     _value = __doSerialize(v,_prefix);
                 if (!_value) return;
-                __batch.m[_ref] = _value;
+                _xbatch.m[_ref] = _value;
                 _arr.push('reference:'+_ref);
             }
         );
@@ -375,11 +375,11 @@ NEJ.define([
         var _arr = [];
         _u._$forIn(
             _object,function(v,k){
-                __batch.p++;
-                var _ref = _prefix+'-e'+__batch.p,
+                _xbatch.p++;
+                var _ref = _prefix+'-e'+_xbatch.p,
                     _value = __doSerialize(v,_prefix);
                 if (!_value) return;
-                __batch.m[_ref] = _value;
+                _xbatch.m[_ref] = _value;
                 _arr.push(encodeURIComponent(k)+':reference:'+_ref);
             }
         );
@@ -411,7 +411,7 @@ NEJ.define([
      * @return {Void}
      */
     var __doRequest = function(_bid){
-        var _batch = __cache[_bid];
+        var _batch = _xcache[_bid];
         if (!_batch) return;
         _batch.u = _batch.u.replace(/(\?|$)/,(
                    _batch.m.callCount>1
@@ -445,8 +445,8 @@ NEJ.define([
      * @return {Void}
      */
     var __onError = function(_bid,_cid,_error){
-        var _batch = __cache[_bid];
-        if (!_batch||__filter(_error)) return;
+        var _batch = _xcache[_bid];
+        if (!_batch||_doFilter(_error)) return;
         var _handler = _batch.h[_cid];
         if (!_handler) return;
         try{
@@ -464,7 +464,7 @@ NEJ.define([
      * @return {Void}
      */
     var __onErrorAll = function(_bid,_error){
-        var _batch = __cache[_bid];
+        var _batch = _xcache[_bid];
         if (!_batch) return;
         _u._$forIn(
             _batch.h,function(v,k){
@@ -480,7 +480,7 @@ NEJ.define([
      * @return {Void}
      */
     var __onLoadFromDWR = function(_bid,_cid,_data){
-        var _batch = __cache[_bid];
+        var _batch = _xcache[_bid];
         if (!_batch) return;
         try{
             (_batch.h[_cid].c||f)(_data);
