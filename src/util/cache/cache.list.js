@@ -114,35 +114,47 @@ NEJ.define([
      * 列表载入完成回调
      * @event  {onlistload} 
      * @param  {Object} 可选配置参数
-     * @config {String} key      列表标识
+     * @config {String}   key 列表标识
+     * @config {Variable} ext 传入数据原样返回
      * 
      * [hr]
      * 缓存项载入完成回调
      * @event  {onitemload} 
      * @param  {Object} 可选配置参数
-     * @config {String} id  项标识
-     * @config {String} key 列表标识
+     * @config {String}   id  项标识
+     * @config {String}   key 列表标识
+     * @config {Variable} ext 传入数据原样返回
      * 
      * [hr]
      * 缓存项添加完成回调
      * @event  {onitemadd} 
      * @param  {Object} 可选配置参数
-     * @config {String} id  项标识
-     * @config {String} key 列表标识
+     * @config {String}   id  项标识
+     * @config {String}   key 列表标识
+     * @config {Variable} ext 传入数据原样返回
      * 
      * [hr]
      * 缓存项删除完成回调
      * @event  {onitemdelete} 
      * @param  {Object} 可选配置参数
-     * @config {String} id  项标识
-     * @config {String} key 列表标识
+     * @config {String}   id  项标识
+     * @config {String}   key 列表标识
+     * @config {Variable} ext 传入数据原样返回
      * 
      * [hr]
      * 缓存项更新完成回调
      * @event  {onitemupdate} 
      * @param  {Object} 可选配置参数
-     * @config {String} id  项标识
-     * @config {String} key 列表标识
+     * @config {String}   id  项标识
+     * @config {String}   key 列表标识
+     * @config {Variable} ext 传入数据原样返回
+     * 
+     * [hr]
+     * 服务器最新列表拉取完成回调
+     * @event  {onpullrefresh} 
+     * @param  {Object} 可选配置参数
+     * @config {String}   key 列表标识
+     * @config {Variable} ext 传入数据原样返回
      * 
      * [hr]
      * 从服务器载入列表
