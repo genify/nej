@@ -8,6 +8,7 @@ v0.0.1
   * 删除xmpp
   * 删除gesture
   * 删除util/ajax/connect.js
+  * 删除cache/config.js
 
 define.js
 - NEJ.config接口名称改为NEJ.deps
