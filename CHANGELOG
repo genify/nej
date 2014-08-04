@@ -9,6 +9,7 @@ v0.0.1
   * 删除gesture
   * 删除util/ajax/connect.js
   * 删除cache/config.js
+  * 删除dispatch/v1
 
 define.js
 - NEJ.config接口名称改为NEJ.deps
@@ -36,6 +37,8 @@ util/ajax/dwr.js
 util/cache/storage.js
 - 删除_$cloneDataInStorage接口
 
-
-
+util/dispatcher
+- 合并module.2.js和module.base.js
+util/dispatcher.2.js
+- 删除_$apply接口，使用_$redirect代替
 
