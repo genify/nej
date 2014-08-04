@@ -32,7 +32,8 @@ util/event.js
 util/ajax/dwr.js
 - 删除_$setProxy接口
 
-
+util/cache/storage.js
+- 删除_$cloneDataInStorage接口
 
 
 
