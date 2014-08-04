@@ -5,6 +5,7 @@ v0.0.1
 - 增加依赖注入，保留兼容模式下名字空间形式
 - 独立平台适配，删除patched目录，独立到各API、控件
 - 清理没用控件及API
+  * 删除native
   * 删除xmpp
   * 删除gesture
   * 删除util/ajax/connect.js
