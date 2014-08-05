@@ -5,19 +5,19 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    // variable declaration
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _f = NEJ.F,
-        _e = _('nej.e'),
-        _u = _('nej.u'),
-        _t = _('nej.ut'),
-        _p = _('nej.ui'),
-        _pro;
-    if (!!_p._$$Abstract) return;
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{lib}base/util.js',
+    '{lib}util/event.js',
+    '{lib}util/template/tpl.js'
+],function(NEJ,_k,_e,_u,_t0,_t1,_p,_o,_f,_r){
+    var _pro;
     /**
-     * UI控件基类，框架及项目中所有涉及UI的控件均继承此类
+     * UI控件基类，框架及项目中所有涉及UI的控件均继承此类<br/>
+     * 
+     * 脚本举例
      * [code]
      *    // 分配控件实例
      *    var ctrl = AAA._$allocate({
@@ -30,13 +30,16 @@ var f = function(){
      *        return _parent;
      *    });
      * [/code]
-     * @class   {nej.ui._$$Abstract}
-     * @extends {nej.ut._$$Event}
-     * @param {String}               控件样式
-     * @param {String|Node|Function} 控件所在容器节点或者追加控件节点执行函数
+     * 
+     * @class   {_$$Abstract}
+     * @extends {_$$Event}
+     * 
+     * @param   {Object} 可选配置参数
+     * @config  {String}               clazz  控件样式
+     * @config  {String|Node|Function} parent 控件所在容器节点或者追加控件节点执行函数
      */
-    _p._$$Abstract = NEJ.C();
-    _pro = _p._$$Abstract._$extend(_t._$$Event);
+    _p._$$Abstract = _k._$klass();
+    _pro = _p._$$Abstract._$extend(_t0._$$Event);
     /**
      * 初始化
      * @protected
@@ -44,7 +47,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__init = function(){
-        this.__supInit();
+        this.__super();
         _e._$dumpCSSText();
         this.__initXGui();
         this.__initNode();
@@ -57,7 +60,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         this.__doInitClass(_options.clazz);
         this._$appendTo(_options.parent);
     };
@@ -68,14 +71,16 @@ var f = function(){
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         // clear parent
         this.__doDelParentClass();
         delete this.__parent;
         // clear body
         _e._$removeByEC(this.__body);
-        _e._$delClassName(this.__body,
-                          this.__class);
+        _e._$delClassName(
+            this.__body,
+            this.__class
+        );
         delete this.__class;
     };
     /**
@@ -92,11 +97,13 @@ var f = function(){
      * @return {Void}
      */
     _pro.__initNode = function(){
-        if (!this.__seed_html)
-             this.__initNodeTemplate();
-        this.__body = _e._$getNodeTemplate(this.__seed_html);
-        if (!this.__body)
-             this.__body = _e._$create('div',this.__seed_css);
+        if (!this.__seed_html){
+            this.__initNodeTemplate();
+        }
+        this.__body = _t1._$getNodeTemplate(this.__seed_html);
+        if (!this.__body){
+            this.__body = _e._$create('div',this.__seed_css);
+        }
         _e._$addClassName(this.__body,this.__seed_css);
     };
     /**
@@ -125,8 +132,10 @@ var f = function(){
      */
     _pro.__doAddParentClass = function(){
         if (!this.__seed_css) return;
-        _e._$addClassName(this.__parent,
-                          this.__seed_css+'-parent');
+        _e._$addClassName(
+            this.__parent,
+            this.__seed_css+'-parent'
+        );
     };
     /**
      * 父节点删除辅助样式
@@ -136,17 +145,21 @@ var f = function(){
      */
     _pro.__doDelParentClass = function(){
         if (!this.__seed_css) return;
-        _e._$delClassName(this.__parent,
-                          this.__seed_css+'-parent');
+        _e._$delClassName(
+            this.__parent,
+            this.__seed_css+'-parent'
+        );
     };
     /**
      * 取当前控件节点<br />
+     * 
      * 脚本举例
      * [code]
      *   // _mask是一个继承了此基类的实例化对象
      *   // 获取当前控件的节点
      *   _mask._$getBody();
      * [/code]
+     * 
      * @method {_$getBody}
      * @return {Node} 控件节点
      */
@@ -155,6 +168,7 @@ var f = function(){
     };
     /**
      * 控件节点追加至容器<br />
+     * 
      * 脚本举例
      * [code]
      *   // _mask是一个继承了此基类的实例化对象
@@ -167,58 +181,62 @@ var f = function(){
      *      return _parent;
      *   });
      * [/code]
+     * 
      * @method {_$appendTo}
-     * @param  {String|Node|Function} _parent 控件所在容器节点
-     * @return {nej.ui._$$Abstract}
+     * @param  {String|Node|Function} 控件所在容器节点
+     * @return {Void}
      */
     _pro._$appendTo = function(_parent){
-        if (!this.__body) return this;
+        if (!this.__body) return;
         this.__doDelParentClass();
         if (_u._$isFunction(_parent)){
             this.__parent = _parent(this.__body);
         }else{
             this.__parent = _e._$get(_parent);
-            if (!!this.__parent)
+            if (!!this.__parent){
                 this.__parent.appendChild(this.__body);
+            }
         }
         this.__doAddParentClass();
-        return this;
     };
     /**
      * 显示控件<br />
+     * 
      * 脚本举例
      * [code]
      *   // _mask是一个继承了此基类的实例化对象
      *   _mask._$show();
      * [/code]
+     * 
      * @method {_$show}
-     * @return {nej.ui._$Absttact}
+     * @return {Void}
      */
     _pro._$show = function(){
         if (!this.__parent||!this.__body||
-             this.__body.parentNode==this.__parent)
-            return this;
+             this.__body.parentNode==this.__parent){
+            return;
+        }
         this.__parent.appendChild(this.__body);
-        return this;
     };
     /**
      * 隐藏控件<br />
+     * 
      * 脚本举例
      * [code]
      *   // _mask是一个继承了此基类的实例化对象
      *   _mask._$hide();
      * [/code]
+     * 
      * @method {_$hide}
-     * @return {nej.ui._$$Abstract}
+     * @return {Void}
      */
     _pro._$hide = function(){
         _e._$removeByEC(this.__body);
-        return this;
     };
-};
-NEJ.define(
-    '{lib}ui/base.js',[
-    '{lib}base/element.js',
-    '{lib}util/event.js',
-    '{lib}util/template/tpl.js'
-],f);
+    
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui'),_p);
+    }
+    
+    return _p;    
+});

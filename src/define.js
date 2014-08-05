@@ -627,9 +627,9 @@
             var _args = _doMergeDI(
                 _item.d,_item.p
             );
-            var _result;
             if (!!_item.f){
-                _result = _item.f.apply(null,_args);
+                var _result = _item.f.apply(null,_args)||
+                              _args[_args.length-4];
                 _doMergeResult(_item.n,_result);
             }
             __scache[_item.n] = 2;
