@@ -42,3 +42,5 @@ util/dispatcher
 util/dispatcher.2.js
 - 删除_$apply接口，使用_$redirect代替
 
+util/page/page.js
+- 删除_e._$page接口

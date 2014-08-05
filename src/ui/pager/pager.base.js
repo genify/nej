@@ -5,18 +5,16 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
+NEJ.define([
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{lib}base/util.js',
+    '{lib}ui/base.js'
+],function(_k,_e,_u,_t,_p,_o,_f,_r){
     // variable declaration
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _r = NEJ.R,
-        _e = _('nej.e'),
-        _u = _('nej.u'),
-        _p = _('nej.ui'),
-        _pro,
+    var _pro,
         _seed_css,
         _seed_page;
-    if (!!_p._$$AbstractPager) return;
     /**
      * 分页器控件基类封装<br />
      * 页面结构举例
@@ -26,59 +24,72 @@ var f = function(){
      * [/code]
      * 脚本举例
      * [code]
-     *   // 第一步：继承此类，新建一个子类
-     *   _p._$$Pager = NEJ.C();
-     *   _proPager = _p._$$Pager._$extend(_p._$$AbstractPager);
-     *   
-     *   // 调用父类reset方法后，实例化一个NEJ.P('nej.ut')._$page对象，首尾页用数字表示
-     *   // 表现为,上一页 1 2 3.. 10 下一页 
-     *   // 或者实例化一个page.simple对象，首尾页需要辅助，数字可能不会出现
-     *   // 表现为,首页 上一页 5 6 7 8 9 10 下一页 末页 
-     *   _proPager.__reset = function(_options){
-     *       this.__supReset(_options);
-     *       this.__page = _t._$$Page._$allocate(this.__popt);
-     *   };
-     *   
-     *   // reset之前生成需要的页码结构
-     *   _proPager.__initNode = function(){
-     *   
-     *   };
-     *   
-     *   // reset之前生成需要的页码结构
-     *   _proPager.__initNodeTemplate = function(){
-     *      // _seed_html根据需求定制
-     *      this.__seed_html = _seed_html;
-     *   };
-     *   
-     *   // 第二步：生成一个pager实例
-     *   // 总页数10，默认第一页
-     *   var _pager = p._$$Pager._$allocate({
-     *       parent:'pagerCnt',
-     *       onchange: function(_event){},
-     *       total: 10,
-     *       index:1
-     *   });
+     *   NEJ.define([
+     *       '{lib}base/klass.js',
+     *       '{lib}ui/pager/pager.base.js',
+     *       '{lib}util/page/page.js'
+     *   ],function(_k,_u,_t,_p,_o,_f,_r){
+     *       // 第一步：继承此类，新建一个子类
+     *       _p._$$Pager = _k._$klass();
+     *       _pro = _p._$$Pager._$extend(_u._$$AbstractPager);
+     *
+     *      // 调用父类reset方法后，
+     *   实例化一个_t._$page对象，首尾页用数字表示
+     *       // 表现为,上一页 1 2 3.. 10 下一页
+     *       // 或者实例化一个page.simple对象，首尾页需要辅助，数字可能不会出现
+     *       // 表现为,首页 上一页 5 6 7 8 9 10 下一页 末页
+     *       _pro.__reset = function(_options){
+     *           this.__supReset(_options);
+     *           this.__page = _t._$$Page._$allocate(this.__popt);
+     *           };
+     *
+     *      // reset之前生成需要的页码结构
+     *      _pro.__initNode = function(){
+     *
+     *      };
+     *
+     *      // reset之前生成需要的页码结构
+     *      _pro.__initNodeTemplate = function(){
+     *          // _seed_html根据需求定制
+     *          this.__seed_html = _seed_html;
+     *      };
+     *      return _p;
+     *   })
+     *
+     *   NEJ.define([
+     *       '/path/to/custom/pager.js'
+     *   ],function(_u,_p,_o,_f,_r){
+     *       // 第二步：生成一个pager实例
+     *       // 总页数10，默认第一页
+     *       var _pager = _u._$$Pager._$allocate({
+     *           parent:'pagerCnt',
+     *           onchange: function(_event){},
+     *           total: 10,
+     *           index:1
+     *       });
+     *   })
+     *
      * [/code]
-     * @class   {nej.ui._$$AbstractPager} 分页器控件封装
-     * @extends {nej.ui._$$Abstract}
+     * @class   {_$$AbstractPager} 分页器控件封装
+     * @extends {ui#_$$Abstract}
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {Number} index  当前页码
      * @config  {Number} total  总页码数
      * @config  {Number} number 显示页数
      * @config  {Number} limit  总页数限制
      * @config  {Object} label  按钮文案，{prev:'&lt;',next:'&gt;'}
-     * 
+     *
      * [hr]
      * 页码切换事件，输入{last:3,index:1,total:12}
-     * @event  {onchange} 
+     * @event  {onchange}
      * @param  {Object} 页码状态对象
      * @config {Number} last  上一次的页码
      * @config {Number} index 当前要切换的页面
      * @config {Number} total 总页面数
-     * 
+     *
      */
-    _p._$$AbstractPager = NEJ.C();
-    _pro = _p._$$AbstractPager._$extend(_p._$$Abstract);
+    _p._$$AbstractPager = _k._$klass();
+    _pro = _p._$$AbstractPager._$extend(_t._$$Abstract);
     /**
      * 控件重置
      * @protected
@@ -87,10 +98,10 @@ var f = function(){
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__bopt = NEJ.X({},_options);
-        this.__popt = NEJ.X({},_options);
+        this.__bopt = _u._$merge({},_options);
+        this.__popt = _u._$merge({},_options);
         delete this.__bopt.onchange;
-        this.__popt.onchange = 
+        this.__popt.onchange =
             this.__onChange._$bind(this);
         this.__supReset(_options);
         this.__doResetNumber({
@@ -199,12 +210,12 @@ var f = function(){
      * [/code]
      * @method {_$bind}
      * @param  {String|Node} 联动分页器父容器
-     * @return {nej.ui._$$AbstractPager}
+     * @return {Void}
      */
     _pro._$bind = function(_parent){
         _parent = _e._$get(_parent);
-        if (!_parent) return this;
-        var _opt = NEJ.X(
+        if (!_parent) return;
+        var _opt = _u._$merge(
             {},this.__bopt
         );
         _opt.parent = _parent;
@@ -214,7 +225,6 @@ var f = function(){
         _pager._$setEvent('onchange',this.__popt.onchange);
         if (!this.__binders) this.__binders = [];
         this.__binders.push(_pager);
-        return this;
     };
     /**
      * 解除联动分页器<br />
@@ -258,7 +268,7 @@ var f = function(){
      *   _pager._$getIndex()
      * [/code]
      * @method {_$getIndex}
-     * @return {Number} 当前页码 
+     * @return {Number} 当前页码
      */
     _pro._$getIndex = function(){
         if (!this.__page) return 1;
@@ -322,8 +332,10 @@ var f = function(){
         {/if}\
         {/trim}\
     ');
-};
-NEJ.define(
-    '{lib}ui/pager/pager.base.js',[
-    '{lib}ui/base.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui'),_p);
+    }
+
+    return _p;
+})

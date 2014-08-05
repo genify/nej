@@ -5,16 +5,14 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
+NEJ.define([
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{lib}base/util.js',
+    '{lib}util/page/page.base.js'
+],function(_k,_e,_u,_t,_p,_o,_f,_r){
     // variable declaration
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _e = _('nej.e'),
-        _u = _('nej.u'),
-        _x = _('nej.x'),
-        _p = _('nej.ut'),
-        _pro;
-    if (!!_p._$$Page) return;
+    var _pro;
     /**
      * 三段分页器业务逻辑封装，适合于以下形式的分页器<br />
      * 此结构没有首页，末页，因为首页，末页都可点击
@@ -41,25 +39,31 @@ var f = function(){
      * [/code]
      * 脚本举例
      * [code]
-     *   var e = NEJ.P('nej.e');
-     *   var _box = e._$get('pagebox');
-     *   var _pg = e._$page(_box,{
-     *       event:'click',
-     *       index:9,
-     *       total:10,
-     *       onchange:function(_obj){
-     *           // 返回页码信息，last:上一次页面,index:当前页面，total:总页数
-     *       }
-     *   });
-     *   // 翻到第4页
-     *   _pg._$setIndex(4);
-     *   // 改变总页数,状态复原到第一页
-     *   _pg._$getTotal(20);
-     *   // 想要保持页面信息状态
-     *   _pg._$updatePage(5,10);
+     *   NEJ.define([
+     *       '{lib}base/element.js',
+     *       '{lib}util/page/page.js'
+     *   ],function(_e,_t,_p,_o,_f,_r){
+     *       var _box = _e._$get('pagebox');
+     *       var _pg  = _t._$$Page._$allocate({
+     *           parent:_box,
+     *           event:'click',
+     *           index:9,
+     *           total:10,
+     *           onchange:function(_obj){
+     *               // 返回页码信息，last:上一次页面,
+     *               index:当前页面，total:总页数
+     *           }
+     *       });
+     *       // 翻到第4页
+     *       _pg._$setIndex(4);
+     *       // 改变总页数,状态复原到第一页
+     *       _pg._$getTotal(20);
+     *       // 想要保持页面信息状态
+     *       _pg._$updatePage(5,10);
+     *   })
      * [/code]
-     * @class   {nej.ut._$$Page} 三段分页器业务逻辑封装
-     * @extends {nej.ut._$$AbstractPage}
+     * @class   {_$$Page} 三段分页器业务逻辑封装
+     * @extends {util/page#_$$AbstractPage}
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {Array}          list        页码节点列表【长度保持奇数】
      * @config  {String}         event       触发页码切换事件，默认为click
@@ -71,18 +75,18 @@ var f = function(){
      * @config  {Number}         total       总页码数
      * @config  {String}         selected    选中样式，默认为js-selected
      * @config  {String}         disabled    禁用样式，默认为js-disabled
-     * 
+     *
      * [hr]
-     * 
+     *
      * @event  {onchange} 切换页面处理
      * @param  {Object} 页码信息
      * @config {Number} last  上一次的页码
      * @config {Number} index 当前要切换的页面
      * @config {Number} total 总页面数
-     * 
+     *
      */
-    _p._$$Page = NEJ.C();
-    _pro = _p._$$Page._$extend(_p._$$AbstractPage);
+    _p._$$Page = _k._$klass();
+    _pro = _p._$$Page._$extend(_t._$$AbstractPage);
     /**
      * 初始化控件
      * @protected
@@ -205,10 +209,10 @@ var f = function(){
             this.__doSetNodeIndex(this.__list[_point]);
         }
     };
-    /**
+    /*
      * 分页器加入分页算法
      * [code]
-     *    // 构建一个pager控件
+     *    // 构建一个page控件
      *    nej.e._$page('abc',{
      *        index:2,
      *        total:10,
@@ -235,9 +239,7 @@ var f = function(){
      * @config  {String}         disabled    禁用样式，默认为js-disabled
      * @config  {String}         clazz       需要做Page控件封装的节点标识，如没有此参数则选取父节点下的所有子节点
      * @return  {Function}                   控件实例
-     */
-    _e._$page = 
-    _x._$page = function(_parent,_options){
+    _e._$page = function(_parent,_options){
         var _id = _e._$id(_parent);
         if (!_id) return null;
         if (!_p._$api(_id,_p._$$Page)){
@@ -253,8 +255,11 @@ var f = function(){
         return _p._$api(_id,_p._$$Page,_options||_o);
     };
     _x.isChange = !0;
-};
-NEJ.define(
-    '{lib}util/page/page.js',[
-    '{lib}util/page/page.base.js'
-],f);
+    */
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+})

@@ -5,16 +5,14 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _f = NEJ.F,
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _p = _('nej.ut'),
-        _pro;
-    if (!!_p._$$AbstractPage) return;
+NEJ.define([
+    '{lib}base/klass.js',
+    '{lib}util/event.js',
+    '{lib}base/util.js',
+    '{lib}base/element.js',
+    '{lib}base/event.js'
+],function(_k,_t,_u,_e,_v,_p,_o,_f,_r){
+    var _pro;
     /**
      * 分页逻辑封装基类<br />
      * 页面结构举例
@@ -37,44 +35,58 @@ var f = function(){
      * [/code]
      * 脚本举例
      * [code]
-     *   // 首先继承此基类，重写__doRefreshPage方法
-     *   _p._$$SimplePage = NEJ.C();
-     *   _proSimplePage = _p._$$SimplePage._$extend(_p._$$AbstractPage);
-     *   // 刷新页码列表算法
-     *   _proSimplePage.__doRefreshPage = function(){
-     *       var _length = this.__list.length;
-     *       if (!_length) return;
-     *       var _middle = Math.floor(_length/2),
-     *           _offset = Math.min(this.__total-_length+1,
-     *                   Math.max(1,this.__index-_middle));
-     *       _u._$forEach(this.__list,
-     *           function(_node,_index){
+     *   NEJ.define([
+     *       '{lib}base/klass.js',
+     *       '{lib}util/page/page.base.js',
+     *       '{lib}base/util.js'
+     *   ],function(_k,_t,_u,_p,_o,_f,_r){
+     *       var _pro;
+     *       // 首先继承此基类，重写__doRefreshPage方法
+     *       _p._$$SimplePage = _k._$klass();
+     *       _pro = _p._$$SimplePage._$extend(_t._$$AbstractPage);
+     *       // 刷新页码列表算法
+     *       _pro.__doRefreshPage = function(){
+     *           var _length = this.__list.length;
+     *           if (!_length) return;
+     *           var _middle = Math.floor(_length/2),
+     *               _offset = Math.min(this.__total-_length+1,
+     *                       Math.max(1,this.__index-_middle));
+     *           _u._$forEach(this.__list,
+     *               function(_node,_index){
      *               var _page = _offset+_index;
      *               this.__doSetNodeIndex(_node,
      *                   _page>this.__total?null:_page);
      *           },this);
      *       };
-     *   // 第二步，生成simplePage的实例
-     *   var _page = e._$get('page');
-     *   var _ps = t._$$SimplePage._$allocate({
-     *       list:e._$getByClassName(_page,'zpgi'),
-     *       event:'click',
-     *       pbtn:e._$getByClassName(_page,'zprv')[0],
-     *       nbtn:e._$getByClassName(_page,'znxt')[0],
-     *       sbtn:e._$getByClassName(_page,'sbtn')[0],
-     *       ebtn:e._$getByClassName(_page,'ebtn')[0],
-     *       index:90,
-     *       total:100,
-     *       onchange:function(_obj){
-     *           // 返回页码信息，last:上一次页面,index:当前页面，total:总页数
-     *       }
-     *   });
-     *   
-     *   // 第3步，可以调用提供的共有接口
-     *   
+     *       return _p;
+     *   })
+     *
+     *   NEJ.define([
+     *       '/path/to/custom/page.simple.js',
+     *       '{lib}base/element.js'
+     *   ],function(_t,_e,_p,_o,_f,_r){
+     *       // 第二步，生成simplePage的实例
+     *       var _page = _e._$get('page');
+     *       var _ps = _t._$$SimplePage._$allocate({
+     *           list:_e._$getByClassName(_page,'zpgi'),
+     *           event:'click',
+     *           pbtn:_e._$getByClassName(_page,'zprv')[0],
+     *           nbtn:_e._$getByClassName(_page,'znxt')[0],
+     *           sbtn:_e._$getByClassName(_page,'sbtn')[0],
+     *           ebtn:_e._$getByClassName(_page,'ebtn')[0],
+     *           index:90,
+     *           total:100,
+     *           onchange:function(_obj){
+     *           // 返回页码信息，last:上一次页面,
+     *              index:当前页面，total:总页数
+     *           }
+     *       });
+     *       // 第3步，可以调用提供的共有接口
+     *       _ps._$setTotal(100);
+     *   })
      * [/code]
-     * @class   {nej.ut._$$AbstractPage} 分页逻辑封装基类
-     * @extends {nej.ut._$$Event}
+     * @class   {_$$AbstractPage} 分页逻辑封装基类
+     * @extends {util#_$$Event}
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {Array}        list        页码节点列表【长度保持奇数】
      * @config  {String}       event       触发页码切换事件，默认为click
@@ -87,18 +99,18 @@ var f = function(){
      * @config  {Number}       limit       总页数限制
      * @config  {String}       selected    选中样式，默认为js-selected
      * @config  {String}       disabled    禁用样式，默认为js-disabled
-     * 
+     *
      * [hr]
-     * 
+     *
      * @event  {onchange} 页码变化触发事件，输入{last:3,index:1,total:12}
      * @param  {Object}   页码信息
      * @config {Number} last  上一次的页码
      * @config {Number} index 当前要切换的页面
      * @config {Number} total 总页面数
-     * 
+     *
      */
-    _p._$$AbstractPage = NEJ.C();
-    _pro = _p._$$AbstractPage._$extend(_p._$$Event);
+    _p._$$AbstractPage = _k._$klass();
+    _pro = _p._$$AbstractPage._$extend(_t._$$Event);
     /**
      * 控件重置
      * @protected
@@ -273,7 +285,7 @@ var f = function(){
      */
     _pro.__doSaveTotal = function(_total){
         _total = parseInt(_total);
-        if (isNaN(_total)||_total<1) 
+        if (isNaN(_total)||_total<1)
             return !1;
         this.__total = Math.min(
             _total,this.__limit
@@ -302,7 +314,7 @@ var f = function(){
             case -1:
                 _index = this.__index+_flag;
             break;
-            // end 
+            // end
             case  2:
                 _index = this.__total;
             break;
@@ -335,14 +347,13 @@ var f = function(){
      * [/code]
      * @method {_$setIndex}
      * @param  {Number} 页码值
-     * @return {nej.ut._$$AbstractPage}
+     * @return {Void}
      */
     _pro._$setIndex = function(_index){
         var _oidx = this.__index;
         this.__doSaveIndex(_index);
         if (_oidx!=this.__index)
             this.__doChangeIndex();
-        return this;
     };
      /**
      * 返回页码总数<br />
@@ -366,7 +377,7 @@ var f = function(){
      * [/code]
      * @method {_$setTotal}
      * @param  {Number} 总页码数
-     * @return {nej.ut._$$AbstractPage}
+     * @return {Void}
      */
     _pro._$setTotal = function(_total){
         if (this.__doSaveTotal(_total)&&
@@ -374,7 +385,6 @@ var f = function(){
             this.__index = 1;
             this.__doChangeIndex();
         }
-        return this;
     };
     /**
      * 更新总页码数，当前页码不变，无回调<br />
@@ -385,14 +395,13 @@ var f = function(){
      * [/code]
      * @method {_$updateTotal}
      * @param  {Number} 总页码数
-     * @return {nej.ut._$$AbstractPage}
+     * @return {Void}
      */
     _pro._$updateTotal = function(_total){
         if (this.__doSaveTotal(_total)){
             this.__doRefreshPage();
             this.__doSyncBtnState();
         }
-        return this;
     };
     /**
      * 更新页码信息<br />
@@ -404,17 +413,18 @@ var f = function(){
      * @method {_$updatePage}
      * @param  {Number} 当前页码
      * @param  {Number} 总页码数
-     * @return {nej.ut._$$AbstractPage}
+     * @return {Void}
      */
     _pro._$updatePage = function(_index,_total){
         if (!this.__doSaveTotal(_total)||
             !this.__doSaveIndex(_index))
-            return this;
+            return;
         this.__doChangeIndex();
-        return this;
     };
-};
-NEJ.define(
-    '{lib}util/page/page.base.js',[
-    '{lib}util/event.js'
-],f);
+
+    if (CMPT){
+       NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+})

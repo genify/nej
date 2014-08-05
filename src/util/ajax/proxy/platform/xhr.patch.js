@@ -6,7 +6,7 @@
  * ------------------------------------------
  */
 NEJ.define([
-    './xdr.js',
+    './xhr.js',
     '{lib}base/util.js'
 ],function(_h,_u,_p,_o,_f,_r){
     // for ie6-
@@ -41,6 +41,6 @@ NEJ.define([
             };
         })();
     });
-    
+
     return _h;
 });
