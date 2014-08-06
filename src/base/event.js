@@ -379,7 +379,7 @@ NEJ.define([
         if (!!_element){
             _u._$forEach(
                 _getTypeList(_type),function(_name){
-                    _p.__dispatchEvent(
+                    _h.__dispatchEvent(
                         _element,_name,_options
                     );
                 }

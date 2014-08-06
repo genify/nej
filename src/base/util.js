@@ -354,7 +354,11 @@ NEJ.define([
     _p._$forEach = function(_list,_callback,_this){
         if (!!_list&&!!_list.length&&
             _p._$isFunction(_callback)){
-            _h.__forEach(_list,_callback,_this);
+            if (!_list.forEach){
+                _p._$forIn.apply(_p,arguments);
+            }else{
+                _h.__forEach(_list,_callback,_this);
+            }
         }
     };
     /**
@@ -395,10 +399,6 @@ NEJ.define([
         if (!_list||!_p._$isFunction(_callback)){
             return null;
         }
-        // list is object
-        if (_p._$isObject(_list)){
-            return _h.__forIn(_list,_callback,_this);
-        }
         // list is array
         if (_list.length!=null&&_list.length>0){
             for(var i=0,l=_list.length;i<l;i++){
@@ -406,6 +406,10 @@ NEJ.define([
                     return i;
                 }
             }
+        }
+        // list is object
+        if (_p._$isObject(_list)){
+            return _h.__forIn(_list,_callback,_this);
         }
         return null;
     };
