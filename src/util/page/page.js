@@ -6,11 +6,12 @@
  * ------------------------------------------
  */
 NEJ.define([
+    '{lib}base/global.js',
     '{lib}base/klass.js',
     '{lib}base/element.js',
     '{lib}base/util.js',
     '{lib}util/page/page.base.js'
-],function(_k,_e,_u,_t,_p,_o,_f,_r){
+],function(NEJ,_k,_e,_u,_t,_p,_o,_f,_r){
     // variable declaration
     var _pro;
     /**
@@ -62,7 +63,7 @@ NEJ.define([
      *       _pg._$updatePage(5,10);
      *   })
      * [/code]
-     * @class   {_$$Page} 三段分页器业务逻辑封装
+     * @class   {_$$Page}
      * @extends {util/page#_$$AbstractPage}
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {Array}          list        页码节点列表【长度保持奇数】
@@ -77,8 +78,8 @@ NEJ.define([
      * @config  {String}         disabled    禁用样式，默认为js-disabled
      *
      * [hr]
-     *
-     * @event  {onchange} 切换页面处理
+     * 切换页面处理
+     * @event  {onchange}
      * @param  {Object} 页码信息
      * @config {Number} last  上一次的页码
      * @config {Number} index 当前要切换的页面
@@ -95,7 +96,7 @@ NEJ.define([
      */
     _pro.__init = function(){
         this.__ndot = [];
-        this.__supInit();
+        this.__super();
     };
     /**
      * 控件销毁
@@ -104,7 +105,7 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         this.__doRecycleDotNode();
     };
     /**
@@ -262,4 +263,4 @@ NEJ.define([
     }
 
     return _p;
-})
+});

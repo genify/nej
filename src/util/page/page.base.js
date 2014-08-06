@@ -6,12 +6,13 @@
  * ------------------------------------------
  */
 NEJ.define([
+    '{lib}base/global.js',
     '{lib}base/klass.js',
     '{lib}util/event.js',
     '{lib}base/util.js',
     '{lib}base/element.js',
     '{lib}base/event.js'
-],function(_k,_t,_u,_e,_v,_p,_o,_f,_r){
+],function(NEJ,_k,_t,_u,_e,_v,_p,_o,_f,_r){
     var _pro;
     /**
      * 分页逻辑封装基类<br />
@@ -101,8 +102,8 @@ NEJ.define([
      * @config  {String}       disabled    禁用样式，默认为js-disabled
      *
      * [hr]
-     *
-     * @event  {onchange} 页码变化触发事件，输入{last:3,index:1,total:12}
+     * 页码变化触发事件，输入{last:3,index:1,total:12}
+     * @event  {onchange}
      * @param  {Object}   页码信息
      * @config {Number} last  上一次的页码
      * @config {Number} index 当前要切换的页面
@@ -119,7 +120,7 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         this.__pbtn  = _options.pbtn;
         this.__nbtn  = _options.nbtn;
         this.__sbtn  = _options.sbtn;
@@ -141,7 +142,7 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         delete this.__list;
         delete this.__name;
         delete this.__pbtn;
@@ -427,4 +428,4 @@ NEJ.define([
     }
 
     return _p;
-})
+});

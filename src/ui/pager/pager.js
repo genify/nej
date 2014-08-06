@@ -6,11 +6,12 @@
  * ------------------------------------------
  */
 NEJ.define([
+    '{lib}base/global.js',
     '{lib}base/klass.js',
     '{lib}base/element.js',
     '{lib}ui/pager/pager.base.js',
     '{lib}util/page/page.js'
-],function(_k,_e,_u,_t,_p,_o,_f,_r){
+],function(NEJ,_k,_e,_u,_t,_p,_o,_f,_r){
     // variable declaration
     var _pro,
         _seed_html;
@@ -49,7 +50,7 @@ NEJ.define([
      *       _pager._$bind('pagerCnt2');
      *   })
      * [/code]
-     * @class   {_$$Pager} 分页器控件封装
+     * @class   {_$$Pager}
      * @uses    {util/page#_$$Page}
      * @extends {ui#_$$Abstract}
      * @param   {Object}  可选配置参数，已处理参数列表如下
@@ -58,8 +59,8 @@ NEJ.define([
      * @config  {Boolean} noend 无尾页显示
      *
      * [hr]
-     *
-     * @event  {onchange} 页码切换事件，输入{last:3,index:1,total:12}
+     * 页码切换事件，输入{last:3,index:1,total:12}
+     * @event  {onchange}
      * @param  {Object} 页码状态对象
      * @config {Number} last  上一次的页码
      * @config {Number} index 当前要切换的页面
@@ -78,7 +79,7 @@ NEJ.define([
     _pro.__reset = function(_options){
         _options.number =
             parseInt(_options.number)||9;
-        this.__supReset(_options);
+        this.__super(_options);
         this.__page = _t._$$Page._$allocate(this.__popt);
     };
     /**
@@ -107,4 +108,4 @@ NEJ.define([
     }
 
     return _p;
-})
+});

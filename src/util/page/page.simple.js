@@ -6,10 +6,11 @@
  * ------------------------------------------
  */
 NEJ.define([
+    '{lib}base/global.js',
     '{lib}base/klass.js',
     '{lib}util/page/page.base.js',
     '{lib}base/util.js'
-],function(_k,_t,_u,_p,_o,_f,_r){
+],function(NEJ,_k,_t,_u,_p,_o,_f,_r){
     // variable declaration
     var _pro;
     /**
@@ -67,7 +68,7 @@ NEJ.define([
      *       _ps._$updatePage(5,10);
      *   })
      * [/code]
-     * @class   {_$$SimplePage} 一段分页器业务逻辑封装
+     * @class   {_$$SimplePage}
      * @extends {util/page#_$$AbstractPage}
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {Array}          list        页码节点列表【长度保持奇数】
@@ -82,8 +83,8 @@ NEJ.define([
      * @config  {String}         disabled    禁用样式，默认为js-disabled
      *
      * [hr]
-     *
-     * @event  {onchange} 页码变化触发事件，输入{last:3,index:1,total:12}
+     * 页码变化触发事件，输入{last:3,index:1,total:12}
+     * @event  {onchange}
      * @param  {Object} 页码信息
      * @config {Number} last  上一次的页码
      * @config {Number} index 当前要切换的页面
@@ -130,4 +131,4 @@ NEJ.define([
     }
 
     return _p;
-})
+});
