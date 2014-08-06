@@ -5,67 +5,63 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(_b,_p){
-    if (CMPT){
-        // variable declaration
-        var _b = NEJ.P('nej.p'),
-            _p = window,
-            _is = _b._$IS,
-            // ipad/iphone not fire 
-            // requestAnimationFrame when html page change
-            _es = _is.ipad||_is.iphone;
-    }
-    var _p  = window,
-        _is = _b._$IS,
-        _es = _is.ipad||_is.iphone;
-    // implement animation frame interface
-    if (!_es&&!!_p.requestAnimationFrame&&
-        !!_p.cancelRequestAnimationFrame)
-        return;
-    // use browser implementation
-    var _prefix = _b._$KERNEL.prefix.pro;
-    if (!_es&&!!_p[_prefix+'RequestAnimationFrame']&&
-        !!_p[_prefix+'CancelRequestAnimationFrame']){
-        _p.requestAnimationFrame = _p[_prefix+'RequestAnimationFrame'];
-        _p.cancelRequestAnimationFrame = _p[_prefix+'CancelRequestAnimationFrame'];
-        return _p;
-    }
-    // requestAnimationFrame/cancelRequestAnimationFrame implementation
-    var _fps = _is.desktop?80:(_is.ios?50:30);
+NEJ.define([
+    '{lib}base/platform.js',
+    '{platform}animation.js'
+],function(_m,_h,_p,_o,_f,_r){
     /**
      * 请求动画<br />
+     * 
      * 脚本举例
      * [code]
-     *   // 桌面端一秒钟调用12.5次，ios端没秒调用20次，否则调用33次
-     *   var _id  = requestAnimationFrame(function(_date){console.log(_date);})
+     *   NEJ.define([
+     *       '{lib}util/timer/animation.js'
+     *   ],function(_p){
+     *       // 桌面端一秒钟调用12.5次，ios端没秒调用20次，否则调用33次
+     *       var _id  = _p.requestAnimationFrame(
+     *           function(_date){
+     *               console.log(_date);
+     *           }
+     *       );
+     *   });
      * [/code]
-     * @api    {window.requestAnimationFrame}
+     * 
+     * @api    {requestAnimationFrame}
      * @param  {Function} 动画回调
      * @return {String}   动画标识
      */
-    _p.requestAnimationFrame = function(_callback){
-        return window.setTimeout(
-               function(){
-                   try{_callback(+new Date);}catch(ex){}
-               },1000/_fps);
+    _p.requestAnimationFrame = function(){
+        _h.__requestAnimationFrame.apply(null,arguments);
     };
     /**
      * 取消动画<br />
+     * 
      * 脚本举例
      * [code]
-     *   var _id  = requestAnimationFrame(function(_date){console.log(_date);})
-     *   // 停止掉时钟
-     *   cancelRequestAnimationFrame(_id);
+     *   NEJ.define([
+     *       '{lib}util/timer/animation.js'
+     *   ],function(_p){
+     *       var _id  = _p.requestAnimationFrame(
+     *           function(_date){
+     *               console.log(_date);
+     *           }
+     *       );
+     *       // 停止掉时钟
+     *       _p.cancelRequestAnimationFrame(_id);
+     *   });
      * [/code]
-     * @api    {window.cancelRequestAnimationFrame}
+     * 
+     * @api    {cancelRequestAnimationFrame}
      * @param  {String} 动画标识
-     * @return {window}
+     * @return {Void}
      */
-    _p.cancelRequestAnimationFrame = function(_id){
-        window.clearTimeout(_id);
-        return this;
+    _p.cancelRequestAnimationFrame = function(){
+        _h.__cancelRequestAnimationFrame.apply(null,arguments);
     };
+    
+    if (CMPT){
+        NEJ.copy(this,_p);
+    }
+    
     return _p;
-};
-NEJ.define('{lib}util/timer/animation.js',
-          ['{lib}base/platform.js'],f);
+});
