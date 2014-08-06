@@ -6,11 +6,12 @@
  * ------------------------------------------
  */
 NEJ.define([
+    '{lib}base/global.js',
     '{lib}base/klass.js',
     '{lib}base/element.js',
     '{lib}base/util.js',
     '{lib}ui/base.js'
-],function(_k,_e,_u,_t,_p,_o,_f,_r){
+],function(NEJ,_k,_e,_u,_t,_p,_o,_f,_r){
     // variable declaration
     var _pro,
         _seed_css,
@@ -39,7 +40,7 @@ NEJ.define([
      *       // 或者实例化一个page.simple对象，首尾页需要辅助，数字可能不会出现
      *       // 表现为,首页 上一页 5 6 7 8 9 10 下一页 末页
      *       _pro.__reset = function(_options){
-     *           this.__supReset(_options);
+     *           this.__super(_options);
      *           this.__page = _t._$$Page._$allocate(this.__popt);
      *           };
      *
@@ -70,7 +71,7 @@ NEJ.define([
      *   })
      *
      * [/code]
-     * @class   {_$$AbstractPager} 分页器控件封装
+     * @class   {_$$AbstractPager}
      * @extends {ui#_$$Abstract}
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {Number} index  当前页码
@@ -103,7 +104,7 @@ NEJ.define([
         delete this.__bopt.onchange;
         this.__popt.onchange =
             this.__onChange._$bind(this);
-        this.__supReset(_options);
+        this.__super(_options);
         this.__doResetNumber({
             number:_options.number,
             label:_options.label||_o
@@ -120,7 +121,7 @@ NEJ.define([
             this.__page._$recycle();
             delete this.__page;
         }
-        this.__supDestroy();
+        this.__super();
         delete this.__bopt;
         delete this.__popt;
         this._$unbind();
@@ -168,7 +169,7 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__initNode = function(){
-        this.__supInitNode();
+        this.__super();
     };
     /**
      * 生成页码列表html代码
@@ -338,4 +339,4 @@ NEJ.define([
     }
 
     return _p;
-})
+});

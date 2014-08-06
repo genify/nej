@@ -6,13 +6,13 @@
  * ------------------------------------------
  */
 var f = function() {
-	var _  = NEJ.P,
-		_e = _('nej.e'),
-		_v = _('nej.v'),
-		_c = _('nej.c'),
-		_i = _('nej.ui'),
-		_t = _('nej.ut'),
-		_pro;
+    var _  = NEJ.P,
+        _e = _('nej.e'),
+        _v = _('nej.v'),
+        _c = _('nej.c'),
+        _i = _('nej.ui'),
+        _t = _('nej.ut'),
+        _pro;
     if (!!_i._$$MP3Player) return;
     /**
      * 音频播放器
@@ -32,7 +32,7 @@ var f = function() {
     /**
      * 重置控件
      * @param  {Objec} _options 可选配置参数
-     * @return {void}          
+     * @return {void}
      */
     _pro.__reset = function(_options){
         this.__supReset(_options);
@@ -63,8 +63,8 @@ var f = function() {
      * @return {Void}
      */
     _pro.__initXGui = function(){
-    	this.__seed_css = _seed_css;
-    	this.__seed_html = _seed_html;
+        this.__seed_css = _seed_css;
+        this.__seed_html = _seed_html;
     };
 
     /**
@@ -74,13 +74,13 @@ var f = function() {
      * @return {Void}
      */
     _pro.__initNode = function(){
-    	this.__supInitNode();
+        this.__supInitNode();
         // 0 - 播放按钮
         // 1 - 小音量
         // 2 - 当前播放时间
         // 3 - 歌曲总时长
         // 4 - 歌曲播放模式
-    	var _list  = _e._$getByClassName(this.__body,'ztag'),
+        var _list  = _e._$getByClassName(this.__body,'ztag'),
             _vlist = _e._$getByClassName(this.__body,'vtag'),
             _tlist = _e._$getByClassName(this.__body,'ttag');
         this.__nplay  = _list[0];
@@ -126,7 +126,7 @@ var f = function() {
             this.__onPlay();
         }else if (_action == 'next'){
             this.__onNext();
-        } 
+        }
     };
 
     /**
@@ -164,7 +164,7 @@ var f = function() {
      * @return {void}
      */
     _pro.__onPre = function(){
-    	this.__playlist._$prev();
+        this.__playlist._$prev();
     };
 
     /**
@@ -189,7 +189,7 @@ var f = function() {
      * @return {void}
      */
     _pro.__onNext = function(){
-    	this.__playlist._$next();
+        this.__playlist._$next();
     };
 
     /**
@@ -198,7 +198,7 @@ var f = function() {
      * @return {void}
      */
     _pro.__onStateChange = function(_event){
-    	var _state = _event.state;
+        var _state = _event.state;
         if (_state == 2){
             _e._$replaceClassName(this.__nplay,'m-play','m-pause');
         }else{
@@ -220,14 +220,14 @@ var f = function() {
     _pro.__onTimeUpdate = function(_event){
         if (!this.__timeSlider)
             this.__timeSlider = _t._$$SimpleSlider._$allocate(this.__tslide);
-    	// 播放第二首的current有问题
+        // 播放第二首的current有问题
         var _current  = _event.current,
             _duration = _event.duration;
-	    if (parseInt(_current) === 0){
-	    	this.__nctime.innerHTML = '00:00';
+        if (parseInt(_current) === 0){
+            this.__nctime.innerHTML = '00:00';
             this.__nstime.innerHTML = this.__doFormatSecond(_duration);
-	    }
-	    this.__nctime.innerHTML = this.__doFormatSecond(_current);
+        }
+        this.__nctime.innerHTML = this.__doFormatSecond(_current);
         var _played = _current / (_duration ? _duration : 1);
         this.__timeSlider._$setPosition(_played);
     };
@@ -262,7 +262,7 @@ var f = function() {
      * @return {void}
      */
     _pro.__onVolSlideStop = function(_event){
-    	var _value = _event.ratio;
+        var _value = _event.ratio;
             _value = _value * this.__vslide.value
         if (!!this.__audio){
             this.__audio._$volume(_value);
@@ -343,23 +343,23 @@ var f = function() {
     /**
      * 刷新播放列表
      * @param  {Array} _list 歌曲列表
-     * @return {void}  
+     * @return {void}
      */
     _pro._$refreshList = function(_options){
         var _mode = _options.mode||0,
             _list = _options.list||[];
-    	if (!this.__playlist){
-    		this.__playlist = _t._$$PlayList._$allocate({
-				mode:_mode,
-				list:_list,
-				onmodechange:this.__onModeChange._$bind(this),
-				onmediachange:this.__onMediaChange._$bind(this,_options)
-			});
-    	}else{
+        if (!this.__playlist){
+            this.__playlist = _t._$$PlayList._$allocate({
+                mode:_mode,
+                list:_list,
+                onmodechange:this.__onModeChange._$bind(this),
+                onmediachange:this.__onMediaChange._$bind(this,_options)
+            });
+        }else{
             this.__autostart = !0;
-    		this.__playlist._$setPlayMode(_mode);
-    		this.__playlist._$setPlayList(_list);
-    	}
+            this.__playlist._$setPlayMode(_mode);
+            this.__playlist._$setPlayList(_list);
+        }
     };
     var _seed_css = _e._$pushCSSText('\
       .#<uispace> .m-pre, .#<uispace> .m-play, .#<uispace> .m-next, .#<uispace> .m-cur, .#<uispace> .m-pause, .#<uispace> .m-volmin,\
@@ -367,39 +367,35 @@ var f = function() {
       .#<uispace> .m-volmax, .#<uispace> .m-volmaxc{background:url('+_c._$get('root')+'audio_sprite.png) no-repeat 9999px 9999px;}\
       .#<uispace> .m-player{height:40px;min-width:530px;background:#606060;cursor:default}\
       .#<uispace> .m-player .ctl{width:300px; float:left;}\
-      .#<uispace> .m-pre{height:30px;width:25px;background-position:0 0;float:left;margin-top:8px;margin-left: 10px;}\
+      .#<uispace> .m-pre{height:10px;width:16px;background-position:0 0;float:left;margin-top:14px;margin-left: 10px;}\
       .#<uispace> .m-pre:active, .#<uispace> .m-preatv{background-position:-104px -1px;}\
-      .#<uispace> .m-play{height:40px;width:32px;background-position:0 -35px;float:left;margin:2px 4px 0;}\
+      .#<uispace> .m-play{height:11px;width:10px;background-position:2px -28px;float:left;margin:14px 20px 0;}\
       .#<uispace> .m-play:active{background-position:-202px -36px;}\
-      .#<uispace> .m-pause{height:40px;width:32px;background-position:-103px -35px;float:left;margin:2px 4px 0;}\
+      .#<uispace> .m-pause{height:11px;width:10px;background-position:0 -96px;float:left;margin:14px 20px 0;}\
       .#<uispace> .m-pause:active{background-position:-155px -36px;}\
-      .#<uispace> .m-next{height:30px;width:25px;background-position:0 -80px;float:left;margin-top:8px;}\
+      .#<uispace> .m-next{height:10px;width:16px;background-position:0 -61px;float:left;margin-top:14px;}\
       .#<uispace> .m-next:active, .#<uispace>  .m-nextatv{background-position:-103px -81px;}\
       .#<uispace> .m-player .loop{width:120px;float:right}\
       .#<uispace> .m-curtime{float: right;margin-right: 10px;color:#fff;line-height: 40px;}\
       .#<uispace> .m-time{float: left;margin-left: 10px;color:#fff;line-height: 40px;}\
       .#<uispace> .m-player .timeline{height:25px;position:absolute;left:315px;right:120px;bottom:0;top:0;width:135px;padding-top:15px;}\
       .#<uispace> .m-vol{height:27px;width:90px;padding:13px 0 0 20px;float:left;}\
-      .#<uispace> .m-volicn{width:12px;height:20px;margin:10px 0 0 10px;float:left}\
-      .#<uispace> .m-vzero .m-volminc{background-position:1px -185px;width:5px;height:20px;float:left;}\
-      .#<uispace> .m-vzero .m-volmaxc{background-position:-8px -185px;width:7px;height:20px;float:left;}\
-      .#<uispace> .m-vmin .m-volminc{background-position:-40px -186px;width:5px;height:20px;float:left;}\
-      .#<uispace> .m-vmax .m-volminc{background-position:-40px -186px;width:5px;height:20px;float:left;}\
-      .#<uispace> .m-vmin .m-volmaxc{background-position:-7px -185px;width:7px;margin-left:-1px;height:20px;float:left;}\
-      .#<uispace> .m-vmax .m-volmaxc{background-position:-50px -186px;width:7px;margin-left:-1px;height:20px;float:left;}\
+      .#<uispace> .m-volicn{width:20px;height:20px;margin:10px 0 0 10px;float:left}\
+      .#<uispace> .m-vzero .m-volminc{background-position:0 -354px;width:100%;height:100%;float:left;}\
+      .#<uispace> .m-vmin .m-volminc{background-position:0 -124px;width:100%;height:100%;float:left;}\
+      .#<uispace> .m-vmax .m-volminc{background-position:0 -155px;width:100%;height:100%;float:left;}\
       .#<uispace> .m-timeline{position:absolute;width:100%;height:8px;border-radius:4px;background:#3b3b3b;border-top:1px solid #212121;border-bottom:1px solid #636363}\
       .#<uispace> .m-timelinei{width:0%;}\
       .#<uispace> .m-timeline-1{margin-top:0px;width:90px;position:absolute;}\
       .#<uispace> .m-progress{background:green;margin-top:-1px;}\
-      .#<uispace> .m-cur{position:absolute;right:-5px;margin-left:-5px;background-position:-73px -186px;height:10px;width:10px;}\
-      .#<uispace> .m-cur2{position:absolute;right:-5px;margin-left:-5px;background:url('+_c._$get('root')+'audio_sprite.png) no-repeat 9999px 9999px;width:10px;background-position: -73px -186px;}\
-      .#<uispace> .m-cur:active, .#<uispace> .m-cur2:active{background-position:-93px -186px;}\
-      .#<uispace> .m-shuffleb{height:20px;width:20px;float:right;margin:10px 10px 0 0 }\
-      .#<uispace> .m-shuffled{background-position:-55px -115px;}\
+      .#<uispace> .m-cur{position:absolute;right:-5px;margin-left:-5px;background-position:0 -302px;height:10px;width:10px;}\
+      .#<uispace> .m-cur2{position:absolute;right:-5px;margin-left:-5px;background:url('+_c._$get('root')+'audio_sprite.png) no-repeat 9999px 9999px;width:10px;background-position:0 -302px;}\
+      .#<uispace> .m-cur:active, .#<uispace> .m-cur2:active{background-position:0 -328px;}\
+      .#<uispace> .m-shuffled{background-position:0 -262px;}\
       .#<uispace> .m-shufflec{background-position:-56px -115px;}\
-      .#<uispace> .m-repeatb, .m-repeatb-1{height:20px;width:20px;float:right;margin:10px 10px 0 0 }\
-      .#<uispace> .m-repeatd{background-position:-55px -149px;}\
-      .#<uispace> .m-repeatd-1{background-position:-11px -149px;}\
+      .#<uispace> .m-repeatb, .m-repeatb-1, .m-shuffleb{height:22px;width:32px;float:right;margin:10px 10px 0 0 }\
+      .#<uispace> .m-repeatd{background-position:0 -187px;}\
+      .#<uispace> .m-repeatd-1{background-position:0 -225px;}\
       .#<uispace> .m-repeatc{background-position:-56px -149px;}\
       .m-cnt{width:600px;position: relative;}');
     var _seed_html = _e._$addNodeTemplate('\
@@ -419,7 +415,6 @@ var f = function() {
               </div>\
               <span class="m-volicn ztag m-vmax f-ib">\
                 <span class="f-ib m-volminc">&nbsp;</span>\
-                <span class="f-ib m-volmaxc">&nbsp;</span>\
               </span>\
               <span class="m-curtime ztag">00:00</span>\
             </div>\
