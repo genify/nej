@@ -5,19 +5,20 @@
  * @author   genify(caijf@corp.netease.com)
  * --------------------------------------------
  */
-var f = function(){
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{lib}base/event.js',
+    '{lib}util/event.js'
+],function(NEJ,_k,_e,_v,_t,_p,_o,_f,_r){
     // variable
-    var _   = NEJ.P,
-        _e  = _('nej.e'),
-        _v  = _('nej.v'),
-        _p  = _('nej.ut'),
-        _proSimpleSlider;
+    var _pro;
     /**
      * 简易滑块控件
-     * 
-     * @class   {nej.ut._$$SimpleSlider}
-     * @extends {nej.ut._$$Event}
-     * 
+     * @class   {_$$SimpleSlider}
+     * @extends {util/event#$$Event}
+     *
      * @param   {Object} 配置参数
      * @config  {String|Node} track    轨道
      * @config  {String|Node} thumb    滑块
@@ -25,29 +26,29 @@ var f = function(){
      * @config  {Float}       value    初始值
      * @config  {Number}      delta    数据计算偏差
      * @config  {Boolean}     reset    回收时是否重置位置
-     * 
+     *
      * [hr]
      * 滑动过程事件
      * @event   {onslidechange}
      * @param   {Object} 滑动信息
      * @config  {Float} ratio 滑动比例
-     * 
+     *
      * [hr]
      * 滑动停止事件
      * @event   {onslidestop}
      * @param   {Object} 滑动信息
      * @config  {Float} ratio 滑动比例
-     * 
+     *
      */
-    _p._$$SimpleSlider = NEJ.C();
-      _proSimpleSlider = _p._$$SimpleSlider._$extend(_p._$$Event);
+    _p._$$SimpleSlider = _k._$klass();
+    _pro = _p._$$SimpleSlider._$extend(_t._$$Event);
     /**
      * 控件重置
      * @param  {Object} 配置参数
      * @return {Void}
      */
-    _proSimpleSlider.__reset = function(_options){
-        this.__supReset(_options);
+    _pro.__reset = function(_options){
+        this.__super(_options);
         this.__ndrst = !!_options.reset;
         this.__delta = parseInt(_options.delta)||0;
         this.__track = _e._$get(_options.track);
@@ -77,17 +78,17 @@ var f = function(){
      * 控件销毁
      * @return {Void}
      */
-    _proSimpleSlider.__destroy = function(){
+    _pro.__destroy = function(){
         if (!!this.__ndrst)
             this.__doUpdatePosition(0);
-        this.__supDestroy();
+        this.__super();
     };
     /**
      * 滑动开始
      * @param  {Event} 事件信息
      * @return {Void}
      */
-    _proSimpleSlider.__onSlideStart = function(_event){
+    _pro.__onSlideStart = function(_event){
         if (!!this.__offset) return;
         _v._$stop(_event);
         this.__offset = _v._$pageX(_event);
@@ -98,7 +99,7 @@ var f = function(){
      * @param  {Event} 事件信息
      * @return {Void}
      */
-    _proSimpleSlider.__onSliding = function(_event){
+    _pro.__onSliding = function(_event){
         if (!this.__offset) return;
         var _offset = _v._$pageX(_event),
             _delta = _offset-this.__offset;
@@ -115,7 +116,7 @@ var f = function(){
      * @param  {Event} 事件信息
      * @return {Void}
      */
-    _proSimpleSlider.__onSlideStop = function(_event){
+    _pro.__onSlideStop = function(_event){
         if (!this.__offset) return;
         this.__onSliding(_event);
         delete this.__offset;
@@ -128,7 +129,7 @@ var f = function(){
      * 直接点击跳转至指定位置
      * @return {Void}
      */
-    _proSimpleSlider.__onSlideTo = function(_event){
+    _pro.__onSlideTo = function(_event){
         var _ofstx = _e._$offset(this.__track).x,
             _pagex = _v._$pageX(_event);
         this.__doUpdatePosition(
@@ -143,7 +144,7 @@ var f = function(){
      * @param  {Float} 滑块百分比
      * @return {Void}
      */
-    _proSimpleSlider.__doUpdatePosition = function(_ratio){
+    _pro.__doUpdatePosition = function(_ratio){
         this.__ratio = Math.max(0,
                        Math.min(1,_ratio));
         _e._$setStyle(
@@ -156,7 +157,7 @@ var f = function(){
      * @param  {Float} 滑块百分比
      * @return {Void}
      */
-    _proSimpleSlider._$setPosition = function(_ratio){
+    _pro._$setPosition = function(_ratio){
         if (!!this.__offset) return;
         this.__doUpdatePosition(_ratio);
     };
@@ -164,9 +165,13 @@ var f = function(){
      * 取滑块位置
      * @return {Float} 滑块百分比
      */
-    _proSimpleSlider._$getPosition = function(_ratio){
+    _pro._$getPosition = function(_ratio){
         return this.__ratio;
     };
-};
-NEJ.define('{lib}util/slider/slider.simple.js',
-          ['{lib}util/event.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});
