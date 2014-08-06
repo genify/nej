@@ -2009,7 +2009,7 @@ NEJ.define([
     _p._$addClassName = function(_element,_class){
         _element = _e._$get(_element);
         if (!!_element){
-            _p.__processClassName(
+            _h.__processClassName(
                 _element,'add',_class
             );
         }
@@ -2046,7 +2046,7 @@ NEJ.define([
     _p._$delClassName = function(_element,_class){
         _element = _e._$get(_element);
         if (!!_element){
-            _p.__processClassName(
+            _h.__processClassName(
                 _element,'remove',_class
             );
         }
@@ -2085,7 +2085,7 @@ NEJ.define([
     _p._$replaceClassName = function(_element,_del,_add){
         _element = _e._$get(_element);
         if (!!_element){
-            _p.__processClassName(
+            _h.__processClassName(
                 _element,'replace',
                 _del,_add
             );
