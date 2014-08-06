@@ -12,9 +12,9 @@ NEJ.define([
 ],function(NEJ,_u,_h,_p,_o,_f,_r){
     /**
      * 取音频播放器实例
-     * @api    {nej.e._$audio}
-     * @param {Object} 配置信息
-     * @return {nej.ut._$$Media} 音频播放器实例
+     * @api    {_$audio}
+     * @param  {Object} 配置信息
+     * @return {util/media#_$$Media} 音频播放器实例
      */
     _p._$audio = function(_options){
         return _h.__getAudioInst(_options);
@@ -22,28 +22,32 @@ NEJ.define([
     /**
      * 播放音频，代码示例
      * [code]
-     *     // 播放音频
-     *     // 如果之前有音频在播放
-     *     // 则会先触发之前音频的0状态onstatechange事件
-     *     nej.e._$playBgSound(
-     *         'http://a.b.com/a/a.mp3',{
-     *             key:'test-audio'
-     *             extra:'xxx_id',
-     *             onstatechange:function(_event){
-     *                 // _event.state -> 状态值
+     *   NEJ.define([
+     *       '{lib}util/audio/audio.js'
+     *   ],function(_e){
+     *       // 播放音频
+     *       // 如果之前有音频在播放
+     *       // 则会先触发之前音频的0状态onstatechange事件
+     *       _e._$playBgSound(
+     *           'http://a.b.com/a/a.mp3',{
+     *               key:'test-audio'
+     *               extra:'xxx_id',
+     *               onstatechange:function(_event){
+     *                   // _event.state -> 状态值
      *                 // _event.data  -> extra值
-     *             },
-     *             onerror:function(_event){
-     *                 // _event.code  -> 错误类型
-     *             }
-     *         }
-     *     );
-     *     // 停止音频播放
-     *     // 如果有音频在播放
-     *     // 则会触发0状态的onstatechange事件
-     *     nej.e._$stopBgSound('test-audio');
+     *               },
+     *               onerror:function(_event){
+     *                   // _event.code  -> 错误类型
+     *               }
+     *           }
+     *       );
+     *       // 停止音频播放
+     *       // 如果有音频在播放
+     *       // 则会触发0状态的onstatechange事件
+     *       _e._$stopBgSound('test-audio');
+     *   });
      * [/code]
-     * @api    {nej.e._$playBgSound}
+     * @api    {_$playBgSound}
      * @param  {String} 音频文件地址
      * @param  {Object} 可选配置参数
      * @config {String}   key           播放标识，同一标识只允许一个播放实例
@@ -144,8 +148,8 @@ NEJ.define([
         };
         /**
          * 停止单例音频播放
-         * @api    {nej.e._$stopBgSound}
-         * @see    {nej.e._$playBgSound}
+         * @api    {_$stopBgSound}
+         * @see    {_$playBgSound}
          * @param  {String} 播放标识
          * @return {Void}
          */

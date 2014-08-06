@@ -5,18 +5,18 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{lib}ui/base.js'
+],function(NEJ,_k,_e,_u,_p,_o,_f,_r){
     // variable declaration
-    var o = NEJ.O,
-        e = NEJ.P('nej.e'),
-        p = NEJ.P('nej.ui'),
-        __proArrows,
-        __supArrows;
-    if (!!p._$$Arrows) return;
+    var _pro;
     /**
      * 箭头控件
-     * @class   {nej.ui._$$Arrows} 箭头控件
-     * @extends {nej.ui._$$Abstract}
+     * @class   {_$$Arrows}
+     * @extends {ui/base#_$$Abstract}
      * @param   {Object} 可选配置参数，已处理参数列表如下：
      * @config  {Number} direction 箭头方向
      * [ntb]
@@ -24,9 +24,8 @@ var f = function(){
      *   -1 | 反方向
      * [/ntb]
      */
-    p._$$Arrows = NEJ.C();
-    __proArrows = p._$$Arrows._$extend(p._$$Abstract);
-    __supArrows = p._$$Arrows._$supro;
+    _p._$$Arrows = _k._$klass();
+    _pro = _p._$$Arrows._$extend(_u._$$Abstract);
     /**
      * 控件重置
      * @protected
@@ -34,8 +33,8 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    __proArrows.__reset = function(_options){
-        this.__supReset(_options);
+    _pro.__reset = function(_options){
+        this.__super(_options);
         this._$direction(_options.direction);
     };
     /**
@@ -44,9 +43,9 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    __proArrows.__destroy = function(){
-        this.__supDestroy();
-        e._$delClassName(this.__body,this.__seed_css+'-reverse');
+    _pro.__destroy = function(){
+        this.__super();
+        _e._$delClassName(this.__body,this.__seed_css+'-reverse');
     };
     /**
      * 改变方向
@@ -54,11 +53,16 @@ var f = function(){
      * @param  {Number} 箭头方向
      * @return {Void}
      */
-    __proArrows._$direction = function(_direction){
+    _pro._$direction = function(_direction){
         var _class = this.__seed_css+'-reverse';
         _direction = parseInt(_direction)||1;
-        _direction>0 ? e._$delClassName(this.__body,_class)
-                     : e._$addClassName(this.__body,_class);
+        _direction>0 ? _e._$delClassName(this.__body,_class)
+                     : _e._$addClassName(this.__body,_class);
     };
-};
-NEJ.define('{lib}ui/arrows/arrows.js',['{lib}ui/base.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui'),_p);
+    }
+
+    return _p;
+});

@@ -72,7 +72,7 @@ NEJ.define([
      *
      * [/code]
      * @class   {_$$AbstractPager}
-     * @extends {ui#_$$Abstract}
+     * @extends {ui/base#_$$Abstract}
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {Number} index  当前页码
      * @config  {Number} total  总页码数
@@ -315,23 +315,23 @@ NEJ.define([
     };
     // ui css text
     _seed_css = _e._$pushCSSText('\
-        .#<uispace>{font-size:12px;line-height:160%;}\
-        .#<uispace> a{margin:0 2px;padding:2px 8px;color:#333;border:1px solid #aaa;text-decoration:none;}\
-        .#<uispace> .js-disabled{cursor:default;}\
-        .#<uispace> .js-selected{cursor:default;background:#bbb;}\
+      .#<uispace>{font-size:12px;line-height:160%;}\
+      .#<uispace> a{margin:0 2px;padding:2px 8px;color:#333;border:1px solid #aaa;text-decoration:none;}\
+      .#<uispace> .js-disabled{cursor:default;}\
+      .#<uispace> .js-selected{cursor:default;background:#bbb;}\
     ');
     _seed_page = _e._$addHtmlTemplate('\
-        {trim}\
-        {if !defined("noprv")||!noprv}\
+      {trim}\
+      {if !defined("noprv")||!noprv}\
         <a href="#" class="zbtn zprv ${\'js-p-\'|seed}">${label.prev||"上一页"}</a>\
-        {/if}\
-        {list 1..number as x}\
+      {/if}\
+      {list 1..number as x}\
         <a href="#" class="zpgi zpg${x} ${\'js-i-\'|seed}"></a>\
-        {/list}\
-        {if !defined("nonxt")||!nonxt}\
+      {/list}\
+      {if !defined("nonxt")||!nonxt}\
         <a href="#" class="zbtn znxt ${\'js-n-\'|seed}">${label.next||"下一页"}</a>\
-        {/if}\
-        {/trim}\
+      {/if}\
+      {/trim}\
     ');
 
     if (CMPT){
