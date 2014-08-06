@@ -1,13 +1,19 @@
-var f = function(){
-	var _  = NEJ.P,
-		_h = _('nej.h');
+/*
+ * ------------------------------------------
+ * 平台适配接口实现文件
+ * @version  1.0
+ * @author   genify(caijf@corp.netease.com)
+ * ------------------------------------------
+ */
+NEJ.define(function(_p){
 	/**
      * 将Hash推入历史
-     * @param  {String} _hash HASH值
+     * @param  {String} HASH值
      * @return {Void}
      */
-    _h.__pushHistory = function(_hash){
+    _p.__pushHistory = function(_hash){
         // do nothing
     };
-};
-define(['{lib}base/platform.js'],f);
+    
+    return _p;
+});
