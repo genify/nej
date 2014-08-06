@@ -13,8 +13,7 @@ NEJ.define([
     '{lib}util/page/page.js'
 ],function(NEJ,_k,_e,_u,_t,_p,_o,_f,_r){
     // variable declaration
-    var _pro,
-        _seed_html;
+    var _pro;
     /**
      * 分页器控件封装<br />
      * 页面结构举例
@@ -51,8 +50,8 @@ NEJ.define([
      *   })
      * [/code]
      * @class   {_$$Pager}
-     * @uses    {util/page#_$$Page}
-     * @extends {ui#_$$Abstract}
+     * @uses    {util/page/page#_$$Page}
+     * @extends {ui/base#_$$Abstract}
      * @param   {Object}  可选配置参数，已处理参数列表如下
      * @config  {Number}  index 当前页码
      * @config  {Number}  total 总页码数

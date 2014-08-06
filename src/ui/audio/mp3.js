@@ -5,29 +5,34 @@
  * @author   cheng-lin(cheng-lin@corp.netease.com)
  * ------------------------------------------
  */
-var f = function() {
-    var _  = NEJ.P,
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _c = _('nej.c'),
-        _i = _('nej.ui'),
-        _t = _('nej.ut'),
-        _pro;
-    if (!!_i._$$MP3Player) return;
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{lib}base/event.js',
+    '{lib}ui/base.js',
+    '{lib}base/config.js',
+    '{lib}util/slider/slider.simple.js',
+    '{lib}util/media/playlist.js',
+    '{lib}util/audio/audio.js'
+],function(NEJ,_k,_e,_v,_u,_c,_t0,_t1,_t2,_p,_o,_f,_r) {
+    var _pro,
+        _seed_css,
+        _seed_html;
     /**
      * 音频播放器
-     * @class   {nej.ui._$$MP3Player} 音频播放器
-     * @uses    {nej.ut._$$SimpleSlider}
-     * @extends {nej.ui._$$Abstract}
+     * @class   {_$$MP3Player}
+     * @uses    {util/slider/slider.simple_$$SimpleSlider}
+     * @uses    {util/media/playlist#_$$PlayList}
+     * @extends {ui/base#._$$Abstract}
      * @param   {Object}  可选配置参数，已处理参数列表如下：
      * @config  {String|Node} parent     父节点
      * @config  {String}      mode       播放模式，0:列表(默认)，1:单曲，2:随机
      * @config  {Array}       list       歌曲列表
      * @config  {Boolean}     autostart  是否自动开始，0:不自动，1:自动(默认)
-     * @return  {nej.ui._$$MP3Player}   播放器实例
      */
-    _i._$$MP3Player = NEJ.C();
-    _pro = _i._$$MP3Player._$extend(_i._$$Abstract);
+    _p._$$MP3Player = _k._$klass();
+    _pro = _p._$$MP3Player._$extend(_u._$$Abstract);
 
     /**
      * 重置控件
@@ -35,14 +40,14 @@ var f = function() {
      * @return {void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         this.__vslide.value = _options.volnumber||100;
         this.__autostart = _options.autostart === 0 ? !1 : !0;
         this.__doInitDomEvent([
             [this.__body,'click',this.__onAction._$bind(this)]
         ]);
         if (!this.__volSlider){
-            this.__volSlider = _t._$$SimpleSlider._$allocate(this.__vslide);
+            this.__volSlider = _t0._$$SimpleSlider._$allocate(this.__vslide);
         }
         this._$refreshList(_options);
     };
@@ -53,7 +58,7 @@ var f = function() {
      */
     _pro.__destroy = function(){
         this.__doClearComponent();
-        this.__supDestroy();
+        this.__super();
     };
 
     /**
@@ -74,7 +79,7 @@ var f = function() {
      * @return {Void}
      */
     _pro.__initNode = function(){
-        this.__supInitNode();
+        this.__super();
         // 0 - 播放按钮
         // 1 - 小音量
         // 2 - 当前播放时间
@@ -219,7 +224,7 @@ var f = function() {
      */
     _pro.__onTimeUpdate = function(_event){
         if (!this.__timeSlider)
-            this.__timeSlider = _t._$$SimpleSlider._$allocate(this.__tslide);
+            this.__timeSlider = _t0._$$SimpleSlider._$allocate(this.__tslide);
         // 播放第二首的current有问题
         var _current  = _event.current,
             _duration = _event.duration;
@@ -304,7 +309,7 @@ var f = function() {
         var _url = _event.list[_event.index];
         if (!this.__audio){
             var _volume = this.__volSlider._$getPosition() * this.__vslide.value;
-            this.__audio =  _e._$audio({
+            this.__audio =  _t2._$audio({
                 preload:_options.preload||false,
                 volume:_volume,
                 onstatechange:this.__onStateChange._$bind(this),
@@ -349,7 +354,7 @@ var f = function() {
         var _mode = _options.mode||0,
             _list = _options.list||[];
         if (!this.__playlist){
-            this.__playlist = _t._$$PlayList._$allocate({
+            this.__playlist = _t1._$$PlayList._$allocate({
                 mode:_mode,
                 list:_list,
                 onmodechange:this.__onModeChange._$bind(this),
@@ -361,7 +366,7 @@ var f = function() {
             this.__playlist._$setPlayList(_list);
         }
     };
-    var _seed_css = _e._$pushCSSText('\
+    _seed_css = _e._$pushCSSText('\
       .#<uispace> .m-pre, .#<uispace> .m-play, .#<uispace> .m-next, .#<uispace> .m-cur, .#<uispace> .m-pause, .#<uispace> .m-volmin,\
       .#<uispace> .m-volminc, .#<uispace> .m-shuffled, .#<uispace> .m-repeatd-1, .#<uispace> .m-shufflec, .#<uispace> .m-repeatd, .#<uispace> .m-repeatc,\
       .#<uispace> .m-volmax, .#<uispace> .m-volmaxc{background:url('+_c._$get('root')+'audio_sprite.png) no-repeat 9999px 9999px;}\
@@ -398,7 +403,7 @@ var f = function() {
       .#<uispace> .m-repeatd-1{background-position:0 -225px;}\
       .#<uispace> .m-repeatc{background-position:-56px -149px;}\
       .m-cnt{width:600px;position: relative;}');
-    var _seed_html = _e._$addNodeTemplate('\
+    _seed_html = _e._$addNodeTemplate('\
       <div class="m-cnt '+_seed_css+'">\
         <div class="cse">\
           <div class="m-player">\
@@ -419,11 +424,11 @@ var f = function() {
               <span class="m-curtime ztag">00:00</span>\
             </div>\
             <div class="timeline">\
-                <div class="m-timeline ttag">\
-                  <div class="m-timeline m-progress ttag m-timelinei">\
-                    <span class="m-cur ttag">&nbsp;</span>\
-                  </div>\
+              <div class="m-timeline ttag">\
+                <div class="m-timeline m-progress ttag m-timelinei">\
+                  <span class="m-cur ttag">&nbsp;</span>\
                 </div>\
+              </div>\
             </div>\
             <div class="loop">\
               <span class="m-time ztag">00:00</span>\
@@ -432,12 +437,10 @@ var f = function() {
           </div>\
         </div>\
       </div>');
-};
-NEJ.define(
-    '{lib}ui/audio/mp3.js',[
-    '{lib}ui/base.js',
-    '{lib}util/audio/audio.js',
-    '{lib}base/config.js',
-    '{lib}util/media/playlist.js',
-    '{lib}util/slider/slider.simple.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui'),_p);
+    }
+
+    return _p;
+});
