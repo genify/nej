@@ -10,7 +10,7 @@ NEJ.define([
     '{lib}base/klass.js',
     '{lib}base/util.js',
     '{lib}util/event.js',
-    '{lib}util/ajax/storage.js'
+    './storage.js'
 ],function(NEJ,_k,_u,_t,_j,_p,_o,_f,_r){
     var _pro,
         _ckey = 'dat-'+(+new Date);
@@ -94,7 +94,7 @@ NEJ.define([
      * @param   {Object} 配置参数
      */
     _p._$$Cache = NEJ.C();
-    _pro = _p._$$Cache._$extend(_p._$$Event);
+    _pro = _p._$$Cache._$extend(_t._$$Event);
     /**
      * 初始化函数
      * @protected
