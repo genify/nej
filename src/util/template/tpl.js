@@ -99,10 +99,9 @@ NEJ.define([
                 _root = _u._$absolute(_root);
             }
             _src = _src.split(',');
-            _u._$forEach(_src,
-                function(_value,_index,_list){
-                    _list[_index] = _u._$absolute(_value,_root);
-                });
+            _u._$forEach(_src,function(_value,_index,_list){
+                _list[_index] = _u._$absolute(_value,_root);
+            });
             return _src;
         };
         var _doAddStyle = function(_textarea,_options){
@@ -221,7 +220,9 @@ NEJ.define([
             _element = _e._$get(_element);
             if (!!_element){
                 var _list = _element.tagName=='TEXTAREA' ? [_element]
-                          : _element.getElementsByTagName('textarea');
+                          : _u._$object2array(
+                                _element.getElementsByTagName('textarea')
+                            );
                 _u._$forEach(_list,function(_node){
                     _doAddTemplate(_node,_options);
                 });
