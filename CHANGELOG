@@ -12,6 +12,7 @@ v0.0.1
   * 删除cache/config.js
   * 删除dispatch/v1
   * 删除util/module
+  * 删除util/tb.resizer
 
 define.js
 - NEJ.config接口名称改为NEJ.deps
