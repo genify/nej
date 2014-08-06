@@ -8,7 +8,7 @@
 NEJ.define([
     '{lib}base/util.js',
     './node.js',
-    '../module.2.js'
+    '../module.base.js'
 ],function(_u,_t0,_t1,_p,_o,_f,_r){
     /*
      * 解析UMI对应的节点
@@ -71,7 +71,7 @@ NEJ.define([
             if (_pname!='/'){
                 _node = _parent._$getChildByName('/');
                 if (!_node){
-                    _node = _p._$$Node._$allocate();
+                    _node = _t0._$$Node._$allocate();
                     _parent._$appendChild(_node);
                 }
             }
@@ -79,7 +79,7 @@ NEJ.define([
             if (!!_name){
                 _node = _parent._$getChildByName(_name);
                 if (!_node){
-                    _node = _p._$$Node._$allocate({name:_name});
+                    _node = _t0._$$Node._$allocate({name:_name});
                     _parent._$appendChild(_node);
                 }
             }
@@ -145,7 +145,7 @@ NEJ.define([
      * @return {Boolean}          是否模块实例
      */
     _p._$isModule = function(_module){
-        return _module instanceof _t1._$$Module;
+        return _module instanceof _t1._$$AbstractModule;
     };
     /**
      * 判断给定UMI是否代表私有模块
