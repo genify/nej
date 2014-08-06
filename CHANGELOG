@@ -45,3 +45,7 @@ util/dispatcher.2.js
 
 util/page/page.js
 - 删除_e._$page接口
+
+util/template/tpl.js
+- 删除_e._$setup接口
+
