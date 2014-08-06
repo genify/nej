@@ -142,10 +142,10 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__doResetNumber = function(_data){
-        _e._$renderHtmlTemplate(
+        _y._$renderHtmlTemplate(
             this.__body,_seed_page,_data
         );
-        var _seed = _e._$getHtmlTemplateSeed();
+        var _seed = _y._$getHtmlTemplateSeed();
         this.__popt.list = _e._$getByClassName(
                 this.__body,
                 'js-i-'+_seed
