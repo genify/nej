@@ -124,6 +124,7 @@ NEJ.define(function(_p,_o,_f,_r){
     }
 
     if (CMPT){
+        this.NEJ = this.NEJ||{};
         // copy object properties
         // only for nej compatiable
         this.NEJ.copy = function(a,b){
