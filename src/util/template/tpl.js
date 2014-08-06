@@ -14,7 +14,7 @@ NEJ.define([
     '{lib}util/event/event.js',
     '{lib}util/ajax/tag.js',
     '{lib}util/ajax/xdr.js'
-],function(NEJ,_u,_v,_e,_x,_t,_j0,_j1,_p,_o,_f,_r){
+],function(NEJ,_u,_v,_e,_y,_t,_j0,_j1,_p,_o,_f,_r){
     var _cache = {}, // template cache
         _skey  = (+new Date)+'-';
     /**
@@ -188,7 +188,7 @@ NEJ.define([
             var _type = _node.name.toLowerCase();
             switch(_type){
                 case 'jst':
-                    _p._$addHtmlTemplate(_node,!0);
+                    _y._$addHtmlTemplate(_node,!0);
                 return;
                 case 'txt':
                     _p._$addTextTemplate(_node.id,_node.value||'');
