@@ -200,7 +200,7 @@ NEJ.define([
     })();
     
     if (CMPT){
-        NEJ.C = _p._$klass;
+        this.NEJ.C = _p._$klass;
     }
     
     return _p;

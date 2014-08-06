@@ -1298,9 +1298,9 @@ NEJ.define([
     };
     
     if (CMPT){
-        NEJ.Q  = _p._$query;
-        NEJ.X  = _p._$merge;
-        NEJ.EX = _p._$fetch;
+        this.NEJ.Q  = _p._$query;
+        this.NEJ.X  = _p._$merge;
+        this.NEJ.EX = _p._$fetch;
         NEJ.copy(NEJ.P('nej.u'),_p);
     }
 

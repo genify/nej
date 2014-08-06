@@ -124,10 +124,10 @@ NEJ.define(function(_p,_o,_f,_r){
     }
 
     if (CMPT){
-        this.NEJ = this.NEJ||{};
+        NEJ = this.NEJ||{};
         // copy object properties
         // only for nej compatiable
-        this.NEJ.copy = function(a,b){
+        NEJ.copy = function(a,b){
             a = a||{};
             b = b||_o;
             for(var x in b){
@@ -138,8 +138,8 @@ NEJ.define(function(_p,_o,_f,_r){
             return a;
         };
         // NEJ namespace
-        this.NEJ = this.NEJ.copy(
-            this.NEJ,{
+        NEJ = NEJ.copy(
+            NEJ,{
                 O:_o,R:_r,F:_f,
                 P:function(_namespace){
                     if (!_namespace||!_namespace.length){
@@ -153,11 +153,8 @@ NEJ.define(function(_p,_o,_f,_r){
                 }
             }
         );
-        // mwf adaptation
-        if (!this.MWF) this.MWF = this.NEJ;
-        if (!this.mwf) this.mwf = this.nej;
-
-        return this.NEJ;
+        
+        return NEJ;
     }
 
     return _p;

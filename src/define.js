@@ -540,7 +540,7 @@
         var _arr = __stack.pop();
         if (!!_arr){
             _arr.unshift(_uri);
-            _doDefine.apply(null,_arr);
+            _doDefine.apply(p,_arr);
         }
         // 404 is ok for platform
         if (!!_uri&&__scache[_uri]!=1){
@@ -628,7 +628,7 @@
                 _item.d,_item.p
             );
             if (!!_item.f){
-                var _result = _item.f.apply(null,_args)||
+                var _result = _item.f.apply(p,_args)||
                               _args[_args.length-4];
                 _doMergeResult(_item.n,_result);
             }
@@ -671,7 +671,7 @@
     var _doClearStack = function(){
         var _args = __stack.pop();
         while(!!_args){
-            _doDefine.apply(null,_args);
+            _doDefine.apply(p,_args);
             _args = __stack.pop();
         }
     };
@@ -823,7 +823,7 @@
     NEJ.define = function(_uri,_deps,_callback){
         // has uri
         if (_isTypeOf(_uri,'String'))
-            return _doDefine.apply(null,arguments);
+            return _doDefine.apply(p,arguments);
         // without uri
         var _args = [].slice.call(arguments,0),
             _script = _doFindScriptRunning();
@@ -832,7 +832,7 @@
             var _src = _script.src;
             if (!!_src)
                 _args.unshift(_doFormatURI(_src));
-            return _doDefine.apply(null,_args);
+            return _doDefine.apply(p,_args);
         }
         // for other 
         __stack.push(_args);
@@ -914,7 +914,7 @@
                     _argc.push(__rcache[_xmap[_deps[i]]]||{});
                 }
             }
-            _args[2].apply(null,_argc);
+            _args[2].apply(p,_argc);
         }
     };
     /**
