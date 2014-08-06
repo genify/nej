@@ -708,7 +708,7 @@
         return function(_uri,_deps,_callback){
             // check input
             var _args = _doFormatARG.apply(
-                null,arguments
+                p,arguments
             );
             _uri = _args[0]||(''+(_seed++));
             _deps = _args[1];
