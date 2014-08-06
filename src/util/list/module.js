@@ -5,22 +5,25 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _f = NEJ.F,
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _i = _('nej.ui'),
-        _p = _('nej.ut'),
-        _pro;
-    if (!!_p._$$ListModule) return;
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/util.js',
+    '{lib}base/element.js',
+    '{lib}ui/item/list.js',
+    '{lib}ui/pager/pager.js',
+    '{lib}util/event.js',
+    '{lib}util/template/jst.js',
+    '{lib}util/template/tpl.js',
+    '{lib}util/cache/cache.list.js'
+],function(NEJ,_k,_u,_e,_i0,_i1,_t0,_t1,_t2,_t3,_p,_o,_f,_r){
+    var _pro;
     /**
      * 列表模块基类
      * 
-     * @class   {nej.ut._$$ListModule}
-     * @extends {nej.ut._$$Event}
+     * @class   {_$$ListModule}
+     * @extends {_$$Event}
+     * 
      * @param   {Object}               可选配置参数
      * @config  {String|Node}   parent 列表容器节点
      * @config  {Number}        limit  每页显示数量，默认10项
@@ -141,10 +144,9 @@ var f = function(){
      * [hr]
      * 错误处理回调
      * @event  {onerror}
-     * 
      */
-    _p._$$ListModule = NEJ.C();
-    _pro = _p._$$ListModule._$extend(_p._$$Event);
+    _p._$$ListModule = _k._$klass();
+    _pro = _p._$$ListModule._$extend(_t0._$$Event);
     /**
      * 控件重置
      * @protected
@@ -154,7 +156,7 @@ var f = function(){
      */
     _pro.__reset = function(_options){
         this.__ropt = {};
-        this.__supReset(_options);
+        this.__super(_options);
         this.__lbox = _e._$get(_options.parent);
         this.__iopt = {parent:this.__lbox};
         this.__limit = parseInt(_options.limit)||10;
@@ -173,7 +175,7 @@ var f = function(){
     _pro.__destroy = function(){
         this._$dispatchEvent('onbeforerecycle');
         this.__doClearListBox();
-        this.__supDestroy();
+        this.__super();
         if (this.__ropt.clear){
             this.__cache._$clearListInCache(this.__ropt.key);
         }
@@ -200,7 +202,7 @@ var f = function(){
      */
     _pro.__getItemBodyId = function(_id){
         return this.__getItemId(_id)+
-               _e._$getHtmlTemplateSeed();
+               _t1._$getHtmlTemplateSeed();
     };
     /**
      * 取项标识
@@ -257,7 +259,7 @@ var f = function(){
             return;
         }
         // if item is jst with options
-        NEJ.X(this.__iopt,_item);
+        _u._$merge(this.__iopt,_item);
         var _klass = this.__iopt.klass;
         delete this.__iopt.klass;
         if (_u._$isString(_klass)){
@@ -279,7 +281,7 @@ var f = function(){
      */
     _pro.__doResetCache = function(_cache){
         var _klass = _cache.klass,
-            _copt  = NEJ.X({},_cache);
+            _copt  = _u._$merge({},_cache);
         this.__ropt.key = _copt.lkey;
         this.__ropt.ext = _copt.ext;
         this.__ropt.data = _copt.data||{};
@@ -302,16 +304,20 @@ var f = function(){
             _copt.onitemupdate = this.
                 __cbItemUpdate._$bind(this);
         }
-        this.__cache = (_klass||_p._$$ListCache)._$allocate(_copt);
+        this.__cache = (_klass||_t3._$$ListCache)._$allocate(_copt);
         // set total
         if (_cache.total!=null){
             this.__cache._$setTotal(
-                this.__ropt.key,_cache.total);
+                this.__ropt.key,
+                _cache.total
+            );
         }
         // set list
         if (!!_cache.list){
             this.__cache._$setListInCache(
-                this.__ropt.key,_cache.list);
+                this.__ropt.key,
+                _cache.list
+            );
         }
     };
     /**
@@ -320,8 +326,8 @@ var f = function(){
      * @return {Void}
      */
     _pro.__doResetPager = function(_pager){
-        this.__pkls = _pager.klass||_i._$$Pager;
-        this.__popt = NEJ.X({},_pager);
+        this.__pkls = _pager.klass||_i1._$$Pager;
+        this.__popt = _u._$merge({},_pager);
         // parse bind pager
         if (_u._$isArray(_pager.parent)){
             this.__popt.parent = _pager.parent[0];
@@ -427,8 +433,9 @@ var f = function(){
         _data.limit  = this.__ropt.limit;
         this.__cache._$getList(
             this.__doGenRequestOpt(
-                NEJ.X({},this.__ropt)
-        ));
+                _u._$merge({},this.__ropt)
+            )
+        );
     };
     /**
      * 数据列表载入完成回调
@@ -464,13 +471,15 @@ var f = function(){
             this.__iopt.beg = _offset;
             this.__iopt.end = Math.min(_list.length,_offset+_limit)-1;
             this.__iopt.act = 'list';
-            var _html = _e._$getHtmlTemplate(this.__ikey,this.__iopt);
+            var _html = _t1._$getHtmlTemplate(
+                this.__ikey,this.__iopt
+            );
             this.__doShowListByJST(_html);
         }else{
             // render by item
             this.__iopt.limit = _limit;
             this.__iopt.offset = _offset;
-            var _items = _e._$getItemTemplate(
+            var _items = _t2._$getItemTemplate(
                          _list,this.__ikls,this.__iopt);
             this.__doShowListByItem(_items);
         }
@@ -581,7 +590,7 @@ var f = function(){
                 this.__iopt.end = 0;
                 this.__iopt.act = 'add';
                 this.__doShowListByJST(
-                    _e._$getHtmlTemplate(
+                    _t1._$getHtmlTemplate(
                         this.__ikey,this.__iopt
                     ),_pos
                 );
@@ -591,7 +600,7 @@ var f = function(){
                 this.__iopt.offset = 0;
                 this.__iopt.parent = 
                       _doInsert._$bind(this,_pos);
-                var _items = _e._$getItemTemplate(
+                var _items = _t2._$getItemTemplate(
                              _xlist,this.__ikls,this.__iopt);
                 this.__iopt.parent = this.__lbox;
                 this.__doShowListByItem(_items);
@@ -896,7 +905,7 @@ var f = function(){
     };
     /**
      * 取缓存实例
-     * @return {nej.ut._$$ListCache}
+     * @return {_$$ListCache}
      */
     _pro._$cache = function(){
         return this.__cache;
@@ -992,7 +1001,7 @@ var f = function(){
             );
         }else{
             // render by item
-            var _item = _e._$getItemById(
+            var _item = _t2._$getItemById(
                 this.__getItemId(_id)
             );
             if (!!_item){
@@ -1007,10 +1016,6 @@ var f = function(){
     _pro._$isLoaded = function(){
         return this.__cache._$isLoaded(this.__ropt.key);
     };
-};
-NEJ.define(
-    '{lib}util/list/module.js',[
-    '{lib}ui/item/list.js',
-    '{lib}ui/pager/pager.js',
-    '{lib}util/cache/cache.list.base.js'
-],f);
+    
+    return _p;
+});

@@ -5,19 +5,17 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _r = NEJ.R,
-        _u = _('nej.u'),
-        _e = _('nej.e'),
-        _p = _('nej.ut'),
-        _pro,_sup;
-    if (!!_p._$$ListModulePG) return;
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/util.js',
+    './module.js'
+],function(NEJ,_k,_u,_t,_p,_o,_f,_r){
+    var _pro;
     /**
-     * 分页式列表模块
+     * 分页式列表模块<br/>
      * 
-     * 结构举例：
+     * 结构举例
      * [code type="html"]
      *   <div class="mbox">
      *     <div class="lbox" id="list-box">
@@ -41,72 +39,74 @@ var f = function(){
      *   </textarea>
      * [/code]
      * 
-     * 脚本举例：
+     * 脚本举例
      * [code]
-     *   // 统一定义名字空间简写
-     *   var _  = NEJ.P,
-     *       _j = _('nej.j'),
-     *       _t = _('nej.ut'),
-     *       _p = _('t.d'),
-     *       _proCustomListCache;
-     *   // 自定义列表缓存
-     *   _p._$$CustomListCache = NEJ.C();
-     *     _proCustomListCache = _p._$$CustomListCache
-     *                             ._$extend(_t._$$AbstractListCache);
-     *   // 实现数据载入逻辑
-     *   _proCustomListCache.__doLoadList = function(_options){
-     *       var _onload = _options.onload;
-     *       // 补全请求数据，也可在模块层通过cache参数传入
-     *       var _data = _options.data||{};
-     *       NEJ.X(_data,{uid:'ww',sort:'xx',order:1});
-     *       switch(_options.key){
-     *              case 'user-list':
-     *               // TODO load list from server
-     *               _j._$request('/api/user/list',{
-     *                   type:'json',
-     *                   data:_u._$object2query(_data),
-     *                   onload:function(_json){
-     *                          // _json.code
-     *                       // _json.result
-     *                          _onload(_json.code==1?_json.result:null);
-     *                   },
-     *                   onerror:_onload._$bind(null);
-     *               });
-     *           break;
-     *           // TODO other list load
-     *       }
-     *   };
-     * [/code]
+     *   NEJ.define([
+     *       '{lib}base/klass.js',
+     *       '{lib}base/util.js',
+     *       '{lib}util/ajax/xdr.js',
+     *       '{lib}util/cache/cache.list.base.js'
+     *   ],function(_k,_u,_j,_t,_p){
+     *       var _pro;
+     *       // 自定义列表缓存
+     *       _p._$$CustomListCache = _k._$klass();
+     *       _pro = _p._$$CustomListCache._$extend(_t._$$AbstractListCache);
      * 
-     * 脚本举例：
-     * [code]
-     *   // 统一定义名字空间简写
-     *   var _  = NEJ.P,
-     *       _e = _('nej.e'),
-     *       _t = _('nej.ut'),
-     *       _d = _('t.d');
-     *   // 构建列表模块，使用JST模版
-     *   _t._$$ListModulePG._$allocate({
-     *       limit:5,
-     *       parent:'list-box',
-     *       item:'jst-list', // 这里也可以传自己实现的item类型
-     *       cache:{
-     *           key:'user-list',// 此key必须是唯一的，对应了item中的值,也是删除选项的data-id
-     *           data:{uid:'ww',sort:'xx',order:1}, // <--- 列表加载时携带数据信息，此数据也可在cache层补全
-     *           klass:_d._$$CustomListCache
-     *       },
-     *       pager:{parent:'pager-box'}
+     *       // 实现数据载入逻辑
+     *       _pro.__doLoadList = function(_options){
+     *           var _onload = _options.onload;
+     *           // 补全请求数据，也可在模块层通过cache参数传入
+     *           var _data = _options.data||{};
+     *           _u._$merge(_data,{uid:'ww',sort:'xx',order:1});
+     *           switch(_options.key){
+     *                  case 'user-list':
+     *                      // TODO load list from server
+     *                      _j._$request('/api/user/list',{
+     *                          type:'json',
+     *                          data:_u._$object2query(_data),
+     *                          onload:function(_json){
+     *                              // _json.code
+     *                              // _json.result
+     *                              _onload(_json.code==1?_json.result:null);
+     *                          },
+     *                          onerror:_onload._$bind(null);
+     *                      });
+     *                  break;
+     *                  // TODO other list load
+     *           }
+     *       };
      *   });
      * [/code]
      * 
-     * @class   {nej.ut._$$ListModulePG}
-     * @extends {nej.ut._$$ListModule}
+     * 脚本举例
+     * [code]
+     *   NEJ.define([
+     *       '/path/to/cache.js',
+     *       '{lib}util/list/module.pager.js'
+     *   ],function(_t,_p){
+     *       // 构建列表模块，使用JST模版
+     *       _p._$$ListModulePG._$allocate({
+     *           limit:5,
+     *           parent:'list-box',
+     *           item:'jst-list', // 这里也可以传自己实现的item类型
+     *           cache:{
+     *               key:'user-list',// 此key必须是唯一的，对应了item中的值,也是删除选项的data-id
+     *               data:{uid:'ww',sort:'xx',order:1}, // <--- 列表加载时携带数据信息，此数据也可在cache层补全
+     *               klass:_t._$$CustomListCache
+     *           },
+     *           pager:{parent:'pager-box'}
+     *       });
+     *   });
+     * [/code]
+     * 
+     * @class   {_$$ListModulePG}
+     * @extends {_$$ListModule}
+     * 
      * @param   {Object}       可选配置参数
      * 
      */
-    _p._$$ListModulePG = NEJ.C();
-    _pro = _p._$$ListModulePG._$extend(_p._$$ListModule);
-    _sup = _p._$$ListModulePG._$supro;
+    _p._$$ListModulePG = _k._$klass();
+    _pro = _p._$$ListModulePG._$extend(_t._$$ListModule);
     /**
      * 取当前偏移量的分页信息
      * @param  {Number} 偏移位置
@@ -114,8 +114,9 @@ var f = function(){
      * @return {Object} 分页信息，如：{index:1,total:4}
      */
     _pro.__getPageInfo = function(_offset,_length){
-        return _sup.__getPageInfo.call(
-            this,this.__first,_offset,this.__limit,_length
+        return this.__super(
+            this.__first,_offset,
+            this.__limit,_length
         );
     };
     /**
@@ -138,7 +139,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__doChangePage = function(_event){
-        _sup.__doChangePage.apply(this,arguments);
+        this.__super(_event);
         if (!_event.stopped){
             this.__doChangeOffset(
                 this.__getOffsetByIndex(_event.index)
@@ -162,7 +163,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__doBeforeListShow = function(){
-        _sup.__doBeforeListShow.apply(this,arguments);
+        this.__super();
         this.__doClearListBox();
     };
     /**
@@ -199,7 +200,7 @@ var f = function(){
             this.__lbox.innerHTML = _message;
             return;
         }
-        _sup.__doRenderMessage.apply(this,arguments);
+        this.__super(_message,_pos);
     };
     /**
      * 以jst模版方式绘制列表
@@ -282,8 +283,10 @@ var f = function(){
             index:_info.index
         });
     };
-};
-NEJ.define(
-    '{lib}util/list/module.pager.js',[
-    '{lib}util/list/module.js'
-],f);
+    
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+    
+    return _p;
+});

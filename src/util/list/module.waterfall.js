@@ -5,21 +5,19 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _r = NEJ.R,
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _i = _('nej.ui'),
-        _p = _('nej.ut'),
-        _pro,_sup;
-    if (!!_p._$$ListModuleWF) return;
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/event.js',
+    '{lib}base/element.js',
+    '{lib}base/util.js',
+    './module.js'
+],function(NEJ,_k,_v,_e,_u,_t,_p,_o,_f,_r){
+    var _pro;
     /**
-     * 瀑布式列表模块
+     * 瀑布式列表模块<br/>
      * 
-     * 结构举例：
+     * 结构举例
      * [code type="html"]
      *   <div class="mbox">
      *     <div class="lbox" id="list-box">
@@ -41,77 +39,78 @@ var f = function(){
      *   </textarea>
      * [/code]
      * 
-     * 脚本举例：
+     * 脚本举例
      * [code]
-     *   // 统一定义名字空间简写
-     *   var _  = NEJ.P,
-     *       _j = _('nej.j'),
-     *       _t = _('nej.ut'),
-     *       _p = _('t.d'),
-     *       _proCustomListCache;
-     *   // 自定义列表缓存
-     *   _p._$$CustomListCache = NEJ.C();
-     *     _proCustomListCache = _p._$$CustomListCache
-     *                             ._$extend(_t._$$AbstractListCache);
-     *   // 实现数据载入逻辑
-     *   _proCustomListCache.__doLoadList = function(_options){
-     *       var _onload = _options.onload;
-     *       // 补全请求数据，也可在模块层通过cache参数传入
-     *       var _data = _options.data||{};
-     *       NEJ.X(_data,{uid:'ww',sort:'xx',order:1});
-     *       switch(_options.key){
-     *              case 'user-list':
-     *               // TODO load list from server
-     *               _j._$request('/api/user/list',{
-     *                   type:'json',
-     *                   data:_u._$object2query(_data),
-     *                   onload:function(_json){
-     *                          // _json.code
-     *                       // _json.result
-     *                          _onload(_json.code==1?_json.result:null);
-     *                   },
-     *                   onerror:_onload._$bind(null);
-     *               });
-     *           break;
-     *           // TODO other list load
-     *       }
-     *   };
-     * [/code]
+     *   NEJ.define([
+     *       '{lib}base/klass.js',
+     *       '{lib}base/util.js',
+     *       '{lib}util/ajax/xdr.js',
+     *       '{lib}util/cache/cache.list.base.js'
+     *   ],function(_k,_u,_j,_t,_p){
+     *       var _pro;
+     *       // 自定义列表缓存
+     *       _p._$$CustomListCache = _k._$klass();
+     *       _pro = _p._$$CustomListCache._$extend(_t._$$AbstractListCache);
      * 
-     * 脚本举例：
-     * [code]
-     *   // 统一定义名字空间简写
-     *   var _  = NEJ.P,
-     *       _e = _('nej.e'),
-     *       _t = _('nej.ut'),
-     *       _d = _('t.d');
-     *   // 构建列表模块，使用JST模版
-     *   _t._$$ListModuleWF._$allocate({
-     *       limit:5,
-     *       parent:'list-box',
-     *       more:'more-btn',
-     *       item:'jst-list',
-     *       cache:{
-     *           key:'user-list',// 此key必须是唯一的，对应了item中的值,也是删除选项的data-id
-     *           data:{uid:'ww',sort:'xx',order:1}, // <--- 列表加载时携带数据信息，此数据也可在cache层补全
-     *           klass:_d._$$CustomListCache
-     *       }
+     *       // 实现数据载入逻辑
+     *       _pro.__doLoadList = function(_options){
+     *           var _onload = _options.onload;
+     *           // 补全请求数据，也可在模块层通过cache参数传入
+     *           var _data = _options.data||{};
+     *           _u._$merge(_data,{uid:'ww',sort:'xx',order:1});
+     *           switch(_options.key){
+     *                  case 'user-list':
+     *                      // TODO load list from server
+     *                      _j._$request('/api/user/list',{
+     *                          type:'json',
+     *                          data:_u._$object2query(_data),
+     *                          onload:function(_json){
+     *                              // _json.code
+     *                              // _json.result
+     *                              _onload(_json.code==1?_json.result:null);
+     *                          },
+     *                          onerror:_onload._$bind(null);
+     *                      });
+     *                  break;
+     *                  // TODO other list load
+     *           }
+     *       };
      *   });
      * [/code]
      * 
-     * @class   {nej.ut._$$ListModuleWF}
-     * @extends {nej.ut._$$ListModule}
-     * @param   {Object}              可选配置参数
+     * 脚本举例
+     * [code]
+     *   NEJ.define([
+     *       '/path/to/cache.js',
+     *       '{lib}util/list/module.waterfall.js'
+     *   ],function(_t,_p){
+     *       // 构建列表模块，使用JST模版
+     *       _p._$$ListModuleWF._$allocate({
+     *           limit:5,
+     *           parent:'list-box',
+     *           item:'jst-list', // 这里也可以传自己实现的item类型
+     *           cache:{
+     *               key:'user-list',// 此key必须是唯一的，对应了item中的值,也是删除选项的data-id
+     *               data:{uid:'ww',sort:'xx',order:1}, // <--- 列表加载时携带数据信息，此数据也可在cache层补全
+     *               klass:_t._$$CustomListCache
+     *           },
+     *           pager:{parent:'pager-box'}
+     *       });
+     *   });
+     * [/code]
+     * 
+     * @class   {_$$ListModuleWF}
+     * @extends {_$$ListModule}
+     * 
+     * @param   {Object} 可选配置参数
      * @config  {String|Node}  more   添加更多列表项按钮节点
      * @config  {String|Node}  sbody  滚动条所在容器，支持onscroll事件
      * @config  {Number}       delta  触发自动加载更多时距离滚动容器底部的便宜量，单位px，默认30
      * @config  {Number}       count  指定加载多少次后出现分页器
      * @config  {Number}       number 初始加载次数，小于等于count数有效
-     * 
      */
-    _p._$$ListModuleWF = NEJ.C();
-    _pro = _p._$$ListModuleWF._$extend(_p._$$ListModule);
-    _sup = _p._$$ListModuleWF._$supro;
+    _p._$$ListModuleWF = _k._$klass();
+    _pro = _p._$$ListModuleWF._$extend(_t._$$ListModule);
     /**
      * 控件重置
      * @protected
@@ -135,7 +134,7 @@ var f = function(){
         if (_number>1&&_number<=_count){
             this.__number = _number;
         }
-        this.__supReset(_options);
+        this.__super(_options);
     };
     /**
      * 控件销毁
@@ -144,7 +143,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         delete this.__nmore;
         delete this.__sbody;
         delete this.__endskr;
@@ -159,9 +158,7 @@ var f = function(){
     _pro.__getPageInfo = function(_offset,_length){
         var _point = this.__first+(this.__count-1)*this.__limit,
             _limit = this.__count*this.__limit;
-        return _sup.__getPageInfo.call(
-            this,_point,_offset,_limit,_length
-        );
+        return this.__super(_point,_offset,_limit,_length);
     };
     /**
      * 重置载入更多按钮
@@ -211,7 +208,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__doChangePage = function(_event){
-        _sup.__doChangePage.apply(this,arguments);
+        this.__super(_event);
         if (!_event.stopped){
             this.__doClearListBox();
             var _offset = 0;
@@ -246,7 +243,7 @@ var f = function(){
      */
     _pro.__cbListLoad = function(_options){
         delete this.__nexting;
-        _sup.__cbListLoad.apply(this,arguments);
+        this.__super(_options);
         this._$resize();
     };
     /**
@@ -263,7 +260,7 @@ var f = function(){
                 delete this.__nexting;
             break;
         }
-        _sup.__cbListChange.apply(this,arguments);
+        this.__super(_event);
     };
     /**
      * 加载数据之前处理逻辑，显示数据加载中信息
@@ -434,13 +431,6 @@ var f = function(){
         var _element = this.__sbody;
         if (!_element||this.__endskr) return;
         this.__doCheckScroll(this.__sbody);
-        /*
-        if (!_element.scrollHeight)
-             _element = _e._$getPageBox();
-        if (_element.scrollHeight<=_element.clientHeight){
-            this.__doCheckScroll(this.__sbody);
-        }
-        */
     };
     /**
      * 刷新模块
@@ -450,7 +440,7 @@ var f = function(){
      */
     _pro._$refresh = function(){
         delete this.__endskr;
-        _sup._$refresh.apply(this,arguments);
+        this.__super();
     };
     /**
      * 载入更多列表
@@ -469,6 +459,10 @@ var f = function(){
             this.__first:this.__limit;
         this.__doChangeOffset(_offset);
     };
-};
-NEJ.define('{lib}util/list/module.waterfall.js',
-          ['{lib}util/list/module.js'],f);
+    
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+    
+    return _p;
+});
