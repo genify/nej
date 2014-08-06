@@ -8,10 +8,11 @@
 NEJ.define([
     '{lib}base/global.js',
     '{lib}base/klass.js',
+    '{lib}base/element.js',
     '{lib}base/util.js',
     '{lib}util/event.js',
     './dispatcher.2.js'
-],function(NEJ,_k,_u,_t0,_t1,_p,_o,_f,_r){
+],function(NEJ,_k,_e,_u,_t0,_t1,_p,_o,_f,_r){
     var _pro;
     /**
      * 项目模块基类对象

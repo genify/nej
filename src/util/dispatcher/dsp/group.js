@@ -6,6 +6,7 @@
  * ------------------------------------------
  */
 NEJ.define([
+    '{lib}base/util.js',
     '{lib}base/klass.js',
     '{lib}base/constant.js',
     '{lib}base/element.js',
@@ -13,7 +14,7 @@ NEJ.define([
     '{lib}util/event.js',
     '{lib}util/template/tpl.js',
     './util.js'
-],function(_k,_g,_e,_j,_t0,_t1,_t2,_p,_o,_f,_r){
+],function(_u,_k,_g,_e,_j,_t0,_t1,_t2,_p,_o,_f,_r){
     var _pro;
     /**
      * 模块分组管理器
@@ -121,7 +122,7 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__doModuleCheck = function(_type,_from,_to){
-        if (_from==_to||!_p._$isNode(_from)){
+        if (_from==_to||!_t2._$isNode(_from)){
             return;
         }
         // dispatch first if hide module
@@ -300,7 +301,7 @@ NEJ.define([
     _pro._$loadedUMI = function(_umi){
         if (this._$hasUMI(_umi)){
             this.__doModuleAction(
-                _p._$getNodeByUMI(this.__root,_umi)
+                _t2._$getNodeByUMI(this.__root,_umi)
             );
         }
     };
@@ -326,7 +327,7 @@ NEJ.define([
     _pro._$hideUMI = function(_umi){
         if (this._$hasUMI(_umi)){
             this.__doModuleHide(
-                _p._$getNodeByUMI(this.__root,_umi)
+                _t2._$getNodeByUMI(this.__root,_umi)
             );
         }
     };
