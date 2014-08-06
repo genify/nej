@@ -10,8 +10,9 @@ NEJ.define([
     '{lib}base/klass.js',
     '{lib}base/element.js',
     '{lib}base/util.js',
-    '{lib}ui/base.js'
-],function(NEJ,_k,_e,_u,_t,_p,_o,_f,_r){
+    '{lib}ui/base.js',
+    '{lib}util/template/jst.js'
+],function(NEJ,_k,_e,_u,_t,_y,_p,_o,_f,_r){
     // variable declaration
     var _pro,
         _seed_css,
@@ -320,7 +321,7 @@ NEJ.define([
       .#<uispace> .js-disabled{cursor:default;}\
       .#<uispace> .js-selected{cursor:default;background:#bbb;}\
     ');
-    _seed_page = _e._$addHtmlTemplate('\
+    _seed_page = _y._$addHtmlTemplate('\
       {trim}\
       {if !defined("noprv")||!noprv}\
         <a href="#" class="zbtn zprv ${\'js-p-\'|seed}">${label.prev||"上一页"}</a>\
