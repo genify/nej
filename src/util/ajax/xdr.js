@@ -7,11 +7,12 @@
  */
 NEJ.define([
     '{lib}base/global.js',
+    '{lib}base/constant.js',
     '{lib}base/util.js',
     '{lib}base/element.js',
     './proxy/xhr.js',
     '{platform}xdr.js'
-],function(NEJ,_u,_e,_t,_h,_p,_o,_f,_r){
+],function(NEJ,_g,_u,_e,_t,_h,_p,_o,_f,_r){
     // sn:{req:proxy,onload:function(){},onerror:function(){}}
     var _xcache = {},
         _doFilter = _f;
