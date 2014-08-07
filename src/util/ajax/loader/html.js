@@ -70,8 +70,12 @@ NEJ.define([
     _pro.__onLoaded = function(){
         var _body = null,
             _iframe = (this.__getLoadData(this.__url)||_o).request;
-        if (_iframe.src!=this.__url) return;
-        try{_body = _iframe.contentWindow.document.body;}catch(ex){}
+        try{
+            if (_iframe.src!=this.__url) return;
+            _body = _iframe.contentWindow.document.body;
+        }catch(ex){
+            // ignore
+        }
         this.__doCallback('onloaded',_body);
         _h.__removeIFrameKeepHistory(_iframe);
     };

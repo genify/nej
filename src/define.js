@@ -576,8 +576,8 @@
         return function(){
             _result = [];
             // check from begin to end
-            return _loop(__xqueue[0]);
-            //return _loop(__xqueue[__xqueue.length-1]);
+            //return _loop(__xqueue[0]);
+            return _loop(__xqueue[__xqueue.length-1]);
         };
     })();
     /*
@@ -660,6 +660,7 @@
         // check circular reference
         if (__xqueue.length>0&&_isFinishLoaded()){
             var _item = _doFindCircularRef()||__xqueue.pop();
+            console.warn('try to unlock circular reference -> '+_item.n);
             _doExecFunction(_item);
             _doCheckLoading();
         }

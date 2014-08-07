@@ -399,16 +399,15 @@ NEJ.define([
         if (!_list||!_p._$isFunction(_callback)){
             return null;
         }
-        // list is array
         if (_list.length!=null&&_list.length>0){
+            // list see as array
             for(var i=0,l=_list.length;i<l;i++){
                 if (!!_callback.call(_this,_list[i],i,_list)){
                     return i;
                 }
             }
-        }
-        // list is object
-        if (_p._$isObject(_list)){
+        }else if (_p._$isObject(_list)){
+            // list is object
             return _h.__forIn(_list,_callback,_this);
         }
         return null;
