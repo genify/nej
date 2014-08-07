@@ -6,8 +6,9 @@
  * ------------------------------------------
  */
 NEJ.define([
-    '{lib}base/util.js'
-],function(_u,_p,_o,_f,_r){
+    '{lib}base/util.js',
+    '{lib}base/event.js'
+],function(_u,_v,_p,_o,_f,_r){
     /**
      * 从DocumentFragment中取指定ID的节点
      * @param  {Document} 文档对象
@@ -99,6 +100,7 @@ NEJ.define([
      * @param {Variable} 值
      */
     _p.__dataset = function(_element,_name,_value){
+        _element.dataset = _element.dataset||{};
         if (_value!==undefined){
             _element.dataset[_name] = _value;
         }

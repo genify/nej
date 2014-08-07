@@ -9,11 +9,12 @@ NEJ.define([
     './proxy.js',
     '{lib}base/klass.js',
     '{lib}base/util.js',
+    '{lib}base/event.js',
     '{lib}base/element.js',
     '{lib}base/constant.js',
     '{lib}util/ajax/xdr.js',
     '{lib}util/ajax/message.js'
-],function(_t,_k,_u,_e,_g,_j0,_j1,_p,_o,_f,_r){
+],function(_t,_k,_u,_v,_e,_g,_j0,_j1,_p,_o,_f,_r){
     var _pro,
         _cache = {},
         _xflag = 'NEJ-UPLOAD-RESULT:';

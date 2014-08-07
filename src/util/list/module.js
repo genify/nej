@@ -9,6 +9,7 @@ NEJ.define([
     '{lib}base/global.js',
     '{lib}base/klass.js',
     '{lib}base/util.js',
+    '{lib}base/event.js',
     '{lib}base/element.js',
     '{lib}ui/item/list.js',
     '{lib}ui/pager/pager.js',
@@ -16,7 +17,7 @@ NEJ.define([
     '{lib}util/template/jst.js',
     '{lib}util/template/tpl.js',
     '{lib}util/cache/cache.list.js'
-],function(NEJ,_k,_u,_e,_i0,_i1,_t0,_t1,_t2,_t3,_p,_o,_f,_r){
+],function(NEJ,_k,_u,_v,_e,_i0,_i1,_t0,_t1,_t2,_t3,_p,_o,_f,_r){
     var _pro;
     /**
      * 列表模块基类
