@@ -4,15 +4,22 @@ v0.0.1
 - 独立类模型实现文件至{lib}base/klass.js
 - 增加依赖注入，保留兼容模式下名字空间形式
 - 独立平台适配，删除patched目录，独立到各API、控件
-- 清理没用控件及API
+- 清理没用控件或者后期重新开发控件及API
   * 删除native
-  * 删除xmpp
-  * 删除gesture
+  * 删除util/xmpp
+  * 删除util/gesture
   * 删除util/ajax/connect.js
-  * 删除cache/config.js
-  * 删除dispatch/v1
+  * 删除util/cache/config.js
+  * 删除util/dispatch/v1
   * 删除util/module
   * 删除util/tb.resizer
+  * 删除util/oauth
+  * 删除util/sorter
+  * 删除ui/arrows
+  * 删除ui/loading
+  * 删除ui/loadmore
+  * 删除ui/pullrefresh
+  * 删除ui/sorter
 
 define.js
 - NEJ.config接口名称改为NEJ.deps
