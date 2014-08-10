@@ -5,14 +5,10 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(_u,_p){
-
-    if (CMPT){
-        var _  = NEJ.P,
-            _u = _('nej.u'),
-            _p = _('nej.ut.c');
-        if (!!_p._$isColor) return;
-    }
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/util.js'
+],function(NEJ,_u,_p,_o,_f,_r){
     /**
      * 判断色值是否合法
      * @api    {nej.ut.c._$isColor}
@@ -115,23 +111,23 @@ var f = function(_u,_p){
         };
         var _hue2rgb = function(_v1,_v2,_hue){
             _hue += _hue<0?1:(_hue>1?-1:0);
-            if ((6*_hue)<1) 
+            if ((6*_hue)<1)
                 return _v1+(_v2-_v1)*6*_hue;
-            if ((2*_hue)<1) 
+            if ((2*_hue)<1)
                 return _v2;
-            if ((3*_hue)<2) 
+            if ((3*_hue)<2)
                 return _v1+(_v2-_v1)*((2/3)-_hue)*6;
             return _v1;
         };
         return function(_hsl){
             var _red,_green,_blue;
             if (!_hsl.s){
-                _red = 
-                _blue = 
+                _red =
+                _blue =
                 _green = _hsl.l*255;
             }else{
                 var _v2 = (_hsl.l<0.5)
-                        ? (_hsl.l*(1+_hsl.s)) 
+                        ? (_hsl.l*(1+_hsl.s))
                         : ((_hsl.l+_hsl.s)-(_hsl.s*_hsl.l)),
                     _v1 = 2*_hsl.l-_v2;
                 _red = 255*_hue2rgb(_v1,_v2,_hsl.h+(1/3));
@@ -153,7 +149,9 @@ var f = function(_u,_p){
         return _p._$rgb2hsl(_p._$color2rgb(_color));
     };
 
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut.c'),_p);
+    }
+
     return _p;
-};
-NEJ.define('{lib}ui/colorpick/util.js',
-      ['{lib}base/util.js'],f);
+});

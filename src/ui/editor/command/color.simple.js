@@ -5,41 +5,44 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _e = _('nej.e'),
-        _i = _('nej.ui'),
-        _p = _('nej.ui.cmd'),
-        _proSimpleColorCard,
-        _supSimpleColorCard;
-    // ui css seed
-    if (!!_p._$$SimpleColorCard) return;
-    var _seed_css = _e._$pushCSSText('.#<uispace>{width:160px;padding:5px 0;border:1px solid #9FAC87;}');
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{lib}ui/editor/command/color.js',
+    '{lib}ui/colorpick/colorpick.simple.js'
+],function(NEJ,_k,_e,_u,_u0,_p,_o,_f,_r){
+    var _pro,
+        _seed_css;
     /**
      * 颜色选择卡片
      * @class   {nej.ui.cmd._$$SimpleColorCard} 颜色选择卡片
      * @extends {nej.ui.cmd._$$ColorCard}
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {String} color 颜色值
-     * 
+     *
      * [hr]
-     * 
+     *
      * @event  {onchange} 颜色选中回调函数
      * @param  {String}   颜色值
-     * 
+     *
      */
-    _p._$$SimpleColorCard = NEJ.C();
-      _proSimpleColorCard = _p._$$SimpleColorCard._$extend(_p._$$ColorCard);
+    _p._$$SimpleColorCard = _k._$klass();
+    _pro = _p._$$SimpleColorCard._$extend(_u._$$ColorCard);
     /**
      * 取取色器实例
      * @return {Void}
      */
-    _proSimpleColorCard.__getColorPicker = function(){
+    _pro.__getColorPicker = function(){
         this.__copt.clazz = _seed_css;
-        return _i._$$SimpleColorPick._$allocate(this.__copt);
+        return _u0._$$SimpleColorPick._$allocate(this.__copt);
     };
-};
-NEJ.define('{lib}ui/editor/command/color.simple.js',
-          ['{lib}ui/editor/command/color.js'
-          ,'{lib}ui/colorpick/colorpick.simple.js'],f);
+    // ui css seed
+    _seed_css = _e._$pushCSSText('.#<uispace>{width:160px;padding:5px 0;border:1px solid #9FAC87;}');
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui.cmd'),_p);
+    }
+
+    return _p;
+});

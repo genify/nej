@@ -5,18 +5,19 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _e = NEJ.P('nej.e'),
-        _v = NEJ.P('nej.v'),
-        _u = NEJ.P('nej.u'),
-        _t = NEJ.P('nej.ut'),
-        _p = NEJ.P('nej.ui'),
-        _seed_css,
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{lib}base/event.js',
+    '{lib}base/util.js',
+    '{lib}ui/layer/layer.js',
+    '{lib}ui/mask/mask.js',
+    '{lib}util/dragger/dragger.js'
+],function(NEJ,_k,_e,_v,_u,_u0,_u1,_t,_p,_o,_f,_r){
+    var _seed_css,
         _seed_html,
-        _pro,_sup;
-    if (!!_p._$$Window) return;
+        _pro;
     /**
      * 窗体控件<br />
      * 脚本举例
@@ -49,15 +50,14 @@ var f = function(){
      *   如果是布尔值               | 则使用默认盖层
      *   如果是字符串               | 则为盖层样式
      * [/ntb]
-     * 
+     *
      * [hr]
-     * 
+     *
      * @event  {onclose} 关闭窗体触发事件
-     * 
+     *
      */
-    _p._$$Window = NEJ.C();
-    _pro = _p._$$Window._$extend(_p._$$Layer);
-    _sup = _p._$$Window._$supro;
+    _p._$$Window = _k._$klass();
+    _pro = _p._$$Window._$extend(_u0._$$Layer);
     /**
      * 控件初始化
      * @protected
@@ -67,7 +67,7 @@ var f = function(){
     _pro.__init = function(){
         this.__mopt = {};
         this.__dopt = {onchange:this.__onDragging._$bind(this)};
-        this.__supInit();
+        this.__super();
     };
     /**
      * 控件重置
@@ -77,7 +77,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         this.__setMask(_options.mask);
         this._$setAlign(_options.align);
         this._$setTitle(_options.title);
@@ -92,7 +92,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         delete this.__align;
         delete this.__mclz;
         if (!!this.__imask){
@@ -121,7 +121,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__initNode = function(){
-        this.__supInitNode();
+        this.__super();
         // 0 - move bar
         // 1 - content box
         // 2 - close btn
@@ -226,7 +226,7 @@ var f = function(){
     _pro.__doHide = function(){
         if (!!this.__imask)
             this.__imask._$hide();
-        _sup.__doHide.apply(this,arguments);
+        this.__super();
     };
     /**
      * 设置盖层构造
@@ -237,7 +237,7 @@ var f = function(){
      */
     _pro.__setMask = function(_mask){
         if (!!_mask){
-            if (_mask instanceof _p._$$Mask){
+            if (_mask instanceof _u1._$$Mask){
                 this.__imask = _mask;
                 return;
             }
@@ -305,7 +305,7 @@ var f = function(){
      * @return {nej.ui._$$Window}
      */
     _pro._$show = function(){
-        _sup._$show.apply(this,arguments);
+        this.__super();
         this.__doShowMask();
         return this;
     };
@@ -325,10 +325,12 @@ var f = function(){
           <span class="zcls" title="关闭窗体">×</span>\
         </div>\
     ');
-};
-NEJ.define(
-    '{lib}ui/layer/window.js',[
-    '{lib}ui/layer/layer.js',
-    '{lib}ui/mask/mask.js',
-    '{lib}util/dragger/dragger.js'
-],f);
+
+    if (CMPT){
+        _t = NEJ.P('nej.ut'),
+        _p = NEJ.P('nej.ui')
+        NEJ.copy(NEJ.P('nej.ui'),_p);
+    }
+
+    return _p;
+});

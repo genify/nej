@@ -5,23 +5,39 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _e = _('nej.e'),
-        _p = _('nej.ui'),
-        _pro,_sup;
-    if (!!_p._$$CustomEditor) return;
-    // ui html code
-    var _seed_html;
+
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}ui/editor/editor.js',
+    '{lib}util/editor/command/fontsize.js',
+    '{lib}util/editor/command/fontname.js',
+    '{lib}util/editor/command/bold.js',
+    '{lib}util/editor/command/italic.js',
+    '{lib}util/editor/command/insertorderedlist.js',
+    '{lib}util/editor/command/insertunorderedlist.js',
+    '{lib}util/editor/command/underline.js',
+    '{lib}util/editor/command/strikethrough.js',
+    '{lib}util/editor/command/forecolor.js',
+    '{lib}util/editor/command/backcolor.js',
+    '{lib}util/editor/command/justifyleft.js',
+    '{lib}util/editor/command/justifycenter.js',
+    '{lib}util/editor/command/justifyright.js',
+    '{lib}util/editor/command/link.js',
+    '{lib}util/editor/command/format.js',
+    '{lib}util/editor/command/uploadimage.js',
+    '{lib}util/editor/command/blockquote.js'
+],function(NEJ,_k,_u,_t0,_t1,_t2,_t3,_t4,_t5,_t6,_t7,_t8,_t9,_t10,_t11,_t12,_t13,_t14,_t15,_t16,_p,_o,_f,_r){
+    var _pro,
+        _seed_html;
     /**
      * 富媒体编辑器封装
      * @class   {nej.ui._$$CustomEditor} 富媒体编辑器封装
      * @extends {nej.ui._$$Editor}
      * @param   {Object} 可选配置参数，已处理参数列表如下
      */
-    _p._$$CustomEditor = NEJ.C();
-    _pro = _p._$$CustomEditor._$extend(_p._$$Editor);
-    _sup = _p._$$CustomEditor._$supro;
+    _p._$$CustomEditor =_k._$klass();
+    _pro = _p._$$CustomEditor._$extend(_u._$$Editor);
     /**
      * 初始化外观信息
      * @protected
@@ -29,7 +45,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__initXGui = function(){
-        _sup.__initXGui.apply(this,arguments);
+        this.__super();
         this.__seed_html = _seed_html;
     };
     /**
@@ -64,25 +80,10 @@ var f = function(){
             this.__seed_html = _seed_html;
         };
     })();
-};
-NEJ.define(
-    '{lib}ui/editor/custom.js',[
-    '{lib}ui/editor/editor.js',
-    '{lib}util/editor/command/fontsize.js',
-    '{lib}util/editor/command/fontname.js',
-    '{lib}util/editor/command/bold.js',
-    '{lib}util/editor/command/italic.js',
-    '{lib}util/editor/command/insertorderedlist.js',
-    '{lib}util/editor/command/insertunorderedlist.js',
-    '{lib}util/editor/command/underline.js',
-    '{lib}util/editor/command/strikethrough.js',
-    '{lib}util/editor/command/forecolor.js',
-    '{lib}util/editor/command/backcolor.js',
-    '{lib}util/editor/command/justifyleft.js',
-    '{lib}util/editor/command/justifycenter.js',
-    '{lib}util/editor/command/justifyright.js',
-    '{lib}util/editor/command/link.js',
-    '{lib}util/editor/command/format.js',
-    '{lib}util/editor/command/uploadimage.js',
-    '{lib}util/editor/command/blockquote.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui'),_p);
+    }
+
+    return _p;
+});

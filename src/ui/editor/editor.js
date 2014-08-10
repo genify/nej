@@ -5,21 +5,21 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _f = NEJ.F,
-        _c = _('nej.c'),
-        _e = _('nej.e'),
-        _u = _('nej.u'),
-        _t = _('nej.ut'),
-        _p = _('nej.ui'),
-        _seed_css,
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/config.js',
+    '{lib}base/element.js',
+    '{lib}base/event.js',
+    '{lib}base/util.js',
+    '{lib}ui/base.js',
+    '{lib}util/editor/editor.js'
+],function(NEJ,_k,_c,_e,_v,_u,_u0,_t,_p,_o,_f,_r){
+    var _seed_css,
         _seed_icmd,
         _seed_ifnt,
         _seed_iedt,
-        _pro,_sup;
-    if (!!_p._$$Editor) return;
+        _pro;
     /**
      * 富媒体编辑器基类封装
      * @class   {nej.ui._$$Editor} 富媒体编辑器基类封装
@@ -29,11 +29,10 @@ var f = function(){
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {Boolean}   focus    是否自动聚焦
      * @config  {String} content  文本内容
-     * 
+     *
      */
-    _p._$$Editor = NEJ.C();
-      _pro = _p._$$Editor._$extend(_p._$$Abstract);
-      _sup = _p._$$Editor._$supro;
+    _p._$$Editor = _k._$klass();
+    _pro = _p._$$Editor._$extend(_u0._$$Abstract);
     /**
      * 控件初始化
      * @protected
@@ -43,7 +42,7 @@ var f = function(){
     _pro.__init = function(){
         this.__aopt = {};
         this.__topt = {};
-        this.__supInit();
+        this.__super();
     };
     /**
      * 控件重置
@@ -53,8 +52,8 @@ var f = function(){
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
-        NEJ.X(this.__aopt,_options,function(_value,_key){
+        this.__super(_options);
+        _u._$merge(this.__aopt,_options,function(_value,_key){
             if(_key.search(/^on/)<0){
                 return !0;
             }
@@ -76,7 +75,7 @@ var f = function(){
     _pro.__destroy = function(){
         // recycle editor first
         this.__editor._$recycle();
-        this.__supDestroy();
+        this.__super();
         delete this.__editor;
     };
     /**
@@ -95,7 +94,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__initNode = function(){
-        this.__supInitNode();
+        this.__super();
         var _list = _e._$getChildren(this.__body);
         this.__aopt.parent = _list[1];
         this.__topt.list = _e._$getByClassName(_list[0],
@@ -186,39 +185,35 @@ var f = function(){
      * 设置编辑内容
      * @method {_$setContent}
      * @param  {String} 内容
-     * @return {nej.ui._$$Editor}
+     * @return {Void}
      */
     _pro._$setContent = function(_content){
         this.__editor._$setContent(_content);
-        return this;
     };
     /**
      * 注册命令实现
      * @method {_$registCommand}
      * @param  {Array|nej.ut._$$EditorCommand} 命令实现类构造
-     * @return {nej.ui._$$Editor}
+     * @return {Void}
      */
     _pro._$registCommand = function(_class){
         this.__editor._$registCommand(_class);
-        return this;
     };
     /**
      * 显示编辑器
      * @method {_$show}
-     * @return {nej.ui._$$Editor}
+     * @return {Void}
      */
     _pro._$show = function(){
         this.__body.style.display = '';
-        return this;
     };
     /**
      * 隐藏编辑器
      * @method {_$hide}
-     * @return {nej.ui._$$Editor}
+     * @return {Void}
      */
     _pro._$hide = function(){
         this.__body.style.display = 'none';
-        return this;
     };
     /*
      * 获取图标样式代码
@@ -281,10 +276,10 @@ var f = function(){
           <div class="zarea"></div>\
         </div>\
     ');
-};
-NEJ.define(
-    '{lib}ui/editor/editor.js',[
-    '{lib}base/config.js',
-    '{lib}ui/base.js',
-    '{lib}util/editor/editor.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui'),_p);
+    }
+
+    return _p;
+});

@@ -5,33 +5,33 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _e = _('nej.e'),
-        _p = _('nej.ui.cmd'),
-        _pro,_sup,_seed_html;
-    if (!!_p._$$FontNameCard) return;
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{lib}ui/editor/command/font.js'
+],function(NEJ,_k,_e,_u,_p,_o,_f,_r){
+    var _pro,
+        _seed_html;
     /**
      * 字体选择控件
      * @class   {nej.ui.cmd._$$FontNameCard} 字体选择控件
      * @extends {nej.ui.cmd._$$FontCard}
      * @param   {Object} 可选配置参数，已处理参数列表如下
-     * 
+     *
      * [hr]
-     * 
+     *
      * @event {onselect} 字体选中回调函数
      * @param {String}   字体
-     * 
+     *
      */
-    _p._$$FontNameCard = NEJ.C();
-    _pro = _p._$$FontNameCard._$extend(_p._$$FontCard);
-    _sup = _p._$$FontNameCard._$supro;
+    _p._$$FontNameCard = _k._$klass();
+    _pro = _p._$$FontNameCard._$extend(_u._$$FontCard);
     /**
      * 字体选项列表
      * @type Array
      */
-    _p._$$FontNameCard.list = 
+    _p._$$FontNameCard.list =
       [{name:'宋体'}
       ,{name:'微软雅黑'}
       ,{name:'黑体'}
@@ -53,7 +53,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__initXGui = function(){
-        _sup.__initXGui.apply(this,arguments);
+        this.__super();
         this.__seed_html = _seed_html;
     };
     /**
@@ -72,8 +72,10 @@ var f = function(){
                      '</div>');
         this.__seed_html = _seed_html;
     };
-};
-NEJ.define(
-    '{lib}ui/editor/command/fontname.js',[
-    '{lib}ui/editor/command/font.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui.cmd'),_p);
+    }
+
+    return _p;
+});

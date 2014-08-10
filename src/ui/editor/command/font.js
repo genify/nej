@@ -5,38 +5,37 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _i = _('nej.ui'),
-        _p = _('nej.ui.cmd'),
-        _pro,
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{lib}base/event.js',
+    '{lib}base/util.js',
+    '{lib}ui/layer/card.wrapper.js'
+],function(NEJ,_k,_e,_v,_u,_u0,_p,_o,_f,_r){
+    var _pro,
         _seed_css,
         _seed_fnt;
-    if (!!_p._$$FontCard) return;
     /**
      * 字体字号选择卡片基类
      * @class   {nej.ui.cmd._$$FontCard} 字体字号选择卡片基类
      * @extends {nej.ui._$$CardWrapper}
      * @param   {Object} 可选配置参数，已处理参数列表如下
-     * 
+     *
      * [hr]
-     * 
+     *
      * @event  {onchange} 字号/字体选中回调函数
      * @param  {String}   字号/字体
-     * 
+     *
      */
-    _p._$$FontCard = NEJ.C();
-    _pro = _p._$$FontCard._$extend(_i._$$CardWrapper);
+    _p._$$FontCard = _k._$klass();
+    _pro = _p._$$FontCard._$extend(_u0._$$CardWrapper);
     /**
      * 控件重置
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         if (_options.width!=null){
             _e._$setStyle(
                 this.__body,'width',
@@ -45,26 +44,13 @@ var f = function(){
         }
     };
     /**
-     * 取字体字号提示文字
-     * @static
-     * @method {_$getText}
-     * @return {String} 字体/字号
-     */
-    _p._$$FontCard._$getText = function(_value){
-        var _index = _u._$indexOf(this.list,
-            function(_data){
-                return (_data.value||_data.name)==_value;
-            });
-        return (this.list[_index]||_o).name;
-    };
-    /**
      * 控件销毁
      * @protected
      * @method {__destroy}
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         delete this.__flist;
     };
     /**
@@ -83,7 +69,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__initNode = function(){
-        this.__supInitNode();
+        this.__super();
         _v._$addEvent(
             this.__body,'click',
             this.__onFontSelect._$bind(this)
@@ -120,6 +106,19 @@ var f = function(){
             this._$hide();
         };
     })();
+    /**
+     * 取字体字号提示文字
+     * @static
+     * @method {_$getText}
+     * @return {String} 字体/字号
+     */
+    _p._$$FontCard._$getText = function(_value){
+        var _index = _u._$indexOf(this.list,
+            function(_data){
+                return (_data.value||_data.name)==_value;
+            });
+        return (this.list[_index]||_o).name;
+    };
     // ui css text
     _seed_css = _e._$pushCSSText('\
         .#<uispace>{border:1px solid #9FAC87;font-size:12px;text-align:left;}\
@@ -136,8 +135,10 @@ var f = function(){
         </a>\
         {/list}\
     ');
-};
-NEJ.define(
-    '{lib}ui/editor/command/font.js',[
-    '{lib}ui/layer/card.wrapper.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui.cmd'),_p);
+    }
+
+    return _p;
+});

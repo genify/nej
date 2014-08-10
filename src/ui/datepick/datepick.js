@@ -5,17 +5,18 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _e = _('nej.e'),
-        _u = _('nej.u'),
-        _t = _('nej.ut'),
-        _p = _('nej.ui'),
-        _pro,_sup;
-    if (!!_p._$$DatePick) return;
-    // ui html code
-    var _seed_css,_seed_html,_seed_date,
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{lib}base/util.js',
+    '{lib}ui/layer/card.wrapper.js',
+    '{lib}util/calendar/calendar.js',
+],function(NEJ,_k,_e,_u,_u0,_t,_p,_o,_f,_r){
+    var _pro,
+        _seed_css,
+        _seed_html,
+        _seed_date,
         _seed_action = _u._$uniqueID();
     /**
      * 日期选择控件<br />
@@ -51,16 +52,15 @@ var f = function(){
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {Date}  date  设置日期
      * @config  {Array} range 可选范围
-     * 
+     *
      * [hr]
-     * 
+     *
      * @event  {onchange} 日期变化触发事件
      * @param  {Date} 日期
-     * 
+     *
      */
-    _p._$$DatePick = NEJ.C();
-    _pro = _p._$$DatePick._$extend(_p._$$CardWrapper);
-    _sup = _p._$$DatePick._$supro;
+    _p._$$DatePick = _k._$klass();
+    _pro = _p._$$DatePick._$extend(_u0._$$CardWrapper);
     /**
      * 控件初始化
      * @protected
@@ -71,7 +71,7 @@ var f = function(){
         this.__copt = {
             onselect:this.__onDateChange._$bind(this)
         };
-        this.__supInit();
+        this.__super();
     };
     /**
      * 控件重置
@@ -81,7 +81,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         this.__copt.range = _options.range;
         this.__calendar = _t._$$Calendar
                             ._$allocate(this.__copt);
@@ -94,7 +94,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         delete this.__copt.range;
         var _calendar = this.__calendar;
         if (!!_calendar){
@@ -119,7 +119,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__initNode = function(){
-        this.__supInitNode();
+        this.__super();
         var _list = _e._$getChildren(this.__body);
         this.__copt.list = _e._$getByClassName(_list[1],'js-ztag');
         _list = _e._$getChildren(_list[0]);
@@ -168,12 +168,11 @@ var f = function(){
      * [/code]
      * @method {_$setDate}
      * @param  {Date} 日期
-     * @return {nej.ui._$$DatePick}
+     * @return {Void}
      */
     _pro._$setDate = function(_date){
         _date = _u._$var2date(_date);
         this.__calendar._$setDate(_date);
-        return this;
     };
     /**
      * 取当前时间<br />
@@ -227,9 +226,10 @@ var f = function(){
           <span class="ztxt"></span>月\
         </div>\
     ');
-};
-NEJ.define(
-    '{lib}ui/datepick/datepick.js',[
-    '{lib}ui/layer/card.wrapper.js',
-    '{lib}util/calendar/calendar.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui'),_p);
+    }
+
+    return _p;
+});

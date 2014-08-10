@@ -5,12 +5,13 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _u = _('nej.u'),
-        _p = _('nej.ui'),
-        _proWindowWrapper;
-    if (!!_p._$$WindowWrapper) return;
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}ui/layer/layer.wrapper.js',
+    '{lib}ui/layer/window.js'
+],function(NEJ,_k,_u0,_u1,_p,_o,_f,_r){
+    var _pro;
     /**
      * 弹出窗体封装基类对象，主要实现层里面内容部分的业务逻辑<br />
      * 脚本举例
@@ -39,18 +40,18 @@ var f = function(){
      * @class   {nej.ui._$$WindowWrapper} 弹出窗体封装基类对象
      * @extends {nej.ui._$$LayerWrapper}
      * @param   {Object} 可选配置参数，已处理参数列表如下
-     * 
+     *
      */
-    _p._$$WindowWrapper = NEJ.C();
-      _proWindowWrapper = _p._$$WindowWrapper._$extend(_p._$$LayerWrapper);
+    _p._$$WindowWrapper = _k._$klass();
+    _pro = _p._$$WindowWrapper._$extend(_u0._$$LayerWrapper);
     /**
      * 构建弹层控件实例，子类实现具体业务逻辑
      * @protected
      * @method {__getLayerInstance}
      * @return {nej.ui._$$Layer} 弹层控件实例
      */
-    _proWindowWrapper.__getLayerInstance = function(){
-        return _p._$$Window._$allocate(this.__lopt);
+    _pro.__getLayerInstance = function(){
+        return _u1._$$Window._$allocate(this.__lopt);
     };
     /**
      * 初始化弹层控件可选配置参数
@@ -58,16 +59,18 @@ var f = function(){
      * @method {__doInitLayerOptions}
      * @return {Void}
      */
-    _proWindowWrapper.__doInitLayerOptions = function(){
-        _p._$$WindowWrapper._$supro
-          .__doInitLayerOptions.apply(this,arguments);
+    _pro.__doInitLayerOptions = function(){
+        this.__super();
         this.__lopt.mask  = null;
         this.__lopt.title = '标题';
         this.__lopt.align = '';
         this.__lopt.draggable = !1;
         this.__lopt.onclose = null;
     };
-};
-NEJ.define('{lib}ui/layer/window.wrapper.js',
-          ['{lib}ui/layer/layer.wrapper.js'
-          ,'{lib}ui/layer/window.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui'),_p);
+    }
+
+    return _p;
+});

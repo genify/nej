@@ -5,16 +5,15 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _v = _('nej.v'),
-        _e = _('nej.e'),
-        _p = _('nej.ui'),
-        _pro;
-    if (!!_p._$$Card) return;
-    // ui css text
-    var _seed_css = _e._$pushCSSText('.#<uispace>{position:absolute;background:#fff;}');
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{lib}base/event.js',
+    '{lib}ui/layer/layer.js'
+],function(NEJ,_k,_e,_v,_u,_p,_o,_f,_r){
+    var _pro,
+        _seed_css;
     /**
      * 卡片控件<br />
      * 页面结构举例
@@ -50,8 +49,8 @@ var f = function(){
      * @config  {String}  left   卡片水平位置
      * @config  {Boolean} nostop 是否禁用事件阻止
      */
-    _p._$$Card = NEJ.C();
-      _pro = _p._$$Card._$extend(_p._$$Layer);
+    _p._$$Card = _k._$klass();
+    _pro = _p._$$Card._$extend(_u._$$Layer);
     /**
      * 控件重置
      * @protected
@@ -60,7 +59,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         this.__doInitDomEvent([[
             document,'click',
             this.__onDocClick._$bind(this)
@@ -84,7 +83,7 @@ var f = function(){
         delete this.__fitable;
         delete this.__byPoint;
         delete this.__position;
-        this.__supDestroy();
+        this.__super();
     };
     /**
      * 初始化外观信息
@@ -102,7 +101,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__initNode = function(){
-        this.__supInitNode();
+        this.__super();
         this.__ncnt = this.__body;
         _v._$addEvent(
             this.__body,'click',
@@ -205,7 +204,7 @@ var f = function(){
             this._$setPosition(
             this.__doCalPosition(this.__align));
     };
-    
+
     /**
      * 根据卡片规则计算左上角的坐标
      * @protected
@@ -293,7 +292,7 @@ var f = function(){
      *  对齐方式 | top/bottom | left/right
      * [/ntb]
      * @config {Boolean} fitable 是否需要调整卡片位置使其适应页面
-     * @return {nej.ui._$$Card}
+     * @return {Void}
      */
     _pro._$showByReference = (function(){
         var _doCalTargetBox = function(_element,_delta){
@@ -316,11 +315,14 @@ var f = function(){
                           _options.target,_options.delta);
             this.__fitable = !!_options.fitable;
             this._$show();
-            return this;
         };
     })();
-};
-NEJ.define(
-    '{lib}ui/layer/card.js',[
-    '{lib}ui/layer/layer.js'
-],f);
+    // ui css text
+    _seed_css = _e._$pushCSSText('.#<uispace>{position:absolute;background:#fff;}');
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui'),_p);
+    }
+
+    return _p;
+});

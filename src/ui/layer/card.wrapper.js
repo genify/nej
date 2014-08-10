@@ -5,15 +5,16 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _p = _('nej.ui'),
-        _pro,_sup;
-    if (!!_p._$$CardWrapper) return;
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{lib}base/event.js',
+    '{lib}base/util.js',
+    '{lib}ui/layer/layer.wrapper.js',
+    '{lib}ui/layer/card.js'
+],function(NEJ,_k,_e,_v,_u,_u0,_u1,_p,_o,_f,_r){
+    var _pro;
     /**
      * 弹出卡片封装基类对象，主要实现层里面内容部分的业务逻辑<br />
      * 页面结构举例
@@ -30,21 +31,20 @@ var f = function(){
      *   _proMyCard.__initXGui = function(){
      *       this.__seed_html = _seed_html;
      *   };
-     *   
+     *
      *   // 第二步：实例化一个card对象
      *   var _myCard = _p._$$MyCard._$allocate({
      *       parent:'cardWarpper-box'
      *   });
-     *   
+     *
      * [/code]
      * @class   {nej.ui._$$CardWrapper} 弹出卡片封装基类对象
      * @extends {nej.ui._$$LayerWrapper}
      * @param   {Object} 可选配置参数，已处理参数列表如下
-     *                            
+     *
      */
-    _p._$$CardWrapper = NEJ.C();
-    _pro = _p._$$CardWrapper._$extend(_p._$$LayerWrapper);
-    _sup = _p._$$CardWrapper._$supro;
+    _p._$$CardWrapper = _k._$klass();
+    _pro = _p._$$CardWrapper._$extend(_u0._$$LayerWrapper);
     /**
      * 卡片绑定到执行节点上<br />
      * 脚本举例
@@ -134,8 +134,8 @@ var f = function(){
                  this.__cdpol = {};
             var _id = _e._$id(_node);
             if (!!this.__cdpol[_id]) return this;
-            _options = NEJ.X({},_options);
-            var _sopt = NEJ.EX({
+            _options = _u._$merge({},_options);
+            var _sopt = _u._$fetch({
                     align:'',delta:null,fitable:!1
                 },_options);
             _sopt.target = _id;
@@ -177,7 +177,7 @@ var f = function(){
      * @return {nej.ui._$$Layer} 弹层控件实例
      */
     _pro.__getLayerInstance = function(){
-        return _p._$$Card._$allocate(this.__lopt);
+        return _u1._$$Card._$allocate(this.__lopt);
     };
     /**
      * 初始化弹层控件可选配置参数
@@ -186,7 +186,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__doInitLayerOptions = function(){
-        _sup.__doInitLayerOptions.apply(this,arguments);
+        this.__super();
         this.__lopt.top = null;
         this.__lopt.left = null;
         this.__lopt.nostop = !1;
@@ -195,16 +195,16 @@ var f = function(){
      * 通过参照节点显示卡片位置
      * @method {_$showByReference}
      * @param  {Object} 可选配置参数
-     * @return {nej.ui._$$CardWrapper}
+     * @return {Void}
      */
     _pro._$showByReference = function(_options){
-        if (!!this.__layer) 
+        if (!!this.__layer)
             this.__layer._$showByReference(_options);
-        return this;
     };
-};
-NEJ.define(
-    '{lib}ui/layer/card.wrapper.js',[
-    '{lib}ui/layer/layer.wrapper.js',
-    '{lib}ui/layer/card.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui'),_p);
+    }
+
+    return _p;
+});

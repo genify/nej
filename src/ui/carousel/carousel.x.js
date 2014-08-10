@@ -5,27 +5,27 @@
  * @author   huxueliang(huxueliang@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}ui/carousel/carousel.js'
+],function(NEJ,_k,_u,_p,_o,_f,_r){
     // variable declaration
-    var p = NEJ.P('nej.ui'),
-        __proCarouselX,
-        __supCarouselX;
-    if (!!p._$$CarouselX) return;
+    var _pro;
     /**
      * 卡片水平播放器对象
      * @class   {nej.ui._$$CarouselX} 卡片水平播放器控件
      * @extends {nej.ui._$$Carousel}
      */
-    p._$$CarouselX = NEJ.C();
-    __proCarouselX = p._$$CarouselX._$extend(p._$$Carousel);    
-    __supCarouselX = p._$$CarouselX._$supro;
+    _p._$$CarouselX = _k._$klass();
+    _pro = _p._$$CarouselX._$extend(_u._$$Carousel);
     /**
      * 获得配置参数
      * @protected
      * @method {__getConfig}
      * @return {Object}    配置参数对象
      */
-    __proCarouselX.__getConfig = function(){
+    _pro.__getConfig = function(){
         return {
             m:'moveX',
             p:'m41',
@@ -34,6 +34,11 @@ var f = function(){
             v:!1
         };
     };
-};
-NEJ.define('{lib}ui/carousel/carousel.x.js',
-      ['{lib}ui/carousel/carousel.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui'),_p);
+    }
+
+    return _p;
+});
+

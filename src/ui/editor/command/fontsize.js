@@ -5,33 +5,33 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _e = _('nej.e'),
-        _p = _('nej.ui.cmd'),
-        _pro,_sup,_seed_html;
-    if (!!_p._$$FontSizeCard) return;
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{lib}ui/editor/command/font.js'
+],function(NEJ,_k,_e,_u,_p,_o,_f,_r){
+    var _pro,
+        _seed_html;
     /**
      * 字号选择控件
      * @class   {nej.ui.cmd._$$FontSizeCard} 字号选择控件
      * @extends {nej.ui.cmd._$$FontCard}
      * @param   {Object} 可选配置参数，已处理参数列表如下
-     * 
+     *
      * [hr]
-     * 
+     *
      * @event {onselect} 字号选中回调函数
      * @param {String}   字号
-     * 
+     *
      */
-    _p._$$FontSizeCard = NEJ.C();
-    _pro = _p._$$FontSizeCard._$extend(_p._$$FontCard);
-    _sup = _p._$$FontSizeCard._$supro;
+    _p._$$FontSizeCard = _k._$klass();
+    _pro = _p._$$FontSizeCard._$extend(_u._$$FontCard);
     /**
      * 字号选项列表
      * @type Array
      */
-    _p._$$FontSizeCard.list = 
+    _p._$$FontSizeCard.list =
       [{name:'小',style:'x-small',value:1}
       ,{name:'标准',style:'small',value:2}
       ,{name:'大',style:'medium',value:3}
@@ -44,7 +44,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__initXGui = function(){
-        _sup.__initXGui.apply(this,arguments);
+        this.__super();
         this.__seed_html = _seed_html;
     };
     /**
@@ -63,8 +63,10 @@ var f = function(){
                      '</div>');
         this.__seed_html = _seed_html;
     };
-};
-NEJ.define(
-    '{lib}ui/editor/command/fontsize.js',[
-    '{lib}ui/editor/command/font.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui.cmd'),_p);
+    }
+
+    return _p;
+});

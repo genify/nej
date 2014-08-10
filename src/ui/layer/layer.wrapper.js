@@ -5,14 +5,14 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _f = NEJ.F,
-        _u = _('nej.u'),
-        _e = _('nej.e'),
-        _p = _('nej.ui'),
-        _proLayerWrapper;
-    if (!!_p._$$LayerWrapper) return;
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{lib}base/util.js',
+    '{lib}ui/layer/layer.js'
+],function(NEJ,_k,_e,_u,_u0,_p,_o,_f,_r){
+    var _pro;
     /**
      * 弹出层封装基类对象，主要实现层里面内容部分的业务逻辑<br />
      * 脚本举例
@@ -21,11 +21,11 @@ var f = function(){
      *   var _seed_css = _e._$pushCSSText('.#<uispace>{position:absolute;background:#fff;}');
      *   _p._$$MyLayer = NEJ.C();
      *   _proMyLayer = _p._$$MyLayer._$extend(_p._$$Layer);
-     *   
+     *
      *   _proMyLayer.__initXGui = function(){
      *      this.__seed_css = _seed_css;
      *   };
-     *   
+     *
      *   _proMyLayer.__initNode = function(){
      *       this.__supInitNode();
      *       // this.__ncnt作为放置卡片内容的容器
@@ -37,18 +37,18 @@ var f = function(){
      *   _proMyCardWrapper.__getLayerInstance = function(){
      *       return _p._$$MyLayer._$allocate(this.__lopt);
      *   };
-     *   
+     *
      *   // 下面是对layerwrapper的描述
-     *   
+     *
      *   // 首先：继承layerwrapper基类生成的一个新类
      *   _p._$$MyCardWrapper = NEJ.C();
      *   _proMyCardWrapper = _p._$$MyCardWrapper._$extend(_p._$$LayerWrapper);
-     *   
+     *
      *   // 这里返回内容层的实例
      *   _proMyCardWrapper.__getLayerInstance = function(){
      *       return _p._$$MyLayer._$allocate(this.__lopt);
      *   };
-     *   
+     *
      *   // 这里配置lopt参数，生成内容层用
      *   _proMyCardWrapper.__doInitLayerOptions = function(){
      *   _p._$$MyCardWrapper._$supro
@@ -56,7 +56,7 @@ var f = function(){
      *       this.__lopt.top = null;
      *       this.__lopt.left = null;
      *   };
-     *   
+     *
      *   // 最后项目中实例化wrapper的实例
      *    var _ly = _p._$$MyLayerCard._$allocate({
      *       parent:document.body,
@@ -70,10 +70,10 @@ var f = function(){
      * @class   {nej.ui._$$LayerWrapper} 弹出层封装基类对象
      * @extends {nej.ui._$$Abstract}
      * @param   {Object} 可选配置参数，已处理参数列表如下
-     * 
+     *
      */
-    _p._$$LayerWrapper = NEJ.C();
-      _proLayerWrapper = _p._$$LayerWrapper._$extend(_p._$$Abstract);
+    _p._$$LayerWrapper = _k._$klass();
+    _pro = _p._$$LayerWrapper._$extend(_u0._$$Abstract);
     /**
      * 控件重置
      * @protected
@@ -81,11 +81,11 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proLayerWrapper.__reset = function(_options){
+    _pro.__reset = function(_options){
         this.__doInitLayerOptions();
-        this.__supReset(this
+        this.__super(this
             .__doFilterOptions(_options));
-        this.__lopt.onbeforerecycle = 
+        this.__lopt.onbeforerecycle =
             this._$recycle._$bind(this);
         this.__layer = this.__getLayerInstance();
     };
@@ -95,9 +95,9 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proLayerWrapper.__destroy = function(){
+    _pro.__destroy = function(){
         this._$dispatchEvent('onbeforerecycle');
-        this.__supDestroy();
+        this.__super();
         delete this.__lopt;
         _e._$removeByEC(this.__body);
         var _layer = this.__layer;
@@ -112,7 +112,7 @@ var f = function(){
      * @method {__getLayerInstance}
      * @return {nej.ui._$$Layer} 弹层控件实例
      */
-    _proLayerWrapper.__getLayerInstance = _f;
+    _pro.__getLayerInstance = _f;
     /**
      * 将配置参数拆分为两部分，一部分用于弹层控件，一部分用于本控件
      * @protected
@@ -121,7 +121,7 @@ var f = function(){
      * @return {Object} 过滤后的配置参数
      * @return {Void}
      */
-    _proLayerWrapper.__doFilterOptions = function(_options){
+    _pro.__doFilterOptions = function(_options){
         var _result = {};
         _u._$forIn(_options,
             function(_item,_key){
@@ -137,7 +137,7 @@ var f = function(){
      * @method {__doInitLayerOptions}
      * @return {Void}
      */
-    _proLayerWrapper.__doInitLayerOptions = function(){
+    _pro.__doInitLayerOptions = function(){
         this.__lopt = {
             clazz:''
            ,parent:null
@@ -155,13 +155,12 @@ var f = function(){
      *   _ly._$show();
      * [/code]
      * @method {_$show}
-     * @return {nej.ui._$$LayerWrapper}
+     * @return {Void}
      */
-    _proLayerWrapper._$show = function(){
-        if (!!this.__layer) 
+    _pro._$show = function(){
+        if (!!this.__layer)
             this.__layer._$show();
         this._$dispatchEvent('onaftershow');
-        return this;
     };
     /**
      * 隐藏弹层<br />
@@ -171,13 +170,16 @@ var f = function(){
      *   _ly._$hide();
      * [/code]
      * @method {_$hide}
-     * @return {nej.ui._$$LayerWrapper}
+     * @return {Void}
      */
-    _proLayerWrapper._$hide = function(){
-        if (!!this.__layer) 
+    _pro._$hide = function(){
+        if (!!this.__layer)
             this.__layer._$hide();
-        return this;
     };
-};
-NEJ.define('{lib}ui/layer/layer.wrapper.js',
-      ['{lib}ui/layer/layer.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui'),_p);
+    }
+
+    return _p;
+});

@@ -5,19 +5,19 @@
  * @author   cheng-lin(cheng-lin@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _f = NEJ.F,
-        _c = _('nej.c'),
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _p = _('nej.ui.cmd'),
-        _u = _('nej.ui'),
-        _ut= _('nej.ut'),
-        _ul= _('nej.u'),
-        _pro;
-    if (!!_p._$$UploadImageCard) return;
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{lib}base/event.js',
+    '{lib}base/util.js',
+    '{lib}ui/layer/window.wrapper.js',
+    '{lib}util/tab/tab.js',
+    '{lib}util/flash/flash.js'
+],function(NEJ,_k,_e,_v,_u,_u0,_t0,_t1,_p,_o,_f,_r){
+    var _pro,
+        _seed_css,
+        _seed_html;
     /**
      * 图片上传控件
      * @class   {nej.ui.cmd._$$UploadImageCard} 图片上传控件
@@ -41,25 +41,25 @@ var f = function(){
      * @config  {String}      stamptype      水印类型，默认无
      * @config  {String}      stampstring    水印内容，默认无
      * @config  {String}      sitefrom         产品名称
-     * 
+     *
      * [hr]
-     * 
+     *
      * @event  {oninitflash} Flash开始初始化
-     * 
+     *
      * [hr]
-     * 
+     *
      * @event  {onflashinited} Flash初始化完成
-     * 
+     *
      * [hr]
-     * 
+     *
      * @event  {onchange} 图片上传完成
      * @param  {String}   命令名称
      * @param  {Object}   Flash返回的图片对象
-     * 
+     *
      */
-    _p._$$UploadImageCard = NEJ.C();
-    _pro = _p._$$UploadImageCard._$extend(_u._$$WindowWrapper);
-    
+    _p._$$UploadImageCard = _k._$klass();
+    _pro = _p._$$UploadImageCard._$extend(_u0._$$WindowWrapper);
+
     /**
      * 重置卡片
      * @protected
@@ -74,10 +74,10 @@ var f = function(){
         _options.destroyable = _options.destroyable || false;
         _options.title = _options.title || '选择图片';
         _options.mask  = true;
-        this.__supReset(_options);
+        this.__super(_options);
         this.__onShowErrorTips('');
     };
-    
+
     /**
      * 初始化卡片
      * @protected
@@ -87,7 +87,7 @@ var f = function(){
      */
     _pro.__init = function(_options){
         _options = _options||{};
-        this.__supInit(_options);
+        this.__super(_options);
         this.__desc[0].innerText = _options.fDesc || '支持JPG、JPEG、GIF、BMP格式的图片，文件需小于10M';
         this.__desc[1].innerText = _options.oDesc || '网络图片不能超过2M';
         this._$setEvent('oninitflash',_options.oninitflash || _f);
@@ -115,9 +115,9 @@ var f = function(){
             },
             onready: this.__onFlashReady._$bind(this)
         };
-        _e._$flash(this.__hopt);
+        _t1._$flash(this.__hopt);
     };
-    
+
     /**
      * 初始化节点
      * @protected
@@ -125,7 +125,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__initNode = function(){
-        this.__supInitNode();
+        this.__super();
         this.__desc = _e._$getByClassName(this.__body,'j-desc');
         // 0 : 图片上传模式1
         // 1 ：图片上传模式2
@@ -143,7 +143,7 @@ var f = function(){
             selected:'j-selected',
             onchange:this.__onTabChange._$bind(this)
         };
-        this.__tabMg = _ut._$$Tab._$allocate(this.__topt);
+        this.__tabMg = _t0._$$Tab._$allocate(this.__topt);
         _v._$addEvent(_nlist[2],'click',this.__onSubmitImgUrl._$bind(this));
         _v._$addEvent(this.__nimgBox,'error',this.__onImgUrlError._$bind(this));
         _v._$addEvent(this.__nimgBox,'load',this.__onImgLoad._$bind(this));
@@ -165,18 +165,18 @@ var f = function(){
      * 注册flash回调方法
      * @protected
      * @method {__doRegiestFlashEvent}
-     * @param  {String} Flash回调方法的命名空间 
+     * @param  {String} Flash回调方法的命名空间
      * @return {Void}
      */
     _pro.__doRegiestFlashEvent = function(_space){
-        this.__namespace = _space + _ul._$randNumberString(2);
+        this.__namespace = _space + _u._$randNumberString(2);
         var _namespace = NEJ.P(this.__namespace);
         _namespace.uploadStart = this.__onUploadStart._$bind(this);
         _namespace.uploadComplete = this.__onUploadComplete._$bind(this);
         _namespace.uploadError = this.__uploadError._$bind(this);
         _namespace.showProgress = this.__showProgress._$bind(this);
     };
-    
+
     /**
      * 图片上传完成的回调
      * @protected
@@ -196,7 +196,7 @@ var f = function(){
             this._$hide();
         }
     };
-    
+
     /**
      * 上传图片出错信息设置
      * @protected
@@ -207,7 +207,7 @@ var f = function(){
     _pro.__onShowErrorTips = function(_message){
         this.__nerrorMsg.innerText = _message;
     };
-    
+
     /**
      * 开始图片上传
      * @protected
@@ -217,7 +217,7 @@ var f = function(){
     _pro.__onUploadStart = function(){
         this.__onbeforeupload();
     };
-    
+
     /**
      * flash加载完成回调
      * @protected
@@ -229,7 +229,7 @@ var f = function(){
         this.__flashObj = _flash;
         this._$dispatchEvent('onflashinited');
     };
-    
+
     /**
      * 提交网络图片
      * @protected
@@ -239,7 +239,7 @@ var f = function(){
     _pro.__onSubmitImgUrl = function(){
         this.__nimgBox.src = this.__nimgUrl.value.trim();
     };
-    
+
     /**
      * 图片链接错误
      * @protected
@@ -249,7 +249,7 @@ var f = function(){
     _pro.__onImgUrlError = function(){
         this.__nerrorMsg.innerText = '无法获取链接中的图片，请检查链接或稍后重试';
     };
-    
+
     /**
      * 图片链接正确
      * @protected
@@ -263,7 +263,7 @@ var f = function(){
         };
         this.__onUploadComplete('webimg',_photoObj.resultcode,_photoObj);
     };
-    
+
     /**
      * 图片上传前操作，子类实现
      * @protected
@@ -271,7 +271,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__onbeforeupload = _f;
-    
+
     /**
      * 图片上传后操作，子类实现
      * @protected
@@ -279,7 +279,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__onafterupload = _f;
-    
+
     /**
      * 图片上传错误，子类实现
      * @protected
@@ -287,7 +287,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__uploadError = _f;
-    
+
     /**
      * 图片上传进程回调，子类实现
      * @protected
@@ -295,7 +295,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__showProgress = _f;
-    
+
     /**
      * 切换tab
      * @protected
@@ -312,7 +312,7 @@ var f = function(){
     };
 
     // ui css text
-    var _seed_css = _e._$pushCSSText('\
+    _seed_css = _e._$pushCSSText('\
       .#<uispace>{width:336px;}\
       .#<uispace> .m-iframe{position:absolute;height:0px;width:0px;left:-9000px;}\
       .#<uispace> .u-upload-file{height:0px;width:0px;font-size:0px;}\
@@ -326,7 +326,7 @@ var f = function(){
       .#<uispace> .u-btn{cursor:pointer;color:#528CE0;}\
       .#<uispace> .u-image{width:0px;height:0px;visibility:hidden;}');
     // ui html code
-    var _seed_html = _e._$addNodeTemplate('\
+    _seed_html = _e._$addNodeTemplate('\
       <div>\
         <div>\
           <a class="u-btn f-ib upload j-tab f-fl" name="upload"><span class="img-upload">上传图片</span></a>\
@@ -352,8 +352,10 @@ var f = function(){
         </div>\
         <div class="u-error j-ztag"></div>\
       </div>');
-};
-NEJ.define('{lib}ui/editor/command/uploadimage.js',
-      ['{lib}ui/layer/window.wrapper.js',
-       '{lib}util/tab/tab.js',
-       '{lib}util/flash/flash.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui.cmd'),_p);
+    }
+
+    return _p;
+});
