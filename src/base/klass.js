@@ -22,7 +22,7 @@ NEJ.define([
      *   NEJ.define([
      *       '{lib}base/klass.js'
      *   ],function(_p){
-     *     
+     *
      *       // 定义类A
      *      var A = _p._$klass();
      *      var pro = A.prototype;
@@ -34,7 +34,7 @@ NEJ.define([
      *      pro.__doSomething = function(a){
      *          // TODO something
      *      };
-     * 
+     *
      *      // 定义类B，并继承自A
      *      var B = _p._$klass();
      *      var pro = B._$extend(A);
@@ -50,7 +50,7 @@ NEJ.define([
      *          this.__super(a);
      *          // TODO B的逻辑
      *      };
-     * 
+     *
      *   });
      * [/code]
      *
@@ -84,12 +84,12 @@ NEJ.define([
             _Klass.prototype.__init = _f;
             /**
              * 子类继承父类
-             * 
+             *
              * [code]
              *   NEJ.define([
              *       '{lib}base/klass.js'
              *   ],function(_p){
-             *     
+             *
              *       // 定义类A
              *      var A = _p._$klass();
              *      var pro = A.prototype;
@@ -101,7 +101,7 @@ NEJ.define([
              *      pro.__doSomething = function(a){
              *          // TODO something
              *      };
-             * 
+             *
              *      // 定义类B，并继承自A
              *      var B = _p._$klass();
              *      var pro = B._$extend(A);
@@ -117,10 +117,10 @@ NEJ.define([
              *          this.__super(a);
              *          // TODO B的逻辑
              *      };
-             * 
+             *
              *   });
              * [/code]
-             * 
+             *
              * @api    {_$extend}
              * @param  {Function} 父类
              * @param  {Boolean}  是否拷贝父类的静态方法
@@ -164,8 +164,10 @@ NEJ.define([
                     if (!_name){
                         _name = _doUpdateCache(_method,this.constructor);
                     }else{
+                        var _parent = _phash[_name].prototype;
                         // switch caller name
-                        if (_method!=_phash[_name].prototype[_name]){
+                        if (!_parent.hasOwnProperty(_method)||
+                            _method!=_parent[_name]){
                             _name = _doUpdateCache(_method,this.constructor);
                         }else{
                             _phash[_name] = _phash[_name]._$super;
@@ -180,7 +182,7 @@ NEJ.define([
                     }
                     return _ret;
                 };
-                
+
                 if (CMPT){
                     var _pro = this.prototype;
                     _pro.__supInit      = _pro.__super;
@@ -192,17 +194,17 @@ NEJ.define([
                     _pro.__supOnHide    = _pro.__super;
                     _pro.__supOnRefresh = _pro.__super;
                 }
-                
+
                 return this.prototype;
             };
             return _Klass;
         };
     })();
-    
+
     if (CMPT){
         NEJ.C = _p._$klass;
         NEJ.copy(this.NEJ,NEJ);
     }
-    
+
     return _p;
 });
