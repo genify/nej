@@ -11,7 +11,7 @@ NEJ.define([
     '{lib}base/util.js',
     '{lib}ui/colorpick/colorpick.simple.js',
     '{lib}util/template/jst.js'
-],function(NEJ,_k,_u,_u0,_t,_p,_o,_f,_r){
+],function(NEJ,_k,_u,_i0,_t0,_p,_o,_f,_r){
     var _pro,
         _seed_color;
     /**
@@ -43,7 +43,7 @@ NEJ.define([
      *
      */
     _p._$$ComplexColorPick = _k._$klass();
-    _pro = _p._$$ComplexColorPick._$extend(_u0._$$SimpleColorPick);
+    _pro = _p._$$ComplexColorPick._$extend(_i0._$$SimpleColorPick);
     /**
      * 初始化节点
      * @protected
@@ -97,7 +97,7 @@ NEJ.define([
     })();
 
     // color list
-    _seed_color = _t._$addHtmlTemplate('\
+    _seed_color = _t0._$addHtmlTemplate('\
         {list xlist as x}\
         <a class="zitm zitm2" style="background-color:#${x}" data-value="#${x}" href="#">&nbsp;</a>\
         {/list}'

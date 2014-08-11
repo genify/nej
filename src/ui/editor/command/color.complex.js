@@ -11,7 +11,7 @@ NEJ.define([
     '{lib}base/element.js',
     '{lib}ui/editor/command/color.js',
     '{lib}ui/colorpick/colorpick.complex.js'
-],function(NEJ,_k,_e,_u,_u0,_p,_o,_f,_r){
+],function(NEJ,_k,_e,_i0,_i1,_p,_o,_f,_r){
     var _pro,
         _seed_css;
     /**
@@ -28,14 +28,14 @@ NEJ.define([
      *
      */
     _p._$$ComplexColorCard = _k._$klass();
-    _pro = _p._$$ComplexColorCard._$extend(_u._$$ColorCard);
+    _pro = _p._$$ComplexColorCard._$extend(_i0._$$ColorCard);
     /**
      * 取取色器实例
      * @return {Void}
      */
     _pro.__getColorPicker = function(){
         this.__copt.clazz = _seed_css;
-        return _u0._$$ComplexColorPick._$allocate(this.__copt);
+        return _i1._$$ComplexColorPick._$allocate(this.__copt);
     };
 
     // ui css seed

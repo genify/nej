@@ -15,7 +15,7 @@ NEJ.define([
     '{lib}util/resize/resize.js',
     '{lib}util/template/tpl.js',
     '{lib}util/template/jst.js'
-],function(NEJ,_k,_g,_e,_u,_u0,_t,_t0,_t1,_p,_o,_f,_r){
+],function(NEJ,_k,_g,_e,_u,_i,_t0,_t1,_t2,_p,_o,_f,_r){
     var _pro,
         _seed_css,
         _seed_html,
@@ -30,7 +30,7 @@ NEJ.define([
      * @config  {Object}  max  最大款高限制，{width:300,height:400}
      */
     _p._$$Resizer = _k._$klass();
-    _pro = _p._$$Resizer._$extend(_u0._$$Abstract);
+    _pro = _p._$$Resizer._$extend(_i._$$Abstract);
     /**
      * 控件初始化
      * @return {Void}
@@ -108,7 +108,7 @@ NEJ.define([
                 this.__nsize,
                 _doParseSize(_options.size,_options.max)
             );
-            this.__resize = _t._$$Resize._$allocate(_opt);
+            this.__resize = _t0._$$Resize._$allocate(_opt);
         };
     })();
     /**
@@ -141,7 +141,7 @@ NEJ.define([
     _pro.__initNodeTemplate = (function(){
         var _clazz = ['znt','znr','znb','znl','zpc zntl','zpc zntr','zpc znbr','zpc znbl'];
         return function(){
-            _seed_html = _t0._$addNodeTemplate(
+            _seed_html = _t1._$addNodeTemplate(
                 '<div class="'+_seed_css+'"><div class="zln">'+
                    _e._$getHtmlTemplate(_seed_point,{clazz:_clazz})+
                 '</div></div>'
@@ -205,7 +205,7 @@ NEJ.define([
         .#<uispace> .znbl{bottom:-1px;left:-1px;cursor:sw-resize;}\
     ');
     // html code
-    _seed_point = _t1._$addHtmlTemplate('\
+    _seed_point = _t2._$addHtmlTemplate('\
         {list 1..8 as x}\
         <div class="zpt ${clazz[x-1]} js-rs-${x}">&nbsp;</div>\
         {/list}\

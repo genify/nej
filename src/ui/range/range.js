@@ -11,7 +11,7 @@ NEJ.define([
     '{lib}base/element.js',
     '{lib}ui/base.js',
     '{lib}util/range/range.js'
-],function(NEJ,_k,_e,_u,_t,_p,_o,_f,_r){
+],function(NEJ,_k,_e,_i,_t0,_p,_o,_f,_r){
     var _pro,
         _seed_css;
     /**
@@ -35,7 +35,7 @@ NEJ.define([
      * @param  {Object}   区域信息
      */
     _p._$$Range = _k._$klass();
-    _pro = _p._$$Range._$extend(_u._$$Abstract);
+    _pro = _p._$$Range._$extend(_i._$$Abstract);
     /**
      * 初始化控件
      * @protected
@@ -60,7 +60,7 @@ NEJ.define([
     _pro.__reset = function(_options){
         this.__super(_options);
         this.__ropt.parent = this.__parent;
-        this.__range = _t._$$Range._$allocate(this.__ropt);
+        this.__range = _t0._$$Range._$allocate(this.__ropt);
     };
     /**
      * 控件销毁

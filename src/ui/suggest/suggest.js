@@ -13,7 +13,7 @@ NEJ.define([
     '{lib}ui/base.js',
     '{lib}util/suggest/suggest.js',
     '{lib}util/template/tpl.js'
-],function(NEJ,_k,_e,_u,_u0,_t,_t0,_p,_o,_f,_r){
+],function(NEJ,_k,_e,_u,_i,_t0,_t1,_p,_o,_f,_r){
     var _seed_css,
         _seed_item,
         _pro;
@@ -61,7 +61,7 @@ NEJ.define([
      *
      */
     _p._$$Suggest = _k._$klass();
-    _pro = _p._$$Suggest._$extend(_u0._$$Abstract);
+    _pro = _p._$$Suggest._$extend(_i._$$Abstract);
     /**
      * 控件初始化
      * @protected
@@ -86,7 +86,7 @@ NEJ.define([
         this.__super(_options);
         this.__sopt.input = _e._$get(_options.input);
         this.__sopt.input.insertAdjacentElement('afterEnd',this.__body);
-        this.__suggest = _t._$$Suggest._$allocate(this.__sopt);
+        this.__suggest = _t0._$$Suggest._$allocate(this.__sopt);
     };
     /**
      * 控件销毁
@@ -170,7 +170,7 @@ NEJ.define([
         .#<uispace> .js-selected{background:#1257F9;}\
     ');
     // item html
-    _seed_item = _t0._$addHtmlTemplate('\
+    _seed_item = _t1._$addHtmlTemplate('\
         {if defined("xlist")&&!!xlist.length}\
           {list xlist as x}<div class="zitm">${x}</div>{/list}\
         {/if}\

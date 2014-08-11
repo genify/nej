@@ -13,7 +13,7 @@ NEJ.define([
     '{lib}base/util.js',
     '{lib}ui/base.js',
     '{lib}ui/portrait/portrait.js'
-],function(NEJ,_k,_c,_e,_u,_u0,_u1,_p,_o,_f,_r){
+],function(NEJ,_k,_c,_e,_u,_i,_i0,_p,_o,_f,_r){
     // variable declaration
     var _pro,
         _seed_css;
@@ -34,7 +34,7 @@ NEJ.define([
      *
      */
     _p._$$SimplePortrait = _k._$klass();
-    _pro = _p._$$SimplePortrait._$extend(_u0._$$Abstract);
+    _pro = _p._$$SimplePortrait._$extend(_i._$$Abstract);
     /**
      * 控件初始化
      * @return {Void}
@@ -95,7 +95,7 @@ NEJ.define([
         this.__super(_options);
         _options.cache = _u._$merge({},this.__popt.cache);
         _options.clazz = _seed_css+' '+(_options.clazz||'');
-        this.__portrait = _u1._$$Portrait._$allocate(_options);
+        this.__portrait = _i0._$$Portrait._$allocate(_options);
     };
     /**
      * 控件销毁

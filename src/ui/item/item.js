@@ -9,7 +9,7 @@ NEJ.define([
     '{lib}base/global.js',
     '{lib}base/klass.js',
     '{lib}ui/base.js'
-],function(NEJ,_k,_u,_p,_o,_f,_r){
+],function(NEJ,_k,_i,_p,_o,_f,_r){
     var _pro;
     /**
      * 列表项控件基类<br />
@@ -63,7 +63,7 @@ NEJ.define([
      * @config  {Array}  range 当前项所在的列表片段方位(begin,end)
      */
     _p._$$Item = _k._$klass();
-    _pro = _p._$$Item._$extend(_u._$$Abstract);
+    _pro = _p._$$Item._$extend(_i._$$Abstract);
     /**
      * 控件初始化
      * @protected

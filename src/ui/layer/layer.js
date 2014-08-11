@@ -11,7 +11,7 @@ NEJ.define([
     '{lib}base/element.js',
     '{lib}base/util.js',
     '{lib}ui/base.js'
-],function(NEJ,_k,_e,_u,_u0,_p,_o,_f,_r){
+],function(NEJ,_k,_e,_u,_i,_p,_o,_f,_r){
     var _pro;
     /**
      * 弹出层控件基类<br />
@@ -85,7 +85,7 @@ NEJ.define([
      *
      */
     _p._$$Layer = _k._$klass();
-    _pro = _p._$$Layer._$extend(_u0._$$Abstract);
+    _pro = _p._$$Layer._$extend(_i._$$Abstract);
     /**
      * 控件重置
      * @protected

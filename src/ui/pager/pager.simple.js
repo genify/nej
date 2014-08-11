@@ -9,7 +9,7 @@ NEJ.define([
     '{lib}base/global.js',
     '{lib}ui/pager/pager.base.js',
     '{lib}util/page/page.simple.js'
-],function(NEJ,_u,_t,_p,_o,_f,_r){
+],function(NEJ,_i0,_t0,_p,_o,_f,_r){
     // variable declaration
     var _pro;
     /**
@@ -64,7 +64,7 @@ NEJ.define([
      *
      */
     _p._$$SimplePager = _k._$klass();
-    _pro = _p._$$SimplePager._$extend(_u._$$AbstractPager);
+    _pro = _p._$$SimplePager._$extend(_i0._$$AbstractPager);
     /**
      * 控件重置
      * @protected
@@ -78,7 +78,7 @@ NEJ.define([
         if (_options.total==null)
             _options.total = 10000;
         this.__super(_options);
-        this.__page = _t._$$SimplePage._$allocate(this.__popt);
+        this.__page = _t0._$$SimplePage._$allocate(this.__popt);
     };
 
     if (CMPT){

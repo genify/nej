@@ -11,7 +11,7 @@ NEJ.define([
     '{lib}base/element.js',
     '{lib}ui/pager/pager.base.js',
     '{lib}util/page/page.js'
-],function(NEJ,_k,_e,_u,_t,_p,_o,_f,_r){
+],function(NEJ,_k,_e,_i0,_t0,_p,_o,_f,_r){
     // variable declaration
     var _pro;
     /**
@@ -67,7 +67,7 @@ NEJ.define([
      *
      */
     _p._$$Pager = _k._$klass();
-    _pro = _p._$$Pager._$extend(_u._$$AbstractPager);
+    _pro = _p._$$Pager._$extend(_i0._$$AbstractPager);
     /**
      * 控件重置
      * @protected
@@ -79,7 +79,7 @@ NEJ.define([
         _options.number =
             parseInt(_options.number)||9;
         this.__super(_options);
-        this.__page = _t._$$Page._$allocate(this.__popt);
+        this.__page = _t0._$$Page._$allocate(this.__popt);
     };
     /**
      * 页面变化触发事件

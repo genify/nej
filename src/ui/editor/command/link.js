@@ -12,7 +12,7 @@ NEJ.define([
     '{lib}base/util.js',
     '{lib}ui/layer/window.wrapper.js',
     '{lib}util/template/tpl.js'
-],function(NEJ,_k,_e,_u,_u0,_t,_p,_o,_f,_r){
+],function(NEJ,_k,_e,_u,_i,_t0,_p,_o,_f,_r){
     var _pro,
         _seed_html,
         _seed_css;
@@ -38,7 +38,7 @@ NEJ.define([
      *
      */
     _p._$$LinkCard = _k._$klass();
-    _pro = _p._$$LinkCard._$extend(_u0._$$WindowWrapper);
+    _pro = _p._$$LinkCard._$extend(_i._$$WindowWrapper);
 
     /**
      * 初始化外观信息
@@ -162,7 +162,7 @@ NEJ.define([
     };
 
     // ui html code
-    _seed_html = _t._$addNodeTemplate('\
+    _seed_html = _t0._$addNodeTemplate('\
         <div>\
           <div class="u-row f-cb"><div class="u-edit f-cb"><div class="f-fl u-title">标题</div><input class="f-fl ipt" type="text" /></div></div>\
           <div class="f-cb"><div class="u-edit f-cb"><div class="f-fl u-title">链接</div><input class="f-fl ipt" type="text" value="http://" /></div></div>\

@@ -11,7 +11,7 @@ NEJ.define([
     '{lib}base/element.js',
     '{lib}ui/editor/command/color.js',
     '{lib}ui/colorpick/colorpick.simple.js'
-],function(NEJ,_k,_e,_u,_u0,_p,_o,_f,_r){
+],function(NEJ,_k,_e,_i0,_i1,_p,_o,_f,_r){
     var _pro,
         _seed_css;
     /**
@@ -28,14 +28,14 @@ NEJ.define([
      *
      */
     _p._$$SimpleColorCard = _k._$klass();
-    _pro = _p._$$SimpleColorCard._$extend(_u._$$ColorCard);
+    _pro = _p._$$SimpleColorCard._$extend(_i0._$$ColorCard);
     /**
      * 取取色器实例
      * @return {Void}
      */
     _pro.__getColorPicker = function(){
         this.__copt.clazz = _seed_css;
-        return _u0._$$SimpleColorPick._$allocate(this.__copt);
+        return _i1._$$SimpleColorPick._$allocate(this.__copt);
     };
     // ui css seed
     _seed_css = _e._$pushCSSText('.#<uispace>{width:160px;padding:5px 0;border:1px solid #9FAC87;}');

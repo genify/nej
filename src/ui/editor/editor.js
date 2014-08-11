@@ -15,7 +15,7 @@ NEJ.define([
     '{lib}ui/base.js',
     '{lib}util/editor/editor.js',
     '{lib}util/template/jst.js'
-],function(NEJ,_k,_c,_e,_v,_u,_u0,_t,_t0,_p,_o,_f,_r){
+],function(NEJ,_k,_c,_e,_v,_u,_i,_t0,_t1,_p,_o,_f,_r){
     var _seed_css,
         _seed_icmd,
         _seed_ifnt,
@@ -33,7 +33,7 @@ NEJ.define([
      *
      */
     _p._$$Editor = _k._$klass();
-    _pro = _p._$$Editor._$extend(_u0._$$Abstract);
+    _pro = _p._$$Editor._$extend(_i._$$Abstract);
     /**
      * 控件初始化
      * @protected
@@ -62,9 +62,9 @@ NEJ.define([
         this.__aopt.style = _options.style;
         this.__aopt.content = _options.content;
         this.__aopt.focus = _options.focus||1;
-        this.__editor = _t._$$Editor._$allocate({
-            area:_t._$$EditorArea._$allocate(this.__aopt)
-           ,toolbar:_t._$$EditorToolbar._$allocate(this.__topt)
+        this.__editor = _t0._$$Editor._$allocate({
+            area:_t0._$$EditorArea._$allocate(this.__aopt)
+           ,toolbar:_t0._$$EditorToolbar._$allocate(this.__topt)
         });
     };
     /**
@@ -252,7 +252,7 @@ NEJ.define([
         __doGenIconStyle()
     );
     // command list html
-    _seed_icmd = _t0._$addHtmlTemplate('\
+    _seed_icmd = _t1._$addHtmlTemplate('\
         {list xlist as x}\
         <div class="zitm zbg ${\'js-\'|seed}" data-command="${x.cmd}" title="${x.txt}">\
           <div class="zicn zbg ${x.icn}">&nbsp;</div>\
@@ -264,14 +264,14 @@ NEJ.define([
         {/if}\
     ');
     // font-size and font-family select html
-    _seed_ifnt = _t0._$addHtmlTemplate('\
+    _seed_ifnt = _t1._$addHtmlTemplate('\
         <div class="zsel ${icn} ${\'js-\'|seed}" data-command="${cmd}">\
           <span class="${\'js-t-\'|seed}">${txt}</span>\
           <span class="zarw zbg">&nbsp;</span>\
         </div>\
     ');
     // editor html
-    _seed_iedt = _t0._$addHtmlTemplate('\
+    _seed_iedt = _t1._$addHtmlTemplate('\
         <div class="'+_seed_css+'">\
           <div class="ztbar">${toolbar}</div>\
           <div class="zarea"></div>\

@@ -15,7 +15,7 @@ NEJ.define([
     '{lib}ui/mask/mask.js',
     '{lib}util/dragger/dragger.js',
     '{lib}util/template/tpl.js'
-],function(NEJ,_k,_e,_v,_u,_u0,_u1,_t,_t0,_p,_o,_f,_r){
+],function(NEJ,_k,_e,_v,_u,_i0,_i1,_t0,_t1,_p,_o,_f,_r){
     var _seed_css,
         _seed_html,
         _pro;
@@ -58,7 +58,7 @@ NEJ.define([
      *
      */
     _p._$$Window = _k._$klass();
-    _pro = _p._$$Window._$extend(_u0._$$Layer);
+    _pro = _p._$$Window._$extend(_i0._$$Layer);
     /**
      * 控件初始化
      * @protected
@@ -83,7 +83,7 @@ NEJ.define([
         this._$setAlign(_options.align);
         this._$setTitle(_options.title);
         if (!_options.draggable) return;
-        this.__dragger = _t._$$Dragger.
+        this.__dragger = _t0._$$Dragger.
                          _$allocate(this.__dopt);
     };
     /**
@@ -238,7 +238,7 @@ NEJ.define([
      */
     _pro.__setMask = function(_mask){
         if (!!_mask){
-            if (_mask instanceof _u1._$$Mask){
+            if (_mask instanceof _i1._$$Mask){
                 this.__imask = _mask;
                 return;
             }
@@ -319,7 +319,7 @@ NEJ.define([
         .#<uispace> .zcls{position:absolute;top:5px;right:0;width:20px;height:20px;line-height:20px;cursor:pointer;}\
     ');
     // ui html code
-    _seed_html = _t0._$addNodeTemplate('\
+    _seed_html = _t1._$addNodeTemplate('\
         <div class="'+_seed_css+'">\
           <div class="zbar"><div class="zttl">标题</div></div>\
           <div class="zcnt"></div>\

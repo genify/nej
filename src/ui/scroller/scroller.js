@@ -17,7 +17,7 @@ NEJ.define([
     '{lib}util/animation/bounce.js',
     '{lib}util/animation/easeout.js',
     '{lib}util/animation/decelerate.js'
-],function(NEJ,_k,_e,_v,_u,_u0,_t0,_t1,_t2,_t3,_t4){
+],function(NEJ,_k,_e,_v,_u,_i,_t0,_t1,_t2,_t3,_t4,_p,_o,_f,_r){
     // variable declaration
     var _pro;
     /**
@@ -40,7 +40,7 @@ NEJ.define([
      *                           onrelease     [Function]    - 释放滚动触发事件
      */
     _p._$$Scroller = _k._$klass();
-    _pro = _p._$$Scroller._$extend(_u0._$$Abstract);
+    _pro = _p._$$Scroller._$extend(_i._$$Abstract);
     /**
      * 初始化控件
      * @return {Void}

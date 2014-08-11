@@ -12,7 +12,7 @@ NEJ.define([
     '{lib}base/element.js',
     '{lib}base/util.js',
     '{lib}ui/base.js'
-],function(NEJ,_k,_g,_e,_u,_u0,_p,_o,_f,_r){
+],function(NEJ,_k,_g,_e,_u,_i,_p,_o,_f,_r){
     var _pro,
         _seed_css;
     /**
@@ -38,7 +38,7 @@ NEJ.define([
      *
      */
     _p._$$Mask = _k._$klass();
-    _pro = _p._$$Mask._$extend(_u0._$$Abstract);
+    _pro = _p._$$Mask._$extend(_i._$$Abstract);
     /**
      * 控件重置
      * @protected

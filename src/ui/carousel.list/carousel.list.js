@@ -12,7 +12,7 @@ NEJ.define([
     '{lib}util/event.js',
     '{lib}ui/loading/loading.js',
     '{lib}ui/carousel/carousel.x.js'
-],function(NEJ,_k,_e,_t,_u0,_u1,_p,_o,_f,_r){
+],function(NEJ,_k,_e,_t,_i0,_i1,_p,_o,_f,_r){
     // variable declaration
     var _pro;
     /**
@@ -67,8 +67,8 @@ NEJ.define([
         _options.onscroll = this.__onScroll._$bind(this);
         _options.onbouncerelease = this.__onBounceRelease._$bind(this);
         this.__buffer = _options.buffer||0;
-        if(!this.__carousel)this.__carousel = _u1._$$CarouselX._$allocate(_options);
-        if(!this.__loading)this.__loading = _u0._$$Loading._$allocate({parent:this.__lnode});
+        if(!this.__carousel)this.__carousel = _i1._$$CarouselX._$allocate(_options);
+        if(!this.__loading)this.__loading = _i0._$$Loading._$allocate({parent:this.__lnode});
     };
     /**
      * 滚动回调函数
@@ -104,8 +104,8 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__carousel = _u1._$$CarouselX._$recycle(this.__carousel);
-        this.__loading = _u0._$$Loading._$recycle(this.__loading);
+        this.__carousel = _i1._$$CarouselX._$recycle(this.__carousel);
+        this.__loading = _i0._$$Loading._$recycle(this.__loading);
         _e._$removeByEC(this.__lnode);
         this._$clearEvent();
         this.__super();

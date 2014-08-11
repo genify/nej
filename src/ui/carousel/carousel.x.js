@@ -9,7 +9,7 @@ NEJ.define([
     '{lib}base/global.js',
     '{lib}base/klass.js',
     '{lib}ui/carousel/carousel.js'
-],function(NEJ,_k,_u,_p,_o,_f,_r){
+],function(NEJ,_k,_i0,_p,_o,_f,_r){
     // variable declaration
     var _pro;
     /**
@@ -18,7 +18,7 @@ NEJ.define([
      * @extends {nej.ui._$$Carousel}
      */
     _p._$$CarouselX = _k._$klass();
-    _pro = _p._$$CarouselX._$extend(_u._$$Carousel);
+    _pro = _p._$$CarouselX._$extend(_i0._$$Carousel);
     /**
      * 获得配置参数
      * @protected

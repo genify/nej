@@ -12,7 +12,7 @@ NEJ.define([
     '{lib}base/util.js',
     '{lib}ui/base.js',
     '{lib}util/template/jst.js'
-],function(NEJ,_k,_e,_u,_t,_t0,_p,_o,_f,_r){
+],function(NEJ,_k,_e,_u,_i,_t0,_p,_o,_f,_r){
     // variable declaration
     var _pro,
         _seed_css,
@@ -91,7 +91,7 @@ NEJ.define([
      *
      */
     _p._$$AbstractPager = _k._$klass();
-    _pro = _p._$$AbstractPager._$extend(_t._$$Abstract);
+    _pro = _p._$$AbstractPager._$extend(_i._$$Abstract);
     /**
      * 控件重置
      * @protected

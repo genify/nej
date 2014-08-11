@@ -17,7 +17,7 @@ NEJ.define([
     '{lib}util/list/module.pager.js',
     '{lib}util/template/tpl.js',
     '{lib}util/template/jst.js'
-],function(NEJ,_k,_g,_e,_v,_u,_u0,_u1,_t,_t0,_p,_o,_f,_r){
+],function(NEJ,_k,_g,_e,_v,_u,_i,_i0,_t0,_t1,_t2,_p,_o,_f,_r){
     // variable declaration
     var _pro,
         _seed_css,
@@ -41,7 +41,7 @@ NEJ.define([
      *
      */
     _p._$$Portrait = _k._$klass();
-    _pro = _p._$$Portrait._$extend(_u0._$$Abstract);
+    _pro = _p._$$Portrait._$extend(_i._$$Abstract);
     /**
      * 控件初始化
      * @return {Void}
@@ -54,7 +54,7 @@ NEJ.define([
             pager:{
                 fixed:!0,
                 clazz:'zpager',
-                klass:_u1._$$SimplePager
+                klass:_i0._$$SimplePager
             },
             onpagechange:this.__onChangePage._$bind(this)
         };
@@ -83,7 +83,7 @@ NEJ.define([
                 this.__nprv.parentNode,
                 'js-prev-'+_conf.size
             );
-            this.__mdl = _t._$$ListModulePG._$allocate(this.__mopt);
+            this.__mdl = _t0._$$ListModulePG._$allocate(this.__mopt);
         };
     })();
     /**
@@ -259,13 +259,13 @@ NEJ.define([
         .#<uispace> .js-prev-30{width:60px;height:60px;}\
         .#<uispace> .js-prev-30 img{display:none;}\
     ');
-    _seed_html = _t0._$addNodeTemplate('\
+    _seed_html = _t1._$addNodeTemplate('\
         <div class="'+_seed_css+'">\
           <div class="zlst j-flag"></div>\
           <div class="zpbx j-flag"></div>\
         </div>\
     ');
-    _seed_ilist = _t1._$addHtmlTemplate('\
+    _seed_ilist = _t2._$addHtmlTemplate('\
         {list beg..end as y}\
           {var x=xlist[y]}\
           <a href="#" hidefocus="true" class="zitm z${size} z${size}-${y%(row*col)}" title="${x.text}"\

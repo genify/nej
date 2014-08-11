@@ -11,7 +11,7 @@ NEJ.define([
     '{lib}base/element.js',
     '{lib}util/template/tpl.js',
     '{lib}ui/editor/command/font.js'
-],function(NEJ,_k,_e,_t,_u,_p,_o,_f,_r){
+],function(NEJ,_k,_e,_t0,_u,_p,_o,_f,_r){
     var _pro,
         _seed_html;
     /**
@@ -55,7 +55,7 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__initNodeTemplate = function(){
-        _seed_html = _t._$addNodeTemplate(
+        _seed_html = _t0._$addNodeTemplate(
                      '<div class="'+this.__seed_css+'">'
                      +this.__doGenFontListXhtml({
                          style:'font-size'

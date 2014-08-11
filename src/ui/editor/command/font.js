@@ -13,7 +13,7 @@ NEJ.define([
     '{lib}base/util.js',
     '{lib}ui/layer/card.wrapper.js',
     '{lib}util/template/tpl.js'
-],function(NEJ,_k,_e,_v,_u,_u0,_t,_p,_o,_f,_r){
+],function(NEJ,_k,_e,_v,_u,_i,_t0,_p,_o,_f,_r){
     var _pro,
         _seed_css,
         _seed_fnt;
@@ -30,7 +30,7 @@ NEJ.define([
      *
      */
     _p._$$FontCard = _k._$klass();
-    _pro = _p._$$FontCard._$extend(_u0._$$CardWrapper);
+    _pro = _p._$$FontCard._$extend(_i._$$CardWrapper);
     /**
      * 控件重置
      * @return {Void}
@@ -128,7 +128,7 @@ NEJ.define([
         .#<uispace> .zitm .ztip{position:absolute;top:2px;right:5px;font-size:10px;}\
     ');
     // ui font size list
-    _seed_fnt = _t._$addHtmlTemplate('\
+    _seed_fnt = _t0._$addHtmlTemplate('\
         {list xlist as x}\
         <a class="zitm" hidefocus="true" style="${style}:${x.style|default:x.name};" data-index="${x_index}">\
           ${x.name}\

@@ -11,11 +11,12 @@ NEJ.define([
     '{lib}base/platform.js',
     '{lib}base/element.js',
     '{lib}base/event.js',
+    '{lib}base/util.js',
     '{lib}util/event.js',
     '{lib}util/gesture/drag.js',
     '{lib}util/timer/animation.js',
     '{lib}ui/carousel/indicator.js'
-],function(NEJ,_k,_m,_e,_v,_t0,_t1,_t2,_u,,_p,_o,_f,_r){
+],function(NEJ,_k,_m,_e,_v,_u,_t,_t0,_t1,_i0,_p,_o,_f,_r){
     // variable declaration
     var _pro;
     /**
@@ -61,7 +62,7 @@ NEJ.define([
      *
      */
     _p._$$Carousel = _k._$klass();
-    _pro = _p._$$Carousel._$extend(_t0._$$Event,!0);
+    _pro = _p._$$Carousel._$extend(_t._$$Event,!0);
     /**
      * 控件重置
      * @protected
@@ -110,9 +111,9 @@ NEJ.define([
             this.__iopt.onactive=this._$scrollTo._$bind(this);
             this.__iopt.cindex=this.__items.curIndex;
             if(this.__indicator){
-                this.__indicator=_u._$$Indicator._$recycle(this.__indicator);
+                this.__indicator=_i0._$$Indicator._$recycle(this.__indicator);
             }
-            this.__indicator=_u._$$Indicator._$allocate(this.__iopt);
+            this.__indicator=_i0._$$Indicator._$allocate(this.__iopt);
         }
         this.__worh = _options[this.__config.l]||this.__parent[this.__config.o];
         this.__scroll = 0;
@@ -450,7 +451,7 @@ NEJ.define([
      */
     _pro.__destroy = function(){
         if(this.__indicator)
-            this.__indicator=_u._$$Indicator._$recycle(this.__indicator);
+            this.__indicator=_i0._$$Indicator._$recycle(this.__indicator);
         var i=this.__items.curList.length-1;
         while(!!this.__items.curList[i]&&i>=0){
             this.__delItem(i);

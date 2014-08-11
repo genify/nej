@@ -12,11 +12,11 @@ NEJ.define([
     '{lib}base/util.js',
     '{lib}util/event.js',
     '{lib}util/template/tpl.js'
-],function(NEJ,_k,_e,_u,_t0,_t1,_p,_o,_f,_r){
+],function(NEJ,_k,_e,_u,_t,_t0,_p,_o,_f,_r){
     var _pro;
     /**
      * UI控件基类，框架及项目中所有涉及UI的控件均继承此类<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *    // 分配控件实例
@@ -30,16 +30,16 @@ NEJ.define([
      *        return _parent;
      *    });
      * [/code]
-     * 
+     *
      * @class   {_$$Abstract}
      * @extends {_$$Event}
-     * 
+     *
      * @param   {Object} 可选配置参数
      * @config  {String}               clazz  控件样式
      * @config  {String|Node|Function} parent 控件所在容器节点或者追加控件节点执行函数
      */
     _p._$$Abstract = _k._$klass();
-    _pro = _p._$$Abstract._$extend(_t0._$$Event);
+    _pro = _p._$$Abstract._$extend(_t._$$Event);
     /**
      * 初始化
      * @protected
@@ -100,7 +100,7 @@ NEJ.define([
         if (!this.__seed_html){
             this.__initNodeTemplate();
         }
-        this.__body = _t1._$getNodeTemplate(this.__seed_html);
+        this.__body = _t0._$getNodeTemplate(this.__seed_html);
         if (!this.__body){
             this.__body = _e._$create('div',this.__seed_css);
         }
@@ -152,14 +152,14 @@ NEJ.define([
     };
     /**
      * 取当前控件节点<br />
-     * 
+     *
      * 脚本举例
      * [code]
      *   // _mask是一个继承了此基类的实例化对象
      *   // 获取当前控件的节点
      *   _mask._$getBody();
      * [/code]
-     * 
+     *
      * @method {_$getBody}
      * @return {Node} 控件节点
      */
@@ -168,7 +168,7 @@ NEJ.define([
     };
     /**
      * 控件节点追加至容器<br />
-     * 
+     *
      * 脚本举例
      * [code]
      *   // _mask是一个继承了此基类的实例化对象
@@ -181,7 +181,7 @@ NEJ.define([
      *      return _parent;
      *   });
      * [/code]
-     * 
+     *
      * @method {_$appendTo}
      * @param  {String|Node|Function} 控件所在容器节点
      * @return {Void}
@@ -201,13 +201,13 @@ NEJ.define([
     };
     /**
      * 显示控件<br />
-     * 
+     *
      * 脚本举例
      * [code]
      *   // _mask是一个继承了此基类的实例化对象
      *   _mask._$show();
      * [/code]
-     * 
+     *
      * @method {_$show}
      * @return {Void}
      */
@@ -220,23 +220,23 @@ NEJ.define([
     };
     /**
      * 隐藏控件<br />
-     * 
+     *
      * 脚本举例
      * [code]
      *   // _mask是一个继承了此基类的实例化对象
      *   _mask._$hide();
      * [/code]
-     * 
+     *
      * @method {_$hide}
      * @return {Void}
      */
     _pro._$hide = function(){
         _e._$removeByEC(this.__body);
     };
-    
+
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ui'),_p);
     }
-    
-    return _p;    
+
+    return _p;
 });

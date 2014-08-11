@@ -15,7 +15,7 @@ NEJ.define([
     '{lib}util/tab/tab.js',
     '{lib}util/flash/flash.js',
     '{lib}util/template/tpl.js'
-],function(NEJ,_k,_e,_v,_u,_u0,_t0,_t1,_t2,_p,_o,_f,_r){
+],function(NEJ,_k,_e,_v,_u,_i0,_t0,_t1,_t2,_p,_o,_f,_r){
     var _pro,
         _seed_css,
         _seed_html;
@@ -59,7 +59,7 @@ NEJ.define([
      *
      */
     _p._$$UploadImageCard = _k._$klass();
-    _pro = _p._$$UploadImageCard._$extend(_u0._$$WindowWrapper);
+    _pro = _p._$$UploadImageCard._$extend(_i0._$$WindowWrapper);
 
     /**
      * 重置卡片

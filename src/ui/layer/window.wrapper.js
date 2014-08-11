@@ -10,7 +10,7 @@ NEJ.define([
     '{lib}base/klass.js',
     '{lib}ui/layer/layer.wrapper.js',
     '{lib}ui/layer/window.js'
-],function(NEJ,_k,_u0,_u1,_p,_o,_f,_r){
+],function(NEJ,_k,_i0,_i1,_p,_o,_f,_r){
     var _pro;
     /**
      * 弹出窗体封装基类对象，主要实现层里面内容部分的业务逻辑<br />
@@ -43,7 +43,7 @@ NEJ.define([
      *
      */
     _p._$$WindowWrapper = _k._$klass();
-    _pro = _p._$$WindowWrapper._$extend(_u0._$$LayerWrapper);
+    _pro = _p._$$WindowWrapper._$extend(_i0._$$LayerWrapper);
     /**
      * 构建弹层控件实例，子类实现具体业务逻辑
      * @protected
@@ -51,7 +51,7 @@ NEJ.define([
      * @return {nej.ui._$$Layer} 弹层控件实例
      */
     _pro.__getLayerInstance = function(){
-        return _u1._$$Window._$allocate(this.__lopt);
+        return _i1._$$Window._$allocate(this.__lopt);
     };
     /**
      * 初始化弹层控件可选配置参数
