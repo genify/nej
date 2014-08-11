@@ -101,7 +101,7 @@ NEJ.define([
      * [hr]
      * 请求更新列表项数据，主要用于处理删除之前的确认，
      * 确认完成后可调用模块的_$delete接口将数据从服务器上删除
-     * @event  {onupdate}
+     * @event  {ondelete}
      * @param  {Object}  列表项数据
      * 
      * [hr]
