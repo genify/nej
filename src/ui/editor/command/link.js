@@ -10,8 +10,9 @@ NEJ.define([
     '{lib}base/klass.js',
     '{lib}base/element.js',
     '{lib}base/util.js',
-    '{lib}ui/layer/window.wrapper.js'
-],function(NEJ,_k,_e,_u,_u0,_p,_o,_f,_r){
+    '{lib}ui/layer/window.wrapper.js',
+    '{lib}util/template/tpl.js'
+],function(NEJ,_k,_e,_u,_u0,_t,_p,_o,_f,_r){
     var _pro,
         _seed_html,
         _seed_css;
@@ -161,7 +162,7 @@ NEJ.define([
     };
 
     // ui html code
-    _seed_html = _e._$addNodeTemplate('\
+    _seed_html = _t._$addNodeTemplate('\
         <div>\
           <div class="u-row f-cb"><div class="u-edit f-cb"><div class="f-fl u-title">标题</div><input class="f-fl ipt" type="text" /></div></div>\
           <div class="f-cb"><div class="u-edit f-cb"><div class="f-fl u-title">链接</div><input class="f-fl ipt" type="text" value="http://" /></div></div>\

@@ -9,8 +9,9 @@ NEJ.define([
     '{lib}base/global.js',
     '{lib}base/klass.js',
     '{lib}base/util.js',
-    '{lib}ui/colorpick/colorpick.simple.js'
-],function(NEJ,_k,_u,_u0,_p,_o,_f,_r){
+    '{lib}ui/colorpick/colorpick.simple.js',
+    '{lib}util/template/jst.js'
+],function(NEJ,_k,_u,_u0,_t,_p,_o,_f,_r){
     var _pro,
         _seed_color;
     /**
@@ -96,7 +97,7 @@ NEJ.define([
     })();
 
     // color list
-    _seed_color = _e._$addHtmlTemplate('\
+    _seed_color = _t._$addHtmlTemplate('\
         {list xlist as x}\
         <a class="zitm zitm2" style="background-color:#${x}" data-value="#${x}" href="#">&nbsp;</a>\
         {/list}'

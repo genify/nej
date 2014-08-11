@@ -5,27 +5,32 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _e = _('nej.e'),
-        _g = _('nej.g'),
-        _t = _('nej.ut'),
-        _p = _('nej.ui'),
-        _pro;
-    if (!!_p._$$Resizer) return;
-    var _seed_css,_seed_html,_seed_point;
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/constant.js',
+    '{lib}base/element.js',
+    '{lib}base/util.js',
+    '{lib}ui/base.js',
+    '{lib}util/resize/resize.js',
+    '{lib}util/template/tpl.js',
+    '{lib}util/template/jst.js'
+],function(NEJ,_k,_g,_e,_u,_u0,_t,_t0,_t1,_p,_o,_f,_r){
+    var _pro,
+        _seed_css,
+        _seed_html,
+        _seed_point;
     /**
      * 范围裁剪控件封装
-     * 
+     *
      * @class   {nej.ui._$$Range}
      * @extends {nej.ui._$$Abstract}
      * @param   {Object}  可选配置参数，其他参数见nej.ut._$$Resize控件所示
      * @config  {Object}  size 初始大小，输入任意两个值，其中ratio为width/height，{width:100,height:200,ratio:0.5}
      * @config  {Object}  max  最大款高限制，{width:300,height:400}
      */
-    _p._$$Resizer = NEJ.C();
-      _pro = _p._$$Resizer._$extend(_p._$$Abstract);
+    _p._$$Resizer = _k._$klass();
+    _pro = _p._$$Resizer._$extend(_u0._$$Abstract);
     /**
      * 控件初始化
      * @return {Void}
@@ -38,7 +43,7 @@ var f = function(){
             onresize:this._$dispatchEvent._$bind(this,'onresize'),
             onmove:this._$dispatchEvent._$bind(this,'onmove')
         };
-        this.__supInit();
+        this.__super();
     };
     /**
      * 控件重置
@@ -92,8 +97,8 @@ var f = function(){
             return _result;
         };
         return function(_options){
-            this.__supReset(_options);
-            var _opt = NEJ.X(NEJ.EX({
+            this.__super(_options);
+            var _opt = _u._$merge(_u._$fetch({
                 lock:!1,
                 min:null
             },_options),this.__ropt);
@@ -115,7 +120,7 @@ var f = function(){
     _pro.__destroy = function(){
         if (!!this.__resize)
             this.__resize = this.__resize._$recycle();
-        this.__supDestroy();
+        this.__super();
     };
     /**
      * 初始化外观信息
@@ -136,7 +141,7 @@ var f = function(){
     _pro.__initNodeTemplate = (function(){
         var _clazz = ['znt','znr','znb','znl','zpc zntl','zpc zntr','zpc znbr','zpc znbl'];
         return function(){
-            _seed_html = _e._$addNodeTemplate(
+            _seed_html = _t0._$addNodeTemplate(
                 '<div class="'+_seed_css+'"><div class="zln">'+
                    _e._$getHtmlTemplate(_seed_point,{clazz:_clazz})+
                 '</div></div>'
@@ -149,7 +154,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__initNode = function(){
-        this.__supInitNode();
+        this.__super();
         this.__nsize = _e._$getChildren(this.__body)[0];
     };
     /**
@@ -200,15 +205,9 @@ var f = function(){
         .#<uispace> .znbl{bottom:-1px;left:-1px;cursor:sw-resize;}\
     ');
     // html code
-    _seed_point = _e._$addHtmlTemplate('\
+    _seed_point = _t1._$addHtmlTemplate('\
         {list 1..8 as x}\
         <div class="zpt ${clazz[x-1]} js-rs-${x}">&nbsp;</div>\
         {/list}\
     ');
-};
-NEJ.define(
-    '{lib}ui/resizer/resizer.js',[
-    '{lib}ui/base.js',
-    '{lib}base/constant.js',
-    '{lib}util/resize/resize.js'
-],f);
+});

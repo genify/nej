@@ -13,8 +13,9 @@ NEJ.define([
     '{lib}base/event.js',
     '{lib}base/util.js',
     '{lib}ui/base.js',
-    '{lib}util/editor/editor.js'
-],function(NEJ,_k,_c,_e,_v,_u,_u0,_t,_p,_o,_f,_r){
+    '{lib}util/editor/editor.js',
+    '{lib}util/template/jst.js'
+],function(NEJ,_k,_c,_e,_v,_u,_u0,_t,_t0,_p,_o,_f,_r){
     var _seed_css,
         _seed_icmd,
         _seed_ifnt,
@@ -251,7 +252,7 @@ NEJ.define([
         __doGenIconStyle()
     );
     // command list html
-    _seed_icmd = _e._$addHtmlTemplate('\
+    _seed_icmd = _t0._$addHtmlTemplate('\
         {list xlist as x}\
         <div class="zitm zbg ${\'js-\'|seed}" data-command="${x.cmd}" title="${x.txt}">\
           <div class="zicn zbg ${x.icn}">&nbsp;</div>\
@@ -263,14 +264,14 @@ NEJ.define([
         {/if}\
     ');
     // font-size and font-family select html
-    _seed_ifnt = _e._$addHtmlTemplate('\
+    _seed_ifnt = _t0._$addHtmlTemplate('\
         <div class="zsel ${icn} ${\'js-\'|seed}" data-command="${cmd}">\
           <span class="${\'js-t-\'|seed}">${txt}</span>\
           <span class="zarw zbg">&nbsp;</span>\
         </div>\
     ');
     // editor html
-    _seed_iedt = _e._$addHtmlTemplate('\
+    _seed_iedt = _t0._$addHtmlTemplate('\
         <div class="'+_seed_css+'">\
           <div class="ztbar">${toolbar}</div>\
           <div class="zarea"></div>\

@@ -12,10 +12,12 @@ NEJ.define([
     '{lib}base/element.js',
     '{lib}base/event.js',
     '{lib}base/util.js',
+    '{lib}util/template/tpl.js',
     '{lib}util/slider/slider.y.js',
     '{lib}util/slider/slider.xy.js',
-    '{lib}ui/colorpick/util.js'
-],function(NEJ,_k,_c,_e,_v,_t,_y,_xy,_u,_p,_o,_f,_r){
+    '{lib}ui/colorpick/util.js',
+    '{lib}ui/base.js'
+],function(NEJ,_k,_c,_e,_v,_t,_t0,_y,_xy,_u,_u0,_p,_o,_f,_r){
     var _pro,
         _seed_css,
         _seed_html;
@@ -48,7 +50,7 @@ NEJ.define([
      *
      */
     _p._$$ColorPanel = _k._$klass();
-    _pro = _p._$$ColorPanel._$extend(_p._$$Abstract);
+    _pro = _p._$$ColorPanel._$extend(_u0._$$Abstract);
     /**
      * 控件初始化
      * @protected
@@ -198,7 +200,7 @@ NEJ.define([
         .#<uispace> .zhlt .zdot{width:44px;background-position:0 -30px;}\
         .#<uispace> .zhlt .zshw{width:26px;background:url('+_c._$get('root')+'nej_color_mask.png) repeat-x;}');
     // ui html code
-    _seed_html = _e._$addNodeTemplate('\
+    _seed_html = _t0._$addNodeTemplate('\
         <div class="'+_seed_css+'">\
           <div class="zwrp zpnl js-ztag">\
             <span class="zdot zbg js-ztag">&nbsp;</span>\

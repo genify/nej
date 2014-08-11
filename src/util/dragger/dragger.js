@@ -5,14 +5,14 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _p = _('nej.ut'),
-        _pro;
-    if (!!_p._$$Dragger) return;
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{lib}base/event.js',
+    '{lib}util/event.js'
+],function(NEJ,_k,_e,_v,_t,_p,_o,_f,_r){
+    var _pro;
     /**
      * 区域移动功能封装<br />
      * 页面结构举例
@@ -42,31 +42,31 @@ var f = function(){
      * @config  {String|Node}    mbar      触发移动节点ID或者对象，默认为body参数输入节点
      * @config  {Boolean}        overflow  是否允许超出view范围
      * @config  {Number}         direction 移动方向，默认为0，0-水平+垂直、1-水平、2-垂直
-     * 
+     *
      * [hr]
      * 位置变化之前触发事件
-     * @event  {onbeforechange}    
+     * @event  {onbeforechange}
      * @param  {Object}      位置信息
      * @config {Number} top  离父节点顶部距离
      * @config {Number} left 离父节点左边距离
-     * 
+     *
      * [hr]
      * 位置变化触发事件
-     * @event  {onchange}    
+     * @event  {onchange}
      * @param  {Object}      位置信息
      * @config {Number} top  离父节点顶部距离
      * @config {Number} left 离父节点左边距离
-     * 
+     *
      * [hr]
      * 拖拽结束触发事件
-     * @event  {ondragend}   
+     * @event  {ondragend}
      * @param  {Object}      位置信息
      * @config {Number} top  离父节点顶部距离
      * @config {Number} left 离父节点左边距离
-     *                            
+     *
      */
-    _p._$$Dragger = NEJ.C();
-    _pro = _p._$$Dragger._$extend(_p._$$Event);
+    _p._$$Dragger = _k._$klass();
+    _pro = _p._$$Dragger._$extend(_t._$$Event);
     /**
      * 控件重置
      * @protected
@@ -75,7 +75,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         this.__overflow = !!_options.overflow;
         this.__body = _e._$get(_options.body);
         this.__view = _e._$get(_options.view)||
@@ -100,7 +100,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         delete this.__body;
         delete this.__mbar;
         delete this.__view;
@@ -183,7 +183,7 @@ var f = function(){
      * [/code]
      * @method {_$setPosition}
      * @param  {Object} 位置信息
-     * @return {nej.ut._$$Dragger}
+     * @return {Void}
      */
     _pro._$setPosition = function(_event){
         if (!this.__overflow){
@@ -203,7 +203,6 @@ var f = function(){
             this.__direction==1)
             _style.left = _event.left+'px';
         this._$dispatchEvent('onchange',_event);
-        return this;
     };
     /**
      * 取当前位置<br />
@@ -220,8 +219,10 @@ var f = function(){
             top:parseInt(_e._$getStyle(this.__body,'top'))||0
         };
     };
-};
-NEJ.define(
-    '{lib}util/dragger/dragger.js',[
-    '{lib}util/event.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});

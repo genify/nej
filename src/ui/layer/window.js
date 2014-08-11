@@ -13,8 +13,9 @@ NEJ.define([
     '{lib}base/util.js',
     '{lib}ui/layer/layer.js',
     '{lib}ui/mask/mask.js',
-    '{lib}util/dragger/dragger.js'
-],function(NEJ,_k,_e,_v,_u,_u0,_u1,_t,_p,_o,_f,_r){
+    '{lib}util/dragger/dragger.js',
+    '{lib}util/template/tpl.js'
+],function(NEJ,_k,_e,_v,_u,_u0,_u1,_t,_t0,_p,_o,_f,_r){
     var _seed_css,
         _seed_html,
         _pro;
@@ -318,7 +319,7 @@ NEJ.define([
         .#<uispace> .zcls{position:absolute;top:5px;right:0;width:20px;height:20px;line-height:20px;cursor:pointer;}\
     ');
     // ui html code
-    _seed_html = _e._$addNodeTemplate('\
+    _seed_html = _t0._$addNodeTemplate('\
         <div class="'+_seed_css+'">\
           <div class="zbar"><div class="zttl">标题</div></div>\
           <div class="zcnt"></div>\

@@ -10,8 +10,9 @@ NEJ.define([
     '{lib}base/klass.js',
     '{lib}base/element.js',
     '{lib}base/util.js',
+    '{lib}ui/base.js',
     '{lib}ui/layer/layer.js'
-],function(NEJ,_k,_e,_u,_u0,_p,_o,_f,_r){
+],function(NEJ,_k,_e,_u,_u0,_u1,_p,_o,_f,_r){
     var _pro;
     /**
      * 弹出层封装基类对象，主要实现层里面内容部分的业务逻辑<br />

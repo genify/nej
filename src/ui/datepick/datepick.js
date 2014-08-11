@@ -12,7 +12,9 @@ NEJ.define([
     '{lib}base/util.js',
     '{lib}ui/layer/card.wrapper.js',
     '{lib}util/calendar/calendar.js',
-],function(NEJ,_k,_e,_u,_u0,_t,_p,_o,_f,_r){
+    '{lib}util/template/tpl.js',
+    '{lib}util/template/jst.js'
+],function(NEJ,_k,_e,_u,_u0,_t,_t0,_t1,_p,_o,_f,_r){
     var _pro,
         _seed_css,
         _seed_html,
@@ -137,7 +139,7 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__initNodeTemplate = function(){
-        _seed_html = _e._$addNodeTemplate(
+        _seed_html = _t0._$addNodeTemplate(
             '<div class="'+_seed_css+' zcard">'+
                _e._$getTextTemplate(_seed_action)+
                _e._$getHtmlTemplate(_seed_date)+
@@ -207,7 +209,7 @@ NEJ.define([
         .#<uispace> .zday a.js-disabled:hover{background:#fff;color:#eee;cursor:default;}\
     ');
     // ui date html
-    _seed_date = _e._$addHtmlTemplate('\
+    _seed_date = _t1._$addHtmlTemplate('\
         <table class="zday">\
           <tr>{list ["日","一","二","三","四","五","六"] as x}<th>${x}</th>{/list}</tr>\
           {list 1..6 as x}\
@@ -216,7 +218,7 @@ NEJ.define([
         </table>\
     ');
     // button html
-    _e._$addTextTemplate(_seed_action,'\
+    _t0._$addTextTemplate(_seed_action,'\
         <div class="zact">\
           <span class="zbtn zfl" title="上一年">&lt;&lt;</span>\
           <span class="zbtn zfl" title="上一月">&lt;</span>\

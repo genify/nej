@@ -5,37 +5,42 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/config.js',
+    '{lib}base/element.js',
+    '{lib}base/util.js',
+    '{lib}ui/base.js',
+    '{lib}ui/portrait/portrait.js',
+    '{lib}util/template/tpl.js',
+    '{lib}util/tab/tab.js',
+    '{lib}util/page/page.simple.js',
+    '{lib}util/data/portrait/portrait.js'
+],function(NEJ,_k,_c,_e,_u,_u0,_u1,_t,_t0,_t1,_t2,_t3,_p,_o,_f,_r){
     // variable declaration
-    var _  = NEJ.P,
-        _c = _('nej.c'),
-        _e = _('nej.e'),
-        _u = _('nej.u'),
-        _t = _('nej.ut'),
-        _p = _('nej.ui'),
-        _pro,
+    var _pro,
         _seed_css,
         _seed_html,
         _seed_ilist;
-    if (!!_p._$$ComplexPortrait) return;
     /**
      * 复杂表情控件
-     * 
+     *
      * @class   {nej.ui._$$ComplexPortrait}
      * @extends {nej.ut._$$Event}
      * @uses    {nej.ut._$$Portrait}
      * @param   {Object} 可选配置参数，已处理参数列表如下
-     * 
+     *
      * [hr]
      * 表情选中事件
      * @event   {onselect}
      * @param   {Object} 表情数据对象
      * @config  {String} text  表情描述
      * @config  {String} url   表情文件地址
-     * 
+     *
      */
-    _p._$$ComplexPortrait = NEJ.C();
-    _pro = _p._$$ComplexPortrait._$extend(_p._$$Abstract);
+    _p._$$ComplexPortrait = _k._$klass();
+    _pro = _p._$$ComplexPortrait._$extend(_u0._$$Abstract);
     /**
      * 控件初始化
      * @return {Void}
@@ -45,7 +50,7 @@ var f = function(){
             clazz:'zptrt',
             cache:{
                 data:{},
-                klass:_t._$$PortraitCache
+                klass:_t2._$$PortraitCache
             }
         };
         this.__topt = {
@@ -64,7 +69,7 @@ var f = function(){
             limit:8,
             onchange:this.__onPageChange._$bind(this)
         };
-        this.__supInit();
+        this.__super();
     };
     /**
      * 控件重置
@@ -76,8 +81,8 @@ var f = function(){
     _pro.__reset = function(_options){
         this.__popt.onselect = _options.onselect;
         delete _options.onselect;
-        this.__supReset(_options);
-        this.__cache = _t._$$PortraitCache
+        this.__super(_options);
+        this.__cache = _t2._$$PortraitCache
                          ._$allocate(this.__copt);
         this.__cache._$getList(this.__topt);
     };
@@ -86,7 +91,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         this.__doClearComponent();
     };
     /**
@@ -102,7 +107,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__initNode = function(){
-        this.__supInitNode();
+        this.__super();
         // 0 - previous type
         // 1 - type list
         // 2 - next type
@@ -150,9 +155,9 @@ var f = function(){
                 }
             );
             this.__gopt.total = Math.ceil(_list.length/this.__gopt.limit);
-            this.__pager = _t._$$SimplePage._$allocate(this.__gopt);
+            this.__pager = _t1._$$SimplePage._$allocate(this.__gopt);
             this.__bopt.list = _e._$getChildren(this.__tbox);
-            this.__taber = _t._$$Tab._$allocate(this.__bopt);
+            this.__taber = _t0._$$Tab._$allocate(this.__bopt);
         };
     })();
     /**
@@ -170,7 +175,7 @@ var f = function(){
         this.__popt.page = 'js-'+_item.id+'-';
         _cache.lkey = 'portrait-'+_item.id;
         _cache.data.type = _item.id;
-        this.__portrait = _p._$$Portrait._$allocate(this.__popt);
+        this.__portrait = _u1._$$Portrait._$allocate(this.__popt);
     };
     /**
      * 分类页码变化事件
@@ -211,7 +216,7 @@ var f = function(){
         .#<uispace> .zcnt{margin-right:79px;padding:5px 5px 0;border-width:0 1px 0 0;background:#e5e5e1;}\
         .#<uispace> .zcnt .zptrt{border:none;}\
     ');
-    _seed_html = _e._$addNodeTemplate('\
+    _seed_html = _t._$addNodeTemplate('\
         <div class="'+_seed_css+' zbrd">\
           <div class="zsdb">\
             <a class="zbtn zpgr zpup j-flag" href="#" hidefocus="true" title="上一页"><span class="zbrd zbgp">&nbsp;</span></a>\
@@ -221,14 +226,15 @@ var f = function(){
           <div class="zcnt zbrd j-flag"></div>\
         </div>\
     ');
-    _seed_tlist = _e._$addHtmlTemplate('\
+    _seed_tlist = _t3._$addHtmlTemplate('\
         {list xlist as x}\
         <a href="#" hidefoucus="true" class="zbtn zitm zbrd" data-value="${x.id}">${x.name}</a>\
         {/list}\
     ');
-};
-NEJ.define('{lib}ui/portrait/portrait.complex.js',
-          ['{lib}ui/portrait/portrait.js'
-          ,'{lib}util/tab/tab.js'
-          ,'{lib}util/page/page.simple.js'
-          ,'{lib}util/data/portrait/portrait.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui'),_p);
+    }
+
+    return _p;
+});

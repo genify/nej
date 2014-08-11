@@ -9,8 +9,9 @@ NEJ.define([
     '{lib}base/global.js',
     '{lib}base/klass.js',
     '{lib}base/element.js',
-    '{lib}ui/editor/command/font.js'
-],function(NEJ,_k,_e,_u,_p,_o,_f,_r){
+    '{lib}ui/editor/command/font.js',
+    '{lib}util/template/tpl.js'
+],function(NEJ,_k,_e,_u,_t,_p,_o,_f,_r){
     var _pro,
         _seed_html;
     /**
@@ -63,7 +64,7 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__initNodeTemplate = function(){
-        _seed_html = _e._$addNodeTemplate(
+        _seed_html = _t._$addNodeTemplate(
                      '<div class="'+this.__seed_css+'">'
                      +this.__doGenFontListXhtml({
                          style:'font-family'

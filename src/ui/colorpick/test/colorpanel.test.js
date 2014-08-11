@@ -15,7 +15,7 @@ var f = function(){
 	// 		}
 	// 	});
 	// });
-	
+
 	test('colorpick',function(){
 		stop();
 		expect(0);

@@ -58,3 +58,4 @@ util/page/page.js
 util/template/tpl.js
 - 删除_e._$setup接口
 
+ui/scroller 缺少gesture

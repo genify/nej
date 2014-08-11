@@ -5,18 +5,16 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _g = _('nej.g'),
-        _e = _('nej.e'),
-        _u = _('nej.u'),
-        _v = _('nej.v'),
-        _p = _('nej.ui'),
-        _proMask,
-        _supMask;
-    if (!!_p._$$Mask) return;
-    // ui css text
-    var _seed_css = _e._$pushCSSText('.#<uispace>{position:fixed;_position:absolute;z-index:100;top:0;bottom:0;left:0;right:0;width:100%;height:100%;background-image:url('+_g._$BLANK_IMAGE+');}');
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/constant.js',
+    '{lib}base/element.js',
+    '{lib}base/util.js',
+    '{lib}ui/base.js'
+],function(NEJ,_k,_g,_e,_u,_u0,_p,_o,_f,_r){
+    var _pro,
+        _seed_css;
     /**
      * 盖层控件<br />
      * 页面结构举例
@@ -37,11 +35,10 @@ var f = function(){
      * @extends {nej.ui._$$Abstract}
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {String|Node} content 内容节点或者HTML代码
-     * 
+     *
      */
-    _p._$$Mask = NEJ.C();
-      _proMask = _p._$$Mask._$extend(_p._$$Abstract);
-      _supMask = _p._$$Mask._$supro;
+    _p._$$Mask = _k._$klass();
+    _pro = _p._$$Mask._$extend(_u0._$$Abstract);
     /**
      * 控件重置
      * @protected
@@ -49,8 +46,8 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proMask.__reset = function(_options){
-        this.__supReset(_options);
+    _pro.__reset = function(_options){
+        this.__super(_options);
         var _content = _options.content||'&nbsp;';
         _u._$isString(_content)
         ? this.__body.innerHTML = _content
@@ -62,8 +59,8 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proMask.__destroy = function(){
-        this.__supDestroy();
+    _pro.__destroy = function(){
+        this.__super();
         this.__body.innerHTML = '&nbsp;';
     };
     /**
@@ -72,7 +69,7 @@ var f = function(){
      * @method {__initXGui}
      * @return {Void}
      */
-    _proMask.__initXGui = function(){
+    _pro.__initXGui = function(){
         this.__seed_css = _seed_css;
     };
     /**
@@ -84,13 +81,18 @@ var f = function(){
      *   _mask._$show();
      * [/code]
      * @method {_$show}
-     * @return {nej.ui._$$Mask}
+     * @return {Void}
      */
-    _proMask._$show = function(){
+    _pro._$show = function(){
         _e._$fullScreen(this.__body);
         _supMask._$show.apply(this,arguments);
-        return this;
     };
-};
-NEJ.define('{lib}ui/mask/mask.js',
-      ['{lib}ui/base.js'],f);
+    // ui css text
+    _seed_css = _e._$pushCSSText('.#<uispace>{position:fixed;_position:absolute;z-index:100;top:0;bottom:0;left:0;right:0;width:100%;height:100%;background-image:url('+_g._$BLANK_IMAGE+');}');
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui'),_p);
+    }
+
+    return _p;
+});

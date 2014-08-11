@@ -5,15 +5,15 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _r = NEJ.R,
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _p = _('nej.ut'),
-        _proSlider;
-    if (!!_p._$$Slider) return;
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{lib}base/event.js',
+    '{lib}util/event.js',
+    '{lib}util/dragger/dragger.js'
+],function(NEJ,_k,_e,_v,_t,_t0,_p,_o,_f,_r){
+    var _pro;
     /**
      * 滑动器算法<br />
      * 页面结构举例
@@ -41,29 +41,29 @@ var f = function(){
      * @config  {Object}      range 滑动范围，默认为滑块可运动范围，如{x:[0,100],y:[0,1000]}
      * @config  {String|Node} slide 滑动节点
      * @config  {String|Node} track 滑动轨道节点
-     * 
+     *
      * [hr]
-     * 
+     *
      * @event  {onchange} 滑动触发事件，输入格式如{x:{rate:0.4,value:40},y:{rate:0.5,value:50}}
      * @config {Boolean} stopped 是否停止
      * @config {Object}  x          {rate:0.4,value:40}
      * @config {Object}  y          {rate:0.5,value:50}
-     * 
+     *
      */
-    _p._$$Slider = NEJ.C();
-      _proSlider = _p._$$Slider._$extend(_p._$$Event);
+    _p._$$Slider = _k._$klass();
+    _pro = _p._$$Slider._$extend(_t._$$Event);
     /**
      * 控件初始化
      * @protected
      * @method {__init}
      * @return {Void}
      */
-    _proSlider.__init = function(){
+    _pro.__init = function(){
         this.__dopt = {
             onchange:this.__onChange._$bind(this),
             ondragend:this.__onChange._$bind2(this,!0)
         };
-        this.__supInit();
+        this.__super();
     };
     /**
      * 控件重置
@@ -72,8 +72,8 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proSlider.__reset = function(_options){
-        this.__supReset(_options);
+    _pro.__reset = function(_options){
+        this.__super(_options);
         this.__dopt.view = _e._$get(_options.track);
         this.__dopt.body = _e._$get(_options.slide);
         this.__dopt.mbar = this.__dopt.view;
@@ -82,7 +82,7 @@ var f = function(){
             [this.__dopt.view,'mousedown',
              this.__onSlideToPosition._$bind(this)]
         ]);
-        this.__dragger = _p._$$Dragger._$allocate(this.__dopt);
+        this.__dragger = _t0._$$Dragger._$allocate(this.__dopt);
     };
     /**
      * 控件销毁
@@ -90,8 +90,8 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proSlider.__destroy = function(){
-        this.__supDestroy();
+    _pro.__destroy = function(){
+        this.__super();
         this.__dragger._$recycle();
         delete this.__dragger;
         delete this.__range;
@@ -106,7 +106,7 @@ var f = function(){
      * @param  {Object} 位置信息
      * @return {Void}
      */
-    _proSlider.__onChange = function(_event,_end){
+    _pro.__onChange = function(_event,_end){
         var _ratex = _event.left/this.__range.x[1],
             _ratey = _event.top/this.__range.y[1],
             _rngx = this.__range.x,
@@ -124,7 +124,7 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    _proSlider.__onSlideToPosition = function(_event){
+    _pro.__onSlideToPosition = function(_event){
         var _offset = _e._$offset(this.__dopt.view),
             _pointer = {x:_v._$pageX(_event),
                         y:_v._$pageY(_event)},
@@ -144,9 +144,9 @@ var f = function(){
      * [/code]
      * @method {_$setRange}
      * @param  {Object} 可移动范围，不传则根据轨道自动计算
-     * @return {nej.ut._$$Slider}
+     * @return {Void}
      */
-    _proSlider._$setRange = function(_range){
+    _pro._$setRange = function(_range){
         // save current rate
         var _rate;
         if (!!this.__range){
@@ -170,7 +170,6 @@ var f = function(){
         };
         // adjust position
         if (!!_rate) this._$setPosition(_rate);
-        return this;
     };
     /**
      * 设置滑动比例<br />
@@ -183,13 +182,17 @@ var f = function(){
      * @param  {Object} 滑动比例，范围[0,1]，格式如{x:0.4,y:0.5}
      * @return {nej.ut._$$Slider}
      */
-    _proSlider._$setPosition = function(_rate){
+    _pro._$setPosition = function(_rate){
         _rate = _rate||_o;
         this.__dragger._$setPosition({
             top:this.__range.y[1]*(_rate.y||0)
            ,left:this.__range.x[1]*(_rate.x||0)
         });
     };
-};
-NEJ.define('{lib}util/slider/slider.js',
-      ['{lib}util/dragger/dragger.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});
