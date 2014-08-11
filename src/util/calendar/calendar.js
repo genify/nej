@@ -5,18 +5,18 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _p = _('nej.ut'),
-        _proCalendar;
-    if (!!_p._$$Calendar) return;
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{lib}base/event.js',
+    '{lib}base/util.js',
+    '{lib}util/event.js'
+],function(NEJ,_k,_e,_v,_u,_t,_p,_o,_f,_r){
+    var _pro;
     /**
      * 日历算法<br/>
-     * 
+     *
      * 日期范围举例：
      * [ntb]
      *     [0,0]                                     | 全部日期可选【默认】
@@ -68,7 +68,7 @@ var f = function(){
      * [/code]
      * @class   {nej.ut._$$Calendar}
      * @extends {nej.ut._$$Event}
-     * 
+     *
      * @param   {Object}      可选配置参数，已处理参数列表如下
      * @config  {Number}      offset   开始星期偏移，默认为0，0-星期天、1-星期一 ...
      * @config  {Array}       list     日期显示节点列表
@@ -87,20 +87,20 @@ var f = function(){
      * @config  {String}      extended 扩展项样式，默认为js-extended
      * @config  {String}      disabled 禁用项样式，默认为js-disabled
      * @config  {Date}        date     显示日期，默认为当前时间
-     * 
+     *
      * [hr]
-     * 
-     * @event {onchange} 
+     *
+     * @event {onchange}
      * @param {Date} 当前日期
-     * 
+     *
      * [hr]
-     * 
+     *
      * @event {onselect}
      * @param {Date} 当前日期
-     *                            
+     *
      */
-    _p._$$Calendar = NEJ.C();
-      _proCalendar = _p._$$Calendar._$extend(_p._$$Event);
+    _p._$$Calendar = _k._$klass();
+    _pro = _p._$$Calendar._$extend(_t._$$Event);
     /**
      * 控件重置
      * @protected
@@ -108,8 +108,8 @@ var f = function(){
      * @param  {Object}       可选配置参数
      * @return {Void}
      */
-    _proCalendar.__reset = function(_options){
-        this.__supReset(_options);
+    _pro.__reset = function(_options){
+        this.__super(_options);
         this.__doInitDomEvent([
             [_options.mprv,'click',this.__onMonthChange._$bind(this,-1)]
            ,[_options.mnxt,'click',this.__onMonthChange._$bind(this, 1)]
@@ -136,8 +136,8 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proCalendar.__destroy = function(){
-        this.__supDestroy();
+    _pro.__destroy = function(){
+        this.__super();
         delete this.__list;
         delete this.__range;
         delete this.__nyear;
@@ -150,7 +150,7 @@ var f = function(){
      * @param  {Array} 可选择范围
      * @return {Void}
      */
-    _proCalendar.__doRangeCheck = function(_range){
+    _pro.__doRangeCheck = function(_range){
         this.__range = _range||[];
         var _value = this.__range[0];
         this.__range[0] = _u._$isDate(_value)
@@ -166,7 +166,7 @@ var f = function(){
      * @param  {Array} 日期显示列表
      * @return {Void}
      */
-    _proCalendar.__doDateListCheck = (function(){
+    _pro.__doDateListCheck = (function(){
         var _doCheck = function(_node){
             this.__list.push(_node);
             this.__doInitDomEvent([
@@ -188,7 +188,7 @@ var f = function(){
      * @param  {Number} 日期
      * @return {Void}
      */
-    _proCalendar.__doSaveDateInfo = (function(){
+    _pro.__doSaveDateInfo = (function(){
         var _isDisabled = function(_range,_time){
             var _min = _range[0],
                 _max = _range[1];
@@ -218,7 +218,7 @@ var f = function(){
      * @method {__doSyncDateShow}
      * @return {Void}
      */
-    _proCalendar.__doSyncDateShow = (function(){
+    _pro.__doSyncDateShow = (function(){
         var _days = [31,28,31,30,31,30,31,31,30,31,30,31];
         var _isLeap = function(_year){
             return !(_year%400)||!(_year%4)&&!!(_year%100);
@@ -280,7 +280,7 @@ var f = function(){
      * @param  {Number} 步进
      * @return {Void}
      */
-    _proCalendar.__onYearChange = function(_flag){
+    _pro.__onYearChange = function(_flag){
         this.__year += _flag;
         this.__doSyncDateShow();
         this._$dispatchEvent('onchange',this._$getDate());
@@ -292,7 +292,7 @@ var f = function(){
      * @param  {Number} 步进
      * @return {Void}
      */
-    _proCalendar.__onMonthChange = function(_flag){
+    _pro.__onMonthChange = function(_flag){
         this.__month += _flag;
         if (this.__month<1){
             this.__year--;
@@ -312,7 +312,7 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    _proCalendar.__onDateChange = function(_event){
+    _pro.__onDateChange = function(_event){
         var _element = _v._$getElement(_event);
         if (_e._$hasClassName(
             _element,this.__disabled))
@@ -330,7 +330,7 @@ var f = function(){
      * @param  {Number} 上下周标识
      * @return {Void}
      */
-    _proCalendar.__onWeekChange = function(_flag){
+    _pro.__onWeekChange = function(_flag){
         // TODO something
     };
     /**
@@ -340,7 +340,7 @@ var f = function(){
      * @param  {Number} 上下日标识
      * @return {Void}
      */
-    _proCalendar.__onDayChange = function(_flag){
+    _pro.__onDayChange = function(_flag){
         // TODO something
     };
     /**
@@ -350,15 +350,14 @@ var f = function(){
      * [/code]
      * @method {_$setDate}
      * @param  {String|Number|Date} 日期
-     * @return {nej.ut._$$Calendar}
+     * @return {Void}
      */
-    _proCalendar._$setDate = function(_date){
+    _pro._$setDate = function(_date){
         _date = _u._$var2date(_date);
         this.__year  = _date.getFullYear();
         this.__month = _date.getMonth()+1;
         this.__date  = _date.getDate();
         this.__doSyncDateShow();
-        return this;
     };
     /**
      * 取当前选择时间<br/>
@@ -368,11 +367,15 @@ var f = function(){
      * @method {_$getDate}
      * @return {Date} 当前选择时间
      */
-    _proCalendar._$getDate = function(){
+    _pro._$getDate = function(){
         return new Date(this.__year,
                         this.__month-1,
                         this.__date);
     };
-};
-NEJ.define('{lib}util/calendar/calendar.js',
-      ['{lib}util/event.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});
