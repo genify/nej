@@ -6,12 +6,12 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _r = NEJ.R,
-        _p = _('nej.ut'),
-        _pro;
-    if (!!_p._$$RegionCacheZH) return;
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}util/cache/cache.list.base.js'
+],function(NEJ,_k,_t0,_p,_o,_f,_r){
+    var _pro;
     /**
      * 中国行政划区数据缓存，使用方式
      * [code]
@@ -27,10 +27,10 @@ var f = function(){
      * @class   {nej.ut._$$RegionCacheZH} 中国行政划区数据缓存
      * @extends {nej.ut._$$AbstractListCache}
      * @param   {Object} _options 可选配置参数，已处理参数列表如下
-     * 
+     *
      */
-    _p._$$RegionCacheZH = NEJ.C();
-    _pro = _p._$$RegionCacheZH._$extend(_p._$$AbstractListCache);
+    _p._$$RegionCacheZH = _k._$klass();
+    _pro = _p._$$RegionCacheZH._$extend(_t0._$$AbstractListCache);
     /**
      * 从服务器端载入列表
      * @protected
@@ -442,8 +442,10 @@ var f = function(){
             '新疆维吾尔自治区-自治区直辖县级行政区划':['石河子市','阿拉尔市','图木舒克市','五家渠市']
          }
      };
-};
-NEJ.define(
-    '{lib}util/data/region/zh.js',[
-    '{lib}util/cache/cache.list.base.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});

@@ -5,13 +5,13 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}util/animation/animation.js'
+],function(NEJ,_k,_t0,_p,_o,_f,_r){
     // variable declaration
-    var _  =NEJ.P,
-        _o = NEJ.O,
-        _p = _('nej.ut'),
-        _pro;
-    if (!!_p._$$AnimDecelerate) return;
+    var _pro;
     /**
      * 减速动画
      * [ntb]
@@ -51,8 +51,8 @@ var f = function(){
      * @config  {Number}  friction     阻力系数，0-1之间，阻力越大减速距离越短
      * @config  {Number}  acceleration 加速度，值越小减速越快
      */
-    _p._$$AnimDecelerate = NEJ.C();
-    _pro = _p._$$AnimDecelerate._$extend(_p._$$Animation);
+    _p._$$AnimDecelerate = _k._$klass();
+    _pro = _p._$$AnimDecelerate._$extend(_t0._$$Animation);
     /**
      * 控件重置
      * @protected
@@ -61,7 +61,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         this.__friction = _options.friction||0.5;
         this.__theta = Math.log(1-(this.__friction/10));
         this.__acceleration = _options.acceleration||30;
@@ -84,8 +84,10 @@ var f = function(){
         this._$dispatchEvent('onupdate',{offset:_offset,velocity:_velocity});
         return _stop;
     };
-};
-NEJ.define(
-    '{lib}util/animation/decelerate.js',[
-    '{lib}util/animation/animation.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});

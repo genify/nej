@@ -8,14 +8,14 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/util.js',
+    '{lib}util/animation/animation.js'
+],function(NEJ,_k,_u,_t0,_p,_o,_f,_r){
     // variable declaration
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _u = _('nej.u'),
-        _p = _('nej.ut'),
-        _pro,_sup;
-    if (!!_p._$$AnimBezier) return;
+    var _pro;
     /**
      * 贝塞尔曲线算法
      * [ntb]
@@ -28,9 +28,8 @@ var f = function(){
      * @config  {Number} duration 持续时间，单位毫秒，默认为200ms
      * @config  {String} timing   时间函数，默认为ease，ease/easein/easeout/easeinout/linear/cubic-bezier(x1,y1,x2,y2)
      */
-    _p._$$AnimBezier = NEJ.C();
-    _pro = _p._$$AnimBezier._$extend(_p._$$Animation);
-    _sup = _p._$$AnimBezier._$supro;
+    _p._$$AnimBezier = _k._$klass();
+    _pro = _p._$$AnimBezier._$extend(_t0._$$Animation);
     /**
      * 控件重置
      * @protected
@@ -41,7 +40,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         this.__duration = _options.duration||200;
         this.__epsilon  = 1/(200*this.__duration);
         this.__doParseTiming(_options.timing);
@@ -54,7 +53,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         delete this.__pointer;
         delete this.__coefficient;
     };
@@ -203,15 +202,16 @@ var f = function(){
      *   _bounce._$stop();
      * [/code]
      * @method {_$stop}
-     * @return {nej.ut._$$AnimBezier}
+     * @return {Void}
      */
     _pro._$stop = function(){
         this._$dispatchEvent('onupdate',{offset:this.__end.offset});
-        _sup._$stop.apply(this,arguments);
-        return this;
+        this.__super();
     };
-};
-NEJ.define(
-    '{lib}util/animation/bezier.js',[
-    '{lib}util/animation/animation.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});

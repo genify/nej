@@ -5,13 +5,13 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}util/animation/animation.js'
+],function(NEJ,_k,_t0,_p,_o,_f,_r){
     // variable declaration
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _p = _('nej.ut'),
-        _pro,_sup;
-    if (!!_p._$$AnimBounce) return;
+    var _pro;
     /**
      * 弹跳动画
      * [ntb]
@@ -41,9 +41,8 @@ var f = function(){
      * @config  {Number} acceleration  加速度，值越小弹跳越快
      * @config  {Number} springtension 张紧度，0-1之间，值越小弹跳距离越大
      */
-    _p._$$AnimBounce = NEJ.C();
-    _pro = _p._$$AnimBounce._$extend(_p._$$Animation);
-    _sup = _p._$$AnimBounce._$supro;
+    _p._$$AnimBounce = _k._$klass();
+    _pro = _p._$$AnimBounce._$extend(_t0._$$Animation);
     /**
      * 控件重置
      * @protected
@@ -54,7 +53,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         this.__acceleration = _options.acceleration||30;
         this.__springtension = _options.springtension||0.3;
     };
@@ -100,15 +99,16 @@ var f = function(){
      *   _bounce._$stop();
      * [/code]
      * @method {_$stop}
-     * @return {nej.ut._$$AnimBounce}
+     * @return {Void}
      */
     _pro._$stop = function(){
         this._$dispatchEvent('onupdate',{offset:this.__begin.offset});
-        _sup._$stop.apply(this,arguments);
-        return this;
+        this.__super();
     };
-};
-NEJ.define(
-    '{lib}util/animation/bounce.js',[
-    '{lib}util/animation/animation.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});
