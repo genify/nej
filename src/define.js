@@ -348,6 +348,8 @@
             _reg = /{(.*?)}/gi,
             _reg1= /([^:])\/+/g,
             _reg3= /[^\/]*$/,
+            _reg4= /\.js$/i,
+            _reg5= /^[{\/]/,
             _anchor = d.createElement('a');
         var _absolute = function(_uri){
             return _uri.indexOf('://')>0;
@@ -371,12 +373,28 @@
             return _absolute(_uri)&&_uri.indexOf('./')<0 ? 
                    _uri : _anchor.getAttribute('href',4); // ie6/7
         };
-        return function(_uri,_baseuri){
+        var _amdpath = function(_uri){
+            // start with {xx} or /xx/xx
+            // end with .js
+            if (_reg4.test(_uri)||_reg5.test(_uri)){
+                return _uri;
+            }
+            // lib/base/klass -> {lib}base/klass.js
+            var _arr = _uri.split('/'),
+                _path = __config.root(_arr[0]);
+            if (!!_path){
+                _arr.shift();
+                return _path+_arr.join('/')+'.js';
+            }
+            // for base/klass -> {lib}base/klass.js
+            return '{lib}'+_arr.join('/')+'.js';
+        };
+        return function(_uri,_base){
             if(_isTypeOf(_uri,'Array')){
                 var _list = [];
                 for(var i = 0; i < _uri.length; i++){
                     _list.push(
-                        _doFormatURI(_uri[i],_baseuri)
+                        _doFormatURI(_uri[i],_base)
                     );
                 }
                 return _list;
@@ -384,11 +402,11 @@
             if (!_uri) return '';
             if (_absolute(_uri)){
                 return _format(_uri);
-            } 
-            if (_baseuri&&_uri.indexOf('.')==0){
-                _uri = _root(_baseuri)+_uri;
             }
-            _uri = _slash(_uri);
+            if (_base&&_uri.indexOf('.')==0){
+                _uri = _root(_base)+_uri;
+            }
+            _uri = _slash(_amdpath(_uri));
             var _uri = _uri.replace(
                 _reg,function($1,$2){
                     return __config.root[$2]||$2;

@@ -1,6 +1,6 @@
 /*
  * --------------------------------------------
- * NEJ类模型实现文件
+ * @file     NEJ类模型
  * @version  1.0
  * @author   genify(caijf@corp.netease.com)
  * --------------------------------------------
@@ -10,52 +10,63 @@ NEJ.define([
     '{platform}util.js'
 ],function(NEJ,_u,_p,_o,_f,_r){
     /**
-     * 定义类，通过此api定义的类具有以下特性：<br/>
+     * @module base/klass
+     */
+    /**
+     * 定义类，通过此api定义的类具有以下特性：
      *
-     * [ul]
-     *   _$extend作为类的静态扩展方法
-     *   __init作为类的初始化函数
-     *   __super作为子类调用父类的同名函数
-     * [/ul]
+     * * _$extend作为类的静态扩展方法
+     * * __init作为类的初始化函数
+     * * __super作为子类调用父类的同名函数
      *
-     * [code]
-     *   NEJ.define([
-     *       '{lib}base/klass.js'
-     *   ],function(_p){
-     *
-     *       // 定义类A
-     *      var A = _p._$klass();
-     *      var pro = A.prototype;
-     *      // 初始化
-     *      pro.__init = function(){
-     *           // do init
-     *      };
-     *      // 类接口
-     *      pro.__doSomething = function(a){
-     *          // TODO something
-     *      };
-     *
-     *      // 定义类B，并继承自A
-     *      var B = _p._$klass();
-     *      var pro = B._$extend(A);
-     *      // 初始化
-     *      pro.__init = function(){
-     *          // 调用A的初始化逻辑
-     *          this.__super();
-     *          // TODO B的初始化逻辑
-     *      };
-     *      // 类接口
-     *      pro.__doSomething = function(a){
-     *          // 调用A的__doSomething接口
-     *          this.__super(a);
-     *          // TODO B的逻辑
-     *      };
-     *
-     *   });
-     * [/code]
-     *
-     * @api    {_$klass}
-     * @return {Function} 返回创建的类
+     * ```javascript
+     * NEJ.define([
+     *     'base/klass'
+     * ],function(k,p){
+     *     // 定义类A
+     *     p.A = k._$klass();
+     *     var pro = A.prototype;
+     *     // 初始化
+     *     pro.__init = function(){
+     *          // do init
+     *     };
+     *     // 类接口
+     *     pro.__doSomething = function(a){
+     *         // TODO something
+     *     };
+     * 
+     *     return p;
+     * });
+     * ```
+     * 
+     * ```javascript
+     * NEJ.define([
+     *     'base/klass',
+     *     '/path/to/class/a.js'
+     * ],function(k,a,p){
+     *     // 定义类B，并继承自A
+     *     p.B = k._$klass();
+     *     var pro = B._$extend(a.A);
+     *     // 初始化
+     *     pro.__init = function(){
+     *         // 调用A的初始化逻辑
+     *         this.__super();
+     *         // TODO B的初始化逻辑
+     *     };
+     *     // 类接口
+     *     pro.__doSomething = function(a){
+     *         // 调用A的__doSomething接口
+     *         this.__super(a);
+     *         // TODO B的逻辑
+     *     };
+     * 
+     *     return p;
+     * });
+     * ```
+     * 
+     * @public
+     * @method _$klass
+     * @return {Function} 返回定义的类
      */
     _p._$klass = (function(){
         var _isNotFunction = function(){
@@ -85,45 +96,54 @@ NEJ.define([
             /**
              * 子类继承父类
              *
-             * [code]
-             *   NEJ.define([
-             *       '{lib}base/klass.js'
-             *   ],function(_p){
+             * ```javascript
+             * NEJ.define([
+             *     'base/klass'
+             * ],function(k,p){
+             *     // 定义类A
+             *     p.A = k._$klass();
+             *     var pro = A.prototype;
+             *     // 初始化
+             *     pro.__init = function(){
+             *          // do init
+             *     };
+             *     // 类接口
+             *     pro.__doSomething = function(a){
+             *         // TODO something
+             *     };
+             * 
+             *     return p;
+             * });
+             * ```
+             * 
+             * ```javascript
+             * NEJ.define([
+             *     'base/klass',
+             *     '/path/to/class/a.js'
+             * ],function(k,a,p){
+             *     // 定义类B，并继承自A
+             *     p.B = k._$klass();
+             *     var pro = B._$extend(a.A);
+             *     // 初始化
+             *     pro.__init = function(){
+             *         // 调用A的初始化逻辑
+             *         this.__super();
+             *         // TODO B的初始化逻辑
+             *     };
+             *     // 类接口
+             *     pro.__doSomething = function(a){
+             *         // 调用A的__doSomething接口
+             *         this.__super(a);
+             *         // TODO B的逻辑
+             *     };
+             * 
+             *     return p;
+             * });
+             * ```
              *
-             *       // 定义类A
-             *      var A = _p._$klass();
-             *      var pro = A.prototype;
-             *      // 初始化
-             *      pro.__init = function(){
-             *           // do init
-             *      };
-             *      // 类接口
-             *      pro.__doSomething = function(a){
-             *          // TODO something
-             *      };
-             *
-             *      // 定义类B，并继承自A
-             *      var B = _p._$klass();
-             *      var pro = B._$extend(A);
-             *      // 初始化
-             *      pro.__init = function(){
-             *          // 调用A的初始化逻辑
-             *          this.__super();
-             *          // TODO B的初始化逻辑
-             *      };
-             *      // 类接口
-             *      pro.__doSomething = function(a){
-             *          // 调用A的__doSomething接口
-             *          this.__super(a);
-             *          // TODO B的逻辑
-             *      };
-             *
-             *   });
-             * [/code]
-             *
-             * @api    {_$extend}
-             * @param  {Function} 父类
-             * @param  {Boolean}  是否拷贝父类的静态方法
+             * @method _$extend
+             * @param  {Function} arg0 - 父类
+             * @param  {Boolean}  arg1 - 是否拷贝父类的静态方法
              * @return {Object}   扩展类的prototype对象
              */
             _Klass._$extend = function(_super,_static){
