@@ -5,20 +5,17 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/util.js',
+    '{lib}util/cache/cache.js'
+],function(NEJ,_k,_u,_t0,_p,_o,_f,_r){
     // variable declaration
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _r = NEJ.R,
-        _f = NEJ.F,
-        _u = _('nej.u'),
-        _j = _('nej.j'),
-        _p = _('nej.ut'),
-        _pro;
-    if (!!_p._$$StorageManager) return;
+    var _pro;
     /**
      * 分块持久化数据管理器
-     * 
+     *
      * 代码举例：
      * [code]
      *     // 实例化管理器
@@ -27,7 +24,7 @@ var f = function(){
      *         prefix:'test-user-',
      *         limit:2
      *     });
-     *     
+     *
      *     // memory中存储结构类似：
      *     // {
      *     //    // 数据引用数及对应的块标识
@@ -52,12 +49,12 @@ var f = function(){
      *     //         2,1
      *     //     ]
      *     // }
-     * 
+     *
      *     // storage中存储结构类似：
      *     // test-user-index:{'1':{b:'0',r:1},'2':{b:'0',r:2},'3':{b:'1',r:1},'test-user-blen':[2,1]}
      *     // test-user-0:[{userId:1,name:'11111'},{userId:2,name:'22222'}]
      *     // test-user-1:[{userId:3,name:'33333'}]
-     *     
+     *
      *     // 添加数据
      *     inst._$add({userId:1,name:'11111'});
      *     inst._$add({userId:2,name:'22222'});
@@ -70,20 +67,20 @@ var f = function(){
      *     inst._$update({userId:1,name:'aaaaaa'});
      *     // 取数据对象
      *     var user = inst._$get(1);
-     * 
+     *
      * [/code]
-     * 
+     *
      * @class   {nej.ut._$$StorageManager}
      * @extends {nej.ut._$$Cache}
-     * 
+     *
      * @param   {Object} 配置参数
-     * @config  {String} key	数据标识键名称，默认为id
+     * @config  {String} key    数据标识键名称，默认为id
      * @config  {String} prefix 存储键前缀，也用于标识数据块，相同前缀的数据为同一份
      * @config  {Number} limit  单块数据长度限制，默认单块数组长度为500
-     * 
+     *
      */
-    _p._$$StorageManager = NEJ.C();
-    _pro = _p._$$StorageManager._$extend(_p._$$Cache);
+    _p._$$StorageManager = _k._$klass();
+    _pro = _p._$$StorageManager._$extend(_t0._$$Cache);
     /**
      * 控件重置
      * @param  {Object} 配置参数
@@ -92,15 +89,15 @@ var f = function(){
     _pro.__reset = (function(){
         var _lock = {};
         return function(_options){
-        	this.__supReset(_options);
-        	this.__pkey = _options.key||'id';
-        	this.__prefix = ''+(_options.prefix||'');
-        	this.__limit = parseInt(_options.limit)||500;
-        	// init data
-        	if (!_lock[this.__prefix]){
-        	    _lock[this.__prefix] = !0;
-        	    this.__doInitDataFromStorage();
-        	}
+            this.__super(_options);
+            this.__pkey = _options.key||'id';
+            this.__prefix = ''+(_options.prefix||'');
+            this.__limit = parseInt(_options.limit)||500;
+            // init data
+            if (!_lock[this.__prefix]){
+                _lock[this.__prefix] = !0;
+                this.__doInitDataFromStorage();
+            }
         };
     })();
     /**
@@ -108,17 +105,17 @@ var f = function(){
      * @return {Voie}
      */
     _pro.__destroy = function(){
-    	this.__supDestroy();
-    	delete this.__pkey;
-    	delete this.__limit;
-    	delete this.__prefix;
+        this.__super();
+        delete this.__pkey;
+        delete this.__limit;
+        delete this.__prefix;
     };
     /**
      * 构建存储结构
      * @return {Void}
      */
     _pro.__doInitDataFromStorage = function(){
-        var _ext, 
+        var _ext,
             _prefix = this.__prefix,
             _midx = this.__getIndex();
         // init form storage data
@@ -296,21 +293,21 @@ var f = function(){
     _pro._$get = function(_id){
         // dump item
         if (!_u._$isArray(_id)){
-        	var _map = this.__getData();
-        	// try to fetch from storage
-        	if (!_map[_id]){
-            	// 1 - check index
-            	var _index = this.__getIndex(),
-            	    _conf = _index[_id];
-            	if (!_conf||_conf.block==null) return;
-            	// 2 - check block loaded
-            	var _bidx = _conf.block,
-            	    _block = this.__getBlock();
-            	if (!!_block[_bidx]) return;
-            	// 3 - load data from storage
-            	this.__doLoadBlock(_bidx);
-        	}
-        	return _map[_id];
+            var _map = this.__getData();
+            // try to fetch from storage
+            if (!_map[_id]){
+                // 1 - check index
+                var _index = this.__getIndex(),
+                    _conf = _index[_id];
+                if (!_conf||_conf.block==null) return;
+                // 2 - check block loaded
+                var _bidx = _conf.block,
+                    _block = this.__getBlock();
+                if (!!_block[_bidx]) return;
+                // 3 - load data from storage
+                this.__doLoadBlock(_bidx);
+            }
+            return _map[_id];
         }
         // dump list
         var _arr = [];
@@ -322,8 +319,8 @@ var f = function(){
     /**
      * 添加数据
      * @method {_$add}
-	 * @param  {Object|Array} 单个数据或列表
-	 * @return {Void}
+     * @param  {Object|Array} 单个数据或列表
+     * @return {Void}
      */
     _pro._$add = (function(){
         var _batch;
@@ -376,41 +373,41 @@ var f = function(){
     _pro._$delete = (function(){
         var _batch;
         return function(_id){
-        	if (!_u._$isArray(_id)){
-        	    // check data
-        	    var _data = this._$get(_id);
-        	    if (!_data) return;
-        	    // check data index
-        	    var _index = this.__getIndex(),
-        	        _conf = _index[_id]||_o;
-        	    if (_conf.ref>1){
-        	        // check ref
-        	        _conf.ref--;
-        	    }else{
+            if (!_u._$isArray(_id)){
+                // check data
+                var _data = this._$get(_id);
+                if (!_data) return;
+                // check data index
+                var _index = this.__getIndex(),
+                    _conf = _index[_id]||_o;
+                if (_conf.ref>1){
+                    // check ref
+                    _conf.ref--;
+                }else{
                     // remove data from block list
-            	    delete _index[_id];
-            	    var _bidx = _conf.block,
-            	        _list = this.__getBlock()[_bidx],
-            	        _idx = _u._$indexOf(_list,_id);
-            	    if (_idx>=0){
-            	        _list.splice(_idx,1);
-            	        if (!_batch){
-            	            this.__doFlushBlock(_bidx);
-            	        }else if(_u._$indexOf(_batch,_bidx)<0){
-            	            _batch.push(_bidx);
-            	        }
-            	    }
-        	    }
-        	    
-        	}else{
-        	    _batch = [];
-        	    _u._$forEach(_id,this._$delete,this);
-        	    this.__doFlushBlock(_batch);
-        	    _batch = null;
-        	}
-        	if (!!_batch) return;
-        	// flush to storage
-        	this.__doFlushIndex();
+                    delete _index[_id];
+                    var _bidx = _conf.block,
+                        _list = this.__getBlock()[_bidx],
+                        _idx = _u._$indexOf(_list,_id);
+                    if (_idx>=0){
+                        _list.splice(_idx,1);
+                        if (!_batch){
+                            this.__doFlushBlock(_bidx);
+                        }else if(_u._$indexOf(_batch,_bidx)<0){
+                            _batch.push(_bidx);
+                        }
+                    }
+                }
+
+            }else{
+                _batch = [];
+                _u._$forEach(_id,this._$delete,this);
+                this.__doFlushBlock(_batch);
+                _batch = null;
+            }
+            if (!!_batch) return;
+            // flush to storage
+            this.__doFlushIndex();
         };
     })();
     /**
@@ -472,8 +469,10 @@ var f = function(){
         );
         this.__doFlushIndex();
     };
-};
-NEJ.define(
-    '{lib}util/cache/storage.manager.js',[
-    '{lib}util/cache/cache.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});

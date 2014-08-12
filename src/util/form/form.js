@@ -5,16 +5,17 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _f = NEJ.F,
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _p = _('nej.ut'),
-        _pro;
-    if (!!_p._$$WebForm) return;
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{lib}base/event.js',
+    '{lib}base/util.js',
+    '{lib}util/event.js'
+    '{lib}util/counter/counter.js',
+    '{lib}util/placeholder/placeholder.js'
+],function(NEJ,_k,_e,_v,_u,_t,_t0,_t1,_p,_o,_f,_r){
+    var _pro;
     /**
      * WEB表单验证封装对象，HTML代码中支持以下属性配置：
      * [ntb]
@@ -36,76 +37,76 @@ var f = function(){
      *   maxlength       | Number                | 输入长度必须小于此设置，一个中文算一个字符，适用于text/textarea
      *   minlength       | Number                | 输入长度必须大于此设置，一个中文算一个字符，适用于text/textarea
      * [/ntb]
-     * 
+     *
      * HTML示例代码：
      * [code type="html"]
      *   <!-- form节点添加data-focus-mode属性 -->
      *   <form id="webForm" data-focus-mode="1">
      *     <!-- 必须设置值 -->
-     *     <input name="n00" type="text" 
-     *            data-auto-focus="true" 
-     *            data-required="true" 
+     *     <input name="n00" type="text"
+     *            data-auto-focus="true"
+     *            data-required="true"
      *            data-message="必须输入xxx！"
      *            data-tip="这是对xxx的说明！"/>
-     *     <select name="n01" 
-     *            data-required="true" 
+     *     <select name="n01"
+     *            data-required="true"
      *            data-message="必须选择xxx！">
      *       <option>please select city</option>
      *       <option value="0">Hangzhou</option>
      *       <option value="1">Shanghai</option>
      *     </select>
-     *     <input type="checkbox" 
-     *            data-required="true" 
+     *     <input type="checkbox"
+     *            data-required="true"
      *            data-message="必须同意xxx！"/>
-     *     <input type="radio" 
-     *            data-required="true" 
+     *     <input type="radio"
+     *            data-required="true"
      *            data-message="必须选中xxx！"/>
      *     <!-- 输入URL地址、Email地址、日期、数字 -->
-     *     <input name="n10" type="text" 
+     *     <input name="n10" type="text"
      *            data-type="url" data-message="URL地址不合法！"/>
-     *     <input name="n11" type="text" 
+     *     <input name="n11" type="text"
      *            data-type="email" data-message="Email地址不合法！"/>
-     *     <input name="n12" type="text" 
+     *     <input name="n12" type="text"
      *            data-type="date" data-format="yyyy-MM-dd HH:mm:ss" data-message="日期格式不正确！"/>
-     *     <input name="n12" type="text" 
+     *     <input name="n12" type="text"
      *            data-type="number" data-message="只能输入数字！"/>
      *     <!-- 正则匹配输入信息，注意pattern值必须符合正则表达式规则 -->
-     *     <input name="n20" type="text" 
-     *            data-pattern="^[\\d]+$" 
+     *     <input name="n20" type="text"
+     *            data-pattern="^[\\d]+$"
      *            data-message="输入内容必须符合xxx！"/>
      *     <!-- 限制输入长度 -->
-     *     <input name="n30" type="text" 
+     *     <input name="n30" type="text"
      *            maxlength="100" data-message="长度超过限制！"/>
-     *     <textarea name="n31" 
+     *     <textarea name="n31"
      *            maxlength="100" data-message="长度超过限制！"></textarea>
-     *     <input name="n32" type="text" 
+     *     <input name="n32" type="text"
      *            data-max-length="100" data-message="长度超过限制！"/>
-     *     <textarea name="n33" 
+     *     <textarea name="n33"
      *            data-max-length="100" data-message="长度超过限制！"></textarea>
-     *     <input name="n34" type="text" 
+     *     <input name="n34" type="text"
      *            minlength="100" data-message="长度必须达到xxx！"/>
-     *     <textarea name="n35" 
+     *     <textarea name="n35"
      *            minlength="100" data-message="长度必须达到xxx！"></textarea>
-     *     <input name="n36" type="text" 
+     *     <input name="n36" type="text"
      *            data-min-length="100" data-message="长度必须达到xxx！"/>
-     *     <textarea name="n37" 
+     *     <textarea name="n37"
      *            data-min-length="100" data-message="长度必须达到xxx！"></textarea>
      *     <!-- 限制最小值/最大值 -->
-     *     <input name="n40" type="text" 
+     *     <input name="n40" type="text"
      *            data-type="number" data-min="10"/>
-     *     <input name="n41" type="text" 
+     *     <input name="n41" type="text"
      *            data-type="number" data-max="100"/>
-     *     <input name="n42" type="text" 
+     *     <input name="n42" type="text"
      *            data-type="number" data-min="10" data-max="100"/>
-     *     <input name="n43" type="text" 
+     *     <input name="n43" type="text"
      *            data-type="date" data-min="2010-08-10"/>
-     *     <input name="n44" type="text" 
+     *     <input name="n44" type="text"
      *            data-type="date" data-max="now"/>
-     *     <input name="n45" type="text" 
+     *     <input name="n45" type="text"
      *            data-type="date" data-min="now" data-max="2050-10-10"/>
      *   </form>
      * [/code]
-     * 
+     *
      * 简单应用示例代码：
      * [code]
      *   // 分配表单验证控件实例
@@ -118,11 +119,11 @@ var f = function(){
      *           'pass':'<span class="pass">ok</span>'
      *       }
      *   });
-     *   
+     *
      *   // 验证表单后提交
      *   if (_form._$checkValidity())
      *       _form._$submit();
-     *       
+     *
      *   // 或者在验证完表单的配置项后再做表单的其他项验证
      *   if (_form._$checkValidity()){
      *       // TODO other form check
@@ -135,7 +136,7 @@ var f = function(){
      *       doAjaxRequest('/api/form',_form._$data());
      *   }
      * [/code]
-     * 
+     *
      * 通过回调自定义提示信息示例代码：
      * [code]
      *   var _form = nej.ut._$$WebForm._$allocate({
@@ -154,7 +155,7 @@ var f = function(){
      *       }
      *   });
      * [/code]
-     * 
+     *
      * 通过回调自定义验证规则示例代码：
      * [code]
      *   var _form = nej.ut._$$WebForm._$allocate({
@@ -178,10 +179,10 @@ var f = function(){
      *       }
      *   });
      * [/code]
-     * 
+     *
      * @class   {nej.ut._$$WebForm}
      * @extends {nej.ut._$$EventTarget}
-     * 
+     *
      * @param   {Object}      配置参数
      * @config  {String|Node} form    表单节点
      * @config  {String}      invalid 验证未通过时添加在表单元素上的样式名称，默认为js-invalid
@@ -207,7 +208,7 @@ var f = function(){
      * @config  {Node}   target 当前验证节点
      * @config  {Node}   form   表单对象
      * @config  {Number} value  验证返回结果
-     * 
+     *
      * [hr]
      * 验证未通过触发事件，错误类型对照表
      * [ntb]
@@ -223,21 +224,21 @@ var f = function(){
      * @param   {Object} 验证基本信息
      * @config  {Node}   target 当前验证节点
      * @config  {Number} code   错误标识
-     * 
+     *
      * [hr]
      * 通过验证提示信息
      * @event   {onvalid}
      * @param   {Object} 验证基本信息
      * @config  {Node}   target 当前验证节点
-     * 
+     *
      * [hr]
      * 回车触发事件
      * @event   {onenter}
      * @param   {Event} 事件信息
      * @return  {Void}
      */
-    _p._$$WebForm = NEJ.C();
-      _pro = _p._$$WebForm._$extend(_p._$$EventTarget);
+    _p._$$WebForm = _k._$klass();
+    _pro = _p._$$WebForm._$extend(_t._$$EventTarget);
     /**
      * 控件初始化
      * @protected
@@ -245,7 +246,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__init = function(){
-        this.__supInit();
+        this.__super();
         this.__wopt = {
             tp:{nid:'js-nej-tp'},
             ok:{nid:'js-nej-ok'},
@@ -260,7 +261,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         this.__form = document.forms[_options.form]||
                      _e._$get(_options.form);
         this.__doInitDomEvent([[
@@ -300,7 +301,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         delete this.__message;
         delete this.__fnode;
         delete this.__vinfo;
@@ -314,7 +315,7 @@ var f = function(){
      * @method {__dataset}
      * @param  {String} 自定义属性名
      * @param  {Number} 类型，0-字符，1-数值，2-布尔，3-日期
-     * @return {String} 值 
+     * @return {String} 值
      */
     _pro.__dataset = function(_node,_attr,_type){
         var _value = _e._$dataset(_node,_attr);
@@ -521,7 +522,7 @@ var f = function(){
             // check placeholder
             var _holder = _e._$attr(_node,'placeholder');
             if (!!_holder&&_holder!='null')
-                _e._$placeholder(_node,this.__holder);
+                _t1._$placeholder(_node,this.__holder);
             // check focus
             if (!!this.__fopt&&
                 _reg0.test(_node.tagName))
@@ -556,7 +557,7 @@ var f = function(){
                 _data = (_info||_o).data||_o,
                 _need = this.__dataset(_node,'counter',2);
             if (_need&&(_data.maxlength||_data.maxLength)){
-                _e._$counter(_id,{nid:this.__wopt.tp.nid,clazz:'js-counter'});
+                _t0._$counter(_id,{nid:this.__wopt.tp.nid,clazz:'js-counter'});
             }
             // node need validate
             if (!!_info&&_reg0.test(_node.tagName)){
@@ -724,7 +725,7 @@ var f = function(){
         // check node validate
         _node = this._$get(_node)||_node;
         var _info = this.__vinfo[_e._$id(_node)];
-        if (!_node||!_info||!this.__isValidElement(_node)) 
+        if (!_node||!_info||!this.__isValidElement(_node))
             return !0;
         var _result;
         // check condition
@@ -779,7 +780,7 @@ var f = function(){
             return _holder;
         };
         var _getHolderNode = function(_node,_type){
-            // try get node with id = xxx-tip or xxx-pass or xxx-error 
+            // try get node with id = xxx-tip or xxx-pass or xxx-error
             var _holder = _e._$get(_node.name+'-'+_kmap[_type]);
             if (!_holder)
                 _holder = _e._$getByClassName(_node.parentNode,this.__wopt[_type].nid)[0];
@@ -808,21 +809,20 @@ var f = function(){
      * @method {_$showTip}
      * @param  {String|Node} 表单元素节点或者名称
      * @param  {String}      显示信息
-     * @return {nej.ut._$$WebForm}
+     * @return {Void}
      */
     _pro._$showTip = function(_node,_message){
         this.__doShowMessage(
             _node,_message||
             this.__message[_node.name+'-tip'],'tp'
         );
-        return this;
     };
     /**
      * 显示验证通过信息
      * @method {_$showMsgPass}
      * @param  {String|Node} 表单元素节点或者名称
      * @param  {String}      显示信息
-     * @return {nej.ut._$$WebForm}
+     * @return {Void}
      */
     _pro._$showMsgPass = function(_node,_message){
         this.__doShowMessage(
@@ -830,19 +830,17 @@ var f = function(){
             this.__message[_node.name+'-pass']||
             this.__message.pass,'ok'
         );
-        return this;
     };
     /**
      * 显示错误信息
      * @method {_$showMsgError}
      * @param  {String|Node} 表单元素节点或者名称
      * @param  {String}      显示信息
-     * @return {nej.ut._$$WebForm}
+     * @return {Void}
      */
     _pro._$showMsgError = function(_node,_message){
         this.__doShowMessage(_node,_message||
             this.__message[_node.name+'-error'],'er');
-        return this;
     };
     /**
      * 设置表单控件值
@@ -869,7 +867,7 @@ var f = function(){
         };
         return function(_name,_value){
             var _node = this._$get(_name);
-            if (!_node) return this;
+            if (!_node) return;
             if (_node.tagName=='SELECT'||!_node.length){
                 // for node
                 _doSetValue(_value,_node);
@@ -880,7 +878,6 @@ var f = function(){
                     _doSetValue._$bind(null,_value)
                 );
             }
-            return this;
         };
     })();
     /**
@@ -947,7 +944,7 @@ var f = function(){
     /**
      * 重置表单
      * @method {_$reset}
-     * @return {nej.ut._$$WebForm}
+     * @return {Void}
      */
     _pro._$reset = (function(){
         var _doShowTip = function(_node){
@@ -961,22 +958,20 @@ var f = function(){
                 this.__form.elements,
                 _doShowTip,this
             );
-            return this;
         };
     })();
     /**
      * 提交表单
      * @method {_$submit}
-     * @return {nej.ut._$$WebForm}
+     * @return {Void}
      */
     _pro._$submit = function(){
         this.__form.submit();
-        return this;
     };
     /**
      * 刷新验证信息
      * @method {_$refresh}
-     * @return {nej.ut._$$WebForm} 
+     * @return {Void}
      */
     _pro._$refresh = (function(){
         var _doPrepareElement = function(_node){
@@ -993,7 +988,6 @@ var f = function(){
                 this.__form.elements,
                 _doPrepareElement,this
             );
-            return this;
         };
     })();
     /**
@@ -1018,11 +1012,10 @@ var f = function(){
             },this);
         return _result;
     };
-};
-NEJ.define(
-    '{lib}util/form/form.js',[
-    '{lib}base/util.js',
-    '{lib}util/event.js',
-    '{lib}util/counter/counter.js',
-    '{lib}util/placeholder/placeholder.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});

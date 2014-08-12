@@ -5,15 +5,15 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _f = NEJ.F,
-        _u = _('nej.u'),
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _x = _('nej.x'),
-        _seed_html;
-    if (!!_e._$flash) return;
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/element.js',
+    '{lib}base/event.js',
+    '{lib}base/util.js',
+    '{lib}util/template/jst.js',
+    '{lib}util/timer/animation.js'
+],function(NEJ,_e,_v,_u,_t0,_t1,_p,_o,_f,_r){
+    var _seed_html;
     /**
      * 页面嵌入flash<br />
      * 页面结构举例
@@ -52,15 +52,14 @@ var f = function(){
      * @conifg {Object}      params  设置参数
      * @config {String|Node} target  触发事件的源节点
      * @return {Void}
-     * 
+     *
      * [hr]
      * Flash初始化完毕触发事件
-     * @event  {onready} 
+     * @event  {onready}
      * @param  {Flash} Flash对象
-     * 
+     *
      */
-    _e._$flash = 
-    _x._$flash = (function(){
+    _p._$flash = (function(){
         var _cache = {},
             _reg0 = /^(?:mouse.*|(?:dbl)?click)$/i;
         // flash event
@@ -74,7 +73,7 @@ var f = function(){
                     _target,_event
                 );
             }
-            // check id-type handler 
+            // check id-type handler
             var _handler = _cache[_id+'-on'+_type];
             if (!!_handler){
                 var _result = '';
@@ -97,7 +96,7 @@ var f = function(){
         // listen flash mouse event
         var _doMouseEventBubble = function(_id,_event){
             var _type = _event.type.toLowerCase();
-            requestAnimationFrame(function(){
+            _t1.requestAnimationFrame(function(){
                 _v._$dispatchEvent(_id,_type);
             });
         };
@@ -162,7 +161,7 @@ var f = function(){
             _doCheckFlash(_id);
         };
     })();
-    _seed_html = _e._$addHtmlTemplate('\
+    _seed_html = _t0._$addHtmlTemplate('\
         {var hide  = defined("hidden")&&!!hidden}\
         {var param = defined("params")&&params||NEJ.O}\
         {var width = !hide?width:"1px",height = !hide?height:"1px"}\
@@ -184,10 +183,10 @@ var f = function(){
         </object>\
         {if hide}</div>{/if}\
     ');
-    _x.isChange = !0;
-};
-NEJ.define(
-    '{lib}util/flash/flash.js',[
-    '{lib}util/template/jst.js',
-    '{lib}util/timer/animation.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.e'),_p);
+    }
+
+    return _p;
+});

@@ -1,13 +1,11 @@
-var f = function(){
+NEJ.define([
+    '{lib}base/element.js',
+	'{lib}base/event.js',
+	'./holder.js'
+],function(_e,_v,_h,_p,_o,_f,_r){
 	// ie6-9 holder patch
 	NEJ.patch('2.0<=TR<=5.0',function(){
 		// variable declaration
-		var _  = NEJ.P,
-		    _f = NEJ.F,
-		    _p = _('nej.p'),
-		    _e = _('nej.e'),
-		    _v = _('nej.v'),
-		    _h = _('nej.h');
 		/**
 		 * 节点占位符行为，高版本浏览器用样式处理
 		 * @param  {String|Node} _element 节点
@@ -59,7 +57,7 @@ var f = function(){
 		        });
 		    };
 		    return _h.__setPlaceholder._$aop(
-		           function(_event){
+		            function(_event){
 		                _event.stopped = !0;
 		                var _args = _event.args,
 		                    _input = _e._$get(_args[0]);
@@ -72,30 +70,9 @@ var f = function(){
 		                _v._$addEvent(_input,'blur',_onBlur._$bind(null));
 		                _v._$addEvent(_input,'focus',_onFocus._$bind(null));
 		                _v._$addEvent(_input,'input',_onInput._$bind(null));
-		           });
-		})();
-		//    
-		//    /**
-		//     * 清理节点占位行为
-		//     * @param  {String|Node} 节点
-		//     * @return {Void}
-		//     */
-		//    _h.__clearPlaceHolder = 
-		//    _h.__clearPlaceHolder._$aop(function(_event){
-		//        _event.stopped = !0;
-		//        var _input = _e._$get(_event.args[0]);
-		//        if (!_cache[_input.id]) return;
-		//        // recycle placeholder node
-		//        var _span = _input.parentNode;
-		//        _span.insertAdjacentElement('beforeBegin',_input);
-		//        _e._$removeByEC(_span);
-		//        _pool.unshift(_span);
-		//        // remove onfocus/onblur event
-		//        var _emap = _cache[_input.id];
-		//        _v._$delEvent.apply(_v,_emap.blur);
-		//        _v._$delEvent.apply(_v,_emap.focus);
-		//        delete _cache[_input.id];
-		//    });
+		        	});
+			})();
 		});
-};
-define(['./holder.js'],f);
+
+		return _h;
+});

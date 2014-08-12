@@ -5,14 +5,13 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _f = NEJ.F,
-        _c = _('nej.c'),
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _x = _('nej.x');
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/config.js',
+    '{lib}base/util.js',
+    '{lib}base/element.js',
+    '{lib}util/flash/flash.js'
+],function(NEJ,_c,_u,_e,_t0,_p,_o,_f,_r){
     /*
      * 覆盖剪切操作功能按钮
      * @param  {Node}   按钮
@@ -30,7 +29,7 @@ var f = function(){
             top:Math.floor((_box.parentNode.offsetHeight-_height)/2)+'px'
         });
         // cover flash
-        _e._$flash(NEJ.X({
+        _t0._$flash(NEJ.X({
             parent:_box,
             target:_element,
             width:'100%',height:'100%',
@@ -66,10 +65,9 @@ var f = function(){
      * @api    {nej.e._$bindCopyAction}
      * @param  {String|Node}     操作节点
      * @param  {String|Function} 要复制的内容，或者动态生成要复制的内容
-     * @return {nej.e}
+     * @return {Void}
      */
-    _e._$bindCopyAction = 
-    _x._$bindCopyAction = function(_element,_content){
+    _p._$bindCopyAction = function(_element,_content){
         _element = _e._$get(_element);
         if (!_element) return;
         // bind flash
@@ -78,7 +76,6 @@ var f = function(){
                 return _u._$isFunction(_content)?_content():(_content||'');
             }
         });
-        return this;
     };
     /*
      * 绑定取剪切板内容操作，服务器放置剪切板操作Flash nej_clipboard.swf
@@ -138,21 +135,17 @@ var f = function(){
      * [/code]
      * @api    {nej.e._$bindClearAction}
      * @param  {String|Node} 操作节点
-     * @return {nej.e}
+     * @return {Void}
      */
-    _e._$bindClearAction = 
-    _x._$bindClearAction =  function(_element){
+    _p._$bindClearAction =  function(_element){
         _element = _e._$get(_element);
-        if (!_element) return this;
+        if (!_element) return;
         _doCoverClipboard(_element,'op=2');
-        return this;
     };
-    _x.isChange = !0;
-};
-NEJ.define(
-    '{lib}util/clipboard/clipboard.js',[
-    '{lib}base/config.js',
-    '{lib}base/util.js',
-    '{lib}base/event.js',
-    '{lib}util/flash/flash.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.e'),_p);
+    }
+
+    return _p;
+});

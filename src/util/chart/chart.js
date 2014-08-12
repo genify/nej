@@ -6,7 +6,7 @@
 NEJ.define([
     '{lib}base/global.js',
     '{lib}base/config.js',
-    '{lib}base/event.js',
+    '{lib}base/element.js',
     '{lib}util/flash/flash.js'
 ],function(NEJ,_c,_e,_t0,_p,_o,_f,_r){
     /**

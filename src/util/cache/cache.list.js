@@ -13,7 +13,7 @@ NEJ.define([
 ],function(NEJ,_k,_u,_t,_p,_o,_f,_r){
     /**
      * 列表缓存管理器<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   NEJ.define([
@@ -89,7 +89,7 @@ NEJ.define([
      *               );
      *           }
      *       });
-     * 
+     *
      *       // 第一个列表的请求
      *       _cache._$getList({key:'abc',data:{},offset:0,limit:10})
      *       // 不会发请求，直接走缓存
@@ -100,65 +100,65 @@ NEJ.define([
      *       _cache._$getItem({id:'abc',key:'123',data:{})
      *   });
      * [/code]
-     * 
+     *
      * @class   {_$$ListCache}
      * @extends {_$$Cache}
-     * 
+     *
      * @param  {Object} 可选配置参数，已处理参数列表如下
      * @config {String}  id      缓存标识，默认使用构造器缓存
      * @config {String}  key     列表项标识字段，默认为id
      * @config {Object}  data    列表关联数据
      * @config {Boolean} autogc  是否自动操作
-     * 
+     *
      * [hr]
      * 列表载入完成回调
-     * @event  {onlistload} 
+     * @event  {onlistload}
      * @param  {Object} 可选配置参数
      * @config {String}   key 列表标识
      * @config {Variable} ext 传入数据原样返回
-     * 
+     *
      * [hr]
      * 缓存项载入完成回调
-     * @event  {onitemload} 
+     * @event  {onitemload}
      * @param  {Object} 可选配置参数
      * @config {String}   id  项标识
      * @config {String}   key 列表标识
      * @config {Variable} ext 传入数据原样返回
-     * 
+     *
      * [hr]
      * 缓存项添加完成回调
-     * @event  {onitemadd} 
+     * @event  {onitemadd}
      * @param  {Object} 可选配置参数
      * @config {String}   id  项标识
      * @config {String}   key 列表标识
      * @config {Variable} ext 传入数据原样返回
-     * 
+     *
      * [hr]
      * 缓存项删除完成回调
-     * @event  {onitemdelete} 
+     * @event  {onitemdelete}
      * @param  {Object} 可选配置参数
      * @config {String}   id  项标识
      * @config {String}   key 列表标识
      * @config {Variable} ext 传入数据原样返回
-     * 
+     *
      * [hr]
      * 缓存项更新完成回调
-     * @event  {onitemupdate} 
+     * @event  {onitemupdate}
      * @param  {Object} 可选配置参数
      * @config {String}   id  项标识
      * @config {String}   key 列表标识
      * @config {Variable} ext 传入数据原样返回
-     * 
+     *
      * [hr]
      * 服务器最新列表拉取完成回调
-     * @event  {onpullrefresh} 
+     * @event  {onpullrefresh}
      * @param  {Object} 可选配置参数
      * @config {String}   key 列表标识
      * @config {Variable} ext 传入数据原样返回
-     * 
+     *
      * [hr]
      * 从服务器载入列表
-     * @event  {doloadlist} 
+     * @event  {doloadlist}
      * @param  {Object} 可选配置参数
      * @config {String}   key    列表标识
      * @config {Variable} ext    回调回传数据
@@ -166,17 +166,17 @@ NEJ.define([
      * @config {Number}   offset 偏移量
      * @config {Number}   limit  数量
      * @config {Function} onload 请求回调
-     * 
+     *
      * [hr]
      * 从服务器载入数据项
-     * @event  {doloaditem} 
+     * @event  {doloaditem}
      * @param  {Object} 可选配置参数
      * @config {String}   id     项标识
      * @config {String}   key    列表标识
      * @config {Variable} ext    回调回传数据
      * @config {Number}   data   需要提交到服务器的其他信息
      * @config {Function} onload 请求回调
-     * 
+     *
      * [hr]
      * 往服务器添加数据项
      * @event  {doadditem}
@@ -185,7 +185,7 @@ NEJ.define([
      * @config {Variable} ext    回调回传数据
      * @config {String}   data   数据项对象
      * @config {Function} onload 请求回调
-     * 
+     *
      * [hr]
      * 从服务器删除数据项
      * @event  {dodeleteitem}
@@ -194,7 +194,7 @@ NEJ.define([
      * @config {Variable} ext    回调回传数据
      * @config {String}   data   数据项对象
      * @config {Function} onload 请求回调
-     * 
+     *
      * [hr]
      * 更新服务器数据项
      * @event  {doupdateitem}
@@ -203,7 +203,7 @@ NEJ.define([
      * @config {Variable} ext    回调回传数据
      * @config {String}   data   数据项对象
      * @config {Function} onload 请求回调
-     * 
+     *
      * [hr]
      * 从服务器拉取最新列表
      * @event  {dopullrefresh}
@@ -416,7 +416,7 @@ NEJ.define([
     };
     /**
      * 设置列表总数<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   // 列表总数已知的情况，这时候的total是100
@@ -424,14 +424,14 @@ NEJ.define([
      *   // 但是当前页面的总页面无法做出这种适应，所以不用有相应的变化
      *   // 注意：cache是无法保证数据的同步的。如果在别的地方有数据删除，cache无法获知，需要刷新页面
      *   _cc._$setTotal('abc',100);
-     *   
+     *
      *   // 列表总数未知的情况，这时候的total是list的长度
      *   // 未知总长度会有更多选项出现
      *   var _total = _cc._$getTotal('abc');
      *   // 如果offset+limit>_total说明已经没有数据了，把更多隐藏掉
      *   // 否则会继续有一个更多选项在末尾
      * [/code]
-     * 
+     *
      * @method {_$setTotal}
      * @see    {_$getTotal}
      * @param  {String} 列表缓存键值
@@ -445,7 +445,7 @@ NEJ.define([
     };
     /**
      * 取列表总长度<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   // 获取列表总长度，未知页码的情况是total和list.length较长的一个
@@ -453,7 +453,7 @@ NEJ.define([
      *   // 以上值被设置到list的length属性中
      *   _cc._$getTotal('abc');
      * [/code]
-     * 
+     *
      * @method {_$getTotal}
      * @see    {_$setTotal}
      * @param  {String} 列表标识
@@ -464,13 +464,13 @@ NEJ.define([
     };
     /**
      * 设置未知长度列表的载入完成标志<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   // 设置key为abc的完整数据已经载入完成
      *   _cc._$setLoaded('abc');
      * [/code]
-     * 
+     *
      * @method {_$setLoaded}
      * @param  {String} 列表标识
      * @return {Void}
@@ -480,7 +480,7 @@ NEJ.define([
     };
     /**
      * 判断列表是否载入完成<br/>
-     * 
+     *
      * @method {_$isLoaded}
      * @param  {String}  列表标识
      * @return {Boolean} 是否载入完成
@@ -490,13 +490,13 @@ NEJ.define([
     };
     /**
      * 设置列表，清除原有列表<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   // 设置列表
      *   _cc._$setListInCache('abc',[]);
      * [/code]
-     * 
+     *
      * @method {_$setListInCache}
      * @param  {String} 列表标识
      * @return {Array}  列表
@@ -514,13 +514,13 @@ NEJ.define([
     };
     /**
      * 直接从缓存中取列表<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   // 从cache里取列表数据
      *   _cc._$getListInCache('abc');
      * [/code]
-     * 
+     *
      * @method {_$getListInCache}
      * @param  {String} 列表标识
      * @return {Array}  列表
@@ -601,12 +601,12 @@ NEJ.define([
     };
     /**
      * 取列表<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   _cc._$getList({key:'abc',data:{},offset:0,limit:10});
      * [/code]
-     * 
+     *
      * @method {_$getList}
      * @param  {Object} 可选配置参数
      * @config {String} key    列表标识
@@ -702,13 +702,13 @@ NEJ.define([
     })();
     /**
      * 清除缓存列表<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   // 取列表数据
      *   _cc._$clearListInCache('abc');
      * [/code]
-     * 
+     *
      * @method {_$clearListInCache}
      * @param  {String} 列表标识
      * @return {Void}
@@ -752,13 +752,13 @@ NEJ.define([
     };
     /**
      * 从缓存中取列表项<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   // 从cache中取某一项数据
      *   _cc._$getItemInCache('abc');
      * [/code]
-     * 
+     *
      * @method {_$getItemInCache}
      * @param  {String}   项标识
      * @return {Variable} 列表项
@@ -778,7 +778,7 @@ NEJ.define([
     };
     /**
      * 取列表项项<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   // 取某一项数据
@@ -787,7 +787,7 @@ NEJ.define([
      *       key:'xxxxxx'
      *   });
      * [/code]
-     * 
+     *
      * @method {_$getItem}
      * @param  {Object} 请求信息
      * @config {String} id   项标识，该名称与配置的项标识键一致
@@ -844,7 +844,7 @@ NEJ.define([
     };
     /**
      * 添加列表项<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   _cc._$addItem({
@@ -854,7 +854,7 @@ NEJ.define([
      *       offset:0
      *   });
      * [/code]
-     * 
+     *
      * @method {_$addItem}
      * @param  {Object} 配置信息
      * @config {String}  key    列表标识
@@ -904,24 +904,24 @@ NEJ.define([
             ext:_options.ext
         };
         this._$dispatchEvent('onitemadd',_event);
-        
+
         return _event;
     };
     /**
      * 删除列表项<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   _cc._$deleteItem({
      *       key: '123'
      *   });
      * [/code]
-     * 
+     *
      * @method {_$deleteItem}
      * @param  {Object} 配置信息
      * @config {String} key  列表标识
      * @config {String} id   列表项标识
-     * @config {Object} data 列表项数据信息 
+     * @config {Object} data 列表项数据信息
      * @config {Object} ext  需要回传的数据信息
      * @return {Void}
      */
@@ -955,12 +955,12 @@ NEJ.define([
             ext:_options.ext
         };
         this._$dispatchEvent('onitemdelete',_event);
-        
+
         return _event;
     };
     /**
      * 更新列表项<br/>
-     * 
+     *
      * 脚本举例
      * [code]
      *   _cc._$updateItem({
@@ -968,7 +968,7 @@ NEJ.define([
      *       item:{}
      *   });
      * [/code]
-     * 
+     *
      * @method {_$updateItem}
      * @param  {Object} 配置信息
      * @config {String} key  列表标识
@@ -1003,13 +1003,13 @@ NEJ.define([
             ext:_options.ext
         };
         this._$dispatchEvent('onitemupdate',_event);
-        
+
         return _event;
     };
-    
+
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ut'),_p);
     }
-    
-    return _p;    
+
+    return _p;
 });
