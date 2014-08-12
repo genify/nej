@@ -5,13 +5,11 @@
  * @author   genify(caijf@corp.netease.com)
  * --------------------------------------------
  */
+/** @module base/klass */
 NEJ.define([
     './global.js',
     '{platform}util.js'
 ],function(NEJ,_u,_p,_o,_f,_r){
-    /**
-     * @module base/klass
-     */
     /**
      * 定义类，通过此api定义的类具有以下特性：
      *
@@ -143,7 +141,7 @@ NEJ.define([
              *
              * @method _$extend
              * @param  {Function} arg0 - 父类
-             * @param  {Boolean}  arg1 - 是否拷贝父类的静态方法
+             * @param  {Boolean}  arg1 - 是否拷贝父类的静态方法，默认拷贝父类静态方法
              * @return {Object}   扩展类的prototype对象
              */
             _Klass._$extend = function(_super,_static){

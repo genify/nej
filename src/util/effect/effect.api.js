@@ -1,5 +1,5 @@
 NEJ.define([
-    '{lib}base/element.js',
+    'base/element',
     '{lib}base/event.js',
     '{lib}base/util.js',
     '{platform}effect.api.js',

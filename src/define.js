@@ -380,6 +380,7 @@
                 return _uri;
             }
             // lib/base/klass -> {lib}base/klass.js
+            // pro/util/a     -> {pro}util/a.js
             var _arr = _uri.split('/'),
                 _path = __config.root(_arr[0]);
             if (!!_path){
