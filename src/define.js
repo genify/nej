@@ -775,53 +775,45 @@
      */
     p.NEJ = {};
     /**
-     * 模块定义，单个文件内模块依赖关系自行解决，支持依赖注入，使用方式如
+     * 模块定义，单个文件只允许定义一个模块，即只允许执行一次NEJ.define，模块执行函数支持依赖列表注入和名字空间两种方式
      * 
      * ```javascript
+     * // 依赖{lib}base/global.js和{lib}base/util.js
+     * NEJ.define([
+     *    '{lib}base/global.js',
+     *    '{lib}base/util.js'
+     * ],function(NEJ,u,p,o,f,r){
+     *     // u - {lib}base/util.js文件返回的api集合
+     *     // p - 允许外界调用的类或者API均定义在p空间下
+     *     // o - 注入的空对象 {}
+     *     // f - 注入的空函数 function(){return !1;}
+     *     // r - 注入的空数组 []
      * 
-     *  // 定义自己的文件标识为{lib}base/event.js
-     *  // 依赖{lib}base/global.js和{lib}base/util.js
-     *  define([
-     *     '{lib}base/global.js',
-     *     '{lib}base/util.js'
-     *  ],function(NEJ,_u){
-     *      // TODO something
-     *  });
+     *     // TODO something
+     *      
+     *     // 返回允许外界使用的对象
+     *     return p;
+     * });
+     * ```
      * 
-     *  // 依赖于{lib}base/global.js文件
-     *  define(['{lib}base/global.js'],
-     *  function(){
-     *      // TODO something
-     *  });
-     *  
-     *  // 定义自己的文件标识为{lib}base/event.js
-     *  // 没有依赖其他文件
-     *  define('{lib}base/event.js',
-     *  function(){
-     *      // TODO something
-     *  });
+     * ```javascript
+     * // 不依赖其他文件，等价于直接执行
+     * NEJ.define(function(p,o,f,r){
+     *     // TODO something
+     *      
+     *     return p;
+     * });
+     * ```
      * 
-     *  // 不依赖其他文件
-     *  // 等价于直接执行(function(){})()
-     *  define(
-     *  function(){
-     *      // TODO something
-     *  });
-     *  
-     *  // 仅用于引入依赖文件列表而不执行业务逻辑
-     *  define(['{lib}base/global.js']);
-     *  
-     *  // 定义自己的文件标识为{lib}base/event.js
-     *  // 仅用于引入依赖文件列表而不执行业务逻辑
-     *  define('{lib}base/event.js',
-     *        ['{lib}base/global.js']);
-     * 
+     * ```javascript 
+     * // 仅用于引入依赖文件列表而不执行业务逻辑
+     * NEJ.define(['{lib}base/global.js']);
      * ```
      * 
      * @method NEJ.define
-     * @param  {String}   uri - 当前文件路径标识，不传自动解析
-     * @param  {Array}    dep - 模块依赖的其他模块文件，没有依赖其他文件可不传此参数
-     * @param  {Function} def - 模块定义回调
+     * @param  {String}   arg0 - 当前文件路径标识，不传自动解析，建议不传此参数
+     * @param  {Array}    arg1 - 模块依赖的其他模块文件，没有依赖其他文件可不传此参数
+     * @param  {Function} arg2 - 模块定义回调，依赖列表中文件返回的执行结果会依次注入此回调中，回调返回的结果可被其他文件依赖时注入
      * @return {Void}
      */
     NEJ.define = function(_uri,_deps,_callback){
@@ -845,62 +837,73 @@
     /**
      * 根据条件判断是否在当前平台执行，
      * 平台支持TR|WR|GR，没有比较操作符表示支持当前内核所有release版本
-     * [ntb]
-     * 标识符 | 说明
-     * --------------------------
-     *  T    | Trident引擎，如ie
-     *  W    | Webkit引擎，如chrome
-     *  G    | Gecko引擎，如firefox
-     * [/ntb]
+     * 
+     *  | 标识符 | 说明 |
+     *  | :--   | :-- |
+     *  | T     | Trident引擎，如ie |
+     *  | W     | Webkit引擎，如chrome |
+     *  | G     | Gecko引擎，如firefox |
      * 
      * 平台内置的Trident引擎版本对应的IE版本关系：
-     * [ntb]
-     * Trident版本 | IE版本
-     * --------------------
-     *  2.0       | 6
-     *  3.0       | 7
-     *  4.0       | 8
-     *  5.0       | 9
-     *  6.0       | 10
-     *  7.0       | 11
-     * [/ntb]
      * 
-     * 代码举例
-     * [code]
-     *     NEJ.define(['./hack.js'],
-     *     function(){
-     *         // 针对trident平台的处理逻辑
-     *         NEJ.patch('TR',function(){
+     *  | Trident版本 | IE版本 |
+     *  | :-- | :-- |
+     *  | 2.0 | 6   |
+     *  | 3.0 | 7   |
+     *  | 4.0 | 8   |
+     *  | 5.0 | 9   |
+     *  | 6.0 | 10  |
+     *  | 7.0 | 11  |
+     * 
+     * patch文件必须符合以下规则：
+     * * 只允许执行若干NEJ.patch
+     * * NEJ.patch中只允许修改hack.js注入的对象里的API
+     * * 定义函数必须返回hack.js注入的对象
+     * 
+     * ```javascript
+     * NEJ.define([
+     *     './hack.js'
+     * ],function(h,p,o,f,r){
+     *     // 针对trident平台的处理逻辑
+     *     NEJ.patch('TR',function(){
+     *         // TODO
+     *         console.log('from inline ie');
+     *         h.api = function(){
      *             // TODO
-     *             console.log('from inline ie');
-     *          });
-     *          // 针对webkit平台的处理逻辑
-     *          NEJ.patch('WR',['./hack.chrome.js'],function(){
-     *              // TODO
-     *              console.log('from inline chrome');
-     *          });
-     *          // 针对gecko平台的处理逻辑
-     *          NEJ.patch('GR',['./hack.firefox.js'],function(){
-     *              // TODO
-     *              console.log('from inline firefox');
-     *          });
-     *       
-     *          // 针对IE6平台的处理逻辑
-     *          NEJ.patch('TR==2.0',['./hack.ie6.js']);
-     *       
-     *          // 针对IE7-IE9的处理逻辑
-     *          NEJ.patch('3.0<=TR<=5.0',function(){
-     *              // TODO
-     *              console.log('from inline ie7-ie9');
-     *          });
-     *   });
-     * [/code]
+     *         };
+     *     });
      * 
-     * @api    {NEJ.patch}
-     * @param  {String}    平台识别条件，如：6<=TR<=9
-     * @param  {Array}     依赖文件列表
-     * @param  {Function}  执行函数
-     * @return {Void}  
+     *     // 针对webkit平台的处理逻辑
+     *     NEJ.patch('WR',['./hack.chrome.js'],function(wk){
+     *         // TODO
+     *         console.log('from inline chrome');
+     *     });
+     * 
+     *     // 针对gecko平台的处理逻辑
+     *     NEJ.patch('GR',['./hack.firefox.js'],function(gk){
+     *         // TODO
+     *         console.log('from inline firefox');
+     *     });
+     *       
+     *     // 针对IE6平台的处理逻辑
+     *     NEJ.patch('TR==2.0',['./hack.ie6.js']);
+     *       
+     *     // 针对IE7-IE9的处理逻辑
+     *     NEJ.patch('3.0<=TR<=5.0',function(){
+     *         // TODO
+     *         console.log('from inline ie7-ie9');
+     *     });
+     *     
+     *     // 必须返回hack.js注入的对象
+     *     return h;
+     * });
+     * ```
+     * 
+     * @method NEJ.patch
+     * @param  {String}   arg0 - 平台识别条件，如：6<=TR<=9
+     * @param  {Array}    arg1 - 依赖文件列表
+     * @param  {Function} arg2 - 执行函数
+     * @return {Void}
      */
     NEJ.patch = function(_exp,_deps,_callback){
         var _args = _doFormatARG.apply(
@@ -928,47 +931,47 @@
      * 载入依赖配置，对于老项目或者使用第三方框架的项目，可以使用此接口配置
      * 
      * 项目某个页面加载的脚本列表
-     * [code type="html"]
-     *   <script src="./a.js"></script>
-     *   <script src="./b.js"></script>
-     *   <script src="./c.js"></script>
-     *   <script src="./d.js"></script>
-     *   <script src="./e.js"></script>
-     *   <script src="./f.js"></script>
-     * [/code]
+     * 
+     * ```html
+     * <script src="./a.js"></script>
+     * <script src="./b.js"></script>
+     * <script src="./c.js"></script>
+     * <script src="./d.js"></script>
+     * <script src="./e.js"></script>
+     * <script src="./f.js"></script>
+     * ```
      * 
      * 根据脚本规则提取文件的依赖关系，没有依赖其他文件可不配置，假设页面入口文件为f.js
-     * [code]
-     *   var deps = {
-     *       '{pro}f.js':['{pro}d.js'],
-     *       '{pro}e.js':['{pro}a.js','{pro}b.js','{pro}c.js'],
-     *       '{pro}c.js':['{pro}b.js'],
-     *       '{pro}b.js':['{pro}a.js']
-     *   };
-     * [/code]
+     * 
+     * ```javascript
+     * var deps = {
+     *     '{pro}f.js':['{pro}d.js'],
+     *     '{pro}e.js':['{pro}a.js','{pro}b.js','{pro}c.js'],
+     *     '{pro}c.js':['{pro}b.js'],
+     *     '{pro}b.js':['{pro}a.js']
+     * };
+     * ```
      * 
      * 通过NEJ.deps配置依赖关系，假设以下配置文件的路径为./deps.js
-     * [code]
-     *   NEJ.deps(deps,['{pro}f.js']);
-     * [/code]
+     * 
+     * ```javascript
+     * NEJ.deps(deps,['{pro}f.js']);
+     * ```
      * 
      * 修改页面使用文件依赖管理，使用d参数配置依赖文件地址
-     * [code type="html"]
+     * 
+     * ```html
      *   <script src="http://nej.netease.com/nej/src/define.js?d=./deps.js&pro=./"></script>
      *   <script src="./f.js"></script>
-     * [/code]
+     * ```
      * 
      * 之后项目只需要维护deps.js中的依赖配置信息即可
-     * 说明：
-     * 开发阶段deps.js中配置的文件均会被载入页面中，
-     * 发布上线时仅提取页面使用到的脚本，
-     * 比如上例中页面只用到f.js，
-     * 通过配置文件可以发现f.js只依赖了d.js，
-     * 因此这个页面最终发布时只会导出d.js和f.js
      * 
-     * @api    {NEJ.deps}
-     * @param  {Object}   依赖映射表，如'{pro}a.js':['{pro}b.js','{pro}c.js']
-     * @param  {Array}    入口屏蔽文件列表，页面载入依赖配置文件中的文件时不载入此列表中的文件，多为页面入口文件
+     * 说明：开发阶段deps.js中配置的文件均会被载入页面中，发布上线时仅提取页面使用到的脚本，比如上例中页面只用到f.js，通过配置文件可以发现f.js只依赖了d.js，因此这个页面最终发布时只会导出d.js和f.js
+     * 
+     * @method NEJ.deps
+     * @param  {Object} arg0 - 依赖映射表，如'{pro}a.js':['{pro}b.js','{pro}c.js']
+     * @param  {Array}  arg1 - 入口屏蔽文件列表，页面载入依赖配置文件中的文件时不载入此列表中的文件，多为页面入口文件
      * @return {Void}
      */
     NEJ.deps = function(_map,_entry){
@@ -996,33 +999,31 @@
         document.writeln(_arr.join(''));
     };
     /**
-     * 是否兼容模式，兼容模式下支持使用名字控件使用API和控件<br/>
+     * 是否兼容模式，兼容模式下支持用全局名字空间使用API和控件
      * 
-     * 代码举例
-     * [code]
-     *   if (CMPT){
-     *       // TODO something
-     *       // 此中的代码块在配置文件中将OBF_COMPATIBLE设置为false情况下打包输出时将被忽略
-     *   }
-     * [/code]
+     * ```javascript
+     * if (CMPT){
+     *     // TODO something
+     *     // 此中的代码块在打包配置文件中将OBF_COMPATIBLE设置为false情况下打包输出时将被忽略
+     * }
+     * ```
      * 
-     * @const {CMPT}
-     * @type  {Boolean}
+     * @name CMPT
+     * @constant {Boolean}
      */
     p.CMPT = !0;
     /**
-     * 是否调试模式，打包时调试模式下的代码将被过滤<br/>
+     * 是否调试模式，打包时调试模式下的代码将被过滤
      * 
-     * 代码举例
-     * [code]
-     *   if (DEBUG){
-     *       // TODO something
-     *       // 此中的代码块在打包发布后被过滤，不会输出到结果中
-     *   }
-     * [/code]
+     * ```javascript
+     * if (DEBUG){
+     *     // TODO something
+     *     // 此中的代码块在打包发布后被过滤，不会输出到结果中
+     * }
+     * ```
      * 
-     * @const {DEBUG}
-     * @type  {Boolean}
+     * @name DEBUG
+     * @constant {Boolean}
      */
     p.DEBUG = !0;
     // init

@@ -14,15 +14,15 @@ NEJ.define(function(_p,_o,_f,_r){
     /**
      * AOP增强操作，增强操作接受一个输入参数包含以下信息
      *
-     *  | 参数名称 | 参数类型 | 参数描述 |
-     *  | :-- | :-- | :-- |
-     *  | args | Array | 函数调用时实际输入参数，各增强操作中可以改变值后将影响至后续的操作 |
-     *  | value | Variable | 输出结果 |
-     *  | stopped | Boolean | 是否结束操作，终止后续操作 |
+     *  | 参数名称 | 参数类型  | 参数描述 |
+     *  | :--     | :--      | :-- |
+     *  | args    | Array    | 函数调用时实际输入参数，各增强操作中可以改变值后将影响至后续的操作 |
+     *  | value   | Variable | 输出结果 |
+     *  | stopped | Boolean  | 是否结束操作，终止后续操作 |
      *
-     * @method  Function#_$aop
-     * @param  {Function} before - 之前操作，接受一个输入参数，见描述信息
-     * @param  {Function} after  - 之后操作，接受一个输入参数，见描述信息
+     * @method Function#_$aop
+     * @param  {Function} arg0 - 前置操作，接受一个输入参数，见描述信息
+     * @param  {Function} arg1 - 后置操作，接受一个输入参数，见描述信息
      * @return {Function} 增强后操作函数
      */
     _extpro._$aop = function(_before,_after){
@@ -43,24 +43,23 @@ NEJ.define(function(_p,_o,_f,_r){
      * 绑定接口及参数，使其的调用对象保持一致
      *
      *  ```javascript
-     *  var _obj = {a:0};
+     *  var scope = {a:0};
      * 
-     *  var _fun = function(_a,_b){
+     *  var func = function(a,b){
      *      // 第一个参数 ：1
-     *      console.log(_a);
+     *      console.log(a);
      *      // 第二个参数 ： 2
-     *      consoel.log(_b);
+     *      consoel.log(b);
      *      // 当前this.a ： 0
      *      console.log(this.a);
      *  };
      * 
-     *  _fun._$bind(_obj,"1")(2);
+     *  func._$bind(scope,"1")(2);
      *  ```
      *
      * @method Function#_$bind
-     * @see    {@link Function#_$bind2}
-     * @param  {Object}   scope  - 需要保持一致的对象，null表示window对象
-     * @param  {Variable} args.. - [argument0[,argument1 ...]] 函数调用时需要的参数
+     * @see    Function#_$bind2
+     * @param  {Object}   arg0 - 需要保持一致的对象，null表示window对象，此参数外的其他参数作为绑定参数
      * @return {Function} 返回绑定后的函数
      */
     _extpro._$bind = function() {
@@ -80,24 +79,23 @@ NEJ.define(function(_p,_o,_f,_r){
      * _$bind优先传入绑定时参数，_$bind2优先传入调用时参数
      *
      *  ```javascript
-     *  var _obj = {a:0};
+     *  var scope = {a:0};
      * 
-     *  var _fun = function(_a,_b){
+     *  var func = function(a,b){
      *      // 第一个参数 ：2
-     *      console.log(_a);
+     *      console.log(a);
      *      // 第二个参数 ： 1
-     *      console.log(_b);
+     *      consoel.log(b);
      *      // 当前this.a ： 0
      *      console.log(this.a);
      *  };
      * 
-     *  _fun._$bind2(_obj,"1")(2);
+     *  func._$bind(scope,"1")(2);
      *  ```
      *
      * @method Function#_$bind2
-     * @see    {@link Function#_$bind}
-     * @param  {Object}   scope  - 需要保持一致的对象，null表示window对象
-     * @param  {Variable} args.. - [argument0[,argument1 ...]] 函数调用时需要的参数
+     * @see    Function#_$bind
+     * @param  {Object}   arg0   - 需要保持一致的对象，null表示window对象，此参数外的其他参数作为绑定参数
      * @return {Function} 返回绑定后的事件函数
      */
     _extpro._$bind2 = function() {
