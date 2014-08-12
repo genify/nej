@@ -28,7 +28,7 @@ NEJ.define([
      * 复杂表情控件
      *
      * @class   {nej.ui._$$ComplexPortrait}
-     * @extends {nej.ut._$$Event}
+     * @extends {nej.ut._$$EventTarget}
      * @uses    {nej.ut._$$Portrait}
      * @param   {Object} 可选配置参数，已处理参数列表如下
      *

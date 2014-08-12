@@ -44,7 +44,7 @@ var f = function(){
      *    });
      * [/code]
      * @class   {nej.ut._$$SelectHelper} 音频播放控件
-     * @extends {nej.ut._$$Event}
+     * @extends {nej.ut._$$EventTarget}
      * @param   {Object} 可选配置参数，已处理参数列表如下所示
      * @config  {String|Node} parent   容器节点，从该容器开始往上遍历找到设置了tabindex大于1000的节点来响应键盘上下事件，找不到为document
      * @config  {String}      clazz    用于标识可选择的节点，不传则为body下的子节点
@@ -66,7 +66,7 @@ var f = function(){
      * @config  {Node} target  当前选中项
      */
     _p._$$SelectHelper = NEJ.C();
-    _pro = _p._$$SelectHelper._$extend(_p._$$Event);
+    _pro = _p._$$SelectHelper._$extend(_p._$$EventTarget);
     /**
      * 控件重置
      * @param  {Object} 配置信息

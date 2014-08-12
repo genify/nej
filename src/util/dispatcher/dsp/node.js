@@ -47,7 +47,7 @@ NEJ.define([
      * [/code]
      * 
      * @class    {_$$Node}
-     * @extends  {util/event#_$$Event}
+     * @extends  {util/event#_$$EventTarget}
      * 
      * @param    {Object} 可选配置参数
      * @config   {_$$Node}  parent 父节点
@@ -56,7 +56,7 @@ NEJ.define([
      * 
      */
     _p._$$Node = NEJ.C();
-    _pro = _p._$$Node._$extend(_t._$$Event);
+    _pro = _p._$$Node._$extend(_t._$$EventTarget);
     /**
      * 控件初始化
      * @protected

@@ -19,7 +19,7 @@ NEJ.define([
      * 资源加载器
      * 
      * @class   {_$$Loader} 资源加载器
-     * @extends {_$$Event}
+     * @extends {_$$EventTarget}
      * @param   {Object} 可选配置参数，已处理的参数列表如下所示
      * @config  {String} version 版本信息
      * @config  {Number} timeout 超时时间，0表示禁止超时监测
@@ -38,7 +38,7 @@ NEJ.define([
      * @event  {onloading} 
      */
     _p._$$Loader = _k._$klass();
-    _pro = _p._$$Loader._$extend(_t._$$Event);
+    _pro = _p._$$Loader._$extend(_t._$$EventTarget);
     /**
      * 控件初始化
      * @protected

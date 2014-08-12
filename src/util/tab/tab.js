@@ -42,7 +42,7 @@ var f = function(){
      *   _tb._$go(2);
      * [/code]
      * @class   {nej.ut._$$Tab} 标签切换控件封装
-     * @extends {nej.ut._$$Event}
+     * @extends {nej.ut._$$EventTarget}
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {Array}   list     标签项列表
      * @config  {Number}  index    初始选中项索引值，默认为0
@@ -62,7 +62,7 @@ var f = function(){
      * 
      */
     _p._$$Tab = NEJ.C();
-    _pro = _p._$$Tab._$extend(_p._$$Event);
+    _pro = _p._$$Tab._$extend(_p._$$EventTarget);
     /**
      * 控件重置
      * @protected

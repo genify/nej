@@ -18,7 +18,7 @@ var f = function(){
      * 富媒体编辑器工具栏封装，输入的命令节点需使用以下属性标识
      *  - data-command    指定执行的命令，没有设置此属性将被忽略
      * @class   {nej.ut._$$EditorToolbar} 富媒体编辑器工具栏封装
-     * @extends {nej.ut._$$Event}
+     * @extends {nej.ut._$$EventTarget}
      * @param   {Object} _options 可选配置参数，已处理参数列表如下
      * @config  {Array}     list      命令节点列表
      * @config  {String} selected 命令选中样式，默认为js-selected
@@ -32,7 +32,7 @@ var f = function(){
      * @config {Node}   node 被命令影响的节点
      */
     _p._$$EditorToolbar = NEJ.C();
-      _proEditorToolbar = _p._$$EditorToolbar._$extend(_p._$$Event);
+      _proEditorToolbar = _p._$$EditorToolbar._$extend(_p._$$EventTarget);
     /**
      * 控件初始化
      * @protected

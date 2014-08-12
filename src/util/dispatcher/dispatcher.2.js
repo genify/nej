@@ -104,7 +104,7 @@ NEJ.define([
      * 
      * @singleton
      * @class    {_$$Dispatcher}
-     * @extends  {_$$Event}
+     * @extends  {_$$EventTarget}
      * 
      * @uses     {_$$Node}
      * @uses     {_$$GroupManager}
@@ -180,7 +180,7 @@ NEJ.define([
      * @config   {Object} query 查询参数解析出来的对象
      */
     _p._$$Dispatcher = _k._$klass();
-    _pro = _p._$$Dispatcher._$extend(_t2._$$Event);
+    _pro = _p._$$Dispatcher._$extend(_t2._$$EventTarget);
     /**
      * 控件初始化
      * @protected

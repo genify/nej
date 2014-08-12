@@ -26,7 +26,7 @@ NEJ.define([
      * @config  {_$$Dispatcher} dispatcher 调度器实例
      */
     _p._$$AbstractModule = _k._$klass();
-    _pro = _p._$$AbstractModule._$extend(_t0._$$Event);
+    _pro = _p._$$AbstractModule._$extend(_t0._$$EventTarget);
     /**
      * 控件初始化
      * @protected

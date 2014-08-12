@@ -41,7 +41,7 @@ NEJ.define([
      *
      */
     _p._$$SimpleSlider = _k._$klass();
-    _pro = _p._$$SimpleSlider._$extend(_t._$$Event);
+    _pro = _p._$$SimpleSlider._$extend(_t._$$EventTarget);
     /**
      * 控件重置
      * @param  {Object} 配置参数

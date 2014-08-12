@@ -44,7 +44,7 @@ NEJ.define([
      * [/code]
      * 
      * @class   {_$$DataBase}
-     * @extends {_$$Event}
+     * @extends {_$$EventTarget}
      * 
      * @param   {Object} 配置参数
      * @config  {String} namespace 名字空间，默认随机生成，格式[DB].[TB]，如 music.track
@@ -63,7 +63,7 @@ NEJ.define([
      * 
      */
     _p._$$DataBase = _k._$klass();
-    _pro = _p._$$DataBase._$extend(_t._$$Event);
+    _pro = _p._$$DataBase._$extend(_t._$$EventTarget);
     /**
      * 控件重置
      * @protected

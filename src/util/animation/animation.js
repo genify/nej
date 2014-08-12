@@ -16,7 +16,7 @@ NEJ.define([
     /**
      * 动画基类
      * @class   {nej.ut._$$Animation} 动画基类
-     * @extends {nej.ut._$$Event}
+     * @extends {nej.ut._$$EventTarget}
      *
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {Object} to    动画结束信息
@@ -68,7 +68,7 @@ NEJ.define([
      *
      */
     _p._$$Animation = _k._$klass();
-    _pro = _p._$$Animation._$extend(_t._$$Event);
+    _pro = _p._$$Animation._$extend(_t._$$EventTarget);
     /**
      * 控件重置
      * @protected

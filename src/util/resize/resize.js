@@ -114,7 +114,7 @@ var f = function(){
      *   });
      * [/code]
      * @class   {nej.ut._$$Resize} 区域大小调节功能封装
-     * @extends {nej.ut._$$Event}
+     * @extends {nej.ut._$$EventTarget}
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {Node}         view  视窗节点，默认为documentElement或body节点
      * @config  {String|Node}  body  大小变化区域节点
@@ -160,7 +160,7 @@ var f = function(){
      * 
      */
     _p._$$Resize = NEJ.C();
-      _proResize = _p._$$Resize._$extend(_p._$$Event);
+      _proResize = _p._$$Resize._$extend(_p._$$EventTarget);
     /**
      * 控件重置
      * @protected

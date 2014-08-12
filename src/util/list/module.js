@@ -23,7 +23,7 @@ NEJ.define([
      * 列表模块基类
      * 
      * @class   {_$$ListModule}
-     * @extends {_$$Event}
+     * @extends {_$$EventTarget}
      * 
      * @param   {Object}               可选配置参数
      * @config  {String|Node}   parent 列表容器节点
@@ -147,7 +147,7 @@ NEJ.define([
      * @event  {onerror}
      */
     _p._$$ListModule = _k._$klass();
-    _pro = _p._$$ListModule._$extend(_t0._$$Event);
+    _pro = _p._$$ListModule._$extend(_t0._$$EventTarget);
     /**
      * 控件重置
      * @protected

@@ -73,7 +73,7 @@ NEJ.define([
      *      });
      * [/code]
      * @class   {nej.ut._$$Effect}
-     * @extends {nej.ut._$$Event}
+     * @extends {nej.ut._$$EventTarget}
      * @param   {Object}       可选配置参数，已处理参数列表如下
      * @config  {String|Node}  node       动画节点
      * @config  {Array}        transition 动画属性列表
@@ -95,7 +95,7 @@ NEJ.define([
      * @return {Void}
      */
     _p._$$Effect = _k._$klass();
-    _pro = _p._$$Effect._$extend(_t._$$Event);
+    _pro = _p._$$Effect._$extend(_t._$$EventTarget);
 
     /**
      * 初始化方法

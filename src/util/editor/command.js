@@ -19,13 +19,13 @@ var f = function(){
      * - 指定命令识别名称，通过指定类的name属性实现
      * - 实现命令的具体业务逻辑，通过重写_$execute接口实现
      * @class   {nej.ut._$$EditorCommand} 富媒体编辑器执行命令封装
-     * @extends {nej.ut._$$Event}
+     * @extends {nej.ut._$$EventTarget}
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {nej.ut._$$EditorArea}       area       编辑器核心
      * @config  {nej.ut._$$EditorToolBar} toolbar 工具栏实例
      */
     _p._$$EditorCommand = NEJ.C();
-      _proEditorCommand = _p._$$EditorCommand._$extend(_p._$$Event);
+      _proEditorCommand = _p._$$EditorCommand._$extend(_p._$$EventTarget);
     /**
      * 注册命令实现
      * @method {_$regist}

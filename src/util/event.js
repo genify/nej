@@ -31,7 +31,7 @@ NEJ.define([
      *       // 第一步
      *       // 定义控件类，从父类继承
      *       _p._$$Widget = _k._$klass();
-     *       _pro = _p._$$Widget._$extend(_p._$$Event);
+     *       _pro = _p._$$Widget._$extend(_p._$$EventTarget);
      *   
      *       // 第二步
      *       // 重写控件初始化业务逻辑
@@ -77,11 +77,11 @@ NEJ.define([
      *   });
      * [/code]
      * 
-     * @class {_$$Event}
+     * @class {_$$EventTarget}
+     * 
      * @param {Object} 配置参数，根据控件实际情况提供配置参数支持
      *
      * [hr]
-     * 
      * 控件回收前触发事件，控件在具体实现时如需触发回收前的事件<br/>
      * 
      * 脚本举例
@@ -105,7 +105,6 @@ NEJ.define([
      * @param  {Object} 事件触发信息
      *
      * [hr]
-     * 
      * 控件回收后触发事件，控件在具体实现时如需触发回收后的事件<br/>
      * 
      * 脚本举例
@@ -129,8 +128,8 @@ NEJ.define([
      * @event  {onaftercycle}
      * @param  {Object} 事件触发信息
      */
-    _p._$$Event = _k._$klass();
-    _pro = _p._$$Event.prototype;
+    _p._$$EventTarget = _k._$klass();
+    _pro = _p._$$EventTarget.prototype;
     /**
      * 控件分配，NEJ框架提供的所有控件统一使用分配和回收机制，
      * 分配空间时会优先考虑使用前面回收的同种控件，只有在没有可用控件的情况下才会实例化新的控件<br/>
@@ -153,7 +152,7 @@ NEJ.define([
      * @param  {Object} 配置参数，根据控件实际情况提供配置参数支持
      * @return {Object} Event对象
      */
-    _p._$$Event._$allocate = function(_options){
+    _p._$$EventTarget._$allocate = function(_options){
         _options = _options||{};
         var _instance = !!this.__pool
                         &&this.__pool.shift();
@@ -182,10 +181,10 @@ NEJ.define([
      * 
      * @static
      * @method {_$recycle}
-     * @param  {_$$Event|Array} 待回收实例或者实例列表
+     * @param  {_$$EventTarget|Array} 待回收实例或者实例列表
      * @return {Void}
      */
-    _p._$$Event._$recycle = (function(){
+    _p._$$EventTarget._$recycle = (function(){
         var _doRecycle = function(_item,_index,_list){
             _item._$recycle();
             _list.splice(_index,1);
@@ -254,7 +253,7 @@ NEJ.define([
      * @param  {Object} 配置参数，根据控件实际情况提供配置参数支持
      * @return {Void}
      */
-    _p._$$Event._$getInstance = function(_options){
+    _p._$$EventTarget._$getInstance = function(_options){
         if (!this.__instance){
             this.__instance = this._$allocate(_options);
         }
@@ -289,7 +288,7 @@ NEJ.define([
      * @param  {Boolean} 是否需要先清理已有实例
      * @return {Void}
      */
-    _p._$$Event._$getInstanceWithReset = function(_options,_clear){
+    _p._$$EventTarget._$getInstanceWithReset = function(_options,_clear){
         // clear instance
         if (!!_clear&&!!this.__inctanse){
             this.__inctanse._$recycle();
@@ -744,6 +743,7 @@ NEJ.define([
     };
     
     if (CMPT){
+        _p._$$EventTarget = _p._$$EventTarget;
         NEJ.copy(NEJ.P('nej.ut'),_p);
     }
     

@@ -89,12 +89,12 @@ NEJ.define([
      * [/code]
      * 
      * @class   {_$$Cache} 
-     * @extends {_$$Event}
+     * @extends {_$$EventTarget}
      * 
      * @param   {Object} 配置参数
      */
     _p._$$Cache = NEJ.C();
-    _pro = _p._$$Cache._$extend(_t._$$Event);
+    _pro = _p._$$Cache._$extend(_t._$$EventTarget);
     /**
      * 初始化函数
      * @protected

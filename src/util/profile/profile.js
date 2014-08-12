@@ -36,7 +36,7 @@ var f = function(){
      * 
      */
     p._$$ScrollPerf = NEJ.C();
-    __proScrollPerf = p._$$ScrollPerf._$extend(p._$$Event);
+    __proScrollPerf = p._$$ScrollPerf._$extend(p._$$EventTarget);
     __supScrollPerf = p._$$ScrollPerf._$supro;
     /**
      * 控件重置

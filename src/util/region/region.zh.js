@@ -36,7 +36,7 @@ var f = function(){
      *   });
      * [/code]
      * @class   {nej.ut._$$RegionSelector} 三级联动区域选择控件
-     * @extends {nej.ut._$$Event}
+     * @extends {nej.ut._$$EventTarget}
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {String|Node}                   province 省份选择控件
      * @config  {String|Node}                   city     城市选择控件
@@ -51,7 +51,7 @@ var f = function(){
      * 
      */
     _p._$$RegionSelector = NEJ.C();
-    _pro = _p._$$RegionSelector._$extend(_p._$$Event);
+    _pro = _p._$$RegionSelector._$extend(_p._$$EventTarget);
     /**
      * 控件重置
      * @protected

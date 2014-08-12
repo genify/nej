@@ -56,7 +56,7 @@ var f = function(){
      * [/code]
      * 
      * @class   {nej.ut._$$SimpleScroll}
-     * @extends {nej.ut._$$Event}
+     * @extends {nej.ut._$$EventTarget}
      * 
      * @param   {Object} _options 可选配置参数
      * @config  {Node|Object}  xbar    水平滚动条节点或者配置信息，如果不配置min值则默认取body的初始宽度，配置如{body:'bar-id',track:':parent',min:10,speed:1,left:10,right:10,step:10,hover:'js-hover'}
@@ -65,7 +65,7 @@ var f = function(){
      * @config  {String|Node}  trigger 滚动条显示隐藏触点，不传表示不做显示隐藏切换
      */
     _p._$$SimpleScroll = NEJ.C();
-    _pro = _p._$$SimpleScroll._$extend(_p._$$Event);
+    _pro = _p._$$SimpleScroll._$extend(_p._$$EventTarget);
     /**
      * 初始化控件
      * @return {Void}

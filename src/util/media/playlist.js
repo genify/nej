@@ -39,7 +39,7 @@ var f = function(){
      * [/code]
      * 
      * @class   {nej.ut._$$PlayList}
-     * @extends {nej.ut._$$Event}
+     * @extends {nej.ut._$$EventTarget}
      * 
      * @param   {Object}  可选配置参数
      * @config  {Array}   list  多媒体列表
@@ -69,7 +69,7 @@ var f = function(){
      * @config {Number}  last 上一个播放模式
      */
     _p._$$PlayList = NEJ.C();
-    _pro = _p._$$PlayList._$extend(_p._$$Event);
+    _pro = _p._$$PlayList._$extend(_p._$$EventTarget);
     /**
      * 重置控件
      * @protected

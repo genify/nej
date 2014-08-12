@@ -20,7 +20,7 @@ NEJ.define([
      * Ajax代理对象
      * 
      * @class   {_$$Proxy}
-     * @extends {_$$Event}
+     * @extends {_$$EventTarget}
      * 
      * @param   {Object}  构造配置参数
      * @config  {String}  url     请求地址
@@ -48,7 +48,7 @@ NEJ.define([
      * @config {Object} headers 请求头信息
      */
     _p._$$Proxy = _k._$klass();
-    _pro = _p._$$Proxy._$extend(_t._$$Event);
+    _pro = _p._$$Proxy._$extend(_t._$$EventTarget);
     /**
      * 控件重置
      * @protected

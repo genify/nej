@@ -20,14 +20,14 @@ NEJ.define([
      * 模块分组管理器
      * 
      * @class   {_$$GroupManager}
-     * @extends {_$$Event}
+     * @extends {_$$EventTarget}
      * 
      * @param  {Object}  可选配置参数
      * @config {_$$Node}       root       树根节点
      * @config {_$$Dispatcher} dispatcher 调度器
      */
     _p._$$GroupManager = _k._$klass();
-    _pro = _p._$$GroupManager._$extend(_t0._$$Event);
+    _pro = _p._$$GroupManager._$extend(_t0._$$EventTarget);
     /**
      * 控件重置
      * @protected

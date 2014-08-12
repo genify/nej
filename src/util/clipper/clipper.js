@@ -27,7 +27,7 @@ var f = function(){
      *   
      * [/code]
      * @class   {nej.ut._$$Clipper} 循环播放封装对象
-     * @extends {nej.ut._$$Event}
+     * @extends {nej.ut._$$EventTarget}
      * @uses    {nej.ui._$$Resizer}
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {String|Node}       mbox 裁剪容器节点
@@ -69,7 +69,7 @@ var f = function(){
      *  
      */
     _p._$$Clipper = NEJ.C();
-      _pro = _p._$$Clipper._$extend(_p._$$Event);
+      _pro = _p._$$Clipper._$extend(_p._$$EventTarget);
     /**
      * 控件初始化
      * @protected

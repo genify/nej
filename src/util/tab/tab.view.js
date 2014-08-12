@@ -43,7 +43,7 @@ var f = function(){
      *   _tv._$match('333');
      * [/code]
      * @class   {nej.ut._$$TabView}
-     * @extends {nej.ut._$$Event}
+     * @extends {nej.ut._$$EventTarget}
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {Array}   list     标签项列表
      * @config  {Number}  dataset  属性名称，默认为id
@@ -58,7 +58,7 @@ var f = function(){
      * @config {Boolean} matched 是否匹配
      */
     _p._$$TabView = NEJ.C();
-      _proTabView = _p._$$TabView._$extend(_p._$$Event);
+      _proTabView = _p._$$TabView._$extend(_p._$$EventTarget);
     /**
      * 控件重置
      * @param  {Object} 配置信息

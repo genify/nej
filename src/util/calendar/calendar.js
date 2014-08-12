@@ -67,7 +67,7 @@ NEJ.define([
      *   });
      * [/code]
      * @class   {nej.ut._$$Calendar}
-     * @extends {nej.ut._$$Event}
+     * @extends {nej.ut._$$EventTarget}
      *
      * @param   {Object}      可选配置参数，已处理参数列表如下
      * @config  {Number}      offset   开始星期偏移，默认为0，0-星期天、1-星期一 ...
@@ -100,7 +100,7 @@ NEJ.define([
      *
      */
     _p._$$Calendar = _k._$klass();
-    _pro = _p._$$Calendar._$extend(_t._$$Event);
+    _pro = _p._$$Calendar._$extend(_t._$$EventTarget);
     /**
      * 控件重置
      * @protected

@@ -37,7 +37,7 @@ NEJ.define([
      *   });
      * [/code]
      * @class   {nej.ut._$$Range} 区域大小选择功能封装
-     * @extends {nej.ut._$$Event}
+     * @extends {nej.ut._$$EventTarget}
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {Node|String} body   用于改变范围的节点或者ID
      * @config  {Node|String} parent 可选择区域节点或者ID
@@ -63,7 +63,7 @@ NEJ.define([
      *
      */
     _p._$$Range = _k._$klass();
-    _pro = _p._$$Range._$extend(_t._$$Event);
+    _pro = _p._$$Range._$extend(_t._$$EventTarget);
     /**
      * 控件初始化
      * @protected

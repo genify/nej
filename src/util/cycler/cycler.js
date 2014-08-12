@@ -44,7 +44,7 @@ NEJ.define([
      *   });
      * [/code]
      * @class   {nej.ut._$$Cycler} 循环播放封装对象
-     * @extends {nej.ut._$$Event}
+     * @extends {nej.ut._$$EventTarget}
      * @param   {Object}      可选配置参数，已处理参数列表如下
      * @config  {Array}       list         图片地址列表
      * @config  {String|Node} nbox         图片容器节点
@@ -59,7 +59,7 @@ NEJ.define([
      *
      */
     _p._$$Cycler = _k._$klass();
-    _pro = _p._$$Cycler._$extend(_t._$$Event);
+    _pro = _p._$$Cycler._$extend(_t._$$EventTarget);
     /**
      * 控件初始化
      * @protected

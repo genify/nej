@@ -35,7 +35,7 @@ NEJ.define([
      *   })
      * [/code]
      * @class   {nej.ut._$$Dragger} 区域移动功能封装
-     * @extends {nej.ut._$$Event}
+     * @extends {nej.ut._$$EventTarget}
      * @param   {Object}                   可选配置参数，已处理参数列表如下
      * @config  {Node}           view      视窗节点，默认为documentElement或body节点
      * @config  {String|Node}    body      移动控件节点
@@ -66,7 +66,7 @@ NEJ.define([
      *
      */
     _p._$$Dragger = _k._$klass();
-    _pro = _p._$$Dragger._$extend(_t._$$Event);
+    _pro = _p._$$Dragger._$extend(_t._$$EventTarget);
     /**
      * 控件重置
      * @protected

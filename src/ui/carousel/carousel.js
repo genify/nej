@@ -22,7 +22,7 @@ NEJ.define([
     /**
      * 卡片播放器对象
      * @class   {nej.ui._$$Carousel} 卡片播放器控件
-     * @extends {nej.ut._$$Event}
+     * @extends {nej.ut._$$EventTarget}
      * @param   {Object} 可选配置参数，已处理参数列表如下：
      * @config  {String|Node} parent     卡片所在父容器节点
      * @config  {Number}        mode      动画模式(1:3d;2:2d;3:left/top)
@@ -62,7 +62,7 @@ NEJ.define([
      *
      */
     _p._$$Carousel = _k._$klass();
-    _pro = _p._$$Carousel._$extend(_t._$$Event,!0);
+    _pro = _p._$$Carousel._$extend(_t._$$EventTarget,!0);
     /**
      * 控件重置
      * @protected

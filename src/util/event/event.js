@@ -41,7 +41,7 @@ NEJ.define([
      * [/code]
      * 
      * @class   {_$$CustomEvent}
-     * @extends {_$$Event}
+     * @extends {_$$EventTarget}
      * 
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {String|Node}  element 事件关联节点ID或者对象，默认为window对象
@@ -63,7 +63,7 @@ NEJ.define([
      * @param  {Object} 事件信息
      */
     _p._$$CustomEvent = _k._$klass();
-    _pro = _p._$$CustomEvent._$extend(_t._$$Event);
+    _pro = _p._$$CustomEvent._$extend(_t._$$EventTarget);
     /**
      * 控件初始化
      * @protected

@@ -45,7 +45,7 @@ NEJ.define([
      * [/code]
      * 
      * @class   {_$$ShareCache}
-     * @extends {_$$Event}
+     * @extends {_$$EventTarget}
      * 
      * [hr]
      * 缓存变化出发事件
@@ -57,7 +57,7 @@ NEJ.define([
      * @config {Variable} newValue 新数据
      */
     _p._$$ShareCache = _k._$klass();
-    _pro = _p._$$ShareCache._$extend(_t0._$$Event);
+    _pro = _p._$$ShareCache._$extend(_t0._$$EventTarget);
     /**
      * 初始化函数
      * @protected

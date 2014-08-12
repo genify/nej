@@ -36,7 +36,7 @@ var f = function(){
      *   });
      * [/code]
      * @class   {nej.ut._$$ListHolder}
-     * @extends {nej.ut._$$Event}
+     * @extends {nej.ut._$$EventTarget}
      * 
      * @param   {Object}             可选配置参数
      * @config  {String|Node}  sbody 滚动容器节点
@@ -46,7 +46,7 @@ var f = function(){
      * @config  {String}       clazz 列表项标识，默认为js-item
      */
     _p._$$ListHolder = NEJ.C();
-    _pro = _p._$$ListHolder._$extend(_p._$$Event);
+    _pro = _p._$$ListHolder._$extend(_p._$$EventTarget);
     /**
      * 控件初始化
      * @return {Void}

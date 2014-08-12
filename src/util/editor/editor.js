@@ -16,13 +16,13 @@ var f = function(){
     /**
      * 富媒体编辑器封装
      * @class   {nej.ut._$$Editor} 富媒体编辑器封装
-     * @extends {nej.ut._$$Event}
+     * @extends {nej.ut._$$EventTarget}
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {nej.ut._$$EditorArea}       area       编辑器核心区
      * @config  {nej.ut._$$EditorToolbar} toolbar 编辑器工具栏
      */
     _p._$$Editor = NEJ.C();
-    _pro = _p._$$Editor._$extend(_p._$$Event);
+    _pro = _p._$$Editor._$extend(_p._$$EventTarget);
     /**
      * 控件初始化
      * @protected

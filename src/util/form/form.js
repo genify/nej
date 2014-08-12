@@ -180,7 +180,7 @@ var f = function(){
      * [/code]
      * 
      * @class   {nej.ut._$$WebForm}
-     * @extends {nej.ut._$$Event}
+     * @extends {nej.ut._$$EventTarget}
      * 
      * @param   {Object}      配置参数
      * @config  {String|Node} form    表单节点
@@ -237,7 +237,7 @@ var f = function(){
      * @return  {Void}
      */
     _p._$$WebForm = NEJ.C();
-      _pro = _p._$$WebForm._$extend(_p._$$Event);
+      _pro = _p._$$WebForm._$extend(_p._$$EventTarget);
     /**
      * 控件初始化
      * @protected

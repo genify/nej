@@ -83,7 +83,7 @@ NEJ.define([
      * [/code]
      *
      * @class   {_$$Media}
-     * @extends {util/event#_$$Event}
+     * @extends {util/event#_$$EventTarget}
      *
      * @param   {Object} 可选配置参数
      * @config  {String} url    多媒体文件地址
@@ -123,7 +123,7 @@ NEJ.define([
      *
      */
     _p._$$Media = _k._$klass();
-    _pro = _p._$$Media._$extend(_t._$$Event);
+    _pro = _p._$$Media._$extend(_t._$$EventTarget);
     /**
      * 重置控件
      * @protected

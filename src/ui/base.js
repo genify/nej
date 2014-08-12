@@ -32,14 +32,14 @@ NEJ.define([
      * [/code]
      *
      * @class   {_$$Abstract}
-     * @extends {_$$Event}
+     * @extends {_$$EventTarget}
      *
      * @param   {Object} 可选配置参数
      * @config  {String}               clazz  控件样式
      * @config  {String|Node|Function} parent 控件所在容器节点或者追加控件节点执行函数
      */
     _p._$$Abstract = _k._$klass();
-    _pro = _p._$$Abstract._$extend(_t._$$Event);
+    _pro = _p._$$Abstract._$extend(_t._$$EventTarget);
     /**
      * 初始化
      * @protected
