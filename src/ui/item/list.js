@@ -9,7 +9,7 @@ NEJ.define([
     '{lib}base/global.js',
     '{lib}base/klass.js',
     '{lib}ui/item/item.js'
-],function(NEJ,_k,_u,_p,_o,_f,_r){
+],function(NEJ,_k,_i0,_p,_o,_f,_r){
     var _pro;
     /**
      * 列表项基类对象
@@ -29,7 +29,7 @@ NEJ.define([
      *
      */
     _p._$$ListItem = _k._$klass();
-    _pro = _p._$$ListItem._$extend(_u._$$Item);
+    _pro = _p._$$ListItem._$extend(_i0._$$Item);
     /**
      * 控件重置
      * @protected

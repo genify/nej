@@ -12,7 +12,7 @@ NEJ.define([
     '{lib}base/util.js',
     '{lib}ui/base.js',
     '{lib}util/template/jst.js'
-],function(NEJ,_k,_e,_u,_t,_y,_p,_o,_f,_r){
+],function(NEJ,_k,_e,_u,_i,_t0,_p,_o,_f,_r){
     // variable declaration
     var _pro,
         _seed_css,
@@ -91,7 +91,7 @@ NEJ.define([
      *
      */
     _p._$$AbstractPager = _k._$klass();
-    _pro = _p._$$AbstractPager._$extend(_t._$$Abstract);
+    _pro = _p._$$AbstractPager._$extend(_i._$$Abstract);
     /**
      * 控件重置
      * @protected
@@ -142,10 +142,10 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__doResetNumber = function(_data){
-        _y._$renderHtmlTemplate(
+        _t0._$renderHtmlTemplate(
             this.__body,_seed_page,_data
         );
-        var _seed = _y._$getHtmlTemplateSeed();
+        var _seed = _t0._$getHtmlTemplateSeed();
         this.__popt.list = _e._$getByClassName(
                 this.__body,
                 'js-i-'+_seed
@@ -321,7 +321,7 @@ NEJ.define([
       .#<uispace> .js-disabled{cursor:default;}\
       .#<uispace> .js-selected{cursor:default;background:#bbb;}\
     ');
-    _seed_page = _y._$addHtmlTemplate('\
+    _seed_page = _t0._$addHtmlTemplate('\
       {trim}\
       {if !defined("noprv")||!noprv}\
         <a href="#" class="zbtn zprv ${\'js-p-\'|seed}">${label.prev||"上一页"}</a>\

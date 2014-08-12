@@ -5,8 +5,8 @@ var f = function(){
         _e = _('nej.e'),
         _p = _('nej.ui'),
         _ut= _('nej.ut');
-        
-        
+
+
     //开始单元测试
     test('datepick-ui',function(){
         stop();
@@ -20,7 +20,7 @@ var f = function(){
 		_dp._$setDate('2012-12-21');
 		_dp._$getDate();
     });
-    
+
     test('datepick-util',function(){
         expect(0);
         var pDate = new Date(1997,7,9)

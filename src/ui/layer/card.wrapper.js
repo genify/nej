@@ -13,7 +13,7 @@ NEJ.define([
     '{lib}base/util.js',
     '{lib}ui/layer/layer.wrapper.js',
     '{lib}ui/layer/card.js'
-],function(NEJ,_k,_e,_v,_u,_u0,_u1,_p,_o,_f,_r){
+],function(NEJ,_k,_e,_v,_u,_i0,_i1,_p,_o,_f,_r){
     var _pro;
     /**
      * 弹出卡片封装基类对象，主要实现层里面内容部分的业务逻辑<br />
@@ -44,7 +44,7 @@ NEJ.define([
      *
      */
     _p._$$CardWrapper = _k._$klass();
-    _pro = _p._$$CardWrapper._$extend(_u0._$$LayerWrapper);
+    _pro = _p._$$CardWrapper._$extend(_i0._$$LayerWrapper);
     /**
      * 卡片绑定到执行节点上<br />
      * 脚本举例
@@ -177,7 +177,7 @@ NEJ.define([
      * @return {nej.ui._$$Layer} 弹层控件实例
      */
     _pro.__getLayerInstance = function(){
-        return _u1._$$Card._$allocate(this.__lopt);
+        return _i1._$$Card._$allocate(this.__lopt);
     };
     /**
      * 初始化弹层控件可选配置参数

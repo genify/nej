@@ -5,24 +5,24 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}util/event.js',
+    '{lib}util/timer/animation.js'
+],function(NEJ,_k,_t,_t0,_p,_o,_f,_r){
     // variable declaration
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _f = NEJ.F,
-        _p = _('nej.ut'),
-        _pro;
-    if (!!_p._$$Animation) return;
+    var _pro;
     /**
      * 动画基类
      * @class   {nej.ut._$$Animation} 动画基类
      * @extends {nej.ut._$$Event}
-     * 
+     *
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {Object} to    动画结束信息
      * @config  {Object} from  动画初始信息
      * @config  {Number} delay 延时时间，单位毫秒，默认0
-     * 
+     *
      * [hr]
      * 动画结束回调事件
      * [code]
@@ -41,7 +41,7 @@ var f = function(){
      *  var _bounce = nej.ut._$$AnimBounce._$allocate(options);
      * [/code]
      * @event  {onstop} 动画停止的回调
-     * 
+     *
      * [hr]
      * 动画过程回调事件
      * [code]
@@ -65,10 +65,10 @@ var f = function(){
      * @param  {Object}          可选配置参数
      * @config {Number} offset   偏移量
      * @config {Number} velocity 初速度(px/s)
-     * 
+     *
      */
-    _p._$$Animation = NEJ.C();
-    _pro = _p._$$Animation._$extend(_p._$$Event);
+    _p._$$Animation = _k._$klass();
+    _pro = _p._$$Animation._$extend(_t._$$Event);
     /**
      * 控件重置
      * @protected
@@ -79,7 +79,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         this.__end = _options.to||_o;
         this.__begin = _options.from||{};
         this.__delay = Math.max(
@@ -93,7 +93,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         this._$stop();
         if (!!this.__dtime){
             window.clearTimeout(this.__dtime);
@@ -117,7 +117,7 @@ var f = function(){
             this._$stop();
             return;
         }
-        this.__timer = requestAnimationFrame(
+        this.__timer = _t0.requestAnimationFrame(
                        this.__onAnimationFrame._$bind(this));
     };
     /**
@@ -147,13 +147,13 @@ var f = function(){
      *  _bounce._$play();
      * [/code]
      * @method {_$play}
-     * @return {nej.ut._$$Animation}
+     * @return {Void}
      */
     _pro._$play = (function(){
         var _doPlayAnim = function(){
             this.__dtime = window.clearTimeout(this.__dtime);
             this.__begin.time = +new Date;
-            this.__timer = requestAnimationFrame(
+            this.__timer = _t0.requestAnimationFrame(
                 this.__onAnimationFrame._$bind(this)
             );
         };
@@ -162,7 +162,6 @@ var f = function(){
                 _doPlayAnim._$bind(this),
                 this.__delay
             );
-            return this;
         };
     })();
     /**
@@ -185,18 +184,18 @@ var f = function(){
      *  // 停止动画,触发onstop
      *  _bounce._$stop();
      * [/code]
-     * 
+     *
      * @method {_$stop}
-     * @return {nej.ut._$$Animation}
+     * @return {Void}
      */
     _pro._$stop = function(){
-        this.__timer = cancelRequestAnimationFrame(this.__timer);
+        this.__timer = _t0.cancelRequestAnimationFrame(this.__timer);
         this._$dispatchEvent('onstop',arguments);
-        return this;
     };
-};
-NEJ.define(
-    '{lib}util/animation/animation.js',[
-    '{lib}util/event.js',
-    '{lib}util/timer/animation.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});

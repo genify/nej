@@ -9,8 +9,9 @@ NEJ.define([
     '{lib}base/global.js',
     '{lib}base/klass.js',
     '{lib}base/element.js',
-    '{lib}ui/editor/command/font.js'
-],function(NEJ,_k,_e,_u,_p,_o,_f,_r){
+    '{lib}ui/editor/command/font.js',
+    '{lib}util/template/tpl.js'
+],function(NEJ,_k,_e,_i0,_t0,_p,_o,_f,_r){
     var _pro,
         _seed_html;
     /**
@@ -26,7 +27,7 @@ NEJ.define([
      *
      */
     _p._$$FontNameCard = _k._$klass();
-    _pro = _p._$$FontNameCard._$extend(_u._$$FontCard);
+    _pro = _p._$$FontNameCard._$extend(_i0._$$FontCard);
     /**
      * 字体选项列表
      * @type Array
@@ -63,7 +64,7 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__initNodeTemplate = function(){
-        _seed_html = _e._$addNodeTemplate(
+        _seed_html = _t0._$addNodeTemplate(
                      '<div class="'+this.__seed_css+'">'
                      +this.__doGenFontListXhtml({
                          style:'font-family'

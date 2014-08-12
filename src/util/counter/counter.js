@@ -5,12 +5,12 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _f = NEJ.F,
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _u = _('nej.u');
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/element.js',
+    '{lib}base/event.js',
+    '{lib}base/util.js'
+],function(NEJ,_e,_v,_u,_p,_o,_f,_r){
     /**
      * 输入框计数器，使用属性设置输入的总长度限制，
      * 以下两个属性只能同时设置一个，maxlength优先级高于data-max-length
@@ -19,7 +19,7 @@ var f = function(){
      *   data-max-length | 输入长度必须小于此设置，一个中文算两个字符，适用于text/textarea
      *   maxlength       | 输入长度必须小于此设置，一个中文算一个字符，适用于text/textarea
      * [/ntb]
-     * 
+     *
      * 结构举例：
      * [code type="html"]
      *   <input type="text" id="input-id-0" maxlength="100"/>
@@ -27,13 +27,13 @@ var f = function(){
      *   <textarea id="textarea-id-0" maxlength="100"></textarea>
      *   <textarea id="textarea-id-1" data-max-length="100"></textarea>
      * [/code]
-     * 
+     *
      * 脚本举例：
      * [code]
      *   // 统一定义名字空间所写
      *   var _  = NEJ.P,
      *       _e = _('nej.e');
-     * 
+     *
      *   // 使用属性
      *   _e._$counter('input-id-0',{
      *          onchange:function(_event){
@@ -42,7 +42,7 @@ var f = function(){
      *       }
      *   });
      * [/code]
-     * 
+     *
      * @api    {nej.e._$counter}
      * @param  {String|Node} 输入节点
      * @param  {Object}      配置参数
@@ -52,7 +52,7 @@ var f = function(){
      * @config {Function} onchange 字数变化触发回调，{input:'xx',length:2,delta:98}
      * @return {Void}
      */
-    _e._$counter = (function(){
+    _p._$counter = (function(){
         var _reg0 = /[\r\n]/gi,
             _cache = {}; // {id:{max:123,id:'xxx',onchange:function,onlength:function}}
         // calculate string length
@@ -77,7 +77,7 @@ var f = function(){
             var _id = _e._$id(_element);
             if (!_id||!!_cache[_id]) return;
             // check config
-            var _conf = NEJ.X({},_options);
+            var _conf = _u._$merge({},_options);
             _conf.onchange = _conf.onchange||_f;
             _conf.onlength = _doLength;
             if (!_conf.max){
@@ -98,9 +98,10 @@ var f = function(){
             _onChange(_id);
         };
     })();
-};
-NEJ.define(
-    '{lib}util/counter/counter.js',[
-    '{lib}base/element.js',
-    '{lib}base/event.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.e'),_p);
+    }
+
+    return _p;
+});

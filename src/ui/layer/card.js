@@ -11,7 +11,7 @@ NEJ.define([
     '{lib}base/element.js',
     '{lib}base/event.js',
     '{lib}ui/layer/layer.js'
-],function(NEJ,_k,_e,_v,_u,_p,_o,_f,_r){
+],function(NEJ,_k,_e,_v,_i0,_p,_o,_f,_r){
     var _pro,
         _seed_css;
     /**
@@ -50,7 +50,7 @@ NEJ.define([
      * @config  {Boolean} nostop 是否禁用事件阻止
      */
     _p._$$Card = _k._$klass();
-    _pro = _p._$$Card._$extend(_u._$$Layer);
+    _pro = _p._$$Card._$extend(_i0._$$Layer);
     /**
      * 控件重置
      * @protected

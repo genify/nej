@@ -5,39 +5,43 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/constant.js',
+    '{lib}base/element.js',
+    '{lib}base/event.js',
+    '{lib}base/util.js',
+    '{lib}ui/base.js',
+    '{lib}ui/pager/pager.simple.js',
+    '{lib}util/list/module.pager.js',
+    '{lib}util/template/tpl.js',
+    '{lib}util/template/jst.js'
+],function(NEJ,_k,_g,_e,_v,_u,_i,_i0,_t0,_t1,_t2,_p,_o,_f,_r){
     // variable declaration
-    var _  = NEJ.P,
-        _g = _('nej.g'),
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _t = _('nej.ut'),
-        _p = _('nej.ui'),
-        _pro,
+    var _pro,
         _seed_css,
         _seed_html;
-    if (!!_p._$$Portrait) return;
     /**
      * 表情控件
-     * 
+     *
      * @class   {nej.ui._$$Portrait}
      * @extends {nej.ui._$$Abstract}
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {Number} size  表情大小，30或60，默认为30，目前支持30*30和60*60
      * @config  {String} page  分页标识前缀，默认为js-page-
      * @config  {Object} cache 数据缓存配置
-     * 
+     *
      * [hr]
      * 表情选中事件
      * @event   {onselect}
      * @param   {Object} 表情数据对象
      * @config  {String} text 表情描述
      * @config  {String} url  表情文件地址
-     * 
+     *
      */
-    _p._$$Portrait = NEJ.C();
-    _pro = _p._$$Portrait._$extend(_p._$$Abstract);
+    _p._$$Portrait = _k._$klass();
+    _pro = _p._$$Portrait._$extend(_i._$$Abstract);
     /**
      * 控件初始化
      * @return {Void}
@@ -50,11 +54,11 @@ var f = function(){
             pager:{
                 fixed:!0,
                 clazz:'zpager',
-                klass:_p._$$SimplePager
+                klass:_i0._$$SimplePager
             },
             onpagechange:this.__onChangePage._$bind(this)
         };
-        this.__supInit();
+        this.__super();
     };
     /**
      * 控件重置
@@ -69,7 +73,7 @@ var f = function(){
             30:{row:6,col:10,size:30}
         };
         return function(_options){
-            this.__supReset(_options);
+            this.__super(_options);
             this.__mopt.cache = _options.cache;
             var _conf = _iconf[_options.size]||_iconf['30'];
             this.__prefix = _options.page||'js-page-';
@@ -79,7 +83,7 @@ var f = function(){
                 this.__nprv.parentNode,
                 'js-prev-'+_conf.size
             );
-            this.__mdl = _t._$$ListModulePG._$allocate(this.__mopt);
+            this.__mdl = _t0._$$ListModulePG._$allocate(this.__mopt);
         };
     })();
     /**
@@ -87,7 +91,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         if (!!this.__mdl){
             this.__mdl._$recycle();
             delete this.__mdl;
@@ -116,7 +120,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__initNode = function(){
-        this.__supInitNode();
+        this.__super();
         // build preview
         this.__nprv = new Image();
         var _node = _e._$create('div','js-prev');
@@ -255,22 +259,23 @@ var f = function(){
         .#<uispace> .js-prev-30{width:60px;height:60px;}\
         .#<uispace> .js-prev-30 img{display:none;}\
     ');
-    _seed_html = _e._$addNodeTemplate('\
+    _seed_html = _t1._$addNodeTemplate('\
         <div class="'+_seed_css+'">\
           <div class="zlst j-flag"></div>\
           <div class="zpbx j-flag"></div>\
         </div>\
     ');
-    _seed_ilist = _e._$addHtmlTemplate('\
+    _seed_ilist = _t2._$addHtmlTemplate('\
         {list beg..end as y}\
           {var x=xlist[y]}\
           <a href="#" hidefocus="true" class="zitm z${size} z${size}-${y%(row*col)}" title="${x.text}"\
              data-id="${x.id}" data-align="{if y%col<col/2}right{else}left{/if} top">${x.text}</a>\
         {/list}\
     ');
-};
-NEJ.define('{lib}ui/portrait/portrait.js',
-          ['{lib}base/config.js'
-          ,'{lib}base/constant.js'
-          ,'{lib}ui/pager/pager.simple.js'
-          ,'{lib}util/list/module.pager.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui'),_p);
+    }
+
+    return _p;
+});

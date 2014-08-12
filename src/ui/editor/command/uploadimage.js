@@ -13,8 +13,9 @@ NEJ.define([
     '{lib}base/util.js',
     '{lib}ui/layer/window.wrapper.js',
     '{lib}util/tab/tab.js',
-    '{lib}util/flash/flash.js'
-],function(NEJ,_k,_e,_v,_u,_u0,_t0,_t1,_p,_o,_f,_r){
+    '{lib}util/flash/flash.js',
+    '{lib}util/template/tpl.js'
+],function(NEJ,_k,_e,_v,_u,_i0,_t0,_t1,_t2,_p,_o,_f,_r){
     var _pro,
         _seed_css,
         _seed_html;
@@ -58,7 +59,7 @@ NEJ.define([
      *
      */
     _p._$$UploadImageCard = _k._$klass();
-    _pro = _p._$$UploadImageCard._$extend(_u0._$$WindowWrapper);
+    _pro = _p._$$UploadImageCard._$extend(_i0._$$WindowWrapper);
 
     /**
      * 重置卡片
@@ -326,7 +327,7 @@ NEJ.define([
       .#<uispace> .u-btn{cursor:pointer;color:#528CE0;}\
       .#<uispace> .u-image{width:0px;height:0px;visibility:hidden;}');
     // ui html code
-    _seed_html = _e._$addNodeTemplate('\
+    _seed_html = _t2._$addNodeTemplate('\
       <div>\
         <div>\
           <a class="u-btn f-ib upload j-tab f-fl" name="upload"><span class="img-upload">上传图片</span></a>\

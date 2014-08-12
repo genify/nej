@@ -5,12 +5,14 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/util.js',
+    '{lib}util/animation/bezier.js'
+],function(NEJ,_k,_u,_t0,_p,_o,_f,_r){
     // variable declaration
-    var _  = NEJ.P,
-        _p = _('nej.ut'),
-        _pro;
-    if (!!_p._$$AnimEaseOut) return;
+    var _pro;
     /**
      * 先快后慢动画<br/>
      * 页面结构举例
@@ -46,8 +48,8 @@ var f = function(){
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {String} timing   时间函数，easeout
      */
-    _p._$$AnimEaseOut = NEJ.C();
-    _pro = _p._$$AnimEaseOut._$extend(_p._$$AnimBezier);
+    _p._$$AnimEaseOut = _k._$klass();
+    _pro = _p._$$AnimEaseOut._$extend(_t0._$$AnimBezier);
     /**
      * 控件重置
      * @protected
@@ -57,12 +59,8 @@ var f = function(){
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        _options = NEJ.X({},_options);
+        _options = _u._$merge({},_options);
         _options.timing = 'easeout';
-        this.__supReset(_options);
+        this.__super(_options);
     };
-};
-NEJ.define(
-    '{lib}util/animation/easeout.js',[
-    '{lib}util/animation/bezier.js'
-],f);
+});

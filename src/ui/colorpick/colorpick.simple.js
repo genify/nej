@@ -10,8 +10,10 @@ NEJ.define([
     '{lib}base/klass.js',
     '{lib}base/element.js',
     '{lib}base/event.js',
-    '{lib}ui/base.js'
-],function(NEJ,_k,_e,_v,_u,_p,_o,_f,_r){
+    '{lib}ui/base.js',
+    '{lib}util/template/tpl.js',
+    '{lib}util/template/jst.js'
+],function(NEJ,_k,_e,_v,_i,_t0,_t1,_p,_o,_f,_r){
     var _pro,
         _seed_css,
         _seed_html,
@@ -45,7 +47,7 @@ NEJ.define([
      *
      */
     _p._$$SimpleColorPick = _k._$klass();
-    _pro = _p._$$SimpleColorPick._$extend(_u._$$Abstract);
+    _pro = _p._$$SimpleColorPick._$extend(_i._$$Abstract);
     /**
      * 控件重置
      * @protected
@@ -188,7 +190,7 @@ NEJ.define([
         .#<uispace> .zbox2 .zitm2{width:10px;height:10px;margin:-1px 0 0 -1px;border-color:#000;}'
     );
     // ui html code
-    _seed_html = _e._$addNodeTemplate('\
+    _seed_html = _t0._$addNodeTemplate('\
         <div class="'+_seed_css+'">\
           <a class="zdft" title="去除颜色" href="#">\
             <span class="zprv j-flag">&nbsp;</span>\
@@ -197,7 +199,7 @@ NEJ.define([
         </div>'
     );
     // color list
-    _seed_color = _e._$addHtmlTemplate('\
+    _seed_color = _t1._$addHtmlTemplate('\
         {list xlist as x}\
         <a class="zitm" title="${x.t}" style="background-color:${x.v}" data-value="${x.v}" href="#">&nbsp;</a>\
         {/list}'

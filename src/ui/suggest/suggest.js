@@ -5,17 +5,18 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _e = _('nej.e'),
-        _u = _('nej.u'),
-        _t = _('nej.ut'),
-        _p = _('nej.ui'),
-        _seed_css,
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{lib}base/util.js',
+    '{lib}ui/base.js',
+    '{lib}util/suggest/suggest.js',
+    '{lib}util/template/tpl.js'
+],function(NEJ,_k,_e,_u,_i,_t0,_t1,_p,_o,_f,_r){
+    var _seed_css,
         _seed_item,
         _pro;
-    if (!!_p._$$Suggest) return;
     /**
      * 提示建议控件<br />
      * 页面结构举例
@@ -33,7 +34,7 @@ var f = function(){
      *   };
      *   // 选择某一项的回调
      *   var _onselect = function(_value){
-     *       // 返回选中的值 
+     *       // 返回选中的值
      *   };
      *   // 生成下拉列表实例
      *   var _suggest = _ui._$$Suggest._$allocate({
@@ -47,20 +48,20 @@ var f = function(){
      * @extends {nej.ui._$$Abstract}
      * @param   {Object} 可选配置参数，已处理参数列表如下
      * @config  {Node|String} input 输入框节点或者ID
-     * 
+     *
      * [hr]
-     * 
+     *
      * @event  {onselect} 选中触发事件
      * @param  {String}   选中值
-     * 
+     *
      * [hr]
-     * 
+     *
      * @event  {onchange} 输入内容变化触发事件
      * @param  {String}   输入内容
-     * 
+     *
      */
-    _p._$$Suggest = NEJ.C();
-    _pro = _p._$$Suggest._$extend(_p._$$Abstract);
+    _p._$$Suggest = _k._$klass();
+    _pro = _p._$$Suggest._$extend(_i._$$Abstract);
     /**
      * 控件初始化
      * @protected
@@ -72,7 +73,7 @@ var f = function(){
             onchange:this.__onChange._$bind(this)
            ,onselect:this.__onSelect._$bind(this)
         };
-        this.__supInit();
+        this.__super();
     };
     /**
      * 控件重置
@@ -82,10 +83,10 @@ var f = function(){
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         this.__sopt.input = _e._$get(_options.input);
         this.__sopt.input.insertAdjacentElement('afterEnd',this.__body);
-        this.__suggest = _t._$$Suggest._$allocate(this.__sopt);
+        this.__suggest = _t0._$$Suggest._$allocate(this.__sopt);
     };
     /**
      * 控件销毁
@@ -98,7 +99,7 @@ var f = function(){
             this.__suggest._$recycle();
             delete this.__suggest;
         }
-        this.__supDestroy();
+        this.__super();
         delete this.__sopt.input;
     };
     /**
@@ -117,7 +118,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__initNode = function(){
-        this.__supInitNode();
+        this.__super();
         this.__sopt.body = this.__body;
     };
     /**
@@ -150,7 +151,7 @@ var f = function(){
      * @method {_$setList}
      * @param  {String|Array} 列表html代码或者数据列表
      * @param  {String}       列表项标识样式
-     * @return {nej.ui._$$Suggest}
+     * @return {Void}
      */
     _pro._$setList = function(_html,_clazz){
         if (_u._$isArray(_html))
@@ -160,7 +161,6 @@ var f = function(){
         this.__suggest._$setList(!_clazz
             ? _e._$getChildren(this.__body)
             : _e._$getByClassName(this.__body,_clazz));
-        return this;
     };
     // ui css text
     _seed_css = _e._$pushCSSText('\
@@ -170,14 +170,15 @@ var f = function(){
         .#<uispace> .js-selected{background:#1257F9;}\
     ');
     // item html
-    _seed_item = _e._$addHtmlTemplate('\
+    _seed_item = _t1._$addHtmlTemplate('\
         {if defined("xlist")&&!!xlist.length}\
           {list xlist as x}<div class="zitm">${x}</div>{/list}\
         {/if}\
     ');
-};
-NEJ.define(
-    '{lib}ui/suggest/suggest.js',[
-    '{lib}ui/base.js',
-    '{lib}util/suggest/suggest.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui'),_p);
+    }
+
+    return _p;
+});

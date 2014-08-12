@@ -11,10 +11,11 @@ NEJ.define([
     '{lib}base/config.js',
     '{lib}base/element.js',
     '{lib}base/event.js',
+    '{lib}util/template/tpl.js',
     '{lib}ui/base.js',
     '{lib}ui/colorpick/colorpanel.js',
     '{lib}ui/colorpick/util.js'
-],function(NEJ,_k,_c,_e,_v,_u,_u0,_u1,_p,_o,_f,_r){
+],function(NEJ,_k,_c,_e,_v,_t0,_i,_i0,_i1,_p,_o,_f,_r){
     var _pro,
         _seed_css,
         _seed_html;
@@ -61,7 +62,7 @@ NEJ.define([
      *
      */
     _p._$$ColorPick = _k._$klass();
-    _pro = _p._$$ColorPick._$extend(_u0._$$Abstract);
+    _pro = _p._$$ColorPick._$extend(_i._$$Abstract);
     /**
      * 控件初始化
      * @protected
@@ -83,7 +84,7 @@ NEJ.define([
         this.__super(_options);
         this.__default = _options.defaultColor||'#fff';
         this.__popt.color = _options.color||this.__default;
-        this.__panel = _p._$$ColorPanel._$allocate(this.__popt);
+        this.__panel = _i0._$$ColorPanel._$allocate(this.__popt);
     };
     /**
      * 控件销毁
@@ -113,7 +114,7 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__initNode = function(){
-        this.__superNode();
+        this.__super();
         var _list = _e._$getByClassName(this.__body,'js-ztag');
         this.__ninput = _list[2];
         this.__npreview = _list[1];
@@ -154,7 +155,7 @@ NEJ.define([
      */
     _pro.__onColorSelect = function(){
         var _color = '#'+this.__ninput.value.trim();
-        if (!_u1._$isColor(_color))
+        if (!_i1._$isColor(_color))
             return;
         this.__panel._$setColor(_color);
         _color = '#'+this.__ninput.value.trim();
@@ -197,7 +198,7 @@ NEJ.define([
         .#<uispace> .zinf .ztxt{width:56px;height:13px;line-height:13px;}\
         .#<uispace> .zinf .zbtn{width:49px;height:20px;line-height:20px;padding:0;cursor:pointer;}');
     // ui html code
-    _seed_html = _e._$addNodeTemplate('\
+    _seed_html = _t0._$addNodeTemplate('\
         <div class="'+_seed_css+'">\
           <div class="zinf">\
             <span class="zfl zes zbx js-ztag" title="清除颜色">&nbsp;</span>\

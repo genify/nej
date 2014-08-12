@@ -5,17 +5,21 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{lib}base/event.js',
+    '{lib}base/util.js',
+    '{lib}ui/base.js',
+    '{lib}util/gesture/tap.js',
+    '{lib}util/gesture/drag.js',
+    '{lib}util/animation/bounce.js',
+    '{lib}util/animation/easeout.js',
+    '{lib}util/animation/decelerate.js'
+],function(NEJ,_k,_e,_v,_u,_i,_t0,_t1,_t2,_t3,_t4,_p,_o,_f,_r){
     // variable declaration
-    var o = NEJ.O,
-        f = NEJ.F,
-        e = NEJ.P('nej.e'),
-        v = NEJ.P('nej.v'),
-        u = NEJ.P('nej.u'),
-        t = NEJ.P('nej.ut'),
-        p = NEJ.P('nej.ui'),
-        __proScroller,
-        __supScroller;
+    var _pro;
     /**
      * 滚动控件
      * @class   滚动控件
@@ -35,15 +39,14 @@ var f = function(){
      *                           onbouncestart [Function]    - 弹性开始触发事件
      *                           onrelease     [Function]    - 释放滚动触发事件
      */
-    p._$$Scroller = NEJ.C();
-    __proScroller = p._$$Scroller._$extend(p._$$Abstract);
-    __supScroller = p._$$Scroller._$supro;
+    _p._$$Scroller = _k._$klass();
+    _pro = _p._$$Scroller._$extend(_i._$$Abstract);
     /**
      * 初始化控件
      * @return {Void}
      */
-    __proScroller.__init = function(){
-        this.__supInit();
+    _pro.__init = function(){
+        this.__super();
         this.__momentum = {};
         this.__config = this.__getConfig();
         this.__alopt = {from:{},to:{},
@@ -65,14 +68,14 @@ var f = function(){
      * 取滚动配置信息，子类实现具体逻辑
      * @return {Object} 滚动配置信息
      */
-    __proScroller.__getConfig = f;
+    _pro.__getConfig = f;
     /**
      * 控件重置
      * @param  {Object} _options 可选配置参数
      * @return {Void}
      */
-    __proScroller.__reset = function(_options){
-        this.__supReset(_options);
+    _pro.__reset = function(_options){
+        this.__super(_options);
         this.__doInitDomEvent([
             [this.__parent.parentNode,'touchstart',v._$stopDefault],
             [this.__parent.parentNode,'touchmove',v._$stopDefault]
@@ -82,26 +85,26 @@ var f = function(){
         this.__animate = {minvelocity:1,
                           bcfactor:0.5,minbar:1/5,
                           reset:300,acceleration:30};
-        NEJ.EX(this.__animate,_options.config);
-        this.__cbox = e._$get(_options.container)||
-                      e._$getChildren(this.__parent)[0];
-        e._$addClassName(this.__cbox,this.__seed+'-view');
+        _u._$fetch(this.__animate,_options.config);
+        this.__cbox = _e._$get(_options.container)||
+                      _e._$getChildren(this.__parent)[0];
+        _e._$addClassName(this.__cbox,this.__seed+'-view');
     };
     /**
      * 控件销毁
      * @return {Void}
      */
-    __proScroller.__destroy = function(){
-        this.__supDestroy();
-        e._$delClassName(this.__cbox,this.__seed+'-view');
+    _pro.__destroy = function(){
+        this.__super();
+        _e._$delClassName(this.__cbox,this.__seed+'-view');
         delete this.__offset;
-        e._$setStyle(this.__cbox,'transform','');
+        _e._$setStyle(this.__cbox,'transform','');
     };
     /**
      * 刷新滚动控件参数
      * @return {Void}
      */
-    __proScroller.__refresh = (function(){
+    _pro.__refresh = (function(){
         var _offset = function(_element,_attr){
             if (!_element) return 0;
             var _value = _element[_attr];
@@ -129,7 +132,7 @@ var f = function(){
      * 清理定时器
      * @return {Void}
      */
-    __proScroller.__clearScrollBarTimer = function(){
+    _pro.__clearScrollBarTimer = function(){
         if (!this.__timer) return;
         this.__timer = window.clearTimeout(this.__timer);
     };
@@ -137,7 +140,7 @@ var f = function(){
      * 显示滚动条
      * @return {Void}
      */
-    __proScroller.__showScrollBar = function(){
+    _pro.__showScrollBar = function(){
         if (!this.__barable||
             !this.__scrollable) return;
         this.__clearScrollBarTimer();
@@ -147,7 +150,7 @@ var f = function(){
      * 隐藏滚动条
      * @return {Void}
      */
-    __proScroller.__hideScrollBar = function(){
+    _pro.__hideScrollBar = function(){
         if (!this.__barable||
             !this.__scrollable) return;
         this.__clearScrollBarTimer();
@@ -160,8 +163,8 @@ var f = function(){
      * 取偏移量
      * @return {Number} 偏移量
      */
-    __proScroller.__getOffset = function(){
-        var _transform = e._$matrix(e.
+    _pro.__getOffset = function(){
+        var _transform = _e._$matrix(e.
             _$getStyle(this.__cbox,'transform'));
         return parseInt(_transform[this.__config.dx])||0;
     };
@@ -173,7 +176,7 @@ var f = function(){
      *                          =0  - 非弹性超出
      *                          >0  - 上超出
      */
-    __proScroller.__getOutofBounce = function(_offset){
+    _pro.__getOutofBounce = function(_offset){
         var _out = _offset==null?this.__offset:_offset;
         if (this.__bpoint[0]<=_out&&
             this.__bpoint[1]>=_out)
@@ -188,7 +191,7 @@ var f = function(){
      * @param  {Boolean} _force 强制刷新
      * @return {Void}
      */
-    __proScroller.__doRefresh = function(_force){
+    _pro.__doRefresh = function(_force){
         _force = !!_force||this.__offset===undefined;
         if (!!_force) this.__refresh();
     };
@@ -196,7 +199,7 @@ var f = function(){
      * 恢复弹性
      * @return {Void}
      */
-    __proScroller.__doRevertBounce = function(_offset,_duration){
+    _pro.__doRevertBounce = function(_offset,_duration){
         var _distance = this.__getOutofBounce();
         if (_distance!=0&&!this.__linear){
             var _end = _offset!=null ? _offset
@@ -204,7 +207,7 @@ var f = function(){
             this.__alopt.duration = _duration||200;
             this.__alopt.from.offset = this.__offset;
             this.__alopt.to.offset = _end;
-            this.__linear = t._$$AnimEaseOut._$allocate(this.__alopt);
+            this.__linear = _t3._$$AnimEaseOut._$allocate(this.__alopt);
             this.__linear._$play();
             return !0;
         }
@@ -213,7 +216,7 @@ var f = function(){
      * 弹性恢复动画回收
      * @return {Void}
      */
-    __proScroller.__doStopBounceRevert = function(){
+    _pro.__doStopBounceRevert = function(){
         if (!!this.__linear)
             this.__linear = this.__linear._$recycle();
         this.__skip = !1;
@@ -223,14 +226,14 @@ var f = function(){
      * @param  {Number} _offset 偏移量
      * @return {Void}
      */
-    __proScroller.__doUpdateBounceRevert = function(_event){
+    _pro.__doUpdateBounceRevert = function(_event){
         this.__doScrollTo(_event.offset);
     };
     /**
      * 减速动画回收
      * @return {Void}
      */
-    __proScroller.__doStopDecelerate = function(_nohide){
+    _pro.__doStopDecelerate = function(_nohide){
         if (!!this.__decelerator)
             this.__decelerator = this.__decelerator._$recycle();
         if (!_nohide){
@@ -244,25 +247,25 @@ var f = function(){
      * @param  {Number} _velocity 当前速度
      * @return {Void}
      */
-    __proScroller.__doUpdateDecelerate = function(_event){
+    _pro.__doUpdateDecelerate = function(_event){
         var _offset = _event.offset,
             _velocity = _event.velocity,
             _distance = this.__getOutofBounce(_offset);
         if (_distance==0){
             this.__doScrollTo(_offset);
             return;
-        } 
+        }
         this.__doStopDecelerate(!0);
         this.__abopt.from.velocity = _velocity;
         this.__abopt.from.offset = this.__bpoint[_distance<0?0:1];//this.__offset;
-        this.__bouncer = t._$$AnimBounce._$allocate(this.__abopt);
+        this.__bouncer = _t2._$$AnimBounce._$allocate(this.__abopt);
         this.__bouncer._$play();
     };
     /**
      * 弹性动画回收
      * @return {Void}
      */
-    __proScroller.__doStopBounce = function(){
+    _pro.__doStopBounce = function(){
         if (!!this.__bouncer)
             this.__bouncer = this.__bouncer._$recycle();
         this.__hideScrollBar();
@@ -272,7 +275,7 @@ var f = function(){
      * @param  {Number} _offset 偏移量
      * @return {Void}
      */
-    __proScroller.__doUpdateBounce = function(_event){
+    _pro.__doUpdateBounce = function(_event){
         this.__doScrollTo(_event.offset);
     };
     /**
@@ -280,7 +283,7 @@ var f = function(){
      * @param  {Number} _delta 偏移量
      * @return {Void}
      */
-    __proScroller.__doScrollBy = function(_delta){
+    _pro.__doScrollBy = function(_delta){
         this.__doScrollTo(this.__offset+_delta);
     };
     /**
@@ -288,7 +291,7 @@ var f = function(){
      * @param  {Number} _offset 偏移量
      * @return {Void}
      */
-    __proScroller.__doScrollTo = function(_offset){
+    _pro.__doScrollTo = function(_offset){
         // 正向滚动(远离顶部的滚动)：<0
         // 反向滚动(接近顶部的滚动)：>0
         var _delta = _offset-this.__offset;
@@ -301,8 +304,8 @@ var f = function(){
             this.__offset = Math.ceil(this.__offset-_delta+
                                       this.__animate.bcfactor*_delta);
         var _map = {};
-        _map[this.__config.of] = u._$fixed(this.__offset,2)+'px';
-        e._$css3d(this.__cbox,'translate',_map);
+        _map[this.__config.of] = _u._$fixed(this.__offset,2)+'px';
+        _e._$css3d(this.__cbox,'translate',_map);
         // synchronize scrollbar
         if (this.__barable){
             var _offset = Math.floor(Math.max(0,-this.__scratio*this.__offset));
@@ -316,8 +319,8 @@ var f = function(){
                 _offset = Math.min(_offset,this.__boxsize-this.__barsize);
             }
             var _map = {};
-            _map[this.__config.of] = u._$fixed(_offset,2)+'px';
-            e._$css3d(this.__body,'translate',_map);
+            _map[this.__config.of] = _u._$fixed(_offset,2)+'px';
+            _e._$css3d(this.__body,'translate',_map);
         }
         // event trigger
         if (!_bounce){
@@ -340,7 +343,7 @@ var f = function(){
      * 开始触摸触发事件
      * @return {Void}
      */
-    __proScroller.__onTouchStart = function(){
+    _pro.__onTouchStart = function(){
         // stop all animation
         if (!!this.__linear)
             this.__linear._$stop();
@@ -358,7 +361,7 @@ var f = function(){
      * @param  {Touch} _touch 触点对象
      * @return {Void}
      */
-    __proScroller.__onDragStart = function(){
+    _pro.__onDragStart = function(){
         //v._$stopBubble(_event);
         this.__refresh();
         this.__scrolling = !0;
@@ -371,7 +374,7 @@ var f = function(){
      * @param  {Touch} _touch 触点对象
      * @return {Void}
      */
-    __proScroller.__onDragging = function(_touch){
+    _pro.__onDragging = function(_touch){
         if (!this.__scrolling) return;
         var _delta = _touch.detalY;
         this.__doScrollBy(_delta);
@@ -386,7 +389,7 @@ var f = function(){
      * @param  {Touch} _touch 触点对象
      * @return {Void}
      */
-    __proScroller.__onDragEnd = function(_touch){
+    _pro.__onDragEnd = function(_touch){
         if (!this.__scrolling) return;
         this.__scrolling = !1;
         var _event = {};
@@ -395,7 +398,7 @@ var f = function(){
         if (!!_bounce){
             this.__hideScrollBar();
             return;
-        } 
+        }
         var _duration = new Date().getTime()-this.__momentum.time,
             _distance = this.__offset-this.__momentum.offset,
             _velocity = _distance/_duration*this.__animate.acceleration;
@@ -406,14 +409,14 @@ var f = function(){
         }
         this.__adopt.from.offset = this.__offset;
         this.__adopt.from.velocity = _velocity;
-        this.__decelerator = t._$$AnimDecelerate._$allocate(this.__adopt);
+        this.__decelerator = _t4._$$AnimDecelerate._$allocate(this.__adopt);
         this.__decelerator._$play();
     };
     /**
      * 动画结束触发事件
      * @return {Void}
      */
-    __proScroller.__onTransitionEnd = function(){
+    _pro.__onTransitionEnd = function(){
         this.__cbox.style.webkitTransitionDuration = '0ms';
     };
     /**
@@ -421,9 +424,9 @@ var f = function(){
      * @param  {String|Node} 控件所在容器节点
      * @return {Void}
      */
-    __proScroller._$appendTo = function(_parent){
-        __supScroller._$appendTo.apply(this,arguments);
-        this.__barable = e._$getStyle(
+    _pro._$appendTo = function(_parent){
+        this.__super();
+        this.__barable = _e._$getStyle(
              this.__body,'display')!='none';
         if (!this.__parent) return;
         this.__doInitDomEvent([
@@ -437,7 +440,7 @@ var f = function(){
      * 恢复弹性
      * @return {Void}
      */
-    __proScroller._$revertBounce = function(){
+    _pro._$revertBounce = function(){
         if (!!this.__linear)
             this.__linear._$stop();
         // skip bounce event
@@ -449,10 +452,10 @@ var f = function(){
      * @param  {String|Node} _element 检测节点
      * @return {Boolean}              是否在可视范围内
      */
-    __proScroller._$isInViewPoint = function(_element){
-        _element = e._$get(_element);
+    _pro._$isInViewPoint = function(_element){
+        _element = _e._$get(_element);
         if (!_element) return !1;
-        var _range0 = e._$offset(_element,
+        var _range0 = _e._$offset(_element,
                       this.__cbox)[this.__config.of],
             _range1 = _range0+_element.offsetHeight;
         this.__doRefresh();
@@ -464,7 +467,7 @@ var f = function(){
      * 取当前滚动高度
      * @return {Number} 滚动高度
      */
-    __proScroller._$getScrollTop = function(){
+    _pro._$getScrollTop = function(){
         this.__doRefresh();
         return Math.abs(Math.max(this.__bpoint[0],
                         Math.min(this.__bpoint[1],this.__offset)));
@@ -475,7 +478,7 @@ var f = function(){
      * @param  {Boolean} _refresh 是否需要刷新
      * @return {Void}
      */
-    __proScroller._$scrollBy = function(_delta,_refresh){
+    _pro._$scrollBy = function(_delta,_refresh){
         this.__doRefresh(_refresh);
         this._$scrollTo(Math.abs(this.__offset)+
                                 (parseInt(_delta)||0));
@@ -486,12 +489,12 @@ var f = function(){
      * @param  {Boolean} _refresh 是否需要刷新
      * @return {Void}
      */
-    __proScroller._$scrollTo = function(_offset,_refresh){
+    _pro._$scrollTo = function(_offset,_refresh){
         this.__onTouchStart();
         this.__doRefresh(_refresh);
         _offset = Math.max(this.__bpoint[0],
                   Math.min(this.__bpoint[1],0-_offset));
-        e._$setStyle(this.__cbox,'transitionDuration','150ms');
+        _e._$setStyle(this.__cbox,'transitionDuration','150ms');
         this.__doScrollTo(_offset);
         if (!!this.__timer2)
             this.__timer2 = window.clearTimeout(this.__timer2);
@@ -502,7 +505,7 @@ var f = function(){
      * @param  {Boolean} _refresh 是否需要刷新
      * @return {Void}
      */
-    __proScroller._$scrollTop = function(_refresh){
+    _pro._$scrollTop = function(_refresh){
         this.__doRefresh(_refresh);
         this._$scrollTo(Math.abs(this.__bpoint[1]));
     };
@@ -511,7 +514,7 @@ var f = function(){
      * @param  {Boolean} _refresh 是否需要刷新
      * @return {Void}
      */
-    __proScroller._$scrollMiddle = function(_refresh){
+    _pro._$scrollMiddle = function(_refresh){
         this.__doRefresh(_refresh);
         this._$scrollTo((this.__bpoint[1]-this.__bpoint[0])/2);
     };
@@ -520,7 +523,7 @@ var f = function(){
      * @param  {Boolean} _refresh 是否需要刷新
      * @return {Void}
      */
-    __proScroller._$scrollBottom = function(_refresh){
+    _pro._$scrollBottom = function(_refresh){
         this.__doRefresh(_refresh);
         this._$scrollTo(Math.abs(this.__bpoint[0]));
     };
@@ -530,16 +533,15 @@ var f = function(){
      * @param  {Boolean}     _refresh 是否需要刷新
      * @return {Void}
      */
-    __proScroller._$scrollToElement = function(_element,_refresh){
-        var _offset = e._$offset(_element,this.__cbox);
+    _pro._$scrollToElement = function(_element,_refresh){
+        var _offset = _e._$offset(_element,this.__cbox);
         if (!_offset) return;
         this._$scrollTo(_offset[this.__config.of],_refresh);
     };
-};
-NEJ.define('{lib}ui/scroller/scroller.js',
-      ['{lib}ui/base.js'
-      ,'{lib}util/gesture/tap.js'
-      ,'{lib}util/gesture/drag.js'
-      ,'{lib}util/animation/bounce.js'
-      ,'{lib}util/animation/easeout.js'
-      ,'{lib}util/animation/decelerate.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui'),_p);
+    }
+
+    return _p;
+});

@@ -11,11 +11,12 @@ NEJ.define([
     '{lib}base/config.js',
     '{lib}base/element.js',
     '{lib}base/event.js',
-    '{lib}base/util.js',
+    '{lib}util/template/tpl.js',
     '{lib}util/slider/slider.y.js',
     '{lib}util/slider/slider.xy.js',
+    '{lib}ui/base.js',
     '{lib}ui/colorpick/util.js'
-],function(NEJ,_k,_c,_e,_v,_t,_y,_xy,_u,_p,_o,_f,_r){
+],function(NEJ,_k,_c,_e,_v,_t0,_t1,_t2,_i,_i0,_p,_o,_f,_r){
     var _pro,
         _seed_css,
         _seed_html;
@@ -48,7 +49,7 @@ NEJ.define([
      *
      */
     _p._$$ColorPanel = _k._$klass();
-    _pro = _p._$$ColorPanel._$extend(_p._$$Abstract);
+    _pro = _p._$$ColorPanel._$extend(_i._$$Abstract);
     /**
      * 控件初始化
      * @protected
@@ -70,8 +71,8 @@ NEJ.define([
      */
     _pro.__reset = function(_options){
         this.__super(_options);
-        this.__lslide = _xy._$$SliderXY._$allocate(this.__dopt);
-        this.__rslide = _y._$$SliderY._$allocate(this.__sopt);
+        this.__lslide = _t2._$$SliderXY._$allocate(this.__dopt);
+        this.__rslide = _t1._$$SliderY._$allocate(this.__sopt);
         this._$setColor(_options.color||'#fff');
     };
     /**
@@ -120,7 +121,7 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__doColorChange = function(){
-        this._$dispatchEvent('onchange',_u._$hsl2color(this.__hsl));
+        this._$dispatchEvent('onchange',_i0._$hsl2color(this.__hsl));
     };
     /**
      * 亮度变化触发事件
@@ -153,7 +154,7 @@ NEJ.define([
         this.__hsl.s = _sat;
         _e._$setStyle(this.__nlprv,
                      'backgroundColor',
-                     _u._$hsl2color({
+                     _i0._$hsl2color({
                         h:this.__hsl.h
                        ,s:this.__hsl.s
                        ,l:0.5
@@ -172,8 +173,8 @@ NEJ.define([
      * @return {Void}
      */
     _pro._$setColor = function(_color){
-        if (!_u._$isColor(_color)) return;
-        this.__hsl = _u._$color2hsl(_color);
+        if (!_i0._$isColor(_color)) return;
+        this.__hsl = _i0._$color2hsl(_color);
         this.__lslide._$setPosition({
             x:this.__hsl.h
            ,y:1-this.__hsl.s
@@ -198,7 +199,7 @@ NEJ.define([
         .#<uispace> .zhlt .zdot{width:44px;background-position:0 -30px;}\
         .#<uispace> .zhlt .zshw{width:26px;background:url('+_c._$get('root')+'nej_color_mask.png) repeat-x;}');
     // ui html code
-    _seed_html = _e._$addNodeTemplate('\
+    _seed_html = _t0._$addNodeTemplate('\
         <div class="'+_seed_css+'">\
           <div class="zwrp zpnl js-ztag">\
             <span class="zdot zbg js-ztag">&nbsp;</span>\

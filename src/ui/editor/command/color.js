@@ -11,7 +11,7 @@ NEJ.define([
     '{lib}base/element.js',
     '{lib}ui/layer/card.wrapper.js',
     '{lib}ui/colorpick/colorpick.js'
-],function(NEJ,_k,_e,_u,_u0,_p,_o,_f,_r){
+],function(NEJ,_k,_e,_i0,_i1,_p,_o,_f,_r){
     var _pro,
         _seed_css;
     /**
@@ -28,7 +28,7 @@ NEJ.define([
      *
      */
     _p._$$ColorCard = _k._$klass();
-    _pro = _p._$$ColorCard._$extend(_u._$$CardWrapper);
+    _pro = _p._$$ColorCard._$extend(_i0._$$CardWrapper);
     /**
      * 控件初始化
      * @protected
@@ -75,7 +75,7 @@ NEJ.define([
      */
     _pro.__getColorPicker = function(){
         this.__copt.clazz = _seed_css;
-        return _u0._$$ColorPick._$allocate(this.__copt);
+        return _i1._$$ColorPick._$allocate(this.__copt);
     };
     /**
      * 颜色选择回调

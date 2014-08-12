@@ -14,8 +14,9 @@ NEJ.define([
     '{lib}base/config.js',
     '{lib}util/slider/slider.simple.js',
     '{lib}util/media/playlist.js',
-    '{lib}util/audio/audio.js'
-],function(NEJ,_k,_e,_v,_u,_c,_t0,_t1,_t2,_p,_o,_f,_r) {
+    '{lib}util/audio/audio.js',
+    '{lib}util/template/tpl.js'
+],function(NEJ,_k,_e,_v,_u,_c,_t0,_t1,_t2,_t3,_p,_o,_f,_r) {
     var _pro,
         _seed_css,
         _seed_html;
@@ -403,7 +404,7 @@ NEJ.define([
       .#<uispace> .m-repeatd-1{background-position:0 -225px;}\
       .#<uispace> .m-repeatc{background-position:-56px -149px;}\
       .m-cnt{width:600px;position: relative;}');
-    _seed_html = _e._$addNodeTemplate('\
+    _seed_html = _t3._$addNodeTemplate('\
       <div class="m-cnt '+_seed_css+'">\
         <div class="cse">\
           <div class="m-player">\

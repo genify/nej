@@ -1,17 +1,16 @@
-var f = function() {
-    var _  = NEJ.P,
-        _f = NEJ.F,
-        _u = _('nej.u'),
-        _e = _('nej.e'),
-        _u = _('nej.u'),
-        _h = _('nej.h'),
-        _p = _('nej.ut');
+NEJ.define([
+    '{lib}base/element.js',
+    '{lib}base/event.js',
+    '{lib}base/util.js',
+    '{platform}effect.api.js',
+    '{lib}util/effect/effect.js'
+],function(_e,_v,_u,_h,_t0,_p,_o,_f,_r) {
     /**
      * 初始化特效参数
      * @param  {Object} 特效参数
      * @return {Object} 特效参数
      */
-    _e.__initOptions = function(_options){
+    _p.__initOptions = function(_options){
         _options = _options||{};
         _options.onstop = _options.onstop||_f;
         _options.onplaystate = _options.onplaystate||_f;
@@ -23,7 +22,7 @@ var f = function() {
      * @param  {[type]} _node [description]
      * @return {[type]}       [description]
      */
-    _e.__doBeforeStart = (function(){
+    _p.__doBeforeStart = (function(){
         // 如果有一个属性是没有变化的，此属性的回调不会发生，避免此情况
         var _doCheckState = function(_node,_objs){
             var _number,_flag=true;
@@ -55,9 +54,9 @@ var f = function() {
      * @config {Number} delay    延迟时间
      * @config {String} duration 运动时间
      * @param  {Number} 1表示淡入，0表示淡出，优先使用opacity配置
-     * @return {nej.e}
+     * @return {Void}
      */
-    _e.__doFade = (function(){
+    _p.__doFade = (function(){
         // 检查节点是否隐藏
         var _doCheckDisplay = function(_node){
             var _display = _e._$getStyle(_node,'display');
@@ -72,9 +71,9 @@ var f = function() {
             // isLocked
             if(!!_node.effect) return !1;
             // attribute not change
-            if(!_e.__doBeforeStart(_node,{opacity:_opacity})) return !1;
-            _options = _e.__initOptions(_options);
-            _node.effect = _p._$$Effect._$allocate(
+            if(!_p.__doBeforeStart(_node,{opacity:_opacity})) return !1;
+            _options = _p.__initOptions(_options);
+            _node.effect = _t0._$$Effect._$allocate(
                 {
                     node:_node,
                     transition:[
@@ -87,14 +86,13 @@ var f = function() {
                     ],
                     styles:['opacity:'+_opacity],
                     onstop:function(_state,_flag){
-                        _node.effect = _p._$$Effect._$recycle(_node.effect);
+                        _node.effect = _t0._$$Effect._$recycle(_node.effect);
                         _options.onstop.call(null,_state,_flag);
                     },
                     onplaystate:_options.onplaystate._$bind(_node.effect)
                 }
             );
             _node.effect._$start();
-            return this;
         };
     }._$bind(this))();
 
@@ -126,8 +124,8 @@ var f = function() {
      * @config {String} duration 运动时间
      * @return {nej.e}
      */
-    _e._$fadeIn = function(_node,_options){
-        return _e.__doFade(_node,_options,1);
+    _p._$fadeIn = function(_node,_options){
+        return _p.__doFade(_node,_options,1);
     };
 
     /**
@@ -157,31 +155,29 @@ var f = function() {
      * @config {String} duration 运动时间
      * @return {nej.e}
      */
-    _e._$fadeOut = function(_node,_options){
-        return _e.__doFade(_node,_options,0);
+    _p._$fadeOut = function(_node,_options){
+        return _p.__doFade(_node,_options,0);
     };
 
     /**
      * 终止淡入淡出特效
      * @param  {Node|String} 节点或者节点ID
-     * @return {nej.e}      
+     * @return {Void}
      */
-    _e._$fadeStop = function(_node){
-        _e._$stopEffect(_node);
-        return this;
+    _p._$fadeStop = function(_node){
+        _p._$stopEffect(_node);
     };
 
     /**
      * 中途停止特效，直接跑到最后的目标
      * @param  {Node|String} 节点或者节点ID
-     * @return {nej.e}      
+     * @return {Void}
      */
-    _e._$stopEffect = function(_node){
+    _p._$stopEffect = function(_node){
         _node = _e._$get(_node);
         if(_node.effect && _node.effect._$stop(true)){
-            return this;
+            return;
         }
-        return this;
     };
 
     /**
@@ -209,16 +205,16 @@ var f = function() {
      * @config {String} timing   运动曲线
      * @config {Number} delay    延迟时间
      * @config {String} duration 运动时间
-     * @return {nej.e}
+     * @return {Void}
      */
-    _e._$moveTo = function(_node,_position,_options){
+    _p._$moveTo = function(_node,_position,_options){
         _node = _e._$get(_node);
         if(!!_node.effect) return !1;
-        if(!_e.__doBeforeStart(_node,_position)) return !1;
-        _options = _e.__initOptions(_options);
+        if(!_p.__doBeforeStart(_node,_position)) return !1;
+        _options = _p.__initOptions(_options);
         _options.duration = _options.duration||[];
         var _top = _position.top||0,_left= _position.left||0;
-        _node.effect = _p._$$Effect._$allocate(
+        _node.effect = _t0._$$Effect._$allocate(
             {
                 node:_node,
                 transition:[
@@ -237,14 +233,13 @@ var f = function() {
                 ],
                 styles:['top:'+_top,'left:'+_left],
                 onstop:function(_state,_flag){
-                    _node.effect = _p._$$Effect._$recycle(_node.effect);
+                    _node.effect = _t0._$$Effect._$recycle(_node.effect);
                     _options.onstop.call(null,_state,_flag);
                 },
                 onplaystate:_options.onplaystate._$bind(_node.effect)
             }
         );
         _node.effect._$start();
-        return this;
     };
 
     /**
@@ -273,18 +268,18 @@ var f = function() {
      * @config {String} timing   运动曲线
      * @config {Number} delay    延迟时间
      * @config {String} duration 运动时间
-     * @return {nej.e}
+     * @return {Void}
      */
-    _e._$slide = (function(){
+    _p._$slide = (function(){
         return function(_node,_position,_options){
             _node = _e._$get(_node);
             if(!!_node.effect) return !1;
-            _options = _e.__initOptions(_options);
+            _options = _p.__initOptions(_options);
             var _list  = _position.split(':'),
                 _pro0  = _list[0],
                 _styles= [];
             _styles.push(_position);
-            _node.effect = _p._$$Effect._$allocate(
+            _node.effect = _t0._$$Effect._$allocate(
                 {
                     node:_node,
                     transition:[
@@ -297,14 +292,13 @@ var f = function() {
                     ],
                     styles:_styles,
                     onstop:function(_state,_flag){
-                        _node.effect = _p._$$Effect._$recycle(_node.effect);
+                        _node.effect = _t0._$$Effect._$recycle(_node.effect);
                         _options.onstop.call(null,_state,_flag);
                     },
                     onplaystate:_options.onplaystate._$bind(_node.effect)
                 }
             );
             _node.effect._$start();
-            return this;
         };
     })();
 
@@ -329,16 +323,16 @@ var f = function() {
      * @config {String} timing   运动曲线
      * @config {Number} delay    延迟时间
      * @config {String} duration 运动时间
-     * @return {nej.e}
+     * @return {Void}
      */
-    _e._$toggleEffect = (function(){
+    _p._$toggleEffect = (function(){
         var _doCheck = function(_node,_type){
             return _type == 'height' ? _node.clientHeight : _node.clientWidth;
         };
         return function(_node,_type,_options){
             _node = _e._$get(_node);
             if(!!_node.effect) return !1;
-            _options = _e.__initOptions(_options);
+            _options = _p.__initOptions(_options);
             // set
             var _value = _options.value||false;
             if(!_value){
@@ -350,7 +344,7 @@ var f = function() {
             if(_flag === 'hidden'){
                 _node.style.height = 0;
                 _e._$setStyle(_node,'visibility','inherit');
-                _node.effect = _p._$$Effect._$allocate(
+                _node.effect = _t0._$$Effect._$allocate(
                     {
                         node:_node,
                         transition:[
@@ -363,7 +357,7 @@ var f = function() {
                         ],
                         styles:[_type + ':' + _value],
                         onstop:function(_state,_flag){
-                            _node.effect = _p._$$Effect._$recycle(_node.effect);
+                            _node.effect = _t0._$$Effect._$recycle(_node.effect);
                             _options.onstop.call(null,_state,_flag);
                             _sto = window.clearTimeout(_sto);
                         },
@@ -372,7 +366,7 @@ var f = function() {
                 );
             }else{
                 _node.style.height = _value;
-                _node.effect = _p._$$Effect._$allocate(
+                _node.effect = _t0._$$Effect._$allocate(
                     {
                         node:_node,
                         transition:[
@@ -387,7 +381,7 @@ var f = function() {
                         onstop:function(_state,_flag){
                             _e._$setStyle(_node,'visibility','hidden');
                             _e._$setStyle(_node,_type,'auto');
-                            _node.effect = _p._$$Effect._$recycle(_node.effect);
+                            _node.effect = _t0._$$Effect._$recycle(_node.effect);
                             _options.onstop.call(null,_state,_flag);
                             _sto = window.clearTimeout(_sto);
                         },
@@ -396,10 +390,12 @@ var f = function() {
                 );
             }
             var _sto = window.setTimeout(function(){_node.effect._$start();}._$bind(this),0);
-            return this;
         };
     })();
 
-};
-NEJ.define('{lib}util/effect/effect.api.js',
-      ['{lib}util/effect/effect.js'],f);
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});

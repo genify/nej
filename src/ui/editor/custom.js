@@ -10,6 +10,7 @@ NEJ.define([
     '{lib}base/global.js',
     '{lib}base/klass.js',
     '{lib}ui/editor/editor.js',
+    '{lib}util/template/tpl.js',
     '{lib}util/editor/command/fontsize.js',
     '{lib}util/editor/command/fontname.js',
     '{lib}util/editor/command/bold.js',
@@ -27,7 +28,7 @@ NEJ.define([
     '{lib}util/editor/command/format.js',
     '{lib}util/editor/command/uploadimage.js',
     '{lib}util/editor/command/blockquote.js'
-],function(NEJ,_k,_u,_t0,_t1,_t2,_t3,_t4,_t5,_t6,_t7,_t8,_t9,_t10,_t11,_t12,_t13,_t14,_t15,_t16,_p,_o,_f,_r){
+],function(NEJ,_k,_i0,_t0,_t1,_t2,_t3,_t4,_t5,_t6,_t7,_t8,_t9,_t10,_t11,_t12,_t13,_t14,_t15,_t16,_t17,_p,_o,_f,_r){
     var _pro,
         _seed_html;
     /**
@@ -37,7 +38,7 @@ NEJ.define([
      * @param   {Object} 可选配置参数，已处理参数列表如下
      */
     _p._$$CustomEditor =_k._$klass();
-    _pro = _p._$$CustomEditor._$extend(_u._$$Editor);
+    _pro = _p._$$CustomEditor._$extend(_i0._$$Editor);
     /**
      * 初始化外观信息
      * @protected
@@ -70,7 +71,7 @@ NEJ.define([
                      ,{cmd:'format',txt:'清除格式',icn:'z-i-72'}
                      ,{cmd:'uploadImage',txt:'照片上传',icn:'z-i-82'}];
         return function(){
-            _seed_html = _e._$addNodeTemplate(
+            _seed_html = _t0._$addNodeTemplate(
                 this.__doGenEditorXhtml({
                     toolbar:this.__doGenFontSizeXhtml()
                            +this.__doGenFontNameXhtml()

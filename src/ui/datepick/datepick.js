@@ -12,7 +12,9 @@ NEJ.define([
     '{lib}base/util.js',
     '{lib}ui/layer/card.wrapper.js',
     '{lib}util/calendar/calendar.js',
-],function(NEJ,_k,_e,_u,_u0,_t,_p,_o,_f,_r){
+    '{lib}util/template/tpl.js',
+    '{lib}util/template/jst.js'
+],function(NEJ,_k,_e,_u,_i0,_t0,_t1,_t2,_p,_o,_f,_r){
     var _pro,
         _seed_css,
         _seed_html,
@@ -60,7 +62,7 @@ NEJ.define([
      *
      */
     _p._$$DatePick = _k._$klass();
-    _pro = _p._$$DatePick._$extend(_u0._$$CardWrapper);
+    _pro = _p._$$DatePick._$extend(_i0._$$CardWrapper);
     /**
      * 控件初始化
      * @protected
@@ -83,7 +85,7 @@ NEJ.define([
     _pro.__reset = function(_options){
         this.__super(_options);
         this.__copt.range = _options.range;
-        this.__calendar = _t._$$Calendar
+        this.__calendar = _t0._$$Calendar
                             ._$allocate(this.__copt);
         this._$setDate(_options.date||(new Date()));
     };
@@ -137,10 +139,10 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__initNodeTemplate = function(){
-        _seed_html = _e._$addNodeTemplate(
+        _seed_html = _t1._$addNodeTemplate(
             '<div class="'+_seed_css+' zcard">'+
-               _e._$getTextTemplate(_seed_action)+
-               _e._$getHtmlTemplate(_seed_date)+
+               _t1._$getTextTemplate(_seed_action)+
+               _t2._$getHtmlTemplate(_seed_date)+
             '</div>'
         );
         this.__seed_html = _seed_html;
@@ -207,7 +209,7 @@ NEJ.define([
         .#<uispace> .zday a.js-disabled:hover{background:#fff;color:#eee;cursor:default;}\
     ');
     // ui date html
-    _seed_date = _e._$addHtmlTemplate('\
+    _seed_date = _t2._$addHtmlTemplate('\
         <table class="zday">\
           <tr>{list ["日","一","二","三","四","五","六"] as x}<th>${x}</th>{/list}</tr>\
           {list 1..6 as x}\
@@ -216,7 +218,7 @@ NEJ.define([
         </table>\
     ');
     // button html
-    _e._$addTextTemplate(_seed_action,'\
+    _t1._$addTextTemplate(_seed_action,'\
         <div class="zact">\
           <span class="zbtn zfl" title="上一年">&lt;&lt;</span>\
           <span class="zbtn zfl" title="上一月">&lt;</span>\
