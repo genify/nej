@@ -773,7 +773,7 @@
     /**
      * 模块定义，单个文件内模块依赖关系自行解决，使用方式如
      * 
-     * 脚本举例：
+     * 脚本举例
      * [code]
      * 
      *  // 定义自己的文件标识为{lib}base/event.js
@@ -849,6 +849,7 @@
      *  W    | Webkit引擎，如chrome
      *  G    | Gecko引擎，如firefox
      * [/ntb]
+     * 
      * 平台内置的Trident引擎版本对应的IE版本关系：
      * [ntb]
      * Trident版本 | IE版本
@@ -860,7 +861,8 @@
      *  6.0       | 10
      *  7.0       | 11
      * [/ntb]
-     * 代码举例：
+     * 
+     * 代码举例
      * [code]
      *     NEJ.define(['./hack.js'],
      *     function(){
@@ -890,6 +892,7 @@
      *          });
      *   });
      * [/code]
+     * 
      * @api    {NEJ.patch}
      * @param  {String}    平台识别条件，如：6<=TR<=9
      * @param  {Array}     依赖文件列表
@@ -989,8 +992,36 @@
         }
         document.writeln(_arr.join(''));
     };
-    // init
+    /**
+     * 是否兼容模式，兼容模式下支持使用名字控件使用API和控件<br/>
+     * 
+     * 代码举例
+     * [code]
+     *   if (CMPT){
+     *       // TODO something
+     *       // 此中的代码块在配置文件中将OBF_COMPATIBLE设置为false情况下打包输出时将被忽略
+     *   }
+     * [/code]
+     * 
+     * @const {CMPT}
+     * @type  {Boolean}
+     */
     p.CMPT = !0;
+    /**
+     * 是否调试模式，打包时调试模式下的代码将被过滤<br/>
+     * 
+     * 代码举例
+     * [code]
+     *   if (DEBUG){
+     *       // TODO something
+     *       // 此中的代码块在打包发布后被过滤，不会输出到结果中
+     *   }
+     * [/code]
+     * 
+     * @const {DEBUG}
+     * @type  {Boolean}
+     */
     p.DEBUG = !0;
+    // init
     _doInit();
 })(document,window);
