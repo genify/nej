@@ -46,7 +46,7 @@ NEJ.define([
     './global.js',
     '{platform}util.js',
     '{platform}config.js'
-],function(NEJ,_u,_c,_p,_o,_f,_r){
+],function(NEJ,_u,_h,_p,_o,_f,_r){
     /*
      * URL地址转源信息
      * http://a.b.com:8080/a/bc/ -> http://a.b.com:8080
@@ -64,23 +64,72 @@ NEJ.define([
     })();
     /**
      * 取Frame跨域Ajax代理文件
-     * @api    {_$getFrameProxy}
      * @param  {String} 请求地址或者域名
      * @return {String} 代理文件地址
      */
-    _c._$getFrameProxy = function(_url){
+    _p._$getFrameProxy = function(_url){
         var _host = _url2host(_url);
         return _c._$get('frames')[_host]||
               (_host+'/res/nej_proxy_frame.html');
     };
     /**
      * 取Flash跨域Ajax配置文件
-     * @api    {_$getFlashProxy}
      * @param  {String} 请求地址或者域名
      * @return {String} 代理文件地址
      */
-    _c._$getFlashProxy = function(_url){
+    _p._$getFlashProxy = function(_url){
         return _c._$get('flashs')[_url2host(_url)];
+    };
+    /**
+     * 获取NEJ配置信息，通过NEJ_CONF配置相关信息<br/>
+     * 
+     * 代码举例
+     * [code]
+     *  window.NEJ_CONF = {
+     *      // resource root
+     *      // defalut value -> '/res/'
+     *      root : '/nej/'
+     *      // blank image for ie6-ie7
+     *      // default value -> $root+'nej_blank.gif'
+     *      blank : '/res/nej_blank.gif'
+     *      // localstorage flash
+     *      // default value -> $root+'nej_storage.swf'
+     *      storage : '/res/nej_storage.swf'
+     *      // audio player flash
+     *      // default value -> $root+'nej_player_audio.swf'
+     *      audio : '/res/nej_player_audio.swf'
+     *      // video player flash
+     *      // default value -> $root+'nej_player_video.swf'
+     *      video : '/res/nej_player_video.swf'
+     *      // clipboard flash
+     *      // default value -> $root+'nej_clipboard.swf'
+     *      clipboard : '/res/nej_clipboard.swf'
+     *      // https request proxy
+     *      // default value -> $root+'nej_proxy_flash.swf'
+     *      ajax : '/res/nej_proxy_flash.swf'
+     *      // portrait root
+     *      // default value -> $root+'portrait/'
+     *      portrait : '/res/portrait/'
+     *      // cross domain xhr request for ie6-ie9
+     *      // if path not start with http[s]://
+     *      // will use /res/nej_proxy_frame.html as default
+     *      p_frame:['http://c.d.com/html/nej_proxy_frame.html']
+     *      // flash crossdomain.xml file path
+     *      // default value -> http://a.b.com/crossdomain.xml
+     *      p_flash:['http://a.b.com/proxy/crossdomain.xml']
+     *      // CSRF cookie name and parameter name
+     *      // set p_csrf:true to use URS config {cookie:'AntiCSRF',param:'AntiCSRF'}
+     *      // default value -> {cookie:'',param:''}
+     *      p_csrf:{cookie:'AntiCSRF',param:'AntiCSRF'}
+     *  };
+     * [/code]
+     * 
+     * @api    {_$get}
+     * @param  {String}   配置标识
+     * @return {Variable} 配置信息
+     */
+    _p._$get = function(_key){
+        return _h.__get(_key);
     };
     // init
     /*
@@ -112,10 +161,10 @@ NEJ.define([
         };
         return function(_config){
             // check path config
-            _c.__set('root',_config.root||'/res/');
+            _h.__set('root',_config.root||'/res/');
             var _root = _c._$get('root');
             _u.__forIn(_conf,function(v,k,m){
-                _c.__set(k,_config[v.name]||(_root+v.dft));
+                _h.__set(k,_config[v.name]||(_root+v.dft));
             });
             // csrf config
             var _csrf = _config.p_csrf;
@@ -126,21 +175,21 @@ NEJ.define([
                 };
             }
             _csrf = _csrf || _o;
-            _c.__set('csrf',{
+            _h.__set('csrf',{
                 param:_csrf.param||'',
                 cookie:_csrf.cookie||''
             });
             // ajax by frame proxy
-            _c.__set('frames',_doInitProxy(_config.p_frame));
+            _h.__set('frames',_doInitProxy(_config.p_frame));
             // ajax by flash proxy
-            _c.__set('flashs',_doInitProxy(_config.p_flash));
+            _h.__set('flashs',_doInitProxy(_config.p_flash));
         };
     })();
     _doInit(this.NEJ_CONF||_o);
 
     if (CMPT){
-        NEJ.copy(NEJ.P('nej.c'),_c);
+        NEJ.copy(NEJ.P('nej.c'),_p);
     }
 
-    return _c;
+    return _p;
 });
