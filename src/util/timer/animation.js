@@ -47,20 +47,25 @@ NEJ.define([
      *           }
      *       );
      *       // 停止掉时钟
-     *       _p.cancelRequestAnimationFrame(_id);
+     *       _p.cancelAnimationFrame(_id);
      *   });
      * [/code]
      * 
-     * @api    {cancelRequestAnimationFrame}
+     * @api    {cancelAnimationFrame}
      * @param  {String} 动画标识
      * @return {Void}
      */
-    _p.cancelRequestAnimationFrame = function(){
-        _h.__cancelRequestAnimationFrame.apply(null,arguments);
+    _p.cancelAnimationFrame = function(){
+        _h.__cancelAnimationFrame.apply(null,arguments);
     };
     
     if (CMPT){
-        NEJ.copy(this,_p);
+        if (!this.requestAnimationFrame){
+            this.requestAnimationFrame = _p.requestAnimationFrame;
+        }
+        if (!this.cancelAnimationFrame){
+            this.cancelAnimationFrame = _p.cancelAnimationFrame;
+        }
     }
     
     return _p;

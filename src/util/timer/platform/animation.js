@@ -15,25 +15,29 @@ NEJ.define([
      * @param  {Function} 动画回调
      * @return {String}   动画标识
      */
-    _p.__requestAnimationFrame = function(){
+    _p.__requestAnimationFrame = (function(){
         var _handler = _this.requestAnimationFrame||
                        _this[_prefix+'RequestAnimationFrame'];
-        if (!!_handler){
-            return _handler.apply(this,arguments);
-        }
-    };
+        return function(){
+            if (!!_handler){
+                return _handler.apply(this,arguments);
+            }
+        };
+    })();
     /**
      * 取消动画
      * @param  {String} 动画标识
      * @return {Void}
      */
-    _p.__cancelRequestAnimationFrame = function(){
-        var _handler = _this.cancelRequestAnimationFrame||
-                       _this[_prefix+'CancelRequestAnimationFrame'];
-        if (!!_handler){
-            return _handler.apply(this,arguments);
-        }
-    };
+    _p.__cancelAnimationFrame = (function(){
+        var _handler = _this.cancelAnimationFrame||
+                       _this[_prefix+'CancelAnimationFrame'];
+        return function(){
+            if (!!_handler){
+                return _handler.apply(this,arguments);
+            }
+        };
+    })();
     
     return _p;
 });

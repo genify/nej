@@ -1,6 +1,6 @@
 /*
  * ------------------------------------------
- * 控件基类实现文件
+ * @file     控件基类
  * @version  1.0
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
@@ -14,13 +14,11 @@ NEJ.define([
     var _pro;
     /**
      * 控件基类，主要实现以下功能：
-     * [ul]
-     *   对事件驱动编程模型的支持
-     *   对控件通用行为及业务逻辑的抽象
-     * [/ul]
+     * * 对事件驱动编程模型的支持
+     * * 对控件通用行为及业务逻辑的抽象
      * 
-     * 脚本举例
-     * [code]
+     * ```javascript
+     * 
      *   NEJ.define([
      *       '{lib}base/klass.js',
      *       '{lib}util/event.js'
@@ -75,17 +73,17 @@ NEJ.define([
      *       // 也可以使用以下方式回收，建议使用上面的回收方式
      *       _widget = _p._$$Widget._$recycle(_widget);
      *   });
-     * [/code]
+     * ```
      * 
-     * @class {_$$EventTarget}
+     * @class _$$EventTarget
      * 
-     * @param {Object} 配置参数，根据控件实际情况提供配置参数支持
-     *
-     * [hr]
-     * 控件回收前触发事件，控件在具体实现时如需触发回收前的事件<br/>
+     * @param {Object} options - 配置参数，根据控件实际情况提供配置参数支持
+     */
+    /** 
+     * 控件回收前触发事件，控件在具体实现时如需触发回收前的事件
      * 
-     * 脚本举例
-     * [code]
+     * ```javascript
+     * 
      *   // 重写控件回收业务逻辑触发onbeforerecycle事件
      *   _pro.__destroy = function(){
      *       this._$dispatchEvent('onbeforerecycle');
@@ -99,16 +97,16 @@ NEJ.define([
      *           // TODO something
      *       }
      *   });
-     * [/code]
+     * ```
      * 
-     * @event  {onbeforerecycle}
-     * @param  {Object} 事件触发信息
-     *
-     * [hr]
-     * 控件回收后触发事件，控件在具体实现时如需触发回收后的事件<br/>
+     * @event _$$EventTarget#onbeforerecycle
+     * @param {Object} event - 事件触发信息
+     */
+    /**
+     * 控件回收后触发事件，控件在具体实现时如需触发回收后的事件
      * 
-     * 脚本举例
-     * [code]
+     * ```javascript
+     * 
      *   // 重写控件回收业务逻辑触发onbeforerecycle事件
      *   _pro.__destroy = function(){
      *       // 调用父类回收业务逻辑
@@ -123,19 +121,20 @@ NEJ.define([
      *           // TODO something
      *       }
      *   });
-     * [/code]
      * 
-     * @event  {onaftercycle}
-     * @param  {Object} 事件触发信息
+     * ```
+     * 
+     * @event _$$EventTarget#onaftercycle
+     * @param {Object} event - 事件触发信息
      */
     _p._$$EventTarget = _k._$klass();
     _pro = _p._$$EventTarget.prototype;
     /**
      * 控件分配，NEJ框架提供的所有控件统一使用分配和回收机制，
-     * 分配空间时会优先考虑使用前面回收的同种控件，只有在没有可用控件的情况下才会实例化新的控件<br/>
+     * 分配空间时会优先考虑使用前面回收的同种控件，只有在没有可用控件的情况下才会实例化新的控件
      * 
-     * 脚本举例
-     * [code]
+     * ```javascript
+     * 
      *   // 分配一个控件
      *   var _widget = _p._$$Widget._$allocate({
      *       conf0:'aaaaaaa',
@@ -144,12 +143,11 @@ NEJ.define([
      *           // TODO something
      *       }
      *   });
-     * [/code]
+     * ```
      * 
-     * @static
-     * @method {_$allocate}
-     * @see    {#_$getInstance}
-     * @param  {Object} 配置参数，根据控件实际情况提供配置参数支持
+     * @method _$$EventTarget._$allocate
+     * @see    {@link _$$EventTarget._$getInstance}
+     * @param  {Object} options - 配置参数，根据控件实际情况提供配置参数支持
      * @return {Object} Event对象
      */
     _p._$$EventTarget._$allocate = function(_options){
@@ -166,10 +164,10 @@ NEJ.define([
     };
     /**
      * 控件回收，NEJ框架提供的所有控件统一使用分配和回收机制，
-     * 如果提供的实例非当前类的实例则自动调整为输入实例的类来回收此实例<br/>
+     * 如果提供的实例非当前类的实例则自动调整为输入实例的类来回收此实例
      * 
-     * 脚本举例
-     * [code]
+     * ```javascript
+     * 
      *   // 回收前面分配的实例有两种方式
      *   // 如果不能确定实例的构造类，则可以直接使用实例的回收接口
      *   _widget._$recycle();
@@ -177,11 +175,10 @@ NEJ.define([
      *   _p._$$Widget._$recycle(_widget);
      *   // 如果回收多个实例则使用构造类的静态回收接口
      *   _p._$$Widget._$recycle([_widget0,_widget1]);
-     * [/code]
+     * ```
      * 
-     * @static
-     * @method {_$recycle}
-     * @param  {_$$EventTarget|Array} 待回收实例或者实例列表
+     * @method _$$EventTarget._$recycle
+     * @param  {_$$EventTarget|_$$EventTarget[]} inst - 待回收实例或者实例列表
      * @return {Void}
      */
     _p._$$EventTarget._$recycle = (function(){

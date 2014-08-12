@@ -176,7 +176,11 @@ NEJ.define([
             return '';
         };
         return function(_css){
-            return (_css||'').replace(_reg0,function($1,$2){
+            _css = _css||'';
+            if (!_css.replace){
+                return _css;
+            }
+            return _css.replace(_reg0,function($1,$2){
                 // prefix for css3
                 if ($2==='vendor'){
                     return _pfx;

@@ -69,7 +69,7 @@ NEJ.define([
      */
     _p._$getFrameProxy = function(_url){
         var _host = _url2host(_url);
-        return _c._$get('frames')[_host]||
+        return _p._$get('frames')[_host]||
               (_host+'/res/nej_proxy_frame.html');
     };
     /**
@@ -78,7 +78,7 @@ NEJ.define([
      * @return {String} 代理文件地址
      */
     _p._$getFlashProxy = function(_url){
-        return _c._$get('flashs')[_url2host(_url)];
+        return _p._$get('flashs')[_url2host(_url)];
     };
     /**
      * 获取NEJ配置信息，通过NEJ_CONF配置相关信息<br/>
@@ -162,7 +162,7 @@ NEJ.define([
         return function(_config){
             // check path config
             _h.__set('root',_config.root||'/res/');
-            var _root = _c._$get('root');
+            var _root = _p._$get('root');
             _u.__forIn(_conf,function(v,k,m){
                 _h.__set(k,_config[v.name]||(_root+v.dft));
             });

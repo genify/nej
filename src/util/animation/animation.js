@@ -189,7 +189,7 @@ NEJ.define([
      * @return {Void}
      */
     _pro._$stop = function(){
-        this.__timer = _t0.cancelRequestAnimationFrame(this.__timer);
+        this.__timer = _t0.cancelAnimationFrame(this.__timer);
         this._$dispatchEvent('onstop',arguments);
     };
 

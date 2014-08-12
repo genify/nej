@@ -769,19 +769,22 @@
         };
     })();
     // exports
+    /**
+     * NEJ名字空间
+     * @namespace NEJ 
+     */
     p.NEJ = {};
     /**
-     * 模块定义，单个文件内模块依赖关系自行解决，使用方式如
+     * 模块定义，单个文件内模块依赖关系自行解决，支持依赖注入，使用方式如
      * 
-     * 脚本举例
-     * [code]
+     * ```javascript
      * 
      *  // 定义自己的文件标识为{lib}base/event.js
      *  // 依赖{lib}base/global.js和{lib}base/util.js
-     *  define('{lib}base/event.js',
-     *        ['{lib}base/global.js',
-     *         '{lib}base/util.js'],
-     *  function(){
+     *  define([
+     *     '{lib}base/global.js',
+     *     '{lib}base/util.js'
+     *  ],function(NEJ,_u){
      *      // TODO something
      *  });
      * 
@@ -813,12 +816,12 @@
      *  define('{lib}base/event.js',
      *        ['{lib}base/global.js']);
      * 
-     * [/code]
+     * ```
      * 
-     * @api    {NEJ.define}
-     * @param  {String}   当前文件路径标识，不传自动解析
-     * @param  {Array}    模块依赖的其他模块文件，没有依赖其他文件可不传此参数
-     * @param  {Function} 模块定义回调
+     * @method NEJ.define
+     * @param  {String}   uri - 当前文件路径标识，不传自动解析
+     * @param  {Array}    dep - 模块依赖的其他模块文件，没有依赖其他文件可不传此参数
+     * @param  {Function} def - 模块定义回调
      * @return {Void}
      */
     NEJ.define = function(_uri,_deps,_callback){
