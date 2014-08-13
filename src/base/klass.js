@@ -13,7 +13,7 @@ NEJ.define([
     /**
      * 定义类，通过此api定义的类具有以下特性：
      *
-     * * _$extend作为类的静态扩展方法
+     * * {@link external:Function#_$extend|_$extend}作为类的静态扩展方法
      * * __init作为类的初始化函数
      * * __super作为子类调用父类的同名函数
      *
@@ -62,7 +62,8 @@ NEJ.define([
      * });
      * ```
      * 
-     * @method _$klass
+     * @method module:base/klass._$klass
+     * @see    external:Function#_$extend
      * @return {Function} 返回定义的类
      */
     _p._$klass = (function(){
@@ -138,7 +139,8 @@ NEJ.define([
              * });
              * ```
              *
-             * @method _$extend
+             * @method external:Function#_$extend
+             * @see    module:base/klass._$klass
              * @param  {Function} arg0 - 父类
              * @param  {Boolean}  arg1 - 是否拷贝父类的静态方法，默认拷贝父类静态方法
              * @return {Object}          扩展类的prototype对象
