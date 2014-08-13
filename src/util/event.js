@@ -18,18 +18,17 @@ NEJ.define([
      * * 对控件通用行为及业务逻辑的抽象
      * 
      * ```javascript
-     * 
      *   NEJ.define([
-     *       '{lib}base/klass.js',
-     *       '{lib}util/event.js'
-     *   ],function(_k,_w,_p,_o,_f,_r){
-     *       // 自定义一个控件及使用回收的流程
+     *       'base/klass',
+     *       'util/event'
+     *   ],function(_k,_t,_p,_o,_f,_r){
+     *       // 自定义一个控件及使用、回收的流程
      *       var _pro;
      *   
      *       // 第一步
      *       // 定义控件类，从父类继承
      *       _p._$$Widget = _k._$klass();
-     *       _pro = _p._$$Widget._$extend(_p._$$EventTarget);
+     *       _pro = _p._$$Widget._$extend(_t._$$EventTarget);
      *   
      *       // 第二步
      *       // 重写控件初始化业务逻辑
@@ -76,14 +75,12 @@ NEJ.define([
      * ```
      * 
      * @class _$$EventTarget
-     * 
-     * @param {Object} options - 配置参数，根据控件实际情况提供配置参数支持
+     * @param {Object} arg0 - 配置参数，根据控件实际情况提供配置参数支持
      */
     /** 
      * 控件回收前触发事件，控件在具体实现时如需触发回收前的事件
      * 
      * ```javascript
-     * 
      *   // 重写控件回收业务逻辑触发onbeforerecycle事件
      *   _pro.__destroy = function(){
      *       this._$dispatchEvent('onbeforerecycle');
@@ -91,6 +88,7 @@ NEJ.define([
      *       this.__super();
      *       // TODO something
      *   };
+     * 
      *   // 监测onbeforerecycle事件
      *   var _widget = _p._$$Widget._$allocate({
      *       onbeforerecycle:function(_event){
@@ -106,7 +104,6 @@ NEJ.define([
      * 控件回收后触发事件，控件在具体实现时如需触发回收后的事件
      * 
      * ```javascript
-     * 
      *   // 重写控件回收业务逻辑触发onbeforerecycle事件
      *   _pro.__destroy = function(){
      *       // 调用父类回收业务逻辑
@@ -121,7 +118,6 @@ NEJ.define([
      *           // TODO something
      *       }
      *   });
-     * 
      * ```
      * 
      * @event _$$EventTarget#onaftercycle
@@ -134,7 +130,6 @@ NEJ.define([
      * 分配空间时会优先考虑使用前面回收的同种控件，只有在没有可用控件的情况下才会实例化新的控件
      * 
      * ```javascript
-     * 
      *   // 分配一个控件
      *   var _widget = _p._$$Widget._$allocate({
      *       conf0:'aaaaaaa',
@@ -146,9 +141,10 @@ NEJ.define([
      * ```
      * 
      * @method _$$EventTarget._$allocate
-     * @see    {@link _$$EventTarget._$getInstance}
-     * @param  {Object} options - 配置参数，根据控件实际情况提供配置参数支持
-     * @return {Object} Event对象
+     * @see    _$$EventTarget._$getInstance
+     * @see    _$$EventTarget._$getInstanceWithReset
+     * @param  {Object}  arg0 - 配置参数，根据控件实际情况提供配置参数支持
+     * @return {_$$EventTarget} 控件实例
      */
     _p._$$EventTarget._$allocate = function(_options){
         _options = _options||{};
@@ -167,7 +163,6 @@ NEJ.define([
      * 如果提供的实例非当前类的实例则自动调整为输入实例的类来回收此实例
      * 
      * ```javascript
-     * 
      *   // 回收前面分配的实例有两种方式
      *   // 如果不能确定实例的构造类，则可以直接使用实例的回收接口
      *   _widget._$recycle();
@@ -178,7 +173,7 @@ NEJ.define([
      * ```
      * 
      * @method _$$EventTarget._$recycle
-     * @param  {_$$EventTarget|_$$EventTarget[]} inst - 待回收实例或者实例列表
+     * @param  {_$$EventTarget|_$$EventTarget[]} arg0 - 待回收实例或者实例列表
      * @return {Void}
      */
     _p._$$EventTarget._$recycle = (function(){
@@ -222,10 +217,9 @@ NEJ.define([
     })();
     /**
      * 取控件实例（单例），如果控件指明了为单例模式，
-     * 则项目中使用该控件时统一使用此接口获取控件实例，使用方式同{#_$allocate}<br/>
+     * 则项目中使用该控件时统一使用此接口获取控件实例，使用方式同_$allocate
      * 
-     * 脚本举例
-     * [code]
+     * ```javascript
      *   // 取控件单例，确保在第一次取单例时输入所有配置参数
      *   var _widget = _p._$$Widget._$getInstance({
      *       conf0:'aaaaaaa',
@@ -242,13 +236,13 @@ NEJ.define([
      * 
      *   // 等价于如下调用
      *   var _widget2 = _p._$$Widget._$getInstance();
-     * [/code]
+     * ```
      * 
-     * @static
-     * @method {_$getInstance}
-     * @see    {#_$allocate}
-     * @param  {Object} 配置参数，根据控件实际情况提供配置参数支持
-     * @return {Void}
+     * @method _$$EventTarget._$getInstance
+     * @see    _$$EventTarget._$getInstanceWithReset
+     * @see    _$$EventTarget._$allocate
+     * @param  {Object}  arg0 - 配置参数，根据控件实际情况提供配置参数支持
+     * @return {_$$EventTarget} 控件实例
      */
     _p._$$EventTarget._$getInstance = function(_options){
         if (!this.__instance){
@@ -258,11 +252,10 @@ NEJ.define([
     };
     /**
      * 取控件实例（单例），如果控件指明了为单例模式，
-     * 则项目中使用该控件时统一使用此接口获取控件实例，使用方式同{#_$getInstance}，
-     * 该接口同{#_$getInstance}接口的主要区别在于输入的配置参数是否在每次调用接口时都重置<br/>
+     * 则项目中使用该控件时统一使用此接口获取控件实例，使用方式同_$getInstance，
+     * 该接口同_$getInstance接口的主要区别在于输入的配置参数是否在每次调用接口时都重置
      * 
-     * 脚本举例
-     * [code]
+     * ```javascript
      *   // 取控件单例，确保在第一次取单例时输入所有配置参数
      *   var _widget = _p._$$Widget._$getInstanceWithReset({
      *       conf0:'aaaaaaa',
@@ -276,14 +269,14 @@ NEJ.define([
      *   var _widget1 = _p._$$Widget._$getInstanceWithReset({
      *       conf0:'bbbbb'  // <-- 如果单例已生成，则重置这里的配置信息
      *   });
-     * [/code]
+     * ```
      * 
-     * @static
-     * @method {_$getInstanceWithReset}
-     * @see    {#_$getInstance}
-     * @param  {Object}  配置参数，根据控件实际情况提供配置参数支持
-     * @param  {Boolean} 是否需要先清理已有实例
-     * @return {Void}
+     * @method _$$EventTarget._$getInstanceWithReset
+     * @see    _$$EventTarget._$getInstance
+     * @see    _$$EventTarget._$allocate
+     * @param  {Object}  arg0 - 配置参数，根据控件实际情况提供配置参数支持
+     * @param  {Boolean} arg1 - 是否需要先清理已有实例
+     * @return {_$$EventTarget} 控件实例
      */
     _p._$$EventTarget._$getInstanceWithReset = function(_options,_clear){
         // clear instance
@@ -302,20 +295,19 @@ NEJ.define([
     /**
      * 控件初始化，
      * 子类可重写此接口业务逻辑，
-     * 子类可通过调用__super接口调用父类的初始化业务逻辑<br/>
+     * 子类可通过调用__super接口调用父类的初始化业务逻辑
      * 
-     * 脚本举例
-     * [code]
+     * ```javascript
      *   // 子类控件初始化业务逻辑
      *   _pro.__init = function(){
      *       // 调用父类控件初始化
      *       this.__super();
      *       // TODO something
      *   };
-     * [/code]
+     * ```
      * 
      * @protected
-     * @method {__init}
+     * @method _$$EventTarget#__init
      * @return {Void}
      */
     _pro.__init = function(){
@@ -326,44 +318,40 @@ NEJ.define([
     /**
      * 控件重置，此接口用来接收控件配置参数的处理，
      * 控件基类已处理以下业务逻辑：
-     * [ul]
-     *   缓存通过配置参数输入的回调事件
-     * [/ul]
-     * 子类重写此接口业务逻辑来处理具体控件对配置参数的处理，
-     * 子类通过调用__super接口调用父类的重置业务逻辑<br/>
      * 
-     * 脚本举例
-     * [code]
+     * * 缓存通过配置参数输入的回调事件
+     * 
+     * 子类重写此接口业务逻辑来处理具体控件对配置参数的处理，
+     * 子类通过调用__super接口调用父类的重置业务逻辑
+     * 
+     * ```javascript
      *   // 子类控件重置业务逻辑
      *   _pro.__reset = function(_options){
      *       // 调用父类控件重置逻辑
      *       this.__super(_options);
      *       // TODO something
      *   };
-     * [/code]
+     * ```
      * 
      * @protected
-     * @method {__reset}
-     * @param  {Object} 配置参数，根据控件实际情况提供配置参数支持
+     * @method _$$EventTarget#__reset
+     * @param  {Object} arg0 - 配置参数，根据控件实际情况提供配置参数支持
      * @return {Void}
      */
     _pro.__reset = function(_options){
         this._$batEvent(_options);
     };
     /**
-     * 控件销毁，当控件在回收时会调用此接口，
-     * 基类已处理以下业务逻辑：
-     * [ul]
-     *   通过配置参数输入的事件回调的清理
-     *   通过{#__doInitDomEvent}接口添加的DOM事件的清理
-     * [/ul]
+     * 控件销毁，当控件在回收时会调用此接口，基类已处理以下业务逻辑：
      * 
-     * 一般情况下控件还需回收通过重置接口{#__reset}产生的数据，
-     * 子类可重写此接口业务逻辑来触发{#onbeforerecycle}和{#onafterrecycle}事件，
-     * 子类可通过调用__super接口调用父类的销毁业务逻辑<br/>
+     * * 通过配置参数输入的事件回调的清理
+     * * 通过__doInitDomEvent接口添加的DOM事件的清理
      * 
-     * 脚本举例
-     * [code]
+     * 一般情况下控件还需回收通过重置接口__reset产生的数据，
+     * 子类可重写此接口业务逻辑来触发onbeforerecycle和onafterrecycle事件，
+     * 子类可通过调用__super接口调用父类的销毁业务逻辑
+     * 
+     * ```javascript
      *   // 子类重写控件销毁逻辑
      *   _pro.__destroy = function(){
      *       // 触发回收之前事件
@@ -377,10 +365,10 @@ NEJ.define([
      *       this._$dispatchEvent('onafterrecycle');
      *       this.__super();
      *   };
-     * [/code]
+     * ```
      * 
      * @protected
-     * @method {__destroy}
+     * @method _$$EventTarget#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -388,10 +376,11 @@ NEJ.define([
         this.__doClearDomEvent();
     };
     /**
-     * 初始化事件，重置接口__reset中需要通过_$addEvent接口添加的事件，使用此接口添加可以在回收时自动被清理<br/>
+     * 初始化事件，
+     * 重置接口__reset中需要通过_$addEvent接口添加的事件，
+     * 使用此接口添加可以在回收时自动被清理
      * 
-     * 脚本举例
-     * [code]
+     * ```javascript
      *   // 子类重置接口添加节点事件
      *   _pro.__reset = function(_options){
      *       this.__super(_options);
@@ -401,12 +390,12 @@ NEJ.define([
      *           [window,'ok',this.__onWindowOK._$bind(this)]
      *       ]);
      *   };
-     * [/code]
+     * ```
      * 
      * @protected
-     * @method {__doInitDomEvent}
-     * @see    {#__doClearDomEvent}
-     * @param  {Array} 待添加的事件配置列表 
+     * @method _$$EventTarget#__doInitDomEvent
+     * @see    _$$EventTarget#__doClearDomEvent
+     * @param  {Array} arg0 - 待添加的事件配置列表 
      * @return {Void}
      */
     _pro.__doInitDomEvent = (function(){
@@ -420,20 +409,19 @@ NEJ.define([
         };
     })();
     /**
-     * 清除DOM事件，_$recycle接口会自动调用来清理这种DOM事件<br/>
+     * 清除DOM事件，_$recycle接口会自动调用来清理这种DOM事件
      * 
-     * 脚本举例
-     * [code]
+     * ```javascript
      *   // 子类重置接口清理节点事件
      *   _pro.__destroy = function(_options){
      *       this.__doClearDomEvent();
      *       this.__super(_options);
      *   };
-     * [/code]
+     * ```
      * 
      * @protected
-     * @method {__doClearDomEvent}
-     * @see    {#__doInitDomEvent}
+     * @method _$$EventTarget#__doClearDomEvent
+     * @see    _$$EventTarget#__doInitDomEvent
      * @return {Void}
      */
     _pro.__doClearDomEvent = (function(){
@@ -446,10 +434,9 @@ NEJ.define([
         };
     })();
     /**
-     * 清理所有组合的控件<br/>
+     * 清理所有组合的控件
      * 
-     * 脚本举例
-     * [code]
+     * ```javascript
      *   // 子类重置接口清理组件
      *   _pro.__destroy = function(_options){
      *       this.__doClearComponent(function(_inst){
@@ -458,11 +445,11 @@ NEJ.define([
      *       });
      *       this.__super(_options);
      *   };
-     * [/code]
+     * ```
      * 
      * @protected
-     * @method {__doClearComponent}
-     * @param  {Function} 过滤接口
+     * @method _$$EventTarget#__doClearComponent
+     * @param  {Function} arg0 - 过滤接口，返回true表示不清理该控件
      * @return {Void}
      */
     _pro.__doClearComponent = function(_filter){
@@ -475,26 +462,24 @@ NEJ.define([
         });
     };
     /**
-     * 回收控件，通过实例的构造类来回收当前实例<br/>
+     * 回收控件，通过实例的构造类来回收当前实例
      * 
-     * 脚本举例
-     * [code]
+     * ```javascript
      *   // 通过实例的接口回收当前实例
      *   _widget._$recycle();
-     * [/code]
+     * ```
      * 
-     * @method {_$recycle}
-     * @see    {#_$allocate}
+     * @method _$$EventTarget#_$recycle
+     * @see    _$$EventTarget#_$allocate
      * @return {Void}
      */
     _pro._$recycle = function(){
         this.constructor._$recycle(this);
     };
     /**
-     * 判断是否有注册事件回调<br/>
+     * 判断是否有注册事件回调
      * 
-     * 脚本举例
-     * [code]
+     * ```javascript
      *   // 分配实例
      *   var _widget = _p._$$Widget._$allocate({
      *       onok:function(){
@@ -503,11 +488,11 @@ NEJ.define([
      *   });
      *   // 判断控件实例是否注册有onok事件回调
      *   _widget._$hasEvent('onok');
-     * [/code]
+     * ```
      * 
-     * @method {_$hasEvent}
-     * @param  {String}  事件类型
-     * @return {Boolean} 是否注册了事件回调
+     * @method _$$EventTarget#_$hasEvent
+     * @param  {String} arg0 - 事件类型
+     * @return {Boolean}       是否注册了事件回调
      */
     _pro._$hasEvent = function(_type){
         var _type = (_type||'').toLowerCase(),
@@ -515,10 +500,9 @@ NEJ.define([
         return !!_event&&_event!==_f;
     };
     /**
-     * 删除单个事件回调<br/>
+     * 删除单个事件回调
      * 
-     * 脚本举例
-     * [code]
+     * ```javascript
      *   var _handler = function(){
      *       // TODO
      *   };
@@ -528,11 +512,11 @@ NEJ.define([
      *   });
      *   // 删除onok事件回调
      *   _widget._$delEvent('onok',_handler);
-     * [/code]
+     * ```
      * 
-     * @method {_$delEvent}
-     * @param  {String}   事件类型
-     * @param  {Function} 事件处理函数
+     * @method _$$EventTarget#_$delEvent
+     * @param  {String}   arg0 - 事件类型
+     * @param  {Function} arg1 - 事件处理函数
      * @return {Void}
      */
     _pro._$delEvent = function(_type,_event){
@@ -557,10 +541,9 @@ NEJ.define([
         }
     };
     /**
-     * 重置事件，覆盖原有事件<br/>
+     * 重置事件，覆盖原有事件
      * 
-     * 脚本举例
-     * [code]
+     * ```javascript
      *   // 分配实例
      *   var _widget = _p._$$Widget._$allocate();
      *   // 设置控件事件回调
@@ -570,11 +553,11 @@ NEJ.define([
      *   _widget._$setEvent('oncancel',function(){
      *       // TODO something
      *   });
-     * [/code]
+     * ```
      * 
-     * @method {_$setEvent}
-     * @param  {String}   事件类型，大小写不敏感
-     * @param  {Function} 事件处理函数
+     * @method _$$EventTarget#_$setEvent
+     * @param  {String}   arg0 - 事件类型，大小写不敏感
+     * @param  {Function} arg1 - 事件处理函数
      * @return {Void}
      */
     _pro._$setEvent = function(_type,_event){
@@ -583,10 +566,9 @@ NEJ.define([
         }
     };
     /**
-     * 批量添加事件<br/>
+     * 批量添加事件
      * 
-     * 脚本举例
-     * [code]
+     * ```javascript
      *   // 分配实例
      *   var _widget = _p._$$Widget._$allocate();
      *   // 批量设置控件事件回调
@@ -598,11 +580,11 @@ NEJ.define([
      *           // TODO something
      *       }
      *   });
-     * [/code]
+     * ```
      * 
-     * @method {_$batEvent}
-     * @see    {#_$setEvent}
-     * @param  {Object} 事件集合,{type:function}
+     * @method _$$EventTarget#_$batEvent
+     * @see    _$$EventTarget#_$setEvent
+     * @param  {Object} arg0 - 事件集合,{type:function}
      * @return {Void}
      */
     _pro._$batEvent = (function(){
@@ -614,10 +596,9 @@ NEJ.define([
         };
     })();
     /**
-     * 清除事件，没有指定类型则清除所有事件<br/>
+     * 清除事件，没有指定类型则清除所有事件
      * 
-     * 脚本举例
-     * [code]
+     * ```javascript
      *   // 分配实例
      *   var _widget = _p._$$Widget._$allocate({
      *       onok:function(){
@@ -628,9 +609,9 @@ NEJ.define([
      *   _widget._$clearEvent('onok');
      *   // 清除所有时间回调
      *   _widget._$clearEvent();
-     * [/code]
+     * ```
      * 
-     * @method {_$clearEvent}
+     * @method _$$EventTarget#_$clearEvent
      * @param  {String} 事件类型
      * @return {Void}
      */
@@ -648,10 +629,9 @@ NEJ.define([
         };
     })();
     /**
-     * 追加事件，通过此接口可以对同一个事件添加多个回调函数<br/>
+     * 追加事件，通过此接口可以对同一个事件添加多个回调函数
      * 
-     * 脚本举例
-     * [code]
+     * ```javascript
      *   // 分配实例
      *   var _widget = _p._$$Widget._$allocate({
      *       onok:function(){
@@ -664,11 +644,11 @@ NEJ.define([
      *           // TODO something
      *       }
      *   });
-     * [/code]
+     * ```
      * 
-     * @method {_$pushEvent}
-     * @param  {String}   事件类型
-     * @param  {Function} 事件处理函数
+     * @method _$$EventTarget#_$pushEvent
+     * @param  {String}   arg0 - 事件类型
+     * @param  {Function} arg1 - 事件处理函数
      * @return {Void}
      */
     _pro._$pushEvent = function(_type,_event){
@@ -689,10 +669,9 @@ NEJ.define([
         this.__events[_type].push(_event);
     };
     /**
-     * 调用事件，一般在控件实现的具体业务逻辑中使用<br/>
+     * 调用事件，一般在控件实现的具体业务逻辑中使用
      * 
-     * 脚本举例
-     * [code]
+     * ```javascript
      *   // 分配实例
      *   var _widget = _p._$$Widget._$allocate({
      *       onok:function(){
@@ -708,11 +687,11 @@ NEJ.define([
      *       // 触发onok事件
      *       this._$dispatchEvent('onok');
      *   };
-     * [/code]
+     * ```
      * 
-     * @method {_$dispatchEvent}
-     * @param  {String}   事件类型，不区分大小写
-     * @param  {Variable} 事件可接受参数，具体看调用时的业务逻辑
+     * @method _$$EventTarget#_$dispatchEvent
+     * @param  {String}   arg0 - 事件类型，不区分大小写
+     * @param  {Variable} arg1 - 事件可接受参数，具体看调用时的业务逻辑
      * @return {Void}
      */
     _pro._$dispatchEvent = function(_type){
