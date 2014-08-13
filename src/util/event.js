@@ -75,7 +75,7 @@ NEJ.define([
      * ```
      * 
      * @class _$$EventTarget
-     * @param {Object} arg0 - 配置参数，根据控件实际情况提供配置参数支持
+     * @param {Object} config - 配置参数，根据控件实际情况提供配置参数支持
      */
     /** 
      * 控件回收前触发事件，控件在具体实现时如需触发回收前的事件
@@ -612,7 +612,7 @@ NEJ.define([
      * ```
      * 
      * @method _$$EventTarget#_$clearEvent
-     * @param  {String} 事件类型
+     * @param  {String} arg0 - 事件类型
      * @return {Void}
      */
     _pro._$clearEvent = (function(){
