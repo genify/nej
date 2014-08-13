@@ -59,4 +59,13 @@ util/page/page.js
 util/template/tpl.js
 - 删除_e._$setup接口
 
-ui/scroller 缺少gesture
+util/tab/tab.js
+- onchange事件阻止属性nostop改为stopped
+- 删除nej.e._$tab接口
+
+
+
+
+
+
+
