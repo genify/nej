@@ -1,6 +1,6 @@
 /*
  * --------------------------------------------
- * @file    原生对象扩展接口
+ * 原生对象扩展接口
  * @version 1.0
  * @author  genify(caijf@corp.netease.com)
  * --------------------------------------------
@@ -23,7 +23,7 @@ NEJ.define(function(_p,_o,_f,_r){
      * @method Function#_$aop
      * @param  {Function} arg0 - 前置操作，接受一个输入参数，见描述信息
      * @param  {Function} arg1 - 后置操作，接受一个输入参数，见描述信息
-     * @return {Function} 增强后操作函数
+     * @return {Function}        增强后操作函数
      */
     _extpro._$aop = function(_before,_after){
         var _after = _after||_f,
@@ -59,8 +59,8 @@ NEJ.define(function(_p,_o,_f,_r){
      *
      * @method Function#_$bind
      * @see    Function#_$bind2
-     * @param  {Object}   arg0 - 需要保持一致的对象，null表示window对象，此参数外的其他参数作为绑定参数
-     * @return {Function} 返回绑定后的函数
+     * @param  {Object} arg0 - 需要保持一致的对象，null表示window对象，此参数外的其他参数作为绑定参数
+     * @return {Function}      返回绑定后的函数
      */
     _extpro._$bind = function() {
         var _args = arguments,
@@ -95,8 +95,8 @@ NEJ.define(function(_p,_o,_f,_r){
      *
      * @method Function#_$bind2
      * @see    Function#_$bind
-     * @param  {Object}   arg0   - 需要保持一致的对象，null表示window对象，此参数外的其他参数作为绑定参数
-     * @return {Function} 返回绑定后的事件函数
+     * @param  {Object} arg0 - 需要保持一致的对象，null表示window对象，此参数外的其他参数作为绑定参数
+     * @return {Function}      返回绑定后的事件函数
      */
     _extpro._$bind2 = function() {
         var _args = arguments,

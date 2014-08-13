@@ -1,6 +1,6 @@
 /*
  * --------------------------------------------
- * @file     NEJ类模型
+ * NEJ类模型
  * @version  1.0
  * @author   genify(caijf@corp.netease.com)
  * --------------------------------------------
@@ -62,7 +62,6 @@ NEJ.define([
      * });
      * ```
      * 
-     * @public
      * @method _$klass
      * @return {Function} 返回定义的类
      */
@@ -142,7 +141,7 @@ NEJ.define([
              * @method _$extend
              * @param  {Function} arg0 - 父类
              * @param  {Boolean}  arg1 - 是否拷贝父类的静态方法，默认拷贝父类静态方法
-             * @return {Object}   扩展类的prototype对象
+             * @return {Object}          扩展类的prototype对象
              */
             _Klass._$extend = function(_super,_static){
                 if (_isNotFunction(_super)){
