@@ -7,8 +7,8 @@
  */
 NEJ.define(function(_p,_o,_f,_r){
     /**
-     * 内置函数对象
-     * @class Function
+     * 内置函数对象扩展
+     * @external Function
      */
     var _extpro = Function.prototype;
     /**
@@ -20,7 +20,7 @@ NEJ.define(function(_p,_o,_f,_r){
      *  | value   | Variable | 输出结果 |
      *  | stopped | Boolean  | 是否结束操作，终止后续操作 |
      *
-     * @method Function#_$aop
+     * @method external:Function#_$aop
      * @param  {Function} arg0 - 前置操作，接受一个输入参数，见描述信息
      * @param  {Function} arg1 - 后置操作，接受一个输入参数，见描述信息
      * @return {Function}        增强后操作函数
@@ -57,8 +57,8 @@ NEJ.define(function(_p,_o,_f,_r){
      *  func._$bind(scope,"1")(2);
      *  ```
      *
-     * @method Function#_$bind
-     * @see    Function#_$bind2
+     * @method external:Function#_$bind
+     * @see    external:Function#_$bind2
      * @param  {Object} arg0 - 需要保持一致的对象，null表示window对象，此参数外的其他参数作为绑定参数
      * @return {Function}      返回绑定后的函数
      */
@@ -93,8 +93,8 @@ NEJ.define(function(_p,_o,_f,_r){
      *  func._$bind(scope,"1")(2);
      *  ```
      *
-     * @method Function#_$bind2
-     * @see    Function#_$bind
+     * @method external:Function#_$bind2
+     * @see    external:Function#_$bind
      * @param  {Object} arg0 - 需要保持一致的对象，null表示window对象，此参数外的其他参数作为绑定参数
      * @return {Function}      返回绑定后的事件函数
      */

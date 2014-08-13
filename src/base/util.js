@@ -40,7 +40,9 @@ NEJ.define([
      * });
      * ```
      *
-     * @method _$isFunction
+     * @method   _$isFunction
+     * @memberof module:base/util
+     * 
      * @param  {Variable} arg0 - 待检测类型的数据
      * @return {Boolean}         是否函数类型
      */
@@ -61,7 +63,9 @@ NEJ.define([
      * });
      * ```
      *
-     * @method _$isString
+     * @method   _$isString
+     * @memberof module:base/util
+     * 
      * @param  {Variable} arg0 - 待检测类型的数据
      * @return {Boolean}         是否字符串
      */
@@ -84,7 +88,9 @@ NEJ.define([
      * });
      * ```
      *
-     * @method _$isNumber
+     * @method   _$isNumber
+     * @memberof module:base/util
+     * 
      * @param  {Variable} arg0 - 待检测类型的数据
      * @return {Boolean}         是否数值类型
      */
@@ -105,7 +111,9 @@ NEJ.define([
      * });
      * ```
      *
-     * @method _$isBoolean
+     * @method   _$isBoolean
+     * @memberof module:base/util
+     * 
      * @param  {Variable} arg0 - 待检测类型的数据
      * @return {Boolean}         是否布尔值
      */
@@ -126,7 +134,9 @@ NEJ.define([
      * });
      * ```
      *
-     * @method _$isDate
+     * @method   _$isDate
+     * @memberof module:base/util
+     * 
      * @param  {Variable} arg0 - 待检测类型的数据
      * @return {Boolean}         是否日期
      */
@@ -147,7 +157,9 @@ NEJ.define([
      * });
      * ```
      *
-     * @method _$isArray
+     * @method   _$isArray
+     * @memberof module:base/util
+     * 
      * @param  {Variable} arg0 - 待检测类型的数据
      * @return {Boolean}         是否数组
      */
@@ -169,7 +181,9 @@ NEJ.define([
      * });
      * ```
      *
-     * @method _$isObject
+     * @method   _$isObject
+     * @memberof module:base/util
+     * 
      * @param  {Variable} arg0 - 待检测类型的数据
      * @return {Boolean}         是否对象
      */
@@ -188,7 +202,9 @@ NEJ.define([
      * });
      * ```
      *
-     * @method _$length
+     * @method   _$length
+     * @memberof module:base/util
+     * 
      * @param  {String} arg0 - 待计算长度字符串
      * @return {Number}        字符串长度
      */
@@ -218,7 +234,9 @@ NEJ.define([
      * });
      * ```
      *
-     * @method _$indexOf
+     * @method   _$indexOf
+     * @memberof module:base/util
+     * 
      * @param  {Array}    arg0 - 待搜索列表
      * @param  {Variable} arg1 - 指定项，如果为function则表示过滤接口
      * @return {Number}          给定项所在的位置索引，以0开始，没有项返回-1
@@ -231,6 +249,15 @@ NEJ.define([
     };
     /**
      * 二分法查找指定项
+     * 
+     * 验证函数输入输出说明
+     * 
+     * |      | 类型          | 结果说明 |
+     * | :--  | :--      | :-- |
+     * | 输入  | Variable | 中间项元素 |
+     * | 输出  | Number   | < 0  目标元素在低位区间 |
+     * |      |          | = 0  匹配到目标元素 |
+     * |      |          | > 0  目标元素在高位区间 |
      *
      * ```javascript
      * NEJ.define([
@@ -244,15 +271,11 @@ NEJ.define([
      * });
      * ```
      *
-     * @method _$binSearch
+     * @method   _$binSearch
+     * @memberof module:base/util
+     * 
      * @param  {Array}    arg0 - 待查找列表
      * @param  {Function} arg1 - 验证函数
-                                 |      | 类型         | 结果说明 |
-                                 | :--  | :--      | :-- |
-                                 | 输入  | Variable | 中间值项 |
-                                 | 输出  | Number   | < 0  目标元素在低位区间 |
-                                 |      | Number   | = 0  匹配到目标元素 |
-                                 |      | Number   | > 0  目标元素在高位区间 |
      * @return {Number}          找到匹配项索引，找不到返回-1
      */
     _p._$binSearch = (function(){
@@ -275,7 +298,16 @@ NEJ.define([
     })();
     /**
      * 逆序遍历列表，支持中断
-     *
+     * 
+     * 回调函数输入输出说明
+     * 
+     * |      | 类型          | 说明 |
+     * | :--  | :--      | :-- |
+     * | 输入  | Variable | 值 |
+     * |      | Number   | 下标 |
+     * |      | Array    | 列表对象 |
+     * | 输出  | Boolean  | 是否匹配 |
+     * 
      * ```javascript
      * NEJ.define([
      *     'base/util'
@@ -291,16 +323,12 @@ NEJ.define([
      * });
      * ```
      *
-     * @method _$reverseEach
-     * @see    _$forEach
+     * @method   _$reverseEach
+     * @see      module:base/util._$forEach
+     * @memberof module:base/util
+     * 
      * @param  {Array}    arg0 - 列表
      * @param  {Function} arg1 - 回调，如果返回true，则中断遍历
-     *                           |      | 类型          | 说明 |
-     *                           | :--  | :--      | :-- |
-     *                           | 输入  | Variable | 值 |
-     *                           |      | Number   | 下标 |
-     *                           |      | Array    | 列表对象 |
-     *                           | 输出  | Boolean  | 是否匹配 |
      * @param  {Object}   arg2 - 回调函数调用时this对象
      * @return {Number}          返回遍历中断时的索引值，没有中断则返回null
      */
@@ -316,7 +344,16 @@ NEJ.define([
     };
     /**
      * 正序遍历列表，不支持中断
-     *
+     * 
+     * 回调函数输入输出说明
+     * 
+     * |      | 类型          | 说明 |
+     * | :--  | :--      | :-- |
+     * | 输入  | Variable | 值 |
+     * |      | Number   | 下标 |
+     * |      | Array    | 列表对象 |
+     * | 输出  | Boolean  | 是否匹配 |
+     * 
      * ```javascript
      * NEJ.define([
      *     'base/util'
@@ -328,16 +365,12 @@ NEJ.define([
      * });
      * ```
      *
-     * @method _$forEach
-     * @see    _$reverseEach
+     * @method   _$forEach
+     * @see      module:base/util._$reverseEach
+     * @memberof module:base/util
+     * 
      * @param  {Array}    arg0 - 列表
      * @param  {Function} arg1 - 回调，如果返回true，则中断遍历
-     *                           |      | 类型          | 说明 |
-     *                           | :--  | :--      | :-- |
-     *                           | 输入  | Variable | 值 |
-     *                           |      | Number   | 下标 |
-     *                           |      | Array    | 列表对象 |
-     *                           | 输出  | Boolean  | 是否匹配 |
      * @param  {Object}   arg2 - 回调函数调用时this对象
      * @return {Void}
      */
@@ -354,6 +387,15 @@ NEJ.define([
     /**
      * 遍历列表或对象，支持中断退出
      *
+     * 回调函数输入输出说明
+     * 
+     * |      | 类型          | 说明 |
+     * | :--  | :--      | :-- |
+     * | 输入  | Variable | 值 |
+     * |      | Number   | 下标 |
+     * |      | Object_Array | 列表或者集合对象 |
+     * | 输出  | Boolean  | 是否匹配 |
+     * 
      * ```javascript
      * NEJ.define([
      *     'base/util'
@@ -372,15 +414,11 @@ NEJ.define([
      * });
      * ```
      *
-     * @method _$forIn
+     * @method   _$forIn
+     * @memberof module:base/util
+     * 
      * @param  {Object|Array} arg0 - 列表或者对象
      * @param  {Function}     arg1 - 回调，如果返回true，则中断遍历
-     *                               |      | 类型          | 说明 |
-     *                               | :--  | :--      | :-- |
-     *                               | 输入  | Variable | 值 |
-     *                               |      | Number   | 下标 |
-     *                               |      | Object|Array | 列表或者集合对象 |
-     *                               | 输出  | Boolean  | 是否匹配 |
      * @param  {Object}       arg2 - 回调函数调用时this对象
      * @return {String|Number}       返回中断时的索引或者标识，没有中断则统一返回null
      */
@@ -415,7 +453,9 @@ NEJ.define([
      * });
      * ```
      *
-     * @method _$encode
+     * @method   _$encode
+     * @memberof module:base/util
+     * 
      * @param  {Object} arg0 - 编码规则
      * @param  {String} arg1 - 待编码的字串
      * @return {String}        编码后的字串
@@ -441,18 +481,16 @@ NEJ.define([
      * });
      * ```
      *
-     * @method _$escape
-     * @see    _$unescape
+     * @method   _$escape
+     * @see      module:base/util._$unescape
+     * @memberof module:base/util
+     * 
      * @param  {String} arg0 - 待编码串
      * @return {String}        编码后的串
      */
     _p._$escape = (function(){
         var _reg = /<br\/?>$/,
-            _map = {
-                r:/\<|\>|\&|\r|\n|\s|\'|\"/g,
-                '<':'&lt;','>':'&gt;','&':'&amp;',
-                ' ':'&nbsp;','"':'&quot;',"'":'&#39;','\n':'<br/>','\r':''
-            };
+            _map = {r:/\<|\>|\&|\r|\n|\s|\'|\"/g,'<':'&lt;','>':'&gt;','&':'&amp;',' ':'&nbsp;','"':'&quot;',"'":'&#39;','\n':'<br/>','\r':''};
         return function(_content){
             _content = _p._$encode(_map,_content);
             return _content.replace(_reg,'<br/><br/>');
@@ -470,17 +508,15 @@ NEJ.define([
      * });
      * ```
      *
-     * @method _$unescape
-     * @see    _$escape
+     * @method   _$unescape
+     * @see      module:base/util._$escape
+     * @memberof module:base/util
+     * 
      * @param  {String} arg0 - 待编码串
      * @return {String}        编码后的串
      */
     _p._$unescape = (function(){
-        var _map = {
-            r:/\&(?:lt|gt|amp|nbsp|#39|quot)\;|\<br\/\>/gi,
-            '&lt;':'<','&gt;':'>','&amp;':'&',
-            '&nbsp;':' ','&#39;':"'",'&quot;':'"','<br/>':'\n'
-        };
+        var _map = {r:/\&(?:lt|gt|amp|nbsp|#39|quot)\;|\<br\/\>/gi,'&lt;':'<','&gt;':'>','&amp;':'&','&nbsp;':' ','&#39;':"'",'&quot;':'"','<br/>':'\n'};
         return function(_content){
             return _p._$encode(_map,_content);
         };
@@ -489,26 +525,27 @@ NEJ.define([
      * 格式化时间，yyyy|yy|MM|cM|eM|M|dd|d|HH|H|mm|ms|ss|m|s|w
      *
      * 各标识说明：
-     *  | 标识  | 说明 |
-     *  | :--  | :-- |
-     *  | yyyy | 四位年份，如2001 |
-     *  | yy   | 两位年费，如01 |
-     *  | MM   | 两位月份，如08 |
-     *  | M    | 一位月份，如8 |
-     *  | dd   | 两位日期，如09 |
-     *  | d    | 一位日期，如9 |
-     *  | HH   | 两位小时，如07 |
-     *  | H    | 一位小时，如7 |
-     *  | mm   | 两位分钟，如03 |
-     *  | m    | 一位分钟，如3 |
-     *  | ss   | 两位秒数，如09 |
-     *  | s    | 一位秒数，如9 |
-     *  | ms   | 毫秒数，如234 |
-     *  | w    | 中文星期几，如一 |
-     *  | ct   | 12小时制中文后缀，上午/下午 |
-     *  | et   | 12小时制英文后缀，A.M./P.M. |
-     *  | cM   | 中文月份，如三 |
-     *  | eM   | 英文月份，如Mar |
+     * 
+     * | 标识  | 说明 |
+     * | :--  | :-- |
+     * | yyyy | 四位年份，如2001 |
+     * | yy   | 两位年费，如01 |
+     * | MM   | 两位月份，如08 |
+     * | M    | 一位月份，如8 |
+     * | dd   | 两位日期，如09 |
+     * | d    | 一位日期，如9 |
+     * | HH   | 两位小时，如07 |
+     * | H    | 一位小时，如7 |
+     * | mm   | 两位分钟，如03 |
+     * | m    | 一位分钟，如3 |
+     * | ss   | 两位秒数，如09 |
+     * | s    | 一位秒数，如9 |
+     * | ms   | 毫秒数，如234 |
+     * | w    | 中文星期几，如一 |
+     * | ct   | 12小时制中文后缀，上午/下午 |
+     * | et   | 12小时制英文后缀，A.M./P.M. |
+     * | cM   | 中文月份，如三 |
+     * | eM   | 英文月份，如Mar |
      *
      * ```javascript
      * NEJ.define([
@@ -519,7 +556,9 @@ NEJ.define([
      * });
      * ```
      *
-     * @method _$format
+     * @method   _$format
+     * @memberof module:base/util
+     * 
      * @param  {Number|String|Date} arg0 - 时间
      * @param  {String}             arg1 - 格式
      * @return {String}                    指定格式的时间串
@@ -573,20 +612,21 @@ NEJ.define([
      * 字符串日期格式同ECMA规范定义：YYYY-MM-DDTHH:mm:ss.sssZ
      * 
      * 各标识说明：
-     *  | 标识 | 说明 |
-     *  | :--  | :-- |
-     *  | YYYY | 四位年份，0000-9999，如2001 |
-     *  | -    | 年月日分隔符 |
-     *  | MM   | 两位月份，01-12，如03 |
-     *  | DD   | 两位日期，01-31，如07 |
-     *  | T    | 时间起始标识 |
-     *  | HH   | 两位小时，00-24，如05 |
-     *  | :    | 时分秒分隔符 |
-     *  | mm   | 两位分钟，00-59，如30 |
-     *  | ss   | 两位秒数，00-59，如08 |
-     *  | .    | 秒/毫秒分隔符 |
-     *  | sss  | 三位毫秒数，000-999，如004 |
-     *  | Z    | 时区偏移 |
+     * 
+     * | 标识 | 说明 |
+     * | :--  | :-- |
+     * | YYYY | 四位年份，0000-9999，如2001 |
+     * | -    | 年月日分隔符 |
+     * | MM   | 两位月份，01-12，如03 |
+     * | DD   | 两位日期，01-31，如07 |
+     * | T    | 时间起始标识 |
+     * | HH   | 两位小时，00-24，如05 |
+     * | :    | 时分秒分隔符 |
+     * | mm   | 两位分钟，00-59，如30 |
+     * | ss   | 两位秒数，00-59，如08 |
+     * | .    | 秒/毫秒分隔符 |
+     * | sss  | 三位毫秒数，000-999，如004 |
+     * | Z    | 时区偏移 |
      *
      * ```javascript
      * NEJ.define([
@@ -603,7 +643,9 @@ NEJ.define([
      * });
      * ```
      *
-     * @method _$var2date
+     * @method   _$var2date
+     * @memberof module:base/util
+     * 
      * @param  {String} arg0 - 日期串
      * @return {Date}          日期对象
      */
@@ -631,7 +673,9 @@ NEJ.define([
      * });
      * ```
      *
-     * @method _$fixed
+     * @method   _$fixed
+     * @memberof module:base/util
+     * 
      * @param  {Float}  arg0 - 浮点数
      * @param  {Number} arg1 - 小数位
      * @return {Number}        浮点数
@@ -653,8 +697,10 @@ NEJ.define([
      *     );
      * });
      * ```
-     *
+     * 
      * @method _$absolute
+     * @memberof module:base/util
+     * 
      * @param  {String} arg0 - 相对路径
      * @param  {String} arg1 - 绝对路径ROOT，必须以http://开始，默认为location目录
      * @return {String}        绝对路径地址
@@ -710,7 +756,9 @@ NEJ.define([
      * });
      * ```
      *
-     * @method _$url2origin
+     * @method   _$url2origin
+     * @memberof module:base/util
+     * 
      * @param  {String} arg0 - URL地址
      * @return {String}        源信息
      */
@@ -735,8 +783,10 @@ NEJ.define([
      * });
      * ```
      *
-     * @method _$string2object
-     * @see    _$object2string
+     * @method   _$string2object
+     * @see      module:base/util._$object2string
+     * @memberof module:base/util
+     * 
      * @param  {String}        arg0 - 待处理数据
      * @param  {String|RegExp} arg1 - 分隔符
      * @return {Object}               转换后对象
@@ -757,7 +807,8 @@ NEJ.define([
         return _obj;
     };
     /**
-     * key-value对象转成key=value对后用分隔符join，
+     * key-value对象转成key=value对后用分隔符join
+     * 
      * 对象中不同类型的取值规则如下：
      * 
      * | 类型            |  取值规则 |
@@ -793,8 +844,10 @@ NEJ.define([
      * });
      * ```
      *
-     * @method _$object2string
-     * @see    _$string2object
+     * @method   _$object2string
+     * @see      module:base/util._$string2object
+     * @memberof module:base/util
+     * 
      * @param  {Object}  arg0 - 对象
      * @param  {String}  arg1 - 分隔符，默认为逗号
      * @param  {Boolean} arg2 - 是否编码
@@ -835,9 +888,11 @@ NEJ.define([
      * });
      * ```
      *
-     * @method _$query2object
-     * @see    _$object2query
-     * @see    _$string2object
+     * @method   _$query2object
+     * @see      module:base/util._$object2query
+     * @see      module:base/util._$string2object
+     * @memberof module:base/util
+     * 
      * @param  {String} arg0 - 查询串
      * @return {Object}        转换出来的对象
      */
@@ -856,9 +911,11 @@ NEJ.define([
      * });
      * ```
      *
-     * @method _$object2query
-     * @see    _$query2object
-     * @see    _$object2string
+     * @method   _$object2query
+     * @see      module:base/util._$query2object
+     * @see      module:base/util._$object2string
+     * @memberof module:base/util
+     * 
      * @param  {Object} arg0 - 对象
      * @return {String}        查询串
      */
@@ -882,8 +939,10 @@ NEJ.define([
      * });
      * ```
      *
-     * @method _$object2array
-     * @see    _$array2object
+     * @method   _$object2array
+     * @see      module:base/util._$array2object
+     * @memberof module:base/util
+     * 
      * @param  {Object} arg0 - 集合，必须有length属性
      * @return {Array}         数组
      */
@@ -917,8 +976,10 @@ NEJ.define([
      * });
      * ```
      *
-     * @method _$array2object
-     * @see    _$object2array
+     * @method   _$array2object
+     * @see      module:base/util._$object2array
+     * @memberof module:base/util
+     * 
      * @param  {Array}    arg0 - 列表
      * @param  {Function} arg1 - 过滤函数，返回每一项的KEY，没有返回则过滤当前项
      * @return {Object}   对象
@@ -942,21 +1003,23 @@ NEJ.define([
      * 格式化数字为指定位数，不足位数前面用0补足
      *
      * ```javascript
-     *   NEJ.define([
-     *       'base/util'
-     *   ],function(_p){
-     *       // 2    -> 002
-     *       // 22   -> 022
-     *       // 222  -> 222
-     *       // 2222 -> 2222
-     *       var _str = _p._$number2string(2,3);
-     *   });
+     * NEJ.define([
+     *     'base/util'
+     * ],function(u){
+     *     // 2    -> 002
+     *     // 22   -> 022
+     *     // 222  -> 222
+     *     // 2222 -> 2222
+     *     var str = u._$number2string(2,3);
+     * });
      * ```
      *
-     * @method    {_$number2string}
-     * @param  {Number} 数值
-     * @param  {Number} 位数，至少1位
-     * @return {String} 格式化后字符串
+     * @method   _$number2string
+     * @memberof module:base/util
+     * 
+     * @param  {Number} arg0 - 数值
+     * @param  {Number} arg1 - 位数，至少1位
+     * @return {String}        格式化后字符串
      */
     _p._$number2string = function(_number,_limit){
         var _len1 = (''+_number).length,
@@ -969,26 +1032,28 @@ NEJ.define([
     };
     /**
      * 安全删除属性，
-     * 部分浏览器（如低版本IE）禁止直接delete节点上的属性<br/>
+     * 部分浏览器（如低版本IE）禁止直接delete节点上的属性
      *
      * ```javascript
-     *   NEJ.define([
-     *       'base/util'
-     *   ],function(_p){
-     *       // 节点上保存的数据
-     *       _node.data = {a:'aaaaa',b:'bbbbb'};
-     *       _node.test = 'aaaaa';
+     * NEJ.define([
+     *     'base/util'
+     * ],function(u){
+     *     // 节点上保存的数据
+     *     _node.data = {a:'aaaaa',b:'bbbbb'};
+     *     _node.test = 'aaaaa';
      *
-     *       // 删除单个属性
-     *       _p._$safeDelete(_node,'test');
-     *       // 批量删除
-     *       _p._$safeDelete(_node,['test','data']);
-     *   });
+     *     // 删除单个属性
+     *     u._$safeDelete(_node,'test');
+     *     // 批量删除
+     *     u._$safeDelete(_node,['test','data']);
+     * });
      * ```
      *
-     * @method    {_$safeDelete}
-     * @param  {Object}       对象
-     * @param  {String|Array} 属性
+     * @method   _$safeDelete
+     * @memberof module:base/util
+     * 
+     * @param  {Object}       arg0 - 对象
+     * @param  {String|Array} arg1 - 属性
      * @return {Void}
      */
     _p._$safeDelete = function(_object,_name){
@@ -1007,20 +1072,22 @@ NEJ.define([
         }
     };
     /**
-     * 随机一个字符串<br/>
+     * 随机一个字符串
      *
      * ```javascript
-     *   NEJ.define([
-     *       'base/util'
-     *   ],function(_p){
-     *       // 可能返回"13d1r1dt2"
-     *       _p._$randString(9);
-     *   });
+     * NEJ.define([
+     *     'base/util'
+     * ],function(u){
+     *     // 可能返回"13d1r1dt2"
+     *     var seed = u._$randString(9);
+     * });
      * ```
      *
-     * @method    {_$randString}
-     * @param  {String}  字符串长度
-     * @return {String}  随机字符串
+     * @method   _$randString
+     * @memberof module:base/util
+     * 
+     * @param  {String} arg0 - 字符串长度
+     * @return {String}        随机字符串
      */
     _p._$randString = (function(){
         var _chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';
@@ -1035,42 +1102,48 @@ NEJ.define([
         };
     })();
     /**
-     * 随机生成一个给定范围的整数<br/>
+     * 随机生成一个给定范围的整数
      *
      * ```javascript
-     *   NEJ.define([
-     *       'base/util'
-     *   ],function(_p){
-     *       // 可能返回3
-     *       _p._$randNumber(0,9);
-     *   });
+     * NEJ.define([
+     *     'base/util'
+     * ],function(u){
+     *     // 可能返回3
+     *     var seed = u._$randNumber(0,9);
+     * });
      * ```
-     *
-     * @see    {#_$randNumberString}
-     * @method    {_$randNumber}
-     * @param  {Number}  小区间，包含
-     * @param  {Number}  大区间，不包含
-     * @return {Number}  随机整数
+     * 
+     * @method   _$randNumber
+     * @see      module:base/util._$randNumberString
+     * @memberof module:base/util
+     * 
+     * @param  {Number} arg0 - 小区间，包含
+     * @param  {Number} arg1 - 大区间，不包含
+     * @return {Number}        随机整数
      */
     _p._$randNumber = function(_min,_max){
         return Math.floor(Math.random()*(_max-_min)+_min);
     };
     /**
-     * 随机生成一个全部为数字的字符串<br/>
+     * 随机生成一个全部为数字的字符串
      *
      * ```javascript
-     *   NEJ.define([
-     *       'base/util'
-     *   ],function(_p){
-     *       // 可能返回123456789
-     *       _p._$randNumberString(9);
-     *   });
+     * NEJ.define([
+     *     'base/util'
+     * ],function(u){
+     *     // 可能返回123456789
+     *     var seed = u._$randNumberString(9);
+     * });
      * ```
      *
-     * @see    {#_$randNumber}
-     * @method    {_$randNumberString}
-     * @param  {Number}  随机字符串的长度[1,30]
-     * @return {String}  随机生成的字符串
+     * @deprecated
+     * @method   _$randNumberString
+     * @see      module:base/util._$randNumber
+     * @see      module:base/util._$uniqueID
+     * @memberof module:base/util
+     * 
+     * @param  {Number} arg0 - 随机字符串的长度[1,30]
+     * @return {String}        随机生成的字符串
      */
     _p._$randNumberString = function(_length){
         _length = Math.max(0,Math.min(_length||8,30));
@@ -1078,20 +1151,22 @@ NEJ.define([
         return _p._$randNumber(_min,_max).toString();
     };
     /**
-     * 生成系统中的唯一标识，每次调用均生成一个新的标识<br/>
+     * 生成系统中的唯一标识，每次调用均生成一个新的标识
      *
      * ```javascript
-     *   NEJ.define([
-     *       'base/util'
-     *   ],function(_p){
-     *      // 可能返回123456789
-     *      var _id1 = _p._$uniqueID(),
-     *          _id2 = _p._$uniqueID();
-     *      // _id1 != _id2
-     *   });
+     * NEJ.define([
+     *     'base/util'
+     * ],function(_p){
+     *    // 可能返回123456789
+     *    var _id1 = _p._$uniqueID(),
+     *        _id2 = _p._$uniqueID();
+     *    // _id1 != _id2
+     * });
      * ```
      *
-     * @method    {_$uniqueID}
+     * @method   _$uniqueID
+     * @memberof module:base/util
+     * 
      * @return {String} 唯一标识
      */
     _p._$uniqueID = (function(){
@@ -1101,32 +1176,34 @@ NEJ.define([
         };
     })();
     /**
-     * 读取上下文中指定名字空间的值<br/>
+     * 读取上下文中指定名字空间的值
      *
      * ```javascript
-     *   NEJ.define([
-     *       'base/util'
-     *   ],function(_p){
-     *       var obj = {
-     *           a:{
-     *               b:{
-     *                   c:{
-     *                       d:'ddddd'
-     *                   }
-     *               }
-     *           }
-     *       };
-     *       // 输出 ddddd
-     *       var _value = _p._$query(obj,'a.b.c.d');
-     *       // 输出 undefined
-     *       var _value = _p._$query(null,'a.b.c.d');
-     *   });
+     * NEJ.define([
+     *     'base/util'
+     * ],function(u){
+     *     var obj = {
+     *         a:{
+     *             b:{
+     *                 c:{
+     *                     d:'ddddd'
+     *                 }
+     *             }
+     *         }
+     *     };
+     *     // 输出 ddddd
+     *     var value = u._$query(obj,'a.b.c.d');
+     *     // 输出 undefined
+     *     var value = u._$query(null,'a.b.c.d');
+     * });
      * ```
      *
-     * @method    {_$query}
-     * @param  {Object}   上下文
-     * @param  {String}   名字空间
-     * @return {Varaible} 值
+     * @method   _$query
+     * @memberof module:base/util
+     * 
+     * @param  {Object} arg0 - 上下文
+     * @param  {String} arg1 - 名字空间
+     * @return {Varaible}      查询到的值
      */
     _p._$query = function(_context,_namespace){
         _context = _context||_o;
@@ -1140,40 +1217,46 @@ NEJ.define([
     /**
      * 合并数据，同名属性右侧覆盖左侧，
      * 最后一个如果是函数则用做数据过滤，
-     * 第一个参数作为合并数据结果集对象，如果为空则新建对象<br/>
-     *
+     * 第一个参数作为合并数据结果集对象，如果为空则新建对象
+     * 
+     * 过滤接口输入输出说明
+     * 
+     * |      | 类型          | 说明 |
+     * | :--  | :--      | :-- |
+     * | 输入  | Variable | 值 |
+     * |      | String   | 键 |
+     * | 输出  | Boolean  | 是否过滤 |
+     * 
      * ```javascript
-     *   NEJ.define([
-     *       'base/util'
-     *   ],function(_p){
-     *       // 合并多个数据至_obj0中
-     *       var _obj0 = {a:0,b:1},
-     *           _obj1 = {a:"a",b:"b",c:"c"},
-     *           _obj2 = {c:"c",d:"d",e:"f"},
-     *           ... ;
-     *       var _obj = _p._$merge(_obj0,_obj1,_obj2,...);
+     * NEJ.define([
+     *     'base/util'
+     * ],function(u){
+     *     // 合并多个数据至obj0中
+     *     var obj0 = {a:0,b:1},
+     *         obj1 = {a:"a",b:"b",c:"c"},
+     *         obj2 = {c:"c",d:"d",e:"f"},
+     *         ... ;
+     *     var obj = u._$merge(obj0,obj1,obj2,...);
      *
-     *       // 带过滤接口合并
-     *       // 阻止a属性的覆盖
-     *       var _obj = _p._$merge(
-     *           _obj0,_obj1,_obj2,...,
-     *           function(_value,_key){
-     *               return _key=='a';
-     *           }
-     *       );
-     *   });
+     *     // 带过滤接口合并
+     *     // 阻止a属性的覆盖
+     *     var obj = u._$merge(
+     *         obj0,obj1,obj2,...,
+     *         function(_value,_key){
+     *             return _key=='a';
+     *         }
+     *     );
+     * });
      * ```
      *
-     * @method    {_$merge}
-     * @param  {Object}   原始对象
-     * @param  {Object}   待拷贝对象
-     * @param  {Function} 过滤接口
-     * [ntb]
-     *  输入  | Variable | 值
-     *       | String   | 键
-     *  输出  | Boolean  | 是否过滤
-     * [/ntb]
-     * @return {Object}   拷贝后对象
+     * @method   _$merge
+     * @see      module:base/util._$fetch
+     * @memberof module:base/util
+     * 
+     * @param  {Object}   arg0 - 原始对象
+     * @param  {Object}   arg1 - 待拷贝对象
+     * @param  {Function} arg2 - 过滤接口
+     * @return {Object}          拷贝后对象
      */
     _p._$merge = function(){
         var _last = arguments.length-1,
@@ -1197,24 +1280,27 @@ NEJ.define([
         return _result;
     };
     /**
-     * 根据原始对象属性，从目标对象提取非空值<br/>
+     * 根据原始对象属性，从目标对象提取非空值
      *
      * ```javascript
-     *   NEJ.define([
-     *       'base/util'
-     *   ],function(_p){
-     *       var _obj0 = {a:0,b:1},
-     *           _obj1 = {a:"a",b:"b",c:"c"};
-     *       // 根据_obj0的属性,从_obj1拷贝非null属性到_obj0中
-     *       // 结果是_obj0.a = "a",_obj.b = "b",没有拷贝c属性;
-     *       var _obj = _p._$fetch(_obj0,_obj1);
-     *   });
+     * NEJ.define([
+     *     'base/util'
+     * ],function(u){
+     *     var obj0 = {a:0,b:1},
+     *         obj1 = {a:"a",b:"b",c:"c"};
+     *     // 根据obj0的属性,从obj1拷贝非null属性到obj0中
+     *     // 结果是obj0.a = "a",obj.b = "b",没有拷贝c属性;
+     *     var obj = u._$fetch(obj0,obj1);
+     * });
      * ```
      *
-     * @method    {_$fetch}
-     * @param  {Object} 原始对象
-     * @param  {Object} 目标对象
-     * @return {Object} 合并后的对象
+     * @method   _$fetch
+     * @see      module:base/util._$merge
+     * @memberof module:base/util
+     * 
+     * @param  {Object} arg0 - 原始对象
+     * @param  {Object} arg1 - 目标对象
+     * @return {Object}        合并后的对象
      */
     _p._$fetch = function(_object,_config){
         if (!!_config){
@@ -1228,33 +1314,35 @@ NEJ.define([
         return _object;
     };
     /**
-     * 判断对象自生是否包含属性
+     * 判断对象自生是否包含元素
      * 
      * ```javascript
-     *   NEJ.define([
-     *       'base/util'
-     *   ],function(_p){
-     *       // 判断空对象是否有属性
-     *       // 输出 false
-     *       var _has = _p._$hasProperty({});
+     * NEJ.define([
+     *     'base/util'
+     * ],function(u){
+     *     // 判断空对象是否有属性
+     *     // 输出 false
+     *     var has = u._$hasProperty({});
      *       
-     *       // 判断非空对象是否有属性
-     *       // 输出 true
-     *       var _has = _p._$hasProperty({a:'a',b:'b',c:'c'});
+     *     // 判断非空对象是否有属性
+     *     // 输出 true
+     *     var has = u._$hasProperty({a:'a',b:'b',c:'c'});
      *       
-     *       // 判断空数组是否有属性
-     *       // 输出 false
-     *       var _has = _p._$hasProperty([]);
+     *     // 判断空数组是否有属性
+     *     // 输出 false
+     *     var has = u._$hasProperty([]);
      *       
-     *       // 判断非空数组是否有属性
-     *       // 输出 true
-     *       var _has = _p._$hasProperty([1,2,3]);
-     *   });
+     *     // 判断非空数组是否有属性
+     *     // 输出 true
+     *     var has = u._$hasProperty([1,2,3]);
+     * });
      * ```
      * 
-     * @method    {_$hasProperty}
-     * @param  {Object|Array} 对象
-     * @return {Boolean}      是否包含属性
+     * @method   _$hasProperty
+     * @memberof module:base/util
+     * 
+     * @param  {Object|Array} arg0 - 对象
+     * @return {Boolean}             是否有元素
      */
     _p._$hasProperty = function(_obj){
         // for null
