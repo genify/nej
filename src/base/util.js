@@ -32,11 +32,11 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 返回false
-     *     var is = u._$isFunction(123);
+     *     var is = _u._$isFunction(123);
      *     // 返回true
-     *     var is = u._$isFunction(fucntion(){});
+     *     var is = _u._$isFunction(fucntion(){});
      * });
      * ```
      *
@@ -53,11 +53,11 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 返回false
-     *     var is = u._$isString(123);
+     *     var is = _u._$isString(123);
      *     // 返回true
-     *     var is = u._$isString("123");
+     *     var is = _u._$isString("123");
      * });
      * ```
      *
@@ -74,13 +74,13 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 返回false
-     *     var is = u._$isNumber("123");
+     *     var is = _u._$isNumber("123");
      *     // 返回true
-     *     var is = u._$isNumber(123);
-     *     var is = u._$isNumber(-123);
-     *     var is = u._$isNumber(Number.MAX_VALUE);
+     *     var is = _u._$isNumber(123);
+     *     var is = _u._$isNumber(-123);
+     *     var is = _u._$isNumber(Number.MAX_VALUE);
      * });
      * ```
      *
@@ -97,11 +97,11 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 返回false
-     *     var is = u._$isBoolean(0);
+     *     var is = _u._$isBoolean(0);
      *     // 返回true
-     *     var is = u._$isBoolean(false);
+     *     var is = _u._$isBoolean(false);
      * });
      * ```
      *
@@ -118,11 +118,11 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 返回false
-     *     var is = u._$isDate(0);
+     *     var is = _u._$isDate(0);
      *     // 返回true
-     *     var is = u._$isDate(new Date());
+     *     var is = _u._$isDate(new Date());
      * });
      * ```
      *
@@ -139,11 +139,11 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 返回false
-     *     var is = u._$isArray(0);
+     *     var is = _u._$isArray(0);
      *     // 返回true
-     *     var is = u._$isArray([1,2]);
+     *     var is = _u._$isArray([1,2]);
      * });
      * ```
      *
@@ -160,12 +160,12 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 返回false
-     *     var is = u._$isObject(function(){});
+     *     var is = _u._$isObject(function(){});
      *     // 返回true
-     *     var is = u._$isObject({});
-     *     var is = u._$isObject({a:"a"});
+     *     var is = _u._$isObject({});
+     *     var is = _u._$isObject({a:"a"});
      * });
      * ```
      *
@@ -182,9 +182,9 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 字符串长度为5
-     *     var len = u._$length('你i他');
+     *     var len = _u._$length('你i他');
      * });
      * ```
      *
@@ -204,15 +204,15 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     var list = ["你","我","他"];
      *     // 返回下标1
-     *     var index = u._$indexOf(list,"我");
+     *     var index = _u._$indexOf(list,"我");
      *     // 没有找到，返回-1
-     *     var index = u._$indexOf(list,"他们");
+     *     var index = _u._$indexOf(list,"他们");
      *     // 如果第二个参数是过滤接口，根据接口的规则查找
      *     // 以下规则排除第一个下标
-     *     var index = u._$indexOf(list,function(_item,_index,_list){
+     *     var index = _u._$indexOf(list,function(_item,_index,_list){
      *           return _item==='他';
      *     });
      * });
@@ -244,10 +244,10 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 二分查找id为2的项的索引值
      *     var list = [{id:1,name:'aaa'},{id:2,name:'bbbb'},...];
-     *     var index = u._$binSearch(list,function(_item){
+     *     var index = _u._$binSearch(list,function(_item){
      *         return _item.id-2;
      *     });
      * });
@@ -291,10 +291,10 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 删除id为3的项，并退出循环
      *     var list = [{id:1,name:'aaa'},{id:2,name:'bbbb'},...];
-     *     u._$reverseEach(list,function(_item,_index,_list){
+     *     _u._$reverseEach(list,function(_item,_index,_list){
      *         if (_item.id==3){
      *             _list.splice(_index,1);
      *             return !0;
@@ -335,9 +335,9 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     var list = [1,2,3];
-     *     u._$forEach(list,function(_item,_index,_list){
+     *     _u._$forEach(list,function(_item,_index,_list){
      *         // TODO somthing
      *     });
      * });
@@ -375,16 +375,16 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *       // 从有序列表里查找id为2的元素，如果有则返回索引，没有返回null
      *       var list = [{id:1,name:'a'},{id:2,name:'b'},...];
-     *       var index = u._$forIn(list,function(_item){
+     *       var index = _u._$forIn(list,function(_item){
      *           return _item.id==2;
      *       });
      *
      *       // 从对象里查找id为2的元素，如果有返回KEY，没有返回null
      *       var obj = {a:{id:1,name:'a'},b:{id:2,name:'b'},...};
-     *       var key = u._$forIn(obj,function(_item){
+     *       var key = _u._$forIn(obj,function(_item){
      *           return _item.id==2;
      *       });
      * });
@@ -421,9 +421,9 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 把字符串99999根据规则9替换成t，结果：ttttt
-     *     var str = u._$encode({r:/\d/g,'9':'t'},'99999');
+     *     var str = _u._$encode({r:/\d/g,'9':'t'},'99999');
      * });
      * ```
      *
@@ -447,9 +447,9 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 编码，结果：&amp;lt;a&amp;gt;util&amp;lt;/a&amp;gt;&amp;amp;
-     *     var str = u._$escape('<a>util</a>&');
+     *     var str = _u._$escape('<a>util</a>&');
      * });
      * ```
      *
@@ -472,9 +472,9 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 反编码，结果：<&a>util</a>
-     *     var str = u._$unescape('&amp;lt;&amp;amp;a&amp;gt;util&amp;lt;/a&amp;gt;');
+     *     var str = _u._$unescape('&amp;lt;&amp;amp;a&amp;gt;util&amp;lt;/a&amp;gt;');
      * });
      * ```
      *
@@ -518,9 +518,9 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 根据格式输出时间，比如:2012-01-11,连接符可自定义
-     *     var str = u._$format(new Date(),'yyyy-MM-dd');
+     *     var str = _u._$format(new Date(),'yyyy-MM-dd');
      * });
      * ```
      *
@@ -597,15 +597,15 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 输入YYYY-MM-DDTHH:mm:ss.sssZ格式字符串，生成日期对象
-     *     var date = u._$var2date('2013-07-29T13:12:45.300');
+     *     var date = _u._$var2date('2013-07-29T13:12:45.300');
      *
      *     // 输入YYYY-MM-DDTHH:mm:ss格式字符串，生成日期对象
-     *     var date = u._$var2date('2013-07-29T13:12:45');
+     *     var date = _u._$var2date('2013-07-29T13:12:45');
      *
      *     // 输入YYYY-MM-DD格式字符串，生成日期对象
-     *     var date = u._$var2date('2013-07-29');
+     *     var date = _u._$var2date('2013-07-29');
      * });
      * ```
      *
@@ -631,9 +631,9 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 保留2位小数，返回3.14
-     *     var value = u._$fixed(3.14159,2);
+     *     var value = _u._$fixed(3.14159,2);
      * });
      * ```
      *
@@ -651,9 +651,9 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 相对路径../a/b.html转绝对路径http://a.b.com:8010/a/b.html
-     *     var url = u._$absolute(
+     *     var url = _u._$absolute(
      *         '../a/b.html',
      *         'http://a.b.com:8010/z/'
      *     );
@@ -709,10 +709,10 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 提取url地址的源信息
      *     // 返回http://a.b.com:8080
-     *     var origin = u._$url2origin("http://a.b.com:8080/a/b/");
+     *     var origin = _u._$url2origin("http://a.b.com:8080/a/b/");
      * });
      * ```
      *
@@ -734,10 +734,10 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     var str = "abc=abc,123=123";
      *     // 返回对象{abc:"abc",123:"123"}
-     *     var obj = u._$string2object(_str,",");
+     *     var obj = _u._$string2object(_str,",");
      * });
      * ```
      *
@@ -777,13 +777,13 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 返回字符串 abc=abc,123=123
      *     var obj = {
      *         abc:"abc",
      *         123:"123"
      *     };
-     *     var str = u._$object2string(obj);
+     *     var str = _u._$object2string(obj);
      *
      *     // 返回字符串
      *     // a=1871406603152186&b=1,2,3&d={"a":"a","b":"b"}&e=e&f=1&g=true
@@ -796,7 +796,7 @@ NEJ.define([
      *         f:1,
      *         g:true
      *     };
-     *     var str = u._$object2string(obj,'&');
+     *     var str = _u._$object2string(obj,'&');
      * });
      * ```
      *
@@ -836,9 +836,9 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 返回对象{abc:"abc",123:"123"}
-     *     var obj = u._$query2object("abc=abc&123=123");
+     *     var obj = _u._$query2object("abc=abc&123=123");
      * });
      * ```
      *
@@ -857,9 +857,9 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 返回对象123=123&abc=abc
-     *     var query = u._$object2query({abc:"abc",123:"123"});
+     *     var query = _u._$object2query({abc:"abc",123:"123"});
      * });
      * ```
      *
@@ -878,14 +878,14 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 返回数组['1','2','3']
      *     var map = {0:'0',1:'1',2:'2',length:3};
-     *     var arr = u._$object2array(map);
+     *     var arr = _u._$object2array(map);
      *
      *     // 多用于对节点集合的转换
      *     var nodes = document.body.childNodes;
-     *     var arr = u._$object2array(nodes);
+     *     var arr = _u._$object2array(nodes);
      * });
      * ```
      *
@@ -903,10 +903,10 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 输出结果为 {2:{id:2,name:'b'},...}
      *     var arr = [{id:1,name:'a'},{id:2,name:'b'},...];
-     *     var obj = u._$array2object(
+     *     var obj = _u._$array2object(
      *         arr,function(_item){
      *             // 过滤name为a的项
      *             if (_item.name=='a'){
@@ -920,7 +920,7 @@ NEJ.define([
      *     // 默认使用每项的值组对象
      *     var brr = ['a','b','c',...];
      *     // 输出 {a:'a',b:'b',c:'c',...}
-     *     var obj = u._$array2object(brr);
+     *     var obj = _u._$array2object(brr);
      * });
      * ```
      *
@@ -951,12 +951,12 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 2    -> 002
      *     // 22   -> 022
      *     // 222  -> 222
      *     // 2222 -> 2222
-     *     var str = u._$number2string(2,3);
+     *     var str = _u._$number2string(2,3);
      * });
      * ```
      *
@@ -981,15 +981,15 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 节点上保存的数据
      *     _node.data = {a:'aaaaa',b:'bbbbb'};
      *     _node.test = 'aaaaa';
      *
      *     // 删除单个属性
-     *     u._$safeDelete(_node,'test');
+     *     _u._$safeDelete(_node,'test');
      *     // 批量删除
-     *     u._$safeDelete(_node,['test','data']);
+     *     _u._$safeDelete(_node,['test','data']);
      * });
      * ```
      *
@@ -1019,9 +1019,9 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 可能返回"13d1r1dt2"
-     *     var seed = u._$randString(9);
+     *     var seed = _u._$randString(9);
      * });
      * ```
      *
@@ -1047,9 +1047,9 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 可能返回3
-     *     var seed = u._$randNumber(0,9);
+     *     var seed = _u._$randNumber(0,9);
      * });
      * ```
      * 
@@ -1068,9 +1068,9 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 可能返回123456789
-     *     var seed = u._$randNumberString(9);
+     *     var seed = _u._$randNumberString(9);
      * });
      * ```
      *
@@ -1115,7 +1115,7 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     var obj = {
      *         a:{
      *             b:{
@@ -1126,9 +1126,9 @@ NEJ.define([
      *         }
      *     };
      *     // 输出 ddddd
-     *     var value = u._$query(obj,'a.b.c.d');
+     *     var value = _u._$query(obj,'a.b.c.d');
      *     // 输出 undefined
-     *     var value = u._$query(null,'a.b.c.d');
+     *     var value = _u._$query(null,'a.b.c.d');
      * });
      * ```
      *
@@ -1162,17 +1162,17 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 合并多个数据至obj0中
      *     var obj0 = {a:0,b:1},
      *         obj1 = {a:"a",b:"b",c:"c"},
      *         obj2 = {c:"c",d:"d",e:"f"},
      *         ... ;
-     *     var obj = u._$merge(obj0,obj1,obj2,...);
+     *     var obj = _u._$merge(obj0,obj1,obj2,...);
      *
      *     // 带过滤接口合并
      *     // 阻止a属性的覆盖
-     *     var obj = u._$merge(
+     *     var obj = _u._$merge(
      *         obj0,obj1,obj2,...,
      *         function(_value,_key){
      *             return _key=='a';
@@ -1215,12 +1215,12 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     var obj0 = {a:0,b:1},
      *         obj1 = {a:"a",b:"b",c:"c"};
      *     // 根据obj0的属性,从obj1拷贝非null属性到obj0中
      *     // 结果是obj0.a = "a",obj.b = "b",没有拷贝c属性;
-     *     var obj = u._$fetch(obj0,obj1);
+     *     var obj = _u._$fetch(obj0,obj1);
      * });
      * ```
      *
@@ -1247,22 +1247,22 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/util'
-     * ],function(u){
+     * ],function(_u){
      *     // 判断空对象是否有属性
      *     // 输出 false
-     *     var has = u._$hasProperty({});
+     *     var has = _u._$hasProperty({});
      *       
      *     // 判断非空对象是否有属性
      *     // 输出 true
-     *     var has = u._$hasProperty({a:'a',b:'b',c:'c'});
+     *     var has = _u._$hasProperty({a:'a',b:'b',c:'c'});
      *       
      *     // 判断空数组是否有属性
      *     // 输出 false
-     *     var has = u._$hasProperty([]);
+     *     var has = _u._$hasProperty([]);
      *       
      *     // 判断非空数组是否有属性
      *     // 输出 true
-     *     var has = u._$hasProperty([1,2,3]);
+     *     var has = _u._$hasProperty([1,2,3]);
      * });
      * ```
      * 
