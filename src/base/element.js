@@ -5,6 +5,7 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module base/element */
 NEJ.define([
     './global.js',
     './constant.js',
@@ -21,26 +22,26 @@ NEJ.define([
          document.head = document.getElementsByTagName('head')[0]||document.body;
     }
     /**
-     * 为节点设置一个唯一的标识<br/>
+     * 为节点设置一个唯一的标识
      *
-     * 页面结构举例
-     * [code type="html"]
+     * 结构举例
+     * ```html
      *    <div id="abc">aaaaa</div>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 如果有id，返回原来的id,否则返回auto-id-12345678(8位随机字符串)
-     *       var _id = _p._$id(_node||"abc");
+     *       var _id = _e._$id(_node||"abc");
      *   });
-     * [/code]
+     * ```
      *
-     * @api    {_$id}
-     * @param  {String|Node} 节点标识或者对象
-     * @return {String}      节点标识
+     * @method module:base/element._$id
+     * @param  {String|Node} arg0 - 节点标识或者对象
+     * @return {String}             节点标识
      */
     _p._$id = function(_element){
         _element = _p._$get(_element);
@@ -54,26 +55,26 @@ NEJ.define([
         return _id;
     };
     /**
-     * 根据标识取节点对象，包括在内存中的节点<br/>
+     * 根据标识取节点对象，包括在内存中的节点
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="abc">123</div>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 先根据id从内存中取，再从页面取
-     *       var _node = _p._$get("abc");
+     *       var _node = _e._$get("abc");
      *   });
-     * [/code]
+     * ```
      *
-     * @api    {_$get}
-     * @param  {String|Node} 节点标识或者对象
-     * @return {Node}        节点对象
+     * @method module:base/element._$get
+     * @param  {String|Node} arg0 - 节点标识或者对象
+     * @return {Node}               节点对象
      */
     _p._$get = function(_element){
         // for document/window
@@ -97,34 +98,34 @@ NEJ.define([
         return document.getElementById(_element);
     };
     /**
-     * 取节点的子节点列表<br/>
+     * 取节点的子节点列表
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="abc">
      *       <p>1</p>
      *       <p><span>2</span></p>
      *       <p>3</p>
      *   </div>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 取直接的3个子节点(p标签)
-     *       var _childs = _p._$getChildren('abc');
+     *       var _childs = _e._$getChildren('abc');
      *
      *       // 使用类名过滤，去带a或者b样式类的子节点
-     *       var _childs = _p._$getChildren('abc','a b');
+     *       var _childs = _e._$getChildren('abc','a b');
      *   });
-     * [/code]
+     * ```
      *
-     * @api    {_$getChildren}
-     * @param  {String|Node} 节点标识或者对象
-     * @param  {String}      样式标识
-     * @return {Array}       子节点列表
+     * @method module:base/element._$getChildren
+     * @param  {String|Node} arg0 - 节点标识或者对象
+     * @param  {String}      arg1 - 样式标识
+     * @return {Array}              子节点列表
      */
     _p._$getChildren = function(_element,_clazz){
         _element = _p._$get(_element);
@@ -142,31 +143,31 @@ NEJ.define([
         return _list;
     };
     /**
-     * 根据类名取节点列表<br/>
+     * 根据类名取节点列表
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="abc">
      *     <p class="item">1</p>
      *     <div><p class="item">2</p></div>
      *     <p class="item">3</p>
      *   </div>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 获取abc节点下样式带有"item"的节点列表,如果没有父节点，返回null
-     *       var _list = _p._$getByClassName('abc','item');
+     *       var _list = _e._$getByClassName('abc','item');
      *   });
-     * [/code]
+     * ```
      *
-     * @api    {_$getByClassName}
-     * @param  {String|Node} 节点标识或者对象
-     * @param  {String}      类名
-     * @return {Array}       节点列表
+     * @method module:base/element._$getByClassName
+     * @param  {String|Node} arg0 - 节点标识或者对象
+     * @param  {String}      arg1 - 类名
+     * @return {Array}              节点列表
      */
     _p._$getByClassName = function(_element,_class){
         _element = _p._$get(_element);
@@ -176,49 +177,49 @@ NEJ.define([
                 );
     };
     /**
-     * 根据从兄弟节点中搜索符合条件的节点<br/>
+     * 根据从兄弟节点中搜索符合条件的节点
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <div>
      *     <p class="item" id="a1">1</p>
      *     <p class="item" id="a2">2</p>
      *     <p class="item" id="a3">3</p>
      *   </div>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 取a2的后一个兄弟节点a3
-     *       var _node = _p._$getSibling('a2');
+     *       var _node = _e._$getSibling('a2');
      *
      *       // 取a2的前一个兄弟节点a1
-     *       var _node = _p._$getSibling('a2',{backward:true});
+     *       var _node = _e._$getSibling('a2',{backward:true});
      *
      *       // 过滤搜索，从a2向后搜索找id为a4的节点
-     *       var _node = _p._$getSibling('a2',function(_element){
+     *       var _node = _e._$getSibling('a2',function(_element){
      *           return _element.id=='a4'
      *       });
      *
      *       // 过滤搜索，从a2向前搜索找id为a0的节点
-     *       var _node = _p._$getSibling('a2',{
+     *       var _node = _e._$getSibling('a2',{
      *           backward:true,
      *           filter:function(_element){
      *               return _element.id=='a0'
      *           }
      *       });
      *   });
-     * [/code]
+     * ```
      *
-     * @api    {_$getSibling}
-     * @param  {String|Node}       节点标识或者对象
-     * @param  {Function|Object}   如果是函数则表示过滤器，否则为配置信息
-     * @config {Boolean}  backward 是否后向搜索，默认前向搜索
-     * @config {Function} filter   节点过滤器，返回true表示需要返回的节点，找到第一个即返回
-     * @return {Node}              符合条件的节点
+     * @method   module:base/element._$getSibling
+     * @param    {String|Node}     arg0     - 节点标识或者对象
+     * @param    {Function|Object} arg1     - 如果是函数则表示过滤器，否则为配置信息
+     * @property {Boolean}         backward - 是否后向搜索，默认前向搜索
+     * @property {Function}        filter   - 节点过滤器，返回true表示需要返回的节点，找到第一个即返回
+     * @return   {Node}                       符合条件的节点
      */
     _p._$getSibling = (function(){
         var _doFilter = function(){
@@ -251,31 +252,31 @@ NEJ.define([
     })();
     /**
      * 取节点所在的滚动容器，
-     * 从当前节点开始往上遍历，直到出现滚动条的节点<br/>
+     * 从当前节点开始往上遍历，直到出现滚动条的节点
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="efg">
      *     <div id="abc">123</div>
      *   </div>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 加入efg节点出现滚动条，则这里找到的是efg节点
-     *       var _sbody = _p._$getScrollViewPort('abc');
+     *       var _sbody = _e._$getScrollViewPort('abc');
      *
      *       // 不带任何参数取页面滚动条所在节点
-     *       var _sbody = _p._$getScrollViewPort();
+     *       var _sbody = _e._$getScrollViewPort();
      *   });
-     * [/code]
+     * ```
      *
-     * @api    {_$getScrollViewPort}
-     * @param  {String|Node} 节点标识或者对象
-     * @return {Node}        视窗节点
+     * @method module:base/element._$getScrollViewPort
+     * @param  {String|Node} arg0 - 节点标识或者对象
+     * @return {Node}               视窗节点
      */
     _p._$getScrollViewPort = function(_element){
         _element = _p._$get(_element);
@@ -298,28 +299,29 @@ NEJ.define([
     };
     /**
      * 取页面盒信息，返回盒信息内容：
-     * [ntb]
-     *  scrollTop    | 滚动垂直偏移
-     *  scrollLeft   | 滚动水平偏移
-     *  clientWidth  | 页面可视宽度
-     *  clientHeight | 页面可视高度
-     *  scrollWidth  | 页面滚动宽度
-     *  scrollHeight | 页面滚动高度
-     * [/ntb]
-     *
+     * 
+     * | 属性                  | 说明 |
+     * | :--          | :-- |
+     * | scrollTop    | 滚动垂直偏移 |
+     * | scrollLeft   | 滚动水平偏移 |
+     * | clientWidth  | 页面可视宽度 |
+     * | clientHeight | 页面可视高度 |
+     * | scrollWidth  | 页面滚动宽度 |
+     * | scrollHeight | 页面滚动高度 |
+     * 
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 返回信息见说明
-     *       var _box = _p._$getPageBox();
+     *       var _box = _e._$getPageBox();
      *   });
-     * [/code]
+     * ```
      *
-     * @api    {_$getPageBox}
-     * @param  {Document} 文档对象
-     * @return {Object}   盒信息
+     * @method module:base/element._$getPageBox
+     * @param  {Document} arg0 - 文档对象
+     * @return {Object}          盒信息
      */
     _p._$getPageBox = (function(){
         // get min value but not zero
@@ -386,37 +388,37 @@ NEJ.define([
         };
     })();
     /**
-     * 按比例将给定大小缩放至限制区域内<br/>
+     * 按比例将给定大小缩放至限制区域内
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 限制区域大小 100*10
      *       var _limit = {width:100,height:10};
      *
      *       // 给定200*10的大小，由于宽度超出，缩放后为{width:100,height:5}
-     *       var _box = _p._$getMaxBox({width:200,height:10},_limit);
+     *       var _box = _e._$getMaxBox({width:200,height:10},_limit);
      *
      *       // 给定100*20的大小，由于高度超出，缩放后为{width:50,height:10}
-     *       var _box = _p._$getMaxBox({width:100,height:20},_limit);
+     *       var _box = _e._$getMaxBox({width:100,height:20},_limit);
      *
      *       // 给定 50*5，没有超出限制，返回{width:50,height:5}
-     *       var _box = _p._$getMaxBox({width:50,height:5},_limit);
+     *       var _box = _e._$getMaxBox({width:50,height:5},_limit);
      *   });
-     * [/code]
+     * ```
      *
-     * @api    {_$getMaxBox}
-     * @param  {Object} 原始大小
-     * @config {Number} width  宽度
-     * @config {Number} height 高度
-     * @param  {Object} 最大限制
-     * @config {Number} width  宽度
-     * @config {Number} height 高度
-     * @return {Object} 按比例计算出的最大值信息
-     * @config {Number} width  宽度
-     * @config {Number} height 高度
+     * @method   module:base/element._$getMaxBox
+     * @param    {Object} arg0   - 原始大小
+     * @property {Number} width  - 宽度
+     * @property {Number} height - 高度
+     * @param    {Object} arg1   - 最大限制
+     * @property {Number} width  - 宽度
+     * @property {Number} height - 高度
+     * @return   {Object}          按比例计算出的最大值信息
+     * @property {Number} width  - 宽度
+     * @property {Number} height - 高度
      */
     _p._$getMaxBox = function(_org,_max){
         var _result = _u._$merge({},_org),
@@ -437,25 +439,25 @@ NEJ.define([
         return _result;
     };
     /**
-     * 滚动到指定节点<br/>
+     * 滚动到指定节点
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="a" style="padding:5px 0 0 10px;"></div>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 滚动到页面上a这节点的位置
-     *       _p._$scrollTo('a');
+     *       _e._$scrollTo('a');
      *   });
-     * [/code]
+     * ```
      *
-     * @api    {_$scrollTo}
-     * @param  {Node|String} 节点
+     * @method module:base/element._$scrollTo
+     * @param  {Node|String} arg0 - 节点
      * @return {Void}
      */
     _p._$scrollTo = function(_element){
@@ -463,37 +465,37 @@ NEJ.define([
         window.scrollTo(_offset.x,_offset.y);
     };
     /**
-     * 计算在容器中对齐时的位置信息<br/>
+     * 计算在容器中对齐时的位置信息
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 容器大小
      *       var _box = {width:100,height:40};
      *
      *       // 默认居中对齐返回 {top:15,left:40}
-     *       var _pos = _p._$align(_box,{width:20,height:10});
+     *       var _pos = _e._$align(_box,{width:20,height:10});
      *
      *       // 左下对齐返回 {top:30,left:0}
-     *       var _pos = _p._$align(_box,{width:20,height:10},'left bottom');
+     *       var _pos = _e._$align(_box,{width:20,height:10},'left bottom');
      *   });
-     * [/code]
+     * ```
      *
-     * @api    {_$align}
-     * @param  {Object} 容器信息
-     * @config {Number} width  宽度
-     * @config {Number} height 高度
-     * @param  {Object} 原始大小
-     * @config {Number} width  宽度
-     * @config {Number} height 高度
-     * @param  {String} 对齐方式，水平+空格+垂直，如left top，默认为 center middle
-     *                  水平：left/center/right，
-     *                  垂直：top/middle/bottom
-     * @return {Object} 位置信息
-     * @config {Number} top  垂直位置
-     * @config {Number} left 水平位置
+     * @method   module:base/element._$align
+     * @param    {Object} arg0   - 容器信息
+     * @property {Number} width  - 宽度
+     * @property {Number} height - 高度
+     * @param    {Object} arg1   - 原始大小
+     * @property {Number} width  - 宽度
+     * @property {Number} height - 高度
+     * @param    {String} arg2   - 对齐方式，水平+空格+垂直，如left top，默认为 center middle
+     *                             水平：left/center/right，
+     *                             垂直：top/middle/bottom
+     * @return   {Object}          位置信息
+     * @property {Number} top    - 垂直位置
+     * @property {Number} left   - 水平位置
      */
     _p._$align = (function(){
         var _reg = /\s+/;
@@ -528,30 +530,30 @@ NEJ.define([
         };
     })();
     /**
-     * 计算两个节点之间的偏移量<br/>
+     * 计算两个节点之间的偏移量
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="a" style="position:relative;padding:5px 0 0 10px;">
      *     <span id="b">123</span>
      *   </div>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 计算节点b到节点a(外层需要定位属性)的距离，如果没有指定节点，默认计算的根节点
      *       // _result : {x:10,y:5}
-     *       var _result = _p._$offset('b','a');
+     *       var _result = _e._$offset('b','a');
      *   });
-     * [/code]
+     * ```
      *
-     * @api    {_$offset}
-     * @param  {String|Node} 起始节点
-     * @param  {String|Node} 结束节点，没有该参数则计算到根节点
-     * @return {Object}      偏移量，如{x:234,y:987}
+     * @method module:base/element._$offset
+     * @param  {String|Node} arg0 - 起始节点
+     * @param  {String|Node} arg1 - 结束节点，没有该参数则计算到根节点
+     * @return {Object}             偏移量，如{x:234,y:987}
      */
     _p._$offset = (function(){
         var _isRoot = function(_element){
@@ -580,30 +582,31 @@ NEJ.define([
         };
     })();
     /**
-     * 设置/获取光标位置在TEXTAREA中的位置<br/>
+     * 设置/获取光标位置在TEXTAREA中的位置
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 设置光标选中内容
-     *       _p._$cursor('xxx',{start:5,end:10});
+     *       _e._$cursor('xxx',{start:5,end:10});
      *       // 设置光标位置
-     *       _p._$cursor('xxx',8);
+     *       _e._$cursor('xxx',8);
+     * 
      *       // 获取光标位置
      *       // _position.start 光标起始位置
      *       // _position.end   光标结束位置
-     *       var _position = _p._$cursor('xxx');
+     *       var _position = _e._$cursor('xxx');
      *   });
-     * [/code]
+     * ```
      *
-     * @api    {_$cursor}
-     * @param  {String|Node}   TEXTAREA节点
-     * @param  {Number|Object} 待设置光标的位置，如果起始位置和结束位置一致则输入数值即可
-     * @config {Number}  start 起始位置
-     * @config {Number}  end   结束位置，没有end则表示与start相同
-     * @return {Object}        光标位置，{start:0,end:10}
+     * @method   module:base/element._$cursor
+     * @param    {String|Node}   arg0  - TEXTAREA节点
+     * @param    {Number|Object} arg1  - 待设置光标的位置，如果起始位置和结束位置一致则输入数值即可
+     * @property {Number}        start - 起始位置
+     * @property {Number}        end   - 结束位置，没有end则表示与start相同
+     * @return   {Object}                光标位置，{start:0,end:10}
      */
     _p._$cursor = function(_textarea,_options){
         _textarea = _p._$get(_textarea);
@@ -629,8 +632,10 @@ NEJ.define([
     };
     /**
      * 节点占全屏
-     * @param  {Node} 节点
-     * @return {THIS} 调用对象
+     * 
+     * @method module:base/element._$fullScreen
+     * @param  {Node} arg0 - 节点
+     * @return {Void}
      */
     _p._$fullScreen = function(_element){
         _element = _p._$get(_element);
@@ -640,12 +645,14 @@ NEJ.define([
                 _p._$getPageBox()
             );
         }
-        return this;
     };
     /**
      * 为节点增加用于盖select/flash等控件的层
-     * @param  {Node} 节点
-     * @return {Node} 盖层节点
+     * 
+     * @method module:base/element._$mask
+     * @see    module:base/element._$unmask
+     * @param  {Node} arg0 - 节点
+     * @return {Node}        盖层节点
      */
     _p._$mask = function(_element){
         _element = _p._$get(_element);
@@ -657,8 +664,11 @@ NEJ.define([
     };
     /**
      * 为节点移除用于盖select/flash等控件的层
-     * @param  {Node} 节点
-     * @return {Node} 盖层节点
+     * 
+     * @method module:base/element._$unmask
+     * @see    module:base/element._$mask
+     * @param  {Node} arg0 - 节点
+     * @return {Node}        盖层节点
      */
     _p._$unmask = function(_element){
         _element = _p._$get(_element);
@@ -669,36 +679,36 @@ NEJ.define([
         return null;
     };
     /**
-     * 节点hover行为，高版本浏览器用:hover样式处理<br/>
+     * 节点hover行为，高版本浏览器用:hover样式处理
      *
      * 样式举例
      * [code type="css"]
      *    .page .element:hover,
      *    .page .element.js-hover{background:#f00;}
-     * [/code]
+     * ```
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *    <!-- 使用data-hover指定hover效果的样式名称 -->
      *    <div id="abc" data-hover="js-hover">aaaaa</div>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 如果hover效果的样式名已经通过data-hover指定
-     *       _p._$hover('abc');
+     *       _e._$hover('abc');
      *
      *       // 如果hover效果的样式名没有通过data-hover指定
-     *       _p._$hover('abc','js-hover');
+     *       _e._$hover('abc','js-hover');
      *   });
-     * [/code]
+     * ```
      *
-     * @api    {_$hover}
-     * @param  {String|Node} 节点
-     * @param  {String}      样式，默认为js-hover
+     * @method module:base/element._$hover
+     * @param  {String|Node} arg0 - 节点
+     * @param  {String}      arg1 - 样式，默认为js-hover
      * @return {Void}
      */
     _p._$hover = function(_element,_clazz){
@@ -713,34 +723,34 @@ NEJ.define([
         }
     };
     /**
-     * 节点鼠标或手势按下高亮行为，移动触摸反馈<br/>
+     * 节点鼠标或手势按下高亮行为，移动触摸反馈
      *
      * 样式举例
      * [code type="css"]
      *    .page .element.js-highlight{background:#f00;}
-     * [/code]
+     * ```
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *    <!-- 使用data-highlight指定highlight效果的样式名称 -->
      *    <div id="abc" data-highlight="js-highlight">aaaaa</div>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 如果highlight效果的样式名已经通过data-hover指定
-     *       _p._$highlight('abc');
+     *       _e._$highlight('abc');
      *       // 如果highlight效果的样式名没有通过data-hover指定
-     *       _p._$highlight('abc','js-highlight');
+     *       _e._$highlight('abc','js-highlight');
      *   });
-     * [/code]
+     * ```
      *
-     * @api    {_$highlight}
-     * @param  {String|Node} 节点
-     * @param  {String}      样式，默认为js-highlight
+     * @method module:base/element._$highlight
+     * @param  {String|Node} arg0 - 节点
+     * @param  {String}      arg1 - 样式，默认为js-highlight
      * @return {Void}
      */
     _p._$highlight = (function(){
@@ -795,16 +805,16 @@ NEJ.define([
         };
     })();
     /**
-     * 点击切换样式，可以控制两种效果的交替显示<br/>
+     * 点击切换样式，可以控制两种效果的交替显示
      *
      * 样式举例
      * [code type="css"]
      *   .box .shw{display:none;}
      *   .box.js-toggle .shw{display:block;}
-     * [/code]
+     * ```
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <div class="box">
      *     <div class="bar" id="click-bar">可点击区域</div>
      *     <div class="shw">
@@ -814,29 +824,29 @@ NEJ.define([
      *       <p>content content</p>
      *     </div>
      *   </div>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 点击click-bar，交替显示shw节点
-     *       _p._$toggle('click-bar');
+     *       _e._$toggle('click-bar');
      *
      *       // 自定义切换样式
-     *       _p._$toggle('click-bar','js-show');
+     *       _e._$toggle('click-bar','js-show');
      *   });
-     * [/code]
+     * ```
      *
      * 样式举例
      * [code type="css"]
      *   .box{display:none;}
      *   .box.js-toggle{display:block;}
-     * [/code]
+     * ```
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <div class="box">
      *     <div class="bar" id="click-bar">可点击区域</div>
      *     <div class="shw" id="toggle-node">
@@ -846,31 +856,31 @@ NEJ.define([
      *       <p>content content</p>
      *     </div>
      *   </div>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 自定义切换样式
-     *       _p._$toggle('click-bar','toggle-node');
+     *       _e._$toggle('click-bar','toggle-node');
      *
      *       // 同时自定义切换样式和节点
-     *       _p._$toggle('click-bar',{
+     *       _e._$toggle('click-bar',{
      *           clazz:'js-show',
      *           element:'toggle-node'
      *       });
      *   });
-     * [/code]
+     * ```
      *
-     * @api    {_$toggle}
-     * @param  {String|Node}          触发切换节点
-     * @param  {String|Object}        切换配置信息，输入字符串表示样式或者节点
-     * @config {String}      clazz    样式名称，默认为js-toggle
-     * @config {String|Node} element  切换样式的节点，默认为父节点
-     * @config {Function}    ontoggle 节点样式切换触发事件
-     * @return {Void}
+     * @method   module:base/element._$toggle
+     * @param    {String|Node}   arg0     - 触发切换节点
+     * @param    {String|Object} arg1     - 切换配置信息，输入字符串表示样式或者节点
+     * @property {String}        clazz    - 样式名称，默认为js-toggle
+     * @property {String|Node}   element  - 切换样式的节点，默认为父节点
+     * @property {Function}      ontoggle - 节点样式切换触发事件
+     * @return   {Void}
      */
     _p._$toggle = (function(){
         // click event
@@ -919,20 +929,20 @@ NEJ.define([
     })();
     /**
      * 节点focus行为，提供两种模式支持
-     * [ul]
-     *   0 - 聚焦添加效果，失焦去除效果，高版本使用:focus样式处理
-     *   1 - 聚焦添加效果，失焦时只有在当前输入框没有内容时去除效果
-     * [/ul]
+     * 
+     * * 0 - 聚焦添加效果，失焦去除效果，高版本使用:focus样式处理
+     * * 1 - 聚焦添加效果，失焦时只有在当前输入框没有内容时去除效果
+     * 
      *
      * 样式举例
      * [code type="css"]
      *   input:focus,input.js-focus{border:1px solid #f00;}
      *   input{color:#aaa;background:#eee;}
      *   .js-focus-0{color:#000;background-color:#fff;}
-     * [/code]
+     * ```
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <form>
      *     <!-- 可以使用data-focus指定聚焦时样式名称 -->
      *     <!-- 可以使用data-mode指定聚焦模式 -->
@@ -941,33 +951,33 @@ NEJ.define([
      *     <!-- 节点没有指定参数 -->
      *     <input id="yyy" type="text"/>
      *   </form>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 参数已在节点data-属性中指定
-     *       _p._$focus('xxx');
+     *       _e._$focus('xxx');
      *
      *       // 参数没有指定，通过输入传递，仅指定样式名称
-     *       _p._$focus('yyy','js-focus-1');
+     *       _e._$focus('yyy','js-focus-1');
      *
      *       // 参数没有指定，通过输入传递，仅指定聚焦模式
-     *       _p._$focus('yyy',1);
+     *       _e._$focus('yyy',1);
      *
      *       // 参数没有指定，通过输入传递，同时指定样式名称和聚焦模式
-     *       _p._$focus('yyy',{clazz:'js-focus-2',mode:1});
+     *       _e._$focus('yyy',{clazz:'js-focus-2',mode:1});
      *   });
-     * [/code]
+     * ```
      *
-     * @api    {_$focus}
-     * @param  {String|Node}  节点
-     * @param  {Object}       配置参数
-     * @config {Number} mode  模式选择，默认为0
-     * @config {String} clazz 聚焦样式，默认js-focus
-     * @return {Void}
+     * @method   module:base/element._$focus
+     * @param    {String|Node} arg0  - 节点
+     * @param    {Object}      arg1  - 配置参数
+     * @property {Number}      mode  - 模式选择，默认为0
+     * @property {String}      clazz - 聚焦样式，默认js-focus
+     * @return   {Void}
      */
     _p._$focus = function(_element,_options){
         _element = _p._$get(_element);
@@ -999,32 +1009,32 @@ NEJ.define([
         }
     };
     /**
-     * 创建节点<br/>
+     * 创建节点
      *
      * 结构举例
-     * [code]
+     * ```javascript
      *   <div id="abc">1</div>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 创建一个节点，挂到body上
-     *       _p._$create("div","m-body",document.body);
+     *       _e._$create("div","m-body",document.body);
      *
      *       // 创建一个节点挂到id是abc的节点上
      *       // 结果：<div id="abc">1<p class="m-list"></p></div>
-     *       _p._$create("p","m-list","abc");
+     *       _e._$create("p","m-list","abc");
      *   });
-     * [/code]
+     * ```
      *
-     * @api    {_$create}
-     * @param  {String}      标签
-     * @param  {String}      样式
-     * @param  {String|Node} 父节点标识或者对象
-     * @return {Node}        节点
+     * @method module:base/element._$create
+     * @param  {String}      arg0 - 标签
+     * @param  {String}      arg1 - 样式
+     * @param  {String|Node} arg2 - 父节点标识或者对象
+     * @return {Node}               节点
      */
     _p._$create = (function(){
         var _map = {
@@ -1044,19 +1054,19 @@ NEJ.define([
         };
     })();
     /**
-     * 创建可交互框架<br/>
+     * 创建可交互框架
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="frameCnt"></div>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
-     *      var _xFrame = _p._$createXFrame({
+     *       'base/element'
+     *   ],function(_e){
+     *      var _xFrame = _e._$createXFrame({
      *          src:'http://www.baidu.com',
      *          name:'百度',
      *          parent:'frameCnt',
@@ -1067,16 +1077,16 @@ NEJ.define([
      *          }
      *      });
      *   });
-     * [/code]
+     * ```
      *
-     * @api    {_$createXFrame}
-     * @param  {Object}                       可选配置参数，已处理参数
-     * @config {String}               src     框架地址
-     * @config {String}               name    框架名称
-     * @config {String|Node|Function} parent  父节点或者框架加入父容器的执行函数
-     * @config {Boolean}              visible 是否可见
-     * @config {Function}             onload  框架载入回调
-     * @return {Node}                         框架节点
+     * @method   module:base/element._$createXFrame
+     * @param    {Object}               arg0    - 可选配置参数，已处理参数
+     * @property {String}               src     - 框架地址
+     * @property {String}               name    - 框架名称
+     * @property {String|Node|Function} parent  - 父节点或者框架加入父容器的执行函数
+     * @property {Boolean}              visible - 是否可见
+     * @property {Function}             onload  - 框架载入回调
+     * @return {Node}                             框架节点
      */
     _p._$createXFrame = (function(){
         var _getFrameSrc = function(){
@@ -1131,29 +1141,29 @@ NEJ.define([
         };
     })();
     /**
-     * 删除节点<br/>
+     * 删除节点
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="abc">123</div>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 移除节点前先清理节点上的事件
-     *       _p._$remove('abc',false);
+     *       _e._$remove('abc',false);
      *       // 移除节点前不清理节点上的事件
-     *       _p._$remove('abc',true);
+     *       _e._$remove('abc',true);
      *   });
-     * [/code]
+     * ```
      *
-     * @see    {#_$removeByEC}
-     * @api    {_$remove}
-     * @param  {String|Node} 节点标识或者对象
-     * @param  {Boolean}     是否禁止事件清理
+     * @method module:base/element._$remove
+     * @see    module:base/element._$removeByEC
+     * @param  {String|Node} arg0 - 节点标识或者对象
+     * @param  {Boolean}     arg1 - 是否禁止事件清理
      * @return {Void}
      */
     _p._$remove = (function(){
@@ -1200,25 +1210,25 @@ NEJ.define([
         };
     })();
     /**
-     * 节点移至内存<br/>
+     * 节点移至内存
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 先生成一个节点加到body下
-     *       var _node = _p._$create('div','js-div',document.body);
+     *       var _node = _e._$create('div','js-div',document.body);
      *       // 把节点移动到内存中
-     *       _p._$removeByEC(_node);
+     *       _e._$removeByEC(_node);
      *       // 从body上没有取到节点,结果为[]
-     *       _p._$getByClassName(document.body,'js-div');
+     *       _e._$getByClassName(document.body,'js-div');
      *   });
-     * [/code]
+     * ```
      *
-     * @see    {#_$remove}
-     * @api    {_$removeByEC}
-     * @param  {String|Node} 节点标识或者对象
+     * @method module:base/element._$removeByEC
+     * @see    module:base/element._$remove
+     * @param  {String|Node} arg0 - 节点标识或者对象
      * @return {Void}
      */
     _p._$removeByEC = function(_element){
@@ -1228,10 +1238,10 @@ NEJ.define([
         }
     };
     /**
-     * 清除所有子节点<br/>
+     * 清除所有子节点
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <ul id="abc">
      *     <li>aaaaaaaaaaaaa</li>
      *     <li>bbbbbbbbbbbbb</li>
@@ -1243,23 +1253,23 @@ NEJ.define([
      *     <tr><td>2222</td><td>2222</td></tr>
      *     <tr><td>3333</td><td>3333</td></tr>
      *   </table>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 清除ul下的子节点
-     *       _p._$clearChildren('abc');
+     *       _e._$clearChildren('abc');
      *
      *       // 清除table下的子节点
-     *       _p._$clearChildren('efg');
+     *       _e._$clearChildren('efg');
      *   });
-     * [/code]
+     * ```
      *
-     * @api    {_$clearChildren}
-     * @param  {String|Node} 容器节点
+     * @method module:base/element._$clearChildren
+     * @param  {String|Node} arg0 - 容器节点
      * @return {Void}
      */
     _p._$clearChildren = function(_element){
@@ -1274,55 +1284,55 @@ NEJ.define([
         }
     };
     /**
-     * 内联元素增加定位封装<br/>
+     * 内联元素增加定位封装
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <input type="text" id="abc"/>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 包装定位的span
-     *       _p._$wrapInline('abc');
+     *       _e._$wrapInline('abc');
      *   });
-     * [/code]
+     * ```
      *
      * 生成结构如下
-     * [code type="html"]
+     * ```html
      *   <span style="position:relative;zoom:1">
      *     <input type="text" id="abc"/>
      *     <!-- 此api返回以下这个节点 -->
      *     <span style="position:absolute;top:0;left:0;"></span>
      *   </span>
-     * [/code]
+     * ```
      *
      * 应用举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 返回容器的样式名称
      *       // 通过这个样式名称可以取到一个绝对定位的样式名 class+'-show'
-     *       var _node = _p._$wrapInline('abc',{
+     *       var _node = _e._$wrapInline('abc',{
      *           tag:'label',
      *           clazz:'js-xxx'
      *       });
      *       // 可以在返回的节点里添加想要显示的结构
      *       _node.innerHTML = '<span>aaa</span><span>aaa</span>';
      *   });
-     * [/code]
+     * ```
      *
-     * @api    {_$wrapInline}
-     * @param  {String|Node}  内联节点
-     * @param  {Object}       据对定位节点配置信息
-     * @config {String} tag   标记名称，默认span
-     * @config {String} nid   节点识别样式名，这个会被添加到样式中作为标识
-     * @config {String} clazz 样式名称
-     * @return {Node}         绝对定位的节点
+     * @method   module:base/element._$wrapInline
+     * @param    {String|Node}  arg0  - 内联节点
+     * @param    {Object}       arg1  - 据对定位节点配置信息
+     * @property {String}       tag   - 标记名称，默认span
+     * @property {String}       nid   - 节点识别样式名，这个会被添加到样式中作为标识
+     * @property {String}       clazz - 样式名称
+     * @return   {Node}                 绝对定位的节点
      */
     _p._$wrapInline = (function(){
         var _clazz,
@@ -1370,33 +1380,33 @@ NEJ.define([
         };
     })();
     /**
-     * 设置或者获取指定标识的数据<br/>
+     * 设置或者获取指定标识的数据
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="abc">123</div>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 设置值操作
      *       // <div id="abc" data-img="http://a.b.com/a.png">123</div>
      *       // 返回value值: http://a.b.com/a.png
-     *       var _src = _p._$dataset('abc','img','http://a.b.com/a.png');
+     *       var _src = _e._$dataset('abc','img','http://a.b.com/a.png');
      *
      *       // 取值操作
-     *       var _src = _p._$dataset('abc','img');
+     *       var _src = _e._$dataset('abc','img');
      *   });
-     * [/code]
+     * ```
      *
-     * @see    {#_$attr}
-     * @api    {_$dataset}
-     * @param  {String}     数据标识
-     * @param  {String}     数据值
-     * @return {String}     数据值
+     * @method module:base/element._$dataset
+     * @see    module:base/element._$attr
+     * @param  {String} arg0 - 数据标识
+     * @param  {String} arg1 - 数据值
+     * @return {String}        数据值
      */
     _p._$dataset = function(_element,_key,_value){
         var _id = _p._$id(_element);
@@ -1404,33 +1414,33 @@ NEJ.define([
                 _h.__dataset(_element,_key,_value);
     };
     /**
-     * 取某个节点的属性值<br/>
+     * 取某个节点的属性值
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="abc">123</div>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 设置成 <div id="abc" data-img="http://a.b.com/a.png">123</div>
      *       // 返回value值: http://a.b.com/a.png
-     *       var _src = _p._$attr('abc','data-img','http://a.b.com/a.png');
+     *       var _src = _e._$attr('abc','data-img','http://a.b.com/a.png');
      *
      *       // 如果设置了img的值返回data-img，否则放回空字符串
-     *       var _src = _p._$attr('abc','data-img');
+     *       var _src = _e._$attr('abc','data-img');
      *   });
-     * [/code]
+     * ```
      *
-     * @see    {#_$dataset}
-     * @api    {_$attr}
-     * @param  {String|Node} 节点标识或者对象
-     * @param  {String}      属性名称
-     * @param  {String}      属性值，如果没有设置此参数则表示取值
-     * @return {String}      属性值
+     * @method module:base/element._$attr
+     * @see    module:base/element._$dataset
+     * @param  {String|Node} arg0 - 节点标识或者对象
+     * @param  {String}      arg1 - 属性名称
+     * @param  {String}      arg2 - 属性值，如果没有设置此参数则表示取值
+     * @return {String}             属性值
      */
     _p._$attr = function(_element,_name,_value){
         _element = _p._$get(_element);
@@ -1445,35 +1455,35 @@ NEJ.define([
     /**
      * html代码转节点对象，
      * 如果转换出来的节点数量超过[包含]2个，
-     * 则最外面增加一个容器节点，即返回的始终是一个节点<br/>
+     * 则最外面增加一个容器节点，即返回的始终是一个节点
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="abc">
      *     <span>123</span>
      *   </div>
-     * [/code]
+     * ```
      *
      * 代码举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
-     *       var _node = _p._$html2node('<div>1</div><div><span>2</span></div>');
+     *       'base/element'
+     *   ],function(_e){
+     *       var _node = _e._$html2node('<div>1</div><div><span>2</span></div>');
      *   });
-     * [/code]
+     * ```
      *
      * 返回结果
-     * [code type="html"]
+     * ```html
      *   <div> <!-- 返回此节点 -->
      *     <div>1</div>
      *     <div><span>2</span></div>
      *   </div>
-     * [/code]
+     * ```
      *
-     * @api    {_$html2node}
-     * @param  {String} 代码
-     * @return {Node}   节点
+     * @method module:base/element._$html2node
+     * @param  {String} arg0 - 代码
+     * @return {Node}          节点
      */
     _p._$html2node = (function(){
         var _reg = /<(.*?)(?=\s|>)/i, // first tag name
@@ -1490,25 +1500,25 @@ NEJ.define([
         };
     })();
     /**
-     * 将dom节点转为xml串<br/>
+     * 将dom节点转为xml串
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="abc">123</div>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
+     *       'base/element'
      *   ],function(_p){
      *       // 生成<div id="abc">123</div>字符串
      *       var _xml = _p._$dom2xml('abc'));
      *   });
-     * [/code]
+     * ```
      *
-     * @see    {#_$xml2dom}
-     * @api    {_$dom2xml}
+     * @see    module:base/element._$xml2dom}
+     * @method module:base/element._$dom2xml}
      * @param  {String|Node} 节点
      * @return {String}      XML代码
      */
@@ -1517,44 +1527,44 @@ NEJ.define([
         return !_element?'':_h.__serializeDOM2XML(_element);
     };
     /**
-     * 将xml转为dom节点<br/>
+     * 将xml转为dom节点
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 生成<div id="abc">123</div>节点
-     *       var _node = _p._$xml2dom('<div id="abc">123</div>');
+     *       var _node = _e._$xml2dom('<div id="abc">123</div>');
      *   });
-     * [/code]
+     * ```
      *
-     * @see    {#_$dom2xml}
-     * @api    {_$xml2dom}
-     * @param  {String}    xml文本
-     * @return {Node}      节点
+     * @method module:base/element._$xml2dom
+     * @see    module:base/element._$dom2xml
+     * @param  {String} arg0 - xml文本
+     * @return {Node}          DOM节点
      */
     _p._$xml2dom = function(_xml){
         _xml = (_xml||'').trim();
         return !_xml?null:_h.__parseDOMFromXML(_xml);
     };
     /**
-     * dom节点转对象，多用于XML DOM转数据对象<br/>
+     * dom节点转对象，多用于XML DOM转数据对象
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="abc">123</div>
      *
      *   <div id="efg">
      *     <p>aaaa</p>
      *     <span>bbbb</span>
      *   </div>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
+     *       'base/element'
      *   ],function(_p){
      *       // 返回对象{div:'123'}
      *       var _obj = _p._$dom2object('abc');
@@ -1562,11 +1572,11 @@ NEJ.define([
      *       // 返回对象{div:{p:'aaaa',span:'bbbb'}}
      *       var _obj = _p._$dom2object('efg');
      *   });
-     * [/code]
+     * ```
      *
-     * @api    {_$dom2object}
-     * @param  {String|Node} 节点
-     * @return {Object}      转换完成的对象
+     * @method module:base/element._$dom2object
+     * @param  {String|Node} arg0 - 节点
+     * @return {Object}             转换完成的对象
      */
      _p._$dom2object = function(_dom,_obj){
          _obj = _obj||{};
@@ -1588,15 +1598,15 @@ NEJ.define([
         return _obj;
     };
     /**
-     * XML转对象<br/>
+     * XML转对象
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 返回 {user:{id:'1',username:'aaa',password:'123456'}}
-     *       var _obj = _p._$xml2object('\
+     *       var _obj = _e._$xml2object('\
      *           <?xml version="1.0" encoding="utf-8" ?>\
      *           <user>\
      *             <id>1</id>\
@@ -1605,11 +1615,11 @@ NEJ.define([
      *           </user>\
      *       ');
      *   });
-     * [/code]
+     * ```
      *
-     * @api    {_$xml2object}
-     * @param  {String}  xml代码
-     * @return {Object}  对象
+     * @method module:base/element._$xml2object
+     * @param  {String} arg0 - xml代码
+     * @return {Object}        对象
      */
     _p._$xml2object = function(_xml){
         try{
@@ -1619,27 +1629,27 @@ NEJ.define([
         }
     };
     /**
-     * 文本转指定类型的数据<br/>
+     * 文本转指定类型的数据
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       var _text = '<div id="abc">123</div>';
      *       // 转成dom节点
-     *       var _dom = _p._$text2type(_text,"xml");
+     *       var _dom = _e._$text2type(_text,"xml");
      *       // 转成json字符串
-     *       var _json = _p._$text2type(_text,"json");
+     *       var _json = _e._$text2type(_text,"json");
      *       // 原样返回
-     *       var _text = _p._$text2type(_text);
+     *       var _text = _e._$text2type(_text);
      *   });
-     * [/code]
+     * ```
      *
-     * @api    {_$text2type}
-     * @param  {String}     文本内容
-     * @param  {String}     类型，如xml/json/text
-     * @return {Variable}   指定类型的数据
+     * @method module:base/element._$text2type
+     * @param  {String} arg0 - 文本内容
+     * @param  {String} arg1 - 类型，如xml/json/text
+     * @return {Variable}      指定类型的数据
      */
     _p._$text2type = (function(){
         var _fmap = {
@@ -1663,30 +1673,31 @@ NEJ.define([
         };
     })();
     /**
-     * 批量设置节点样式<br/>
+     * 批量设置节点样式
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="abc">123</div>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
-     *       _p._$style('abc',{color:'red',width:'100px'});
+     *       'base/element'
+     *   ],function(_e){
+     *       _e._$style('abc',{color:'red',width:'100px'});
      *   });
-     * [/code]
+     * ```
      *
      * 输出结果
-     * [code type="html"]
+     * ```html
      *   <div id="abc" style="color:red;width:100px;">123</div>
-     * [/code]
+     * ```
      *
-     * @api    {_$style}
-     * @param  {String|Node} 节点
-     * @param  {Object}      样式信息{color:'red',width:'100px'}
+     * @method module:base/element._$style
+     * @see    module:base/element._$setStyle
+     * @param  {String|Node} arg0 - 节点
+     * @param  {Object}      arg1 - 样式信息{color:'red',width:'100px'}
      * @return {Void}
      */
     _p._$style = function(_element,_map){
@@ -1698,32 +1709,32 @@ NEJ.define([
         }
     };
     /**
-     * 设置单个样式<br/>
+     * 设置单个样式
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="abc">123</div>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
-     *       _p._$setStyle('abc','color','red');
+     *       'base/element'
+     *   ],function(_e){
+     *       _e._$setStyle('abc','color','red');
      *   });
-     * [/code]
+     * ```
      *
      * 输出结果
-     * [code type="html"]
+     * ```html
      *   <div id="abc" style="color:red;">123</div>
-     * [/code]
+     * ```
      *
-     * @see    {#_$getStyle}
-     * @api    {_$setStyle}
-     * @param  {String|Node} 节点
-     * @param  {String}      样式名称
-     * @param  {String}      样式值
+     * @method module:base/element._$setStyle
+     * @see    module:base/element._$getStyle
+     * @param  {String|Node} arg0 - 节点
+     * @param  {String}      arg1 - 样式名称
+     * @param  {String}      arg2 - 样式值
      * @return {Void}
      */
     _p._$setStyle = function(_element,_name,_value){
@@ -1736,27 +1747,28 @@ NEJ.define([
         }
     };
     /**
-     * 取样式值<br/>
+     * 取样式值
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="abc" style="color:red;">123</div>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 返回节点的颜色值red（高版本浏览器返回rgb值），如果没有返回空字符串
-     *       var _value = _p._$getStyle('abc','color');
+     *       var _value = _e._$getStyle('abc','color');
      *   });
-     * [/code]
+     * ```
      *
-     * @api    {_$getStyle}
-     * @param  {String|Node} 节点
-     * @param  {String}      样式名称
-     * @return {String}      样式值
+     * @method module:base/element._$getStyle
+     * @method module:base/element._$setStyle
+     * @param  {String|Node} arg0 - 节点
+     * @param  {String}      arg1 - 样式名称
+     * @return {String}             样式值
      */
     _p._$getStyle = function(_element,_name){
         _element = _p._$get(_element);
@@ -1766,32 +1778,32 @@ NEJ.define([
                 );
     };
     /**
-     * 页面注入脚本<br/>
+     * 页面注入脚本
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="abc">123</div>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 注入脚本，全局执行环境
-     *       _p._$addScript('\
+     *       _e._$addScript('\
      *           document.getElementById("abc").style.color = "green"\
      *       ');
      *   });
-     * [/code]
+     * ```
      *
      * 输出结果
-     * [code type="html"]
+     * ```html
      *   <div id="abc" style="color:green;">123</div>
-     * [/code]
+     * ```
      *
-     * @api    {_$addScript}
-     * @param  {String} 脚本内容
+     * @method module:base/element._$addScript
+     * @param  {String} arg0 - 脚本内容
      * @return {Void}
      */
     _p._$addScript = function(_script){
@@ -1807,51 +1819,51 @@ NEJ.define([
         }
     };
     /**
-     * 注入页面内联样式<br/>
-     * 样式支持前缀标记$&lt;vendor&gt; <br/>
-     * 如下样式值支持3D/2D切换，优先选用3D，格式：$&lt;NAME|VALUE&gt;<br/>
-     * [ul]
-     *   NAME支持：scale/rotate/translate/matrix
-     *   VALUE格式：x=1&y=2&z=3&a=30
-     * [/ul]
+     * 注入页面内联样式，
+     * 样式支持前缀标记$&lt;vendor&gt; ，
+     * 如下样式值支持3D/2D切换，优先选用3D，格式：$&lt;NAME|VALUE&gt;
+     * 
+     * * NAME支持：scale/rotate/translate/matrix
+     * * VALUE格式：x=1&y=2&z=3&a=30
+     * 
      *
-     * 范例如$&lt;scale|a=30&gt;，各名称支持的参数列表<br/>
-     * [ntb]
-     *   名称              |  参数
-     *   ---------------------
-     *   scale      |  x,y,z
-     *   rotate     |  x,y,z,a
-     *   translate  |  x,y,z
-     *   matrix     |  m11,m12,m13,m14,m21,m22,m23,m24,m31,m32,m33,m34,m41,m42,m43,m44
-     * [/ntb]
+     * 范例如$&lt;scale|a=30&gt;，各名称支持的参数列表
+     * 
+     * | 名称              | 参数 |
+     * | :--        | :-- |
+     * | scale      | x,y,z |
+     * | rotate     | x,y,z,a |
+     * | translate  | x,y,z |
+     * | matrix     | m11,m12,m13,m14,m21,m22,m23,m24,m31,m32,m33,m34,m41,m42,m43,m44 |
+     * 
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <html>
      *    <head>
      *        <title>test</title>
      *    </head>
      *   </html>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 注入样式
-     *       _p._$addStyle('body{font-size:20px}');
+     *       _e._$addStyle('body{font-size:20px}');
      *
      *       // 注入样式支持变量
-     *       _p._$addStyle('\
+     *       _e._$addStyle('\
      *           .a{$<vendor>transform-origin:0 0;}\
      *           .b{$<vendor>transform:$<translate|x=0&y=1&z=1>}\
      *       ');
      *   });
-     * [/code]
+     * ```
      *
      * 输出结果
-     * [code type="html"]
+     * ```html
      *   <html>
      *    <head>
      *        <title>test</title>
@@ -1862,11 +1874,11 @@ NEJ.define([
      *        </style>
      *    </head>
      *   </html>
-     * [/code]
+     * ```
      *
-     * @api    {_$addStyle}
-     * @param  {String} 样式内容
-     * @return {Node}   样式节点
+     * @method module:base/element._$addStyle
+     * @param  {String} arg0 - 样式内容
+     * @return {Node}          样式节点
      */
     _p._$addStyle = (function(){
         var _reg = /[\s\r\n]+/gi;
@@ -1884,25 +1896,25 @@ NEJ.define([
         };
     })();
     /**
-     * 缓存待激活样式<br/>
+     * 缓存待激活样式
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 设置样式到缓存中，自动生成样式名
-     *       _p._$pushCSSText('.#<class>{width:300px;}');
+     *       _e._$pushCSSText('.#<class>{width:300px;}');
      *
      *       // 把缓存中的样式内联到页面，返回自动生成的类名#<class>
-     *       var _class = _p._$dumpCSSText();
+     *       var _class = _e._$dumpCSSText();
      *   });
-     * [/code]
+     * ```
      *
-     * @see    {#_$dumpCSSText}
-     * @api    {_$pushCSSText}
-     * @param  {String} 样式
-     * @return {String} 样式标识
+     * @method module:base/element._$pushCSSText
+     * @see    module:base/element._$dumpCSSText
+     * @param  {String} arg0 - 样式
+     * @return {String}        样式标识
      */
     _p._$pushCSSText = (function(){
         var _reg = /#<.*?>/g,
@@ -1917,28 +1929,28 @@ NEJ.define([
         };
     })();
     /**
-     * 激活缓存中的样式<br/>
+     * 激活缓存中的样式
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="abc" class="item">123</div>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 设置样式.item{width:300px;}到缓存中
-     *       _p._$pushCSSText('.item{width:300px;}');
+     *       _e._$pushCSSText('.item{width:300px;}');
      *
-     *       // 把缓存中的样式内联到页面
-     *       _p._$dumpCSSText();
+     *       // 把缓存中的样式内联到页面，返回自动生成的类名#<class>
+     *       var _class = _e._$dumpCSSText();
      *   });
-     * [/code]
+     * ```
      *
-     * @see    {#_$pushCSSText}
-     * @api    {_$dumpCSSText}
+     * @method module:base/element._$dumpCSSText
+     * @see    module:base/element._$pushCSSText
      * @return {Void}
      */
     _p._$dumpCSSText = function(){
@@ -1951,23 +1963,24 @@ NEJ.define([
      * 追加CSS规则
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <style id="abc"></style>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 设置样式.item{width:300px;}到缓存中
-     *       _p._$appendCSSText('.item{width:300px;}');
+     *       _e._$appendCSSText('.item{width:300px;}');
      *   });
-     * [/code]
+     * ```
      *
-     * @param  {Node}    样式节点
-     * @param  {String}  单条样式规则
-     * @return {CSSRule} 样式规则对象
+     * @method module:base/element._$appendCSSText
+     * @param  {Node}   arg0 - 样式节点
+     * @param  {String} arg1 - 单条样式规则
+     * @return {CSSRule}       样式规则对象
      */
     _p._$appendCSSText = function(_element,_css){
         _element = _p._$get(_element);
@@ -1978,32 +1991,33 @@ NEJ.define([
                 );
     };
     /**
-     * 新增样式类，多个样式用空格分开<br/>
+     * 新增样式类，多个样式用空格分开
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="abc">123</div>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 添加样式 fc01 fc03
-     *       _p._$addClassName('abc','fc01 fc03');
+     *       _e._$addClassName('abc','fc01 fc03');
      *   });
-     * [/code]
+     * ```
      *
      * 输出结果
-     * [code type="html"]
+     * ```html
      *   <div id="abc" class="fc01 fc03">123</div>
-     * [/code]
+     * ```
      *
-     * @see    {#_$delClassName}
-     * @api    {_$addClassName}
-     * @param  {String|Node} 要操作的节点标识或者节点对象
-     * @param  {String}      要新增的样式类名称
+     * @method module:base/element._$addClassName
+     * @see    module:base/element._$delClassName
+     * @method module:base/element._$replaceClassName
+     * @param  {String|Node} arg0 - 要操作的节点标识或者节点对象
+     * @param  {String}      arg1 - 要新增的样式类名称
      * @return {Void}
      */
     _p._$addClassName = function(_element,_class){
@@ -2015,32 +2029,33 @@ NEJ.define([
         }
     };
     /**
-     * 删除样式类，多个样式用空格分开<br/>
+     * 删除样式类，多个样式用空格分开
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="abc" class="fc01 fc03">123</div>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 删除fc02 fc03样式名
-     *       _p._$delClassName('abc','fc02 fc03');
+     *       _e._$delClassName('abc','fc02 fc03');
      *   });
-     * [/code]
+     * ```
      *
      * 输出结果
-     * [code type="html"]
+     * ```html
      *   <div id="abc" class="fc01">123</div>
-     * [/code]
+     * ```
      *
-     * @see    {#_$addClassName}
-     * @api    {_$delClassName}
-     * @param  {String|Node} 要操作的节点标识或者节点对象
-     * @param  {String}      要删除的样式类名称
+     * @method module:base/element._$delClassName
+     * @see    module:base/element._$addClassName
+     * @method module:base/element._$replaceClassName
+     * @param  {String|Node} arg0 - 要操作的节点标识或者节点对象
+     * @param  {String}      arg1 - 要删除的样式类名称
      * @return {Void}
      */
     _p._$delClassName = function(_element,_class){
@@ -2052,34 +2067,36 @@ NEJ.define([
         }
     };
     /**
-     * 替换节点的样式类名称，多个样式用空格分隔<br/>
-     * 操作过程为先删除待删样式，再添加待添样式，因此不需要删除样式存在才添加样式<br/>
+     * 替换节点的样式类名称，多个样式用空格分隔，
+     * 操作过程为先删除待删样式，再添加待添样式，因此不需要删除样式存在才添加样式
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="abc" class="fc01 fc03">123</div>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 替换fc02为fc05
      *       // 这里不需要fc02存在
-     *       _p._$replaceClassName('abc','fc02','fc05');
+     *       _e._$replaceClassName('abc','fc02','fc05');
      *   });
-     * [/code]
+     * ```
      *
      * 输出结果
-     * [code type="html"]
+     * ```html
      *   <div id="abc" class="fc01 fc03 fc05">123</div>
-     * [/code]
+     * ```
      *
-     * @api    {_$replaceClassName}
-     * @param  {String|Node} 要操作的节点标识或者节点对象
-     * @param  {String}      要删除的样式类名称
-     * @param  {String}      要新增的样式类名称
+     * @method module:base/element._$replaceClassName
+     * @see    module:base/element._$addClassName
+     * @see    module:base/element._$delClassName
+     * @param  {String|Node} arg0 - 要操作的节点标识或者节点对象
+     * @param  {String}      arg1 - 要删除的样式类名称
+     * @param  {String}      arg2 - 要新增的样式类名称
      * @return {Void}
      */
     _p._$replaceClassName = function(_element,_del,_add){
@@ -2092,27 +2109,27 @@ NEJ.define([
         }
     };
     /**
-     * 检测节点是否包含指定样式，多个样式用空格分隔，检测时包含其中之一即表示包含<br/>
+     * 检测节点是否包含指定样式，多个样式用空格分隔，检测时包含其中之一即表示包含
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="abc" class="fc01 fc03">123</div>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 如果有fc01样式返回true，否则返回false
-     *       _p._$hasClassName('abc',"fc01");
+     *       _e._$hasClassName('abc',"fc01");
      *   });
-     * [/code]
+     * ```
      *
-     * @api    {_$hasClassName}
-     * @param  {String|Node} 节点标识或者对象
-     * @param  {String}      样式串
-     * @return {Boolean}     是否含指定样式
+     * @method module:base/element._$hasClassName
+     * @param  {String|Node} arg0 - 节点标识或者对象
+     * @param  {String}      arg1 - 样式串
+     * @return {Boolean}            是否含指定样式
      */
     _p._$hasClassName = function(_element,_class){
         _element = _e._$get(_element);
@@ -2122,53 +2139,53 @@ NEJ.define([
         return !1;
     };
     /**
-     * 取样式变换矩阵对象<br/>
+     * 取样式变换矩阵对象
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 生成下面矩阵的对象
      *       // |a:1,b:0,c:0,d:1,e:0:f:0|
      *       // |m11:1,m12:0,m13:0,m14:0|
      *       // |m21:0,m22:1,m23:0,m24:0|
      *       // |m31:0,m32:0,m33:1,m34:0|
      *       // |m41:0,m42:0,m43:0,m44:1|
-     *       var _matrix = _p._$matrix("matrix(1,0,0,1,0,0)");
+     *       var _matrix = _e._$matrix("matrix(1,0,0,1,0,0)");
      *   });
-     * [/code]
+     * ```
      *
-     * @api    {_$matrix}
-     * @param  {String}    变化信息
-     * @return {CSSMatrix} 变换矩阵对象
+     * @method module:base/element._$matrix
+     * @param  {String} arg0 - 变化信息
+     * @return {CSSMatrix}     变换矩阵对象
      */
     _p._$matrix = function(_matrix){
         _matrix = (_matrix||'').trim();
         return _h.__getCSSMatrix(_matrix);
     };
     /**
-     * 设置3D变换，对于不支持3D的系统自动切换为2D变换<br/>
+     * 设置3D变换，对于不支持3D的系统自动切换为2D变换
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="abc"></div>
-     * [/code]
+     * ```
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}base/element.js'
-     *   ],function(_p){
+     *       'base/element'
+     *   ],function(_e){
      *       // 进行css3d变换，对应css样式为-webkit-transform:rotate3d( 2, 1, 1, -75deg);
-     *       _p._$css3d('abc','rotate',{x:2,y:1,z:1,a:'-75deg'});
+     *       _e._$css3d('abc','rotate',{x:2,y:1,z:1,a:'-75deg'});
      *   });
-     * [/code]
+     * ```
      *
-     * @see    {_$addStyle}
-     * @api    {_$css3d}
-     * @param  {String|Node} 节点标识或者对象
-     * @param  {String}      变换类型，matrix/translate/scale/rotate
-     * @param  {Object}      变换值，{x:1,y:2,z:3,a:'30deg'}
+     * @method module:base/element._$css3d
+     * @see    module:base/element._$addStyle
+     * @param  {String|Node} arg0 - 节点标识或者对象
+     * @param  {String}      arg1 - 变换类型，matrix/translate/scale/rotate
+     * @param  {Object}      arg2 - 变换值，{x:1,y:2,z:3,a:'30deg'}
      * @return {Void}
      */
     _p._$css3d = function(_element,_name,_map){

@@ -70,13 +70,11 @@ NEJ.define([
      * 对于自定义事件的实现逻辑由其他模块负责实现
      * 
      * 结构举例
-     * 
      * ```html
      *   <div id="abc">123</div>
      * ```
      * 
      * 脚本举例
-     * 
      * ```javascript
      *   NEJ.define([
      *       'base/event'
@@ -162,13 +160,11 @@ NEJ.define([
      * 节点删除事件，输入参数必须保证与添加接口_$addEvent输入参数完全一致
      * 
      * 结构举例
-     * 
      * ```html
      *   <div id="abc">123</div>
      * ```
      * 
      * 脚本举例
-     * 
      * ```javascript
      *   NEJ.define([
      *       'base/event'
@@ -260,13 +256,11 @@ NEJ.define([
      * 清除节点事件
      * 
      * 结构举例
-     * 
      * ```html
      *   <div id="abc">123</div>
      * ```
      * 
      * 脚本举例
-     * 
      * ```javascript
      *   NEJ.define([
      *       'base/event'
@@ -348,13 +342,11 @@ NEJ.define([
      * 
      * 
      * 结构举例
-     * 
      * ```html
      *   <div id="abc">123</div>
      * ```
      * 
      * 脚本举例
-     * 
      * ```javascript
      *   NEJ.define([
      *       'base/event'
@@ -401,8 +393,7 @@ NEJ.define([
     /**
      * 获取触发事件的节点，可以传入过滤接口来遍历父节点找到符合条件的节点
      * 
-     * 页面结构举例
-     * 
+     * 结构举例
      * ```html
      *   <div id="a">
      *     <p>
@@ -416,7 +407,6 @@ NEJ.define([
      * ```
      * 
      * 脚本举例
-     * 
      * ```javascript
      *   NEJ.define([
      *       'base/event'
@@ -516,7 +506,6 @@ NEJ.define([
      * 阻止事件，包括默认事件和传递事件
      * 
      * 结构举例
-     * 
      * ```html
      *   <div id="a">
      *     <a href="xxx.html" id="b">123</a>
@@ -524,7 +513,6 @@ NEJ.define([
      * ```
      * 
      * 脚本举例
-     * 
      * ```javascript
      *   NEJ.define([
      *       'base/event'
@@ -562,7 +550,6 @@ NEJ.define([
      * 阻止事件的冒泡传递
      * 
      * 结构举例
-     * 
      * ```html
      *   <div id="a">
      *     <a href="xxx.html" id="b">123</a>
@@ -570,7 +557,6 @@ NEJ.define([
      * ```
      * 
      * 脚本举例
-     * 
      * ```javascript
      *   NEJ.define([
      *       'base/event'
@@ -610,7 +596,6 @@ NEJ.define([
      * 阻止标签的默认事件
      * 
      * 结构举例
-     * 
      * ```html
      *   <div id="a">
      *     <a href="xxx.html" id="b">123</a>
@@ -618,7 +603,6 @@ NEJ.define([
      * ```
      * 
      * 脚本举例
-     * 
      * ```javascript
      *   NEJ.define([
      *       'base/event'
@@ -657,13 +641,11 @@ NEJ.define([
      * 取事件相对于页面的位置
      * 
      * 结构举例
-     * 
      * ```html
      *   <div id="abc" style="width:100%;height:100%;">123</div>
      * ```
      * 
      * 脚本举例
-     * 
      * ```javascript
      *   NEJ.define([
      *       'base/event'
@@ -694,13 +676,11 @@ NEJ.define([
      * 取事件相对于页面左侧的位置
      * 
      * 结构举例
-     * 
      * ```html
      *   <div id="abc" style="width:100%;height:100%;">123</div>
      * ```
      * 
      * 脚本举例
-     * 
      * ```javascript
      *   NEJ.define([
      *       'base/event'
@@ -728,13 +708,11 @@ NEJ.define([
      * 取事件相对于页面顶部的位置
      * 
      * 结构举例
-     * 
      * ```html
      *   <div id="abc" style="width:100%;height:100%;">123</div>
      * ```
      * 
      * 脚本举例
-     * 
      * ```javascript
      *   NEJ.define([
      *       'base/event'
