@@ -27,8 +27,8 @@ NEJ.define([
      * });
      * ```
      * 
-     * @const    module:base/platform#_$IS
-     * @see      module:base/platform#_$is
+     * @const    module:base/platform._$IS
+     * @see      module:base/platform._$is
      * @type     {Object}
      * @property {Boolean} mac     - 是否Mac系统
      * @property {Boolean} win     - 是否windows系统
@@ -71,8 +71,8 @@ NEJ.define([
      * });
      * ```
      * 
-     * @method module:base/platform#_$is
-     * @see    module:base/platform#_$IS
+     * @method module:base/platform._$is
+     * @see    module:base/platform._$IS
      * @param  {String} arg0 - 平台名称
      * @return {Boolean}       是否指定平台
      */
@@ -96,7 +96,7 @@ NEJ.define([
      * });
      * ```
      * 
-     * @const    module:base/platform#_$KERNEL
+     * @const    module:base/platform._$KERNEL
      * @type     {Object}
      * @property {String} engine  - 布局引擎，trident/webkit/gecko/presto...
      * @property {Number} release - 布局引擎版本
@@ -165,8 +165,8 @@ NEJ.define([
      *     console.log(_support.css3d);
      * });
      * ```
-     * @const    module:base/platform#_$SUPPORT
-     * @see      module:base/platform#_$support
+     * @const    module:base/platform._$SUPPORT
+     * @see      module:base/platform._$support
      * @type     {Object}
      * @property {Boolean} css3d  - 是否支持CSS3 3D
      */
@@ -183,8 +183,8 @@ NEJ.define([
      * });
      * ```
      * 
-     * @method module:base/platform#_$support
-     * @see    module:base/platform#_$SUPPORT
+     * @method module:base/platform._$support
+     * @see    module:base/platform._$SUPPORT
      * @param  {String} arg0 - 特性标识
      * @return {Boolean}       是否支持指定特性
      */
