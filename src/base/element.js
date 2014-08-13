@@ -298,16 +298,18 @@ NEJ.define([
         return _tmp2>=_tmp1?document.documentElement:document.body;
     };
     /**
-     * 取页面盒信息，返回盒信息内容：
+     * 盒模型结构
      * 
-     * | 属性                  | 说明 |
-     * | :--          | :-- |
-     * | scrollTop    | 滚动垂直偏移 |
-     * | scrollLeft   | 滚动水平偏移 |
-     * | clientWidth  | 页面可视宽度 |
-     * | clientHeight | 页面可视高度 |
-     * | scrollWidth  | 页面滚动宽度 |
-     * | scrollHeight | 页面滚动高度 |
+     * @typedef  {Object} module:base/element~BoxModel
+     * @property {Number} scrollTop    - 滚动垂直偏移
+     * @property {Number} scrollLeft   - 滚动水平偏移
+     * @property {Number} clientWidth  - 页面可视宽度
+     * @property {Number} clientHeight - 页面可视高度
+     * @property {Number} scrollWidth  - 页面滚动宽度
+     * @property {Number} scrollHeight - 页面滚动高度 
+     */
+    /**
+     * 取页面盒信息，返回盒信息内容：
      * 
      * 脚本举例
      * ```javascript
@@ -318,10 +320,10 @@ NEJ.define([
      *       var _box = _e._$getPageBox();
      *   });
      * ```
-     *
+     * 
      * @method module:base/element._$getPageBox
      * @param  {Document} arg0 - 文档对象
-     * @return {Object}          盒信息
+     * @return {module:base/element~BoxModel} 盒信息
      */
     _p._$getPageBox = (function(){
         // get min value but not zero
