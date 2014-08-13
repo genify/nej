@@ -5,6 +5,7 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module util/event */
 NEJ.define([
     '{lib}base/global.js',
     '{lib}base/klass.js',
@@ -74,7 +75,7 @@ NEJ.define([
      *   });
      * ```
      * 
-     * @class _$$EventTarget
+     * @class module:util/event._$$EventTarget
      * @param {Object} config - 配置参数，根据控件实际情况提供配置参数支持
      */
     /** 
@@ -97,7 +98,7 @@ NEJ.define([
      *   });
      * ```
      * 
-     * @event _$$EventTarget#onbeforerecycle
+     * @event module:util/event._$$EventTarget#onbeforerecycle
      * @param {Object} event - 事件触发信息
      */
     /**
@@ -120,7 +121,7 @@ NEJ.define([
      *   });
      * ```
      * 
-     * @event _$$EventTarget#onaftercycle
+     * @event module:util/event._$$EventTarget#onaftercycle
      * @param {Object} event - 事件触发信息
      */
     _p._$$EventTarget = _k._$klass();
@@ -140,11 +141,11 @@ NEJ.define([
      *   });
      * ```
      * 
-     * @method _$$EventTarget._$allocate
-     * @see    _$$EventTarget._$getInstance
-     * @see    _$$EventTarget._$getInstanceWithReset
+     * @method module:util/event._$$EventTarget._$allocate
+     * @see    module:util/event._$$EventTarget._$getInstance
+     * @see    module:util/event._$$EventTarget._$getInstanceWithReset
      * @param  {Object}  arg0 - 配置参数，根据控件实际情况提供配置参数支持
-     * @return {_$$EventTarget} 控件实例
+     * @return {module:util/event._$$EventTarget} 控件实例
      */
     _p._$$EventTarget._$allocate = function(_options){
         _options = _options||{};
@@ -172,8 +173,8 @@ NEJ.define([
      *   _p._$$Widget._$recycle([_widget0,_widget1]);
      * ```
      * 
-     * @method _$$EventTarget._$recycle
-     * @param  {_$$EventTarget|_$$EventTarget[]} arg0 - 待回收实例或者实例列表
+     * @method module:util/event._$$EventTarget._$recycle
+     * @param  {module:util/event._$$EventTarget|module:util/event._$$EventTarget[]} arg0 - 待回收实例或者实例列表
      * @return {Void}
      */
     _p._$$EventTarget._$recycle = (function(){
@@ -238,11 +239,11 @@ NEJ.define([
      *   var _widget2 = _p._$$Widget._$getInstance();
      * ```
      * 
-     * @method _$$EventTarget._$getInstance
-     * @see    _$$EventTarget._$getInstanceWithReset
-     * @see    _$$EventTarget._$allocate
+     * @method module:util/event._$$EventTarget._$getInstance
+     * @see    module:util/event._$$EventTarget._$getInstanceWithReset
+     * @see    module:util/event._$$EventTarget._$allocate
      * @param  {Object}  arg0 - 配置参数，根据控件实际情况提供配置参数支持
-     * @return {_$$EventTarget} 控件实例
+     * @return {module:util/event._$$EventTarget} 控件实例
      */
     _p._$$EventTarget._$getInstance = function(_options){
         if (!this.__instance){
@@ -271,12 +272,12 @@ NEJ.define([
      *   });
      * ```
      * 
-     * @method _$$EventTarget._$getInstanceWithReset
-     * @see    _$$EventTarget._$getInstance
-     * @see    _$$EventTarget._$allocate
+     * @method module:util/event._$$EventTarget._$getInstanceWithReset
+     * @see    module:util/event._$$EventTarget._$getInstance
+     * @see    module:util/event._$$EventTarget._$allocate
      * @param  {Object}  arg0 - 配置参数，根据控件实际情况提供配置参数支持
      * @param  {Boolean} arg1 - 是否需要先清理已有实例
-     * @return {_$$EventTarget} 控件实例
+     * @return {module:util/event._$$EventTarget} 控件实例
      */
     _p._$$EventTarget._$getInstanceWithReset = function(_options,_clear){
         // clear instance
@@ -307,7 +308,7 @@ NEJ.define([
      * ```
      * 
      * @protected
-     * @method _$$EventTarget#__init
+     * @method module:util/event._$$EventTarget#__init
      * @return {Void}
      */
     _pro.__init = function(){
@@ -334,7 +335,7 @@ NEJ.define([
      * ```
      * 
      * @protected
-     * @method _$$EventTarget#__reset
+     * @method module:util/event._$$EventTarget#__reset
      * @param  {Object} arg0 - 配置参数，根据控件实际情况提供配置参数支持
      * @return {Void}
      */
@@ -368,7 +369,7 @@ NEJ.define([
      * ```
      * 
      * @protected
-     * @method _$$EventTarget#__destroy
+     * @method module:util/event._$$EventTarget#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -393,8 +394,8 @@ NEJ.define([
      * ```
      * 
      * @protected
-     * @method _$$EventTarget#__doInitDomEvent
-     * @see    _$$EventTarget#__doClearDomEvent
+     * @method module:util/event._$$EventTarget#__doInitDomEvent
+     * @see    module:util/event._$$EventTarget#__doClearDomEvent
      * @param  {Array} arg0 - 待添加的事件配置列表 
      * @return {Void}
      */
@@ -420,8 +421,8 @@ NEJ.define([
      * ```
      * 
      * @protected
-     * @method _$$EventTarget#__doClearDomEvent
-     * @see    _$$EventTarget#__doInitDomEvent
+     * @method module:util/event._$$EventTarget#__doClearDomEvent
+     * @see    module:util/event._$$EventTarget#__doInitDomEvent
      * @return {Void}
      */
     _pro.__doClearDomEvent = (function(){
@@ -448,7 +449,7 @@ NEJ.define([
      * ```
      * 
      * @protected
-     * @method _$$EventTarget#__doClearComponent
+     * @method module:util/event._$$EventTarget#__doClearComponent
      * @param  {Function} arg0 - 过滤接口，返回true表示不清理该控件
      * @return {Void}
      */
@@ -469,8 +470,8 @@ NEJ.define([
      *   _widget._$recycle();
      * ```
      * 
-     * @method _$$EventTarget#_$recycle
-     * @see    _$$EventTarget#_$allocate
+     * @method module:util/event._$$EventTarget#_$recycle
+     * @see    module:util/event._$$EventTarget#_$allocate
      * @return {Void}
      */
     _pro._$recycle = function(){
@@ -490,7 +491,7 @@ NEJ.define([
      *   _widget._$hasEvent('onok');
      * ```
      * 
-     * @method _$$EventTarget#_$hasEvent
+     * @method module:util/event._$$EventTarget#_$hasEvent
      * @param  {String} arg0 - 事件类型
      * @return {Boolean}       是否注册了事件回调
      */
@@ -514,7 +515,7 @@ NEJ.define([
      *   _widget._$delEvent('onok',_handler);
      * ```
      * 
-     * @method _$$EventTarget#_$delEvent
+     * @method module:util/event._$$EventTarget#_$delEvent
      * @param  {String}   arg0 - 事件类型
      * @param  {Function} arg1 - 事件处理函数
      * @return {Void}
@@ -555,7 +556,7 @@ NEJ.define([
      *   });
      * ```
      * 
-     * @method _$$EventTarget#_$setEvent
+     * @method module:util/event._$$EventTarget#_$setEvent
      * @param  {String}   arg0 - 事件类型，大小写不敏感
      * @param  {Function} arg1 - 事件处理函数
      * @return {Void}
@@ -582,8 +583,8 @@ NEJ.define([
      *   });
      * ```
      * 
-     * @method _$$EventTarget#_$batEvent
-     * @see    _$$EventTarget#_$setEvent
+     * @method module:util/event._$$EventTarget#_$batEvent
+     * @see    module:util/event._$$EventTarget#_$setEvent
      * @param  {Object} arg0 - 事件集合,{type:function}
      * @return {Void}
      */
@@ -611,7 +612,7 @@ NEJ.define([
      *   _widget._$clearEvent();
      * ```
      * 
-     * @method _$$EventTarget#_$clearEvent
+     * @method module:util/event._$$EventTarget#_$clearEvent
      * @param  {String} arg0 - 事件类型
      * @return {Void}
      */
@@ -646,7 +647,7 @@ NEJ.define([
      *   });
      * ```
      * 
-     * @method _$$EventTarget#_$pushEvent
+     * @method module:util/event._$$EventTarget#_$pushEvent
      * @param  {String}   arg0 - 事件类型
      * @param  {Function} arg1 - 事件处理函数
      * @return {Void}
@@ -689,7 +690,7 @@ NEJ.define([
      *   };
      * ```
      * 
-     * @method _$$EventTarget#_$dispatchEvent
+     * @method module:util/event._$$EventTarget#_$dispatchEvent
      * @param  {String}   arg0 - 事件类型，不区分大小写
      * @param  {Variable} arg1 - 事件可接受参数，具体看调用时的业务逻辑
      * @return {Void}

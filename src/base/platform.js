@@ -5,6 +5,7 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module base/platform */
 NEJ.define([
     './global.js'
 ],function(NEJ,_p,_o,_f,_r){
@@ -13,22 +14,31 @@ NEJ.define([
     /**
      * 平台判断信息
      * 
-     * [ntb]
-     *  名称          | 类型              | 描述
-     *  ------------------------------------
-     *  mac      | Boolean    | is mac os
-     *  win      | Boolean    | is windows os
-     *  linux    | Boolean    | is linux os
-     *  ipad     | Boolean    | is ipad device
-     *  iphone   | Boolean    | is iphone device
-     *  android  | Boolean    | is android system
-     *  ios      | Boolean    | is ios system
-     *  tablet   | Boolean    | is tablet
-     *  desktop  | Boolean    | is desktop env
-     * [/ntb]
+     * ```javascript
+     * NEJ.define([
+     *     'base/platform'
+     * ],function(_m){
+     *     var _is = _m._$IS;
+     *     // 是否MAC系统
+     *     console.log(_is.mac);
+     *     // 是否IPhone
+     *     console.log(_is.iphone);
+     *     // ...
+     * });
+     * ```
      * 
-     * @const {_$IS}
-     * @type  {Object}
+     * @const    module:base/platform#_$IS
+     * @see      module:base/platform#_$is
+     * @type     {Object}
+     * @property {Boolean} mac     - 是否Mac系统
+     * @property {Boolean} win     - 是否windows系统
+     * @property {Boolean} linux   - 是否linux系统
+     * @property {Boolean} ipad    - 是否Ipad
+     * @property {Boolean} iphone  - 是否IPhone
+     * @property {Boolean} android - 是否Android系统
+     * @property {Boolean} ios     - 是否IOS系统
+     * @property {Boolean} tablet  - 是否平板
+     * @property {Boolean} desktop - 是否桌面系统
      */
     var _is = {
         mac     : _platform,
@@ -46,22 +56,53 @@ NEJ.define([
     _is.ios = _is.ipad||_is.iphone||_is.ipod;
     _is.tablet = _is.ipad;
     _is.desktop = _is.mac||_is.win||(_is.linux&&!_is.android);
+    /**
+     * 判断是否指定平台
+     * 
+     * ```javascript
+     * NEJ.define([
+     *     'base/platform'
+     * ],function(_m){
+     *     // 是否MAC系统
+     *     console.log(_m._$is('mac'));
+     *     // 是否iphone
+     *     console.log(_m._$is('iphone'));
+     *     // ...
+     * });
+     * ```
+     * 
+     * @method module:base/platform#_$is
+     * @see    module:base/platform#_$IS
+     * @param  {String} arg0 - 平台名称
+     * @return {Boolean}       是否指定平台
+     */
+    _p._$is = function(_platform){
+        return !!_is[_platform];
+    };
     // parse kernel information
     /**
      * 引擎内核信息
      * 
-     * [ntb]
-     *  名称          | 类型         | 描述
-     *  ------------------------------------
-     *  engine   | String  | layout engine, trident/webkit/gecko/presto...
-     *  release  | Number  | layout engine version
-     *  browser  | String  | browser name, ie/chrome/safari/opera/firefox/maxthon...
-     *  version  | Number  | browser version
-     *  prefix   | Object  | prefix for html5/css3 attribute/method/constructor name
-     * [/ntb]
+     * ```javascript
+     * NEJ.define([
+     *     'base/platform'
+     * ],function(_m){
+     *     var _kernel = _m._$KERNEL;
+     *     // 打印平台信息
+     *     console.log(_kernel.engine);
+     *     console.log(_kernel.release);
+     *     console.log(_kernel.browser);
+     *     console.log(_kernel.version);
+     * });
+     * ```
      * 
-     * @const {_$KERNEL}
-     * @type  {Object}
+     * @const    module:base/platform#_$KERNEL
+     * @type     {Object}
+     * @property {String} engine  - 布局引擎，trident/webkit/gecko/presto...
+     * @property {Number} release - 布局引擎版本
+     * @property {String} browser - 浏览器名称，ie/chrome/safari/opera/firefox/maxthon...
+     * @property {Number} version - 浏览器版本
+     * @property {Object} prefix  - 平台前缀，html5/css3 attribute/method/constructor
      */
     var _kernel = {
         engine:'unknow',
@@ -113,48 +154,42 @@ NEJ.define([
         }
     }
     /**
-     * 引擎属性支持信息
+     * 引擎特性支持信息
      * 
-     * [ntb]
-     *  名称       | 类型          | 描述
-     *  ------------------------------------
-     *  css3d  | Boolean  | 是否支持CSS3 3D动画
-     * [/ntb]
-     * 
-     * @const {_$SUPPORT}
-     * @type  {Object}
+     * ```javascript
+     * NEJ.define([
+     *     'base/platform'
+     * ],function(_m){
+     *     var _support = _m._$SUPPORT;
+     *     // 打印平台是否支持CSS3 3D特效
+     *     console.log(_support.css3d);
+     * });
+     * ```
+     * @const    module:base/platform#_$SUPPORT
+     * @see      module:base/platform#_$support
+     * @type     {Object}
+     * @property {Boolean} css3d  - 是否支持CSS3 3D
      */
     _p._$SUPPORT = {};
     /**
-     * 平台补丁判断信息
+     * 判断平台是否支持指定特性
      * 
-     * [ntb]
-     *  名称       | 类型          | 描述
-     *  ------------------------------------
-     *  gecko    | Boolean  | not gecko
-     *  webkit   | Boolean  | not webkit
-     *  presto   | Boolean  | not presto
-     *  trident  | Boolean  | not trident(ie6-9)
-     *  trident0 | Boolean  | not trident0(ie6-)
-     *  trident1 | Boolean  | not trident1(ie10+)
-     * [/ntb]
+     * ```javascript
+     * NEJ.define([
+     *     'base/platform'
+     * ],function(_m){
+     *     // 是否支持CSS3 3D特效
+     *     console.log(_m._$support('css3d'));
+     * });
+     * ```
      * 
-     * @const  {_$NOT_PATCH}
-     * @type   {Object}
+     * @method module:base/platform#_$support
+     * @see    module:base/platform#_$SUPPORT
+     * @param  {String} arg0 - 特性标识
+     * @return {Boolean}       是否支持指定特性
      */
-    var _notd = _kernel.engine!='trident';
-    _p._$NOT_PATCH = {
-        gecko : _kernel.engine!='gecko',
-        webkit: _kernel.engine!='webkit',
-        presto: _kernel.engine!='presto',
-        // fix for ie6-
-        trident0 : _notd||_kernel.release>'2.0',
-        // fix for ie10+ (html5/css3 support)
-        trident1 : _notd||_kernel.release<'6.0',
-        // fix for ie7-
-        trident2 : _notd||_kernel.release>'3.0',
-        // fix for ie6-ie9
-        trident  : _notd||_kernel.release>='6.0'
+    _p._$support = function(_feature){
+        return !!_p._$SUPPORT[_feature];
     };
     
     if (CMPT){

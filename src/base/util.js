@@ -660,7 +660,7 @@ NEJ.define([
      * });
      * ```
      * 
-     * @method _$absolute
+     * @method module:base/util._$absolute
      * @param  {String} arg0 - 相对路径
      * @param  {String} arg1 - 绝对路径ROOT，必须以http://开始，默认为location目录
      * @return {String}        绝对路径地址

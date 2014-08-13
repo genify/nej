@@ -5,6 +5,7 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module util/tab/tab */
 NEJ.define([
     'base/global',
     'base/event',
@@ -46,8 +47,8 @@ NEJ.define([
      * });
      * ```
      * 
-     * @class   _$$Tab
-     * @extends _$$EventTarget
+     * @class   module:util/tab/tab._$$Tab
+     * @extends module:util/event._$$EventTarget
      * 
      * @param    {Object}  config   - 可选配置参数，已处理参数列表如下
      * @property {Array}   list     - 标签项列表
@@ -79,7 +80,7 @@ NEJ.define([
      * });
      * ```
      * 
-     * @event    _$$Tab#onchange
+     * @event    module:util/tab/tab._$$Tab#onchange
      * @param    {Object}  event   - tab信息
      * @property {Number}  last    - 上一次的tab索引
      * @property {Number}  index   - 需要切换到的tab索引
@@ -93,7 +94,7 @@ NEJ.define([
      * 控件重置
      * 
      * @protected
-     * @method _$$Tab#__reset
+     * @method module:util/tab/tab._$$Tab#__reset
      * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
@@ -110,7 +111,7 @@ NEJ.define([
      * 控件回收
      * 
      * @protected
-     * @method _$$Tab#__destroy
+     * @method module:util/tab/tab._$$Tab#__destroy
      * @return {Void}
      */
     _pro.__destroy = (function(){
@@ -135,7 +136,7 @@ NEJ.define([
      * 初始化标签列表
      * 
      * @protected
-     * @method _$$Tab#__doTabListCheck
+     * @method module:util/tab/tab._$$Tab#__doTabListCheck
      * @param  {Array} arg0 - 标签节点列表
      * @return {Void}
      */
@@ -161,7 +162,7 @@ NEJ.define([
      * 设置标签选中状态
      * 
      * @protected
-     * @method _$$Tab#__doTabItemSelect
+     * @method module:util/tab/tab._$$Tab#__doTabItemSelect
      * @param  {Node}    arg0 - 标签节点
      * @param  {Boolean} arg1 - 是否选中
      * @return {Void}
@@ -181,7 +182,7 @@ NEJ.define([
      *   _tab._$go(2,true);
      * ```
      * 
-     * @method _$$Tab#_$go
+     * @method module:util/tab/tab._$$Tab#_$go
      * @param  {Number}  arg0 - 索引值
      * @param  {Boolean} arg1 - 是否强行触发onchange事件
      * @return {Void}
@@ -219,7 +220,7 @@ NEJ.define([
      *   var index = _tab._$getIndex();
      * ```
      * 
-     * @method _$$Tab#_$getIndex
+     * @method module:util/tab/tab._$$Tab#_$getIndex
      * @return {Number} 当前选中项索引
      */
     _pro._$getIndex = function(){
@@ -233,7 +234,7 @@ NEJ.define([
      *   _tab._$getList();
      * ```
      * 
-     * @method _$$Tab#_$getList
+     * @method module:util/tab/tab._$$Tab#_$getList
      * @return {Array} 关联的节点列表
      */
     _pro._$getList = function(){

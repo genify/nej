@@ -34,6 +34,10 @@ base/element.js
 - 交换_$getMaxBox接口输入参数顺序
 - 修改_$dom2object第二个参数为非必传参数
 
+base/platform.js
+- 删除_$NOT_PATCH
+- 增加_$support/_$is接口
+
 base/event.js
 - 删除接口_$stopClick
 

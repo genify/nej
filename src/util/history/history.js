@@ -116,6 +116,12 @@ NEJ.define([
             if (_url!=_ctxt.location.href) _onLocationChange();
             _timer = _t0.requestAnimationFrame(_doCheckLocation);
         };
+        // check use hashchange event on window
+        var _useHashChange = function(){
+            var _knl = _m._$KERNEL;
+                 _ie7 = _knl.engine=='trident'&&_knl.release<='3.0';
+            return _isHack()&&('onhashchange' in window)&&!_ie7;
+        };
         return function(_context){
             // lock active
             if (!!_done){
@@ -125,9 +131,7 @@ NEJ.define([
             // do init
             _ctxt = _context||window;
             // ignore onhashchange on ie7
-            if (_isHack()&&
-               ('onhashchange' in window)&&
-                _m._$NOT_PATCH.trident2){
+            if (_useHashChange()){
                 _v._$addEvent(
                     _ctxt,'hashchange',
                     _onLocationChange
