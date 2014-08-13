@@ -35,7 +35,7 @@ NEJ.define([
      * ],function(_t){
      *     // 实例化控件
      *     var _tab = _t._$$Tab._$allocate({
-     *         list:_e._$getChildren('box'),
+     *         list:_e._$getChildren('box'), 
      *         index:1,
      *         onchange:function(_event){
      *             // TODO
