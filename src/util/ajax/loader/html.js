@@ -76,7 +76,7 @@ NEJ.define([
         }catch(ex){
             // ignore
         }
-        this.__doCallback('onloaded',_body);
+        this.__doCallback('onload',_body);
         _h.__removeIFrameKeepHistory(_iframe);
     };
 

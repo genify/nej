@@ -49,6 +49,9 @@ util/event.js
 util/ajax/dwr.js
 - 删除_$setProxy接口
 
+util/ajax/tag.js
+- 修改onloaded载入回调函数名称为onload
+
 util/cache/storage.js
 - 删除_$cloneDataInStorage接口
 

@@ -127,7 +127,7 @@ NEJ.define([
                 _count++;
                 var _options = {
                     version:_e._$dataset(_textarea,'version'),
-                    onloaded:_onAddScript._$bind(null,_val)
+                    onload:_onAddScript._$bind(null,_val)
                 };
                 window.setTimeout(
                     _j0._$queueScript._$bind(
@@ -150,7 +150,7 @@ NEJ.define([
                 _count++;
                 var _options = {
                     version:_e._$dataset(_textarea,'version'),
-                    onloaded:_onAddHtml
+                    onload:_onAddHtml
                 };
                 window.setTimeout(
                     _j0._$loadHtml._$bind(

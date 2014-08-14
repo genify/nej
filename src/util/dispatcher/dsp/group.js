@@ -258,7 +258,7 @@ NEJ.define([
                         var _config = location.config||_o;
                         _j._$loadHtml((_config.root||'')+_module,{
                             version:(_config.ver||_o)[_module],
-                            onloaded:_t1._$parseTemplate
+                            onload:_t1._$parseTemplate
                         });
                     }
                 }

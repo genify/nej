@@ -52,7 +52,7 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__onLoaded = function(_text){
-        this.__doCallback('onloaded',{
+        this.__doCallback('onload',{
             url:this.__url,
             content:_text
         });

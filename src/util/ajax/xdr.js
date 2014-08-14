@@ -5,11 +5,12 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module  util/ajax/xdr */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/constant.js',
-    '{lib}base/util.js',
-    '{lib}base/element.js',
+    'base/global',
+    'base/constant',
+    'base/util',
+    'base/element',
     './proxy/xhr.js',
     '{platform}xdr.js'
 ],function(NEJ,_g,_u,_e,_t,_h,_p,_o,_f,_r){
@@ -17,36 +18,38 @@ NEJ.define([
     var _xcache = {},
         _doFilter = _f;
     /**
-     * 中断请求<br/>
+     * 中断请求
      * 
      * 脚本举例
-     * [code]
-     *   NEJ.define([
-     *       '{lib}util/ajax/xdr.js'
-     *   ],function(_p){
-     *       var _id = _p._$request(
-     *           'http://123.163.com/xhr/',{
-     *               type:'json',
-     *               method:'POST',
-     *               data:{name:'ABC'},
-     *               timeout:60000,
-     *               onload:function(_data){
-     *                   // TODO
-     *               },
-     *               onerror:function(_error){
-     *                   // TODO
-     *               }
-     *           }
-     *       );
-     *       // 1秒后中断掉这个请求
-     *       setTimeout(function(){
-     *           _p._$abort(_id);
-     *       },1000);
-     *   });
-     * [/code]
+     * ```javascript
+     * NEJ.define([
+     *     'util/ajax/xdr'
+     * ],function(_j){
+     *     var _id = _j._$request(
+     *         'http://123.163.com/xhr/',{
+     *             type:'json',
+     *             method:'POST',
+     *             data:{name:'ABC'},
+     *             timeout:60000,
+     *             onload:function(_data){
+     *                 // TODO
+     *             },
+     *             onerror:function(_error){
+     *                 // TODO
+     *             }
+     *         }
+     *     );
+     *     // 1秒后中断掉这个请求
+     *     window.setTimeout(
+     *         function(){
+     *             _j._$abort(_id);
+     *         },1000
+     *     );
+     * });
+     * ```
      * 
-     * @api    {_$abort}
-     * @param  {String} 请求标识
+     * @method module:util/ajax/xdr._$abort
+     * @param  {String} arg0 - 请求标识
      * @return {Void}
      */
     _p._$abort = function(_sn){
@@ -56,115 +59,137 @@ NEJ.define([
         }
     };
     /**
-     * 全局请求过滤器，过滤器中可以通过设置输入事件对象的stopped值阻止继续回调<br/>
+     * 全局请求过滤器，过滤器中可以通过设置输入事件对象的stopped值阻止继续回调
      * 
      * 脚本举例
-     * [code]
-     *   NEJ.define([
-     *       '{lib}util/ajax/xdr.js'
-     *   ],function(_p){
-     *       _p._$filter(function(_event){
-     *           // 过滤掉404的异常，如果type是onload不做处理
-     *           if (_event.type == 'onerror'){
-     *               if (_event.result.data == 404){
-     *                   _event.stopped = false;
-     *               }
-     *           }
-     *       });
-     *       _p._$request('xxxx',{
-     *           type:'json',
-     *           method:'POST',
-     *           data:{name:'abc'},
-     *           timeout:3000,
-     *           onload:function(_data){
-     *               // TODO
-     *           },
-     *           onerror:function(_error){
-     *               // TODO
-     *           }
-     *       });
-     *   });
-     * [/code]
+     * ```javascript
+     * NEJ.define([
+     *     'util/ajax/xdr'
+     * ],function(_j){
+     *     _j._$filter(function(_event){
+     *         // _event.type     请求过滤类型
+     *         // _event.result   请求结果
+     *         // _event.stopped  是否阻止后续逻辑
+     *         
+     *         // 过滤掉404的异常，如果type是onload不做处理
+     *         if (_event.type == 'onerror'){
+     *             if (_event.result.data == 404){
+     *                 _event.stopped = false;
+     *             }
+     *         }
+     *     });
+     *     _j._$request('xxxx',{
+     *         type:'json',
+     *         method:'POST',
+     *         data:{name:'abc'},
+     *         timeout:3000,
+     *         onload:function(_data){
+     *             // TODO
+     *         },
+     *         onerror:function(_error){
+     *             // TODO
+     *         }
+     *     });
+     * });
+     * ```
      * 
-     * @api    {_$filter}
-     * @param  {Function} 过滤器
+     * @method module:util/ajax/xdr._$filter
+     * @param  {Function} arg0 - 过滤器
      * @return {Void}
      */
     _p._$filter = function(_filter){
         _doFilter = _filter||_f;
     };
+    /** 
+     * 载入回调
+     * 
+     * @callback module:util/ajax/xdr.onload
+     * @param    {Variable|Object} event - 请求返回数据，根据请求时type指定格式返回，
+     *                                     如果请求时指定了result参数，则此处输入为包含额外信息的对象，
+     *                                     数据结果从此对象的data属性中取，如{headers:{'x-res-0':'12345', ...},data:{a:'aaa', ...}}
+     */
+    /** 
+     * 出错回调
+     * 
+     * @callback module:util/ajax/xdr.onerror
+     * @param    {Object}   event   - 错误信息
+     * @property {Number}   code    - 错误代码
+     * @property {String}   message - 错误描述
+     * @property {Variable} data    - 出错时携带数据
+     */
+    /** 
+     * 请求之前对数据处理回调
+     * 
+     * @callback module:util/ajax/xdr.onbeforerequest
+     * @param    {Object} event   - 请求信息
+     * @property {Object} request - 请求参数，数据信息 url/sync/cookie/type/method/timeout
+     * @property {Object} headers - 请求头信息
+     */
+    /** 
+     * 上传进度回调
+     * 
+     * @callback module:util/ajax/xdr.onuploading
+     * @param    {Object} event  - 进度信息
+     * @property {Number} loaded - 载入数量
+     * @property {Number} total  - 总量
+     */
     /**
-     * 发送ajax请求<br/>
+     * 发送ajax请求
      * 
      * 脚本举例
-     * [code]
-     *   NEJ.define([
-     *       '{lib}util/ajax/xdr.js'
-     *   ],function(_p){
-     *       var _id = _p._$request(
-     *           'http://a.b.com/api',{
-     *               sync:true,
-     *               type:'json',
-     *               data:'hello',
-     *               query:'a=1&b=2',
-     *               method:'post',
-     *               timeout:3000,
-     *               mode:0||1||2||3,
-     *               onload:function(_data){
-     *                   // 正常回调处理
-     *               },
-     *               onerror:function(_error){
-     *                   // 异常处理
-     *               },
-     *               onbeforerequest:function(_data){
-     *                   // 请求发送前，对请求数据处理
-     *               }
-     *           }
-     *       );
-     *   });
-     * [/code]
+     * ```javascript
+     * NEJ.define([
+     *     'util/ajax/xdr'
+     * ],function(_p){
+     *     var _id = _p._$request(
+     *         'http://a.b.com/api',{
+     *             sync:true,
+     *             type:'json',
+     *             data:'hello',
+     *             query:'a=1&b=2',
+     *             method:'post',
+     *             timeout:3000,
+     *             mode:0||1||2||3,
+     *             onload:function(_data){
+     *                 // 正常回调处理
+     *             },
+     *             onerror:function(_error){
+     *                 // 异常处理
+     *             },
+     *             onbeforerequest:function(_data){
+     *                 // 请求发送前，对请求数据处理
+     *             }
+     *         }
+     *     );
+     * });
+     * ```
      * 
-     * @api    {_$request}
-     * @param  {String}   请求地址
-     * @param  {Object}   配置参数
-     * @config {Boolean}  sync     是否同步请求
-     * @config {String}   type     返回数据格式,text/json/xml
-     * @config {Variable} data     要发送的数据
-     * @config {Variable} query    查询参数,字符串格式a=b&c=d,对象格式{a:'b',c:'d'}
-     * @config {String}   method   请求方式,GET/POST
-     * @config {Number}   timeout  超时时间,0 禁止超时监测
-     * @config {Object}   headers  头信息表
-     * @config {Boolean}  cookie   跨域请求是否带cookie，仅对CORS方式有效
-     * @config {Number}   mode     请求模式,针对跨域请求采用的请求方式<br/>
-     *                             0 - 自动模式，高版本使用HTML5的CORS协议，低版本采用Frame代理方式<br/>
-     *                             1 - 高版本使用HTML5的CORS协议，低版本采用Flash代理方式<br/>
-     *                             2 - 全部使用Frame代理方式<br/>
-     *                             3 - 全部使用Flash代理方式
-     * @config {Object}   result   onload回调输入时需包含的额外信息，已处理额外数据
-     *                             headers  服务器返回头信息，如{headers:'x-res-0'}或者{headers:['x-res-0','x-res-1']}
-     * @return {String} 分配给请求的ID
+     * @method   module:util/ajax/xdr._$request
+     * @param    {String}   arg0    - 请求地址
+     * @param    {Object}   arg1    - 配置参数
+     * @property {Boolean}  sync    - 是否同步请求
+     * @property {String}   type    - 返回数据格式,text/json/xml
+     * @property {Variable} data    - 要发送的数据
+     * @property {Variable} query   - 查询参数,字符串格式a=b&c=d,对象格式{a:'b',c:'d'}
+     * @property {String}   method  - 请求方式,GET/POST
+     * @property {Number}   timeout - 超时时间,0 禁止超时监测
+     * @property {Object}   headers - 头信息表
+     * @property {Boolean}  cookie  - 跨域请求是否带cookie，仅对CORS方式有效
+     * @property {Number}   mode    - 请求模式,针对跨域请求采用的请求方式
      * 
-     * [hr]
-     * 载入回调
-     * @event  {onload}
-     * @param  {Variable|Object} 请求返回数据，根据请求时type指定格式返回，
-     *                           如果请求时指定了result参数，则此处输入为包含额外信息的对象，
-     *                           数据结果从此对象的data属性中取，如{headers:{'x-res-0':'12345', ...},data:{a:'aaa', ...}}
+     * * 0 - 自动模式，高版本使用HTML5的CORS协议，低版本采用Frame代理方式
+     * * 1 - 高版本使用HTML5的CORS协议，低版本采用Flash代理方式
+     * * 2 - 全部使用Frame代理方式
+     * * 3 - 全部使用Flash代理方式
+     *                             
+     * @property {Object}   result  - onload回调输入时需包含的额外信息，已处理额外数据
      * 
-     * [hr]
-     * 出错回调
-     * @event  {onerror}  
-     * @param  {Object}   错误信息
-     * @config {Number}   code    错误代码
-     * @config {String}   message 错误描述
-     * @config {Variable} data    出错时携带数据
+     * * headers - 服务器返回头信息，如{headers:'x-res-0'}或者{headers:['x-res-0','x-res-1']}
      * 
-     * [hr]
-     * 请求之前对数据处理回调
-     * @event  {onbeforerequest} 
-     * @param  {Object} 请求信息
-     * @config {Object} request 请求参数，数据信息 url/sync/cookie/type/method/timeout
-     * @config {Object} headers 请求头信息
+     * @property {module:util/ajax/xdr.onload}          onload  - 数据载入回调
+     * @property {module:util/ajax/xdr.onerror}         onerror - 请求异常回调
+     * @property {module:util/ajax/xdr.onbeforerequest} onbeforerequest - 请求之前回调
+     * @return   {String} 分配给请求的ID
      */
     _p._$request = (function(){
         var _location = (location.protocol+'//'
@@ -266,76 +291,57 @@ NEJ.define([
         };
     })();
     /**
-     * 文件上传<br/>
+     * 文件上传
      * 
      * 结构举例
-     * [code type="html"]
-     *   <form id="upload" name="upload" action="http://123.163.com:3000/xhr/uploadCallback">
-     *      <input type="text" id="progress" />
-     *      <input type="hidden" name="nej_mode" value="2" />
-     *      <input type="hidden" name="nej_query" value="http://123.163.com:3000/xhr/progress" />
-     *   </form>
-     * [/code]
+     * ```html
+     * <form id="upload" name="upload" action="http://123.163.com:3000/xhr/uploadCallback">
+     *    <input type="text" id="progress" />
+     *    <input type="hidden" name="nej_mode" value="2" />
+     *    <input type="hidden" name="nej_query" value="http://123.163.com:3000/xhr/progress" />
+     * </form>
+     * ```
      * 
      * 脚本举例
-     * [code]
-     *   NEJ.define([
-     *       '{lib}util/ajax/xdr.js'
-     *   ],function(_p){
-     *       _p._$upload('upload',{
-     *           mode:2,
-     *           cookie:true,
-     *           onuploading:function(_data){
-     *               // 后台处理http://123.163.com:3000/xhr/progress，返回一个json对象
-     *               // 前台会去轮询此接口获取进度
-     *               if(!!_data.total&&_data.progress){
-     *                   _progress.value = _data.progress;
-     *               }
-     *           },
-     *           onload:function(_url){
-     *               // 此前会把进度轮询终止掉。如果要显示进度100%，可在此设置一次
-     *               // 后台处理http://123.163.com:3000/xhr/uploadCallback，返回url
-     *               // 文件上传完成的回调,url为返回的地址
-     *           }
-     *       });
-     *   });
-     * [/code]
+     * ```javascript
+     * NEJ.define([
+     *     'util/ajax/xdr'
+     * ],function(_j){
+     *     _j._$upload('upload',{
+     *         mode:2,
+     *         cookie:true,
+     *         onuploading:function(_data){
+     *             // 后台处理http://123.163.com:3000/xhr/progress，返回一个json对象
+     *             // 前台会去轮询此接口获取进度
+     *             if(!!_data.total&&_data.progress){
+     *                 _progress.value = _data.progress;
+     *             }
+     *         },
+     *         onload:function(_url){
+     *             // 此前会把进度轮询终止掉。如果要显示进度100%，可在此设置一次
+     *             // 后台处理http://123.163.com:3000/xhr/uploadCallback，返回url
+     *             // 文件上传完成的回调,url为返回的地址
+     *         }
+     *     });
+     * });
+     * ```
      * 
-     * @api    {_$upload}
-     * @param  {HTMLFormElement}   表单对象，待上传的文件及目标地址信息封装在此对象中
-     * @param  {Object}            可选配置参数,已处理参数列表如下：
-     * @config {String}   type     返回数据格式
-     * @config {Variable} query    查询参数
-     * @config {Number}   mode     跨域类型，0/2，见_$request接口说明
-     * @config {Object}   headers  头信息
-     * @config {Boolean}  cookie   跨域请求是否带cookie，仅对CORS方式有效
-     * @return {String}            分配给请求的ID
+     * @method   module:util/ajax/xdr._$upload
+     * @see      module:util/ajax/xdr._$request
+     * @param    {HTMLFormElement}  arg0    - 表单对象，待上传的文件及目标地址信息封装在此对象中
+     * @param    {Object}           arg1    - 可选配置参数,已处理参数列表如下：
+     * @property {String}           type    - 返回数据格式
+     * @property {Variable}         query   - 查询参数
+     * @property {Number}           mode    - 跨域类型，0/2，见_$request接口说明
+     * @property {Object}           headers - 头信息
+     * @property {Boolean}          cookie  - 跨域请求是否带cookie，仅对CORS方式有效
      * 
-     * [hr]
-     * 载入回调
-     * @event  {onload}   
-     * @param  {Variable} 请求返回数据，根据请求时type指定格式返回
+     * @property {module:util/ajax/xdr.onload}          onload  - 数据载入回调
+     * @property {module:util/ajax/xdr.onerror}         onerror - 请求异常回调
+     * @property {module:util/ajax/xdr.onuploading}     onuploading     - 上传进度回调
+     * @property {module:util/ajax/xdr.onbeforerequest} onbeforerequest - 请求之前回调
      * 
-     * [hr]
-     * 出错回调
-     * @event  {onerror}  
-     * @param  {Object}   错误信息
-     * @config {Number}   code    错误代码
-     * @config {String}   message 错误描述
-     * @config {Variable} data    出错时携带数据
-     * 
-     * [hr]
-     * 上传进度回调
-     * @event  {onuploading} 
-     * @param  {Object} 数据对象
-     * 
-     * [hr]
-     * 请求之前对数据处理回调
-     * @event  {onbeforerequest} 
-     * @param  {Object} 请求信息
-     * @config {Object} request 请求参数，数据信息 url/sync/cookie/type/method/timeout
-     * @config {Object} headers 请求头信息
-     * 
+     * @return   {String}                     分配给请求的ID
      */
     _p._$upload = function(_form,_options){
         _form = _e._$get(_form);

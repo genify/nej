@@ -31,7 +31,7 @@ NEJ.define([
      * 
      * [hr]
      * 资源载入成功回调
-     * @event  {onloaded} 
+     * @event  {onload} 
      * 
      * [hr]
      * 资源加载中回调
@@ -49,7 +49,7 @@ NEJ.define([
         this.__super();
         this.__qopt = {
             onerror:this.__onQueueError._$bind(this),
-            onloaded:this.__onQueueLoaded._$bind(this)
+            onload:this.__onQueueLoaded._$bind(this)
         };
         if (!this.constructor.__cache){
             // url : {request:script,timer:2,bind:[instance1,instance2 ... ]}
@@ -191,7 +191,7 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__onLoaded = function(){
-        this.__doCallback('onloaded');
+        this.__doCallback('onload');
     };
     /**
      * 载入队列资源
@@ -217,7 +217,7 @@ NEJ.define([
         _cache.loaded ++;
         if (_cache.loaded<_cache.total) return;
         this.__delLoadData(this.__key);
-        this._$dispatchEvent(_cache.error>0?'onerror':'onloaded');
+        this._$dispatchEvent(_cache.error>0?'onerror':'onload');
     };
     /**
      * 队列载入资源异常事件
@@ -251,7 +251,7 @@ NEJ.define([
      *       // 载入指定html,10秒超时
      *       var _loader = _p0._$$HtmlLoader._$allocate({
      *           timeout:10000,
-     *           onloaded:function(){
+     *           onload:function(){
      *               // 载入资源成功的回调
      *           }
      *       });
@@ -261,7 +261,7 @@ NEJ.define([
      *       // 载入指定script,20秒超时
      *       var _loader = _p2._$$ScriptLoader._$allocate({
      *           timeout:20000,
-     *           onloaded:function(){
+     *           onload:function(){
      *               // 载入资源成功的回调
      *           }
      *       });
@@ -271,7 +271,7 @@ NEJ.define([
      *       // 载入指定style,30秒超时
      *       var _loader = _p1._$$StyleLoader._$allocate({
      *           timeout:30000,
-     *           onloaded:function(){
+     *           onload:function(){
      *               // 载入资源成功的回调
      *           }
      *       });
@@ -299,7 +299,7 @@ NEJ.define([
         }
         if (this.__getLoadData('loaded')[this.__url]){
             try{
-                this._$dispatchEvent('onloaded');
+                this._$dispatchEvent('onload');
             }catch(ex){
                 // ignore
                 console.error(ex.message);
@@ -351,7 +351,7 @@ NEJ.define([
      *       '{lib}util/ajax/loader/html.js'
      *   ],function(_p){
      *       var _loader = _p._$$HtmlLoader._$allocate({
-     *           onloaded:function(){
+     *           onload:function(){
      *               // 载入队列资源成功的回调
      *           }
      *       });
