@@ -35,7 +35,7 @@ NEJ.define([
      * 
      * [hr]
      * 资源加载中回调
-     * @event  {onloading} 
+     * @event  {onloading}
      */
     _p._$$Loader = _k._$klass();
     _pro = _p._$$Loader._$extend(_t._$$EventTarget);
