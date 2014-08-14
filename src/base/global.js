@@ -5,11 +5,19 @@
  * @author  genify(caijf@corp.netease.com)
  * --------------------------------------------
  */
+/**
+ * 全局window对象
+ * @external window
+ */
+/**
+ * 全局页面文档对象
+ * @external document
+ */
+/**
+ * 内置函数对象扩展
+ * @external Function
+ */
 NEJ.define(function(_p,_o,_f,_r){
-    /**
-     * 内置函数对象扩展
-     * @external Function
-     */
     var _extpro = Function.prototype;
     /**
      * AOP增强操作，增强操作接受一个输入参数包含以下信息

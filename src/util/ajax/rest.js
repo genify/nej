@@ -5,97 +5,97 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module  util/ajax/rest */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/event.js',
-    '{lib}base/util.js',
-    '{lib}base/constant.js',
-    '{lib}util/ajax/xdr.js',
-    '{lib}util/event/event.js'
+    'base/global',
+    'base/event',
+    'base/util',
+    'base/constant',
+    'util/ajax/xdr',
+    'util/event/event'
 ],function(NEJ,_v,_u,_g,_j,_t,_p,_o,_f,_r){
-    /**
-     * 使用REST进行数据交互接口<br/>
-     * 脚本举例
-     * [code]
-     *   NEJ.define([
-     *       '{lib}base/event.js',
-     *       '{lib}util/ajax/rest.js'
-     *   ],function(_v,_p){
-     *       // 通用错误处理，所有请求异常均会调用此回调处理
-     *       _v._$addEvent(
-     *           window,'resterror',function(_error){
-     *               // _error.code
-     *               // _error.message
-     *               // _error.data
-     *               // 通过设置_error.stopped阻止事件回调到请求的onerror中
-     *           }
-     *       );
-     * 
-     *       var url = "http://a.b.com/rest/list";
-     *       var opt = {
-     *            param:{brand:'nokia',model:'9'},
-     *            data:'123',
-     *            method:'post',
-     *            onload:function(_data){
-     *                // 请求正常回调
-     *            },
-     *            onerror:function(_error){
-     *                // _error.code
-     *                // _error.message
-     *                // _error.data
-     *                // 如果window的resterror回调中stopped了事件则不会进入此回调
-     *            },
-     *            onbeforerequest:function(_event){
-     *                // _event.request
-     *                // _event.headers
-     *            }
-     *       }
-     *       _p._$requestByREST(url,opt);
-     *   });
-     * [/code]
-     * 
-     * @api    {_$requestByREST}
-     * @param  {String} 请求地址
-     * @param  {Object} 可选配置参数，已处理参数列表如下
-     * @config {Boolean}  sync    是否同步请求
-     * @config {Variable} data    要发送的数据
-     * @config {Object}   param   请求参数,包括模板地址里使用的参数
-     * @config {String}   method  请求方式,GET/POST/PUT/DELETE
-     * @config {Number}   timeout 超时时间,0 禁止超时监测
-     * @config {Object}   headers 头信息
-     * @config {Object}   result  onload回调输入时需包含的额外信息
-     * @return {Void}
-     * 
-     * [hr]
+    /** 
      * 载入完成回调函数
-     * @event  {onload} 
-     * @param  {Variable} 服务器返回的数据
      * 
-     * [hr]
-     * 载入出错回调函数
-     * @event  {onerror} 
-     * @param  {Object}   错误信息
-     * @config {Number}   code    错误代码
-     * @config {String}   message 错误描述
-     * @config {Variable} data    出错时携带数据
-     * 
-     * [hr]
-     * 请求之前对数据处理回调
-     * @event  {onbeforerequest} 
-     * @param  {Object} 数据对象
-     * @config {Object} headers 要发送的请求的头信息
-     * @config {Object} request 请求信息，{url:'',sync:!1,cookie:!1,type:'text',method:'GET',timeout:60000}
-     * 
-     * [hr]
-     * 通用载入出错回调函数，所有请求的异常均会进入此事件的回调逻辑中
-     * @event  {window.onresterror}
-     * @param  {Object}   错误信息
-     * @config {Number}   code    错误代码
-     * @config {String}   message 错误描述
-     * @config {Variable} data    出错时携带数据
-     * @config {Boolean}  stopped 是否阻止当个请求中的onerror回调
+     * @callback module:util/ajax/rest.onload
+     * @param    {Variable} event - 服务器返回的数据
      */
-    _p._$requestByREST = (function(){
+    /** 
+     * 载入出错回调函数
+     * @callback module:util/ajax/rest.onerror 
+     * @param    {Object}   arg0    - 错误信息
+     * @property {Number}   code    - 错误代码
+     * @property {String}   message - 错误描述
+     * @property {Variable} data    - 出错时携带数据
+     */
+    /** 
+     * 请求之前对数据处理回调
+     * 
+     * @callback module:util/ajax/rest.onbeforerequest
+     * @param    {Object} arg0    - 数据对象
+     * @property {Object} headers - 要发送的请求的头信息
+     * @property {Object} request - 请求信息，{url:'',sync:!1,cookie:!1,type:'text',method:'GET',timeout:60000}
+     */
+    /**
+     * 使用REST进行数据交互接口
+     * 
+     * 脚本举例
+     * ```javascript
+     * NEJ.define([
+     *     'base/event',
+     *     'util/ajax/rest'
+     * ],function(_v,_j){
+     *     // 通用错误处理，所有请求异常均会调用此回调处理
+     *     _v._$addEvent(
+     *         window,'resterror',function(_error){
+     *             // _error.code
+     *             // _error.message
+     *             // _error.data
+     *             // 通过设置_error.stopped阻止事件回调到请求的onerror中
+     *         }
+     *     );
+     * 
+     *     var url = "http://a.b.com/rest/list";
+     *     var opt = {
+     *          param:{brand:'nokia',model:'9'},
+     *          data:'123',
+     *          method:'post',
+     *          onload:function(_data){
+     *              // 请求正常回调
+     *          },
+     *          onerror:function(_error){
+     *              // _error.code
+     *              // _error.message
+     *              // _error.data
+     *              // 如果window的resterror回调中stopped了事件则不会进入此回调
+     *          },
+     *          onbeforerequest:function(_event){
+     *              // _event.request
+     *              // _event.headers
+     *          }
+     *     }
+     *     _j._$request(url,opt);
+     * });
+     * ```
+     * 
+     * @method module:util/ajax/rest._$request
+     * @param    {String}  arg0 - 请求地址
+     * @param    {Object}  arg1 - 可选配置参数
+     * @property {Boolean}  sync    - 是否同步请求
+     * @property {Variable} data    - 要发送的数据
+     * @property {Object}   param   - 请求参数,包括模板地址里使用的参数
+     * @property {String}   method  - 请求方式,GET/POST/PUT/DELETE
+     * @property {Number}   timeout - 超时时间,0 禁止超时监测
+     * @property {Object}   headers - 头信息
+     * @property {Object}   result  - onload回调输入时需包含的额外信息
+     *
+     * @property {module:util/ajax/rest.onload} onload   - 请求载入成功回调
+     * @property {module:util/ajax/rest.onerror} onerror - 请求载入失败回调
+     * @property {module:util/ajax/rest.onbeforerequest} onbeforerequest - 发起请求之前回调
+     * 
+     * @return   {Void}
+     */
+    _p._$request = (function(){
         var _cache = {},  // request cache - sn:{s:funciton(){},f:function(){}}
             _reg0 = /\{(.*?)\}/gi,
             _reg1 = /^get|delete|head$/i,
@@ -218,15 +218,23 @@ NEJ.define([
             _j._$request(_url,_options);
         };
     })();
-    
-    // custom event on window.onresterror
+    /** 
+     * 通用载入出错回调函数，所有REST请求的异常均会进入此事件的回调逻辑中
+     * 
+     * @event    external:window.onresterror
+     * @param    {Object}   arg0    - 错误信息
+     * @property {Number}   code    - 错误代码
+     * @property {String}   message - 错误描述
+     * @property {Variable} data    - 出错时携带数据
+     * @property {Boolean}  stopped - 是否阻止单个请求中的onerror回调
+     */
     _t._$$CustomEvent._$allocate({
         element:window,
         event:'resterror'
     });
     
     if (CMPT){
-        NEJ.copy(NEJ.P('nej.j'),_p);
+        NEJ.P('nej.j')._$requestByREST = _p._$request;
     }
     
     return _p;
