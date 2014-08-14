@@ -180,7 +180,7 @@ NEJ.define([
      * @return {String} 页码列表html代码
      */
     _pro.__doGenPageListXhtml = function(_data){
-        return _e._$getHtmlTemplate(_seed_page,_data);
+        return _t0._$getHtmlTemplate(_seed_page,_data);
     };
     /**
      * 页面变化触发事件

@@ -5,14 +5,13 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _f = NEJ.F,
-        _p = _('nej.ut'),
-        _impls = {},
-        _proEditorCommand;
-    if (!!_p._$$EditorCommand) return;
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}util/event.js'
+],function(NEJ,_k,_t,_p,_o,_f,_r){
+    var _impls = {},
+        _pro;
     /**
      * 富媒体编辑器执行命令封装，
      * 子类实现具体命令时注意：
@@ -24,8 +23,8 @@ var f = function(){
      * @config  {nej.ut._$$EditorArea}       area       编辑器核心
      * @config  {nej.ut._$$EditorToolBar} toolbar 工具栏实例
      */
-    _p._$$EditorCommand = NEJ.C();
-      _proEditorCommand = _p._$$EditorCommand._$extend(_p._$$EventTarget);
+    _p._$$EditorCommand = _k._$klass();
+    _pro = _p._$$EditorCommand._$extend(_t._$$EventTarget);
     /**
      * 注册命令实现
      * @method {_$regist}
@@ -49,9 +48,9 @@ var f = function(){
      * @method {__init}
      * @return {Void}
      */
-    _proEditorCommand.__init = function(){
+    _pro.__init = function(){
         this.__name = this.constructor.command;
-        this.__supInit();
+        this.__super();
     };
     /**
      * 控件重置
@@ -60,8 +59,8 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proEditorCommand.__reset = function(_options){
-        this.__supReset(_options);
+    _pro.__reset = function(_options){
+        this.__super(_options);
         this.__editor  = _options.area;
         this.__toolbar = _options.toolbar;
     };
@@ -71,8 +70,8 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proEditorCommand.__destroy = function(){
-        this.__supDestroy();
+    _pro.__destroy = function(){
+        this.__super();
         delete this.__editor;
         delete this.__toolbar;
     };
@@ -82,20 +81,20 @@ var f = function(){
      * @param  {Object} 执行参数
      * @return {Void}
      */
-    _proEditorCommand._$execute = _f;
+    _pro._$execute = _f;
     /**
      * 查询命令值，子类实现具体业务逻辑
      * @method {_$queryValue}
      * @param  {Node} 命令按钮节点
      * @return {Void}
      */
-    _proEditorCommand._$queryValue = _f;
+    _pro._$queryValue = _f;
     /**
      * 查询命令是否已经执行，子类重写具体业务逻辑
      * @method {_$queryState}
      * @return {Boolean} 是否已经被执行，返回null表示不做处理
      */
-    _proEditorCommand._$queryState = function(){
+    _pro._$queryState = function(){
         return null;
     };
     /**
@@ -103,9 +102,13 @@ var f = function(){
      * @method {_$queryEnabled}
      * @return {Boolean} 是否允许被执行，返回null表示不做处理
      */
-    _proEditorCommand._$queryEnabled = function(){
+    _pro._$queryEnabled = function(){
         return null;
     };
-};
-NEJ.define('{lib}util/editor/command.js',
-      ['{lib}util/event.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});

@@ -14,8 +14,10 @@ NEJ.define([
     '{lib}base/util.js',
     '{lib}ui/base.js',
     '{lib}util/editor/editor.js',
-    '{lib}util/template/jst.js'
-],function(NEJ,_k,_c,_e,_v,_u,_i,_t0,_t1,_p,_o,_f,_r){
+    '{lib}util/template/jst.js',
+    '{lib}util/editor/area.js',
+    '{lib}util/editor/toolbar.js'
+],function(NEJ,_k,_c,_e,_v,_u,_i,_t0,_t1,_t2,_t3,_p,_o,_f,_r){
     var _seed_css,
         _seed_icmd,
         _seed_ifnt,
@@ -63,8 +65,8 @@ NEJ.define([
         this.__aopt.content = _options.content;
         this.__aopt.focus = _options.focus||1;
         this.__editor = _t0._$$Editor._$allocate({
-            area:_t0._$$EditorArea._$allocate(this.__aopt)
-           ,toolbar:_t0._$$EditorToolbar._$allocate(this.__topt)
+            area:_t2._$$EditorArea._$allocate(this.__aopt)
+           ,toolbar:_t3._$$EditorToolbar._$allocate(this.__topt)
         });
     };
     /**
@@ -99,7 +101,7 @@ NEJ.define([
         var _list = _e._$getChildren(this.__body);
         this.__aopt.parent = _list[1];
         this.__topt.list = _e._$getByClassName(_list[0],
-                           'js-'+_e._$getHtmlTemplateSeed());
+                           'js-'+_t1._$getHtmlTemplateSeed());
     };
     /**
      * 获取按钮html代码
@@ -109,7 +111,7 @@ NEJ.define([
      * @return {String} html代码
      */
     _pro.__doGenCmdXhtml = function(_data){
-        return _e._$getHtmlTemplate(_seed_icmd,_data);
+        return _t1._$getHtmlTemplate(_seed_icmd,_data);
     };
     /**
      * 获取字号选择html代码
@@ -118,7 +120,7 @@ NEJ.define([
      * @return {String} html代码
      */
     _pro.__doGenFontSizeXhtml = function(){
-        return _e._$getHtmlTemplate(_seed_ifnt,
+        return _t1._$getHtmlTemplate(_seed_ifnt,
                {cmd:'fontSize',txt:'标准',icn:'zfs'});
     };
     /**
@@ -128,7 +130,7 @@ NEJ.define([
      * @return {String} html代码
      */
     _pro.__doGenFontNameXhtml = function(){
-        return _e._$getHtmlTemplate(_seed_ifnt,
+        return _t1._$getHtmlTemplate(_seed_ifnt,
                {cmd:'fontName',txt:'Arial',icn:'zfm'});
     };
     /**
@@ -139,7 +141,7 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__doGenEditorXhtml = function(_data){
-        return _e._$getHtmlTemplate(_seed_iedt,_data);
+        return _t1._$getHtmlTemplate(_seed_iedt,_data);
     };
     /**
      * 取编辑内容

@@ -7,7 +7,7 @@
  */
 NEJ.define([
     './config.js',
-    '{lib}base/platform.js'
+    'base/platform'
 ],function(_h,_m,_p,_o,_f,_r){
     // for ie
     NEJ.patch('TR',function(){

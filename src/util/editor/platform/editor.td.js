@@ -5,13 +5,10 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(_e,_h,_p){
-    if (CMPT){
-        var _  = NEJ.P,
-            _e = _('nej.e'),
-            _h = _('nej.h'),
-            _rcache = {};  // range cache
-    }
+NEJ.define([
+    '{lib}base/element.js',
+    './editor.js'
+],function(_e,_h,_p,_o,_f,_r){
     var  _rcache = {};
     /**
      * 执行编辑命令
@@ -20,7 +17,7 @@ var f = function(_e,_h,_p){
      * @param  {String} _value    命令值
      * @return {Void}
      */
-    _h.__execCommand = 
+    _h.__execCommand =
     _h.__execCommand._$aop(function(_event){
         var _args = _event.args;
         if (_args[1]=='styleWithCSS'){
@@ -36,7 +33,7 @@ var f = function(_e,_h,_p){
      * @param  {Node} _node 节点
      * @return {Void}
      */
-    _h.__saveRange = 
+    _h.__saveRange =
     _h.__saveRange._$aop(function(_event){
         if (!!document.selection){
             _event.stopped = !0;
@@ -53,7 +50,7 @@ var f = function(_e,_h,_p){
      * @param  {Node} _node 节点
      * @return {Void}
      */
-    _h.__focusRange = 
+    _h.__focusRange =
     _h.__focusRange._$aop(null,function(_event){
         var _doc = _h.__getDocument(_event.args[0]),
             _id = _e._$id(_doc),
@@ -76,7 +73,7 @@ var f = function(_e,_h,_p){
      * @param  {Node} _node 节点
      * @return {Void}
      */
-    _h.__clearRange = 
+    _h.__clearRange =
     _h.__clearRange._$aop(null,function(_event){
         var _id = _e._$id(
             _h.__getDocument(_event.args[0])
@@ -84,10 +81,5 @@ var f = function(_e,_h,_p){
         delete _rcache[_id];
     });
 
-    return _p;
-};
-NEJ.define(
-    '{lib}util/editor/platform/editor.td.js',[
-    '{lib}base/element.js',
-    './editor.js'
-],f);
+    return _h;
+});

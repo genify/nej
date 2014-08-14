@@ -1,9 +1,11 @@
-var f = function(_m,_j,_3rd,_p){
+NEJ.define([
+	'{lib}base/platform.js'
+],function(_m,_p,_o,_f,_r){
 	// ie8-
-	NEJ.patch(_m,'TR<=5.0',['./3rd.json.js']);
+	NEJ.patch('TR<=5.0',['./3rd.json.js']);
 
 	// ie6 json patch
-    NEJ.patch(_m,'TR==2.0',['./3rd.json.js'],function(JSON){
+    NEJ.patch('TR==2.0',['./3rd.json.js'],function(JSON){
 	    // eval for big string
 	    JSON.parse = (function(){
 	        // check save json string
@@ -23,5 +25,4 @@ var f = function(_m,_j,_3rd,_p){
 	    })();
 	});
 	return _p;
-};
-define(['{lib}base/platform.js','./json.js'],f);
+});

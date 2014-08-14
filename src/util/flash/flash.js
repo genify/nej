@@ -88,7 +88,7 @@ NEJ.define([
         // append flash element
         var _doInitDOM = function(_options){
             var _parent = _e._$get(_options.parent)||document.body,
-                _html = _e._$getHtmlTemplate(_seed_html,_options);
+                _html = _t0._$getHtmlTemplate(_seed_html,_options);
             _parent.insertAdjacentHTML(
                !_options.hidden?'beforeEnd':'afterBegin',_html
             );

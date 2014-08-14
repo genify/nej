@@ -328,8 +328,6 @@ NEJ.define([
     ');
 
     if (CMPT){
-        _t = NEJ.P('nej.ut'),
-        _p = NEJ.P('nej.ui')
         NEJ.copy(NEJ.P('nej.ui'),_p);
     }
 

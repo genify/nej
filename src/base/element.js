@@ -1,6 +1,6 @@
 ﻿/*
  * ------------------------------------------
- * 节点接口实现文件 
+ * 节点接口实现文件
  * @version  1.0
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
@@ -83,9 +83,7 @@ NEJ.define([
             return _node;
         }
         // node in memory
-        var _node = _h.__getElementById(
-            _fragment,_element
-        );
+        var _node = _h.__getElementById(_fragment,_element);
         if (!!_node){
             return _node;
         }
@@ -299,18 +297,18 @@ NEJ.define([
     };
     /**
      * 盒模型结构
-     * 
+     *
      * @typedef  {Object} module:base/element~BoxModel
      * @property {Number} scrollTop    - 滚动垂直偏移
      * @property {Number} scrollLeft   - 滚动水平偏移
      * @property {Number} clientWidth  - 页面可视宽度
      * @property {Number} clientHeight - 页面可视高度
      * @property {Number} scrollWidth  - 页面滚动宽度
-     * @property {Number} scrollHeight - 页面滚动高度 
+     * @property {Number} scrollHeight - 页面滚动高度
      */
     /**
      * 取页面盒信息，返回盒信息内容：
-     * 
+     *
      * 脚本举例
      * ```javascript
      *   NEJ.define([
@@ -320,7 +318,7 @@ NEJ.define([
      *       var _box = _e._$getPageBox();
      *   });
      * ```
-     * 
+     *
      * @method module:base/element._$getPageBox
      * @param  {Document} arg0 - 文档对象
      * @return {module:base/element~BoxModel} 盒信息
@@ -595,7 +593,7 @@ NEJ.define([
      *       _e._$cursor('xxx',{start:5,end:10});
      *       // 设置光标位置
      *       _e._$cursor('xxx',8);
-     * 
+     *
      *       // 获取光标位置
      *       // _position.start 光标起始位置
      *       // _position.end   光标结束位置
@@ -634,7 +632,7 @@ NEJ.define([
     };
     /**
      * 节点占全屏
-     * 
+     *
      * @method module:base/element._$fullScreen
      * @param  {Node} arg0 - 节点
      * @return {Void}
@@ -650,7 +648,7 @@ NEJ.define([
     };
     /**
      * 为节点增加用于盖select/flash等控件的层
-     * 
+     *
      * @method module:base/element._$mask
      * @see    module:base/element._$unmask
      * @param  {Node} arg0 - 节点
@@ -666,7 +664,7 @@ NEJ.define([
     };
     /**
      * 为节点移除用于盖select/flash等控件的层
-     * 
+     *
      * @method module:base/element._$unmask
      * @see    module:base/element._$mask
      * @param  {Node} arg0 - 节点
@@ -876,7 +874,7 @@ NEJ.define([
      *               // _event.clazz   切换的样式名称
      *               // _event.target  触发切换事件的节点
      *               // _event.toggled 是否增加了切换样式
-     *               
+     *
      *               // TODO
      *           }
      *       });
@@ -938,7 +936,7 @@ NEJ.define([
     })();
     /**
      * 节点focus行为，提供两种模式支持
-     * 
+     *
      * * 0 - 聚焦添加效果，失焦去除效果，高版本使用:focus样式处理
      * * 1 - 聚焦添加效果，失焦时只有在当前输入框没有内容时去除效果
      *
@@ -1833,20 +1831,20 @@ NEJ.define([
      * 注入页面内联样式，
      * 样式支持前缀标记$&lt;vendor&gt; ，
      * 如下样式值支持3D/2D切换，优先选用3D，格式：$&lt;NAME|VALUE&gt;
-     * 
+     *
      * * NAME支持：scale/rotate/translate/matrix
      * * VALUE格式：x=1&y=2&z=3&a=30
-     * 
+     *
      *
      * 范例如$&lt;scale|a=30&gt;，各名称支持的参数列表
-     * 
+     *
      * | 名称              | 参数 |
      * | :--        | :-- |
      * | scale      | x,y,z |
      * | rotate     | x,y,z,a |
      * | translate  | x,y,z |
      * | matrix     | m11,m12,m13,m14,m21,m22,m23,m24,m31,m32,m33,m34,m41,m42,m43,m44 |
-     * 
+     *
      *
      * 结构举例
      * ```html

@@ -12,7 +12,7 @@ NEJ.define([
     '{lib}base/event.js',
     '{lib}base/util.js',
     '{lib}ui/layer/card.wrapper.js',
-    '{lib}util/template/tpl.js'
+    '{lib}util/template/jst.js'
 ],function(NEJ,_k,_e,_v,_u,_i,_t0,_p,_o,_f,_r){
     var _pro,
         _seed_css,
@@ -84,7 +84,7 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__doGenFontListXhtml = function(_data){
-        return _e._$getHtmlTemplate(_seed_fnt,_data);
+        return _t0._$getHtmlTemplate(_seed_fnt,_data);
     };
     /**
      * 字体大小选择事件

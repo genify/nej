@@ -201,7 +201,7 @@ NEJ.define([
      */
     _pro._$show = function(){
         _e._$setStyle(this.__body,'visibility','hidden');
-        _supLayer._$show.apply(this,arguments);
+        this.__super();
         this.__doPositionAlign();
         _e._$setStyle(this.__body,'visibility','');
         if (!this.__nohack){

@@ -118,7 +118,7 @@ NEJ.define([
             {t:'玫瑰红',v:'#ff99cc'},{t:'茶色',v:'#ffcc99'},{t:'浅黄',v:'#ffff99'},{t:'浅绿',v:'#ccffcc'},{t:'浅青绿',v:'#ccffff'},{t:'淡蓝',v:'#99ccff'},{t:'淡紫',v:'#cc99ff'},{t:'白色',v:'#ffffff'}
         ];
         return function(){
-            _e._$renderHtmlTemplate(
+            _t1._$renderHtmlTemplate(
                 this.__nbox,_seed_color,{
                     xlist:_xlist
                 }

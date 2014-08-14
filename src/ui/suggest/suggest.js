@@ -155,7 +155,7 @@ NEJ.define([
      */
     _pro._$setList = function(_html,_clazz){
         if (_u._$isArray(_html))
-            _html = _e._$getHtmlTemplate(
+            _html = _t1._$getHtmlTemplate(
                     _seed_item,{xlist:_html});
         this.__body.innerHTML = _html||'';
         this.__suggest._$setList(!_clazz

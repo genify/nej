@@ -5,36 +5,35 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _f = NEJ.F,
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _t = _('nej.ut'),
-        _p = _('nej.ut.cmd'),
-        _proCardCommand;
-    if (!!_p._$$CardCommand) return;
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{lib}base/event.js',
+    '{lib}util/editor/command.js'
+],function(NEJ,_k,_e,_v,_t0,_p,_o,_f,_r){
+   var _pro;
     /**
      * 命令弹出卡片
      * @class   {nej.ut.cmd._$$CardCommand} 命令弹出卡片
      * @extends {nej.ut._$$EditorCommand}
      * @param   {Object} _options 可选配置参数，已处理参数列表如下
      */
-    _p._$$CardCommand = NEJ.C();
-      _proCardCommand = _p._$$CardCommand._$extend(_t._$$EditorCommand);
+    _p._$$CardCommand = _k._$klass();
+    _pro = _p._$$CardCommand._$extend(_t0._$$EditorCommand);
     /**
      * 控件初始化
      * @protected
      * @method {__init}
      * @return {Void}
      */
-    _proCardCommand.__init = function(){
+    _pro.__init = function(){
         this.__fopt = {
             destroyable:!0,
             parent:document.body,
             onchange:this.__onChange._$bind(this)
         };
-        this.__supInit();
+        this.__super();
     };
     /**
      * 卡片内容变化回调，子类实现具体业务逻辑
@@ -42,21 +41,21 @@ var f = function(){
      * @method {__onChange}
      * @return {Void}
      */
-    _proCardCommand.__onChange = _f;
+    _pro.__onChange = _f;
     /**
      * 显示卡片，子类实现具体业务逻辑
      * @protected
      * @method {__doShowCard}
      * @return {Void}
      */
-    _proCardCommand.__doShowCard = _f;
+    _pro.__doShowCard = _f;
     /**
      * 执行命令
      * @method {_$execute}
      * @param  {Object} 执行参数
-     * @return {nej.ut.cmd._$$CardCommand}
+     * @return {Void}
      */
-    _proCardCommand._$execute = function(_options){
+    _pro._$execute = function(_options){
         _v._$dispatchEvent(document,'click');
         var _node = _options.target,
             _offset = _e._$offset(_node);
@@ -64,8 +63,11 @@ var f = function(){
         this.__fopt.left = _offset.x-1;
         this.__fopt.width = _node.clientWidth;
         this.__doShowCard();
-        return this;
     };
-};
-NEJ.define('{lib}util/editor/command/card.js',
-      ['{lib}util/editor/command.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut.cmd'),_p);
+    }
+
+    return _p;
+});

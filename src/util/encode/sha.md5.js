@@ -8,11 +8,11 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    // variable declaration
-    var p = NEJ.P('nej.u');
+NEJ.define([
+    '{lib}base/global.js'
+],function(NEJ,_p,_o,_f,_r){
     // bits per input character. 8 - ASCII; 16 - Unicode
-    var __chrsz = 8; 
+    var __chrsz = 8;
     /*
      * Bitwise rotate a 32-bit number to the left.
      */
@@ -139,7 +139,7 @@ var f = function(){
      * Calculate the MD5 of an array of little-endian words, and a bit length
      */
     var __data2md5  = function(x,y){
-        x[y>>5] |= 0x80<<((y)%32); 
+        x[y>>5] |= 0x80<<((y)%32);
         x[(((y+64)>>>9)<<4)+14] = y;
         var a = 1732584193,
             b = -271733879,
@@ -211,9 +211,9 @@ var f = function(){
             d = __md5ii(d, a, b, c, x[i+11], 10, -1120210379);
             c = __md5ii(c, d, a, b, x[i+ 2], 15,  718787259);
             b = __md5ii(b, c, d, a, x[i+ 9], 21, -343485551);
-            a = __add(a, _oa); 
+            a = __add(a, _oa);
             b = __add(b, _ob);
-            c = __add(c, _oc); 
+            c = __add(c, _oc);
             d = __add(d, _od);
         }   return [a, b, c, d];
     };
@@ -222,18 +222,18 @@ var f = function(){
      */
     var __data2hmacmd5 = function(_key,_data){
         var _bkey = __str2bin(_key,!0);
-        if (_bkey.length>16) 
+        if (_bkey.length>16)
             _bkey = __data2md5(_bkey,_key.length*__chrsz);
-    
+
         var _ipad = Array(16),
             _opad = Array(16);
         for(var i=0;i<16;i++){
             _ipad[i] = _bkey[i]^0x36363636;
             _opad[i] = _bkey[i]^0x5C5C5C5C;
         }
-    
+
         var _hash = __data2md5(_ipad.concat(
-                               __str2bin(_data,!0)), 
+                               __str2bin(_data,!0)),
                                512+_data.length*__chrsz);
         return __data2md5(_opad.concat(_hash),512+128);
     };
@@ -275,9 +275,9 @@ var f = function(){
      */
     var __data2hmacsha1 = function(_key,_data){
         var _bkey = __str2bin(_key);
-        if (_bkey.length>16) 
+        if (_bkey.length>16)
             _bkey = __data2sha1(_bkey,_key.length*__chrsz);
-    
+
         var _ipad = Array(16),
             _opad = Array(16);
         for(var i=0;i<16;i++){
@@ -459,7 +459,7 @@ var f = function(){
      */
     p._$md52hex = function(_data){
         return __bin2hex(__data2md5(
-                         __str2bin(_data,!0), 
+                         __str2bin(_data,!0),
                          _data.length*__chrsz),!0);
     };
     /**
@@ -477,7 +477,7 @@ var f = function(){
      */
     p._$md52b64 = function(_data){
         return __bin2b64(__data2md5(
-                         __str2bin(_data,!0), 
+                         __str2bin(_data,!0),
                          _data.length*__chrsz),!0);
     };
     /**
@@ -514,5 +514,6 @@ var f = function(){
     p._$str2hex = function(_data){
         return __bin2hex(__str2bin(_data,!0),!0);
     };
-};
-NEJ.define('{lib}util/encode/sha.md5.js',['{lib}base/global.js'],f);
+
+    NEJ.copy(NEJ.P('nej.u'),_p);
+});

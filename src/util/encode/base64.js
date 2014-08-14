@@ -5,9 +5,10 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    // variable declaration
-    var p = NEJ.P('nej.u');
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/util.js'
+],function(NEJ,_u,_p,_o,_f,_r){
     // implement
     var __b64tab = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/',
         __b64char = {},
@@ -77,7 +78,7 @@ var f = function(){
                     else if((c>127)&&(c<2048))
                         _result.push((c>>6)|192,(c&63)|128);
                     // all the signs between 2048 and 66536 => 3byte
-                    else 
+                    else
                         _result.push((c>>12)|224,((c>>6)&63)|128,(c&63)|128);
                 }
             return _result;
@@ -105,7 +106,7 @@ var f = function(){
         }
         // this is again for the padding
         if (_mode == 1)
-            _result[_result.length-1] = 
+            _result[_result.length-1] =
             _result[_result.length-2] = '=';
         if (_mode == 2)
             _result[_result.length-1] = '=';
@@ -153,7 +154,7 @@ var f = function(){
      * @param  {String} 数据
      * @return {String} 解码后数据
      */
-    p._$b642str = function(_data){
+    _p._$b642str = function(_data){
         return __bin2utf8(__b642bin(_data));
     };
     /**
@@ -173,7 +174,7 @@ var f = function(){
      * @param  {String} 数据
      * @return {String} 编码后数据
      */
-    p._$str2b64 = function(_data){
+    _p._$str2b64 = function(_data){
         try{
             // only for x0000-x00ff
             return window.btoa(_data);
@@ -181,5 +182,10 @@ var f = function(){
             return __bin2b64(__utf82bin(_data));
         }
     };
-};
-NEJ.define('{lib}util/encode/base64.js',['{lib}base/global.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.u'),_p);
+    }
+
+    return _p;
+});

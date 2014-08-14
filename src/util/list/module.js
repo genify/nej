@@ -21,10 +21,10 @@ NEJ.define([
     var _pro;
     /**
      * 列表模块基类
-     * 
+     *
      * @class   {_$$ListModule}
      * @extends {_$$EventTarget}
-     * 
+     *
      * @param   {Object}               可选配置参数
      * @config  {String|Node}   parent 列表容器节点
      * @config  {Number}        limit  每页显示数量，默认10项
@@ -32,7 +32,7 @@ NEJ.define([
      * @config  {String|Object} item   列表JST模版标识或者Item配置，{clazz:'xxx',klass:_$$Item||'jst key',prefix:'xxx'}
      * @config  {Object}        cache  缓存配置信息，{key:'primary key',lkey:'list key',data:{},ext:{},klass:_$$ListCache,list:[],clear:true,total:200}
      * @config  {Object}        pager  分页器配置信息，{parent:'xxx',klass:_$$Pager,index:2,fixed:true}
-     * 
+     *
      * [hr]
      * 下拉刷新列表之前处理业务逻辑，可用于处理loading状态的显示
      * @event  {onbeforepullrefresh}
@@ -40,7 +40,7 @@ NEJ.define([
      * @config {Node}    parent  容器节点
      * @config {String}  value   设置此参数返回用以显示loading的html代码或者节点
      * @config {Boolean} stopped 设置此参数用以表明loading已处理，后续逻辑忽略处理loading状态
-     * 
+     *
      * [hr]
      * 下拉刷新列表载入之后处理业务逻辑，可用于处理loading状态的隐藏
      * @event  {onafterpullrefresh}
@@ -48,7 +48,7 @@ NEJ.define([
      * @config {Node}    parent  容器节点
      * @config {String}  value   设置此参数返回用以显示loading的html代码
      * @config {Boolean} stopped 设置此参数用以表明loading已处理，后续逻辑忽略处理loading状态
-     * 
+     *
      * [hr]
      * 加载列表之前处理业务逻辑，可用于处理loading状态的显示
      * @event  {onbeforelistload}
@@ -56,7 +56,7 @@ NEJ.define([
      * @config {Node}    parent  容器节点
      * @config {String}  value   设置此参数返回用以显示loading的html代码或者节点
      * @config {Boolean} stopped 设置此参数用以表明loading已处理，后续逻辑忽略处理loading状态
-     * 
+     *
      * [hr]
      * 列表载入之后处理业务逻辑，可用于处理loading状态的隐藏
      * @event  {onafterlistload}
@@ -64,7 +64,7 @@ NEJ.define([
      * @config {Node}    parent  容器节点
      * @config {String}  value   设置此参数返回用以显示loading的html代码
      * @config {Boolean} stopped 设置此参数用以表明loading已处理，后续逻辑忽略处理loading状态
-     * 
+     *
      * [hr]
      * 为空列表时显示的信息
      * @event  {onemptylist}
@@ -72,38 +72,38 @@ NEJ.define([
      * @config {Node}    parent  容器节点
      * @config {String}  value   设置此参数返回用以显示的html代码
      * @config {Boolean} stopped 设置此参数用以表明已处理，后续逻辑忽略处理状态
-     * 
+     *
      * [hr]
      * 页码变化触发事件
      * @event  {onpagechange}
      * @param  {Object}          事件信息
      * @config {Number}  index   当前页码
      * @config {Boolean} stopped 设置此参数用以表明已处理，后续逻辑忽略分页处理
-     * 
+     *
      * [hr]
      * 列表显示之前处理业务逻辑，此事件确保列表有数据
      * @event  {onbeforelistrender}
      * @param  {Object}          事件信息
      * @config {Node}    parent  容器节点
-     * 
+     *
      * [hr]
      * 列表显示之后处理业务逻辑，此事件确保列表有数据
      * @event  {onafterlistrender}
      * @param  {Object}          事件信息
      * @config {Node}    parent  容器节点
-     * 
+     *
      * [hr]
      * 列表清除之前处理业务逻辑
      * @event  {onbeforelistclear}
      * @param  {Object}          事件信息
      * @config {Node}    parent  容器节点
-     * 
+     *
      * [hr]
      * 请求更新列表项数据，主要用于处理删除之前的确认，
      * 确认完成后可调用模块的_$delete接口将数据从服务器上删除
      * @event  {ondelete}
      * @param  {Object}  列表项数据
-     * 
+     *
      * [hr]
      * 删除列表项之前回调，主要用来预处理调用Cache中的删除接口时的信息
      * @event  {onbeforedelete}
@@ -111,7 +111,7 @@ NEJ.define([
      * @config {String} id   列表项标识
      * @config {String} key  列表标识
      * @config {Object} data 列表项数据
-     * 
+     *
      * [hr]
      * 删除列表项之后回调，主要用来额外处理列表呈现的业务逻辑
      * @event  {onafterdelete}
@@ -119,13 +119,13 @@ NEJ.define([
      * @config {String}  key     列表标识
      * @config {Object}  data    删除的列表项数据
      * @config {Boolean} stopped 是否阻止列表刷新逻辑
-     * 
+     *
      * [hr]
      * 请求更新列表项数据，针对JST模版的用户点击行为，
      * 主要用于处理收集更新数据，更新数据收集完成后可调用模块的_$update接口将数据更新到服务器
      * @event  {onupdate}
      * @param  {Object}  列表项数据
-     * 
+     *
      * [hr]
      * 更新列表项之前回调，主要用来预处理调用Cache中的更新接口时的信息
      * @event  {onbeforeupdate}
@@ -133,7 +133,7 @@ NEJ.define([
      * @config {String} id   列表项标识
      * @config {String} key  列表标识
      * @config {Object} data 列表项数据
-     * 
+     *
      * [hr]
      * 更新列表项之后回调，主要用来额外处理列表呈现的业务逻辑
      * @event  {onafterupdate}
@@ -141,7 +141,7 @@ NEJ.define([
      * @config {String}  key     列表标识
      * @config {Object}  data    删除的列表项数据
      * @config {Boolean} stopped 是否阻止列表刷新逻辑
-     * 
+     *
      * [hr]
      * 错误处理回调
      * @event  {onerror}
@@ -288,9 +288,9 @@ NEJ.define([
         this.__ropt.data = _copt.data||{};
         this.__ropt.clear = !!_copt.clear;
         this.__iopt.pkey = _copt.key||'id';
-        _copt.onlistload = 
+        _copt.onlistload =
             this.__cbListLoad._$bind(this);
-        _copt.onpullrefresh = 
+        _copt.onpullrefresh =
             this.__cbPullRefresh._$bind(this);
         if (!!_klass&&('onlistchange' in _klass)){
             this.__doInitDomEvent([[
@@ -429,7 +429,7 @@ NEJ.define([
         _data.offset = this.__ropt.offset;
         var _first = _data.offset==0;
         _data.total  = _first;
-        this.__ropt.limit = 
+        this.__ropt.limit =
               _first?this.__first:this.__limit;
         _data.limit  = this.__ropt.limit;
         this.__cache._$getList(
@@ -497,7 +497,7 @@ NEJ.define([
      */
     _pro.__cbPullRefresh = function(_options){
         // unlock pulling
-        if (!this.__pulling) 
+        if (!this.__pulling)
             return;
         delete this.__pulling;
         // recycle loading
@@ -599,7 +599,7 @@ NEJ.define([
                 // render by item
                 this.__iopt.limit = 1;
                 this.__iopt.offset = 0;
-                this.__iopt.parent = 
+                this.__iopt.parent =
                       _doInsert._$bind(this,_pos);
                 var _items = _t2._$getItemTemplate(
                              _xlist,this.__ikls,this.__iopt);
@@ -663,7 +663,7 @@ NEJ.define([
      * @method {__doShowMessage}
      * @param  {String} 事件名称
      * @param  {String} 默认显示内容
-     * @return {Void} 
+     * @return {Void}
      */
     _pro.__doShowMessage = function(_name,_default,_pos){
         var _event = {
@@ -797,7 +797,7 @@ NEJ.define([
             this.__iopt.beg  = _index;
             this.__iopt.end  = _index;
             this.__iopt.act  = 'update';
-            var _html = _e._$getHtmlTemplate(
+            var _html = _t1._$getHtmlTemplate(
                 this.__ikey,this.__iopt
             );
             _node.insertAdjacentHTML('afterEnd',_html);
@@ -961,7 +961,7 @@ NEJ.define([
      */
     _pro._$pullRefresh = function(){
         // lock pulling
-        if (!!this.__pulling) 
+        if (!!this.__pulling)
             return;
         this.__pulling = !0;
         // show loading
@@ -1012,11 +1012,11 @@ NEJ.define([
     };
     /**
      * 判断列表是否载入完成s
-     * @return {Boolean} 
+     * @return {Boolean}
      */
     _pro._$isLoaded = function(){
         return this.__cache._$isLoaded(this.__ropt.key);
     };
-    
+
     return _p;
 });

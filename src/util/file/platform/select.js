@@ -1,8 +1,10 @@
-var f = function(){
-	var _  = NEJ.P,
-       	_e = _('nej.e');
-	_e.__handleFileLabelClick = function(){
+NEJ.define([
+    '{lib}base/global.js',
+	'{lib}base/element.js'
+],function(NEJ,_e,_p,_o,_f,_r){
+	_p.__handleFileLabelClick = function(){
 		//do nothing
 	};
-};
-define(['{lib}base/element.js'],f);
+
+	return _p;
+});

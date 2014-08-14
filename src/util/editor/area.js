@@ -5,16 +5,15 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _v = _('nej.v'),
-        _e = _('nej.e'),
-        _u = _('nej.u'),
-        _h = _('nej.h'),
-        _p = _('nej.ut'),
-        _pro;
-    if (!!_p._$$EditorArea) return;
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{lib}base/event.js',
+    '{platform}editor.js',
+    '{lib}util/event.js'
+],function(NEJ,_k,_e,_v,_h,_t,_p,_o,_f,_r){
+    var _pro;
     /**
      * 富媒体编辑器输入区封装
      * @class   {nej.ut._$$EditorArea} 富媒体编辑器输入区封装
@@ -24,13 +23,13 @@ var f = function(){
      * @config  {String}               style   编辑器初始样式
      * @config  {Boolean}              focus   是否自动聚焦
      * @config  {String}               content 文本内容
-     * 
+     *
      * [hr]
-     * 
+     *
      * @event  {onselectionchange}
      */
-    _p._$$EditorArea = NEJ.C();
-    _pro = _p._$$EditorArea._$extend(_p._$$EventTarget);
+    _p._$$EditorArea = _k._$klass();
+    _pro = _p._$$EditorArea._$extend(_t._$$EventTarget);
     /**
      * 控件初始化
      * @protected
@@ -42,7 +41,7 @@ var f = function(){
             visible:!0,
             onload:this.__onIFrameLoaded._$bind(this)
         };
-        this.__supInit();
+        this.__super();
     };
     /**
      * 控件重置
@@ -54,13 +53,13 @@ var f = function(){
     _pro.__reset = (function(){
         var _cnttpl = '<head><base href="#<BSUL>"/><style>html,body{margin:0;padding:0;border:0;cursor:text;font-size:14px;font-family:Arial;word-wrap:break-word;height:100%;}#<UDCS></style></head><body contenteditable="true"></body>';
         return function(_options){
-            this.__supReset(_options);
+            this.__super(_options);
             this.__focus = _options.focus;
             this.__content = _cnttpl
                 .replace('#<UDCS>',_options.style||'')
                 .replace('#<BSUL>',_options.base||location.href);
             this.__initcnt = _options.content||'';
-            this.__fopt.parent = 
+            this.__fopt.parent =
                 _e._$get(_options.parent)||document.body;
             this.__iframe = _e._$createXFrame(this.__fopt);
         };
@@ -72,7 +71,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         _h.__clearRange(this._$getDocument());
         delete this.__content;
         delete this.__fopt.parent;
@@ -200,18 +199,17 @@ var f = function(){
      * 聚焦编辑器
      * @method {_$focus}
      * @param  {Number} 光标位置，默认为0，0-末尾、1-起始、2-不变
-     * @return {nej.ut._$$EditorArea}
+     * @return {Void}
      */
     _pro._$focus = function(_cursor){
         var _document = this._$getDocument();
-        if (!_document) return this;
+        if (!_document) return;
         _h.__focusRange(_document.body);
         _h.__moveCursorPosition(
             _document.body,
             parseInt(_cursor)||0
         );
         this.__onSelectionChange();
-        return this;
     };
     /**
      * 取编辑器文档对象
@@ -224,7 +222,7 @@ var f = function(){
     /**
      * 取编辑内容
      * @param  {Boolean|Number} 是否只保留background-color,font-size,color样式
-     * @param  {Boolean|Number} 是否删除所有style 
+     * @param  {Boolean|Number} 是否删除所有style
      * @method {_$getContent}
      * @return {String} 内容
      */
@@ -266,14 +264,13 @@ var f = function(){
      * 设置内容
      * @method {_$setContent}
      * @param  {String} 编辑内容
-     * @return {nej.ut._$$EditorArea}
+     * @return {Void}
      */
     _pro._$setContent = function(_content){
         var _document = this._$getDocument();
-        if (!_document) return this;
+        if (!_document) return;
         _document.body.innerHTML = _content;
         this.__onInputCheck();
-        return this;
     };
     /**
      * 执行编辑命令
@@ -281,17 +278,16 @@ var f = function(){
      * @param  {String} 命令名称
      * @param  {String} 命令值
      * @param  {String} 是否通过style的方式来改变样式，比如superscript命令
-     * @return {nej.ut._$$EditorArea}
+     * @return {Void}
      */
     _pro._$execCommand = function(_command,_value,_css){
         var _document = this._$getDocument();
-        if (!_document) return this;
+        if (!_document) return;
         this._$focus(2);
         _h.__execCommand(_document,'styleWithCSS',false);
         _h.__execCommand(_document,_command,_value);
         this._$focus(2);
         this.__onInputCheck();
-        return this;
     };
     /**
      * 查询命令的状态
@@ -348,9 +344,10 @@ var f = function(){
         var _document = this._$getDocument();
         return !_document?null:_e._$getPageBox(_document);
     };
-};
-NEJ.define(
-    '{lib}util/editor/area.js',[
-    '{lib}util/event.js',
-    '{platform}editor.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});

@@ -53,7 +53,7 @@
         for(var i=_list.length-1,_script;i>=0;i--){
             _script = _list[i];
             _script.xxx = !0;
-            _reg.test(_script.src) 
+            _reg.test(_script.src)
                 ? _doParseConfig(_script.src)
                 : _doScriptLoaded(_script,!0);
         }
@@ -63,7 +63,7 @@
     };
     /*
      * 解析地址
-     * @param  {String} 
+     * @param  {String}
      * @return {Void}
      */
     var _doParseConfig = function(_uri){
@@ -100,7 +100,7 @@
      */
     var _doParseDependency = (function(){
         var _dependency = function(_list,_dmap,_test){
-            if (!_list||!_list.length) 
+            if (!_list||!_list.length)
                 return null;
             var _result = [];
             for(var i=0,l=_list.length,_file,_files;i<l;i++){
@@ -333,7 +333,7 @@
                 _brr = _list[i].split('=');
                 _key = _brr.shift();
                 if (!_key) continue;
-                _result[decodeURIComponent(_key)] = 
+                _result[decodeURIComponent(_key)] =
                         decodeURIComponent(_brr.join('='));
             }
         return _result;
@@ -370,7 +370,7 @@
             _append();
             _anchor.href = _uri;
             _uri = _anchor.href;
-            return _absolute(_uri)&&_uri.indexOf('./')<0 ? 
+            return _absolute(_uri)&&_uri.indexOf('./')<0 ?
                    _uri : _anchor.getAttribute('href',4); // ie6/7
         };
         var _amdpath = function(_uri){
@@ -593,6 +593,7 @@
             }
         };
         var _exec = function(_list,_pmap){
+            if (!_pmap) return;
             var _map = {};
             for(var i=0,l=_list.length,_it;i<l;i++){
                 _it = _list[i];
@@ -611,10 +612,11 @@
         return function(){
             _result = [];
             // check from begin to end
-            //return _loop(__xqueue[0]);
-            var _item = _loop(__xqueue[__xqueue.length-1]);
+            var _item = _loop(__xqueue[0]);
             // must do platform before excute
-            _exec(_item.d);
+            if (!!_item){
+                _exec(_item.d,_item.p);
+            }
             return _item;
         };
     })();
@@ -752,7 +754,7 @@
             _uri = _args[0]||(''+(_seed++));
             _deps = _args[1];
             _callback = _args[2];
-            // check module defined in file 
+            // check module defined in file
             _uri = _doFormatURI(_uri);
             if (__scache[_uri]===2){
                 return; // duplication
@@ -809,12 +811,12 @@
     // exports
     /**
      * NEJ名字空间
-     * @namespace NEJ 
+     * @namespace NEJ
      */
     p.NEJ = {};
     /**
      * 模块定义，单个文件只允许定义一个模块，即只允许执行一次NEJ.define，模块执行函数支持依赖列表注入和名字空间两种方式
-     * 
+     *
      * ```javascript
      * // 依赖{lib}base/global.js和{lib}base/util.js
      * NEJ.define([
@@ -826,28 +828,28 @@
      *     // o - 注入的空对象 {}
      *     // f - 注入的空函数 function(){return !1;}
      *     // r - 注入的空数组 []
-     * 
+     *
      *     // TODO something
-     *      
+     *
      *     // 返回允许外界使用的对象
      *     return p;
      * });
      * ```
-     * 
+     *
      * ```javascript
      * // 不依赖其他文件，等价于直接执行
      * NEJ.define(function(p,o,f,r){
      *     // TODO something
-     *      
+     *
      *     return p;
      * });
      * ```
-     * 
-     * ```javascript 
+     *
+     * ```javascript
      * // 仅用于引入依赖文件列表而不执行业务逻辑
      * NEJ.define(['{lib}base/global.js']);
      * ```
-     * 
+     *
      * @method NEJ.define
      * @param  {String}   arg0 - 当前文件路径标识，不传自动解析，建议不传此参数
      * @param  {Array}    arg1 - 模块依赖的其他模块文件，没有依赖其他文件可不传此参数
@@ -868,22 +870,22 @@
                 _args.unshift(_doFormatURI(_src));
             return _doDefine.apply(p,_args);
         }
-        // for other 
+        // for other
         __stack.push(_args);
         _doAddAllListener();
     };
     /**
      * 根据条件判断是否在当前平台执行，
      * 平台支持TR|WR|GR，没有比较操作符表示支持当前内核所有release版本
-     * 
+     *
      *  | 标识符 | 说明 |
      *  | :--   | :-- |
      *  | T     | Trident引擎，如ie |
      *  | W     | Webkit引擎，如chrome |
      *  | G     | Gecko引擎，如firefox |
-     * 
+     *
      * 平台内置的Trident引擎版本对应的IE版本关系：
-     * 
+     *
      *  | Trident版本 | IE版本 |
      *  | :-- | :-- |
      *  | 2.0 | 6   |
@@ -892,12 +894,12 @@
      *  | 5.0 | 9   |
      *  | 6.0 | 10  |
      *  | 7.0 | 11  |
-     * 
+     *
      * patch文件必须符合以下规则：
      * * 只允许执行若干NEJ.patch
      * * NEJ.patch中只允许修改hack.js注入的对象里的API
      * * 定义函数必须返回hack.js注入的对象
-     * 
+     *
      * ```javascript
      * NEJ.define([
      *     './hack.js'
@@ -910,33 +912,33 @@
      *             // TODO
      *         };
      *     });
-     * 
+     *
      *     // 针对webkit平台的处理逻辑
      *     NEJ.patch('WR',['./hack.chrome.js'],function(wk){
      *         // TODO
      *         console.log('from inline chrome');
      *     });
-     * 
+     *
      *     // 针对gecko平台的处理逻辑
      *     NEJ.patch('GR',['./hack.firefox.js'],function(gk){
      *         // TODO
      *         console.log('from inline firefox');
      *     });
-     *       
+     *
      *     // 针对IE6平台的处理逻辑
      *     NEJ.patch('TR==2.0',['./hack.ie6.js']);
-     *       
+     *
      *     // 针对IE7-IE9的处理逻辑
      *     NEJ.patch('3.0<=TR<=5.0',function(){
      *         // TODO
      *         console.log('from inline ie7-ie9');
      *     });
-     *     
+     *
      *     // 必须返回hack.js注入的对象
      *     return h;
      * });
      * ```
-     * 
+     *
      * @method NEJ.patch
      * @param  {String}   arg0 - 平台识别条件，如：6<=TR<=9
      * @param  {Array}    arg1 - 依赖文件列表
@@ -967,9 +969,9 @@
     };
     /**
      * 载入依赖配置，对于老项目或者使用第三方框架的项目，可以使用此接口配置
-     * 
+     *
      * 项目某个页面加载的脚本列表
-     * 
+     *
      * ```html
      * <script src="./a.js"></script>
      * <script src="./b.js"></script>
@@ -978,9 +980,9 @@
      * <script src="./e.js"></script>
      * <script src="./f.js"></script>
      * ```
-     * 
+     *
      * 根据脚本规则提取文件的依赖关系，没有依赖其他文件可不配置，假设页面入口文件为f.js
-     * 
+     *
      * ```javascript
      * var deps = {
      *     '{pro}f.js':['{pro}d.js'],
@@ -989,24 +991,24 @@
      *     '{pro}b.js':['{pro}a.js']
      * };
      * ```
-     * 
+     *
      * 通过NEJ.deps配置依赖关系，假设以下配置文件的路径为./deps.js
-     * 
+     *
      * ```javascript
      * NEJ.deps(deps,['{pro}f.js']);
      * ```
-     * 
+     *
      * 修改页面使用文件依赖管理，使用d参数配置依赖文件地址
-     * 
+     *
      * ```html
      *   <script src="http://nej.netease.com/nej/src/define.js?d=./deps.js&pro=./"></script>
      *   <script src="./f.js"></script>
      * ```
-     * 
+     *
      * 之后项目只需要维护deps.js中的依赖配置信息即可
-     * 
+     *
      * 说明：开发阶段deps.js中配置的文件均会被载入页面中，发布上线时仅提取页面使用到的脚本，比如上例中页面只用到f.js，通过配置文件可以发现f.js只依赖了d.js，因此这个页面最终发布时只会导出d.js和f.js
-     * 
+     *
      * @method NEJ.deps
      * @param  {Object} arg0 - 依赖映射表，如'{pro}a.js':['{pro}b.js','{pro}c.js']
      * @param  {Array}  arg1 - 入口屏蔽文件列表，页面载入依赖配置文件中的文件时不载入此列表中的文件，多为页面入口文件
@@ -1038,28 +1040,28 @@
     };
     /**
      * 是否兼容模式，兼容模式下支持用全局名字空间使用API和控件
-     * 
+     *
      * ```javascript
      * if (CMPT){
      *     // TODO something
      *     // 此中的代码块在打包配置文件中将OBF_COMPATIBLE设置为false情况下打包输出时将被忽略
      * }
      * ```
-     * 
+     *
      * @name CMPT
      * @constant {Boolean}
      */
     p.CMPT = !0;
     /**
      * 是否调试模式，打包时调试模式下的代码将被过滤
-     * 
+     *
      * ```javascript
      * if (DEBUG){
      *     // TODO something
      *     // 此中的代码块在打包发布后被过滤，不会输出到结果中
      * }
      * ```
-     * 
+     *
      * @name DEBUG
      * @constant {Boolean}
      */

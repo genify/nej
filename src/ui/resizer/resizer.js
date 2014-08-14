@@ -143,7 +143,7 @@ NEJ.define([
         return function(){
             _seed_html = _t1._$addNodeTemplate(
                 '<div class="'+_seed_css+'"><div class="zln">'+
-                   _e._$getHtmlTemplate(_seed_point,{clazz:_clazz})+
+                   _t2._$getHtmlTemplate(_seed_point,{clazz:_clazz})+
                 '</div></div>'
             );
             this.__seed_html = _seed_html;

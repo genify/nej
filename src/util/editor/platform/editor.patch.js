@@ -1,13 +1,11 @@
-var f = function(_m,_e,_u,_h,_p){
-
+NEJ.define([
+    '{lib}base/platform.js',
+	'{lib}base/element.js',
+	'{lib}base/util.js',
+	'./editor.js'
+],function(_m,_e,_u,_h,_p,_o,_f,_r){
 	// gecko editor patch
-	NEJ.patch(_m,'GV',function(){
-		if (CMPT){
-			var _  = NEJ.P,
-		        _e = _('nej.e'),
-		        _h = _('nej.h');
-		}
-	    
+	NEJ.patch('GV',function(){
 	    /**
 	     * 基本内容过滤
 	     */
@@ -17,16 +15,16 @@ var f = function(_m,_e,_u,_h,_p){
 	        __reg_fzag = /<(style|script).*?>.*?<\/\1>/gi,//style和script标签
 	        __reg_ftag = /<\/?(?:meta|link|!--\[.+?\]--|[\w]+:[\w]+).*?>/gi,
 	        __reg_fimg = /<img(\n|\r|\s|[^>])*?src="data:image\/png;base64[^>]*?>/gi;//FF需要干掉base64的图片数据
-	    
+
 	    /**
 	     * 验证gecko下内容是否来自Word
-	     * @param  {String} _html 内容
-	     * @return {Boolean}      gecko下内容是否来自Word
+	     * @param  {String}  _html 内容
+	     * @return {Boolean} gecko下内容是否来自Word
 	     */
 	    var __isFromWord = function(_html){
 	        return (_html||'').indexOf('<w:WordDocument>')>=0;
 	    };
-	    
+
 	    /**
 	     * gecko清除word过来的冗余内容
 	     * @param  {String} _html 内容
@@ -42,7 +40,7 @@ var f = function(_m,_e,_u,_h,_p){
 	                    .replace(__reg_fimg,'')
 	                    .replace(__empty,'');
 	    };
-	    
+
 	    /**
 	     * gecko特殊过滤
 	     * @param {Object} _html
@@ -54,13 +52,7 @@ var f = function(_m,_e,_u,_h,_p){
 	});
 
 	// ie6-9 editor patch
-	NEJ.patch(_m,'PV',function(){
-		if (CMPT){
-			// variable declaration
-		    var _  = NEJ.P,
-		        _h = _('nej.h');
-		}
-	    
+	NEJ.patch('PV',function(){
 	    var __reg_nwrd = /<\/?[\w]+:[\w]+.*?>/gi,
 	        __opspc    = '';
 	    /**
@@ -70,13 +62,13 @@ var f = function(_m,_e,_u,_h,_p){
 	     * @param  {String} _value    命令值
 	     * @return {Void}
 	     */
-	    _h.__execCommand = 
+	    _h.__execCommand =
 	    _h.__execCommand._$aop(function(_event){
 	        var _args = _event.args;
 	        if (_args[1]=='hiliteColor')
 	            _args[1] = 'backColor';
 	    });
-	    
+
 	    /**
 	     * 验证presto下内容是否来自Word
 	     * @param  {String} _html 内容
@@ -85,7 +77,7 @@ var f = function(_m,_e,_u,_h,_p){
 	    var __isFromWord = function(_html){
 	        return (_html||'').search('</?[\\w]+:[\\w]+.*?>')>=0;
 	    };
-	    
+
 	    /**
 	     * presto清除word过来的冗余内容
 	     * @param  {String} _html 内容
@@ -96,7 +88,7 @@ var f = function(_m,_e,_u,_h,_p){
 	            return _html;
 	        return _html.replace(__reg_nwrd,'');
 	    };
-	    
+
 	    /**
 	     * presto特殊过滤
 	     * @param {Object} _html
@@ -108,9 +100,6 @@ var f = function(_m,_e,_u,_h,_p){
 
 	// ie6-9 editor patch
 	NEJ.patch('2.0<=TR<=5.0',['./editor.td.js'],function(){
-	    var _  = NEJ.P,
-	        _p = _('nej.p'),
-	        _h = _('nej.h');
 	    var __reg_nwrd = /<\/?[\w]+:[\w]+.*?>/gi,
 	        __reg_cxml = /<\?xml[^>]*>/gi;
 	    /**
@@ -136,7 +125,7 @@ var f = function(_m,_e,_u,_h,_p){
 	                   }
 	               });
 	    })();
-	    
+
 	    /**
 	     * 验证trident下内容是否来自Word
 	     * @param  {String} _html 内容
@@ -145,7 +134,7 @@ var f = function(_m,_e,_u,_h,_p){
 	    var __isFromWord = function(_html){
 	        return (_html||'').search('</?[\\w]+:[\\w]+.*?>')>=0;
 	    };
-	    
+
 	    /**
 	     * trident清除word过来的冗余内容
 	     * @param  {String} _html 内容
@@ -160,11 +149,6 @@ var f = function(_m,_e,_u,_h,_p){
 
 	// ie10+ editor patch
 	NEJ.patch('TR>=6.0',['./editor.td.js'],function(){
-		if (CMPT){
-			var _  = NEJ.P,
-		        _u = _('nej.u'),
-		        _h = _('nej.h');
-		}
 	    var __reg_nwrd = /<\/?[\w]+:[\w]+.*?>/gi;
 	    /**
 	     * 验证trident1下内容是否来自Word
@@ -174,7 +158,7 @@ var f = function(_m,_e,_u,_h,_p){
 	    var __isFromWord = function(_html){
 	        return (_html||'').search('</?[\\w]+:[\\w]+.*?>')>=0;
 	    };
-	    
+
 	    /**
 	     * trident1清除word过来的冗余内容
 	     * @param  {String} _html 内容
@@ -188,17 +172,12 @@ var f = function(_m,_e,_u,_h,_p){
 	});
 
 	NEJ.patch('TR>=7.0',function(){
-		if (CMPT){
-			var _  = NEJ.P,
-		        _u = _('nej.u'),
-		        _h = _('nej.h');
-		}
 	    /**
 	     * 保存当前选择状态
 	     * @param  {Node} _node 节点
 	     * @return {Void}
 	     */
-	    _h.__saveRange = 
+	    _h.__saveRange =
 	    _h.__saveRange._$aop(function(_event){
 	    	// if have selection patched is on editor.td.js
 	        if (!document.selection){
@@ -216,16 +195,12 @@ var f = function(_m,_e,_u,_h,_p){
 	     * @param {Object} _document 文档对象
 	     * @param {Object} _html
 	     */
-	    _h.__insertHtml = 
-	    _h.__insertHtml._$aop(function(_event){
+	    _h.__insertHtml = function(_doc,_html){
 	        // inserthtml for ie11
-            _event.stopped = !0;
-            var _args = _event.args,
-                _doc = _args[0],
-                _win = _h.__getWindow(_doc),
+            var _win = _h.__getWindow(_doc),
                 _range = _h.__getRange(_win);
             var _node = _doc.createElement('div');
-            _node.innerHTML = _args[1];
+            _node.innerHTML = _html;
             // insert content
             _range.deleteContents();
             _u._$reverseEach(
@@ -238,17 +213,11 @@ var f = function(_m,_e,_u,_h,_p){
             var _selection = _h.__getSelection(_win);
             _selection.collapseToEnd();
             _win.focus();
-	    });
+	    }
 	});
 
 	// ie8-
 	NEJ.patch('TR<=4.0',function(){
-		if (CMPT){
-			var _  = NEJ.P,
-	        	_e = _('nej.e'),
-	            _h = _('nej.h');
-		}
-        
         _h.__getSelectText = function(_document){
             var _range = _h.__getRange(_document);
             if (!_range) return '';
@@ -264,12 +233,6 @@ var f = function(_m,_e,_u,_h,_p){
 
 	// webkit editor patch
 	NEJ.patch('WV',function(){
-		if (CMPT){
-			var _  = NEJ.P,
-		        _e = _('nej.e'),
-		        _h = _('nej.h');
-		}
-	   
 	    var __reg_nwrd = /<\/?[\w]+:[\w]+.*?>/gi;
 	    /**
 	     * 验证webkit下内容是否来自Word
@@ -279,7 +242,7 @@ var f = function(_m,_e,_u,_h,_p){
 	    var __isFromWord = function(_html){
 	        return (_html||'').search('</?[\\w]+:[\\w]+.*?>')>=0;
 	    };
-	    
+
 	    /**
 	     * webkit清除word过来的冗余内容
 	     * @param  {String} _html 内容
@@ -292,7 +255,5 @@ var f = function(_m,_e,_u,_h,_p){
 	    };
 	});
 
-	return _p;
-};
-define(['{lib}base/platform.js','{lib}base/element.js',
-	'{lib}base/util.js','./editor.js'],f);
+    return _h;
+});
