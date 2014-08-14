@@ -412,15 +412,9 @@ NEJ.define([
      * ```
      *
      * @method   module:base/element._$getMaxBox
-     * @param    {Object} arg0   - 原始大小
-     * @property {Number} width  - 宽度
-     * @property {Number} height - 高度
-     * @param    {Object} arg1   - 最大限制
-     * @property {Number} width  - 宽度
-     * @property {Number} height - 高度
-     * @return   {Object}          按比例计算出的最大值信息
-     * @property {Number} width  - 宽度
-     * @property {Number} height - 高度
+     * @param    {module:base/element~SizeModel} arg0 - 原始大小
+     * @param    {module:base/element~SizeModel} arg1 - 最大限制大小
+     * @return   {module:base/element~SizeModel}        按比例计算出的最大值信息
      */
     _p._$getMaxBox = function(_org,_max){
         var _result = _u._$merge({},_org),
@@ -467,6 +461,18 @@ NEJ.define([
         window.scrollTo(_offset.x,_offset.y);
     };
     /**
+     * 大小信息对象
+     * @typedef  {Object} module:base/element~SizeModel
+     * @property {Number} width  - 宽度
+     * @property {Number} height - 高度
+     */
+    /**
+     * 位置信息对象
+     * @typedef  {Object} module:base/element~PositionModel
+     * @property {Number} top  - 垂直位置
+     * @property {Number} left - 水平位置
+     */
+    /**
      * 计算在容器中对齐时的位置信息
      *
      * 脚本举例
@@ -486,18 +492,12 @@ NEJ.define([
      * ```
      *
      * @method   module:base/element._$align
-     * @param    {Object} arg0   - 容器信息
-     * @property {Number} width  - 宽度
-     * @property {Number} height - 高度
-     * @param    {Object} arg1   - 原始大小
-     * @property {Number} width  - 宽度
-     * @property {Number} height - 高度
-     * @param    {String} arg2   - 对齐方式，水平+空格+垂直，如left top，默认为 center middle
-     *                             水平：left/center/right，
-     *                             垂直：top/middle/bottom
-     * @return   {Object}          位置信息
-     * @property {Number} top    - 垂直位置
-     * @property {Number} left   - 水平位置
+     * @param    {module:base/element~SizeModel} arg0 - 容器大小
+     * @param    {module:base/element~SizeModel} arg1 - 原始大小
+     * @param    {String} arg2 - 对齐方式，水平+空格+垂直，如left top，默认为 center middle，
+     *                           水平：left/center/right，
+     *                           垂直：top/middle/bottom
+     * @return   {module:base/element~PositionModel} 位置信息
      */
     _p._$align = (function(){
         var _reg = /\s+/;
@@ -604,7 +604,7 @@ NEJ.define([
      * ```
      *
      * @method   module:base/element._$cursor
-     * @param    {String|Node}   arg0  - TEXTAREA节点
+     * @param    {String|Node}   arg0  - TEXTAREA或者INPUT节点
      * @param    {Number|Object} arg1  - 待设置光标的位置，如果起始位置和结束位置一致则输入数值即可
      * @property {Number}        start - 起始位置
      * @property {Number}        end   - 结束位置，没有end则表示与start相同
@@ -684,7 +684,7 @@ NEJ.define([
      * 节点hover行为，高版本浏览器用:hover样式处理
      *
      * 样式举例
-     * [code type="css"]
+     * ```css
      *    .page .element:hover,
      *    .page .element.js-hover{background:#f00;}
      * ```
@@ -728,7 +728,7 @@ NEJ.define([
      * 节点鼠标或手势按下高亮行为，移动触摸反馈
      *
      * 样式举例
-     * [code type="css"]
+     * ```css
      *    .page .element.js-highlight{background:#f00;}
      * ```
      *
@@ -810,7 +810,7 @@ NEJ.define([
      * 点击切换样式，可以控制两种效果的交替显示
      *
      * 样式举例
-     * [code type="css"]
+     * ```css
      *   .box .shw{display:none;}
      *   .box.js-toggle .shw{display:block;}
      * ```
@@ -842,7 +842,7 @@ NEJ.define([
      * ```
      *
      * 样式举例
-     * [code type="css"]
+     * ```css
      *   .box{display:none;}
      *   .box.js-toggle{display:block;}
      * ```
@@ -871,7 +871,14 @@ NEJ.define([
      *       // 同时自定义切换样式和节点
      *       _e._$toggle('click-bar',{
      *           clazz:'js-show',
-     *           element:'toggle-node'
+     *           element:'toggle-node',
+     *           ontoggle:function(_event){
+     *               // _event.clazz   切换的样式名称
+     *               // _event.target  触发切换事件的节点
+     *               // _event.toggled 是否增加了切换样式
+     *               
+     *               // TODO
+     *           }
      *       });
      *   });
      * ```
@@ -881,7 +888,7 @@ NEJ.define([
      * @param    {String|Object} arg1     - 切换配置信息，输入字符串表示样式或者节点
      * @property {String}        clazz    - 样式名称，默认为js-toggle
      * @property {String|Node}   element  - 切换样式的节点，默认为父节点
-     * @property {Function}      ontoggle - 节点样式切换触发事件
+     * @property {Function}      ontoggle - 节点样式切换触发事件，输入信息{clazz,target,toggled}
      * @return   {Void}
      */
     _p._$toggle = (function(){
@@ -934,10 +941,9 @@ NEJ.define([
      * 
      * * 0 - 聚焦添加效果，失焦去除效果，高版本使用:focus样式处理
      * * 1 - 聚焦添加效果，失焦时只有在当前输入框没有内容时去除效果
-     * 
      *
      * 样式举例
-     * [code type="css"]
+     * ```css
      *   input:focus,input.js-focus{border:1px solid #f00;}
      *   input{color:#aaa;background:#eee;}
      *   .js-focus-0{color:#000;background-color:#fff;}
@@ -1271,6 +1277,7 @@ NEJ.define([
      * ```
      *
      * @method module:base/element._$clearChildren
+     * @see    module:base/element._$remove
      * @param  {String|Node} arg0 - 容器节点
      * @return {Void}
      */
@@ -1330,7 +1337,7 @@ NEJ.define([
      *
      * @method   module:base/element._$wrapInline
      * @param    {String|Node}  arg0  - 内联节点
-     * @param    {Object}       arg1  - 据对定位节点配置信息
+     * @param    {Object}       arg1  - 绝对定位节点配置信息
      * @property {String}       tag   - 标记名称，默认span
      * @property {String}       nid   - 节点识别样式名，这个会被添加到样式中作为标识
      * @property {String}       clazz - 样式名称
@@ -1519,10 +1526,10 @@ NEJ.define([
      *   });
      * ```
      *
-     * @see    module:base/element._$xml2dom}
-     * @method module:base/element._$dom2xml}
-     * @param  {String|Node} 节点
-     * @return {String}      XML代码
+     * @see    module:base/element._$xml2dom
+     * @method module:base/element._$dom2xml
+     * @param  {String|Node} arg0 - 节点
+     * @return {String}             XML代码
      */
     _p._$dom2xml = function(_element){
         _element = _p._$get(_element);
@@ -1577,6 +1584,7 @@ NEJ.define([
      * ```
      *
      * @method module:base/element._$dom2object
+     * @see    module:base/element._$xml2object
      * @param  {String|Node} arg0 - 节点
      * @return {Object}             转换完成的对象
      */
@@ -1620,6 +1628,7 @@ NEJ.define([
      * ```
      *
      * @method module:base/element._$xml2object
+     * @see    module:base/element._$dom2object
      * @param  {String} arg0 - xml代码
      * @return {Object}        对象
      */
@@ -1767,7 +1776,7 @@ NEJ.define([
      * ```
      *
      * @method module:base/element._$getStyle
-     * @method module:base/element._$setStyle
+     * @see    module:base/element._$setStyle
      * @param  {String|Node} arg0 - 节点
      * @param  {String}      arg1 - 样式名称
      * @return {String}             样式值
@@ -1905,11 +1914,11 @@ NEJ.define([
      *   NEJ.define([
      *       'base/element'
      *   ],function(_e){
-     *       // 设置样式到缓存中，自动生成样式名
-     *       _e._$pushCSSText('.#<class>{width:300px;}');
+     *       // 设置样式到缓存中，自动生成样式名，返回自动生成的类名#<class>
+     *       var _class = _e._$pushCSSText('.#<class>{width:300px;}');
      *
-     *       // 把缓存中的样式内联到页面，返回自动生成的类名#<class>
-     *       var _class = _e._$dumpCSSText();
+     *       // 把缓存中的样式内联到页面
+     *       _e._$dumpCSSText();
      *   });
      * ```
      *
@@ -1946,8 +1955,8 @@ NEJ.define([
      *       // 设置样式.item{width:300px;}到缓存中
      *       _e._$pushCSSText('.item{width:300px;}');
      *
-     *       // 把缓存中的样式内联到页面，返回自动生成的类名#<class>
-     *       var _class = _e._$dumpCSSText();
+     *       // 把缓存中的样式内联到页面
+     *       _e._$dumpCSSText();
      *   });
      * ```
      *
@@ -1980,6 +1989,7 @@ NEJ.define([
      * ```
      *
      * @method module:base/element._$appendCSSText
+     * @see    module:base/element._$addStyle
      * @param  {Node}   arg0 - 样式节点
      * @param  {String} arg1 - 单条样式规则
      * @return {CSSRule}       样式规则对象
@@ -2017,7 +2027,7 @@ NEJ.define([
      *
      * @method module:base/element._$addClassName
      * @see    module:base/element._$delClassName
-     * @method module:base/element._$replaceClassName
+     * @see    module:base/element._$replaceClassName
      * @param  {String|Node} arg0 - 要操作的节点标识或者节点对象
      * @param  {String}      arg1 - 要新增的样式类名称
      * @return {Void}
@@ -2055,7 +2065,7 @@ NEJ.define([
      *
      * @method module:base/element._$delClassName
      * @see    module:base/element._$addClassName
-     * @method module:base/element._$replaceClassName
+     * @see    module:base/element._$replaceClassName
      * @param  {String|Node} arg0 - 要操作的节点标识或者节点对象
      * @param  {String}      arg1 - 要删除的样式类名称
      * @return {Void}
