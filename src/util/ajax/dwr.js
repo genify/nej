@@ -5,13 +5,14 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module  util/ajax/dwr */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/constant.js',
-    '{lib}base/util.js',
-    '{lib}util/ajax/xdr.js',
-    '{lib}util/ajax/tag.js',
-    '{lib}util/cache/cookie.js'
+    'base/global',
+    'base/constant',
+    'base/util',
+    'util/ajax/xdr',
+    'util/ajax/tag',
+    'util/cache/cookie'
 ],function(NEJ,_g,_u,_j0,_j1,_j2,_p,_o,_f,_r){
     var _batchid,         // 请求ID标识
         _doFilter = _f,   // 全局异常过滤器
@@ -26,55 +27,84 @@ NEJ.define([
                           //                          // request options
                           //  m:{}}                   // send data
     /**
-     * 设置全局异常过滤器<br/>
+     * 设置全局异常过滤器
      * 
      * 脚本举例
-     * [code]
-     *   NEJ.define([
-     *       '{lib}util/ajax/dwr.js'
-     *   ],function(_p){
-     *       // 所有请求对错误码是401的情况不做处理
-     *       _p._$setFilter(function(_code){
-     *           return _code == 401;
-     *       });
-     *   });
-     * [/code]
+     * ```javascript
+     * NEJ.define([
+     *     'util/ajax/dwr'
+     * ],function(_j){
+     *     // 所有请求对错误码是401的情况不做处理
+     *     _j._$setFilter(function(_event){
+     *         // _event.code
+     *         // _event.message
+     *         
+     *         return _event.code == 401;
+     *     });
+     * });
+     * ```
      * 
-     * @api    {_$setFilter}
-     * @param  {Function}  过滤器,过滤器返回值
-     * [ntb]
-     *  输出 | Boolean    | true  - 不继续执行后续错误处理接口
-     *      | Boolean    | false - 继续执行后续错误处理接口
-     * [/ntb]
+     * @method module:util/ajax/dwr._$setFilter
+     * @param  {Function}  arg0 - 过滤器,过滤器返回值
+     *
+     * * true  - 不继续执行后续错误处理接口
+     * * false - 继续执行后续错误处理接口
+     * 
      * @return {Void}
      */
     _p._$setFilter = function(_filter){
         _doFilter = _u._$isFunction(_filter)?_filter:_f;
     };
     /**
-     * 设置CSRF使用的cookie名
-     * @api    {_$setCookieName}
-     * @param  {String} cookie名
+     * 设置CSRF使用的cookie名，请求时会将此cookie对应的值带在参数上发送到服务器
+     *
+     * 脚本举例
+     * ```javascript
+     * NEJ.define([
+     *     'util/ajax/dwr'
+     * ],function(_j){
+     *     _j._$setCookieName('CSRF-CKN');
+     *
+     *     // 假设cookie里有CSRF-CKN的值为asldjsdi23234asdfasdf
+     *     // 则以下请求参数中带有httpSessionId=asldjsdi23234asdfasdf
+     *     // 服务器端取请求参数中的httpSessionId值与cookie中的CSRF-CKN值比较，判断是否是伪造请求
+     *     _j._$request(
+     *         'DownloadBean.getDownloadUrlByBrandAndModel1',{
+     *             path:'/dwr/call/plaincall/',
+     *             script:false,
+     *             param:["nokia","n97"],
+     *             onload:function(data){
+     *                 // TODO
+     *             },onerror:function(error){
+     *                 // TODO
+     *             }
+     *         }
+     *     );
+     * });
+     * ```
+     * 
+     * @method module:util/ajax/dwr._$setCookieName
+     * @param  {String} arg0 - cookie名称
      * @return {Void}
      */
     _p._$setCookieName = function(_name){
         _cname = _name||_cname;
     };
     /**
-     * 设置请求标识<br/>
+     * 设置请求标识
      * 
      * 脚本举例
-     * [code]
-     *   NEJ.define([
-     *       '{lib}util/ajax/dwr.js'
-     *   ],function(_p){
-     *       // 手动设置请求标识
-     *       _p._$setBatchId('batchId-12345');
-     *   });
-     * [/code]
+     * ```javascript
+     * NEJ.define([
+     *     'util/ajax/dwr'
+     * ],function(_j){
+     *     // 手动设置请求标识
+     *     _j._$setBatchId('batchId-12345');
+     * });
+     * ```
      * 
-     * @api    {_$setBatchId}
-     * @param  {String} 请求标识
+     * @method module:util/ajax/dwr._$setBatchId
+     * @param  {String} arg0 - 请求标识
      * @return {Void}
      */
     _p._$setBatchId = function(_id){
@@ -84,45 +114,45 @@ NEJ.define([
      * 开始批处理请求<br/>
      * 
      * 脚本举例
-     * [code]
-     *   NEJ.define([
-     *       '{lib}util/ajax/dwr.js'
-     *   ],function(_p){
-     *       _p._$beginBatch();
-     *       _p._$requestByDWR(
-     *           'DownloadBean.getDownloadUrlByBrandAndModel1',{
-     *               path:'/dwr/call/plaincall/',
-     *               script:false,
-     *               param:["nokia","n97"],
-     *               onload:function(data){
-     *                   // TODO
-     *               },onerror:function(error){
-     *                   // TODO
-     *               }
-     *           }
-     *       );
-     *       _p._$requestByDWR(
-     *           'DownloadBean.getDownloadUrlByBrandAndModel2',{
-     *               path:'/dwr/call/plaincall/',
-     *               script:false,
-     *               param:["nokia","n98"],
-     *               onload:function(data){
-     *                   // TODO
-     *               },onerror:function(error){
-     *                   // TODO
-     *               }
-     *           }
-     *       );
-     *       // 最后做一次请求发送
-     *       _p._$endBatch();
-     *   });
-     * [/code]
+     * ```javascript
+     * NEJ.define([
+     *     'util/ajax/dwr'
+     * ],function(_j){
+     *     _j._$begin();
+     *     _j._$request(
+     *         'DownloadBean.getDownloadUrlByBrandAndModel1',{
+     *             path:'/dwr/call/plaincall/',
+     *             script:false,
+     *             param:["nokia","n97"],
+     *             onload:function(data){
+     *                 // TODO
+     *             },onerror:function(error){
+     *                 // TODO
+     *             }
+     *         }
+     *     );
+     *     _j._$request(
+     *         'DownloadBean.getDownloadUrlByBrandAndModel2',{
+     *             path:'/dwr/call/plaincall/',
+     *             script:false,
+     *             param:["nokia","n98"],
+     *             onload:function(data){
+     *                 // TODO
+     *             },onerror:function(error){
+     *                 // TODO
+     *             }
+     *         }
+     *     );
+     *     // 最后做一次请求发送
+     *     _j._$end();
+     * });
+     * ```
      * 
-     * @api    {_$beginBatch}
-     * @see    {#_$endBatch}
+     * @method module:util/ajax/dwr._$begin
+     * @see    module:util/ajax/dwr._$end
      * @return {Void}
      */
-    _p._$beginBatch = function(){
+    _p._$begin = function(){
         if (!!_xbatch) return;
         _xbatch = {
             h:{},p:0,
@@ -143,76 +173,59 @@ NEJ.define([
         };
     };
     /**
-     * 使用DWR方式载入数据<br/>
+     * 使用DWR方式载入数据
      * 
      * 脚本举例
-     * [code]
-     *   NEJ.define([
-     *       '{lib}util/ajax/dwr.js'
-     *   ],function(_p){
-     *       _p._$requestByDWR(
-     *           'LogBean.log',{
-     *               path:'/dwr/call/plaincall/',
-     *               script:true,param:{},
-     *               onload:function(data){
-     *                   // 正常回调方法
-     *               },
-     *               onerror:function(error){
-     *                   // 异常回调
-     *               },
-     *               onbeforerequest:function(data){
-     *                  // 请求发送前对请求数据进行处理
-     *               }
-     *           }
-     *       );
-     *   });
-     * [/code]
+     * ```javascript
+     * NEJ.define([
+     *     'util/ajax/dwr'
+     * ],function(_j){
+     *     _j._$request(
+     *         'LogBean.log',{
+     *             path:'/dwr/call/plaincall/',
+     *             script:true,param:{},
+     *             onload:function(data){
+     *                 // 正常回调方法
+     *             },
+     *             onerror:function(error){
+     *                 // 异常回调
+     *             },
+     *             onbeforerequest:function(data){
+     *                // 请求发送前对请求数据进行处理
+     *             }
+     *         }
+     *     );
+     * });
+     * ```
      * 
-     * @api    {_$requestByDWR}
-     * @param  {String}  请求地址,格式为class.method
-     * @param  {Object}  可选配置参数,已处理参数列表如下：
-     * @config {String}  path    请求路径,默认为/dwr/call/plaincall/
-     * @config {String}  query   请求地址附带的查询参数,格式a=aaa&b=bbb
-     * @config {Array}   param   参数列表,不传或空数组均作为无参数处理
-     * @config {String}  proxy   代理标识，使用该代理时忽略script/sync/method/timeout属性
-     * @config {Boolean} script  使用脚本方式载入
-     * @config {Boolean} sync    是否同步请求,使用脚本载入方式忽略此属性
-     * @config {String}  method  请求方式,GET/POST,使用脚本载入方式忽略此属性
-     * @config {Number}  timeout 请求超时时间
-     * @config {Object}  headers 头信息,批处理请求合并所有头信息,同名的头信息后面请求覆盖前面请求
-     * @config {String}  session 
-     * @return {Void}
+     * @method   module:util/ajax/dwr._$request
+     * @param    {String}  arg0    - 请求地址,格式为class.method
+     * @param    {Object}  arg1    - 可选配置参数
+     * @property {String}  path    - 请求路径,默认为/dwr/call/plaincall/
+     * @property {String}  query   - 请求地址附带的查询参数,格式a=aaa&b=bbb
+     * @property {Array}   param   - 参数列表,不传或空数组均作为无参数处理
+     * @property {String}  proxy   - 代理标识，使用该代理时忽略script/sync/method/timeout属性
+     * @property {Boolean} script  - 使用脚本方式载入
+     * @property {Boolean} sync    - 是否同步请求,使用脚本载入方式忽略此属性
+     * @property {String}  method  - 请求方式,GET/POST,使用脚本载入方式忽略此属性
+     * @property {Number}  timeout - 请求超时时间
+     * @property {Object}  headers - 头信息,批处理请求合并所有头信息,同名的头信息后面请求覆盖前面请求
+     * @property {String}  session - CSRF验证的COOKIE名称
+     *  
+     * @property {module:util/ajax/xdr.onload}          onload  - 数据载入回调
+     * @property {module:util/ajax/xdr.onerror}         onerror - 请求异常回调
+     * @property {module:util/ajax/xdr.onbeforerequest} onbeforerequest - 请求之前回调
      * 
-     * [hr]
-     * 载入回调
-     * @event  {onload}
-     * @param  {Variable|Object} 请求返回数据，根据请求时type指定格式返回，
-     *                           如果请求时指定了result参数，则此处输入为包含额外信息的对象，
-     *                           数据结果从此对象的data属性中取，如{headers:{'x-res-0':'12345', ...},data:{a:'aaa', ...}}
-     * 
-     * [hr]
-     * 出错回调
-     * @event  {onerror}  
-     * @param  {Object}   错误信息
-     * @config {Number}   code    错误代码
-     * @config {String}   message 错误描述
-     * @config {Variable} data    出错时携带数据
-     * 
-     * [hr]
-     * 请求之前对数据处理回调
-     * @event  {onbeforerequest} 
-     * @param  {Object} 请求信息
-     * @config {Object} request 请求参数，数据信息 url/sync/cookie/type/method/timeout
-     * @config {Object} headers 请求头信息
+     * @return   {Void}
      */
-    _p._$requestByDWR = function(_url,_options){
+    _p._$request = function(_url,_options){
         var _info = (_url||'').split('.');
         if (!_info||_info.length!=2) return;
         var _single = !1;
         _options = _options||_o;
         if (!_xbatch){
             _single = !0;
-            _p._$beginBatch();
+            _p._$begin();
             if (!!_options.session){
                 _xbatch.m.httpSessionId = _j2._$cookie(_options.session);
             }
@@ -243,52 +256,52 @@ NEJ.define([
         );
         _xbatch.m.callCount++;
         if (_single){
-            _p._$endBatch();
+            _p._$end();
         }
     };
     /**
-     * 结束请求批处理，正式发送请求<br/>
+     * 结束请求批处理，正式发送请求
      * 
      * 脚本举例
-     * [code]
-     *   NEJ.define([
-     *       '{lib}util/ajax/dwr.js'
-     *   ],function(_p){
-     *       _p._$beginBatch();
-     *       _p._$requestByDWR(
-     *           'DownloadBean.getDownloadUrlByBrandAndModel1',{
-     *               path:'/dwr/call/plaincall/',
-     *               script:false,
-     *               param:["nokia","n97"],
-     *               onload:function(data){
-     *                   // TODO
-     *               },onerror:function(error){
-     *                   // TODO
-     *               }
-     *           }
-     *       );
-     *       _p._$requestByDWR(
-     *           'DownloadBean.getDownloadUrlByBrandAndModel2',{
-     *               path:'/dwr/call/plaincall/',
-     *               script:false,
-     *               param:["nokia","n98"],
-     *               onload:function(data){
-     *                   // TODO
-     *               },onerror:function(error){
-     *                   // TODO
-     *               }
-     *           }
-     *       );
-     *       // 最后做一次请求发送
-     *       _p._$endBatch();
-     *   });
-     * [/code]
+     * ```javascript
+     * NEJ.define([
+     *     'util/ajax/dwr'
+     * ],function(_j){
+     *     _j._$begin();
+     *     _j._$request(
+     *         'DownloadBean.getDownloadUrlByBrandAndModel1',{
+     *             path:'/dwr/call/plaincall/',
+     *             script:false,
+     *             param:["nokia","n97"],
+     *             onload:function(data){
+     *                 // TODO
+     *             },onerror:function(error){
+     *                 // TODO
+     *             }
+     *         }
+     *     );
+     *     _j._$request(
+     *         'DownloadBean.getDownloadUrlByBrandAndModel2',{
+     *             path:'/dwr/call/plaincall/',
+     *             script:false,
+     *             param:["nokia","n98"],
+     *             onload:function(data){
+     *                 // TODO
+     *             },onerror:function(error){
+     *                 // TODO
+     *             }
+     *         }
+     *     );
+     *     // 最后做一次请求发送
+     *     _j._$end();
+     * });
+     * ```
      * 
-     * @api    {_$endBatch}
-     * @see    {#_$beginBatch}
+     * @method module:util/ajax/dwr._$end
+     * @see    module:util/ajax/dwr._$begin
      * @return {Void}
      */
-    _p._$endBatch = function(){
+    _p._$end = function(){
         if (!_xbatch||!_xbatch.u){
             _xbatch = null;
             return;
@@ -541,7 +554,13 @@ NEJ.define([
     }];
     
     if (CMPT){
-        NEJ.copy(NEJ.P('nej.j'),_p);
+        var _j = NEJ.P('nej.j');
+        _j._$endBatch      = _p._$end;
+        _j._$requestByDWR  = _p._$request;
+        _j._$beginBatch    = _p._$begin;
+        _j._$setFilter     = _p._$setFilter;
+        _j._$setBatchId    = _p._$setBatchId;
+        _j._$setCookieName = _p._$setCookieName;
     }
     
     return _p;

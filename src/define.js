@@ -382,7 +382,7 @@
             // lib/base/klass -> {lib}base/klass.js
             // pro/util/a     -> {pro}util/a.js
             var _arr = _uri.split('/'),
-                _path = __config.root(_arr[0]);
+                _path = __config.root[_arr[0]];
             if (!!_path){
                 _arr.shift();
                 return _path+_arr.join('/')+'.js';
@@ -592,11 +592,30 @@
                 if (!!_citm) return _citm;
             }
         };
+        var _exec = function(_list,_pmap){
+            var _map = {};
+            for(var i=0,l=_list.length,_it;i<l;i++){
+                _it = _list[i];
+                if (_pmap[_it]){
+                    _map[_it] = !0;
+                    _map[_pmap[_it]] = !0;
+                }
+            }
+            for(var i=0,l=__xqueue.length,_it;i<l;i++){
+                _it = __xqueue[i];
+                if (!!_map[_it.n]){
+                    _doExecFunction(_it);
+                }
+            }
+        };
         return function(){
             _result = [];
             // check from begin to end
             //return _loop(__xqueue[0]);
-            return _loop(__xqueue[__xqueue.length-1]);
+            var _item = _loop(__xqueue[__xqueue.length-1]);
+            // must do platform before excute
+            _exec(_item.d);
+            return _item;
         };
     })();
     /*

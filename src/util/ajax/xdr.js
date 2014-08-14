@@ -14,6 +14,39 @@ NEJ.define([
     './proxy/xhr.js',
     '{platform}xdr.js'
 ],function(NEJ,_g,_u,_e,_t,_h,_p,_o,_f,_r){
+    /** 
+     * 载入回调
+     * 
+     * @callback module:util/ajax/xdr.onload
+     * @param    {Variable|Object} event - 请求返回数据，根据请求时type指定格式返回，
+     *                                     如果请求时指定了result参数，则此处输入为包含额外信息的对象，
+     *                                     数据结果从此对象的data属性中取，如{headers:{'x-res-0':'12345', ...},data:{a:'aaa', ...}}
+     */
+    /** 
+     * 出错回调
+     * 
+     * @callback module:util/ajax/xdr.onerror
+     * @param    {Object}   event   - 错误信息
+     * @property {Number}   code    - 错误代码
+     * @property {String}   message - 错误描述
+     * @property {Variable} data    - 出错时携带数据
+     */
+    /** 
+     * 请求之前对数据处理回调
+     * 
+     * @callback module:util/ajax/xdr.onbeforerequest
+     * @param    {Object} event   - 请求信息
+     * @property {Object} request - 请求参数，数据信息 url/sync/cookie/type/method/timeout
+     * @property {Object} headers - 请求头信息
+     */
+    /** 
+     * 上传进度回调
+     * 
+     * @callback module:util/ajax/xdr.onuploading
+     * @param    {Object} event  - 进度信息
+     * @property {Number} loaded - 载入数量
+     * @property {Number} total  - 总量
+     */
     // sn:{req:proxy,onload:function(){},onerror:function(){}}
     var _xcache = {},
         _doFilter = _f;
@@ -100,39 +133,6 @@ NEJ.define([
     _p._$filter = function(_filter){
         _doFilter = _filter||_f;
     };
-    /** 
-     * 载入回调
-     * 
-     * @callback module:util/ajax/xdr.onload
-     * @param    {Variable|Object} event - 请求返回数据，根据请求时type指定格式返回，
-     *                                     如果请求时指定了result参数，则此处输入为包含额外信息的对象，
-     *                                     数据结果从此对象的data属性中取，如{headers:{'x-res-0':'12345', ...},data:{a:'aaa', ...}}
-     */
-    /** 
-     * 出错回调
-     * 
-     * @callback module:util/ajax/xdr.onerror
-     * @param    {Object}   event   - 错误信息
-     * @property {Number}   code    - 错误代码
-     * @property {String}   message - 错误描述
-     * @property {Variable} data    - 出错时携带数据
-     */
-    /** 
-     * 请求之前对数据处理回调
-     * 
-     * @callback module:util/ajax/xdr.onbeforerequest
-     * @param    {Object} event   - 请求信息
-     * @property {Object} request - 请求参数，数据信息 url/sync/cookie/type/method/timeout
-     * @property {Object} headers - 请求头信息
-     */
-    /** 
-     * 上传进度回调
-     * 
-     * @callback module:util/ajax/xdr.onuploading
-     * @param    {Object} event  - 进度信息
-     * @property {Number} loaded - 载入数量
-     * @property {Number} total  - 总量
-     */
     /**
      * 发送ajax请求
      * 
@@ -189,6 +189,7 @@ NEJ.define([
      * @property {module:util/ajax/xdr.onload}          onload  - 数据载入回调
      * @property {module:util/ajax/xdr.onerror}         onerror - 请求异常回调
      * @property {module:util/ajax/xdr.onbeforerequest} onbeforerequest - 请求之前回调
+     * 
      * @return   {String} 分配给请求的ID
      */
     _p._$request = (function(){

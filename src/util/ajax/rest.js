@@ -14,28 +14,6 @@ NEJ.define([
     'util/ajax/xdr',
     'util/event/event'
 ],function(NEJ,_v,_u,_g,_j,_t,_p,_o,_f,_r){
-    /** 
-     * 载入完成回调函数
-     * 
-     * @callback module:util/ajax/rest.onload
-     * @param    {Variable} event - 服务器返回的数据
-     */
-    /** 
-     * 载入出错回调函数
-     * @callback module:util/ajax/rest.onerror 
-     * @param    {Object}   arg0    - 错误信息
-     * @property {Number}   code    - 错误代码
-     * @property {String}   message - 错误描述
-     * @property {Variable} data    - 出错时携带数据
-     */
-    /** 
-     * 请求之前对数据处理回调
-     * 
-     * @callback module:util/ajax/rest.onbeforerequest
-     * @param    {Object} arg0    - 数据对象
-     * @property {Object} headers - 要发送的请求的头信息
-     * @property {Object} request - 请求信息，{url:'',sync:!1,cookie:!1,type:'text',method:'GET',timeout:60000}
-     */
     /**
      * 使用REST进行数据交互接口
      * 
@@ -89,9 +67,9 @@ NEJ.define([
      * @property {Object}   headers - 头信息
      * @property {Object}   result  - onload回调输入时需包含的额外信息
      *
-     * @property {module:util/ajax/rest.onload} onload   - 请求载入成功回调
-     * @property {module:util/ajax/rest.onerror} onerror - 请求载入失败回调
-     * @property {module:util/ajax/rest.onbeforerequest} onbeforerequest - 发起请求之前回调
+     * @property {module:util/ajax/xdr.onload} onload   - 请求载入成功回调
+     * @property {module:util/ajax/xdr.onerror} onerror - 请求载入失败回调
+     * @property {module:util/ajax/xdr.onbeforerequest} onbeforerequest - 发起请求之前回调
      * 
      * @return   {Void}
      */
