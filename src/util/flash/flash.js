@@ -10,9 +10,10 @@ NEJ.define([
     '{lib}base/element.js',
     '{lib}base/event.js',
     '{lib}base/util.js',
+    '{platform}flash.js',
     '{lib}util/template/jst.js',
     '{lib}util/timer/animation.js'
-],function(NEJ,_e,_v,_u,_t0,_t1,_p,_o,_f,_r){
+],function(NEJ,_e,_v,_u,_h,_t0,_t1,_p,_o,_f,_r){
     var _seed_html;
     /**
      * 页面嵌入flash<br />
@@ -132,7 +133,7 @@ NEJ.define([
             _vars += (!_vars?'':'&')+('id='+_id);
             // delegate mouse event bubble
             if (!_options.hidden&&(!!_options.target||
-                 _v._$canFlashEventBubble(_params.wmode))){
+                 _h.__canFlashEventBubble(_params.wmode))){
                 var _tid = _e._$id(_options.target)||
                            _e._$id(_options.parent);
                 _cache[_id+'-tgt'] = _tid;
