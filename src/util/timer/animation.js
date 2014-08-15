@@ -5,54 +5,55 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module util/timer/animation */
 NEJ.define([
-    '{lib}base/platform.js',
+    'base/platform',
     '{platform}animation.js'
 ],function(_m,_h,_p,_o,_f,_r){
     /**
-     * 请求动画<br />
+     * 请求动画
      * 
      * 脚本举例
-     * [code]
-     *   NEJ.define([
-     *       '{lib}util/timer/animation.js'
-     *   ],function(_p){
-     *       // 桌面端一秒钟调用12.5次，ios端没秒调用20次，否则调用33次
-     *       var _id  = _p.requestAnimationFrame(
-     *           function(_date){
-     *               console.log(_date);
-     *           }
-     *       );
-     *   });
-     * [/code]
+     * ```javascript
+     * NEJ.define([
+     *     'util/timer/animation'
+     * ],function(_p){
+     *     // 桌面端一秒钟调用12.5次，ios端没秒调用20次，否则调用33次
+     *     var _id  = _p.requestAnimationFrame(
+     *         function(_time){
+     *             console.log(_time);
+     *         }
+     *     );
+     * });
+     * ```
      * 
-     * @api    {requestAnimationFrame}
-     * @param  {Function} 动画回调
-     * @return {String}   动画标识
+     * @method module:util/timer/animation.requestAnimationFrame
+     * @param  {Function} arg0 - 动画回调
+     * @return {String}          动画标识
      */
     _p.requestAnimationFrame = function(){
         _h.__requestAnimationFrame.apply(null,arguments);
     };
     /**
-     * 取消动画<br />
+     * 取消动画
      * 
      * 脚本举例
-     * [code]
-     *   NEJ.define([
-     *       '{lib}util/timer/animation.js'
-     *   ],function(_p){
-     *       var _id  = _p.requestAnimationFrame(
-     *           function(_date){
-     *               console.log(_date);
-     *           }
-     *       );
-     *       // 停止掉时钟
-     *       _p.cancelAnimationFrame(_id);
-     *   });
-     * [/code]
+     * ```javascript
+     * NEJ.define([
+     *     'util/timer/animation'
+     * ],function(_p){
+     *     var _id  = _p.requestAnimationFrame(
+     *         function(_time){
+     *             console.log(_time);
+     *         }
+     *     );
+     *     // 停止掉时钟
+     *     _p.cancelAnimationFrame(_id);
+     * });
+     * ```
      * 
-     * @api    {cancelAnimationFrame}
-     * @param  {String} 动画标识
+     * @method module:util/timer/animation.cancelAnimationFrame
+     * @param  {String} arg0 - 动画标识
      * @return {Void}
      */
     _p.cancelAnimationFrame = function(){
