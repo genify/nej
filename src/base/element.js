@@ -1088,7 +1088,7 @@ NEJ.define([
      * ```
      *
      * @method   module:base/element._$createXFrame
-     * @param    {Object}               arg0    - 可选配置参数，已处理参数
+     * @param    {Object}               arg0    - 可选配置参数
      * @property {String}               src     - 框架地址
      * @property {String}               name    - 框架名称
      * @property {String|Node|Function} parent  - 父节点或者框架加入父容器的执行函数

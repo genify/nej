@@ -46,7 +46,7 @@ var f = function(){
      * [/code]
      * @class   {nej.ut._$$MultiSelector} 多选控件
      * @extends {nej.ut._$$EventTarget}
-     * @param   {Object} 可选配置参数，已处理参数列表如下所示
+     * @param   {Object} 可选配置参数
      * @config  {Node|String}  parent   容器节点或者ID，如果不输入则在列表的每一项上检测事件
      * @config  {String}       name     项标识属性名称，默认id，节点通过data-id指定项标识
      * @config  {String}       item     可选节点样式标识，默认为js-item

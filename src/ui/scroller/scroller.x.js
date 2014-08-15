@@ -21,7 +21,7 @@ var f = function(){
      * 水平滚动控件
      * @class   {nej.ui._$$ScrollerX} 水平滚动控件
      * @extends {nej.ui._$$Scroller}
-     * @param   {Object} 可选配置参数，已处理参数列表如下：
+     * @param   {Object} 可选配置参数
      */
     p._$$ScrollerX = NEJ.C();
     __proScrollerX = p._$$ScrollerX._$extend(p._$$Scroller);

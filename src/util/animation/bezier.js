@@ -24,7 +24,7 @@ NEJ.define([
      * [/ntb]
      * @class   {nej.ut._$$AnimBezier} 贝塞尔曲线算法
      * @extends {nej.ut._$$Animation}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {Number} duration 持续时间，单位毫秒，默认为200ms
      * @config  {String} timing   时间函数，默认为ease，ease/easein/easeout/easeinout/linear/cubic-bezier(x1,y1,x2,y2)
      */

@@ -19,7 +19,7 @@ NEJ.define([
          * @param  {Number}  模式
          * @param  {Boolean} 是否文件上传
          * @param  {Object}  构造配置参数
-         * @return {_$$Proxy} 代理实例
+         * @return {_$$ProxyAbstract} 代理实例
          */
         _h.__getProxyByMode = (function(){
             var _pmap = {0:2,1:3};

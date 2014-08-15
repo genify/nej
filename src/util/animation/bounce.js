@@ -37,7 +37,7 @@ NEJ.define([
      * [/code]
      * @class   {nej.ut._$$AnimBounce} 弹跳动画
      * @extends {nej.ut._$$Animation}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {Number} acceleration  加速度，值越小弹跳越快
      * @config  {Number} springtension 张紧度，0-1之间，值越小弹跳距离越大
      */

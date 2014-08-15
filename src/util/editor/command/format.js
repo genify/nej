@@ -14,7 +14,7 @@ NEJ.define([
      * 斜体执行命令封装
      * @class   {nej.ut.cmd._$$Format} 斜体执行命令封装
      * @extends {nej.ut.cmd._$$SimpleCommand}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      */
     _p._$$Format = _k._$klass();
     _pro = _p._$$Format._$extend(_t0._$$EditorCommand);

@@ -18,7 +18,7 @@ NEJ.define([
      * @class   {nej.ut._$$Animation} 动画基类
      * @extends {nej.ut._$$EventTarget}
      *
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {Object} to    动画结束信息
      * @config  {Object} from  动画初始信息
      * @config  {Number} delay 延时时间，单位毫秒，默认0

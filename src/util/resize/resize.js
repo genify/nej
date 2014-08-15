@@ -115,7 +115,7 @@ var f = function(){
      * [/code]
      * @class   {nej.ut._$$Resize} 区域大小调节功能封装
      * @extends {nej.ut._$$EventTarget}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {Node}         view  视窗节点，默认为documentElement或body节点
      * @config  {String|Node}  body  大小变化区域节点
      * @config  {Object}       flag  各方向节点样式标识

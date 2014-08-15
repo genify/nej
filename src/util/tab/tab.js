@@ -51,7 +51,7 @@ NEJ.define([
      * @class   module:util/tab/tab._$$Tab
      * @extends module:util/event._$$EventTarget
      *
-     * @param    {Object}  config   - 可选配置参数，已处理参数列表如下
+     * @param    {Object}  config   - 可选配置参数
      * @property {Array}   list     - 标签项列表
      * @property {Number}  index    - 初始选中项索引值，默认为0
      * @property {String}  event    - 触发选择事件名称，默认为click

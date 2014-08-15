@@ -37,7 +37,7 @@ NEJ.define([
      * [/code]
      * @class   {nej.ut._$$Slider} 滑动器算法
      * @extends {nej.ut._$$EventTarget}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {Object}      range 滑动范围，默认为滑块可运动范围，如{x:[0,100],y:[0,1000]}
      * @config  {String|Node} slide 滑动节点
      * @config  {String|Node} track 滑动轨道节点

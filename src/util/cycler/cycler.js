@@ -45,7 +45,7 @@ NEJ.define([
      * [/code]
      * @class   {nej.ut._$$Cycler} 循环播放封装对象
      * @extends {nej.ut._$$EventTarget}
-     * @param   {Object}      可选配置参数，已处理参数列表如下
+     * @param   {Object}      可选配置参数
      * @config  {Array}       list         图片地址列表
      * @config  {String|Node} nbox         图片容器节点
      * @config  {String|Node} pbox         页码索引容器节点
@@ -77,7 +77,7 @@ NEJ.define([
      * 控件重置
      * @protected
      * @method {__reset}
-     * @param   {Object}       可选配置参数，已处理参数列表如下
+     * @param   {Object}       可选配置参数
      * @config  {Array}       list      图片地址列表
      * @config  {String|Node} nbox      图片容器节点
      * @config  {String|Node} pbox      页码索引容器节点

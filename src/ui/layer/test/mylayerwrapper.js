@@ -17,7 +17,7 @@ var f = function(){
     /**
      * @class   {nej.ui._$$MyCardWrapper} 弹出卡片封装基类对象
      * @extends {nej.ui._$$LayerWrapper}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      *                            
      */
     _p._$$MyCardWrapper = NEJ.C();

@@ -5,28 +5,30 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module  util/ajax/loader/html */
 NEJ.define([
     './loader.js',
-    '{lib}base/klass.js',
-    '{lib}base/element.js',
+    'base/klass',
+    'base/element',
     '{platform}html.js'
 ],function(_t,_k,_e,_h,_p,_o,_f,_r){
     var _pro;
     /**
      * HTML资源加载器
      * 
-     * @class   {_$$HtmlLoader}
-     * @extends {_$$Loader}
+     * @class   module:util/ajax/loader/html._$$LoaderHtml
+     * @extends module:util/ajax/loader/loader._$$LoaderAbstract
      * 
-     * @param   {Object} 可选配置参数，已处理的参数列表如下所示
+     * @param   {Object} config - 可选配置参数
      */
-    _p._$$HtmlLoader = _k._$klass(); 
-    _pro = _p._$$HtmlLoader._$extend(_t._$$Loader);
+    _p._$$LoaderHtml = _k._$klass(); 
+    _pro = _p._$$LoaderHtml._$extend(_t._$$LoaderAbstract);
     /**
      * 取资源载入控件
+     * 
      * @protected
-     * @method {__getRequest}
-     * @return {Link} 控件
+     * @method module:util/ajax/loader/html._$$LoaderHtml#__getRequest
+     * @return {Node} IFrame节点
      */
     _pro.__getRequest = function(){
         var _iframe = _e._$create('iframe');
@@ -37,9 +39,10 @@ NEJ.define([
     };
     /**
      * 资源载入
+     * 
      * @protected
-     * @method {__doRequest}
-     * @param  {Script} 控件
+     * @method module:util/ajax/loader/html._$$LoaderHtml#__doRequest
+     * @param  {Node} arg0 - 控件节点
      * @return {Void}
      */
     _pro.__doRequest = function(_request){
@@ -49,9 +52,10 @@ NEJ.define([
     };
     /**
      * 资源载入异常事件
+     * 
      * @protected
-     * @method {__onError}
-     * @param  {Object} 错误信息
+     * @method module:util/ajax/loader/html._$$LoaderHtml#__onError
+     * @param  {Object} arg0 - 错误信息
      * @return {Void}
      */
     _pro.__onError = function(_error){
@@ -63,8 +67,9 @@ NEJ.define([
     };
     /**
      * 资源载入成功事件
+     * 
      * @protected
-     * @method {__onLoaded}
+     * @method module:util/ajax/loader/html._$$LoaderHtml#__onLoaded
      * @return {Void}
      */
     _pro.__onLoaded = function(){

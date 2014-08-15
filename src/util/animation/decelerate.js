@@ -47,7 +47,7 @@ NEJ.define([
      * [/code]
      * @class   {nej.ut._$$AnimDecelerate} 减速动画
      * @extends {nej.ut._$$Animation}
-     * @param   {Object}  可选配置参数，已处理参数列表如下
+     * @param   {Object}  可选配置参数
      * @config  {Number}  friction     阻力系数，0-1之间，阻力越大减速距离越短
      * @config  {Number}  acceleration 加速度，值越小减速越快
      */

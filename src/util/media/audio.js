@@ -39,7 +39,7 @@ var f = function(){
      * [/code]
      * @class   {nej.ut._$$MediaAudio} 音频播放控件
      * @extends {nej.ut._$$Media}
-     * @param   {Object} 可选配置参数，已处理参数列表如下所示
+     * @param   {Object} 可选配置参数
      * @config  {String} url 音频地址
      */
     _p._$$MediaAudio = NEJ.C();

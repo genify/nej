@@ -44,7 +44,7 @@ NEJ.define([
      * [/code]
      * @class   {nej.ui._$$Card} 卡片控件
      * @extends {nej.ui._$$Layer}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {String}  top    卡片垂直位置
      * @config  {String}  left   卡片水平位置
      * @config  {Boolean} nostop 是否禁用事件阻止
@@ -284,7 +284,7 @@ NEJ.define([
      *   });
      * [/code]
      * @method {_$showByReference}
-     * @param  {Object}  可选配置参数，已处理参数列表如下
+     * @param  {Object}  可选配置参数
      * @config {Object}  delta   位置偏移，{top:0,right:0,bottom:0,left:0}
      * @config {Object}  align   卡片位置，默认为'top left'，{top:0,right:0,bottom:0,left:0}
      * [ntb]

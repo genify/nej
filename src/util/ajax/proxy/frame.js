@@ -5,29 +5,33 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module  util/ajax/proxy/frame */
 NEJ.define([
     './proxy.js',
-    '{lib}base/util.js',
-    '{lib}base/klass.js',
-    '{lib}base/event.js',
-    '{lib}base/config.js',
-    '{lib}base/element.js',
-    '{lib}util/ajax/message.js'
+    'base/util',
+    'base/klass',
+    'base/event',
+    'base/config',
+    'base/element',
+    'util/ajax/message'
 ],function(_t,_u,_k,_v,_c,_e,_j,_p,_o,_f,_r){
     var _pro,
         _cache = {};
     /**
      * Frame代理方式Ajax请求对象
      * 
-     * @class   {_$$FrameProxy}
-     * @extends {_$$Proxy}
+     * @class   module:util/ajax/proxy/frame._$$ProxyFrame
+     * @extends module:util/ajax/proxy/proxy._$$ProxyAbstract
      * 
-     * @param   {Object}  构造配置参数
+     * @param   {Object}  config - 构造配置参数
      */
-    _p._$$FrameProxy = _k._$klass();
-    _pro = _p._$$FrameProxy._$extend(_t._$$Proxy);
+    _p._$$ProxyFrame = _k._$klass();
+    _pro = _p._$$ProxyFrame._$extend(_t._$$ProxyAbstract);
     /**
      * 控件初始化
+     *
+     * @protected
+     * @method module:util/ajax/proxy/frame._$$ProxyFrame#__init
      * @return {Void}
      */
     _pro.__init = (function(){
@@ -61,7 +65,10 @@ NEJ.define([
     })();
     /**
      * 往服务器发送请求
-     * @param  {Object} 请求信息
+     *
+     * @protected
+     * @method module:util/ajax/proxy/frame._$$ProxyFrame#__doSendRequest
+     * @param  {Object} arg0 - 请求信息
      * @return {Void}
      */
     _pro.__doSendRequest = function(_options){
@@ -114,7 +121,8 @@ NEJ.define([
     };
     /**
      * 中断请求
-     * @method {_$abort}
+     * 
+     * @method module:util/ajax/proxy/frame._$$ProxyFrame#_$abort
      * @return {Void}
      */
     _pro._$abort = function(){

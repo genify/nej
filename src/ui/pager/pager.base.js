@@ -74,7 +74,7 @@ NEJ.define([
      * [/code]
      * @class   {_$$AbstractPager}
      * @extends {ui/base#_$$Abstract}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {Number} index  当前页码
      * @config  {Number} total  总页码数
      * @config  {Number} number 显示页数

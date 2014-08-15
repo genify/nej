@@ -104,7 +104,7 @@ NEJ.define([
      * @class   {_$$ListCache}
      * @extends {_$$Cache}
      *
-     * @param  {Object} 可选配置参数，已处理参数列表如下
+     * @param  {Object} 可选配置参数
      * @config {String}  id      缓存标识，默认使用构造器缓存
      * @config {String}  key     列表项标识字段，默认为id
      * @config {Object}  data    列表关联数据

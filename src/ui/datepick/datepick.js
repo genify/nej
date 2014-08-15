@@ -51,7 +51,7 @@ NEJ.define([
      * @class   {nej.ui._$$DatePick} 日期选择控件
      * @uses    {nej.ut._$$Calendar}
      * @extends {nej.ui._$$CardWrapper}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {Date}  date  设置日期
      * @config  {Array} range 可选范围
      *

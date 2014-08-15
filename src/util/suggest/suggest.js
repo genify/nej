@@ -60,7 +60,7 @@ var f = function(){
      * [/code]
      * @class   {nej.ut._$$Suggest} 建议提示控件
      * @extends {nej.ut._$$EventTarget}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {Node|String} input    输入框
      * @config  {Node|String} body     提示卡片节点
      * @config  {String}      selected 提示项选中样式，默认为js-selected

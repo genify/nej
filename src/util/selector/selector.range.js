@@ -62,7 +62,7 @@ var f = function(){
      * [/code]
      * @class   {nej.ut._$$RangeSelector} 多选控件带范围选择
      * @extends {nej.ut._$$MultiSelector}
-     * @param   {Object} 可选配置参数，已处理参数列表如下所示
+     * @param   {Object} 可选配置参数
      * @config  {nej.ut._$$Range|nej.ui._$$Range} range 范围选择器实例
      */
     _p._$$RangeSelector = NEJ.C();

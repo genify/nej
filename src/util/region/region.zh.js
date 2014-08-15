@@ -37,7 +37,7 @@ var f = function(){
      * [/code]
      * @class   {nej.ut._$$RegionSelector} 三级联动区域选择控件
      * @extends {nej.ut._$$EventTarget}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {String|Node}                   province 省份选择控件
      * @config  {String|Node}                   city     城市选择控件
      * @config  {String|Node}                   area     地区选择控件

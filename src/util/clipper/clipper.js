@@ -29,7 +29,7 @@ var f = function(){
      * @class   {nej.ut._$$Clipper} 循环播放封装对象
      * @extends {nej.ut._$$EventTarget}
      * @uses    {nej.ui._$$Resizer}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {String|Node}       mbox 裁剪容器节点
      * @config  {String|Node|Array} pbox 预览容器节点 
      * @config  {String}            url  图片地址

@@ -20,7 +20,7 @@ NEJ.define([
      * @class   {_$$AbstractModule}
      * @extends {_$$Module}
      * 
-     * @param   {Object} 可选配置参数，已处理参数列表如下所示
+     * @param   {Object} 可选配置参数
      * @config  {String}        umi        当前模块的统一模块标识符
      * @config  {Object}        composite  组合模块配置信息
      * @config  {_$$Dispatcher} dispatcher 调度器实例

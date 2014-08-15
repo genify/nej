@@ -5,29 +5,31 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module  util/ajax/loader/script */
 NEJ.define([
     './loader.js',
-    '{lib}base/klass.js',
-    '{lib}base/element.js'
+    'base/klass',
+    'base/element'
 ],function(_t,_k,_e,_p,_o,_f,_r){
     var _pro;
     /**
      * 脚本加载器
      * 
-     * @class   {_$$ScriptLoader}
-     * @extends {_$$Loader}
+     * @class    module:util/ajax/loader/script._$$LoaderScript
+     * @extends  module:util/ajax/loader/loader._$$LoaderAbstract
      * 
-     * @param   {Object} 可选配置参数，已处理的参数列表如下所示
-     * @config  {Boolean} async   异步载入并立刻执行，默认为!0
-     * @config  {String}  charset 脚本编码
+     * @param    {Object} config   - 可选配置参数
+     * @property {Boolean} async   - 异步载入并立刻执行，默认为!0
+     * @property {String}  charset - 脚本编码
      */
-    _p._$$ScriptLoader = _k._$klass();
-    _pro = _p._$$ScriptLoader._$extend(_t._$$Loader);
+    _p._$$LoaderScript = _k._$klass();
+    _pro = _p._$$LoaderScript._$extend(_t._$$LoaderAbstract);
     /**
      * 控件重置
+     * 
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
+     * @method module:util/ajax/loader/script._$$LoaderScript#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -39,8 +41,9 @@ NEJ.define([
     };
     /**
      * 取资源载入控件
+     * 
      * @protected
-     * @method {__getRequest}
+     * @method module:util/ajax/loader/script._$$LoaderScript#__getRequest
      * @return {Script} 控件
      */
     _pro.__getRequest = function(){
@@ -55,12 +58,13 @@ NEJ.define([
     };
     /**
      * 删除控件
+     * 
      * @protected
-     * @method {__clearRequest}
-     * @param  {Script|Link} 控件
+     * @method module:util/ajax/loader/script._$$LoaderScript#__doClearRequest
+     * @param  {Node} arg0 - 控件节点
      * @return {Void}
      */
-    _pro.__clearRequest = function(_request){
+    _pro.__doClearRequest = function(_request){
         _e._$remove(_request);
     };
     

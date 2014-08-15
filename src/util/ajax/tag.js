@@ -59,7 +59,7 @@ NEJ.define([
      * @return   {Void}
      */
     _p._$loadScript = function(_url,_options){
-        _t3._$$ScriptLoader._$allocate(_options)._$load(_url);
+        _t3._$$LoaderScript._$allocate(_options)._$load(_url);
     };
     /**
      * 载入队列脚本并依次执行
@@ -95,7 +95,7 @@ NEJ.define([
      * @return   {Void}
      */
     _p._$queueScript = function(_list,_options){
-        _t3._$$ScriptLoader._$allocate(_options)._$queue(_list);
+        _t3._$$LoaderScript._$allocate(_options)._$queue(_list);
     };
     /**
      * 载入样式文件
@@ -125,7 +125,7 @@ NEJ.define([
      * @return   {Void}
      */
     _p._$loadStyle = function(_url,_options){
-        _t2._$$StyleLoader._$allocate(_options)._$load(_url);
+        _t2._$$LoaderStyle._$allocate(_options)._$load(_url);
     };
     /**
      * 载入样式队列
@@ -160,7 +160,7 @@ NEJ.define([
      * @return   {Void}
      */
     _p._$queueStyle = function(_list,_options){
-        _t2._$$StyleLoader._$allocate(_options)._$queue(_list);
+        _t2._$$LoaderStyle._$allocate(_options)._$queue(_list);
     };
     /**
      * 载入HTML文件
@@ -190,7 +190,7 @@ NEJ.define([
      * @return   {Void}
      */
     _p._$loadHtml = function(_url,_options){
-        _t1._$$HtmlLoader._$allocate(_options)._$load(_url);
+        _t1._$$LoaderHtml._$allocate(_options)._$load(_url);
     };
     /**
      * 载入HTML文件
@@ -220,7 +220,7 @@ NEJ.define([
      * @return {Void}
      */
     _p._$loadText = function(_url,_options){
-        _t0._$$TextLoader._$allocate(_options)._$load(_url);
+        _t0._$$LoaderText._$allocate(_options)._$load(_url);
     };
     
     if (CMPT){

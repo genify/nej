@@ -30,7 +30,7 @@ NEJ.define([
      * @class   {nej.ui._$$ComplexPortrait}
      * @extends {nej.ut._$$EventTarget}
      * @uses    {nej.ut._$$Portrait}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      *
      * [hr]
      * 表情选中事件

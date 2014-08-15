@@ -16,7 +16,7 @@ NEJ.define([
      * 字号大小执行命令封装
      * @class   {nej.ut.cmd._$$FontSize} 字号大小执行命令封装
      * @extends {nej.ut.cmd._$$Font}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      */
     _p._$$FontSize = _k._$klass();
     _pro = _p._$$FontSize._$extend(_t0._$$Font);

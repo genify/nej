@@ -44,7 +44,7 @@ NEJ.define([
      *   });
      * [/code]
      * @api    {nej.e._$flash}
-     * @param  {Object} 可选配置参数，已处理参数列表如下
+     * @param  {Object} 可选配置参数
      * @config {String}      src     Flash文件地址，必须指定地址
      * @config {Boolean}     hidden  Flash是否不可见
      * @config {Number}      width   Flash显示宽度，设为不可见时可以不设此参数

@@ -20,13 +20,13 @@ NEJ.define([
      * @param  {Number}   模式
      * @param  {Boolean}  是否文件上传
      * @param  {Object}   构造配置参数
-     * @return {_$$Proxy} 代理实例
+     * @return {_$$ProxyAbstract} 代理实例
      */
     _p.__getProxyByMode = function(_mode,_upload,_options){
         var _map = !!_upload 
-                 ? {2:_t3._$$UploadProxy}
-                 : {2:_t2._$$FrameProxy,3:_t1._$$FlashProxy};
-        return (_map[_mode]||_t0._$$XHRProxy)._$allocate(_options);
+                 ? {2:_t3._$$ProxyUpload}
+                 : {2:_t2._$$ProxyFrame,3:_t1._$$ProxyFlash};
+        return (_map[_mode]||_t0._$$ProxyXHR)._$allocate(_options);
     };
     
     return _p;

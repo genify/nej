@@ -44,7 +44,7 @@ NEJ.define([
      * @class   {nej.ui._$$ColorPick}
      * @uses    {nej.ui._$$ColorPanel}
      * @extends {nej.ui._$$Abstract}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {String} color        颜色值
      * @config  {String} defaultColor 默认颜色值
      *

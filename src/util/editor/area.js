@@ -18,7 +18,7 @@ NEJ.define([
      * 富媒体编辑器输入区封装
      * @class   {nej.ut._$$EditorArea} 富媒体编辑器输入区封装
      * @extends {nej.ut._$$EventTarget}
-     * @param   {Object} _options 可选配置参数，已处理参数列表如下
+     * @param   {Object} _options 可选配置参数
      * @config  {Node|String|Function} parent  父节点或者编辑器加入父节点执行函数
      * @config  {String}               style   编辑器初始样式
      * @config  {Boolean}              focus   是否自动聚焦

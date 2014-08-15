@@ -29,7 +29,7 @@ NEJ.define([
      * @uses    {nej.ut._$$EditorArea}
      * @uses    {nej.ut._$$EditorToolbar}
      * @extends {nej.ui._$$Abstract}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {Boolean}   focus    是否自动聚焦
      * @config  {String} content  文本内容
      *

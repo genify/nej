@@ -69,7 +69,7 @@ NEJ.define([
      * @class   {nej.ut._$$Calendar}
      * @extends {nej.ut._$$EventTarget}
      *
-     * @param   {Object}      可选配置参数，已处理参数列表如下
+     * @param   {Object}      可选配置参数
      * @config  {Number}      offset   开始星期偏移，默认为0，0-星期天、1-星期一 ...
      * @config  {Array}       list     日期显示节点列表
      * @config  {Number}      year     年份显示节点

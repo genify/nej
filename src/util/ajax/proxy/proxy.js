@@ -5,55 +5,63 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module  util/ajax/proxy/proxy */
 NEJ.define([
-    '{lib}base/klass.js',
-    '{lib}base/util.js',
-    '{lib}base/element.js',
-    '{lib}base/config.js',
-    '{lib}base/constant.js',
-    '{lib}util/event.js',
-    '{lib}util/cache/cookie.js',
-    '{lib}util/encode/json.js'
+    'base/klass',
+    'base/util',
+    'base/element',
+    'base/config',
+    'base/constant',
+    'util/event',
+    'util/cache/cookie',
+    'util/encode/json'
 ],function(_k,_u,_e,_c,_g,_t,_j,JSON,_p,_o,_f,_r){
     var _pro;
     /**
      * Ajax代理对象
      * 
-     * @class   {_$$Proxy}
-     * @extends {_$$EventTarget}
+     * @class   module:util/ajax/proxy/proxy._$$ProxyAbstract
+     * @extends module:util/event._$$EventTarget
      * 
-     * @param   {Object}  构造配置参数
-     * @config  {String}  url     请求地址
-     * @config  {Boolean} sync    是否同步请求
-     * @config  {String}  type    返回数据格式,text/json/xml
-     * @config  {String}  method  请求方式,GET/POST
-     * @config  {Number}  timeout 超时时间,0表示禁止超时监测
-     * @config  {Object}  headers 头信息
-     * 
-     * [hr]
+     * @param    {Object}  config  - 构造配置参数
+     * @property {String}  url     - 请求地址
+     * @property {Boolean} sync    - 是否同步请求
+     * @property {String}  type    - 返回数据格式,text/json/xml
+     * @property {String}  method  - 请求方式,GET/POST
+     * @property {Number}  timeout - 超时时间,0表示禁止超时监测
+     * @property {Object}  headers - 头信息
+     */
+    /** 
      * 载入回调
-     * @event {onload}
-     * @param {Object} 数据信息
      * 
-     * [hr]
+     * @event module:util/ajax/proxy/proxy._$$ProxyAbstract#onload
+     * @param {Object} event - 服务器返回数据信息
+     */
+    /** 
      * 异常回调
-     * @event {onerror}
-     * @param {Object}  数据信息
      * 
+     * @event    module:util/ajax/proxy/proxy._$$ProxyAbstract#onerror
+     * @param    {Object}   event   - 错误信息
+     * @property {Number}   code    - 错误代码
+     * @property {String}   message - 错误描述
+     * @property {Variable} data    - 出错时携带数据
+     */
+    /** 
      * [hr]
      * 请求之前对数据处理回调
-     * @event {onbeforerequest}
-     * @param  {Object} 请求信息
-     * @config {Object} request 请求参数，数据信息 url/sync/cookie/type/method/timeout
-     * @config {Object} headers 请求头信息
+     * @event    module:util/ajax/proxy/proxy._$$ProxyAbstract#onbeforerequest
+     * @param    {Object} event   - 请求信息
+     * @property {Object} request - 请求参数，数据信息 url/sync/cookie/type/method/timeout
+     * @property {Object} headers - 请求头信息
      */
-    _p._$$Proxy = _k._$klass();
-    _pro = _p._$$Proxy._$extend(_t._$$EventTarget);
+    _p._$$ProxyAbstract = _k._$klass();
+    _pro = _p._$$ProxyAbstract._$extend(_t._$$EventTarget);
     /**
      * 控件重置
+     * 
      * @protected
-     * @method {__reset}
-     * @param  {Object} 配置参数
+     * @method module:util/ajax/proxy/proxy._$$ProxyAbstract#__reset
+     * @param  {Object} arg0 - 配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -84,8 +92,9 @@ NEJ.define([
     };
     /**
      * 回收控件
+     * 
      * @protected
-     * @method {__destroy}
+     * @method module:util/ajax/proxy/proxy._$$ProxyAbstract#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -96,12 +105,13 @@ NEJ.define([
     };
     /**
      * 请求载入回调
+     * 
      * @protected
-     * @method {__onLoadRequest}
-     * @param  {Object} 数据信息
-     * @config {Number} status 请求状态
-     * @config {String} result 请求结果，纯文本形式
-     * @return {Void}
+     * @method   module:util/ajax/proxy/proxy._$$ProxyAbstract#__onLoadRequest
+     * @param    {Object} arg0   - 数据信息
+     * @property {Number} status - 请求状态
+     * @property {String} result - 请求结果，纯文本形式
+     * @return   {Void}
      */
     _pro.__onLoadRequest = function(_event){
         var _status = _event.status;
@@ -132,24 +142,27 @@ NEJ.define([
     };
     /**
      * 往服务器发送请求，子类实现具体业务逻辑
-     * @protected
-     * @method {__doSendRequest}
-     * @param  {Object} 请求信息
+     * 
+     * @abstract
+     * @method module:util/ajax/proxy/proxy._$$ProxyAbstract#__doSendRequest
+     * @param  {Object} arg0 - 请求信息
      * @return {Void}
      */
     _pro.__doSendRequest = _f;
     /**
      * 取头信息，子类实现具体业务逻辑
-     * @protected
-     * @method {__getResponseHeader}
-     * @param  {String} 要取的头信息名称
-     * @return {String} 头信息结果或集合
+     * 
+     * @abstract
+     * @method module:util/ajax/proxy/proxy._$$ProxyAbstract#__getResponseHeader
+     * @param  {String} arg0 - 要取的头信息名称
+     * @return {String}        头信息结果或集合
      */
     _pro.__getResponseHeader = _f;
     /**
      * 发送请求
-     * @method {_$send}
-     * @param  {Variable} 要发送的数据
+     * 
+     * @method module:util/ajax/proxy/proxy._$$ProxyAbstract#_$send
+     * @param  {Variable} arg0 - 要发送的数据
      * @return {Void}
      */
     _pro._$send = function(_data){
@@ -185,15 +198,18 @@ NEJ.define([
     };
     /**
      * 中断请求，子类实现具体业务逻辑
-     * @method {_$abort}
+     *
+     * @abstract
+     * @method module:util/ajax/proxy/proxy._$$ProxyAbstract#_$abort
      * @return {Void}
      */
     _pro._$abort = _f;
     /**
      * 取头信息
-     * @method {_$header}
-     * @param  {String|Array}  要取的头信息名称
-     * @return {String|Object} 头信息结果或集合
+     * 
+     * @method module:util/ajax/proxy/proxy._$$ProxyAbstract#_$header
+     * @param  {String|Array}  arg0 - 要取的头信息名称
+     * @return {String|Object}        头信息结果或集合
      */
     _pro._$header = function(_key){
         if (!_u._$isArray(_key)){

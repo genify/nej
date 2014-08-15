@@ -44,7 +44,7 @@ var f = function(){
      * [/code]
      * @class   {nej.ut._$$TabView}
      * @extends {nej.ut._$$EventTarget}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {Array}   list     标签项列表
      * @config  {Number}  dataset  属性名称，默认为id
      * @config  {String}  selected 选中样式名，默认为js-selected

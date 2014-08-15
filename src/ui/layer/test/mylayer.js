@@ -17,7 +17,7 @@ var f = function(){
     var _seed_css = _e._$pushCSSText('.#<uispace>{position:absolute;background:#fff;}');
     /**
      * 卡片控件
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {String} top  卡片垂直位置
      * @config  {String} left 卡片水平位置
      */

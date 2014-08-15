@@ -14,7 +14,7 @@ NEJ.define([
      * 斜体执行命令封装
      * @class   {nej.ut.cmd._$$Italic} 斜体执行命令封装
      * @extends {nej.ut.cmd._$$SimpleCommand}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      */
     _p._$$Italic = _k._$klass();
     _p._$$Italic._$extend(_t0._$$SimpleCommand);

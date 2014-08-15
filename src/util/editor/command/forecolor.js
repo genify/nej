@@ -15,7 +15,7 @@ NEJ.define([
      * 文字颜色执行命令封装
      * @class   {nej.ut.cmd._$$ForeColor} 文字颜色执行命令封装
      * @extends {nej.ui.cmd._$$Color}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      *
      */
     _p._$$ForeColor = _k._$klass();

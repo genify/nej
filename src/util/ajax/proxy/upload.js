@@ -5,15 +5,16 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module  util/ajax/proxy/upload */
 NEJ.define([
     './proxy.js',
-    '{lib}base/klass.js',
-    '{lib}base/util.js',
-    '{lib}base/event.js',
-    '{lib}base/element.js',
-    '{lib}base/constant.js',
-    '{lib}util/ajax/xdr.js',
-    '{lib}util/ajax/message.js'
+    'base/klass',
+    'base/util',
+    'base/event',
+    'base/element',
+    'base/constant',
+    'util/ajax/xdr',
+    'util/ajax/message'
 ],function(_t,_k,_u,_v,_e,_g,_j0,_j1,_p,_o,_f,_r){
     var _pro,
         _cache = {},
@@ -21,16 +22,18 @@ NEJ.define([
     /**
      * 文件上传代理
      *
-     * @class   {_$$UploadProxy}
-     * @extends {_$$Proxy}
+     * @class   module:util/ajax/proxy/upload._$$ProxyUpload
+     * @extends module:util/ajax/proxy/proxy._$$ProxyAbstract
      *
-     * @param   {Object}  构造配置参数
+     * @param   {Object}  config - 构造配置参数
      */
-    _p._$$UploadProxy = _k._$klass();
-    _pro = _p._$$UploadProxy._$extend(_t._$$Proxy);
+    _p._$$ProxyUpload = _k._$klass();
+    _pro = _p._$$ProxyUpload._$extend(_t._$$ProxyAbstract);
     /**
      * 控件初始化
-     * @method {__init}
+     *
+     * @protected
+     * @method module:util/ajax/proxy/upload._$$ProxyUpload#__init
      * @return {Void}
      */
     _pro.__init = (function(){
@@ -64,8 +67,9 @@ NEJ.define([
     })();
     /**
      * 控件销毁
+     * 
      * @protected
-     * @method {__destroy}
+     * @method module:util/ajax/proxy/upload._$$ProxyUpload#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -77,9 +81,10 @@ NEJ.define([
     };
     /**
      * 请求载入回调
+     * 
      * @protected
-     * @method {__onLoadRequest}
-     * @param  {String} 数据信息
+     * @method module:util/ajax/proxy/upload._$$ProxyUpload#__onLoadRequest
+     * @param  {String} arg0 - 数据信息
      * @return {Void}
      */
     _pro.__onLoadRequest = function(_text){
@@ -96,9 +101,10 @@ NEJ.define([
     };
     /**
      * 往服务器发送请求
+     * 
      * @protected
-     * @method {__doSendRequest}
-     * @param  {Object} 请求信息
+     * @method module:util/ajax/proxy/upload._$$ProxyUpload#__doSendRequest
+     * @param  {Object} arg0 - 请求信息
      * @return {Void}
      */
     _pro.__doSendRequest = (function(){
@@ -183,7 +189,8 @@ NEJ.define([
     })();
     /**
      * 中断请求
-     * @method {_$abort}
+     * 
+     * @method module:util/ajax/proxy/upload._$$ProxyUpload#_$abort
      * @return {Void}
      */
     _pro._$abort = function(){

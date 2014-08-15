@@ -391,7 +391,7 @@ NEJ.define([
      * @api    {_$getItemTemplate}
      * @param  {Array}          数据列表
      * @param  {_$$Item}        列表项构造函数
-     * @param  {Object}         可选配置参数，已处理参数列表如下，其他参数参见item指定的构造函数的配置参数
+     * @param  {Object}         可选配置参数，其他参数参见item指定的构造函数的配置参数
      * @config {Number} offset  起始指针【包含】，默认0
      * @config {Number} limit   分配数据长度或者数量，默认为列表长度
      * @return {Array}          ITEM模板列表

@@ -19,7 +19,7 @@ NEJ.define([
      * 富媒体编辑器封装
      * @class   {nej.ut._$$Editor} 富媒体编辑器封装
      * @extends {nej.ut._$$EventTarget}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {nej.ut._$$EditorArea}       area       编辑器核心区
      * @config  {nej.ut._$$EditorToolbar} toolbar 编辑器工具栏
      */

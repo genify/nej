@@ -16,7 +16,7 @@ NEJ.define([
      * 超链接执行命令封装
      * @class   {nej.ut.cmd._$$Link} 超链接执行命令封装
      * @extends {nej.ut._$$EditorCommand}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      *
      */
     _p._$$Link = _k._$klass();

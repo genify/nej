@@ -18,7 +18,7 @@ NEJ.define([
      * 颜色选择卡片
      * @class   {nej.ui.cmd._$$ComplexColorCard} 颜色选择卡片
      * @extends {nej.ui.cmd._$$ColorCard}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {String} color 颜色值
      *
      * [hr]

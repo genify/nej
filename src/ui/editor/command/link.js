@@ -20,7 +20,7 @@ NEJ.define([
      * 超链接卡片
      * @class   {nej.ui.cmd._$$LinkCard} 超链接卡片
      * @extends {nej.ui._$$CardWrapper}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      *
      * [hr]
      *

@@ -36,7 +36,7 @@ NEJ.define([
      * [/code]
      * @class   {nej.ut._$$Dragger} 区域移动功能封装
      * @extends {nej.ut._$$EventTarget}
-     * @param   {Object}                   可选配置参数，已处理参数列表如下
+     * @param   {Object}                   可选配置参数
      * @config  {Node}           view      视窗节点，默认为documentElement或body节点
      * @config  {String|Node}    body      移动控件节点
      * @config  {String|Node}    mbar      触发移动节点ID或者对象，默认为body参数输入节点

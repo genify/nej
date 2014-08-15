@@ -22,7 +22,7 @@ var f = function(){
      * 列表滚动控件
      * @class   {nej.ui._$$ListScroller} 列表滚动控件
      * @extends {nej.ui._$$Abstract}
-     * @param   {Object} 可选配置参数，已处理参数列表如下：
+     * @param   {Object} 可选配置参数
      * @config  {Object} config 滚动参数配置信息
      * 
      * [hr]

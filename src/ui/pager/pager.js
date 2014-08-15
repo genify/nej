@@ -52,7 +52,7 @@ NEJ.define([
      * @class   {_$$Pager}
      * @uses    {util/page/page#_$$Page}
      * @extends {ui/base#_$$Abstract}
-     * @param   {Object}  可选配置参数，已处理参数列表如下
+     * @param   {Object}  可选配置参数
      * @config  {Number}  index 当前页码
      * @config  {Number}  total 总页码数
      * @config  {Boolean} noend 无尾页显示

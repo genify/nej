@@ -17,7 +17,7 @@ NEJ.define([
      * 字体/字号执行命令封装
      * @class   {nej.ut.cmd._$$Font} 字体/字号执行命令封装
      * @extends {nej.ui.cmd._$$CardCommand}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      */
     _p._$$Font = _k._$klass();
     _pro = _p._$$Font._$extend(_t0._$$CardCommand);

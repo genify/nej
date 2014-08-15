@@ -18,7 +18,7 @@ NEJ.define([
      * 字体选择控件
      * @class   {nej.ui.cmd._$$FontNameCard} 字体选择控件
      * @extends {nej.ui.cmd._$$FontCard}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      *
      * [hr]
      *

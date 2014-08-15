@@ -19,7 +19,7 @@ NEJ.define([
      *  - data-command    指定执行的命令，没有设置此属性将被忽略
      * @class   {nej.ut._$$EditorToolbar} 富媒体编辑器工具栏封装
      * @extends {nej.ut._$$EventTarget}
-     * @param   {Object} _options 可选配置参数，已处理参数列表如下
+     * @param   {Object} _options 可选配置参数
      * @config  {Array}     list      命令节点列表
      * @config  {String} selected 命令选中样式，默认为js-selected
      * @config  {String} disabled 命令禁用样式，默认为js-disabled

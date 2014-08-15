@@ -27,7 +27,7 @@ NEJ.define([
      *
      * @class   {nej.ui._$$Portrait}
      * @extends {nej.ui._$$Abstract}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {Number} size  表情大小，30或60，默认为30，目前支持30*30和60*60
      * @config  {String} page  分页标识前缀，默认为js-page-
      * @config  {Object} cache 数据缓存配置

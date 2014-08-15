@@ -19,7 +19,7 @@ NEJ.define([
      * - 实现命令的具体业务逻辑，通过重写_$execute接口实现
      * @class   {nej.ut._$$EditorCommand} 富媒体编辑器执行命令封装
      * @extends {nej.ut._$$EventTarget}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {nej.ut._$$EditorArea}       area       编辑器核心
      * @config  {nej.ut._$$EditorToolBar} toolbar 工具栏实例
      */

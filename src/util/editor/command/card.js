@@ -17,7 +17,7 @@ NEJ.define([
      * 命令弹出卡片
      * @class   {nej.ut.cmd._$$CardCommand} 命令弹出卡片
      * @extends {nej.ut._$$EditorCommand}
-     * @param   {Object} _options 可选配置参数，已处理参数列表如下
+     * @param   {Object} _options 可选配置参数
      */
     _p._$$CardCommand = _k._$klass();
     _pro = _p._$$CardCommand._$extend(_t0._$$EditorCommand);

@@ -23,7 +23,7 @@ NEJ.define([
      * @class   {_$$AudioPlayer}
      * @uses    {util/audio/audio#_$$MediaAudio}
      * @extends {ui/base#_$$Abstract}
-     * @param   {Object}  可选配置参数，已处理参数列表如下：
+     * @param   {Object}  可选配置参数
      * @config  {String}  url       音乐地址
      * @config  {String}  title     音乐标题
      * @config  {Boolean} autostart 自动开始播放

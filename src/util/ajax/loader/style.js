@@ -5,36 +5,39 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module  util/ajax/loader/style */
 NEJ.define([
     './loader.js',
-    '{lib}base/klass.js',
-    '{lib}base/element.js'
+    'base/klass',
+    'base/element'
 ],function(_t,_k,_e,_p,_o,_f,_r){
     var _pro;
     /**
      * 样式加载器
      * 
-     * @class   {_$$StyleLoader}
-     * @extends {_$$Loader}
+     * @class   module:util/ajax/loader/style._$$LoaderStyle
+     * @extends module:util/ajax/loader/loader._$$LoaderAbstract
      * 
-     * @param   {Object} 可选配置参数，已处理的参数列表如下所示
+     * @param   {Object} config - 可选配置参数
      */
-    _p._$$StyleLoader = _k._$klass();
-    _pro = _p._$$StyleLoader._$extend(_t._$$Loader);
+    _p._$$LoaderStyle = _k._$klass();
+    _pro = _p._$$LoaderStyle._$extend(_t._$$LoaderAbstract);
     /**
      * 取资源载入控件
+     * 
      * @protected
-     * @method {__getRequest}
-     * @return {Link} 控件
+     * @method module:util/ajax/loader/style._$$LoaderStyle#__getRequest
+     * @return {Node} 控件节点
      */
     _pro.__getRequest = function(){
         return _e._$create('link');
     };
     /**
      * 资源载入
+     * 
      * @protected
-     * @method {__doRequest}
-     * @param  {Script} 控件
+     * @method module:util/ajax/loader/style._$$LoaderStyle#__doRequest
+     * @param  {Node} 控件节点
      * @return {Void}
      */
     _pro.__doRequest = function(_request){

@@ -32,7 +32,7 @@ NEJ.define([
      * [/code]
      * @class   {nej.ui._$$ComplexColorPick}
      * @extends {nej.ui._$$SimpleColorPick}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {String} defaultColor 默认颜色值
      *
      * [hr]

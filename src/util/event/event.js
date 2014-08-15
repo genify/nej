@@ -43,7 +43,7 @@ NEJ.define([
      * @class   {_$$CustomEvent}
      * @extends {_$$EventTarget}
      * 
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {String|Node}  element 事件关联节点ID或者对象，默认为window对象
      * @config  {String|Array} event   事件名称或者名称列表
      * 

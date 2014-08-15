@@ -56,7 +56,7 @@ NEJ.define([
      * [/code]
      * @class   {nej.ui._$$Item} 列表项控件基类
      * @extends {nej.ui._$$Abstract}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {Object} data 当前项绑定的数据
      * @config  {Number} index 当前项的索引
      * @config  {Number} total 总列表长度

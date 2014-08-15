@@ -208,7 +208,7 @@ NEJ.define([
         var _getProxy = function(_options){
             var _upload = _isUpload(_options.headers);
             if (!_isXDomain(_options.url)&&!_upload)
-                return _t._$$XHRProxy._$allocate(_options);
+                return _t._$$ProxyXHR._$allocate(_options);
             return _h.__getProxyByMode(_options.mode,_upload,_options);
         };
         // parse ext result
@@ -330,7 +330,7 @@ NEJ.define([
      * @method   module:util/ajax/xdr._$upload
      * @see      module:util/ajax/xdr._$request
      * @param    {HTMLFormElement}  arg0    - 表单对象，待上传的文件及目标地址信息封装在此对象中
-     * @param    {Object}           arg1    - 可选配置参数,已处理参数列表如下：
+     * @param    {Object}           arg1    - 可选配置参数
      * @property {String}           type    - 返回数据格式
      * @property {Variable}         query   - 查询参数
      * @property {Number}           mode    - 跨域类型，0/2，见_$request接口说明

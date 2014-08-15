@@ -26,7 +26,7 @@ NEJ.define([
      * [/code]
      * @class   {nej.ut._$$RegionCacheZH} 中国行政划区数据缓存
      * @extends {nej.ut._$$AbstractListCache}
-     * @param   {Object} _options 可选配置参数，已处理参数列表如下
+     * @param   {Object} _options 可选配置参数
      *
      */
     _p._$$RegionCacheZH = _k._$klass();

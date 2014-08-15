@@ -24,7 +24,7 @@ NEJ.define([
      * 滚动控件
      * @class   滚动控件
      * @extends nej.ui._$$Abstract
-     * @param  {Object} _options 可选配置参数，已处理参数列表如下：
+     * @param  {Object} _options 可选配置参数
      *                           config        [Object]      - 滚动配置信息
      *                                                         bcfactor     [Float]  - 弹性移动距离与触点移动距离比例，默认0.5 表示触点移动2px弹性增加1px
      *                                                         minbar       [Float]  - 滚动条保留的最小高度与窗体可视高度比例，默认1/3

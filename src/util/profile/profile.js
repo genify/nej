@@ -20,7 +20,7 @@ var f = function(){
     /**
      * 滚动内存优化控件，限垂直方向
      * @class  {nej.ut._$$ScrollPerf} 滚动内存优化控件
-     * @param  {Object} 可选配置参数，已处理参数列表如下
+     * @param  {Object} 可选配置参数
      * @config {Number} level 优化等级，计算位置时位置的缓存控制
      * [ntb]
      *   0 | 不做任何优化，每个优化项每次必须重新计算位置【默认】

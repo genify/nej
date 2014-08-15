@@ -74,7 +74,7 @@ NEJ.define([
      * [/code]
      * @class   {nej.ut._$$Effect}
      * @extends {nej.ut._$$EventTarget}
-     * @param   {Object}       可选配置参数，已处理参数列表如下
+     * @param   {Object}       可选配置参数
      * @config  {String|Node}  node       动画节点
      * @config  {Array}        transition 动画属性列表
      * [ntb]

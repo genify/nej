@@ -5,44 +5,53 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module  util/ajax/loader/loader */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/constant.js',
-    '{lib}base/event.js',
-    '{lib}base/util.js',
-    '{lib}util/event.js'
+    'base/global',
+    'base/klass',
+    'base/constant',
+    'base/event',
+    'base/util',
+    'util/event'
 ],function(NEJ,_k,_g,_v,_u,_t,_p,_o,_f,_r){
     var _pro,
         _timeout = 60000;
     /**
      * 资源加载器
      * 
-     * @class   {_$$Loader} 资源加载器
-     * @extends {_$$EventTarget}
-     * @param   {Object} 可选配置参数，已处理的参数列表如下所示
-     * @config  {String} version 版本信息
-     * @config  {Number} timeout 超时时间，0表示禁止超时监测
+     * @class    module:util/ajax/loader/loader._$$LoaderAbstract
+     * @extends  module:util/event._$$EventTarget
      * 
-     * [hr]
-     * 资源载入失败回调
-     * @event  {onerror} 
-     * @param  {String}  错误信息
-     * 
-     * [hr]
-     * 资源载入成功回调
-     * @event  {onload} 
-     * 
-     * [hr]
-     * 资源加载中回调
-     * @event  {onloading}
+     * @param    {Object} config  - 可选配置参数
+     * @property {String} version - 版本信息
+     * @property {Number} timeout - 超时时间，0表示禁止超时监测
      */
-    _p._$$Loader = _k._$klass();
-    _pro = _p._$$Loader._$extend(_t._$$EventTarget);
+    /** 
+     * 资源载入失败回调
+     * 
+     * @event    module:util/ajax/loader/loader._$$LoaderAbstract#onerror
+     * @param    {Object} event   - 错误信息
+     * @property {Number} code    - 错误码
+     * @property {String} message - 错误信息
+     */
+    /** 
+     * 资源载入成功回调
+     * 
+     * @event  module:util/ajax/loader/loader._$$LoaderAbstract#onload
+     * @param  {Variable} event - 请求返回数据
+     */
+    /** 
+     * 资源加载中回调
+     * 
+     * @event  module:util/ajax/loader/loader._$$LoaderAbstract#onloading
+     */
+    _p._$$LoaderAbstract = _k._$klass();
+    _pro = _p._$$LoaderAbstract._$extend(_t._$$EventTarget);
     /**
      * 控件初始化
+     * 
      * @protected
-     * @method {__init}
+     * @method module:util/ajax/loader/loader._$$LoaderAbstract#__init
      * @return {Void}
      */
     _pro.__init = function(){
@@ -59,9 +68,10 @@ NEJ.define([
     };
     /**
      * 控件重置
+     * 
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
+     * @method module:util/ajax/loader/loader._$$LoaderAbstract#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -73,30 +83,33 @@ NEJ.define([
     };
     /**
      * 删除加载信息
+     * 
      * @protected
-     * @method {__delLoadData}
-     * @param  {String} 标识
-     * @return {Object} 加载信息
+     * @method module:util/ajax/loader/loader._$$LoaderAbstract#__delLoadData
+     * @param  {String} arg0 - 标识
+     * @return {Object}        加载信息
      */
     _pro.__delLoadData = function(_key){
         delete this.constructor.__cache[_key];
     };
     /**
      * 取加载信息
+     * 
      * @protected
-     * @method {__getLoadData}
-     * @param  {String} 标识
-     * @return {Object} 加载信息
+     * @method module:util/ajax/loader/loader._$$LoaderAbstract#__getLoadData
+     * @param  {String} arg0 - 标识
+     * @return {Object}        加载信息
      */
     _pro.__getLoadData = function(_key){
         return this.constructor.__cache[_key];
     };
     /**
      * 设置加载信息
+     * 
      * @protected
-     * @method {__setLoadData}
-     * @param  {String} 标识
-     * @param  {Object} 加载信息
+     * @method module:util/ajax/loader/loader._$$LoaderAbstract#__setLoadData
+     * @param  {String} arg0 - 标识
+     * @param  {Object} arg1 - 加载信息
      * @return {Void}
      */
     _pro.__setLoadData = function(_key,_data){
@@ -104,26 +117,29 @@ NEJ.define([
     };
     /**
      * 取资源载入控件，子类实现具体逻辑
-     * @protected
-     * @method {__getRequest}
+     * 
+     * @abstract
+     * @method module:util/ajax/loader/loader._$$LoaderAbstract#__getRequest
      * @return {Script|Link} 控件
      */
     _pro.__getRequest = _f;
     /**
      * 清理控件
+     * 
      * @protected
-     * @method {__clearRequest}
-     * @param  {Script|Link} 控件
+     * @method module:util/ajax/loader/loader._$$LoaderAbstract#__doClearRequest
+     * @param  {Script|Link} arg0 - 控件
      * @return {Void}
      */
-    _pro.__clearRequest = function(_request){
+    _pro.__doClearRequest = function(_request){
         _v._$clearEvent(_request);
     };
     /**
-     * 资源载入，子类重写具体逻辑
+     * 资源载入
+     * 
      * @protected
-     * @method {__doRequest}
-     * @param  {Script|Link} _request 控件
+     * @method module:util/ajax/loader/loader._$$LoaderAbstract#__doRequest
+     * @param  {Script|Link} arg0 - 控件
      * @return {Void}
      */
     _pro.__doRequest = function(_request){
@@ -132,15 +148,16 @@ NEJ.define([
     };
     /**
      * 执行清理任务
+     * 
      * @protected
-     * @method {__doClear}
+     * @method module:util/ajax/loader/loader._$$LoaderAbstract#__doClear
      * @return {Void}
      */
     _pro.__doClear = function(){
         var _cache = this.__getLoadData(this.__url);
         if (!_cache) return;
         window.clearTimeout(_cache.timer);
-        this.__clearRequest(_cache.request);
+        this.__doClearRequest(_cache.request);
         delete _cache.bind;
         delete _cache.timer;
         delete _cache.request;
@@ -149,9 +166,10 @@ NEJ.define([
     };
     /**
      * 执行回调
+     * 
      * @protected
-     * @method {__doCallback}
-     * @param  {String} 回调名称
+     * @method module:util/ajax/loader/loader._$$LoaderAbstract#__doCallback
+     * @param  {String} arg0 - 回调名称
      * @return {Void}
      */
     _pro.__doCallback = function(_name){
@@ -176,9 +194,10 @@ NEJ.define([
     };
     /**
      * 资源载入异常事件
+     * 
      * @protected
-     * @method {__onError}
-     * @param  {Object} 错误信息
+     * @method module:util/ajax/loader/loader._$$LoaderAbstract#__onError
+     * @param  {Object} arg0 - 错误信息
      * @return {Void}
      */
     _pro.__onError = function(_error){
@@ -186,8 +205,9 @@ NEJ.define([
     };
     /**
      * 资源载入成功事件
+     * 
      * @protected
-     * @method {__onLoaded}
+     * @method module:util/ajax/loader/loader._$$LoaderAbstract#__onLoaded
      * @return {Void}
      */
     _pro.__onLoaded = function(){
@@ -195,9 +215,10 @@ NEJ.define([
     };
     /**
      * 载入队列资源
+     * 
      * @protected
-     * @method {__doLoadQueue}
-     * @param  {String} 资源地址
+     * @method module:util/ajax/loader/loader._$$LoaderAbstract#__doLoadQueue
+     * @param  {String} arg0 - 资源地址
      * @return {Void}
      */
     _pro.__doLoadQueue = function(_url){
@@ -205,8 +226,9 @@ NEJ.define([
     };
     /**
      * 检查队列状况
+     * 
      * @protected
-     * @method {__onQueueCheck}
+     * @method module:util/ajax/loader/loader._$$LoaderAbstract#__onQueueCheck
      * @return {Void}
      */
     _pro.__onQueueCheck = function(_error){
@@ -221,9 +243,10 @@ NEJ.define([
     };
     /**
      * 队列载入资源异常事件
+     * 
      * @protected
-     * @method {__onQueueError}
-     * @param  {Object} 错误信息
+     * @method module:util/ajax/loader/loader._$$LoaderAbstract#__onQueueError
+     * @param  {Object} arg0 - 错误信息
      * @return {Void}
      */
     _pro.__onQueueError = function(_error){
@@ -231,57 +254,58 @@ NEJ.define([
     };
     /**
      * 队列载入资源成功事件
+     * 
      * @protected
-     * @method {__onQueueLoaded}
+     * @method module:util/ajax/loader/loader._$$LoaderAbstract#__onQueueLoaded
      * @return {Void}
      */
     _pro.__onQueueLoaded = function(){
         this.__onQueueCheck();
     };
     /**
-     * 载入资源<br/>
+     * 载入资源
      * 
      * 脚本举例
-     * [code]
-     *   NEJ.define([
-     *       '{lib}util/ajax/loader/html.js',
-     *       '{lib}util/ajax/loader/style.js',
-     *       '{lib}util/ajax/loader/script.js'
-     *   ],function(_p0,_p1,_p2){
-     *       // 载入指定html,10秒超时
-     *       var _loader = _p0._$$HtmlLoader._$allocate({
-     *           timeout:10000,
-     *           onload:function(){
-     *               // 载入资源成功的回调
-     *           }
-     *       });
-     *       // 绝对路径或者当前页面的相对路径
-     *       _loader._$load('../../../html/util/formTest.html');
+     * ```javascript
+     * NEJ.define([
+     *     'util/ajax/loader/html',
+     *     'util/ajax/loader/style',
+     *     'util/ajax/loader/script'
+     * ],function(_t0,_t1,_t2){
+     *     // 载入指定html,10秒超时
+     *     var _loader = _t0._$$LoaderHtml._$allocate({
+     *         timeout:10000,
+     *         onload:function(){
+     *             // 载入资源成功的回调
+     *         }
+     *     });
+     *     // 绝对路径或者当前页面的相对路径
+     *     _loader._$load('../../../html/util/formTest.html');
      * 
-     *       // 载入指定script,20秒超时
-     *       var _loader = _p2._$$ScriptLoader._$allocate({
-     *           timeout:20000,
-     *           onload:function(){
-     *               // 载入资源成功的回调
-     *           }
-     *       });
-     *       // 绝对路径或者当前页面的相对路径
-     *       _loader._$load('../../../javascript/log.js');
+     *     // 载入指定script,20秒超时
+     *     var _loader = _t2._$$LoaderScript._$allocate({
+     *         timeout:20000,
+     *         onload:function(){
+     *             // 载入资源成功的回调
+     *         }
+     *     });
+     *     // 绝对路径或者当前页面的相对路径
+     *     _loader._$load('../../../javascript/log.js');
      * 
-     *       // 载入指定style,30秒超时
-     *       var _loader = _p1._$$StyleLoader._$allocate({
-     *           timeout:30000,
-     *           onload:function(){
-     *               // 载入资源成功的回调
-     *           }
-     *       });
-     *       // 绝对路径或者当前页面的相对路径
-     *       _loader._$load('../../../base/qunit.css');
-     *   });
-     * [/code]
+     *     // 载入指定style,30秒超时
+     *     var _loader = _t1._$$LoaderStyle._$allocate({
+     *         timeout:30000,
+     *         onload:function(){
+     *             // 载入资源成功的回调
+     *         }
+     *     });
+     *     // 绝对路径或者当前页面的相对路径
+     *     _loader._$load('../../../base/qunit.css');
+     * });
+     * ```
      * 
-     * @method {_$load}
-     * @param  {String} 资源地址
+     * @method module:util/ajax/loader/loader._$$LoaderAbstract#_$load
+     * @param  {String} arg0 - 资源地址
      * @return {Void}
      */
     _pro._$load = function(_url){
@@ -343,29 +367,29 @@ NEJ.define([
         this._$dispatchEvent('onloading');
     };
     /**
-     * 队列载入资源<br/>
+     * 队列载入资源
      * 
      * 脚本举例
-     * [code]
-     *   NEJ.define([
-     *       '{lib}util/ajax/loader/html.js'
-     *   ],function(_p){
-     *       var _loader = _p._$$HtmlLoader._$allocate({
-     *           onload:function(){
-     *               // 载入队列资源成功的回调
-     *           }
-     *       });
-     *       // 路径列表，可以是绝对路径也可以是当前页面的相对路径
-     *       var _list = [
-     *           '../../../html/util/formTest.html',
-     *           '../../../html/util/cacheTest.html'
-     *       ];
-     *       _loader._$queue(_list);
-     *   });
-     * [/code]
+     * ```javascript
+     * NEJ.define([
+     *     'util/ajax/loader/html.js'
+     * ],function(_t){
+     *     var _loader = _t._$$LoaderHtml._$allocate({
+     *         onload:function(){
+     *             // 载入队列资源成功的回调
+     *         }
+     *     });
+     *     // 路径列表，可以是绝对路径也可以是当前页面的相对路径
+     *     var _list = [
+     *         '../../../html/util/formTest.html',
+     *         '../../../html/util/cacheTest.html'
+     *     ];
+     *     _loader._$queue(_list);
+     * });
+     * ```
      * 
-     * @method {_$queue}
-     * @param  {Array} 资源地址队列
+     * @method module:util/ajax/loader/loader._$$LoaderAbstract#_$queue
+     * @param  {Array} arg0 - 资源地址队列
      * @return {Void}
      */
     _pro._$queue = function(_list){

@@ -21,7 +21,7 @@ var f = function(){
      * 垂直滚动控件
      * @class   {nej.ui._$$ScrollerY} 垂直滚动控件
      * @extends {nej.ui._$$Scroller}
-     * @param   {Object} 可选配置参数，已处理参数列表如下：
+     * @param   {Object} 可选配置参数
      */
     p._$$ScrollerY = NEJ.C();
     __proScrollerY = p._$$ScrollerY._$extend(p._$$Scroller);

@@ -70,7 +70,7 @@ NEJ.define([
      * [/code]
      * @class   {_$$SimplePage}
      * @extends {util/page/page#_$$AbstractPage}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {Array}          list        页码节点列表【长度保持奇数】
      * @config  {String}         event       触发页码切换事件，默认为click
      * @config  {String|Node}    pbtn        上一页按钮

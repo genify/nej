@@ -45,7 +45,7 @@ var f = function(){
      * [/code]
      * @class   {nej.ut._$$SelectHelper} 音频播放控件
      * @extends {nej.ut._$$EventTarget}
-     * @param   {Object} 可选配置参数，已处理参数列表如下所示
+     * @param   {Object} 可选配置参数
      * @config  {String|Node} parent   容器节点，从该容器开始往上遍历找到设置了tabindex大于1000的节点来响应键盘上下事件，找不到为document
      * @config  {String}      clazz    用于标识可选择的节点，不传则为body下的子节点
      * @config  {String}      selected 选中节点样式标识，默认为js-selected

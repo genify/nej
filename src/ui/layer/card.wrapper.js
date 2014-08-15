@@ -40,7 +40,7 @@ NEJ.define([
      * [/code]
      * @class   {nej.ui._$$CardWrapper} 弹出卡片封装基类对象
      * @extends {nej.ui._$$LayerWrapper}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      *
      */
     _p._$$CardWrapper = _k._$klass();

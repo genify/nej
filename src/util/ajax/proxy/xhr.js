@@ -5,26 +5,28 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module  util/ajax/proxy/xhr */
 NEJ.define([
     './proxy.js',
-    '{lib}base/util.js',
-    '{lib}base/klass.js',
+    'base/util',
+    'base/klass',
     '{platform}xhr.js'
 ],function(_t,_u,_k,_h,_p,_o,_f,_r){
     /**
      * Ajax代理对象
      * 
-     * @class   {_$$XHRProxy}
-     * @extends {_$$Proxy}
+     * @class   module:util/ajax/proxy/xhr._$$ProxyXHR
+     * @extends module:util/ajax/proxy/proxy._$$ProxyAbstract
      * 
-     * @param   {Object}  构造配置参数
+     * @param   {Object} config - 构造配置参数
      */
-    _p._$$XHRProxy = _k._$klass();
-    _pro = _p._$$XHRProxy._$extend(_t._$$Proxy);
+    _p._$$ProxyXHR = _k._$klass();
+    _pro = _p._$$ProxyXHR._$extend(_t._$$ProxyAbstract);
     /**
      * 控件销毁
+     * 
      * @protected
-     * @method {__destroy}
+     * @method module:util/ajax/proxy/xhr._$$ProxyXHR#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -43,9 +45,10 @@ NEJ.define([
     };
     /**
      * 往服务器发送请求
+     * 
      * @protected
-     * @method {__doSendRequest}
-     * @param  {Object} 请求信息
+     * @method module:util/ajax/proxy/xhr._$$ProxyXHR#__doSendRequest
+     * @param  {Object} arg0 - 请求信息
      * @return {Void}
      */
     _pro.__doSendRequest = (function(){
@@ -115,9 +118,10 @@ NEJ.define([
     })();
     /**
      * 请求状态变化事件
+     * 
      * @protected
-     * @method {__onStateChange}
-     * @param  {Number} 状态变化类型
+     * @method module:util/ajax/proxy/xhr._$$ProxyXHR#__onStateChange
+     * @param  {Number} arg0 - 状态变化类型
      * @return {Void}
      */
     _pro.__onStateChange = function(_type){
@@ -143,17 +147,19 @@ NEJ.define([
     };
     /**
      * 取头信息
+     * 
      * @protected
-     * @method {__getResponseHeader}
-     * @param  {String} 要取的头信息名称
-     * @return {String} 头信息结果或集合
+     * @method module:util/ajax/proxy/xhr._$$ProxyXHR#__getResponseHeader
+     * @param  {String} arg0 - 要取的头信息名称
+     * @return {String}        头信息结果或集合
      */
     _pro.__getResponseHeader = function(_key){
         return !this.__xhr?'':this.__xhr.getResponseHeader(_key);
     };
     /**
      * 中断请求
-     * @method {_$abort}
+     * 
+     * @method module:util/ajax/proxy/xhr._$$ProxyXHR#_$abort
      * @return {Void}
      */
     _pro._$abort = function(){

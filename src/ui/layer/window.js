@@ -37,7 +37,7 @@ NEJ.define([
      * [/code]
      * @class   {nej.ui._$$Window} 窗体控件
      * @extends {nej.ui._$$Layer}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {String}                         title       窗口标题
      * @config  {String}                         align       相对于视窗位置定义，横向+空格+纵向，默认为center middle
      * [ntb]

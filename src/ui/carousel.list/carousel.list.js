@@ -19,7 +19,7 @@ NEJ.define([
      * 卡片播放器对象
      * @class   {nej.ui._$$CarouselList} 卡片播放器控件
      * @extends {nej.ut._$$EventTarget}
-     * @param  {Object} 可选配置参数，已处理参数列表如下：
+     * @param  {Object} 可选配置参数
      * @config {String|Node} parent    卡片所在父容器节点
      * @config {Number}      current   当前选中项
      * @config {Number}      buffer    预加载卡片个数

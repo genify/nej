@@ -45,7 +45,7 @@ NEJ.define([
      * [/code]
      * @class   {nej.ut._$$AnimEaseInOut} 先慢后快再慢动画
      * @extends {nej.ut._$$AnimBezier}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {String} timing   时间函数，easeinout
      */
     _p._$$AnimEaseInOut = _k._$klass();

@@ -69,7 +69,7 @@ NEJ.define([
      * [/code]
      * @class   {nej.ui._$$Layer} 弹出层控件基类
      * @extends {nej.ui._$$Abstract}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {String|Node} content     内容HTML代码或者节点对象
      * @config  {Boolean}     destroyable 调用隐藏时是否自动回收，默认不自动回收
      * @config  {Boolean}     nohack      针对IE6不做hack处理

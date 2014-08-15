@@ -21,7 +21,7 @@ NEJ.define([
      * 字体字号选择卡片基类
      * @class   {nej.ui.cmd._$$FontCard} 字体字号选择卡片基类
      * @extends {nej.ui._$$CardWrapper}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      *
      * [hr]
      *

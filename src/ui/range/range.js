@@ -18,7 +18,7 @@ NEJ.define([
      * 范围选择控件封装
      * @class   {nej.ui._$$Range} 范围选择控件封装
      * @extends {nej.ui._$$Abstract}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      *
      * [hr]
      *

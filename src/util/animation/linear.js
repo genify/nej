@@ -48,7 +48,7 @@ NEJ.define([
      * [/code]
      * @class   {nej.ut._$$AnimLinear} 线性动画
      * @extends {nej.ut._$$AnimBezier}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {String} timing   时间函数，linear
      */
     _p._$$AnimLinear = _k._$klass();

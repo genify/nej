@@ -5,12 +5,13 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module  util/ajax/proxy/flash */
 NEJ.define([
     './proxy.js',
-    '{lib}base/klass.js',
-    '{lib}base/config.js',
-    '{lib}base/util.js',
-    '{lib}util/flash/flash.js'
+    'base/klass',
+    'base/config',
+    'base/util',
+    'util/flash/flash'
 ],function(_t,_k,_c,_u,_e,_p,_o,_f,_r){
     var _pro,
         _cache = {},
@@ -47,18 +48,19 @@ NEJ.define([
     /**
      * Flash代理方式Ajax请求对象
      * 
-     * @class   {_$$FlashProxy}
-     * @extends {_$$Proxy}
+     * @class   module:util/ajax/proxy/flash._$$ProxyFlash
+     * @extends module:util/ajax/proxy/proxy._$$ProxyAbstract
      * 
-     * @param   {Object}  构造配置参数
+     * @param   {Object}  config - 构造配置参数
      */
-    _p._$$FlashProxy = _k._$klass();
-    _pro = _p._$$FlashProxy._$extend(_t._$$Proxy);
+    _p._$$ProxyFlash = _k._$klass();
+    _pro = _p._$$ProxyFlash._$extend(_t._$$ProxyAbstract);
     /**
      * 往服务器发送请求
+     * 
      * @protected
-     * @method {__doSendRequest}
-     * @param  {Object} 请求信息
+     * @method module:util/ajax/proxy/flash._$$ProxyFlash#__doSendRequest
+     * @param  {Object} arg0 - 请求信息
      * @return {Void}
      */
     _pro.__doSendRequest = function(_options){
@@ -117,11 +119,14 @@ NEJ.define([
     };
     /**
      * 中断请求
-     * @method {_$abort}
+     * 
+     * @method module:util/ajax/proxy/flash._$$ProxyFlash#_$abort
      * @return {Void}
      */
     _pro._$abort = function(){
         delete _cache[this.__rkey];
         this.__onLoadRequest({status:0});
     };
+
+    return _p;
 });

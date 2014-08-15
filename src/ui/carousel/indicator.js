@@ -17,7 +17,7 @@ NEJ.define([
      * 指示器对象
      * @class   {nej.ui._$$Indicator}
      * @extends {nej.ut._$$EventTarget}
-     * @param   {Object} 可选配置参数，已处理参数列表如下：
+     * @param   {Object} 可选配置参数
      * @config  {String|Node} parent 控件所在容器节点
      * @config  {Number}       cindex 当前指示项
      * @config  {String}       cstyle 当前指示项样式

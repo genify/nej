@@ -25,7 +25,7 @@ NEJ.define([
      * @class   {nej.ui.cmd._$$UploadImageCard} 图片上传控件
      * @uses    {nej.ut._$$Tab}
      * @extends {nej.ui.cmd._$$WindowWrapper}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {String|Node} parent            父容器
      * @config  {Boolean}     draggable        是否可拖拽
      * @config  {Boolean}     destroyable      关闭是否销毁

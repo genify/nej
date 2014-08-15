@@ -35,7 +35,7 @@ NEJ.define([
      * 富媒体编辑器封装
      * @class   {nej.ui._$$CustomEditor} 富媒体编辑器封装
      * @extends {nej.ui._$$Editor}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      */
     _p._$$CustomEditor =_k._$klass();
     _pro = _p._$$CustomEditor._$extend(_i0._$$Editor);

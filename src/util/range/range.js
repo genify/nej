@@ -38,7 +38,7 @@ NEJ.define([
      * [/code]
      * @class   {nej.ut._$$Range} 区域大小选择功能封装
      * @extends {nej.ut._$$EventTarget}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {Node|String} body   用于改变范围的节点或者ID
      * @config  {Node|String} parent 可选择区域节点或者ID
      *

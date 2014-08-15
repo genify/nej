@@ -16,7 +16,7 @@ NEJ.define([
      * 颜色执行命令封装
      * @class   {nej.ut.cmd._$$Color} 颜色执行命令封装
      * @extends {nej.ui.cmd._$$CardCommand}
-     * @param   {Object} _options 可选配置参数，已处理参数列表如下
+     * @param   {Object} _options 可选配置参数
      *
      */
     _p._$$Color = _k._$klass();

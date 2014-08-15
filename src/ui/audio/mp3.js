@@ -26,7 +26,7 @@ NEJ.define([
      * @uses    {util/slider/slider.simple_$$SimpleSlider}
      * @uses    {util/media/playlist#_$$PlayList}
      * @extends {ui/base#._$$Abstract}
-     * @param   {Object}  可选配置参数，已处理参数列表如下：
+     * @param   {Object}  可选配置参数
      * @config  {String|Node} parent     父节点
      * @config  {String}      mode       播放模式，0:列表(默认)，1:单曲，2:随机
      * @config  {Array}       list       歌曲列表

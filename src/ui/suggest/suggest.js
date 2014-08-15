@@ -46,7 +46,7 @@ NEJ.define([
      * @class   {nej.ui._$$Suggest} 提示建议控件
      * @uses    {nej.ut._$$Suggest}
      * @extends {nej.ui._$$Abstract}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * @param   {Object} 可选配置参数
      * @config  {Node|String} input 输入框节点或者ID
      *
      * [hr]

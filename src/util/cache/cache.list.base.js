@@ -107,7 +107,7 @@ NEJ.define([
      * @class   {_$$AbstractListCache}
      * @extends {_$$ListCache}
      * 
-     * @param   {Object}   可选配置参数，已处理参数列表如下
+     * @param   {Object}   可选配置参数
      * 
      * [hr]
      * 列表载入完成回调
