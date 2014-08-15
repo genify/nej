@@ -1018,5 +1018,9 @@ NEJ.define([
         return this.__cache._$isLoaded(this.__ropt.key);
     };
 
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
     return _p;
 });

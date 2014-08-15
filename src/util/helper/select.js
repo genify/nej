@@ -5,14 +5,15 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{lib}base/event.js',
+    '{lib}util/event.js'
+],function(NEJ,_k,_e,_v,_t,_p,_o,_f,_r){
     // variable declaration
-    var _  = NEJ.P,
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _p = _('nej.ut'),
-        _pro;
-    if (!!_p._$$SelectHelper) return;
+    var _pro;
     /**
      * 选择助手控件<br />
      * 结构举例：
@@ -51,36 +52,36 @@ var f = function(){
      * @config  {String}      selected 选中节点样式标识，默认为js-selected
      * @config  {String}      hover    鼠标移入样式标识，默认同selected，如果hover样式和selected不一样，确保selected样式优先级高于hover
      * @config  {Boolean}     loopable 是否允许循环选择
-     * 
+     *
      * [hr]
      * 选择项变化触发事件
      * @event   {onchange}
      * @param   {Object} 选择信息
      * @config  {Node} target  当前选中项
      * @config  {Node} last    上次选中项
-     * 
+     *
      * [hr]
      * 选中某项触发事件，用户敲回车或者鼠标单击选项时触发此事件
      * @event   {onselect}
      * @param   {Object} 选择信息
      * @config  {Node} target  当前选中项
      */
-    _p._$$SelectHelper = NEJ.C();
-    _pro = _p._$$SelectHelper._$extend(_p._$$EventTarget);
+    _p._$$SelectHelper = _k._$klass();
+    _pro = _p._$$SelectHelper._$extend(_t._$$EventTarget);
     /**
      * 控件重置
      * @param  {Object} 配置信息
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         this.__loop = !!_options.loopable;
         this.__parent = _e._$get(_options.parent);
         this.__selected = _options.selected||'js-selected';
         this.__hovered = _options.hover||this.__selected;
         this.__nopt = {};
         if (!!_options.clazz){
-            this.__nopt.filter = 
+            this.__nopt.filter =
                 _e._$hasClassName.
                     _$bind2(_e,_options.clazz);
             this.__clazz = _options.clazz;
@@ -111,7 +112,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         delete this.__selected;
         delete this.__hovered;
         delete this.__parent;
@@ -302,8 +303,10 @@ var f = function(){
     _pro._$getSelectedNode = function(){
         return this.__getItemElement(this.__selected);
     };
-};
-NEJ.define(
-    '{lib}util/helper/select.js',[
-    '{lib}util/event/event.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});

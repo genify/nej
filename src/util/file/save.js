@@ -5,12 +5,13 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _cache = {};
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/element.js',
+    '{lib}base/event.js',
+    '{lib}base/util.js'
+],function(NEJ,_e,_v,_u,_p,_o,_f,_r){
+    var _cache = {};
     /*
      * 执行另存为
      * @param  {Event} 节点标识
@@ -50,7 +51,7 @@ var f = function(){
     })();
     /**
      * 绑定文件下载行为
-     * 
+     *
      * 脚本举例
      * [code]
      *   // 统一定义名字空间简写
@@ -59,7 +60,7 @@ var f = function(){
      *   // 绑定文件下载行为
      *   _e._$bindSaveAsAction('button_id');
      * [/code]
-     * 
+     *
      * @api    {nej.e._$bindSaveAsAction}
      * @param  {String|Node} 下载点击链接节点，必须是A节点
      * @param  {Object}      可选配置参数
@@ -67,17 +68,17 @@ var f = function(){
      * @config {String}          name 保存的文件名称，没有指定name则取url中文件名
      * @return {Void}
      */
-    _e._$bindSaveAsAction = function(_button,_options){
+    _p._$bindSaveAsAction = function(_button,_options){
         var _id = _e._$id(_button);
         if (!!_cache[_id]) return;
         var _node = _e._$get(_button);
         if (_node.tagName!='A') return;
-        _cache[_id] = NEJ.X({},_options);
+        _cache[_id] = _u._$merge({},_options);
         _v._$addEvent(_id,'click',_doSaveAs);
     };
     /**
      * 解绑文件下载行为
-     * 
+     *
      * 脚本举例
      * [code]
      *   // 统一定义名字空间简写
@@ -86,22 +87,21 @@ var f = function(){
      *   // 文件另存为
      *   _e._$unbindSaveAsAction('button_id');
      * [/code]
-     * 
+     *
      * @api    {nej.e._$unbindSaveAsAction}
      * @param  {String|Node} 下载点击按钮节点
      * @return {Void}
      */
-    _e._$unbindSaveAsAction = function(_button){
+    _p._$unbindSaveAsAction = function(_button){
         var _id = _e._$id(_button);
         if (!_cache[_id]) return;
         delete _cache[_id];
         _v._$delEvent(_id,'click',_doSaveAs);
     };
-};
-NEJ.define(
-    '{lib}util/file/save.js',[
-    '{lib}base/platform.js',
-    '{lib}base/element.js',
-    '{lib}base/event.js',
-    '{lib}base/util.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.e'),_p);
+    }
+
+    return _p;
+});
