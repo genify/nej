@@ -37,12 +37,12 @@ NEJ.define([
      *     });
      * [/code]
      * @class   {nej.ut._$$PortraitCache} 中国行政划区数据缓存
-     * @extends {nej.ut._$$AbstractListCache}
+     * @extends {nej.ut._$$CacheListAbstract}
      * @param   {Object} _options 可选配置参数
      *
      */
     _p._$$PortraitCache = _k._$klass();
-    _pro = _p._$$PortraitCache._$extend(_t0._$$AbstractListCache);
+    _pro = _p._$$PortraitCache._$extend(_t0._$$CacheListAbstract);
     /**
      * 载入表情列表
      * @protected

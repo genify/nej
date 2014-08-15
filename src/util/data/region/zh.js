@@ -25,12 +25,12 @@ NEJ.define([
      *     cache._$getList({key:'area-浙江省-杭州市'});
      * [/code]
      * @class   {nej.ut._$$RegionCacheZH} 中国行政划区数据缓存
-     * @extends {nej.ut._$$AbstractListCache}
+     * @extends {nej.ut._$$CacheListAbstract}
      * @param   {Object} _options 可选配置参数
      *
      */
     _p._$$RegionCacheZH = _k._$klass();
-    _pro = _p._$$RegionCacheZH._$extend(_t0._$$AbstractListCache);
+    _pro = _p._$$RegionCacheZH._$extend(_t0._$$CacheListAbstract);
     /**
      * 从服务器端载入列表
      * @protected
