@@ -5,26 +5,30 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module  util/cache/manager */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/util.js',
-    '{lib}util/cache/cache.js'
+    'base/global',
+    'base/klass',
+    'base/util',
+    'util/cache/cache'
 ],function(NEJ,_k,_u,_t0,_p,_o,_f,_r){
     // variable declaration
     var _pro;
     /**
      * 分块持久化数据管理器
      *
-     * 代码举例：
-     * [code]
+     * 脚本举例
+     * ```javascript
+     * NEJ.define([
+     *     'util/cache/manager'
+     * ],function(_t){
      *     // 实例化管理器
-     *     var inst = nej.ut._$$StorageManager._$allocate({
+     *     var inst = _t._$$StorageManager._$allocate({
      *         key:'userId',
      *         prefix:'test-user-',
      *         limit:2
      *     });
-     *
+     *    
      *     // memory中存储结构类似：
      *     // {
      *     //    // 数据引用数及对应的块标识
@@ -49,12 +53,12 @@ NEJ.define([
      *     //         2,1
      *     //     ]
      *     // }
-     *
+     *    
      *     // storage中存储结构类似：
      *     // test-user-index:{'1':{b:'0',r:1},'2':{b:'0',r:2},'3':{b:'1',r:1},'test-user-blen':[2,1]}
      *     // test-user-0:[{userId:1,name:'11111'},{userId:2,name:'22222'}]
      *     // test-user-1:[{userId:3,name:'33333'}]
-     *
+     *    
      *     // 添加数据
      *     inst._$add({userId:1,name:'11111'});
      *     inst._$add({userId:2,name:'22222'});
@@ -67,23 +71,25 @@ NEJ.define([
      *     inst._$update({userId:1,name:'aaaaaa'});
      *     // 取数据对象
      *     var user = inst._$get(1);
+     * });
+     * ```
      *
-     * [/code]
+     * @class    module:util/cache/manager._$$StorageManager
+     * @extends  module:util/cache/cache._$$CacheAbstract
      *
-     * @class   {nej.ut._$$StorageManager}
-     * @extends {nej.ut._$$Cache}
-     *
-     * @param   {Object} 配置参数
-     * @config  {String} key    数据标识键名称，默认为id
-     * @config  {String} prefix 存储键前缀，也用于标识数据块，相同前缀的数据为同一份
-     * @config  {Number} limit  单块数据长度限制，默认单块数组长度为500
-     *
+     * @param    {Object} config - 配置参数
+     * @property {String} key    - 数据标识键名称，默认为id
+     * @property {String} prefix - 存储键前缀，也用于标识数据块，相同前缀的数据为同一份
+     * @property {Number} limit  - 单块数据长度限制，默认单块数组长度为500
      */
     _p._$$StorageManager = _k._$klass();
-    _pro = _p._$$StorageManager._$extend(_t0._$$Cache);
+    _pro = _p._$$StorageManager._$extend(_t0._$$CacheAbstract);
     /**
      * 控件重置
-     * @param  {Object} 配置参数
+     *
+     * @protected
+     * @method module:util/cache/manager._$$StorageManager#__reset
+     * @param  {Object} arg0 - 配置参数
      * @return {Void}
      */
     _pro.__reset = (function(){
@@ -102,7 +108,10 @@ NEJ.define([
     })();
     /**
      * 控件销毁
-     * @return {Voie}
+     * 
+     * @protected
+     * @method module:util/cache/manager._$$StorageManager#__destroy
+     * @return {Void}
      */
     _pro.__destroy = function(){
         this.__super();
@@ -112,6 +121,9 @@ NEJ.define([
     };
     /**
      * 构建存储结构
+     * 
+     * @protected
+     * @method module:util/cache/manager._$$StorageManager#__doInitDataFromStorage
      * @return {Void}
      */
     _pro.__doInitDataFromStorage = function(){
@@ -136,6 +148,9 @@ NEJ.define([
     };
     /**
      * 取索引块数据
+     * 
+     * @protected
+     * @method module:util/cache/manager._$$StorageManager#__getIndex
      * @return {Object} 索引块数据
      */
     _pro.__getIndex = function(){
@@ -145,6 +160,9 @@ NEJ.define([
     };
     /**
      * 取数据缓存集合，数据缓存
+     *
+     * @protected
+     * @method module:util/cache/manager._$$StorageManager#__getData
      * @return {Object} 数据缓存集合
      */
     _pro.__getData = function(){
@@ -154,6 +172,9 @@ NEJ.define([
     };
     /**
      * 取块信息集合
+     *
+     * @protected
+     * @method module:util/cache/manager._$$StorageManager#__getBlock
      * @return {Object} 块信息集合
      */
     _pro.__getBlock = function(){
@@ -163,6 +184,9 @@ NEJ.define([
     };
     /**
      * 取块信息集合
+     *
+     * @protected
+     * @method module:util/cache/manager._$$StorageManager#__getBlockLen
      * @return {Object} 块信息集合
      */
     _pro.__getBlockLen = function(){
@@ -172,6 +196,9 @@ NEJ.define([
     };
     /**
      * 分配块索引
+     *
+     * @protected
+     * @method module:util/cache/manager._$$StorageManager#__getBlockIndex
      * @return {Number} 索引值
      */
     _pro.__getBlockIndex = function(){
@@ -207,6 +234,9 @@ NEJ.define([
     };
     /**
      * 载入块数据
+     *
+     * @protected
+     * @method module:util/cache/manager._$$StorageManager#__doLoadBlock
      * @return {Void}
      */
     _pro.__doLoadBlock = function(_bidx){
@@ -231,6 +261,9 @@ NEJ.define([
     };
     /**
      * 持久化索引块数据
+     *
+     * @protected
+     * @method module:util/cache/manager._$$StorageManager#__doFlushIndex
      * @return {Void}
      */
     _pro.__doFlushIndex = function(){
@@ -257,7 +290,10 @@ NEJ.define([
     };
     /**
      * 持久化块数据
-     * @param  {String|Array} 块标识，没传表示序列化所有块
+     *
+     * @protected
+     * @method module:util/cache/manager._$$StorageManager#__doFlushBlock
+     * @param  {String|Array} arg0 - 块标识，没传表示序列化所有块
      * @return {Void}
      */
     _pro.__doFlushBlock = function(_key){
@@ -286,9 +322,10 @@ NEJ.define([
     };
     /**
      * 取单项数据或者列表数据
-     * @method {_$get}
-     * @param  {String|Array} 项标识列表
-     * @return {Object|Array} 项数据列表
+     * 
+     * @method module:util/cache/manager._$$StorageManager#_$get
+     * @param  {String|Array} arg0 - 项标识列表
+     * @return {Object|Array}        项数据列表
      */
     _pro._$get = function(_id){
         // dump item
@@ -318,8 +355,9 @@ NEJ.define([
     };
     /**
      * 添加数据
-     * @method {_$add}
-     * @param  {Object|Array} 单个数据或列表
+     *
+     * @method module:util/cache/manager._$$StorageManager#_$add
+     * @param  {Object|Array} arg0 - 单个数据或列表
      * @return {Void}
      */
     _pro._$add = (function(){
@@ -366,8 +404,9 @@ NEJ.define([
     })();
     /**
      * 删除数据
-     * @method {_$delete}
-     * @param  {String|Array} 数据标识列表
+     * 
+     * @method module:util/cache/manager._$$StorageManager#_$delete
+     * @param  {String|Array} arg0 - 数据标识列表
      * @return {Void}
      */
     _pro._$delete = (function(){
@@ -412,8 +451,9 @@ NEJ.define([
     })();
     /**
      * 更新数据
-     * @method {_$update}
-     * @param  {Object} 数据对象
+     * 
+     * @method module:util/cache/manager._$$StorageManager#_$update
+     * @param  {Object} arg0 - 数据对象
      * @return {Void}
      */
     _pro._$update = function(_data){
@@ -441,8 +481,9 @@ NEJ.define([
     /**
      * 迁移数据集，如果是数据列表直接使用_$add方法，
      * 如果数据可能存在重复迁移则建议迁移后使用_$syncRef同步引用计数
-     * @method {_$migrate}
-     * @param  {Object} 数据集
+     * 
+     * @method module:util/cache/manager._$$StorageManager#_$migrate
+     * @param  {Object} arg0 - 数据集
      * @return {Void}
      */
     _pro._$migrate = function(_hash){
@@ -454,8 +495,9 @@ NEJ.define([
     };
     /**
      * 同步引用计数
-     * @method {_$syncRef}
-     * @param  {Object} ID对应的引用计数信息,{id:2}
+     * 
+     * @method module:util/cache/manager._$$StorageManager#_$syncRef
+     * @param  {Object} arg0 - ID对应的引用计数信息,{id:2}
      * @return {Void}
      */
     _pro._$syncRef = function(_map){

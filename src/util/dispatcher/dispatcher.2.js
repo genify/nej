@@ -969,7 +969,7 @@ NEJ.define([
      */
     _pro._$subscribe = function(_umi,_type,_callback){
         _umi = this.__config.al[_umi]||_umi;
-        this._$pushEvent(
+        this._$addEvent(
             (_umi||'')+':'+(_type||''),_callback
         );
     };

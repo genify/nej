@@ -8,7 +8,7 @@ var f = function(){
         _proCacheCustom,
         _supCacheCustom;
 	_p._$$CacheCustom = NEJ.C();
-    _proCacheCustom = _p._$$CacheCustom._$extend(_p._$$Cache);
+    _proCacheCustom = _p._$$CacheCustom._$extend(_p._$$CacheAbstract);
 	_supCacheCustom = _proCacheCustom._$supro;
 	
 	_proCacheCustom.__reset = function(_options){

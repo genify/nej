@@ -20,6 +20,7 @@ v0.0.1
   * 删除ui/loadmore
   * 删除ui/pullrefresh
   * 删除ui/sorter
+  * util/cache/storage.manager.js 更名为 util/cache/manager.js
 
 define.js
 - NEJ.config接口名称改为NEJ.deps
@@ -43,7 +44,7 @@ base/event.js
 
 util/event.js
 - 更改_$$Event类名为_$$EventTarget，兼容_$$Event
-- 删除_$addEvent接口，同功能接口_$setEvent代替
+- _$addEvent接口功能使用_$pushEvent代替原来的_$setEvent
 - 删除_$api接口
 
 util/ajax/dwr.js
@@ -70,7 +71,8 @@ util/tab/tab.js
 - onchange事件阻止属性nostop改为stopped
 - 删除nej.e._$tab接口
 
-
+util/cache/share.js
+- localCache._$addEvent代替原nej.v._$addEvent方式添加事件监听
 
 
 

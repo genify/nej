@@ -128,5 +128,5 @@ var f = function(){
     };
     
 }
-define('{pro}cache.list.custom.js',['{lib}util/event/event.js','{lib}util/cache/cache.list.base.js'],f);
+define('{pro}cache.list.custom.js',['{lib}util/event/event.js','{lib}util/cache/abstract.js'],f);
 

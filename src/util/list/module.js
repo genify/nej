@@ -16,7 +16,7 @@ NEJ.define([
     '{lib}util/event.js',
     '{lib}util/template/jst.js',
     '{lib}util/template/tpl.js',
-    '{lib}util/cache/cache.list.js'
+    '{lib}util/cache/list.js'
 ],function(NEJ,_k,_u,_v,_e,_i0,_i1,_t0,_t1,_t2,_t3,_p,_o,_f,_r){
     var _pro;
     /**
@@ -30,7 +30,7 @@ NEJ.define([
      * @config  {Number}        limit  每页显示数量，默认10项
      * @config  {Number}        first  首页显示数量，默认为limit的值
      * @config  {String|Object} item   列表JST模版标识或者Item配置，{clazz:'xxx',klass:_$$Item||'jst key',prefix:'xxx'}
-     * @config  {Object}        cache  缓存配置信息，{key:'primary key',lkey:'list key',data:{},ext:{},klass:_$$ListCache,list:[],clear:true,total:200}
+     * @config  {Object}        cache  缓存配置信息，{key:'primary key',lkey:'list key',data:{},ext:{},klass:_$$CacheList,list:[],clear:true,total:200}
      * @config  {Object}        pager  分页器配置信息，{parent:'xxx',klass:_$$Pager,index:2,fixed:true}
      *
      * [hr]
@@ -305,7 +305,7 @@ NEJ.define([
             _copt.onitemupdate = this.
                 __cbItemUpdate._$bind(this);
         }
-        this.__cache = (_klass||_t3._$$ListCache)._$allocate(_copt);
+        this.__cache = (_klass||_t3._$$CacheList)._$allocate(_copt);
         // set total
         if (_cache.total!=null){
             this.__cache._$setTotal(
@@ -906,7 +906,7 @@ NEJ.define([
     };
     /**
      * 取缓存实例
-     * @return {_$$ListCache}
+     * @return {_$$CacheList}
      */
     _pro._$cache = function(){
         return this.__cache;

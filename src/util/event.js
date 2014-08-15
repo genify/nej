@@ -640,19 +640,19 @@ NEJ.define([
      *       }
      *   });
      *   // 追加事件回调
-     *   _widget._$pushEvent({
+     *   _widget._$addEvent({
      *       onok:function(){
      *           // TODO something
      *       }
      *   });
      * ```
      * 
-     * @method module:util/event._$$EventTarget#_$pushEvent
+     * @method module:util/event._$$EventTarget#_$addEvent
      * @param  {String}   arg0 - 事件类型
      * @param  {Function} arg1 - 事件处理函数
      * @return {Void}
      */
-    _pro._$pushEvent = function(_type,_event){
+    _pro._$addEvent = function(_type,_event){
         // check type and event
         if (!_type||!_u._$isFunction(_event)){
             return;

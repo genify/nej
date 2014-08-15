@@ -5,26 +5,28 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module  util/cache/cookie */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/util.js'
+    'base/global',
+    'base/util'
 ],function(NEJ,_u,_p,_o,_f,_r){
     /**
-     * 设置或者获取cookie<br/>
-     * 没有输入第二个参数则表示返回已有cookie<br/>
-     * 如果cookie值为空字符串则表示删除cookie<br/>
+     * 设置或者获取cookie
+     * 
+     * * 没有输入第二个参数则表示返回已有cookie
+     * * 如果cookie值为空字符串则表示删除cookie
      * 
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
-     *       '{lib}util/event.js'
-     *   ],function(_p){
+     *       'util/cookie'
+     *   ],function(_j){
      *       // 设置cookie的name=abc
-     *       var _cookie = _p._$cookie('name','abc');
-     *       _p._$cookie('name',{value:'abc'});
+     *       var _cookie = _j._$cookie('name','abc');
+     *       _j._$cookie('name',{value:'abc'});
      * 
      *       // 设置路径，domain(如果domain不同域，cookie设置不会成功),设置过期时间1天;
-     *       var _cookie = _p._$cookie('name',{
+     *       var _cookie = _j._$cookie('name',{
      *           value:'abc',
      *           path:'/a/',
      *           domain:'www.163.com',
@@ -32,19 +34,19 @@ NEJ.define([
      *       });
      * 
      *       // 删除cookie
-     *       _p._$cookie('name','');
-     *       _p._$cookie('name',{expires:-1});
+     *       _j._$cookie('name','');
+     *       _j._$cookie('name',{expires:-1});
      *   });
-     * [/code]
+     * ```
      * 
-     * @api    {_$cookie}
-     * @param  {String}        cookie名称
-     * @param  {String|Object} cookie值，如果有其他配置信息输入对象，已处理属性包括
-     * @config {String}        value   cookie值
-     * @config {String}        path    路径
-     * @config {String}        domain  域名，当前域或者当前域的父域
-     * @config {Number}        expires 过期时间偏移，单位天，负值表示删除cookie
-     * @return {String}        cookie值
+     * @method   module:util/cache/cookie._$cookie
+     * @param    {String}        arg0    - cookie名称
+     * @param    {String|Object} arg1    - cookie值，如果有其他配置信息输入对象，已处理属性包括
+     * @property {String}        value   - cookie值
+     * @property {String}        path    - 路径
+     * @property {String}        domain  - 域名，当前域或者当前域的父域
+     * @property {Number}        expires - 过期时间偏移，单位天，负值表示删除cookie
+     * @return   {String}                  cookie值
      */
     _p._$cookie = (function(){
         var _date = new Date(),

@@ -11,7 +11,7 @@ NEJ.define([
     '{lib}base/config.js',
     '{lib}base/element.js',
     '{lib}base/util.js',
-    '{lib}util/cache/cache.list.base.js'
+    '{lib}util/cache/abstract.js'
 ],function(NEJ,_k,_c,_e,_u,_t0,_p,_o,_f,_r){
     var _pro;
     /**

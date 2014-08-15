@@ -5,69 +5,70 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module  util/cache/cache */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/util.js',
-    '{lib}util/event.js',
-    './storage.js'
+    'base/global',
+    'base/klass',
+    'base/util',
+    'util/event',
+    './storage'
 ],function(NEJ,_k,_u,_t,_j,_p,_o,_f,_r){
     var _pro,
         _ckey = 'dat-'+(+new Date);
     /**
-     * 缓存对象基类<br/>
+     * 缓存对象基类
      * 
      * 脚本举例
-     * [code]
-     *   NEJ.define([
-     *       '{lib}base/klass.js',
-     *       '{lib}util/ajax/xdr.js',
-     *       '{lib}util/cache/cache.js'
-     *   ],function(_k,_j,_t,_p){
-     *       var _pro;
+     * ```javascript
+     * NEJ.define([
+     *     'base/klass',
+     *     'util/ajax/xdr',
+     *     'util/cache/cache'
+     * ],function(_k,_j,_t,_p){
+     *     var _pro;
      * 
-     *       _p._$$CacheCustom = _k._$klass();
-     *       _pro = _p._$$CacheCustom._$extend(_t._$$Cache);
+     *     _p._$$CacheCustom = _k._$klass();
+     *     _pro = _p._$$CacheCustom._$extend(_t._$$CacheAbstract);
      * 
-     *       // 取缓存数据，先从内存中取，没有从服务器上取
-     *       _pro._$getDataInCache = function(_key){
-     *           this.__setDataInCache(_key,_value);
-     *       };
+     *     // 取缓存数据，先从内存中取，没有从服务器上取
+     *     _pro._$getDataInCache = function(_key){
+     *         this.__setDataInCache(_key,_value);
+     *     };
      * 
-     *       // 取数据
-     *       _pro._$getData = function(_key){
-     *           var _data = this._$getDataInCache(_key);
-     *           // 数据已在缓存中
-     *           if (_data!=null){
-     *               this._$dispatchEvent('ondataload',{
-     *                   key:_key
-     *               });
-     *               return;
-     *           }
-     *           // 从服务器端载入数据
-     *           // rkey为请求唯一标识，可以是URL，也可以是某种算法的结果
-     *           var _rkey = this.__doGenReqKey(_key), 
-     *               _callback = this._$dispatchEvent._$bind(
-     *                   this,'ondataload',{key:_key}
-     *               );
-     *           if (!this.__doQueueRequest(_rkey,_callback)){
-     *               _j._$request({
-     *                   onload:function(_data){
-     *                       // 缓存数据
-     *                       this.__setDataInCache(_key,_data);
-     *                       // 触发队列中同请求的回调逻辑
-     *                       this.__doCallbackRequest(_rkey);
-     *                   }._$bind(this)
-     *               });
-     *           }
-     *       };
+     *     // 取数据
+     *     _pro._$getData = function(_key){
+     *         var _data = this._$getDataInCache(_key);
+     *         // 数据已在缓存中
+     *         if (_data!=null){
+     *             this._$dispatchEvent('ondataload',{
+     *                 key:_key
+     *             });
+     *             return;
+     *         }
+     *         // 从服务器端载入数据
+     *         // rkey为请求唯一标识，可以是URL，也可以是某种算法的结果
+     *         var _rkey = this.__doGenReqKey(_key), 
+     *             _callback = this._$dispatchEvent._$bind(
+     *                 this,'ondataload',{key:_key}
+     *             );
+     *         if (!this.__doQueueRequest(_rkey,_callback)){
+     *             _j._$request({
+     *                 onload:function(_data){
+     *                     // 缓存数据
+     *                     this.__setDataInCache(_key,_data);
+     *                     // 触发队列中同请求的回调逻辑
+     *                     this.__doCallbackRequest(_rkey);
+     *                 }._$bind(this)
+     *             });
+     *         }
+     *     };
      * 
-     *       return _p;
-     *   });
-     * [/code]
+     *     return _p;
+     * });
+     * ```
      * 
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
      *       '/path/to/custom/cache.js'
      *   ],function(_p){
@@ -86,19 +87,20 @@ NEJ.define([
      *       // 不会发请求，直接走缓存
      *       _cache._$getData('a');
      *   });
-     * [/code]
+     * ```
      * 
-     * @class   {_$$Cache} 
-     * @extends {_$$EventTarget}
+     * @class   module:util/cache/cache._$$CacheAbstract 
+     * @extends module:util/event._$$EventTarget
      * 
-     * @param   {Object} 配置参数
+     * @param   {Object} config - 配置参数
      */
-    _p._$$Cache = NEJ.C();
-    _pro = _p._$$Cache._$extend(_t._$$EventTarget);
+    _p._$$CacheAbstract = NEJ.C();
+    _pro = _p._$$CacheAbstract._$extend(_t._$$EventTarget);
     /**
      * 初始化函数
+     * 
      * @protected
-     * @method {__init}
+     * @method module:util/cache/cache._$$CacheAbstract#__init
      * @return {Void}
      */
     _pro.__init = function(){
@@ -113,20 +115,22 @@ NEJ.define([
     };
     /**
      * 从缓存中取数据
+     * 
      * @protected
-     * @method {__getDataInCache}
-     * @param  {String}   缓存键值
-     * @return {Variable} 缓存数据
+     * @method module:util/cache/cache._$$CacheAbstract#__getDataInCache
+     * @param  {String}   arg0 - 缓存键值
+     * @return {Variable}        缓存数据
      */
     _pro.__getDataInCache = function(_key){
         return this.__cache[_key];
     };
     /**
      * 数据存入缓存
+     * 
      * @protected
-     * @method {__setDataInCache}
-     * @param  {String}   缓存键值
-     * @param  {Variable} 缓存数据
+     * @method module:util/cache/cache._$$CacheAbstract#__setDataInCache
+     * @param  {String}   arg0 - 缓存键值
+     * @param  {Variable} arg1 - 缓存数据
      * @return {Void}
      */
     _pro.__setDataInCache = function(_key,_value){
@@ -134,10 +138,11 @@ NEJ.define([
     };
     /**
      * 带默认值取本地数据
+     * 
      * @protected
-     * @method {__getDataInCacheWithDefault}
-     * @param  {String}   键值
-     * @param  {Variable} 默认值
+     * @method module:util/cache/cache._$$CacheAbstract#__getDataInCacheWithDefault
+     * @param  {String}   arg0 - 键值
+     * @param  {Variable} arg1 - 默认值
      * @return {Void}
      */
     _pro.__getDataInCacheWithDefault = function(_key,_default){
@@ -150,9 +155,10 @@ NEJ.define([
     };
     /**
      * 删除缓存数据，不传键值则清除所有缓存
+     * 
      * @protected
-     * @method {__delDataInCache}
-     * @param  {String} 缓存键值
+     * @method module:util/cache/cache._$$CacheAbstract#__delDataInCache
+     * @param  {String} arg0 - 缓存键值
      * @return {Void}
      */
     _pro.__delDataInCache = function(_key){
@@ -170,30 +176,33 @@ NEJ.define([
     };
     /**
      * 从本地存储中删除数据
+     * 
      * @protected
-     * @method {__delDataInStorage}
-     * @param  {String} 存储键值
-     * @return {String} 存储数据
+     * @method module:util/cache/cache._$$CacheAbstract#__delDataInStorage
+     * @param  {String} arg0 - 存储键值
+     * @return {String}        存储数据
      */
     _pro.__delDataInStorage = function(_key){
         return _j._$delDataInStorage(_key);
     };
     /**
      * 从本地存储中取数据
+     * 
      * @protected
-     * @method {__getDataInStorage}
-     * @param  {String} 存储键值
-     * @return {String} 存储数据
+     * @method module:util/cache/cache._$$CacheAbstract#__getDataInStorage
+     * @param  {String} arg0 - 存储键值
+     * @return {String}        存储数据
      */
     _pro.__getDataInStorage = function(_key){
         return _j._$getDataInStorage(_key);
     };
     /**
      * 数据存入本地缓存
+     * 
      * @protected
-     * @method {__setDataInStorage}
-     * @param  {String}   存储键值
-     * @param  {Variable} 存储数据
+     * @method module:util/cache/cache._$$CacheAbstract#__setDataInStorage
+     * @param  {String}   arg0 - 存储键值
+     * @param  {Variable} arg1 - 存储数据
      * @return {Void}
      */
     _pro.__setDataInStorage = function(_key,_value){
@@ -201,11 +210,12 @@ NEJ.define([
     };
     /**
      * 带默认值取本地数据
+     * 
      * @protected
-     * @method {__getDataLocalWithDefault}
-     * @param  {String}   键值
-     * @param  {Variable} 默认值
-     * @return {Variable} 数据
+     * @method module:util/cache/cache._$$CacheAbstract#__getDataLocalWithDefault
+     * @param  {String}   arg0 - 键值
+     * @param  {Variable} arg1 - 默认值
+     * @return {Variable}        数据
      */
     _pro.__getDataLocalWithDefault = function(_key,_default){
         var _data = this.__getDataLocal(_key);
@@ -217,10 +227,11 @@ NEJ.define([
     };
     /**
      * 取本地数据,检测内存和本地存储
+     * 
      * @protected
-     * @method {__getDataLocal}
-     * @param  {String}   键值
-     * @return {Variable} 数据
+     * @method module:util/cache/cache._$$CacheAbstract#__getDataLocal
+     * @param  {String}   arg0 - 键值
+     * @return {Variable}        数据
      */
     _pro.__getDataLocal = function(_key){
         // get from memory
@@ -237,10 +248,11 @@ NEJ.define([
     };
     /**
      * 存本地数据
+     * 
      * @protected
-     * @method {__setDataLocal}
-     * @param  {String}   键值
-     * @param  {Variable} 数据
+     * @method module:util/cache/cache._$$CacheAbstract#__setDataLocal
+     * @param  {String}   arg0 - 键值
+     * @param  {Variable} arg1 - 数据
      * @return {Void}
      */
     _pro.__setDataLocal = function(_key,_value){
@@ -249,9 +261,10 @@ NEJ.define([
     };
     /**
      * 清除本地缓存，不传键值则清除所有缓存
+     * 
      * @protected
-     * @method {__delDataLocal}
-     * @param  {String} 缓存键值
+     * @method module:util/cache/cache._$$CacheAbstract#__delDataLocal
+     * @param  {String} arg0 - 缓存键值
      * @return {Void}
      */
     _pro.__delDataLocal = function(_key){
@@ -269,17 +282,17 @@ NEJ.define([
         );
     };
     /**
-     * 清除缓存数据<br/>
+     * 清除缓存数据
      * 
      * 脚本举例
-     * [code]
-     *   var _cache = new c._$$Cache();
-     *   j._$clearDataLocal('name','jack');
-     *   // 清空所有hash值
-     *   j._$clearDataInStorage();
-     * [/code]
+     * ```javascript
+     * var _cache = new c._$$CacheAbstract();
+     * j._$clearDataLocal('name','jack');
+     * // 清空所有hash值
+     * j._$clearDataInStorage();
+     * ```
      * 
-     * @method {_$clearDataLocal}
+     * @method module:util/cache/cache._$$CacheAbstract#_$clearDataLocal
      * @return {Void}
      */
     _pro._$clearDataLocal = function(){
@@ -287,9 +300,10 @@ NEJ.define([
     };
     /**
      * 请求回调
+     * 
      * @protected
-     * @method {__doCallbackRequest}
-     * @param  {String} 请求标识
+     * @method module:util/cache/cache._$$CacheAbstract#__doCallbackRequest
+     * @param  {String} arg0 - 请求标识
      * @return {Void}
      */
     _pro.__doCallbackRequest = function(_key){
@@ -310,11 +324,12 @@ NEJ.define([
     };
     /**
      * 锁定请求，同样的请求只发送一次
+     * 
      * @protected
-     * @method {__doQueueRequest}
-     * @param  {String}   请求标识
-     * @param  {Function} 请求回调
-     * @return {Boolean}  是否已存在相同请求
+     * @method module:util/cache/cache._$$CacheAbstract#__doQueueRequest
+     * @param  {String}   arg0 - 请求标识
+     * @param  {Function} arg1 - 请求回调
+     * @return {Boolean}         是否已存在相同请求
      */
     _pro.__doQueueRequest = function(_key,_callback){
         _callback = _callback||_f;
@@ -329,12 +344,13 @@ NEJ.define([
     };
     /**
      * 检测列表中是否已存在指定片段数据
+     * 
      * @protected
-     * @method {__hasFragment}
-     * @param  {Array}   列表
-     * @param  {Number}  偏移量
-     * @param  {Number}  数量，0表示全列表，默认为0
-     * @return {Boolean} 是否已经存在
+     * @method module:util/cache/cache._$$CacheAbstract#__hasFragment
+     * @param  {Array}   arg0 - 列表
+     * @param  {Number}  arg1 - 偏移量
+     * @param  {Number}  arg2 - 数量，0表示全列表，默认为0
+     * @return {Boolean}        是否已经存在
      */
     _pro.__hasFragment = function(_list,_offset,_limit){
         if (!_list) return !1;

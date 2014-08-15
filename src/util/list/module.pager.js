@@ -45,7 +45,7 @@ NEJ.define([
      *       '{lib}base/klass.js',
      *       '{lib}base/util.js',
      *       '{lib}util/ajax/xdr.js',
-     *       '{lib}util/cache/cache.list.base.js'
+     *       '{lib}util/cache/abstract.js'
      *   ],function(_k,_u,_j,_t,_p){
      *       var _pro;
      *       // 自定义列表缓存

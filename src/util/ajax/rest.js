@@ -200,7 +200,7 @@ NEJ.define([
      * 通用载入出错回调函数，所有REST请求的异常均会进入此事件的回调逻辑中
      * 
      * @event    external:window.onresterror
-     * @param    {Object}   arg0    - 错误信息
+     * @param    {Object}   event   - 错误信息
      * @property {Number}   code    - 错误代码
      * @property {String}   message - 错误描述
      * @property {Variable} data    - 出错时携带数据

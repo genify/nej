@@ -9,7 +9,7 @@
 NEJ.define([
     '{lib}base/global.js',
     '{lib}base/klass.js',
-    '{lib}util/cache/cache.list.base.js'
+    '{lib}util/cache/abstract.js'
 ],function(NEJ,_k,_t0,_p,_o,_f,_r){
     var _pro;
     /**
