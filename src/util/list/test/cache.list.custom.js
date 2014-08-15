@@ -9,7 +9,7 @@ var f = function(){
         _proCacheListCustom,
         _supCacheListCustom;
     _p._$$CacheListCustom = NEJ.C();
-    _proCacheListCustom = _p._$$CacheListCustom._$extend(_p._$$AbstractListCache);
+    _proCacheListCustom = _p._$$CacheListCustom._$extend(_p._$$CacheListAbstract);
     _supCacheListCustom = _proCacheListCustom._$supro;
 	
 	_proCacheListCustom.__doLoadList = function(_options){

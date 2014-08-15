@@ -11,7 +11,7 @@ NEJ.define([
     'base/klass',
     'base/util',
     'util/event',
-    './storage'
+    './storage.js'
 ],function(NEJ,_k,_u,_t,_j,_p,_o,_f,_r){
     var _pro,
         _ckey = 'dat-'+(+new Date);

@@ -50,7 +50,7 @@ NEJ.define([
      *       var _pro;
      *       // 自定义列表缓存
      *       _p._$$CustomListCache = _k._$klass();
-     *       _pro = _p._$$CustomListCache._$extend(_t._$$AbstractListCache);
+     *       _pro = _p._$$CustomListCache._$extend(_t._$$CacheListAbstract);
      * 
      *       // 实现数据载入逻辑
      *       _pro.__doLoadList = function(_options){

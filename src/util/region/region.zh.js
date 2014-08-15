@@ -41,7 +41,7 @@ var f = function(){
      * @config  {String|Node}                   province 省份选择控件
      * @config  {String|Node}                   city     城市选择控件
      * @config  {String|Node}                   area     地区选择控件
-     * @config  {nej.ut._$$AbstractListCache}   cache    数据缓存实例
+     * @config  {nej.ut._$$CacheListAbstract}   cache    数据缓存实例
      * @config  {Object}                        data     初始地区信息，如{province:'浙江省',city:'杭州市',area:'滨江区'}
      * 
      * [hr]

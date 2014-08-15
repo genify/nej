@@ -24,7 +24,7 @@ NEJ.define([
      * ],function(_k,_j,_t,_p){
      *     // 创建自己的listCache管理类
      *     _p._$$CacheListCustom = _k._$klass();
-     *     _pro = _p._$$CacheListCustom._$extend(_t._$$AbstractListCache);
+     *     _pro = _p._$$CacheListCustom._$extend(_t._$$CacheListAbstract);
      *     
      *     // 实现取列表的方法
      *     // 根据offset+limit取列表
@@ -105,7 +105,7 @@ NEJ.define([
      * });
      * ```
      * 
-     * @class   module:util/cache/abstract._$$AbstractListCache
+     * @class   module:util/cache/abstract._$$CacheListAbstract
      * @extends module:util/cache/list._$$CacheList
      * 
      * @param   {Object} config - 可选配置参数
@@ -113,7 +113,7 @@ NEJ.define([
     /** 
      * 列表载入完成回调
      * 
-     * @event    module:util/cache/abstract._$$AbstractListCache#onlistload
+     * @event    module:util/cache/abstract._$$CacheListAbstract#onlistload
      * @param    {Object}   event - 可选配置参数
      * @property {String}   key   - 列表标识
      * @property {Variable} ext   - 传入数据原样返回
@@ -121,7 +121,7 @@ NEJ.define([
     /** 
      * 缓存项载入完成回调
      * 
-     * @event    module:util/cache/abstract._$$AbstractListCache#onitemload
+     * @event    module:util/cache/abstract._$$CacheListAbstract#onitemload
      * @param    {Object}   event - 可选配置参数
      * @property {String}   id    - 项标识
      * @property {String}   key   - 列表标识
@@ -130,7 +130,7 @@ NEJ.define([
     /** 
      * 缓存项添加完成回调
      * 
-     * @event    module:util/cache/abstract._$$AbstractListCache#onitemadd
+     * @event    module:util/cache/abstract._$$CacheListAbstract#onitemadd
      * @param    {Object}   event - 可选配置参数
      * @property {String}   id    - 项标识
      * @property {String}   key   - 列表标识
@@ -139,7 +139,7 @@ NEJ.define([
     /** 
      * 缓存项删除完成回调
      * 
-     * @event    module:util/cache/abstract._$$AbstractListCache#onitemdelete 
+     * @event    module:util/cache/abstract._$$CacheListAbstract#onitemdelete 
      * @param    {Object}   event - 可选配置参数
      * @property {String}   id    - 项标识
      * @property {String}   key   - 列表标识
@@ -148,7 +148,7 @@ NEJ.define([
     /** 
      * 缓存项更新完成回调
      * 
-     * @event    module:util/cache/abstract._$$AbstractListCache#onitemupdate
+     * @event    module:util/cache/abstract._$$CacheListAbstract#onitemupdate
      * @param    {Object}   event - 可选配置参数
      * @property {String}   id    - 项标识
      * @property {String}   key   - 列表标识
@@ -157,18 +157,18 @@ NEJ.define([
     /** 
      * 服务器最新列表拉取完成回调
      * 
-     * @event    module:util/cache/abstract._$$AbstractListCache#onpullrefresh
+     * @event    module:util/cache/abstract._$$CacheListAbstract#onpullrefresh
      * @param    {Object}   event - 可选配置参数
      * @property {String}   key   - 列表标识
      * @property {Variable} ext   - 传入数据原样返回
      */
-    _p._$$AbstractListCache = _k._$klass();
-    _pro = _p._$$AbstractListCache._$extend(_t._$$CacheList);
+    _p._$$CacheListAbstract = _k._$klass();
+    _pro = _p._$$CacheListAbstract._$extend(_t._$$CacheList);
     /**
      * 控件初始化
      * 
      * @protected
-     * @method module:util/cache/abstract._$$AbstractListCache#__init
+     * @method module:util/cache/abstract._$$CacheListAbstract#__init
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -186,7 +186,7 @@ NEJ.define([
      * 从服务器端载入列表，子类实现具体逻辑
      * 
      * @abstract
-     * @method   module:util/cache/abstract._$$AbstractListCache#__doLoadList
+     * @method   module:util/cache/abstract._$$CacheListAbstract#__doLoadList
      * @param    {Object}   arg0   - 请求信息
      * @property {String}   key    - 列表标识
      * @property {Number}   offset - 偏移量
@@ -200,7 +200,7 @@ NEJ.define([
      * 从服务器端前向刷新列表，子类实现具体逻辑
      * 
      * @abstract
-     * @method   module:util/cache/abstract._$$AbstractListCache#__doPullRefresh
+     * @method   module:util/cache/abstract._$$CacheListAbstract#__doPullRefresh
      * @param    {Object}   arg0   - 请求信息
      * @property {String}   key    - 列表标识
      * @property {String}   data   - 请求相关数据
@@ -210,55 +210,59 @@ NEJ.define([
     _pro.__doPullRefresh = _f;
     /**
      * 从服务器端载入列表项，子类实现具体逻辑
-     * @protected
-     * @method   module:util/cache/abstract._$$AbstractListCache#__doLoadItem
-     * @param    {Object}   请求信息
-     * @property {String}   key      列表标识
-     * @property {Number}   id       列表项标识
-     * @property {String}   data     请求相关数据
-     * @property {Function} onload   列表项载入回调
+     * 
+     * @abstract
+     * @method   module:util/cache/abstract._$$CacheListAbstract#__doLoadItem
+     * @param    {Object}   arg0   - 请求信息
+     * @property {String}   key    - 列表标识
+     * @property {Number}   id     - 列表项标识
+     * @property {String}   data   - 请求相关数据
+     * @property {Function} onload - 列表项载入回调
      * @return   {Void}
      */
     _pro.__doLoadItem = _f;
     /**
      * 添加列表项至服务器，子类实现具体逻辑
-     * @protected
-     * @method module:util/cache/abstract._$$AbstractListCache#__doAddItem
-     * @param   {Object}   请求信息
-     * @property  {String}   key      列表标识
-     * @property  {Number}   id       列表项标识
-     * @property  {String}   data     请求相关数据
-     * @property  {Function} onload   列表项载入回调
-     * @return {Void}
+     * 
+     * @abstract
+     * @method   module:util/cache/abstract._$$CacheListAbstract#__doAddItem
+     * @param    {Object}   arg0   - 请求信息
+     * @property {String}   key    - 列表标识
+     * @property {Number}   id     - 列表项标识
+     * @property {String}   data   - 请求相关数据
+     * @property {Function} onload - 列表项载入回调
+     * @return   {Void}
      */
     _pro.__doAddItem = _f;
     /**
      * 从服务器上删除列表项，子类实现具体逻辑
-     * @protected
-     * @method module:util/cache/abstract._$$AbstractListCache#__doDeleteItem
-     * @param   {Object}   请求信息
-     * @property  {String}   key      列表标识
-     * @property  {Number}   id       列表项标识
-     * @property  {String}   data     请求相关数据
-     * @property  {Function} onload   列表项载入回调
-     * @return {Void}
+     * 
+     * @abstract
+     * @method    module:util/cache/abstract._$$CacheListAbstract#__doDeleteItem
+     * @param     {Object}   event  - 请求信息
+     * @property  {String}   key    - 列表标识
+     * @property  {Number}   id     - 列表项标识
+     * @property  {String}   data   - 请求相关数据
+     * @property  {Function} onload - 列表项载入回调
+     * @return    {Void}
      */
     _pro.__doDeleteItem = _f;
     /**
      * 更新列表项至服务器，子类实现具体逻辑
-     * @protected
-     * @method module:util/cache/abstract._$$AbstractListCache#__doUpdateItem
-     * @param     {Object}   请求信息
-     * @property  {String}   key      列表标识
-     * @property  {Number}   id       列表项标识
-     * @property  {String}   data     请求相关数据
-     * @property  {Function} onload   列表项载入回调
+     * 
+     * @abstract
+     * @method module:util/cache/abstract._$$CacheListAbstract#__doUpdateItem
+     * @param    {Object}   event  - 请求信息
+     * @property {String}   key    - 列表标识
+     * @property {Number}   id     - 列表项标识
+     * @property {String}   data   - 请求相关数据
+     * @property {Function} onload - 列表项载入回调
      * @return   {Void}
      */
     _pro.__doUpdateItem = _f;
     
     if (CMPT){
-        NEJ.copy(NEJ.P('nej.ut'),_p);
+        NEJ.P('nej.ut')._$$AbstractListCache = _p._$$CacheListAbstract;
     }
     
     return _p;
