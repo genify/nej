@@ -5,15 +5,14 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/util.js',
+    '{lib}util/event.js'
+],function(NEJ,_k,_u,_t,_p,_o,_f,_r){
     // variable declaration
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _f = NEJ.F,
-        _u = _('nej.u'),
-        _p = _('nej.ut'),
-        _pro;
-    if (!!_p._$$PlayList) return;
+    var _pro;
     /**
      * 多媒体播放列表管理控件
      * 脚本举例
@@ -37,22 +36,22 @@ var f = function(){
      *   // 修改播放模式
      *   _playlist._$setPlayMode(2);
      * [/code]
-     * 
+     *
      * @class   {nej.ut._$$PlayList}
      * @extends {nej.ut._$$EventTarget}
-     * 
+     *
      * @param   {Object}  可选配置参数
      * @config  {Array}   list  多媒体列表
      * @config  {Number}  mode  播放模式
-     *                           
-     * [hr] 
+     *
+     * [hr]
      * 当前媒体变化事件
      * @event  {onmediachange}
      * @param  {Object}  媒体信息
      * @config {Number}  index 当前媒体索引
      * @config {Number}  last  上一个媒体索引
      * @config {Array}   list  播放列表
-     * 
+     *
      * [hr]
      * 多媒体追加触发事件，如果处理过程中将data置空则不追加
      * @event  {onbeforeappend}
@@ -60,7 +59,7 @@ var f = function(){
      * @config {Variable} data  媒体对象
      * @config {Array}    list  播放列表
      * @config {Number}   index 当前媒体索引
-     * 
+     *
      * [hr]
      * 播放模式变化事件
      * @event  {onmodechange}
@@ -68,8 +67,8 @@ var f = function(){
      * @config {Number}  mode 当前播放模式
      * @config {Number}  last 上一个播放模式
      */
-    _p._$$PlayList = NEJ.C();
-    _pro = _p._$$PlayList._$extend(_p._$$EventTarget);
+    _p._$$PlayList = _k._$klass();
+    _pro = _p._$$PlayList._$extend(_t._$$EventTarget);
     /**
      * 重置控件
      * @protected
@@ -78,7 +77,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         this._$setPlayMode(_options.mode);
         this._$setPlayList(_options.list);
     };
@@ -89,7 +88,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         delete this.__index;
         delete this.__list;
         delete this.__mode;
@@ -335,8 +334,10 @@ var f = function(){
     _pro._$prev = function(){
         this._$play(-1);
     };
-};
-NEJ.define(
-    '{lib}util/media/playlist.js',[
-    '{lib}util/event.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej,ut'),_p);
+    }
+
+    return _p;
+});

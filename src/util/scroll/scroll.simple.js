@@ -5,17 +5,18 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{lib}base/event.js',
+    '{lib}base/util.js',
+    '{lib}util/event.js',
+    '{lib}util/dragger/dragger.js',
+    '{lib}util/animation/easeinout.js'
+],function(NEJ,_e,_v,_u,_t,_t0,_t1,_p,_o,_f,_r){
     // variable declaration
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _f = NEJ.F,
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _p = _('nej.ut'),
-        _pro,_sup;
-    if (!!_p._$$SimpleScroll) return;
+    var _pro;
     /**
      * 滚动控件
      * 结构举例：
@@ -37,7 +38,7 @@ var f = function(){
      * [code]
      *     var _v = NEJ.P('nej.v'),
      *         _t = NEJ.P('nej.ut');
-     * 
+     *
      *     // 应用模拟滚动行为
      *     _t._$$SimpleScroll._$allocate({
      *         xbar:'xbar',
@@ -45,7 +46,7 @@ var f = function(){
      *         ybar:{body:'ybar',min:20,top:5,bottom:5},
      *         parent:'box'
      *     });
-     * 
+     *
      *     // 滚动过程可以通过监听parent上的onscroll事件获得
      *     _v._$addEvent(
      *         'box','scroll',function(_event){
@@ -54,18 +55,18 @@ var f = function(){
      *         }
      *     );
      * [/code]
-     * 
+     *
      * @class   {nej.ut._$$SimpleScroll}
      * @extends {nej.ut._$$EventTarget}
-     * 
+     *
      * @param   {Object} _options 可选配置参数
      * @config  {Node|Object}  xbar    水平滚动条节点或者配置信息，如果不配置min值则默认取body的初始宽度，配置如{body:'bar-id',track:':parent',min:10,speed:1,left:10,right:10,step:10,hover:'js-hover'}
      * @config  {Node|Object}  ybar    垂直滚动条节点或者配置信息，如果不配置min值则默认取body的初始高度，配置如{body:'bar-id',track:'parent-id',min:10,speed:1,top:10,bottom:10,step:10,hover:'js-hover'}
      * @config  {String|Node}  parent  滚动容器节点，默认为滚动条的父容器，滚动过程触发该节点上的onscroll事件
      * @config  {String|Node}  trigger 滚动条显示隐藏触点，不传表示不做显示隐藏切换
      */
-    _p._$$SimpleScroll = NEJ.C();
-    _pro = _p._$$SimpleScroll._$extend(_p._$$EventTarget);
+    _p._$$SimpleScroll = _k._$klass();
+    _pro = _p._$$SimpleScroll._$extend(_t._$$EventTarget);
     /**
      * 初始化控件
      * @return {Void}
@@ -91,7 +92,7 @@ var f = function(){
             }
         };
         this.__dragger = {};
-        this.__supInit();
+        this.__super();
     };
     /**
      * 控件重置
@@ -158,11 +159,11 @@ var f = function(){
             var _options = this.__dopt[_name];
             _options.body = _body;
             _options.view = this.__parent;
-            this.__dragger[_name] = 
+            this.__dragger[_name] =
                 _p._$$Dragger._$allocate(_options);
         };
         return function(_options){
-            this.__supReset(_options);
+            this.__super(_options);
             this.__bar = {
                 x:_doInitBar('x',_options.xbar),
                 y:_doInitBar('y',_options.ybar)
@@ -231,7 +232,7 @@ var f = function(){
             delete _conf.body;
         };
         return function(){
-            this.__supDestroy();
+            this.__super();
             delete this.__isout;
             delete this.__parent;
             delete this.__dragging;
@@ -280,7 +281,7 @@ var f = function(){
         }
         _conf.delta = 0;
         if (!!_conf.body){
-            _conf.delta = 
+            _conf.delta =
                 _conf.body[_conf.ob]-
                 _conf.body[_conf.cb];
         }
@@ -512,10 +513,10 @@ var f = function(){
         this.__doResetBarSize(this.__bar.y);
         this.__doUpdateScrollBar(0,0);
     };
-};
-NEJ.define(
-    '{lib}util/scroll/scroll.simple.js',[
-    '{lib}util/event.js',
-    '{lib}util/dragger/dragger.js',
-    '{lib}util/animation/easeinout.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});

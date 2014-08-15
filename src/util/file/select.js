@@ -5,24 +5,23 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _f = NEJ.F,
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _x = _('nej.x'),
-        _cache = {},  // {id:{lab:'label',pid:'parent'}}
-        _class = _e._$pushCSSText('.#<class>{position:absolute;top:0;left:0;width:0;height:0;overflow:hidden;}');
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/element.js',
+    '{lib}base/event.js',
+    '{lib}base/util.js',
+    '{platform}select.js'
+],function(NEJ,_e,_v,_u,_h,_p,_o,_f,_r){
+    var _cache = {},// {id:{lab:'label',pid:'parent'}}
+        _class;
     /**
      * 文件选择按钮封装
-     * 
+     *
      * 结构举例
      * [code type="html"]
      *   <p><label id="abc">选择文件</label></p>
      * [/code]
-     * 
+     *
      * 脚本举例
      * [code]
      *   // 统一定义名字空间简写
@@ -39,7 +38,7 @@ var f = function(){
      *       }
      *   });
      * [/code]
-     * 
+     *
      * @api    {nej.e._$file}
      * @param  {String|Node} 绑定选择文件的节点，必须为label节点，且未设置for属性
      * @param  {Object}      配置参数
@@ -53,8 +52,7 @@ var f = function(){
      *                                - form 文件选择控件封装表单对象
      *                                - id   当前变化的文件选择控件的ID
      */
-    _e._$file = 
-    _x._$file = (function(){
+    _p._$file = (function(){
         // init cache
         var _doInitCache = function(_id){
             var _cch = _cache[_id];
@@ -117,7 +115,7 @@ var f = function(){
                 _cch = _cache[_arr[0]];
             if (!_element.value) return;
             if (_cch.multiple){
-                _e._$get(_cch.lab).htmlFor = 
+                _e._$get(_cch.lab).htmlFor =
                     _doAppendFile(_arr[0],_cch);
             }else if(!!_cch.name){
                 _element.name = _cch.name;
@@ -148,9 +146,9 @@ var f = function(){
             _cch.accept = _options.accept||'';
             _cch.multiple = !!_options.multiple;
             _cch.onchange = _options.onchange||_f;
-            _element.htmlFor = 
+            _element.htmlFor =
                 _doAppendFile(_id,_cch);
-            _e.__handleFileLabelClick(_element);
+            _h.__handleFileLabelClick(_element);
             return _id;
         };
     })();
@@ -161,8 +159,7 @@ var f = function(){
      * @param  {String} 标识
      * @return {Node}   表单节点
      */
-    _e._$getFileForm = 
-    _x._$getFileForm = function(_id){
+    _p._$getFileForm = function(_id){
         var _conf = _cache[_id];
         if (!_conf) return;
         var _form = _e._$get(_conf.pid);
@@ -179,20 +176,18 @@ var f = function(){
      * @param  {String} 标识
      * @return {Void}
      */
-    _e._$removeFileForm = 
-    _x._$removeFileForm = function(_id){
+    _p._$removeFileForm = function(_id){
         var _conf = _cache[_id];
         if (!!_conf){
             _e._$remove(_conf.pid);
             delete _cache[_id];
         }
     };
-    _x.isChange = !0;
-};
-NEJ.define(
-    '{lib}util/file/select.js',[
-    '{lib}base/element.js',
-    '{lib}base/event.js',
-    '{lib}base/util.js',
-    '{platform}select.js'
-],f);
+    _class = _e._$pushCSSText('.#<class>{position:absolute;top:0;left:0;width:0;height:0;overflow:hidden;}');
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.e'),_p);
+    }
+
+    return _p;
+});

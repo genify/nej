@@ -5,16 +5,14 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _f = NEJ.F,
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _p = _('nej.ut'),
-        _pro;
-    if (!!_p._$$ListHolder) return;
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/util.js',
+    '{lib}base/element.js',
+    '{lib}util/event.js'
+],function(NEJ,_k,_u,_e,_t,_p,_o,_f,_r){
+    var _pro;
     /**
      * 列表占位控件
      * 结构举例：
@@ -37,7 +35,7 @@ var f = function(){
      * [/code]
      * @class   {nej.ut._$$ListHolder}
      * @extends {nej.ut._$$EventTarget}
-     * 
+     *
      * @param   {Object}             可选配置参数
      * @config  {String|Node}  sbody 滚动容器节点
      * @config  {String|Node}  hbody 占位容器节点，默认使用滚动容器节点
@@ -45,8 +43,8 @@ var f = function(){
      * @config  {Boolean}      fixed 列表项高度是否固定，默认为true
      * @config  {String}       clazz 列表项标识，默认为js-item
      */
-    _p._$$ListHolder = NEJ.C();
-    _pro = _p._$$ListHolder._$extend(_p._$$EventTarget);
+    _p._$$ListHolder = _k._$klass();
+    _pro = _p._$$ListHolder._$extend(_t._$$EventTarget);
     /**
      * 控件初始化
      * @return {Void}
@@ -67,7 +65,7 @@ var f = function(){
                 bottom:_e._$create('div')
             };
             _u._$forIn(this.__holders,_doInitHolder);
-            this.__supInit();
+            this.__super();
         };
     })();
     /**
@@ -82,7 +80,7 @@ var f = function(){
             _e._$setStyle(_node,'height',0);
         };
         return function(_options){
-            this.__supReset(_options);
+            this.__super(_options);
             this._$limit(_options.limit);
             this.__clazz = _options.clazz||'js-item';
             this.__fixed = _options.fixed;
@@ -117,7 +115,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         this._$clearHolder();
         delete this.__fragments;
         delete this.__clazz;
@@ -163,7 +161,7 @@ var f = function(){
      */
     _pro._$check = (function(){
         var _doCalOffset = function(){
-            
+
         };
         return function(_info){
             var _list = _info.list;
@@ -195,12 +193,7 @@ var f = function(){
                     return !0;
                 }
                 // check limit
-                
-                
-                
-                
             },this);
-            
         };
     })();
     /**
@@ -218,8 +211,10 @@ var f = function(){
         delete this.__fragments.tlist;
         delete this.__fragments.blist;
     };
-};
-NEJ.define(
-    '{lib}util/list/holder.js',[
-    '{lib}util/event/event.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});
