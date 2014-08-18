@@ -8,6 +8,7 @@
 /** @module util/tab/view */
 NEJ.define([
     'base/global',
+    'base/klass',
     'base/element',
     'base/util',
     'util/event'
@@ -60,7 +61,7 @@ NEJ.define([
      * @property {Number}  target  - 目标值
      * @property {Boolean} matched - 是否匹配
      */
-    _p._$$TabView = NEJ.C();
+    _p._$$TabView = _k._$klass();
     _pro = _p._$$TabView._$extend(_t._$$EventTarget);
     /**
      * 控件重置
