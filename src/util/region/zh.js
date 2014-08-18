@@ -231,10 +231,10 @@ NEJ.define([
      * });
      * ```
      * @method module:util/region/zh._$$RegionSelector#_$setRegion
-     * @param    {Object} 区域信息，如{province:'浙江省',city:'杭州市',area:'滨江区'}
-     * @property {String} province 省
-     * @property {String} city     市
-     * @property {String} area     区
+     * @param    {Object} arg0     - 区域信息，如{province:'浙江省',city:'杭州市',area:'滨江区'}
+     * @property {String} province - 省
+     * @property {String} city     - 市
+     * @property {String} area     - 区
      * @return   {Void}
      */
     _pro._$setRegion = function(_data,_nochange){
