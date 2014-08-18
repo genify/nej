@@ -15,15 +15,17 @@ NEJ.define([
 ],function(NEJ,_k,_e,_t0,_t1,_p,_o,_f,_r){
     /**
      * 建议提示控件
+     *
+     * 样式举例
+     * ```css
+     * .box{position:relative;width:100px;}
+     * .xuanzhong{background:pink;}
+     * #suggest-input{height:24px;line-height:24px;}
+     * #card0{position:absolute;top:40px;left:0;width:100%;height:auto;background:#ccc;}
+     * ```
      * 
      * 结构举例
      * ```html
-     * <style type="text/css">
-     *   .box{position:relative;width:100px;}
-     *   .xuanzhong{background:pink;}
-     *   #suggest-input{height:24px;line-height:24px;}
-     *   #card0{position:absolute;top:40px;left:0;width:100%;height:auto;background:#ccc;}
-     * </style>
      * <div class="box">
      *   <input id="suggest-input" type="text" />
      *   <div id="card0"></div>
@@ -95,7 +97,7 @@ NEJ.define([
      * 
      * @protected
      * @method module:util/suggest/suggest._$$Suggest#__reset
-     * @param  {Object} 可选配置参数
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -203,7 +205,7 @@ NEJ.define([
      * @deprecated 
      * @method module:util/suggest/suggest._$$Suggest#_$setList
      * @see    module:util/suggest/suggest._$$Suggest#_$visibile
-     * @param  {Array} 建议项节点列表
+     * @param  {Array} arg0 - 建议项节点列表
      * @return {Void}
      */
     _pro._$setList = function(_list){
