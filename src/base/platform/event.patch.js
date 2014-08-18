@@ -28,7 +28,7 @@ NEJ.define([
             return _h.__checkEvent._$aop(function(_event){
                 var _args = _event.args;
                 // check event convert
-                var _name = _tmap[_args[1]];
+                var _name = _emap[_args[1]];
                 if (!!_name){
                     _event.stopped = !0;
                     _event.value = {

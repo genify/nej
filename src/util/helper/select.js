@@ -325,7 +325,9 @@ NEJ.define([
         this.__doSyncSelection(
             _eopt,this.__hovered
         );
-        this.__kbody.focus();
+        if (!!this.__kbody.focus){
+            this.__kbody.focus();
+        }
     };
     /**
      * 鼠标移出事件
