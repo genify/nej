@@ -24,7 +24,7 @@ var f = function(){
      * @class   module:nej.ui._$$ListScroller 列表滚动控件
      * @extends {nej.ui._$$Abstract}
      * @param   {Object} 可选配置参数
-     * @config  {Object} config 滚动参数配置信息
+     * @property  {Object} config 滚动参数配置信息
      *
      * [hr]
      *
@@ -35,8 +35,8 @@ var f = function(){
      *
      * @event  {onbounce} 弹性触发事件
      * @param  {Object} 弹性信息
-     * @config {Number} movement  偏移量
-     * @config {Number} direction 方向
+     * @property {Number} movement  偏移量
+     * @property {Number} direction 方向
      * [ntb]
      *  正向滚动(远离顶部的滚动) | <0
      *  反向滚动(接近顶部的滚动) | >0

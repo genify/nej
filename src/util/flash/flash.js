@@ -18,11 +18,11 @@ NEJ.define([
     /**
      * 页面嵌入flash<br />
      * 页面结构举例
-     * [code type="html"]
+     * ```html
      *   <div id='flash'></div>
-     * [/code]
+     * ```
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _swf = '../../qunit/res/FlexChart.swf';
      *   _onFlashReady = function(_flash){
      *      // 返回准备好的flash对象
@@ -42,16 +42,16 @@ NEJ.define([
      *       },
      *       onready:_onFlashReady._$bind(this)
      *   });
-     * [/code]
+     * ```
      * @api    {nej.e._$flash}
      * @param  {Object} 可选配置参数
-     * @config {String}      src     Flash文件地址，必须指定地址
-     * @config {Boolean}     hidden  Flash是否不可见
-     * @config {Number}      width   Flash显示宽度，设为不可见时可以不设此参数
-     * @config {Number}      height  Flash显示高度，设为不可见时可以不设此参数
-     * @config {String|Node} parent  容器节点，默认为document.body
+     * @property {String}      src     Flash文件地址，必须指定地址
+     * @property {Boolean}     hidden  Flash是否不可见
+     * @property {Number}      width   Flash显示宽度，设为不可见时可以不设此参数
+     * @property {Number}      height  Flash显示高度，设为不可见时可以不设此参数
+     * @property {String|Node} parent  容器节点，默认为document.body
      * @conifg {Object}      params  设置参数
-     * @config {String|Node} target  触发事件的源节点
+     * @property {String|Node} target  触发事件的源节点
      * @return {Void}
      *
      * [hr]

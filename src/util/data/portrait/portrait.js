@@ -16,7 +16,7 @@ NEJ.define([
     var _pro;
     /**
      * 表情数据缓存，缓存对象可直接用于nej.ut._$$ListModule
-     * [code]
+     * ```javascript
      *     // 取表情分类列表
      *     cache_inst._$getList({
      *         key:'portrait-type',
@@ -35,7 +35,7 @@ NEJ.define([
      *             type:'face'
      *         }
      *     });
-     * [/code]
+     * ```
      * @class   {nej.ut._$$PortraitCache} 中国行政划区数据缓存
      * @extends {nej.ut._$$CacheListAbstract}
      * @param   {Object} _options 可选配置参数
@@ -48,11 +48,11 @@ NEJ.define([
      * @protected
      * @method {__doLoadList}
      * @param  {Object}          请求信息
-     * @config {String}   key    列表标识
-     * @config {Number}   offset 偏移量
-     * @config {Number}   limit  数量
-     * @config {String}   data   请求相关数据
-     * @config {Function} onload 列表载入回调
+     * @property {String}   key    列表标识
+     * @property {Number}   offset 偏移量
+     * @property {Number}   limit  数量
+     * @property {String}   data   请求相关数据
+     * @property {Function} onload 列表载入回调
      * @return {Void}
      */
     _pro.__doLoadList = function(_options){

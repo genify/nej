@@ -16,7 +16,7 @@ NEJ.define([
     /**
      * 列表占位控件
      * 结构举例：
-     * [code type="html"]
+     * ```html
      *   <div id="scroll-body">
      *     <div>
      *       <!-- content here -->
@@ -26,22 +26,22 @@ NEJ.define([
      *       <li>xxxxxxx</li>
      *     </ul>
      *   </div>
-     * [/code]
+     * ```
      * 脚本举例：
-     * [code]
+     * ```javascript
      *   nej.ut._$$ListHolder._$allocate({
      *       sbody:'scroll-body'
      *   });
-     * [/code]
+     * ```
      * @class   {nej.ut._$$ListHolder}
      * @extends {nej.ut._$$EventTarget}
      *
      * @param   {Object}             可选配置参数
-     * @config  {String|Node}  sbody 滚动容器节点
-     * @config  {String|Node}  hbody 占位容器节点，默认使用滚动容器节点
-     * @config  {Number|Array} limit 可视区域外保留列表项数量控制，通过传入数组控制不同的上下数量
-     * @config  {Boolean}      fixed 列表项高度是否固定，默认为true
-     * @config  {String}       clazz 列表项标识，默认为js-item
+     * @property  {String|Node}  sbody 滚动容器节点
+     * @property  {String|Node}  hbody 占位容器节点，默认使用滚动容器节点
+     * @property  {Number|Array} limit 可视区域外保留列表项数量控制，通过传入数组控制不同的上下数量
+     * @property  {Boolean}      fixed 列表项高度是否固定，默认为true
+     * @property  {String}       clazz 列表项标识，默认为js-item
      */
     _p._$$ListHolder = _k._$klass();
     _pro = _p._$$ListHolder._$extend(_t._$$EventTarget);
@@ -153,10 +153,10 @@ NEJ.define([
     /**
      * 检查列表情况
      * @param  {Object} 滚动信息
-     * @config {Number} scrollTop    滚动高度
-     * @config {Number} clientHeight 可视高度
-     * @config {Number} offset       初始项偏移量，不传根据滚动容器计算
-     * @config {Array}  list         待检查列表
+     * @property {Number} scrollTop    滚动高度
+     * @property {Number} clientHeight 可视高度
+     * @property {Number} offset       初始项偏移量，不传根据滚动容器计算
+     * @property {Array}  list         待检查列表
      * @return {Void}
      */
     _pro._$check = (function(){

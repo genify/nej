@@ -18,11 +18,11 @@ NEJ.define([
     /**
      * 弹出卡片封装基类对象，主要实现层里面内容部分的业务逻辑<br />
      * 页面结构举例
-     * [code type="html"]
+     * ```html
      *   <div id='cardWarpper-box'></div>
-     * [/code]
+     * ```
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 第一步：继承此基类生成一个新类
      *   _p._$$MyCard = NEJ.C();
      *   _proMyCard = _p._$$MyCard._$extend(_p._$$CardWrapper);
@@ -37,7 +37,7 @@ NEJ.define([
      *       parent:'cardWarpper-box'
      *   });
      *
-     * [/code]
+     * ```
      *
      * @class   module:nej.ui._$$CardWrapper 弹出卡片封装基类对象
      * @extends {nej.ui._$$LayerWrapper}
@@ -49,7 +49,7 @@ NEJ.define([
     /**
      * 卡片绑定到执行节点上<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _node = 'cardWarpper-box';
      *   var _options = {
      *       // 卡片偏移量
@@ -73,19 +73,19 @@ NEJ.define([
      *   };
      *   // 生成卡片实例
      *   _p._$$MyCard._$attach(_node,_options);
-     * [/code]
+     * ```
      * @static
      * @method {_$attach}
      * @param  {String|Node}      执行节点
      * @param  {Object}           构建卡片配置参数
-     * @config {String}   event   触发显示卡片事件名称，默认为click事件
-     * @config {Boolean}  fixed   是否固定位置，如果已固定位置则卡片显示位置不会自动计算
-     * @config {Object}   delta   四周偏移，默认全为0，{top:0,right:0,bottom:0,left:0}
-     * @config {String}   align   卡片位置，默认为'bottom left'
-     * @config {Boolean}  fitable 是否需要调整卡片位置使其适应页面
-     * @config {Boolean}  noclear 显示卡片之前是否不做卡片清理
-     * @config {Boolean}  toggled 是否采用切换形式打开卡片，如果卡片已经显示则
-     * @config {Function} onbeforeclick 点击之前触发事件，用以调整参数，输入卡片构造配置对象，{noclear:true,toggled:true}
+     * @property {String}   event   触发显示卡片事件名称，默认为click事件
+     * @property {Boolean}  fixed   是否固定位置，如果已固定位置则卡片显示位置不会自动计算
+     * @property {Object}   delta   四周偏移，默认全为0，{top:0,right:0,bottom:0,left:0}
+     * @property {String}   align   卡片位置，默认为'bottom left'
+     * @property {Boolean}  fitable 是否需要调整卡片位置使其适应页面
+     * @property {Boolean}  noclear 显示卡片之前是否不做卡片清理
+     * @property {Boolean}  toggled 是否采用切换形式打开卡片，如果卡片已经显示则
+     * @property {Function} onbeforeclick 点击之前触发事件，用以调整参数，输入卡片构造配置对象，{noclear:true,toggled:true}
      * @return {nej.ui._$$CardWrapper}
      */
     _p._$$CardWrapper._$attach = (function(){

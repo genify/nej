@@ -17,11 +17,11 @@ NEJ.define([
     /**
      * 颜色选择控件<br />
      * 页面结构举例
-     * [code type="html"]
+     * ```html
      *   <div id='colorpanel-box'></div>
-     * [/code]
+     * ```
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _cp = _p._$$ComplexColorPick._$allocate({
      *       parent:'colorpanel-box',
      *       defaultColor:'默认rgb颜色',
@@ -29,18 +29,18 @@ NEJ.define([
      *           console.log(_event.color)
      *       }
      *   });
-     * [/code]
+     * ```
      *
      * @class   module:nej.ui._$$ComplexColorPick
      * @extends {nej.ui._$$SimpleColorPick}
      * @param   {Object} 可选配置参数
-     * @config  {String} defaultColor 默认颜色值
+     * @property  {String} defaultColor 默认颜色值
      *
      * [hr]
      * 确定选择颜色触发事件
      * @event  {onselect}
      * @param  {Object} 颜色信息
-     * @config {String} color 颜色值
+     * @property {String} color 颜色值
      *
      */
     _p._$$ComplexColorPick = _k._$klass();

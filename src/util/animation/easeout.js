@@ -16,11 +16,11 @@ NEJ.define([
     /**
      * 先快后慢动画<br/>
      * 页面结构举例
-     * [code type="html"]
+     * ```html
      *   <div id='id-bounce1'></div>
-     * [/code]
+     * ```
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _box = document.getElementById('id-bounce1'),_easeout;
      *   var options = {
      *       from:{
@@ -42,11 +42,11 @@ NEJ.define([
      *   _easeout  = nej.ut._$$AnimEaseOut._$allocate(options);
      *   // 开始动画
      *   _easeout._$play();
-     * [/code]
+     * ```
      * @class   {nej.ut._$$AnimEaseOut} 先快后慢动画
      * @extends {nej.ut._$$AnimBezier}
      * @param   {Object} 可选配置参数
-     * @config  {String} timing   时间函数，easeout
+     * @property  {String} timing   时间函数，easeout
      */
     _p._$$AnimEaseOut = _k._$klass();
     _pro = _p._$$AnimEaseOut._$extend(_t0._$$AnimBezier);
@@ -55,7 +55,7 @@ NEJ.define([
      * @protected
      * @method {__reset}
      * @param  {Object} 可选配置参数
-     * @config {String} timing   时间函数，easeout
+     * @property {String} timing   时间函数，easeout
      * @return {Void}
      */
     _pro.__reset = function(_options){

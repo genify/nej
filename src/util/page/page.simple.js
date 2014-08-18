@@ -22,7 +22,7 @@ NEJ.define([
      *      ---   ----    -   -   -   --   --   ----   ---
      * </ul>
      * 页面结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="page">
      *       <a href="#" class="zbtn sbtn">首页</a>
      *       <a href="#" class="zbtn zprv">上一页</a>
@@ -38,9 +38,9 @@ NEJ.define([
      *       <a href="#" class="zbtn znxt">下一页</a>
      *       <a href="#" class="zbtn ebtn">末页</a>
      *   </div>
-     * [/code]
+     * ```
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
      *       '{lib}util/page/page.simple.js',
      *       '{lib}base/element.js'
@@ -67,28 +67,28 @@ NEJ.define([
      *       // 想要保持页面信息状态
      *       _ps._$updatePage(5,10);
      *   })
-     * [/code]
+     * ```
      * @class   {_$$SimplePage}
      * @extends {util/page/page#_$$AbstractPage}
      * @param   {Object} 可选配置参数
-     * @config  {Array}          list        页码节点列表【长度保持奇数】
-     * @config  {String}         event       触发页码切换事件，默认为click
-     * @config  {String|Node}    pbtn        上一页按钮
-     * @config  {String|Node}    nbtn        下一页按钮
-     * @config  {String|Node}    sbtn        首页按钮
-     * @config  {String|Node}    ebtn        尾页按钮
-     * @config  {Number}         index       当前页码
-     * @config  {Number}         total       总页码数
-     * @config  {String}         selected    选中样式，默认为js-selected
-     * @config  {String}         disabled    禁用样式，默认为js-disabled
+     * @property  {Array}          list        页码节点列表【长度保持奇数】
+     * @property  {String}         event       触发页码切换事件，默认为click
+     * @property  {String|Node}    pbtn        上一页按钮
+     * @property  {String|Node}    nbtn        下一页按钮
+     * @property  {String|Node}    sbtn        首页按钮
+     * @property  {String|Node}    ebtn        尾页按钮
+     * @property  {Number}         index       当前页码
+     * @property  {Number}         total       总页码数
+     * @property  {String}         selected    选中样式，默认为js-selected
+     * @property  {String}         disabled    禁用样式，默认为js-disabled
      *
      * [hr]
      * 页码变化触发事件，输入{last:3,index:1,total:12}
      * @event  {onchange}
      * @param  {Object} 页码信息
-     * @config {Number} last  上一次的页码
-     * @config {Number} index 当前要切换的页面
-     * @config {Number} total 总页面数
+     * @property {Number} last  上一次的页码
+     * @property {Number} index 当前要切换的页面
+     * @property {Number} total 总页面数
      *
      */
     _p._$$SimplePage = _k._$klass();

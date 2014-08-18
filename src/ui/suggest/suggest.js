@@ -20,11 +20,11 @@ NEJ.define([
     /**
      * 提示建议控件<br />
      * 页面结构举例
-     * [code type="html"]
+     * ```html
      *   <input type='text' id='suggest-input' />
-     * [/code]
+     * ```
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _ui = NEJ.P('nej.ui');
      *   var _input = this._e._$get('suggest-input');
      *   // 输入框内容变化回调
@@ -42,13 +42,13 @@ NEJ.define([
      *       onchange:_onchage._$bind(this),
      *       onselect:_onselect._$bind(this)
      *   });
-     * [/code]
+     * ```
      *
      * @class   module:nej.ui._$$Suggest 提示建议控件
      * @uses    {nej.ut._$$Suggest}
      * @extends {nej.ui._$$Abstract}
      * @param   {Object} 可选配置参数
-     * @config  {Node|String} input 输入框节点或者ID
+     * @property  {Node|String} input 输入框节点或者ID
      *
      * [hr]
      *
@@ -145,10 +145,10 @@ NEJ.define([
     /**
      * 设置建议列表<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 设置下拉列表的值
      *   _suggest._$setList(['1','2','3','4']);
-     * [/code]
+     * ```
      * @method {_$setList}
      * @param  {String|Array} 列表html代码或者数据列表
      * @param  {String}       列表项标识样式

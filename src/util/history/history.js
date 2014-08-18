@@ -147,9 +147,9 @@ NEJ.define([
      * @api    {location.parse}
      * @param  {String} 地址
      * @return {Object} 地址信息
-     * @config {String} path  路径信息，不带查询参数
-     * @config {String} href  完整路径，带查询参数
-     * @config {Object} query 查询参数解析出来的对象
+     * @property {String} path  路径信息，不带查询参数
+     * @property {String} href  完整路径，带查询参数
+     * @property {Object} query 查询参数解析出来的对象
      */
     location.parse = (function(){
         var _reg0 = /^https?:\/\/.*?\//i,

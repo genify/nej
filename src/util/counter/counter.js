@@ -21,15 +21,15 @@ NEJ.define([
      * [/ntb]
      *
      * 结构举例：
-     * [code type="html"]
+     * ```html
      *   <input type="text" id="input-id-0" maxlength="100"/>
      *   <input type="text" id="input-id-1" data-max-length="100"/>
      *   <textarea id="textarea-id-0" maxlength="100"></textarea>
      *   <textarea id="textarea-id-1" data-max-length="100"></textarea>
-     * [/code]
+     * ```
      *
      * 脚本举例：
-     * [code]
+     * ```javascript
      *   // 统一定义名字空间所写
      *   var _  = NEJ.P,
      *       _e = _('nej.e');
@@ -41,15 +41,15 @@ NEJ.define([
      *              _event.value = '还可输入'+_event.delta+'字';
      *       }
      *   });
-     * [/code]
+     * ```
      *
      * @api    {nej.e._$counter}
      * @param  {String|Node} 输入节点
      * @param  {Object}      配置参数
-     * @config {String}   nid      显示提示信息节点标识
-     * @config {Number}   max      最大字数限制，优先级大于标签上配置的属性，一个中文算一个字符，默认100个字符
-     * @config {String}   clazz    计数器显示样式
-     * @config {Function} onchange 字数变化触发回调，{input:'xx',length:2,delta:98}
+     * @property {String}   nid      显示提示信息节点标识
+     * @property {Number}   max      最大字数限制，优先级大于标签上配置的属性，一个中文算一个字符，默认100个字符
+     * @property {String}   clazz    计数器显示样式
+     * @property {Function} onchange 字数变化触发回调，{input:'xx',length:2,delta:98}
      * @return {Void}
      */
     _p._$counter = (function(){

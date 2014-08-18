@@ -21,11 +21,11 @@ NEJ.define([
      * 无结束信息
      * [/ntb]
      * 页面结构举例
-     * [code type="html"]
+     * ```html
      *   <div id='id-bounce1'></div>
-     * [/code]
+     * ```
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _box = document.getElementById('id-bounce1'),_decelerate;
      *   var options = {
      *       from:{
@@ -44,12 +44,12 @@ NEJ.define([
      *   _decelerate  = nej.ut._$$AnimDecelerate._$allocate(options);
      *   // 开始动画
      *   _decelerate._$play();
-     * [/code]
+     * ```
      * @class   {nej.ut._$$AnimDecelerate} 减速动画
      * @extends {nej.ut._$$Animation}
      * @param   {Object}  可选配置参数
-     * @config  {Number}  friction     阻力系数，0-1之间，阻力越大减速距离越短
-     * @config  {Number}  acceleration 加速度，值越小减速越快
+     * @property  {Number}  friction     阻力系数，0-1之间，阻力越大减速距离越短
+     * @property  {Number}  acceleration 加速度，值越小减速越快
      */
     _p._$$AnimDecelerate = _k._$klass();
     _pro = _p._$$AnimDecelerate._$extend(_t0._$$Animation);

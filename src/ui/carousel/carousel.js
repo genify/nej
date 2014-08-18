@@ -26,13 +26,13 @@ NEJ.define([
      * @class   module:nej.ui._$$Carousel 卡片播放器控件
      * @extends {nej.ut._$$EventTarget}
      * @param   {Object} 可选配置参数
-     * @config  {String|Node} parent     卡片所在父容器节点
-     * @config  {Number}        mode      动画模式(1:3d;2:2d;3:left/top)
-     * @config  {Number}        current   当前选中项
-     * @config  {Number}        buffer     预加载卡片个数
-     * @config  {Boolean}       nofollow  无跟随
-     * @config  {Boolean}       nobounce  无弹性
-     * @config  {Object}        indicator 指示器参数
+     * @property  {String|Node} parent     卡片所在父容器节点
+     * @property  {Number}        mode      动画模式(1:3d;2:2d;3:left/top)
+     * @property  {Number}        current   当前选中项
+     * @property  {Number}        buffer     预加载卡片个数
+     * @property  {Boolean}       nofollow  无跟随
+     * @property  {Boolean}       nobounce  无弹性
+     * @property  {Object}        indicator 指示器参数
      *
      * [hr]
      *
@@ -511,7 +511,7 @@ NEJ.define([
      * 刷新接口
      * @method {_$refresh}
      * @param  {Object} 刷新参数
-     * @config {Number} current  当前页
+     * @property {Number} current  当前页
      * @return {Void}
      */
     _pro._$refresh = function(_options){

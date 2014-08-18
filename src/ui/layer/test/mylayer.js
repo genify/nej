@@ -18,8 +18,8 @@ var f = function(){
     /**
      * 卡片控件
      * @param   {Object} 可选配置参数
-     * @config  {String} top  卡片垂直位置
-     * @config  {String} left 卡片水平位置
+     * @property  {String} top  卡片垂直位置
+     * @property  {String} left 卡片水平位置
      */
     _p._$$MyLayer = NEJ.C();
     _proMyLayer = _p._$$MyLayer._$extend(_p._$$Layer);

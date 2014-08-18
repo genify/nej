@@ -21,7 +21,7 @@ NEJ.define([
     };
     /**
      * 播放音频，代码示例
-     * [code]
+     * ```javascript
      *   NEJ.define([
      *       '{lib}util/audio/audio.js'
      *   ],function(_e){
@@ -46,23 +46,23 @@ NEJ.define([
      *       // 则会触发0状态的onstatechange事件
      *       _e._$stopBgSound('test-audio');
      *   });
-     * [/code]
+     * ```
      * @api    {_$playBgSound}
      * @param  {String} 音频文件地址
      * @param  {Object} 可选配置参数
-     * @config {String}   key           播放标识，同一标识只允许一个播放实例
-     * @config {Variable} extra         onstatechange/onerror时传回数据
-     * @config {Number}   retry         出错重试次数，0表示不重试，默认为0
-     * @config {Number}   interval      如果设置了retry则通过此参数指定每次重试间隔，单位毫秒，默认500
-     * @config {Function} onstatechange 播放状态变化回调事件，state值为
+     * @property {String}   key           播放标识，同一标识只允许一个播放实例
+     * @property {Variable} extra         onstatechange/onerror时传回数据
+     * @property {Number}   retry         出错重试次数，0表示不重试，默认为0
+     * @property {Number}   interval      如果设置了retry则通过此参数指定每次重试间隔，单位毫秒，默认500
+     * @property {Function} onstatechange 播放状态变化回调事件，state值为
      *                                  [ntb]
      *                                   0 | 当前停止状态
      *                                   1 | 当前缓冲状态
      *                                   2 | 当前播放状态
      *                                   3 | 当前暂停状态
      *                                  [/ntb]
-     * @config {Function} ontimeupdate 时间轴变化事件，输入{current:1.000,duration:50.000,data:'extra data'}
-     * @config {Function} onerror      播放异常回调事件
+     * @property {Function} ontimeupdate 时间轴变化事件，输入{current:1.000,duration:50.000,data:'extra data'}
+     * @property {Function} onerror      播放异常回调事件
      * @return {Void}
      */
     _p._$playBgSound = (function(){

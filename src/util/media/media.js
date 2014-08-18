@@ -15,7 +15,7 @@ NEJ.define([
     /**
      * 多媒体控件基类<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
      *       '{lib}util/media/media.js'
      *   ],function(_t,_p,_o,_f,_r){
@@ -80,20 +80,20 @@ NEJ.define([
      *      // 停止播放
      *      _mda._$stop();
      *   });
-     * [/code]
+     * ```
      *
      * @class   {_$$Media}
      * @extends {util/event#_$$EventTarget}
      *
      * @param   {Object} 可选配置参数
-     * @config  {String} url    多媒体文件地址
-     * @config  {Number} volume 音量大小，0-100之间的数值
+     * @property  {String} url    多媒体文件地址
+     * @property  {Number} volume 音量大小，0-100之间的数值
      *
      * [hr]
      * 状态变化触发事件
      * @event  {onstatechange}
      * @param  {Object} 可选配置参数
-     * @config {Number} state 播放状态
+     * @property {Number} state 播放状态
      * [ntb]
      *   0 | 当前停止状态
      *   1 | 当前缓冲状态
@@ -101,20 +101,20 @@ NEJ.define([
      *   3 | 当前暂停状态
      *   4 | 播放结束状态
      * [/ntb]
-     * @config  {Object} target 播放信息
+     * @property  {Object} target 播放信息
      *
      * [hr]
      * 播放过程触发事件
      * @event  {ontimeupdate}
      * @param  {Object} 可选配置参数
-     * @config {Float} current  当前时间，单位秒
-     * @config {Float} duration 总时长，单位秒
+     * @property {Float} current  当前时间，单位秒
+     * @property {Float} duration 总时长，单位秒
      *
      * [hr]
      * 音量变化触发事件
      * @event  {onvolumechange}
      * @param  {Object} 可选配置参数
-     * @config {Float} volume 当前音量，0-100之间的数值
+     * @property {Float} volume 当前音量，0-100之间的数值
      *
      * [hr]
      * 播放错误触发事件

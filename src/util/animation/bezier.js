@@ -25,8 +25,8 @@ NEJ.define([
      * @class   {nej.ut._$$AnimBezier} 贝塞尔曲线算法
      * @extends {nej.ut._$$Animation}
      * @param   {Object} 可选配置参数
-     * @config  {Number} duration 持续时间，单位毫秒，默认为200ms
-     * @config  {String} timing   时间函数，默认为ease，ease/easein/easeout/easeinout/linear/cubic-bezier(x1,y1,x2,y2)
+     * @property  {Number} duration 持续时间，单位毫秒，默认为200ms
+     * @property  {String} timing   时间函数，默认为ease，ease/easein/easeout/easeinout/linear/cubic-bezier(x1,y1,x2,y2)
      */
     _p._$$AnimBezier = _k._$klass();
     _pro = _p._$$AnimBezier._$extend(_t0._$$Animation);
@@ -35,8 +35,8 @@ NEJ.define([
      * @protected
      * @method {__reset}
      * @param  {Object} 可选配置参数
-     * @config {Number} duration 持续时间
-     * @config {String} timing   时间函数，默认为ease，ease/easein/easeout/easeinout/linear/cubic-bezier(x1,y1,x2,y2)
+     * @property {Number} duration 持续时间
+     * @property {String} timing   时间函数，默认为ease，ease/easein/easeout/easeinout/linear/cubic-bezier(x1,y1,x2,y2)
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -184,7 +184,7 @@ NEJ.define([
     /**
      * 取消动画监听事件<br/>
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var options = {
      *         from: {
      *             offset: 100,
@@ -200,7 +200,7 @@ NEJ.define([
      *   _bounce._$play();
      *   // 停止动画,触发onstop
      *   _bounce._$stop();
-     * [/code]
+     * ```
      * @method {_$stop}
      * @return {Void}
      */

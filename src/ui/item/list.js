@@ -18,15 +18,15 @@ NEJ.define([
      * @class   module:nej.ui._$$ListItem
      * @extends {nej.ui._$$Item}
      * @param   {Object}  配置参数
-     * @config  {String}  pkey  主键字段名称，默认为id
+     * @property  {String}  pkey  主键字段名称，默认为id
      *
      *
      * [hr]
      * 删除列表项触发事件
      * @event  {ondelete}
      * @param  {Object} 事件信息
-     * @config {String} id   项标识
-     * @config {Object} data 项绑定的数据
+     * @property {String} id   项标识
+     * @property {Object} data 项绑定的数据
      *
      */
     _p._$$ListItem = _k._$klass();
@@ -71,13 +71,13 @@ NEJ.define([
      * 刷新项绑定的数据<br/>
      *
      * 脚本举例：
-     * [code]
+     * ```javascript
      *   // 获取当前item的数据信息
      *   _item._$refresh({
      *       a:'aaaaa',
      *       b:'bbbbb'
      *   });
-     * [/code]
+     * ```
      *
      * @method {_$refresh}
      * @param  {Object} 项绑定的数据

@@ -20,7 +20,7 @@ NEJ.define([
      * @class   module:nej.ui.cmd._$$ColorCard 颜色选择卡片
      * @extends {nej.ui._$$CardWrapper}
      * @param   {Object} 可选配置参数
-     * @config  {String} color 颜色值
+     * @property  {String} color 颜色值
      *
      * [hr]
      *

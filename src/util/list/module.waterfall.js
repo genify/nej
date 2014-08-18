@@ -18,7 +18,7 @@ NEJ.define([
      * 瀑布式列表模块<br/>
      * 
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <div class="mbox">
      *     <div class="lbox" id="list-box">
      *       <!-- list box -->
@@ -37,10 +37,10 @@ NEJ.define([
      *       </div>
      *     {/list}
      *   </textarea>
-     * [/code]
+     * ```
      * 
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
      *       '{lib}base/klass.js',
      *       '{lib}base/util.js',
@@ -76,10 +76,10 @@ NEJ.define([
      *           }
      *       };
      *   });
-     * [/code]
+     * ```
      * 
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
      *       '/path/to/cache.js',
      *       '{lib}util/list/module.waterfall.js'
@@ -97,17 +97,17 @@ NEJ.define([
      *           pager:{parent:'pager-box'}
      *       });
      *   });
-     * [/code]
+     * ```
      * 
      * @class   {_$$ListModuleWF}
      * @extends {_$$ListModule}
      * 
      * @param   {Object} 可选配置参数
-     * @config  {String|Node}  more   添加更多列表项按钮节点
-     * @config  {String|Node}  sbody  滚动条所在容器，支持onscroll事件
-     * @config  {Number}       delta  触发自动加载更多时距离滚动容器底部的便宜量，单位px，默认30
-     * @config  {Number}       count  指定加载多少次后出现分页器
-     * @config  {Number}       number 初始加载次数，小于等于count数有效
+     * @property  {String|Node}  more   添加更多列表项按钮节点
+     * @property  {String|Node}  sbody  滚动条所在容器，支持onscroll事件
+     * @property  {Number}       delta  触发自动加载更多时距离滚动容器底部的便宜量，单位px，默认30
+     * @property  {Number}       count  指定加载多少次后出现分页器
+     * @property  {Number}       number 初始加载次数，小于等于count数有效
      */
     _p._$$ListModuleWF = _k._$klass();
     _pro = _p._$$ListModuleWF._$extend(_t._$$ListModule);

@@ -27,8 +27,8 @@ NEJ.define([
      * @class   module:nej.ui._$$Range
      * @extends {nej.ui._$$Abstract}
      * @param   {Object}  可选配置参数，其他参数见nej.ut._$$Resize控件所示
-     * @config  {Object}  size 初始大小，输入任意两个值，其中ratio为width/height，{width:100,height:200,ratio:0.5}
-     * @config  {Object}  max  最大款高限制，{width:300,height:400}
+     * @property  {Object}  size 初始大小，输入任意两个值，其中ratio为width/height，{width:100,height:200,ratio:0.5}
+     * @property  {Object}  max  最大款高限制，{width:300,height:400}
      */
     _p._$$Resizer = _k._$klass();
     _pro = _p._$$Resizer._$extend(_i._$$Abstract);

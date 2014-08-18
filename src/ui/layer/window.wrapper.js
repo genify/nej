@@ -15,7 +15,7 @@ NEJ.define([
     /**
      * 弹出窗体封装基类对象，主要实现层里面内容部分的业务逻辑<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 第一步：继承此类，生成一个新类
      *   _p = NEJ.P('nej.ui');
      *   _p._$$MyWindow = NEJ.C();
@@ -36,7 +36,7 @@ NEJ.define([
      *         // 关闭窗口的回调
      *       }
      *   });
-     * [/code]
+     * ```
      *
      * @class   module:nej.ui._$$WindowWrapper 弹出窗体封装基类对象
      * @extends {nej.ui._$$LayerWrapper}

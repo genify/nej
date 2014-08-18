@@ -19,13 +19,13 @@ NEJ.define([
      * @extends {nej.ut._$$EventTarget}
      *
      * @param   {Object} 可选配置参数
-     * @config  {Object} to    动画结束信息
-     * @config  {Object} from  动画初始信息
-     * @config  {Number} delay 延时时间，单位毫秒，默认0
+     * @property  {Object} to    动画结束信息
+     * @property  {Object} from  动画初始信息
+     * @property  {Number} delay 延时时间，单位毫秒，默认0
      *
      * [hr]
      * 动画结束回调事件
-     * [code]
+     * ```javascript
      *   // 监测onstop事件
      *   var options = {
      *         from: {
@@ -39,12 +39,12 @@ NEJ.define([
      *         }
      *     }
      *  var _bounce = nej.ut._$$AnimBounce._$allocate(options);
-     * [/code]
+     * ```
      * @event  {onstop} 动画停止的回调
      *
      * [hr]
      * 动画过程回调事件
-     * [code]
+     * ```javascript
      *   // 监测onupdate事件
      *   var options = {
      *         from: {
@@ -60,11 +60,11 @@ NEJ.define([
      *         }
      *     }
      *  var _bounce = nej.ut._$$AnimBounce._$allocate(options);
-     * [/code]
+     * ```
      * @event  {onupdate}        一帧动画结束的回调
      * @param  {Object}          可选配置参数
-     * @config {Number} offset   偏移量
-     * @config {Number} velocity 初速度(px/s)
+     * @property {Number} offset   偏移量
+     * @property {Number} velocity 初速度(px/s)
      *
      */
     _p._$$Animation = _k._$klass();
@@ -74,8 +74,8 @@ NEJ.define([
      * @protected
      * @method {__reset}
      * @param  {Object} 可选配置参数
-     * @config {Number} to       结束坐标
-     * @config {Number} from      起始坐标
+     * @property {Number} to       结束坐标
+     * @property {Number} from      起始坐标
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -131,7 +131,7 @@ NEJ.define([
     /**
      * 注册动画监听事件<br/>
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var options = {
      *         from: {
      *             offset: 100,
@@ -145,7 +145,7 @@ NEJ.define([
      *  var _bounce = nej.ut._$$AnimBounce._$allocate(options);
      *  // 进行弹性动画
      *  _bounce._$play();
-     * [/code]
+     * ```
      * @method {_$play}
      * @return {Void}
      */
@@ -167,7 +167,7 @@ NEJ.define([
     /**
      * 取消动画监听事件<br/>
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var options = {
      *         from: {
      *             offset: 100,
@@ -183,7 +183,7 @@ NEJ.define([
      *  _bounce._$play();
      *  // 停止动画,触发onstop
      *  _bounce._$stop();
-     * [/code]
+     * ```
      *
      * @method {_$stop}
      * @return {Void}

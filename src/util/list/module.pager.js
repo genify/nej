@@ -16,7 +16,7 @@ NEJ.define([
      * 分页式列表模块<br/>
      * 
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <div class="mbox">
      *     <div class="lbox" id="list-box">
      *       <!-- list box -->
@@ -37,10 +37,10 @@ NEJ.define([
      *       </div>
      *     {/list}
      *   </textarea>
-     * [/code]
+     * ```
      * 
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
      *       '{lib}base/klass.js',
      *       '{lib}base/util.js',
@@ -76,10 +76,10 @@ NEJ.define([
      *           }
      *       };
      *   });
-     * [/code]
+     * ```
      * 
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
      *       '/path/to/cache.js',
      *       '{lib}util/list/module.pager.js'
@@ -97,7 +97,7 @@ NEJ.define([
      *           pager:{parent:'pager-box'}
      *       });
      *   });
-     * [/code]
+     * ```
      * 
      * @class   {_$$ListModulePG}
      * @extends {_$$ListModule}

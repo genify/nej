@@ -25,7 +25,7 @@ NEJ.define([
      *     [new Date(1997,1,1),new Date(2000,1,1)]   | 可选指定范围的日期
      * [/ntb]
      * 页面结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="datepick-box">
      *       <div id="days"></div>
      *       <div id="year"></div>
@@ -35,8 +35,8 @@ NEJ.define([
      *       <div id="ynxt">后一年</div>
      *       <div id="mnxt">后一月</div>
      *   </div>
-     * [/code]
-     * [code]
+     * ```
+     * ```javascript
      *   var _ut= NEJ.P('nej.ut'),
      *       _e = NEJ.P('nej.e');
      *   // 前选范围
@@ -65,28 +65,28 @@ NEJ.define([
      *       // 日期的范围，超过范围不可选
      *       range:[pDate,nDate]
      *   });
-     * [/code]
+     * ```
      * @class   {nej.ut._$$Calendar}
      * @extends {nej.ut._$$EventTarget}
      *
      * @param   {Object}      可选配置参数
-     * @config  {Number}      offset   开始星期偏移，默认为0，0-星期天、1-星期一 ...
-     * @config  {Array}       list     日期显示节点列表
-     * @config  {Number}      year     年份显示节点
-     * @config  {Number}      month    月份显示节点
-     * @config  {String|Node} mprv     上一月按钮节点
-     * @config  {String|Node} mnxt     下一月按钮节点
-     * @config  {String|Node} yprv     上一年按钮节点
-     * @config  {String|Node} ynxt     下一年按钮节点
-     * @config  {String|Node} wprv     上一星期按钮节点
-     * @config  {String|Node} wnxt     下一星期按钮节点
-     * @config  {String|Node} dprv     上一天按钮节点
-     * @config  {String|Node} dnxt     下一天按钮节点
-     * @config  {Array}       range    日期可选范围，默认全部可选
-     * @config  {String}      selected 当前项样式，默认为js-selected
-     * @config  {String}      extended 扩展项样式，默认为js-extended
-     * @config  {String}      disabled 禁用项样式，默认为js-disabled
-     * @config  {Date}        date     显示日期，默认为当前时间
+     * @property  {Number}      offset   开始星期偏移，默认为0，0-星期天、1-星期一 ...
+     * @property  {Array}       list     日期显示节点列表
+     * @property  {Number}      year     年份显示节点
+     * @property  {Number}      month    月份显示节点
+     * @property  {String|Node} mprv     上一月按钮节点
+     * @property  {String|Node} mnxt     下一月按钮节点
+     * @property  {String|Node} yprv     上一年按钮节点
+     * @property  {String|Node} ynxt     下一年按钮节点
+     * @property  {String|Node} wprv     上一星期按钮节点
+     * @property  {String|Node} wnxt     下一星期按钮节点
+     * @property  {String|Node} dprv     上一天按钮节点
+     * @property  {String|Node} dnxt     下一天按钮节点
+     * @property  {Array}       range    日期可选范围，默认全部可选
+     * @property  {String}      selected 当前项样式，默认为js-selected
+     * @property  {String}      extended 扩展项样式，默认为js-extended
+     * @property  {String}      disabled 禁用项样式，默认为js-disabled
+     * @property  {Date}        date     显示日期，默认为当前时间
      *
      * [hr]
      *
@@ -345,9 +345,9 @@ NEJ.define([
     };
     /**
      * 设置日期<br/>
-     * [code]
+     * ```javascript
      *   _dp._$setDate('1998-09-28');
-     * [/code]
+     * ```
      * @method {_$setDate}
      * @param  {String|Number|Date} 日期
      * @return {Void}
@@ -361,9 +361,9 @@ NEJ.define([
     };
     /**
      * 取当前选择时间<br/>
-     * [code]
+     * ```javascript
      *   _dp._$getDate();
-     * [/code]
+     * ```
      * @method {_$getDate}
      * @return {Date} 当前选择时间
      */

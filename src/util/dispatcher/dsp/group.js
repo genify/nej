@@ -23,8 +23,8 @@ NEJ.define([
      * @extends {_$$EventTarget}
      * 
      * @param  {Object}  可选配置参数
-     * @config {_$$Node}       root       树根节点
-     * @config {_$$Dispatcher} dispatcher 调度器
+     * @property {_$$Node}       root       树根节点
+     * @property {_$$Dispatcher} dispatcher 调度器
      */
     _p._$$GroupManager = _k._$klass();
     _pro = _p._$$GroupManager._$extend(_t0._$$EventTarget);
@@ -33,7 +33,7 @@ NEJ.define([
      * @protected
      * @method {__reset}
      * @param  {Object} 可选配置参数
-     * @config {_$$Node} root 树根节点
+     * @property {_$$Node} root 树根节点
      * @return {Void}
      */
     _pro.__reset = function(_options){

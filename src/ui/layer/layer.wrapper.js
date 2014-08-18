@@ -17,7 +17,7 @@ NEJ.define([
     /**
      * 弹出层封装基类对象，主要实现层里面内容部分的业务逻辑<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 第一步：继承此基类生成新类
      *   var _seed_css = _e._$pushCSSText('.#<uispace>{position:absolute;background:#fff;}');
      *   _p._$$MyLayer = NEJ.C();
@@ -67,7 +67,7 @@ NEJ.define([
      *         // 设置浮层内容的回调
      *       }
      *   });
-     * [/code]
+     * ```
      *
      * @class   module:nej.ui._$$LayerWrapper 弹出层封装基类对象
      * @extends {nej.ui._$$Abstract}
@@ -152,10 +152,10 @@ NEJ.define([
     /**
      * 显示弹层<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 显示浮层
      *   _ly._$show();
-     * [/code]
+     * ```
      * @method {_$show}
      * @return {Void}
      */
@@ -167,10 +167,10 @@ NEJ.define([
     /**
      * 隐藏弹层<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 隐藏弹层
      *   _ly._$hide();
-     * [/code]
+     * ```
      * @method {_$hide}
      * @return {Void}
      */

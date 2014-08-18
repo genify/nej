@@ -29,10 +29,10 @@ NEJ.define([
      * @uses    {util/media/playlist#_$$PlayList}
      * @extends {ui/base#._$$Abstract}
      * @param   {Object}  可选配置参数
-     * @config  {String|Node} parent     父节点
-     * @config  {String}      mode       播放模式，0:列表(默认)，1:单曲，2:随机
-     * @config  {Array}       list       歌曲列表
-     * @config  {Boolean}     autostart  是否自动开始，0:不自动，1:自动(默认)
+     * @property  {String|Node} parent     父节点
+     * @property  {String}      mode       播放模式，0:列表(默认)，1:单曲，2:随机
+     * @property  {Array}       list       歌曲列表
+     * @property  {Boolean}     autostart  是否自动开始，0:不自动，1:自动(默认)
      */
     _p._$$MP3Player = _k._$klass();
     _pro = _p._$$MP3Player._$extend(_u._$$Abstract);

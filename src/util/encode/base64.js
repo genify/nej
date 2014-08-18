@@ -140,7 +140,7 @@ NEJ.define([
     /**
      * Base64解码数据<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 测试一些字符，编码，反编码
      *   var _strList = ['a','null','function','error','return','switch','if','!0',
      *   'UNdefined','NULL','Function','ERROR','return 1'];
@@ -149,7 +149,7 @@ NEJ.define([
      *       var _str2b64 = p._$str2b64(_str);
      *       var _b642str = p._$b642str(_str2b64);
      *   }
-     * [/code]
+     * ```
      * @api    {nej.u._$b642str}
      * @param  {String} 数据
      * @return {String} 解码后数据
@@ -160,7 +160,7 @@ NEJ.define([
     /**
      * Base64编码数据<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 测试一些字符，编码，反编码
      *   var _strList = ['a','null','function','error','return','switch','if','!0',
      *   'UNdefined','NULL','Function','ERROR','return 1'];
@@ -169,7 +169,7 @@ NEJ.define([
      *       var _str2b64 = p._$str2b64(_str);
      *       var _b642str = p._$b642str(_str2b64);
      *   }
-     * [/code]
+     * ```
      * @api    {nej.u._$str2b64}
      * @param  {String} 数据
      * @return {String} 编码后数据

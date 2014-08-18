@@ -22,11 +22,11 @@ NEJ.define([
     /**
      * 颜色选择控件<br />
      * 页面结构举例
-     * [code type="html"]
+     * ```html
      *   <div id='colorpanel-box'></div>
-     * [/code]
+     * ```
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _cp = _p._$$ColorPick._$allocate({
      *       parent:'colorpanel-box',
      *       color:'默认rgb颜色',
@@ -40,26 +40,26 @@ NEJ.define([
      *           console.log(_event.color)
      *       }
      *   });
-     * [/code]
+     * ```
      *
      * @class   module:nej.ui._$$ColorPick
      * @uses    {nej.ui._$$ColorPanel}
      * @extends {nej.ui._$$Abstract}
      * @param   {Object} 可选配置参数
-     * @config  {String} color        颜色值
-     * @config  {String} defaultColor 默认颜色值
+     * @property  {String} color        颜色值
+     * @property  {String} defaultColor 默认颜色值
      *
      * [hr]
      * 颜色变化触发事件
      * @event  {onchange}
      * @param  {Object}   颜色信息
-     * @config {String}   color 颜色值
+     * @property {String}   color 颜色值
      *
      * [hr]
      * 确定选择颜色触发事件
      * @event  {onselect}
      * @param  {Object}   颜色信息
-     * @config {String}   color 颜色值
+     * @property {String}   color 颜色值
      *
      */
     _p._$$ColorPick = _k._$klass();
@@ -177,10 +177,10 @@ NEJ.define([
     /**
      * 设置颜色<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 先把颜色转成rgb，然后转成hsl,在一个面板设置sh，在另外一个面板设置l
      *   _cp._$setColor('#ccc');
-     * [/code]
+     * ```
      * @method {_$setColor}
      * @param  {String} 颜色值
      * @return {Void}

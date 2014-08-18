@@ -70,10 +70,10 @@ NEJ.define([
      * @protected
      * @method {__reset}
      * @param  {Object}  可选配置参数
-     * @config {Boolean} draggable   是否可拖动
-     * @config {Boolean} destroyable 关闭是否销毁
-     * @config {String}  title          卡片标题
-     * @config {Boolean} name        超链接名称
+     * @property {Boolean} draggable   是否可拖动
+     * @property {Boolean} destroyable 关闭是否销毁
+     * @property {String}  title          卡片标题
+     * @property {Boolean} name        超链接名称
      * @return {Void}
      */
     _pro.__reset = function(_options){

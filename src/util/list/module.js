@@ -26,77 +26,77 @@ NEJ.define([
      * @extends {_$$EventTarget}
      *
      * @param   {Object}               可选配置参数
-     * @config  {String|Node}   parent 列表容器节点
-     * @config  {Number}        limit  每页显示数量，默认10项
-     * @config  {Number}        first  首页显示数量，默认为limit的值
-     * @config  {String|Object} item   列表JST模版标识或者Item配置，{clazz:'xxx',klass:_$$Item||'jst key',prefix:'xxx'}
-     * @config  {Object}        cache  缓存配置信息，{key:'primary key',lkey:'list key',data:{},ext:{},klass:_$$CacheList,list:[],clear:true,total:200}
-     * @config  {Object}        pager  分页器配置信息，{parent:'xxx',klass:_$$Pager,index:2,fixed:true}
+     * @property  {String|Node}   parent 列表容器节点
+     * @property  {Number}        limit  每页显示数量，默认10项
+     * @property  {Number}        first  首页显示数量，默认为limit的值
+     * @property  {String|Object} item   列表JST模版标识或者Item配置，{clazz:'xxx',klass:_$$Item||'jst key',prefix:'xxx'}
+     * @property  {Object}        cache  缓存配置信息，{key:'primary key',lkey:'list key',data:{},ext:{},klass:_$$CacheList,list:[],clear:true,total:200}
+     * @property  {Object}        pager  分页器配置信息，{parent:'xxx',klass:_$$Pager,index:2,fixed:true}
      *
      * [hr]
      * 下拉刷新列表之前处理业务逻辑，可用于处理loading状态的显示
      * @event  {onbeforepullrefresh}
      * @param  {Object}          事件信息
-     * @config {Node}    parent  容器节点
-     * @config {String}  value   设置此参数返回用以显示loading的html代码或者节点
-     * @config {Boolean} stopped 设置此参数用以表明loading已处理，后续逻辑忽略处理loading状态
+     * @property {Node}    parent  容器节点
+     * @property {String}  value   设置此参数返回用以显示loading的html代码或者节点
+     * @property {Boolean} stopped 设置此参数用以表明loading已处理，后续逻辑忽略处理loading状态
      *
      * [hr]
      * 下拉刷新列表载入之后处理业务逻辑，可用于处理loading状态的隐藏
      * @event  {onafterpullrefresh}
      * @param  {Object}          事件信息
-     * @config {Node}    parent  容器节点
-     * @config {String}  value   设置此参数返回用以显示loading的html代码
-     * @config {Boolean} stopped 设置此参数用以表明loading已处理，后续逻辑忽略处理loading状态
+     * @property {Node}    parent  容器节点
+     * @property {String}  value   设置此参数返回用以显示loading的html代码
+     * @property {Boolean} stopped 设置此参数用以表明loading已处理，后续逻辑忽略处理loading状态
      *
      * [hr]
      * 加载列表之前处理业务逻辑，可用于处理loading状态的显示
      * @event  {onbeforelistload}
      * @param  {Object}          事件信息
-     * @config {Node}    parent  容器节点
-     * @config {String}  value   设置此参数返回用以显示loading的html代码或者节点
-     * @config {Boolean} stopped 设置此参数用以表明loading已处理，后续逻辑忽略处理loading状态
+     * @property {Node}    parent  容器节点
+     * @property {String}  value   设置此参数返回用以显示loading的html代码或者节点
+     * @property {Boolean} stopped 设置此参数用以表明loading已处理，后续逻辑忽略处理loading状态
      *
      * [hr]
      * 列表载入之后处理业务逻辑，可用于处理loading状态的隐藏
      * @event  {onafterlistload}
      * @param  {Object}          事件信息
-     * @config {Node}    parent  容器节点
-     * @config {String}  value   设置此参数返回用以显示loading的html代码
-     * @config {Boolean} stopped 设置此参数用以表明loading已处理，后续逻辑忽略处理loading状态
+     * @property {Node}    parent  容器节点
+     * @property {String}  value   设置此参数返回用以显示loading的html代码
+     * @property {Boolean} stopped 设置此参数用以表明loading已处理，后续逻辑忽略处理loading状态
      *
      * [hr]
      * 为空列表时显示的信息
      * @event  {onemptylist}
      * @param  {Object}          事件信息
-     * @config {Node}    parent  容器节点
-     * @config {String}  value   设置此参数返回用以显示的html代码
-     * @config {Boolean} stopped 设置此参数用以表明已处理，后续逻辑忽略处理状态
+     * @property {Node}    parent  容器节点
+     * @property {String}  value   设置此参数返回用以显示的html代码
+     * @property {Boolean} stopped 设置此参数用以表明已处理，后续逻辑忽略处理状态
      *
      * [hr]
      * 页码变化触发事件
      * @event  {onpagechange}
      * @param  {Object}          事件信息
-     * @config {Number}  index   当前页码
-     * @config {Boolean} stopped 设置此参数用以表明已处理，后续逻辑忽略分页处理
+     * @property {Number}  index   当前页码
+     * @property {Boolean} stopped 设置此参数用以表明已处理，后续逻辑忽略分页处理
      *
      * [hr]
      * 列表显示之前处理业务逻辑，此事件确保列表有数据
      * @event  {onbeforelistrender}
      * @param  {Object}          事件信息
-     * @config {Node}    parent  容器节点
+     * @property {Node}    parent  容器节点
      *
      * [hr]
      * 列表显示之后处理业务逻辑，此事件确保列表有数据
      * @event  {onafterlistrender}
      * @param  {Object}          事件信息
-     * @config {Node}    parent  容器节点
+     * @property {Node}    parent  容器节点
      *
      * [hr]
      * 列表清除之前处理业务逻辑
      * @event  {onbeforelistclear}
      * @param  {Object}          事件信息
-     * @config {Node}    parent  容器节点
+     * @property {Node}    parent  容器节点
      *
      * [hr]
      * 请求更新列表项数据，主要用于处理删除之前的确认，
@@ -108,17 +108,17 @@ NEJ.define([
      * 删除列表项之前回调，主要用来预处理调用Cache中的删除接口时的信息
      * @event  {onbeforedelete}
      * @param  {Object}  事件信息
-     * @config {String} id   列表项标识
-     * @config {String} key  列表标识
-     * @config {Object} data 列表项数据
+     * @property {String} id   列表项标识
+     * @property {String} key  列表标识
+     * @property {Object} data 列表项数据
      *
      * [hr]
      * 删除列表项之后回调，主要用来额外处理列表呈现的业务逻辑
      * @event  {onafterdelete}
      * @param  {Object}  事件信息
-     * @config {String}  key     列表标识
-     * @config {Object}  data    删除的列表项数据
-     * @config {Boolean} stopped 是否阻止列表刷新逻辑
+     * @property {String}  key     列表标识
+     * @property {Object}  data    删除的列表项数据
+     * @property {Boolean} stopped 是否阻止列表刷新逻辑
      *
      * [hr]
      * 请求更新列表项数据，针对JST模版的用户点击行为，
@@ -130,17 +130,17 @@ NEJ.define([
      * 更新列表项之前回调，主要用来预处理调用Cache中的更新接口时的信息
      * @event  {onbeforeupdate}
      * @param  {Object}  事件信息
-     * @config {String} id   列表项标识
-     * @config {String} key  列表标识
-     * @config {Object} data 列表项数据
+     * @property {String} id   列表项标识
+     * @property {String} key  列表标识
+     * @property {Object} data 列表项数据
      *
      * [hr]
      * 更新列表项之后回调，主要用来额外处理列表呈现的业务逻辑
      * @event  {onafterupdate}
      * @param  {Object}  事件信息
-     * @config {String}  key     列表标识
-     * @config {Object}  data    删除的列表项数据
-     * @config {Boolean} stopped 是否阻止列表刷新逻辑
+     * @property {String}  key     列表标识
+     * @property {Object}  data    删除的列表项数据
+     * @property {Boolean} stopped 是否阻止列表刷新逻辑
      *
      * [hr]
      * 错误处理回调
@@ -733,8 +733,8 @@ NEJ.define([
      * @protected
      * @method {__doDeleteItem}
      * @param  {Object} 列表项信息
-     * @config {String} id   项标识
-     * @config {Object} data 项绑定的数据信息
+     * @property {String} id   项标识
+     * @property {Object} data 项绑定的数据信息
      * @return {Void}
      */
     _pro.__doDeleteItem = function(_event){
@@ -759,8 +759,8 @@ NEJ.define([
      * @protected
      * @method {__doUpdateItem}
      * @param  {Object} 列表项信息
-     * @config {String} id   项标识
-     * @config {Object} data 项绑定的数据信息
+     * @property {String} id   项标识
+     * @property {Object} data 项绑定的数据信息
      * @return {Void}
      */
     _pro.__doUpdateItem = function(_event){

@@ -20,12 +20,12 @@ NEJ.define([
     /**
      * 分页器控件基类封装<br />
      * 页面结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="pagerCnt">page</div>
      *   <div id="pagerCnt2">page</div>
-     * [/code]
+     * ```
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
      *       '{lib}base/klass.js',
      *       '{lib}ui/pager/pager.base.js',
@@ -71,24 +71,24 @@ NEJ.define([
      *       });
      *   })
      *
-     * [/code]
+     * ```
      *
      * @class   module:_$$AbstractPager
      * @extends {ui/base#_$$Abstract}
      * @param   {Object} 可选配置参数
-     * @config  {Number} index  当前页码
-     * @config  {Number} total  总页码数
-     * @config  {Number} number 显示页数
-     * @config  {Number} limit  总页数限制
-     * @config  {Object} label  按钮文案，{prev:'&lt;',next:'&gt;'}
+     * @property  {Number} index  当前页码
+     * @property  {Number} total  总页码数
+     * @property  {Number} number 显示页数
+     * @property  {Number} limit  总页数限制
+     * @property  {Object} label  按钮文案，{prev:'&lt;',next:'&gt;'}
      *
      * [hr]
      * 页码切换事件，输入{last:3,index:1,total:12}
      * @event  {onchange}
      * @param  {Object} 页码状态对象
-     * @config {Number} last  上一次的页码
-     * @config {Number} index 当前要切换的页面
-     * @config {Number} total 总页面数
+     * @property {Number} last  上一次的页码
+     * @property {Number} index 当前要切换的页面
+     * @property {Number} total 总页面数
      *
      */
     _p._$$AbstractPager = _k._$klass();
@@ -207,10 +207,10 @@ NEJ.define([
     /**
      * 绑定联动分页器<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 绑定一个联动翻页器
      *   _pager._$bind('pagerCnt2')
-     * [/code]
+     * ```
      * @method {_$bind}
      * @param  {String|Node} 联动分页器父容器
      * @return {Void}
@@ -232,10 +232,10 @@ NEJ.define([
     /**
      * 解除联动分页器<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 解绑所以联动翻页器
      *   _pager._$unbind()
-     * [/code]
+     * ```
      * @method {_$unbind}
      * @return {nej.ui._$$AbstractPager}
      */
@@ -251,10 +251,10 @@ NEJ.define([
     /**
      * 跳转至指定页码<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 设置页码到第二页
      *   _pager._$setIndex(2)
-     * [/code]
+     * ```
      * @method {_$setIndex}
      * @param  {Number} 页码
      * @return {nej.ui._$$AbstractPager}
@@ -266,10 +266,10 @@ NEJ.define([
     /**
      * 取当前页码<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 取当前页码
      *   _pager._$getIndex()
-     * [/code]
+     * ```
      * @method {_$getIndex}
      * @return {Number} 当前页码
      */
@@ -280,10 +280,10 @@ NEJ.define([
     /**
      * 取总页数<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 取总页数
      *   _pager._$getTotal()
-     * [/code]
+     * ```
      * @method {_$getTotal}
      * @return {Number} 总页数
      */
@@ -294,10 +294,10 @@ NEJ.define([
     /**
      * 更新页码信息<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 重新设置默认页和总页数
      *   _pager._$updatePage(2,10);
-     * [/code]
+     * ```
      * @method {_$updatePage}
      * @param  {Number} 当前页码
      * @param  {Number} 总页码数

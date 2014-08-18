@@ -291,12 +291,12 @@ NEJ.define([
     /**
      * HMAC-SHA1编码数据输出十六进制串<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _p = NEJ.P('nej.u');
      *   // 密钥123，加密abc，输出十六进制编码串
      *   // a3c024f01cccb3b63457d848b0d2f89c1f744a3d
      *   _p._$hmacsha12hex('123','abc');
-     * [/code]
+     * ```
      * @api    {nej.u._$hmacsha12hex}
      * @param  {String}   密钥
      * @param  {Variable} 数据
@@ -308,12 +308,12 @@ NEJ.define([
     /**
      * HMAC-SHA1编码数据输出Base64串<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _p = NEJ.P('nej.u');
      *   // 密钥123，加密abc，输出Base64编码串
      *   // o8Ak8BzMs7Y0V9hIsNL4nB90Sj0=
      *   _p._$hmacsha12b64('123','abc');
-     * [/code]
+     * ```
      * @api    {nej.u._$hmacsha12b64}
      * @param  {String}   密钥
      * @param  {Variable} 数据
@@ -325,12 +325,12 @@ NEJ.define([
     /**
      * HMAC-SHA1编码数据输出字符串<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _p = NEJ.P('nej.u');
      *   // 密钥123，加密abc，输出字符串
      *   // £À$ðÌ³¶4WØH°ÒøtJ=
      *   _p._$hmacsha12str('123','abc');
-     * [/code]
+     * ```
      * @api    {nej.u._$hmacsha12str}
      * @param  {String}   密钥
      * @param  {Variable} 数据
@@ -342,12 +342,12 @@ NEJ.define([
     /**
      * HMAC-MD5编码数据输出十六进制串<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _p = NEJ.P('nej.u');
      *   // 密钥123，加密abc，输出十六进制串
      *   // b2a1ec0f3e0607099d7f39791c04e9a4
      *   _p._$hmacsha12str('123','abc');
-     * [/code]
+     * ```
      * @api    {nej.u._$hmacsha12str}
      * @param  {String} 密钥
      * @param  {String} 数据
@@ -359,12 +359,12 @@ NEJ.define([
     /**
      * HMAC-MD5编码数据输出Base64串<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _p = NEJ.P('nej.u');
      *   // 密钥123，加密abc，输出Base64串
      *   // sqHsDz4GBwmdfzl5HATppA==
      *   _p._$hmacmd52b64('123','abc');
-     * [/code]
+     * ```
      * @api    {nej.u._$hmacmd52b64}
      * @param  {String} 密钥
      * @param  {String} 数据
@@ -376,12 +376,12 @@ NEJ.define([
     /**
      * HMAC-MD5编码数据输出字符串<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _p = NEJ.P('nej.u');
      *   // 密钥123，加密abc，输出字符串
      *   // ²¡ì> 9yé¤
      *   _p._$hmacmd52str('123','abc');
-     * [/code]
+     * ```
      * @api    {nej.u._$hmacmd52str}
      * @param  {String} 密钥
      * @param  {String} 数据
@@ -393,12 +393,12 @@ NEJ.define([
     /**
      * SHA1编码数据输出十六进制串<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _p = NEJ.P('nej.u');
      *   // 输入数据123，输出十六进制编码串
      *   // 40bd001563085fc35165329ea1ff5c5ecbdbbeef
      *   _p._$sha12hex('123');
-     * [/code]
+     * ```
      * @api    {nej.u._$sha12hex}
      * @param  {Variable} 数据
      * @return {String}   十六进制编码串
@@ -411,12 +411,12 @@ NEJ.define([
     /**
      * SHA1编码数据输出Base64串<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _p = NEJ.P('nej.u');
      *   // 输入数据123，输出Base64编码串
      *   // QL0AFWMIX8NRZTKeof9cXsvbvu8=
      *   _p._$sha12b64('123');
-     * [/code]
+     * ```
      * @api    {nej.u._$sha12b64}
      * @param  {Variable} 数据
      * @return {String}   Base64编码串
@@ -429,12 +429,12 @@ NEJ.define([
     /**
      * SHA1编码数据输出字符串<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _p = NEJ.P('nej.u');
      *   // 输入数据123，输出字符串
      *   // @½c_ÃQe2¡ÿ\^ËÛ¾ï
      *   _p._$sha12str('123');
-     * [/code]
+     * ```
      * @api    {nej.u._$sha12str}
      * @param  {Variable} 数据
      * @return {String}   字符串
@@ -447,12 +447,12 @@ NEJ.define([
     /**
      * MD5编码数据输出十六进制串<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _p = NEJ.P('nej.u');
      *   // 输入数据123，输出十六进制串
      *   // 202cb962ac59075b964b07152d234b70
      *   _p._$md52hex('123');
-     * [/code]
+     * ```
      * @api    {nej.u._$md52hex}
      * @param  {String} 数据
      * @return {String} 十六进制串
@@ -465,12 +465,12 @@ NEJ.define([
     /**
      * MD5编码数据输出Base64串<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _p = NEJ.P('nej.u');
      *   // 输入数据123，输出Base64串
      *   // ICy5YqxZB1uWSwcVLSNLcA==
      *   _p._$md52b64('123');
-     * [/code]
+     * ```
      * @api    {nej.u._$md52b64}
      * @param  {String} 数据
      * @return {String} Base64串
@@ -483,12 +483,12 @@ NEJ.define([
     /**
      * MD5编码数据输出字符串<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _p = NEJ.P('nej.u');
      *   // 输入数据123，输出字符串
      *   //  ,¹b¬Y[K-#Kp
      *   _p._$md52str('123');
-     * [/code]
+     * ```
      * @api    {nej.u._$md52str}
      * @param  {String} 数据
      * @return {String} 字符串
@@ -501,12 +501,12 @@ NEJ.define([
     /**
      * 字符串转十六进制,低位补零<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _p = NEJ.P('nej.u');
      *   // 输入数据0，输出十六进制串
      *   // 30000000
      *   _p._$str2hex('0');
-     * [/code]
+     * ```
      * @api    {nej.u._$str2hex}
      * @param  {String} 字符串
      * @return {String} 十六进制串

@@ -16,7 +16,7 @@ NEJ.define([
      * 树节点对象<br/>
      * 
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
      *       '{lib}util/dispatcher/dsp/node.js'
      *   ],function(_p){
@@ -44,15 +44,15 @@ NEJ.define([
      *       // 回收树，同时回收节点的所有子孙节点
      *       _root = _root._$recycle();
      *   });
-     * [/code]
+     * ```
      * 
      * @class    {_$$Node}
      * @extends  {util/event#_$$EventTarget}
      * 
      * @param    {Object} 可选配置参数
-     * @config   {_$$Node}  parent 父节点
-     * @config   {String}   name   节点名称，默认为"/"
-     * @config   {Object}   data   节点缓存的数据信息
+     * @property   {_$$Node}  parent 父节点
+     * @property   {String}   name   节点名称，默认为"/"
+     * @property   {Object}   data   节点缓存的数据信息
      * 
      */
     _p._$$Node = NEJ.C();

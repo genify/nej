@@ -18,7 +18,7 @@ NEJ.define([
      * UI控件基类，框架及项目中所有涉及UI的控件均继承此类<br/>
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *    // 分配控件实例
      *    var ctrl = AAA._$allocate({
      *        clazz:'xxx',
@@ -29,15 +29,15 @@ NEJ.define([
      *        _parent.insertAdjacentElement('afterBegin',_body);
      *        return _parent;
      *    });
-     * [/code]
+     * ```
      *
      *
      * @class   module:_$$Abstract
      * @extends {_$$EventTarget}
      *
      * @param   {Object} 可选配置参数
-     * @config  {String}               clazz  控件样式
-     * @config  {String|Node|Function} parent 控件所在容器节点或者追加控件节点执行函数
+     * @property  {String}               clazz  控件样式
+     * @property  {String|Node|Function} parent 控件所在容器节点或者追加控件节点执行函数
      */
     _p._$$Abstract = _k._$klass();
     _pro = _p._$$Abstract._$extend(_t._$$EventTarget);
@@ -155,11 +155,11 @@ NEJ.define([
      * 取当前控件节点<br />
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // _mask是一个继承了此基类的实例化对象
      *   // 获取当前控件的节点
      *   _mask._$getBody();
-     * [/code]
+     * ```
      *
      * @method {_$getBody}
      * @return {Node} 控件节点
@@ -171,7 +171,7 @@ NEJ.define([
      * 控件节点追加至容器<br />
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // _mask是一个继承了此基类的实例化对象
      *   _mask._$appendTo(document.body);
      *   // 还可以传方法
@@ -181,7 +181,7 @@ NEJ.define([
      *      _parent.insertAdjacentElement('afterBegin',_body);
      *      return _parent;
      *   });
-     * [/code]
+     * ```
      *
      * @method {_$appendTo}
      * @param  {String|Node|Function} 控件所在容器节点
@@ -204,10 +204,10 @@ NEJ.define([
      * 显示控件<br />
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // _mask是一个继承了此基类的实例化对象
      *   _mask._$show();
-     * [/code]
+     * ```
      *
      * @method {_$show}
      * @return {Void}
@@ -223,10 +223,10 @@ NEJ.define([
      * 隐藏控件<br />
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // _mask是一个继承了此基类的实例化对象
      *   _mask._$hide();
-     * [/code]
+     * ```
      *
      * @method {_$hide}
      * @return {Void}

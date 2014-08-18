@@ -19,7 +19,7 @@ NEJ.define([
      * @extends {_$$GroupManager}
      * 
      * @param  {Object}  可选配置参数
-     * @config {Boolean} classed 是否需要切换样式
+     * @property {Boolean} classed 是否需要切换样式
      */
     _p._$$SingleGroupManager = _k._$klass();
     _pro = _p._$$SingleGroupManager._$extend(_t1._$$GroupManager);

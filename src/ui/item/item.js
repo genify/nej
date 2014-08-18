@@ -14,11 +14,11 @@ NEJ.define([
     /**
      * 列表项控件基类<br />
      * 页面结构举例
-     * [code type="html"]
+     * ```html
      *   <div id='item-box'></div>
-     * [/code]
+     * ```
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _  = NEJ.P,
      *   _p = _('nej.ut'),
      *   _e = _('nej.e');
@@ -53,15 +53,15 @@ NEJ.define([
      *       _p._$$MyItem,
      *       {parent:'item-box'}
      *   );
-     * [/code]
+     * ```
      *
      * @class   module:nej.ui._$$Item 列表项控件基类
      * @extends {nej.ui._$$Abstract}
      * @param   {Object} 可选配置参数
-     * @config  {Object} data 当前项绑定的数据
-     * @config  {Number} index 当前项的索引
-     * @config  {Number} total 总列表长度
-     * @config  {Array}  range 当前项所在的列表片段方位(begin,end)
+     * @property  {Object} data 当前项绑定的数据
+     * @property  {Number} index 当前项的索引
+     * @property  {Number} total 总列表长度
+     * @property  {Array}  range 当前项所在的列表片段方位(begin,end)
      */
     _p._$$Item = _k._$klass();
     _pro = _p._$$Item._$extend(_i._$$Abstract);
@@ -122,10 +122,10 @@ NEJ.define([
     /**
      * 取项标识<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *  // 获取当前item的id标识
      *   _item._$getId();
-     * [/code]
+     * ```
      * @method {_$getId}
      * @return {String} 项标识
      */
@@ -136,10 +136,10 @@ NEJ.define([
      * 取项绑定数据<br/>
      *
      * 脚本举例：
-     * [code]
+     * ```javascript
      *   // 获取当前item的数据信息
      *   _item._$getData();
-     * [/code]
+     * ```
      * @method {_$getData}
      * @return {Object} 数据信息
      */
@@ -150,13 +150,13 @@ NEJ.define([
      * 刷新项绑定的数据<br/>
      *
      * 脚本举例：
-     * [code]
+     * ```javascript
      *   // 获取当前item的数据信息
      *   _item._$refresh({
      *       a:'aaaaa',
      *       b:'bbbbb'
      *   });
-     * [/code]
+     * ```
      *
      * @method {_$refresh}
      * @param  {Object} 项绑定的数据

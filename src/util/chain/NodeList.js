@@ -117,7 +117,7 @@ var f = function() {
     *    可以进行链式操作，拥有大部分nej.e下的接口，并扩展了一部分jQuery的常用方法。
     *
     *    一个脑残的例子告诉你链式调用可以做什么
-    *    [code]
+    *    ```javascript
     *    // 获得某个节点集, 设置样式
     *    $("#chainable li:nth-child(odd)")._$style({
     *        "background": "#cca",
@@ -154,7 +154,7 @@ var f = function() {
     *    // 获得样式值
     *    })._$style(["width", "left"])
     *    // 到这里链式结束返回{"width":"80px", "left":"30px"}
-    *    [/code]
+    *    ```
     *    
     *    复制的NEJ中的接口如下：
     *    [ul]
@@ -193,23 +193,23 @@ var f = function() {
     *    [/ul]   
     *    nej.$ 支持的选择器与nes选择器一致，具体请参考 https://github.com/leeluolee/nes
     *    页面结构举例
-    *    [code type="html"]
+    *    ```html
     *      <ul>
     *          <li><a href=""></a></li>
     *          <li><a href=""></a></li>
     *          <li><a href=""></a></li>
     *          <li><a href=""></a></li>
     *      </ul>
-    *    [/code]
-    *    [code]
+    *    ```
+    *    ```javascript
     *      var $ = NEJ.P('nej.$');
     *      $('ul > li:nth-child(2n+1) >a')
     *       .addClassName('odd')
     *       ._$on('click', _callback) //将所有的奇数li节点下的a标签加上className，并进行事件绑定
-    *    [/code]
+    *    ```
     *
     *    $接受的参数与jQuery的一致 ，非常灵活
-    *    [code]
+    *    ```javascript
     *    获得"body"节点， 很明显此时节点集只有一个元素
     *    $("body")
     *
@@ -221,7 +221,7 @@ var f = function() {
     *    // 有时候你不确定输入的是什么参数， 安全的再包一次吧，无副作用
     *    $body = $("body")
     *    $body2 = $($body2) 
-    *    [/code]
+    *    ```
     *    @chainable
     *    @api    {nej.$}
     *    @param  {String|Array|_$$NodeList|Node} _selector 可以是选择器、节点、节点数组或另一个_$$NodeList实例
@@ -272,7 +272,7 @@ var f = function() {
          * 扩展链式化接口，你可以通过两种方式，一是迁移已有的静态接口(比如NEJ的大部分接口都是这样迁移过来的)，而是直接进行_$$NodeList的原型扩展
          *
          * Example:
-         * [code]
+         * ```javascript
          * // 1. 直接扩展
          * $._$implement("_$hello", function(){
          *     // 遍历容器内的所有节点
@@ -292,7 +292,7 @@ var f = function() {
          *     $content._$after2(this)._$insert(this);
          * })
          * $("#list")._$wrap(document.createElement("div"))
-         * [/code]
+         * ```
          *
          * 需要注意的是，当静态接口的迁移时，有如下约定(同时也是NEJ原接口在链式调用的表现约定)
          * [ul]
@@ -503,12 +503,12 @@ var f = function() {
      /**    
       * 获取节点样式或者设置节点样式, 这个接口的表现与jQuery的css方法一致, 根据参数不同有不同的表现
       * 比如:
-      * [code]
+      * ```javascript
       * $('li')._$style(name) //相当于_$getStyle 返回样式值
       * $('li')._$style([name1,name2...]) //相当于多重_$getStyle 返回一个Object(如{"height:20px, width:30px..."})
       * $('li')._$style(name, value) // 相当于setStyle 返回this
       * $('li')._$style(obj) //相当于多重版setStyle(即原_$style) 返回this        
-      * [/code]
+      * ```
       * @chainable
       * @api    {nej.$()._$style}
       * @param  {String|Object|Array} _key  可以是String(单取值或设置)，一个对象(多重赋值)，一个数组(多重取值)
@@ -527,12 +527,12 @@ var f = function() {
        /**
         * 获取节点属性或者设置节点属性, 这个接口的表现与jQuery的attr一致, 同_$style接口，根据参数不同有不同的表现
         * 比如:
-        * [code]
+        * ```javascript
         * $('li')._$attr(name): 相当于_$attr 返回属性值
         * $('li')._$attr([name1, name2]) 同style描述 返回{titile:"xxx",rel:"xxx", href:"xxx"}
         * $('li')._$attr(name, value): 相当于_$attr 返回this
         * $('li')._$attr(obj): 相当于多重版的_$attr 返回this
-        * [/code]
+        * ```
         * @chainable
         * @api    {nej.$()._$attr}
         * @param  {String|Object|Array} _key  可以是String(单取值或设置)，一个对象(多重赋值)，一个数组(多重取值)
@@ -552,13 +552,13 @@ var f = function() {
         /**
          * 类似于ES5的Array#forEach, 一个遍历函数, 即遍历_$$NodeList的所有节点集
          * 比如:
-         * [code]
+         * ```javascript
          * // 将1,4,7...class含有strong的li元素分别加上阶梯型的高度
          * $("li.strong:nth-child(3n+1)")._$forEach(function(_node, _index){
          *     _node.style.height = "" + (_index+1)*10 + "px"; 
          *     // 这里的this指向实例
          * })   
-         * [/code]
+         * ```
          * 注意callback中传入的节点是裸节点，而不是包装后的_$$NodeList
          * @chainable
          * @api    {nej.$()._$forEach}
@@ -573,7 +573,7 @@ var f = function() {
       /**     
        * 类似于ES5的Array#filter, 一个过滤, 即过滤_$$NodeList的所有节点集并筛选符合的节点
        * 比如:
-       * [code]
+       * ```javascript
        * // 返回节点集中的匹配选择器.strong:nth-child(3n)的节点
        * $("li")._$filter(".strong:nth-child(3n)") 
 
@@ -581,7 +581,7 @@ var f = function() {
        * $("li")._$filter(function(_node){
        *     return $(_node)._$matches(".strong:nth-child(3n)");
        * });        
-       * [/code]
+       * ```
        * 注意callback中传入的节点是裸节点，而不是包装后的_$$NodeList
        * @chainable
        * @api    {nej.$()._$filter}
@@ -601,7 +601,7 @@ var f = function() {
          * 相当于ES5的Array#map, 当返回值全部是节点类型时，返回$NodeListchainable, 否则返回标准结果数组(此时chainable不能)
          *
          * example:
-         * [code]
+         * ```javascript
          * // 此时返回Array : ["li", "li", "li".........]
          * $("li")._$map(function(_node){
          *     return _node.tagName.toLowerCase()
@@ -610,7 +610,7 @@ var f = function() {
          * $("li")._$map(function(_node){
          *     return _node.nextSibling
          * });
-         * [/code]
+         * ```
          * 注意callback中传入的节点是裸节点，而不是包装后的_$$NodeList
          * @chainable
          * @api    {nej.$()._$map}
@@ -639,12 +639,12 @@ var f = function() {
         },
         /**
          * 向内部节点集填入元素, 会处理好重复以及过滤的逻辑。这个也是$接口依赖的方法。
-         * [code]
+         * ```javascript
          * var $body = $("body")
          * $body._$add($("tbody")) //==> 添加tbody
          * $body._$add($("tbody")) //==> 什么都不会发生 因为重复了
          * $body._$add(document.body.childNodes) //==> 添加所有的body下的子节点,过滤掉不符合的
-         * [/code]
+         * ```
          * @chainable
          * @api    {nej.$()._$add}
          * @param  {Node|Array|_$$NodeList} _node 要添加的节点或节点集
@@ -679,10 +679,10 @@ var f = function() {
         /**
          * 判断包装节点是否满足某个选择器，即Selector API的matches方法。如果节点集内不止一个节点，则只判断第一个节点
          * Exmaple:
-         * [code]
+         * ```javascript
          *  $("body tbody td:nth-child(4n)")._$matches("body tbody td:nth-child(2n)")
          *  //返回 true... 这个是当然的, 4倍数的节点当然满足偶数条件
-         * [/code]
+         * ```
          *
          * @chainable
          * @api    {nej.$()._$matches}
@@ -696,7 +696,7 @@ var f = function() {
          * 查找 所有节点 的第一个(或所有)满足关系的 父节点 集, 并返回$NodeList
          *
          * Example:
-         * [code]
+         * ```javascript
          * $("tr")._$parent() 
          * //=> ['tbody', 'thead'],两个是因为节点集中的tr元素可能在tbody或thead中
          * $("tr")._$parent("tbody") 
@@ -705,7 +705,7 @@ var f = function() {
          * // =>['tbody', 'thead', 'div', 'body' ....] //会向上查找所有父节点
          * $("tr")._$parent("tbody, body",true) 
          * // =>['body', 'tbody'] //会向上查找所有父节点,但是必须满足选择器
-         * [/code]
+         * ```
          * @api    {nej.$()._$parent}
          * @param  {String} _selector 选择器
          * @param  {Boolean} _all     是否获取所有层级的父节点
@@ -715,12 +715,12 @@ var f = function() {
         _$parent: _traverse("parentNode"),
         /**
          * 与_$parent类似,查找 所有节点 的第一个(或所有根据_all参数)满足关系的 前序兄弟节点 (previousSibling)集, 并返回$NodeList
-         * [code] 
+         * ```javascript 
          * $("td")._$prev("th[scope=row]", true) 
          * // 返回所有在td之前的th元素, 它们的scope属性为 row         
          * $("td")._$prev("th[scope=row]") 
          * // 只返回直接相邻的前节点，如果不满足选择器则返回空节点集
-         * [/code]
+         * ```
          * @api    {nej.$()._$prev} 
          * @param  {String} _selector 选择器
          * @param  {Boolean} _all     是否获取所有前序节点
@@ -737,7 +737,7 @@ var f = function() {
         _$next: _traverse("nextSibling"),
         /**
          * 查找到 本节点集中 所有节点 的满足选择器关系的 直接子节点 (或 任意层级子节点 )集, 并返回$NodeList
-         * [code] 
+         * ```javascript 
          * $("body, table")._$children();
          * // => 相当于 合并body与table的直接子节点
          * $("body, table")._$children("div, thead");
@@ -746,7 +746,7 @@ var f = function() {
          * // => 这里会获取所有body下的所有层级的子节点(table也在body中) 
          * $("body, table")._$children("td:not(:last-child, :nth-child(2n))",true);
          * // => 返回所有层级的td元素并且满足选择器 td:not(:last-child, :nth-child(2n))
-         * [/code]
+         * ```
          * 
          * @api    {nej.$()._$children} 
          * @param  {String} _selector 选择器
@@ -770,9 +770,9 @@ var f = function() {
         /**
          * 满足选择器条件的同级节点，但不包含本身
          * Example
-         * [code]
+         * ```javascript
          * $("script")._$siblings("title,h2"); // => 返回script的同级节点中的
-         * [/code]
+         * ```
          *
          * @chainable
          * @api    {nej.$()._$siblings} 
@@ -786,12 +786,12 @@ var f = function() {
          * 这个insert 拥有jQuery的四个接口的功能(before, after, prepend , append) ，分别用_direct参数控制
          *
          * Example: 
-         * [code]
+         * ```javascript
          * //将`a.next`插到`#home`的内部的最上方
          * $('#home')._$insert('a.next', 'up');
          * //将a.next插入到`#home`节点后面
          * $('#home')._$insert('a.next', 'after');
-         * [/code]
+         * ```
          * 
          * @api    {nej.$()._$insert} 
          * @param  {String|Node|_$$NodeList} _selector 代表被插入的节点，可以是选择器、节点或是另外一个_$$NodeList对象
@@ -815,12 +815,12 @@ var f = function() {
          * 你做的是将被插入节点插入到某个节点的指定位置。
          *
          * Example: 
-         * [code]
+         * ```javascript
          * //将`#home`插到`a.next`的内部的最上方
          * $('#home')._$insert2('a.next', 'up');
          * //将`#home`插入到`a.next`节点后面
          * $('#home')._$insert2('a.next', 'after');
-         * [/code]
+         * ```
          * 
          * @api    {nej.$()._$insert2} 
          * @param  {String|Node|_$$NodeList} _selector 代表参考节点，可以是选择器、节点或是另外一个_$$NodeList对象
@@ -835,9 +835,9 @@ var f = function() {
          * 克隆节点集内部的 所有节点, 并返回clone的目标节点集 $NodeList 实例
          *
          * Example:
-         * [code]
+         * ```javascript
          * $('.m-template')._$clone(true)._$insert2('body');//将`.m-template`节点clone一份插入到`body`的内部下方
-         * [/code]
+         * ```
          * 
          * @api    {nej.$()._$clone} 
          * @param  {Boolean} _withContent 是否要克隆子节点
@@ -852,12 +852,12 @@ var f = function() {
          * 获得节点集中的 第一个元素的innerText 或者 设置所有元素的innerText
          *
          * Example:
-         * [code]
+         * ```javascript
          * $("title,h2")._$text("haha")
          * // 同时设置title与h2的text内容为haha
          * $("title,h2")._$text()
          * // 获得title(第一个元素)的innerText
-         * [/code]
+         * ```
          *
          * @chainable
          * @api    {nej.$()._$text} 
@@ -877,12 +877,12 @@ var f = function() {
          * 获得节点集中的 第一个元素的innerHTML 或者设置所有元素的innerHTML(与_$text接口类似)
          *
          * Example:
-         * [code]
+         * ```javascript
          * $("title,h2")._$html("haha")
          * // 同时设置title与h2的innerHTML为haha
          * $("title,h2")._$html()
          * // 获得title(第一个元素)的innerHTML
-         * [/code]
+         * ```
          *
          * @chainable
          * @api    {nej.$()._$html} 
@@ -903,12 +903,12 @@ var f = function() {
          * 获得节点集中的 第一个元素的value 或者设置所有元素的value(与_$text接口类似)
          *
          * Example:
-         * [code]
+         * ```javascript
          * $("input,textarea")._$val()
          * // 获取第一个满足'input,textarea'选择器元素的value值
          * $("title,h2")._$html("haha")
          * // 获得title(第一个元素)的innerHTML
-         * [/code]
+         * ```
          *
          * @chainable
          * @api    {nej.$()._$html} 
@@ -979,7 +979,7 @@ var f = function() {
          * 绑定事件，可以使用事件代理, 与jQuery的on类似
          * 
          * __Example:__
-         * [code]
+         * ```javascript
          * // 1. 普通事件绑定
          * $("body")._$on("click", function(_e){
          *     alert("单个事件绑定"+_e.type)
@@ -1008,7 +1008,7 @@ var f = function() {
          *         alert("多重事件绑定之代理版"+_e.type)
          *     }
          * })
-         * [/code]
+         * ```
          * @chainable
          * @api    {nej.$()._$on} 
          * @param  {String|Array|Object} _event     事件名，_event支持多种参数类型会有不同的结果
@@ -1053,7 +1053,7 @@ var f = function() {
         /**
          * 为 节点集内的每一个节点 解除事件回调, 类似jQuery的off方法 
          * __Example__
-         * [code]
+         * ```javascript
          * // 1. 普通事件解绑
          * $("body")._$off("click", handler)
          * // 2. 多个普通类型事件解绑(同一个handler)
@@ -1079,7 +1079,7 @@ var f = function() {
          * });
          * // 9. 所有事件清除 
          * $("body")._$off() //慎重
-         * [/code]
+         * ```
          * 
          * @chainable
          * @api    {nej.$()._$off} 
@@ -1136,7 +1136,7 @@ var f = function() {
          *                                      如果_event是个Ojbect,则会视为多重触发, 如{'click': param1, 'mouseover': param2}
          *                                      如果_event是个Array, 则会对多个_event进行触发(公用一个options), 如['click','mouseover']
          * Example:
-         * [code]
+         * ```javascript
          * //触发一个事件
          * _$trigger("click", params) 
          * //一次触发多个事件(如果有参数，他们共用这个参数)
@@ -1146,7 +1146,7 @@ var f = function() {
          *     "click": params1,
          *     "dblclick": params2
          * })
-         * [/code]
+         * ```
          * 
          * @api    {nej.$()._$trigger} 
          * @param  {String|Array|Object} _event   可以传入多种参数类型

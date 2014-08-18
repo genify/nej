@@ -53,19 +53,19 @@ NEJ.define([
      * 绑定文件下载行为
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 统一定义名字空间简写
      *   var _  = NEJ.P,
      *       _e = _('nej.e');
      *   // 绑定文件下载行为
      *   _e._$bindSaveAsAction('button_id');
-     * [/code]
+     * ```
      *
      * @api    {nej.e._$bindSaveAsAction}
      * @param  {String|Node} 下载点击链接节点，必须是A节点
      * @param  {Object}      可选配置参数
-     * @config {String|Function} url  下载文件地址或者地址生成函数
-     * @config {String}          name 保存的文件名称，没有指定name则取url中文件名
+     * @property {String|Function} url  下载文件地址或者地址生成函数
+     * @property {String}          name 保存的文件名称，没有指定name则取url中文件名
      * @return {Void}
      */
     _p._$bindSaveAsAction = function(_button,_options){
@@ -80,13 +80,13 @@ NEJ.define([
      * 解绑文件下载行为
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 统一定义名字空间简写
      *   var _  = NEJ.P,
      *       _e = _('nej.e');
      *   // 文件另存为
      *   _e._$unbindSaveAsAction('button_id');
-     * [/code]
+     * ```
      *
      * @api    {nej.e._$unbindSaveAsAction}
      * @param  {String|Node} 下载点击按钮节点

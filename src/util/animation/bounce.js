@@ -20,7 +20,7 @@ NEJ.define([
      *  velocity  [Number] | 初速度，单位 px/s
      * 无结束信息
      * [/ntb]
-     * [code]
+     * ```javascript
      *   var options = {
      *         from: {
      *             offset: 100,
@@ -34,12 +34,12 @@ NEJ.define([
      *     }
      *  var _bounce = nej.ut._$$AnimBounce._$allocate(options);
      *  _bounce._$play();
-     * [/code]
+     * ```
      * @class   {nej.ut._$$AnimBounce} 弹跳动画
      * @extends {nej.ut._$$Animation}
      * @param   {Object} 可选配置参数
-     * @config  {Number} acceleration  加速度，值越小弹跳越快
-     * @config  {Number} springtension 张紧度，0-1之间，值越小弹跳距离越大
+     * @property  {Number} acceleration  加速度，值越小弹跳越快
+     * @property  {Number} springtension 张紧度，0-1之间，值越小弹跳距离越大
      */
     _p._$$AnimBounce = _k._$klass();
     _pro = _p._$$AnimBounce._$extend(_t0._$$Animation);
@@ -48,8 +48,8 @@ NEJ.define([
      * @protected
      * @method {__reset}
      * @param  {Object} 可选配置参数
-     * @config {Number} acceleration  加速度，值越小弹跳越快
-     * @config {Number} springtension 张紧度，0-1之间，值越小弹跳距离越大
+     * @property {Number} acceleration  加速度，值越小弹跳越快
+     * @property {Number} springtension 张紧度，0-1之间，值越小弹跳距离越大
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -81,7 +81,7 @@ NEJ.define([
     /**
      * 取消动画监听事件<br/>
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var options = {
      *         from: {
      *             offset: 100,
@@ -97,7 +97,7 @@ NEJ.define([
      *   _bounce._$play();
      *   // 停止动画,触发onstop
      *   _bounce._$stop();
-     * [/code]
+     * ```
      * @method {_$stop}
      * @return {Void}
      */

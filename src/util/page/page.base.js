@@ -17,7 +17,7 @@ NEJ.define([
     /**
      * 分页逻辑封装基类<br />
      * 页面结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="page">
      *       <a href="#" class="zbtn sbtn">首页</a>
      *       <a href="#" class="zbtn zprv">上一页</a>
@@ -33,9 +33,9 @@ NEJ.define([
      *       <a href="#" class="zbtn znxt">下一页</a>
      *       <a href="#" class="zbtn ebtn">末页</a>
      *   </div>
-     * [/code]
+     * ```
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
      *       '{lib}base/klass.js',
      *       '{lib}util/page/page.base.js',
@@ -85,29 +85,29 @@ NEJ.define([
      *       // 第3步，可以调用提供的共有接口
      *       _ps._$setTotal(100);
      *   })
-     * [/code]
+     * ```
      * @class   {_$$AbstractPage} 分页逻辑封装基类
      * @extends {util/event#_$$EventTarget}
      * @param   {Object} 可选配置参数
-     * @config  {Array}        list        页码节点列表【长度保持奇数】
-     * @config  {String}       event       触发页码切换事件，默认为click
-     * @config  {String|Node}  pbtn        上一页按钮
-     * @config  {String|Node}  nbtn        下一页按钮
-     * @config  {String|Node}  sbtn        首页按钮
-     * @config  {String|Node}  ebtn        尾页按钮
-     * @config  {Number}       index       当前页码
-     * @config  {Number}       total       总页码数
-     * @config  {Number}       limit       总页数限制
-     * @config  {String}       selected    选中样式，默认为js-selected
-     * @config  {String}       disabled    禁用样式，默认为js-disabled
+     * @property  {Array}        list        页码节点列表【长度保持奇数】
+     * @property  {String}       event       触发页码切换事件，默认为click
+     * @property  {String|Node}  pbtn        上一页按钮
+     * @property  {String|Node}  nbtn        下一页按钮
+     * @property  {String|Node}  sbtn        首页按钮
+     * @property  {String|Node}  ebtn        尾页按钮
+     * @property  {Number}       index       当前页码
+     * @property  {Number}       total       总页码数
+     * @property  {Number}       limit       总页数限制
+     * @property  {String}       selected    选中样式，默认为js-selected
+     * @property  {String}       disabled    禁用样式，默认为js-disabled
      *
      * [hr]
      * 页码变化触发事件，输入{last:3,index:1,total:12}
      * @event  {onchange}
      * @param  {Object}   页码信息
-     * @config {Number} last  上一次的页码
-     * @config {Number} index 当前要切换的页面
-     * @config {Number} total 总页面数
+     * @property {Number} last  上一次的页码
+     * @property {Number} index 当前要切换的页面
+     * @property {Number} total 总页面数
      *
      */
     _p._$$AbstractPage = _k._$klass();
@@ -329,10 +329,10 @@ NEJ.define([
     /**
      * 返回当前页码数<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 获取当前页码
      *   _ps._$getIndex();
-     * [/code]
+     * ```
      * @method {_$getIndex}
      * @return {Number} 当前页码
      */
@@ -342,10 +342,10 @@ NEJ.define([
     /**
      * 跳转至指定页码<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 设置当前页码
      *   _ps._$setIndex(2);
-     * [/code]
+     * ```
      * @method {_$setIndex}
      * @param  {Number} 页码值
      * @return {Void}
@@ -359,10 +359,10 @@ NEJ.define([
      /**
      * 返回页码总数<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 获取总页码数
      *   _ps._$getTotal();
-     * [/code]
+     * ```
      * @method {_$getTotal}
      * @return {Number} 页码总数
      */
@@ -372,10 +372,10 @@ NEJ.define([
     /**
      * 设置总页码数，当前页码重置为首页<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 设置总页码数
      *   _ps._$setTotal(10);
-     * [/code]
+     * ```
      * @method {_$setTotal}
      * @param  {Number} 总页码数
      * @return {Void}
@@ -390,10 +390,10 @@ NEJ.define([
     /**
      * 更新总页码数，当前页码不变，无回调<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 设置总页码数
      *   _ps._$updateTotal(10);
-     * [/code]
+     * ```
      * @method {_$updateTotal}
      * @param  {Number} 总页码数
      * @return {Void}
@@ -407,10 +407,10 @@ NEJ.define([
     /**
      * 更新页码信息<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 设置总页码数，并且跳转到指定页面
      *   _ps._$updatePage(2,10);
-     * [/code]
+     * ```
      * @method {_$updatePage}
      * @param  {Number} 当前页码
      * @param  {Number} 总页码数

@@ -17,7 +17,7 @@ NEJ.define([
      * 自定义事件封装对象，封装的事件支持通过事件相关接口进行添加、删除等操作<br/>
      * 
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
      *       '{lib}base/event.js'
      *       '{lib}util/event.js'
@@ -38,14 +38,14 @@ NEJ.define([
      *       window.onok({a:'aaaaa'});
      *       _v._$dispatchEvent(window,'ok',{a:'aaaaa'});
      *   });
-     * [/code]
+     * ```
      * 
      * @class   {_$$CustomEvent}
      * @extends {_$$EventTarget}
      * 
      * @param   {Object} 可选配置参数
-     * @config  {String|Node}  element 事件关联节点ID或者对象，默认为window对象
-     * @config  {String|Array} event   事件名称或者名称列表
+     * @property  {String|Node}  element 事件关联节点ID或者对象，默认为window对象
+     * @property  {String|Array} event   事件名称或者名称列表
      * 
      * [hr]
      * 初始化时触发事件

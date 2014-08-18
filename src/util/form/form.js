@@ -39,7 +39,7 @@ NEJ.define([
      * [/ntb]
      *
      * HTML示例代码：
-     * [code type="html"]
+     * ```html
      *   <!-- form节点添加data-focus-mode属性 -->
      *   <form id="webForm" data-focus-mode="1">
      *     <!-- 必须设置值 -->
@@ -105,10 +105,10 @@ NEJ.define([
      *     <input name="n45" type="text"
      *            data-type="date" data-min="now" data-max="2050-10-10"/>
      *   </form>
-     * [/code]
+     * ```
      *
      * 简单应用示例代码：
-     * [code]
+     * ```javascript
      *   // 分配表单验证控件实例
      *   var _form = nej.ut._$$WebForm._$allocate({
      *       form:'webForm',
@@ -135,10 +135,10 @@ NEJ.define([
      *       // 使用ajax请求的话可以通过_form._$data()获取表单信息
      *       doAjaxRequest('/api/form',_form._$data());
      *   }
-     * [/code]
+     * ```
      *
      * 通过回调自定义提示信息示例代码：
-     * [code]
+     * ```javascript
      *   var _form = nej.ut._$$WebForm._$allocate({
      *       form:'webForm',
      *       oninvalid:function(_event){
@@ -154,10 +154,10 @@ NEJ.define([
      *           _event.value = '<span class="pass">pass</span>'
      *       }
      *   });
-     * [/code]
+     * ```
      *
      * 通过回调自定义验证规则示例代码：
-     * [code]
+     * ```javascript
      *   var _form = nej.ut._$$WebForm._$allocate({
      *       form:'webForm',
      *       oncheck:function(_event){
@@ -178,22 +178,22 @@ NEJ.define([
      *           // TODO other check
      *       }
      *   });
-     * [/code]
+     * ```
      *
      * @class   {nej.ut._$$WebForm}
      * @extends {nej.ut._$$EventTarget}
      *
      * @param   {Object}      配置参数
-     * @config  {String|Node} form    表单节点
-     * @config  {String}      invalid 验证未通过时添加在表单元素上的样式名称，默认为js-invalid
-     * @config  {String}      holder  如果有placeholder，则可以指定样式名称，默认为js-placeholder
-     * @config  {String}      focus   如果有聚焦效果，则可以通过指定该样式名称，默认为js-focus
-     * @config  {String}      tip     提示信息效果样式名称，默认为js-tip
-     * @config  {String}      pass    提示信息效果样式名称，默认为js-pass
-     * @config  {String}      error   提示信息效果样式名称，默认为js-error
-     * @config  {Object}      type    类型验证扩展，主要扩展data-type值的验证规则，{type:regexp,type:function}
-     * @config  {Object}      attr    验证属性扩展，主要扩展自定义data-xxx的验证规则，{attr:function}
-     * @config  {Object}      message 提示信息内容，{key:value}<br/>
+     * @property  {String|Node} form    表单节点
+     * @property  {String}      invalid 验证未通过时添加在表单元素上的样式名称，默认为js-invalid
+     * @property  {String}      holder  如果有placeholder，则可以指定样式名称，默认为js-placeholder
+     * @property  {String}      focus   如果有聚焦效果，则可以通过指定该样式名称，默认为js-focus
+     * @property  {String}      tip     提示信息效果样式名称，默认为js-tip
+     * @property  {String}      pass    提示信息效果样式名称，默认为js-pass
+     * @property  {String}      error   提示信息效果样式名称，默认为js-error
+     * @property  {Object}      type    类型验证扩展，主要扩展data-type值的验证规则，{type:regexp,type:function}
+     * @property  {Object}      attr    验证属性扩展，主要扩展自定义data-xxx的验证规则，{attr:function}
+     * @property  {Object}      message 提示信息内容，{key:value}<br/>
      *                                错误信息key规则：节点名称+错误代码，
      *                                如 'username-1':'必须输入用户名！'
      *                                表示username输入框没有输入内容时错误提示信息为'必须输入用户名！'<br/>
@@ -205,9 +205,9 @@ NEJ.define([
      * 对于无法通过配置验证的控件会回调外界辅助验证
      * @event   {oncheck}
      * @param   {Object} 验证基本信息
-     * @config  {Node}   target 当前验证节点
-     * @config  {Node}   form   表单对象
-     * @config  {Number} value  验证返回结果
+     * @property  {Node}   target 当前验证节点
+     * @property  {Node}   form   表单对象
+     * @property  {Number} value  验证返回结果
      *
      * [hr]
      * 验证未通过触发事件，错误类型对照表
@@ -222,14 +222,14 @@ NEJ.define([
      * [/ntb]
      * @event   {oninvalid}
      * @param   {Object} 验证基本信息
-     * @config  {Node}   target 当前验证节点
-     * @config  {Number} code   错误标识
+     * @property  {Node}   target 当前验证节点
+     * @property  {Number} code   错误标识
      *
      * [hr]
      * 通过验证提示信息
      * @event   {onvalid}
      * @param   {Object} 验证基本信息
-     * @config  {Node}   target 当前验证节点
+     * @property  {Node}   target 当前验证节点
      *
      * [hr]
      * 回车触发事件

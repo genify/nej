@@ -22,7 +22,7 @@ NEJ.define([
     /**
      * 窗体控件<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _window = _p._$$Window._$allocate({
      *       parent:document.body,
      *       title:'弹出框标题',
@@ -34,19 +34,19 @@ NEJ.define([
      *   });
      *   // 显示窗口，默认实例化后会显示，如果_$hide()后需要手动调用
      *   _window._$show();
-     * [/code]
+     * ```
      *
      * @class   module:nej.ui._$$Window 窗体控件
      * @extends {nej.ui._$$Layer}
      * @param   {Object} 可选配置参数
-     * @config  {String}                         title       窗口标题
-     * @config  {String}                         align       相对于视窗位置定义，横向+空格+纵向，默认为center middle
+     * @property  {String}                         title       窗口标题
+     * @property  {String}                         align       相对于视窗位置定义，横向+空格+纵向，默认为center middle
      * [ntb]
      *   横向 | left/center/right/auto
      *   纵向 | top/middle/bottom/auto
      * [/ntb]
-     * @config  {Boolean}                        draggable 是否可拖拽
-     * @config  {nej.ui._$$Mask|Boolean|String}  mask      盖层信息
+     * @property  {Boolean}                        draggable 是否可拖拽
+     * @property  {nej.ui._$$Mask|Boolean|String}  mask      盖层信息
      * [ntb]
      *   如果是nej.ui._$$Mask的子类 | 则为盖层构造
      *   如果是布尔值               | 则使用默认盖层
@@ -257,9 +257,9 @@ NEJ.define([
     /**
      * 设置标题<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   _window._$setTitle('设置浮层标题');
-     * [/code]
+     * ```
      * @method {_$setTitle}
      * @param  {String} 标题
      * @return {nej.ui._$$Window}
@@ -274,10 +274,10 @@ NEJ.define([
     /**
      * 设置窗体对齐方式<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 设置对齐方式，默认是center,middle
      *   _window._$setAlign();
-     * [/code]
+     * ```
      * @method {_$setAlign}
      * @param  {String} 对齐方式
      * @return {nej.ui._$$Window}
@@ -300,9 +300,9 @@ NEJ.define([
     /**
      * 显示窗体<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   _window._$show();
-     * [/code]
+     * ```
      * @method {_$show}
      * @return {nej.ui._$$Window}
      */

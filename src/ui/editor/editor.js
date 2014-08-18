@@ -31,8 +31,8 @@ NEJ.define([
      * @uses    {nej.ut._$$EditorToolbar}
      * @extends {nej.ui._$$Abstract}
      * @param   {Object} 可选配置参数
-     * @config  {Boolean}   focus    是否自动聚焦
-     * @config  {String} content  文本内容
+     * @property  {Boolean}   focus    是否自动聚焦
+     * @property  {String} content  文本内容
      *
      */
     _p._$$Editor = _k._$klass();

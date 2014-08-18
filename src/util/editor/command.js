@@ -20,8 +20,8 @@ NEJ.define([
      * @class   {nej.ut._$$EditorCommand} 富媒体编辑器执行命令封装
      * @extends {nej.ut._$$EventTarget}
      * @param   {Object} 可选配置参数
-     * @config  {nej.ut._$$EditorArea}       area       编辑器核心
-     * @config  {nej.ut._$$EditorToolBar} toolbar 工具栏实例
+     * @property  {nej.ut._$$EditorArea}       area       编辑器核心
+     * @property  {nej.ut._$$EditorToolBar} toolbar 工具栏实例
      */
     _p._$$EditorCommand = _k._$klass();
     _pro = _p._$$EditorCommand._$extend(_t._$$EventTarget);

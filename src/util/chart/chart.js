@@ -12,18 +12,18 @@ NEJ.define([
     /**
      * 绘制图表对象<br/>
      * 页面结构举例
-     * [code type="html"]
+     * ```html
      *   <div id='box'></div>
-     * [/code]
+     * ```
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _e = NEJ.P('nej.e');
      *   _e._$drawChart('box',{data:{}})
-     * [/code]
+     * ```
      * @api    {nej.e._$drawChart}
      * @param  {String|Node}  图表父节点
      * @param  {Object} 可配置参数
-     * @config {Object}       data 生成图表需要的数据
+     * @property {Object}       data 生成图表需要的数据
      * @return {Void}
      */
     _p._$drawChart = (function(){

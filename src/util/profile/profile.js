@@ -21,13 +21,13 @@ var f = function(){
      * 滚动内存优化控件，限垂直方向
      * @class  {nej.ut._$$ScrollPerf} 滚动内存优化控件
      * @param  {Object} 可选配置参数
-     * @config {Number} level 优化等级，计算位置时位置的缓存控制
+     * @property {Number} level 优化等级，计算位置时位置的缓存控制
      * [ntb]
      *   0 | 不做任何优化，每个优化项每次必须重新计算位置【默认】
      *   1 | 第一次计算位置，后续使用缓存数据
      * [/ntb]
-     * @config {Number}      offset   当前可视节点的上下偏移个节点可见，如该参数为1则表示当前节点加前后1个节点（共3个节点）可见
-     * @config {String|Node} viewport 滚动条所在的节点，默认为document.body
+     * @property {Number}      offset   当前可视节点的上下偏移个节点可见，如该参数为1则表示当前节点加前后1个节点（共3个节点）可见
+     * @property {String|Node} viewport 滚动条所在的节点，默认为document.body
      * 
      * [hr]
      * 
@@ -43,13 +43,13 @@ var f = function(){
      * @protected
      * @method {__reset}
      * @param  {Object} 可选配置参数
-     * @config {Number} level 优化等级，计算位置时位置的缓存控制
+     * @property {Number} level 优化等级，计算位置时位置的缓存控制
      * [ntb]
      *   0 | 不做任何优化，每个优化项每次必须重新计算位置【默认】
      *   1 | 第一次计算位置，后续使用缓存数据
      * [/ntb]
-     * @config {Number}      offset   当前可视节点的上下偏移个节点可见，如该参数为1则表示当前节点加前后1个节点（共3个节点）可见
-     * @config {String|Node} viewport 滚动条所在的节点，默认为document.body
+     * @property {Number}      offset   当前可视节点的上下偏移个节点可见，如该参数为1则表示当前节点加前后1个节点（共3个节点）可见
+     * @property {String|Node} viewport 滚动条所在的节点，默认为document.body
      * @return {Void}
      */
     __proScrollPerf.__reset = function(_options){

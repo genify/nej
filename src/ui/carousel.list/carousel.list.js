@@ -21,10 +21,10 @@ NEJ.define([
      * @class   module:nej.ui._$$CarouselList 卡片播放器控件
      * @extends {nej.ut._$$EventTarget}
      * @param  {Object} 可选配置参数
-     * @config {String|Node} parent    卡片所在父容器节点
-     * @config {Number}      current   当前选中项
-     * @config {Number}      buffer    预加载卡片个数
-     * @config {Object}      indicator 指示器参数
+     * @property {String|Node} parent    卡片所在父容器节点
+     * @property {Number}      current   当前选中项
+     * @property {Number}      buffer    预加载卡片个数
+     * @property {Object}      indicator 指示器参数
      *
      * [hr]
      *

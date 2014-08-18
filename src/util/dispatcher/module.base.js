@@ -21,9 +21,9 @@ NEJ.define([
      * @extends {_$$Module}
      * 
      * @param   {Object} 可选配置参数
-     * @config  {String}        umi        当前模块的统一模块标识符
-     * @config  {Object}        composite  组合模块配置信息
-     * @config  {_$$Dispatcher} dispatcher 调度器实例
+     * @property  {String}        umi        当前模块的统一模块标识符
+     * @property  {Object}        composite  组合模块配置信息
+     * @property  {_$$Dispatcher} dispatcher 调度器实例
      */
     _p._$$AbstractModule = _k._$klass();
     _pro = _p._$$AbstractModule._$extend(_t0._$$EventTarget);

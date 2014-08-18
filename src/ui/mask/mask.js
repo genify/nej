@@ -18,24 +18,24 @@ NEJ.define([
     /**
      * 盖层控件<br />
      * 页面结构举例
-     * [code type="html"]
+     * ```html
      *   <style type="text/css">
      *       .box{position:relative;}
      *   </style>
      *   <div id="mask-box" class="box"></div>
-     * [/code]
+     * ```
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _mask = _p._$$Mask._$allocate({
      *       parent:document.body,
      *       content:'<div style="width:100px;height:100px;margin:0 auto;margin-top:150px;">搞一点盖层的内容</div>'
      *   });
-     * [/code]
+     * ```
      *
      * @class   module:nej.ui._$$Mask 盖层控件
      * @extends {nej.ui._$$Abstract}
      * @param   {Object} 可选配置参数
-     * @config  {String|Node} content 内容节点或者HTML代码
+     * @property  {String|Node} content 内容节点或者HTML代码
      *
      */
     _p._$$Mask = _k._$klass();
@@ -75,12 +75,12 @@ NEJ.define([
     };
     /**
      * 显示盖层<br />
-     * [code]
+     * ```javascript
      *   // 先隐藏盖层
      *   _mask._$hide();
      *   // 显示盖层
      *   _mask._$show();
-     * [/code]
+     * ```
      * @method {_$show}
      * @return {Void}
      */

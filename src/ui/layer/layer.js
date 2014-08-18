@@ -16,7 +16,7 @@ NEJ.define([
     /**
      * 弹出层控件基类<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 第一步：继承此基类生成新类
      *   var _seed_css = _e._$pushCSSText('.#<uispace>{position:absolute;background:#fff;}');
      *   _p._$$MyLayer = NEJ.C();
@@ -66,14 +66,14 @@ NEJ.define([
      *         // 设置浮层内容的回调
      *       }
      *   });
-     * [/code]
+     * ```
      *
      * @class   module:nej.ui._$$Layer 弹出层控件基类
      * @extends {nej.ui._$$Abstract}
      * @param   {Object} 可选配置参数
-     * @config  {String|Node} content     内容HTML代码或者节点对象
-     * @config  {Boolean}     destroyable 调用隐藏时是否自动回收，默认不自动回收
-     * @config  {Boolean}     nohack      针对IE6不做hack处理
+     * @property  {String|Node} content     内容HTML代码或者节点对象
+     * @property  {Boolean}     destroyable 调用隐藏时是否自动回收，默认不自动回收
+     * @property  {Boolean}     nohack      针对IE6不做hack处理
      *
      * [hr]
      *
@@ -147,10 +147,10 @@ NEJ.define([
     /**
      * 设置层显示内容<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 设置层里面展示的内容
      *   _ly._$setContent('节点或者字符串');
-     * [/code]
+     * ```
      * @method {_$setContent}
      * @param  {String|Node} 内容HTML代码或者节点
      * @return {Void}
@@ -168,10 +168,10 @@ NEJ.define([
     /**
      * 设置位置<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 设置浮层位置
      *   _ly._$setPosition({top:100,left:200});
-     * [/code]
+     * ```
      * @method {_$setPosition}
      * @param  {Object} 位置信息，如{top:100,left:200}
      * @return {Void}
@@ -193,10 +193,10 @@ NEJ.define([
     /**
      * 显示控件<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 显示浮层
      *   _ly._$show();
-     * [/code]
+     * ```
      * @method {_$show}
      * @return {Void}
      */
@@ -212,10 +212,10 @@ NEJ.define([
     /**
      * 隐藏控件<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 隐藏浮层
      *   _ly._$hide();
-     * [/code]
+     * ```
      * @method {_$hide}
      * @return {Void}
      */

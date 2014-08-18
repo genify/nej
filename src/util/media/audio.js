@@ -14,7 +14,7 @@ var f = function(){
     /**
      * 音频播放控件<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 首先生成播放对象,只负责逻辑部分，要配合UI来使用
      *   // preload：是否预加载
      *   // url：音频地址
@@ -36,11 +36,11 @@ var f = function(){
      *   _mda._$pause();
      *   // 停止播放
      *   _mda._$stop();
-     * [/code]
+     * ```
      * @class   {nej.ut._$$MediaAudio} 音频播放控件
      * @extends {nej.ut._$$Media}
      * @param   {Object} 可选配置参数
-     * @config  {String} url 音频地址
+     * @property  {String} url 音频地址
      */
     _p._$$MediaAudio = NEJ.C();
     _pro = _p._$$MediaAudio._$extend(_p._$$Media);

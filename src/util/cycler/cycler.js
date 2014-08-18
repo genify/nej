@@ -18,16 +18,16 @@ NEJ.define([
     /**
      * 循环播放封装对象<br/>
      * 页面结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="nbox"></div>
      *   <ul id="pbox">
      *       <li>1</li>
      *       <li>2</li>
      *       <li>3</li>
      *   </ul>
-     * [/code]
+     * ```
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _p = NEJ.P('nej.ut');
      *   var _cyc = _p._$$Cycler._$allocate(
      *   {
@@ -42,15 +42,15 @@ NEJ.define([
      *           // 切换页面的回调，_index从1到3
      *       }
      *   });
-     * [/code]
+     * ```
      * @class   {nej.ut._$$Cycler} 循环播放封装对象
      * @extends {nej.ut._$$EventTarget}
      * @param   {Object}      可选配置参数
-     * @config  {Array}       list         图片地址列表
-     * @config  {String|Node} nbox         图片容器节点
-     * @config  {String|Node} pbox         页码索引容器节点
-     * @config  {String}      event        页码切换事件名称
-     * @config  {Number}      interval     轮播时间间隔，单位秒，默认为2s
+     * @property  {Array}       list         图片地址列表
+     * @property  {String|Node} nbox         图片容器节点
+     * @property  {String|Node} pbox         页码索引容器节点
+     * @property  {String}      event        页码切换事件名称
+     * @property  {Number}      interval     轮播时间间隔，单位秒，默认为2s
      *
      * [hr]
      *
@@ -78,10 +78,10 @@ NEJ.define([
      * @protected
      * @method {__reset}
      * @param   {Object}       可选配置参数
-     * @config  {Array}       list      图片地址列表
-     * @config  {String|Node} nbox      图片容器节点
-     * @config  {String|Node} pbox      页码索引容器节点
-     * @config  {String}      event     页码切换事件名称
+     * @property  {Array}       list      图片地址列表
+     * @property  {String|Node} nbox      图片容器节点
+     * @property  {String|Node} pbox      页码索引容器节点
+     * @property  {String}      event     页码切换事件名称
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -114,7 +114,7 @@ NEJ.define([
      * @protected
      * @method {__onPageChange}
      * @param  {Object} 页码信息
-     * @config {Number} index 页码信息
+     * @property {Number} index 页码信息
      * @return {Void}
      */
     _pro.__onPageChange = function(_event){
@@ -151,10 +151,10 @@ NEJ.define([
     /**
      * 设置图片<br/>
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 在回调里突然想换另外一张图片来展示
      *   _cyc._$setImage('http://abc.com/abc.jpg');
-     * [/code]
+     * ```
      * @method {_$setImage}
      * @param  {String} 图片地址
      * @return {Void}

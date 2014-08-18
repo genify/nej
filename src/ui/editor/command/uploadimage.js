@@ -27,23 +27,23 @@ NEJ.define([
      * @uses    {nej.ut._$$Tab}
      * @extends {nej.ui.cmd._$$WindowWrapper}
      * @param   {Object} 可选配置参数
-     * @config  {String|Node} parent            父容器
-     * @config  {Boolean}     draggable        是否可拖拽
-     * @config  {Boolean}     destroyable      关闭是否销毁
-     * @config  {String}      title               卡片标题
-     * @config  {String}      fDesc             自定义错误提示1
-     * @config  {String}      oDesc            自定义错误提示2
-     * @config  {String}      swfUrl           Flash文件路径
-     * @config  {String}      baseUrl          Flash文件路径的前缀
-     * @config  {Number}      flashWidth       Flash宽度
-     * @config  {Number}      flashHeight      Flash高度
-     * @config  {String}      userdefinesize 图片尺寸，默认750x750x0x90;350x350x0x85
-     * @config  {String}      saveorigin     是否保存源文件,默认false
-     * @config  {String}      responsetype   响应格式,默认xml
-     * @config  {String}      rotatedegree   旋转角度，默认0
-     * @config  {String}      stamptype      水印类型，默认无
-     * @config  {String}      stampstring    水印内容，默认无
-     * @config  {String}      sitefrom         产品名称
+     * @property  {String|Node} parent            父容器
+     * @property  {Boolean}     draggable        是否可拖拽
+     * @property  {Boolean}     destroyable      关闭是否销毁
+     * @property  {String}      title               卡片标题
+     * @property  {String}      fDesc             自定义错误提示1
+     * @property  {String}      oDesc            自定义错误提示2
+     * @property  {String}      swfUrl           Flash文件路径
+     * @property  {String}      baseUrl          Flash文件路径的前缀
+     * @property  {Number}      flashWidth       Flash宽度
+     * @property  {Number}      flashHeight      Flash高度
+     * @property  {String}      userdefinesize 图片尺寸，默认750x750x0x90;350x350x0x85
+     * @property  {String}      saveorigin     是否保存源文件,默认false
+     * @property  {String}      responsetype   响应格式,默认xml
+     * @property  {String}      rotatedegree   旋转角度，默认0
+     * @property  {String}      stamptype      水印类型，默认无
+     * @property  {String}      stampstring    水印内容，默认无
+     * @property  {String}      sitefrom         产品名称
      *
      * [hr]
      *

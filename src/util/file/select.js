@@ -18,12 +18,12 @@ NEJ.define([
      * 文件选择按钮封装
      *
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <p><label id="abc">选择文件</label></p>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 统一定义名字空间简写
      *   var _  = NEJ.P,
      *       _e = _('nej.e');
@@ -37,18 +37,18 @@ NEJ.define([
      *           _e._$remove(_event.id);
      *       }
      *   });
-     * [/code]
+     * ```
      *
      * @api    {nej.e._$file}
      * @param  {String|Node} 绑定选择文件的节点，必须为label节点，且未设置for属性
      * @param  {Object}      配置参数
-     * @config {String|Node} form     文件选择控件所在的表单，默认全新生成一个
-     * @config {String}      name     单个文件选择支持指定提交时文件名称
-     * @config {String}      clazz    表单样式名称，可用于控制表单位置
-     * @config {Boolean}     multiple 是否允许多选，默认单选
-     * @config {String}      accept   文件类型过滤，如image/*或者.png，多个类型用逗号分隔
-     * @config {Object}      param    参数集合，以input.hidden的形式放置在form中提交
-     * @config {Function}    onchange 文件选择变化触发回调，{form:form,id:'xxx'}
+     * @property {String|Node} form     文件选择控件所在的表单，默认全新生成一个
+     * @property {String}      name     单个文件选择支持指定提交时文件名称
+     * @property {String}      clazz    表单样式名称，可用于控制表单位置
+     * @property {Boolean}     multiple 是否允许多选，默认单选
+     * @property {String}      accept   文件类型过滤，如image/*或者.png，多个类型用逗号分隔
+     * @property {Object}      param    参数集合，以input.hidden的形式放置在form中提交
+     * @property {Function}    onchange 文件选择变化触发回调，{form:form,id:'xxx'}
      *                                - form 文件选择控件封装表单对象
      *                                - id   当前变化的文件选择控件的ID
      */

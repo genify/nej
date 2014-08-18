@@ -23,7 +23,7 @@ NEJ.define([
     /**
      * 日期选择控件<br />
      * 页面结构举例
-     * [code type="html"]
+     * ```html
      *   <style>
      *       // 注意，样式的优先级
      *       // 扩展 < 当前 < 禁止
@@ -32,9 +32,9 @@ NEJ.define([
      *       #datepick-box .js-disabled{background:red;}
      *   </style>
      *   <div id="datepick-box"></div>
-     * [/code]
+     * ```
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var pDate = new Date(1997,7,9)
      *   var nDate = new Date(2013,7,9);
      *   var _dp = _p._$$DatePick._$allocate({
@@ -47,14 +47,14 @@ NEJ.define([
      *           // 选择了一个日期，返回此日期
      *       }
      *   });
-     * [/code]
+     * ```
      *
      * @class   module:nej.ui._$$DatePick 日期选择控件
      * @uses    {nej.ut._$$Calendar}
      * @extends {nej.ui._$$CardWrapper}
      * @param   {Object} 可选配置参数
-     * @config  {Date}  date  设置日期
-     * @config  {Array} range 可选范围
+     * @property  {Date}  date  设置日期
+     * @property  {Array} range 可选范围
      *
      * [hr]
      *
@@ -166,9 +166,9 @@ NEJ.define([
     /**
      * 设置日期<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   _dp._$setDate('2012-12-21');
-     * [/code]
+     * ```
      * @method {_$setDate}
      * @param  {Date} 日期
      * @return {Void}
@@ -181,10 +181,10 @@ NEJ.define([
      * 取当前时间<br />
      * <br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 返回一个Date对象
      *   var _date = _dp._$getDate();
-     * [/code]
+     * ```
      * @method {_$getDate}
      * @return {Date} 日期
      */

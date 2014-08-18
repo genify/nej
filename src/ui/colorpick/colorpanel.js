@@ -23,25 +23,25 @@ NEJ.define([
     /**
      * 颜色选择面板控件<br />
      * 页面结构举例
-     * [code type="html"]
+     * ```html
      *   <div id='colorpanel-box'></div>
-     * [/code]
+     * ```
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _cp = _p._$$ColorPanel._$allocate({
      *       parent:'colorpanel-box',
      *       onchange:function(_color){
      *           // 选择颜色或者亮度的时候触发
      *       }
      *   });
-     * [/code]
+     * ```
      *
      * @class   module:nej.ui._$$ColorPanel 颜色选择面板控件
      * @uses    {nej.ut._$$SliderXY}
      * @uses    {nej.ut._$$SliderY}
      * @extends {nej.ui._$$Abstract}
      * @param   {Object} 可选配置参数
-     * @config  {String} color RGB颜色值，默认为#fff
+     * @property  {String} color RGB颜色值，默认为#fff
      *
      * [hr]
      *
@@ -165,10 +165,10 @@ NEJ.define([
     /**
      * 设置颜色<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 先把颜色转成rgb，然后转成hsl,在一个面板设置sh，在另外一个面板设置l
      *   _cp._$setColor('#000');
-     * [/code]
+     * ```
      * @method {_$setColor}
      * @param  {String} 颜色值
      * @return {Void}

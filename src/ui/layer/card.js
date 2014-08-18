@@ -17,11 +17,11 @@ NEJ.define([
     /**
      * 卡片控件<br />
      * 页面结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="card-box" class="box"></div>
-     * [/code]
+     * ```
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _  = NEJ.P,
      *       _e = _('nej.e'),
      *       _p = _('nej.ui');
@@ -41,14 +41,14 @@ NEJ.define([
      *   });
      *   // 默认就是显示的，此方法对应_$hide();
      *   _card._$show();
-     * [/code]
+     * ```
      *
      * @class   module:nej.ui._$$Card 卡片控件
      * @extends {nej.ui._$$Layer}
      * @param   {Object} 可选配置参数
-     * @config  {String}  top    卡片垂直位置
-     * @config  {String}  left   卡片水平位置
-     * @config  {Boolean} nostop 是否禁用事件阻止
+     * @property  {String}  top    卡片垂直位置
+     * @property  {String}  left   卡片水平位置
+     * @property  {Boolean} nostop 是否禁用事件阻止
      */
     _p._$$Card = _k._$klass();
     _pro = _p._$$Card._$extend(_i0._$$Layer);
@@ -262,7 +262,7 @@ NEJ.define([
     /**
      * 通过参照节点显示卡片位置<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 卡片显示的时候，根据target节点来定位,卡片位置固定
      *   // align代表卡片的对齐方式
      *   // delta代表偏移量
@@ -283,16 +283,16 @@ NEJ.define([
      *       target:document.body,
      *       delta:{top:10,right:20}
      *   });
-     * [/code]
+     * ```
      * @method {_$showByReference}
      * @param  {Object}  可选配置参数
-     * @config {Object}  delta   位置偏移，{top:0,right:0,bottom:0,left:0}
-     * @config {Object}  align   卡片位置，默认为'top left'，{top:0,right:0,bottom:0,left:0}
+     * @property {Object}  delta   位置偏移，{top:0,right:0,bottom:0,left:0}
+     * @property {Object}  align   卡片位置，默认为'top left'，{top:0,right:0,bottom:0,left:0}
      * [ntb]
      *  整体位置 | top/right/bottom/left
      *  对齐方式 | top/bottom | left/right
      * [/ntb]
-     * @config {Boolean} fitable 是否需要调整卡片位置使其适应页面
+     * @property {Boolean} fitable 是否需要调整卡片位置使其适应页面
      * @return {Void}
      */
     _pro._$showByReference = (function(){

@@ -17,12 +17,12 @@ NEJ.define([
     /**
      * 分页器控件封装<br />
      * 页面结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="pagerCnt">page</div>
      *   <div id="pagerCnt2">page</div>
-     * [/code]
+     * ```
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
      *       '{lib}ui/pager/pager.js'
      *   ],function(_u,_p,_o,_f,_r){
@@ -48,23 +48,23 @@ NEJ.define([
      *       但最后触发一次翻页器的回调,避免重复触发
      *       _pager._$bind('pagerCnt2');
      *   })
-     * [/code]
+     * ```
      *
      * @class   module:_$$Pager
      * @uses    {util/page/page#_$$Page}
      * @extends {ui/base#_$$Abstract}
      * @param   {Object}  可选配置参数
-     * @config  {Number}  index 当前页码
-     * @config  {Number}  total 总页码数
-     * @config  {Boolean} noend 无尾页显示
+     * @property  {Number}  index 当前页码
+     * @property  {Number}  total 总页码数
+     * @property  {Boolean} noend 无尾页显示
      *
      * [hr]
      * 页码切换事件，输入{last:3,index:1,total:12}
      * @event  {onchange}
      * @param  {Object} 页码状态对象
-     * @config {Number} last  上一次的页码
-     * @config {Number} index 当前要切换的页面
-     * @config {Number} total  总页面数
+     * @property {Number} last  上一次的页码
+     * @property {Number} index 当前要切换的页面
+     * @property {Number} total  总页面数
      *
      */
     _p._$$Pager = _k._$klass();

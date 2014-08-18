@@ -16,15 +16,15 @@ var f = function(){
     /**
      * 多选控件带范围选择<br />
      * 页面结构举例
-     * [code type="html"]
+     * ```html
      * 
      *    <body onselectstart="return false;">
      *      <div id="box"></div>
      *      <div id="box2"></div>
      *    </body>
-     * [/code]
+     * ```
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _  = NEJ.P,
      *   _e = _('nej.e'),
      *   _v = _('nej.v'),
@@ -59,11 +59,11 @@ var f = function(){
      *           // 鼠标down，开始选择的回调
      *       }
      *   });
-     * [/code]
+     * ```
      * @class   {nej.ut._$$RangeSelector} 多选控件带范围选择
      * @extends {nej.ut._$$MultiSelector}
      * @param   {Object} 可选配置参数
-     * @config  {nej.ut._$$Range|nej.ui._$$Range} range 范围选择器实例
+     * @property  {nej.ut._$$Range|nej.ui._$$Range} range 范围选择器实例
      */
     _p._$$RangeSelector = NEJ.C();
     _pro = _p._$$RangeSelector._$extend(_p._$$MultiSelector);

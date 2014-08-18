@@ -73,9 +73,9 @@ NEJ.define([
      * @method module:util/ajax/message._$postMessage
      * @param  {String|Window} arg0   - window对象或者Frame的name，或者字符串如_top、_parent、_self
      * @param  {Object}        arg1   - 消息配置
-     * @config {Variable}      data   - 消息内容
-     * @config {String}        origin - 目标Origin，只有指定的页面可以收到消息，如http://a.b.com
-     * @config {String}        source - 当前窗体标识，除非你非常确定当前窗体的标识是什么，否则请采用自动识别
+     * @property {Variable}      data   - 消息内容
+     * @property {String}        origin - 目标Origin，只有指定的页面可以收到消息，如http://a.b.com
+     * @property {String}        source - 当前窗体标识，除非你非常确定当前窗体的标识是什么，否则请采用自动识别
      * @return {Void}
      */
     _p._$postMessage = (function(){

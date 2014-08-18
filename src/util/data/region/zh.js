@@ -14,7 +14,7 @@ NEJ.define([
     var _pro;
     /**
      * 中国行政划区数据缓存，使用方式
-     * [code]
+     * ```javascript
      *     // 取省份列表
      *     cache._$getList({key:'province'});
      *     // 取某个省份的城市列表
@@ -23,7 +23,7 @@ NEJ.define([
      *     // 取某个省份城市下的区域列表
      *     // key为'area-'+省份名称+'-'+城市名称
      *     cache._$getList({key:'area-浙江省-杭州市'});
-     * [/code]
+     * ```
      * @class   {nej.ut._$$RegionCacheZH} 中国行政划区数据缓存
      * @extends {nej.ut._$$CacheListAbstract}
      * @param   {Object} _options 可选配置参数
@@ -36,11 +36,11 @@ NEJ.define([
      * @protected
      * @method {__doLoadList}
      * @param  {Object}          请求信息
-     * @config {String}   key    列表标识
-     * @config {Number}   offset 偏移量
-     * @config {Number}   limit  数量
-     * @config {String}   data   请求相关数据
-     * @config {Function} onload 列表载入回调
+     * @property {String}   key    列表标识
+     * @property {Number}   offset 偏移量
+     * @property {Number}   limit  数量
+     * @property {String}   data   请求相关数据
+     * @property {Function} onload 列表载入回调
      * @return {Void}
      */
     _pro.__doLoadList = function(_options){

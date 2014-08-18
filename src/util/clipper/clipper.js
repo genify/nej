@@ -19,53 +19,53 @@ var f = function(){
     /**
      * 图片裁剪器封装对象<br/>
      * 页面结构举例
-     * [code type="html"]
+     * ```html
      *   
-     * [/code]
+     * ```
      * 脚本举例
-     * [code]
+     * ```javascript
      *   
-     * [/code]
+     * ```
      * @class   {nej.ut._$$Clipper} 循环播放封装对象
      * @extends {nej.ut._$$EventTarget}
      * @uses    {nej.ui._$$Resizer}
      * @param   {Object} 可选配置参数
-     * @config  {String|Node}       mbox 裁剪容器节点
-     * @config  {String|Node|Array} pbox 预览容器节点 
-     * @config  {String}            url  图片地址
-     * @config  {Boolean}           lock 是否锁定比例
-     * @config  {Object}            size 裁剪缩放器初始大小
+     * @property  {String|Node}       mbox 裁剪容器节点
+     * @property  {String|Node|Array} pbox 预览容器节点 
+     * @property  {String}            url  图片地址
+     * @property  {Boolean}           lock 是否锁定比例
+     * @property  {Object}            size 裁剪缩放器初始大小
      * 
      * [hr]
      * 图片载入之前事件
      * @event  {onbeforeimageload}
      * @param  {Object}  配置信息
-     * @config {Node}    parent 容器节点
+     * @property {Node}    parent 容器节点
      * 
      * [hr]
      * 图片载入之后事件
      * @event  {onafterimageload}
      * @param  {Object}  配置信息
-     * @config {Node}    parent 容器节点
-     * @config {Boolean} loaded 图片是否成功载入
+     * @property {Node}    parent 容器节点
+     * @property {Boolean} loaded 图片是否成功载入
      * 
      * [hr]
      * 图片显示之后事件
      * @event  {onafterimageshow}
      * @param  {Object}  配置信息
-     * @config {Node}    parent 容器节点
-     * @config {Float}   ratio  图片缩放比例，显示大小/原始大小
-     * @config {Object}  value  大小调整对象或者大小调整对象配置信息
+     * @property {Node}    parent 容器节点
+     * @property {Float}   ratio  图片缩放比例，显示大小/原始大小
+     * @property {Object}  value  大小调整对象或者大小调整对象配置信息
      * 
      * [hr]
      * 裁剪位置变化事件
      * @event  {onchange}
      * @param  {Object} 裁剪信息
-     * @config {Float}  ratio  图片缩放比例
-     * @config {NUmber} top    裁剪距顶部位置
-     * @config {NUmber} left   裁剪距左侧位置
-     * @config {NUmber} width  裁剪宽度
-     * @config {NUmber} height 裁剪高度
+     * @property {Float}  ratio  图片缩放比例
+     * @property {NUmber} top    裁剪距顶部位置
+     * @property {NUmber} left   裁剪距左侧位置
+     * @property {NUmber} width  裁剪宽度
+     * @property {NUmber} height 裁剪高度
      *  
      */
     _p._$$Clipper = NEJ.C();

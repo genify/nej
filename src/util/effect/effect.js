@@ -24,12 +24,12 @@ NEJ.define([
      * 属性单位限定px,不支持em或pt
      *
      * 页面结构举例
-     * [code type="html"]
+     * ```html
      *   <div id='box' style='position:absolute;z-index:10;'>abc</div>
-     * [/code]
+     * ```
      *
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _effect = _p._$$Effect._$allocate(
      *      {
      *          node:'box',
@@ -71,18 +71,18 @@ NEJ.define([
      *          onplaystate:function(){
      *          }
      *      });
-     * [/code]
+     * ```
      * @class   {nej.ut._$$Effect}
      * @extends {nej.ut._$$EventTarget}
      * @param   {Object}       可选配置参数
-     * @config  {String|Node}  node       动画节点
-     * @config  {Array}        transition 动画属性列表
+     * @property  {String|Node}  node       动画节点
+     * @property  {Array}        transition 动画属性列表
      * [ntb]
      *   意义|属性    |运动轨迹      |延迟启动时间    |持续时间
      *   属性|property|timing        |delay           |duration
      *   值  | width  |[linear,ease-in,ease-out,ease-in-out]|1|10
      * [/ntb]
-     * @config  {Array}        styles     动画需要改变的css属性
+     * @property  {Array}        styles     动画需要改变的css属性
      *
      * [hr]
      * 动画停止的回调

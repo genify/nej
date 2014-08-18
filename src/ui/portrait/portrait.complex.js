@@ -37,8 +37,8 @@ NEJ.define([
      * 表情选中事件
      * @event   {onselect}
      * @param   {Object} 表情数据对象
-     * @config  {String} text  表情描述
-     * @config  {String} url   表情文件地址
+     * @property  {String} text  表情描述
+     * @property  {String} url   表情文件地址
      *
      */
     _p._$$ComplexPortrait = _k._$klass();

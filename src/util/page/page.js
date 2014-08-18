@@ -23,7 +23,7 @@ NEJ.define([
      *     ----    -       -   -   -   -   -       ---    ----
      * </ul>
      * 页面结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="pagebox">
      *       <a href="#" class="zbtn zprv">上一页</a>
      *       <a href="#" class="zpgi"></a>
@@ -37,9 +37,9 @@ NEJ.define([
      *       <a href="#" class="zpgi"></a>
      *       <a href="#" class="zbtn znxt">下一页</a>
      *   </div>
-     * [/code]
+     * ```
      * 脚本举例
-     * [code]
+     * ```javascript
      *   NEJ.define([
      *       '{lib}base/element.js',
      *       '{lib}util/page/page.js'
@@ -62,28 +62,28 @@ NEJ.define([
      *       // 想要保持页面信息状态
      *       _pg._$updatePage(5,10);
      *   })
-     * [/code]
+     * ```
      * @class   {_$$Page}
      * @extends {util/page/page#_$$AbstractPage}
      * @param   {Object} 可选配置参数
-     * @config  {Array}          list        页码节点列表【长度保持奇数】
-     * @config  {String}         event       触发页码切换事件，默认为click
-     * @config  {String|Node}    pbtn        上一页按钮
-     * @config  {String|Node}    nbtn        下一页按钮
-     * @config  {String|Node}    sbtn        首页按钮
-     * @config  {String|Node}    ebtn        尾页按钮
-     * @config  {Number}         index       当前页码
-     * @config  {Number}         total       总页码数
-     * @config  {String}         selected    选中样式，默认为js-selected
-     * @config  {String}         disabled    禁用样式，默认为js-disabled
+     * @property  {Array}          list        页码节点列表【长度保持奇数】
+     * @property  {String}         event       触发页码切换事件，默认为click
+     * @property  {String|Node}    pbtn        上一页按钮
+     * @property  {String|Node}    nbtn        下一页按钮
+     * @property  {String|Node}    sbtn        首页按钮
+     * @property  {String|Node}    ebtn        尾页按钮
+     * @property  {Number}         index       当前页码
+     * @property  {Number}         total       总页码数
+     * @property  {String}         selected    选中样式，默认为js-selected
+     * @property  {String}         disabled    禁用样式，默认为js-disabled
      *
      * [hr]
      * 切换页面处理
      * @event  {onchange}
      * @param  {Object} 页码信息
-     * @config {Number} last  上一次的页码
-     * @config {Number} index 当前要切换的页面
-     * @config {Number} total 总页面数
+     * @property {Number} last  上一次的页码
+     * @property {Number} index 当前要切换的页面
+     * @property {Number} total 总页面数
      *
      */
     _p._$$Page = _k._$klass();
@@ -212,7 +212,7 @@ NEJ.define([
     };
     /*
      * 分页器加入分页算法
-     * [code]
+     * ```javascript
      *    // 构建一个page控件
      *    nej.e._$page('abc',{
      *        index:2,
@@ -223,22 +223,22 @@ NEJ.define([
      *    nej.e._$page('abc')._$setIndex(5);
      *    // 回收page控件
      *    nej.e._$page('abc')._$recycle();
-     * [/code]
+     * ```
      * @api    {nej.e._$page}
      * @param  {String|Node} 分页器容器节点
      * @param  {Object}      可选配置参数，参见nej.ut._$$Page控件的可选配置参数
      * @param   {Object} 可选配置参数
-     * @config  {Array}          list        页码节点列表【长度保持奇数】
-     * @config  {String}         event       触发页码切换事件，默认为click
-     * @config  {String|Node}    pbtn        上一页按钮
-     * @config  {String|Node}    nbtn        下一页按钮
-     * @config  {String|Node}    sbtn        首页按钮
-     * @config  {String|Node}    ebtn        尾页按钮
-     * @config  {Number}         index       当前页码
-     * @config  {Number}         total       总页码数
-     * @config  {String}         selected    选中样式，默认为js-selected
-     * @config  {String}         disabled    禁用样式，默认为js-disabled
-     * @config  {String}         clazz       需要做Page控件封装的节点标识，如没有此参数则选取父节点下的所有子节点
+     * @property  {Array}          list        页码节点列表【长度保持奇数】
+     * @property  {String}         event       触发页码切换事件，默认为click
+     * @property  {String|Node}    pbtn        上一页按钮
+     * @property  {String|Node}    nbtn        下一页按钮
+     * @property  {String|Node}    sbtn        首页按钮
+     * @property  {String|Node}    ebtn        尾页按钮
+     * @property  {Number}         index       当前页码
+     * @property  {Number}         total       总页码数
+     * @property  {String}         selected    选中样式，默认为js-selected
+     * @property  {String}         disabled    禁用样式，默认为js-disabled
+     * @property  {String}         clazz       需要做Page控件封装的节点标识，如没有此参数则选取父节点下的所有子节点
      * @return  {Function}                   控件实例
     _e._$page = function(_parent,_options){
         var _id = _e._$id(_parent);

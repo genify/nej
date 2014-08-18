@@ -49,10 +49,10 @@ NEJ.define([
      * 淡入淡出操作
      * @param  {String|Node} _node  节点或者节点ID
      * @param  {Object}      配置参数
-     * @config {String} opacity  目标透明度
-     * @config {String} timing   运动曲线
-     * @config {Number} delay    延迟时间
-     * @config {String} duration 运动时间
+     * @property {String} opacity  目标透明度
+     * @property {String} timing   运动曲线
+     * @property {Number} delay    延迟时间
+     * @property {String} duration 运动时间
      * @param  {Number} 1表示淡入，0表示淡出，优先使用opacity配置
      * @return {Void}
      */
@@ -99,12 +99,12 @@ NEJ.define([
     /**
      * 淡入动画
      * 页面结构举例
-     * [code type="html"]
+     * ```html
      *   // 必须有opacity属性
      *   <div id="box" style="opact">123</div>
-     * [/code]
+     * ```
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _e = NEJ.P("nej.e");
      *   var _node = _e._$get("box");
      *   _e._$fadeIn(_node,{
@@ -114,14 +114,14 @@ NEJ.define([
      *       delay:0,
      *       duration:5
      *   });
-     * [/code]
+     * ```
      * @api    {nej.e._$fadeIn}
      * @param  {Node|String} 节点或者节点ID
      * @param  {Object}      配置参数
-     * @config {String} opacity  目标透明度
-     * @config {String} timing   运动曲线
-     * @config {Number} delay    延迟时间
-     * @config {String} duration 运动时间
+     * @property {String} opacity  目标透明度
+     * @property {String} timing   运动曲线
+     * @property {Number} delay    延迟时间
+     * @property {String} duration 运动时间
      * @return {nej.e}
      */
     _p._$fadeIn = function(_node,_options){
@@ -131,11 +131,11 @@ NEJ.define([
     /**
      * 淡出动画
      * 页面结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="box">123</div>
-     * [/code]
+     * ```
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _e = NEJ.P("nej.e");
      *   var _node = _e._$get("box");
      *   _e._$fadeOut(_node,{
@@ -145,14 +145,14 @@ NEJ.define([
      *       delay:0,
      *       duration:5
      *   });
-     * [/code]
+     * ```
      * @api    {nej.e._$fadeOut}
      * @param  {Node|String} 节点或者节点ID
      * @param  {Object}      配置参数
-     * @config {String} opacity  目标透明度
-     * @config {String} timing   运动曲线
-     * @config {Number} delay    延迟时间
-     * @config {String} duration 运动时间
+     * @property {String} opacity  目标透明度
+     * @property {String} timing   运动曲线
+     * @property {Number} delay    延迟时间
+     * @property {String} duration 运动时间
      * @return {nej.e}
      */
     _p._$fadeOut = function(_node,_options){
@@ -183,11 +183,11 @@ NEJ.define([
     /**
      * 移动节点
      * 页面结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="box">123</div>
-     * [/code]
+     * ```
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _e = NEJ.P("nej.e");
      *   var _node = _e._$get("box");
      *   // 需要配合预先定义的position属性
@@ -196,15 +196,15 @@ NEJ.define([
      *       delay:0,
      *       duration:[5,1]
      *   });
-     * [/code]
+     * ```
      * @api    {nej.e._$moveTo}
      * @param  {Node|String} 节点或者节点ID
      * @param  {Object}      配置参数
-     * @config {String} top      移动节点的top值
-     * @config {String} left     移动节点的left值
-     * @config {String} timing   运动曲线
-     * @config {Number} delay    延迟时间
-     * @config {String} duration 运动时间
+     * @property {String} top      移动节点的top值
+     * @property {String} left     移动节点的left值
+     * @property {String} timing   运动曲线
+     * @property {Number} delay    延迟时间
+     * @property {String} duration 运动时间
      * @return {Void}
      */
     _p._$moveTo = function(_node,_position,_options){
@@ -245,11 +245,11 @@ NEJ.define([
     /**
      * 移动节点
      * 页面结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="box">123</div>
-     * [/code]
+     * ```
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _e = NEJ.P("nej.e");
      *   var _node = _e._$get("box");
      *   // 需要配合预先定义的position属性
@@ -260,14 +260,14 @@ NEJ.define([
      *       delay:0,
      *       duration:5
      *   });
-     * [/code]
+     * ```
      * @api    {nej.e._$slide}
      * @param  {Node|String} 节点或者节点ID
      * @param  {String}      滑动的方向
      * @param  {Object}      配置参数
-     * @config {String} timing   运动曲线
-     * @config {Number} delay    延迟时间
-     * @config {String} duration 运动时间
+     * @property {String} timing   运动曲线
+     * @property {Number} delay    延迟时间
+     * @property {String} duration 运动时间
      * @return {Void}
      */
     _p._$slide = (function(){
@@ -305,24 +305,24 @@ NEJ.define([
     /**
      * toggle效果
      * 页面结构举例
-     * [code type="html"]
+     * ```html
      *   // overflow:hidden;visibility:hidden;display:none;
      *   <div id="box">123</div>
-     * [/code]
+     * ```
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _e = NEJ.P("nej.e");
      *   var _node = _e._$get("box");
      *   _e._$toggle(_box,'height',{value:100,timing:'ease-out',duration:'1.2'});
-     * [/code]
+     * ```
      * @api    {nej.e._$toggle}
      * @param  {Node|String} 节点或者节点ID
      * @param  {String}      需要改变的属性，height或width
      * @param  {Object}      配置参数
-     * @config {Number} value    属性值
-     * @config {String} timing   运动曲线
-     * @config {Number} delay    延迟时间
-     * @config {String} duration 运动时间
+     * @property {Number} value    属性值
+     * @property {String} timing   运动曲线
+     * @property {Number} delay    延迟时间
+     * @property {String} duration 运动时间
      * @return {Void}
      */
     _p._$toggleEffect = (function(){

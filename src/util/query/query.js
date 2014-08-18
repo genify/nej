@@ -38,7 +38,7 @@ var f = function(){
      * 节点选择器
      * 
      * 结构示例
-     * [code type="html"]
+     * ```html
      *   <ul class="w-tab">
      *     <li class="itm">Tab-0</li>
      *     <li class="itm">Tab-1</li>
@@ -47,10 +47,10 @@ var f = function(){
      *     <li class="itm">Tab-4</li>
      *     <li class="itm">Tab-5</li>
      *   </ul>
-     * [/code]
+     * ```
      * 
      * 脚本示例
-     * [code]
+     * ```javascript
      *   // 统一定义名字空间简写
      *   var _  = NEJ.P,
      *       _e = _('nej.e'),
@@ -64,7 +64,7 @@ var f = function(){
      *              // TODO
      *       }
      *   });
-     * [/code]
+     * ```
      * 
      * @api    {nej.e._$all}
      * @param  {String} 选择器
@@ -82,7 +82,7 @@ var f = function(){
      * 节点选择器
      * 
      * 结构示例
-     * [code type="html"]
+     * ```html
      *   <ul class="w-tab">
      *     <li class="itm">Tab-0</li>
      *     <li class="itm">Tab-1</li>
@@ -91,17 +91,17 @@ var f = function(){
      *     <li class="itm">Tab-4</li>
      *     <li class="itm">Tab-5</li>
      *   </ul>
-     * [/code]
+     * ```
      * 
      * 脚本示例
-     * [code]
+     * ```javascript
      *   // 统一定义名字空间简写
      *   var _  = NEJ.P,
      *       _e = _('nej.e'),
      *       _t = _('nej.ut);
      *   // 使用选择器接口来取选中的节点
      *   var _node = _e.$one('.w-tab > li.js-selected');
-     * [/code]
+     * ```
      * 
      * @api    {nej.e._$one}
      * @param  {String} 选择器

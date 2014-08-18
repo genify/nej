@@ -40,20 +40,20 @@ NEJ.define([
     /**
      * 绑定复制操作，服务器放置剪切板操作Flash nej_clipboard.swf
      * 如果flash文件不在/res/下可以通过以下方式配置
-     * [code]
+     * ```javascript
      *   // 在引入define.js之前配置NEJ
      *   window.NEJ_CONF ={
      *       clipboard:'/other/path/nej_clipboard.swf'
      *   };
-     * [/code]
+     * ```
      * 使用举例
      * 页面结构：
-     * [code type="html"]
+     * ```html
      *   <!-- 复制按钮 -->
      *   <input id="copyBtn" type="button" value="复制"/>
-     * [/code]
+     * ```
      * 脚本绑定复制功能：
-     * [code]
+     * ```javascript
      *   // 或者通过参数在绑定时输入要复制的内容
      *   nej.e._$bindCopyAction('copyBtn','text to clipboard');
      *   // 如果要复制的内容动态生成
@@ -61,7 +61,7 @@ NEJ.define([
      *       // 此函数必须同步返回结果
      *       return 'text to clipboard'
      *   });
-     * [/code]
+     * ```
      * @api    {nej.e._$bindCopyAction}
      * @param  {String|Node}     操作节点
      * @param  {String|Function} 要复制的内容，或者动态生成要复制的内容
@@ -80,26 +80,26 @@ NEJ.define([
     /*
      * 绑定取剪切板内容操作，服务器放置剪切板操作Flash nej_clipboard.swf
      * 如果flash文件不在/res/下可以通过以下方式配置
-     * [code]
+     * ```javascript
      *   // 在引入define.js之前配置NEJ
      *   window.NEJ_CONF ={
      *       clipboard:'/other/path/nej_clipboard.swf'
      *   };
-     * [/code]
+     * ```
      * 使用举例
      * 页面结构：
-     * [code type="html"]
+     * ```html
      *   <!-- 粘贴按钮 -->
      *   <input id="pasteBtn" type="button" value="粘贴"/>
-     * [/code]
+     * ```
      * 脚本绑定接收剪切板内容功能：
-     * [code]
+     * ```javascript
      *   // 绑定接收剪切板内容回调
      *   nej.e._$bindPasteAction('pasteBtn',function(_text){
      *       // _text is content in clipboard
      *       // TODO something
      *   });
-     * [/code]
+     * ```
      * @param  {String|Node} 操作节点
      * @param  {Function}    用于接收剪切板数据的回调函数
      * @return {nej.e}
@@ -116,23 +116,23 @@ NEJ.define([
     /**
      * 清空剪切板，服务器放置剪切板操作Flash nej_clipboard.swf
      * 如果flash文件不在/res/下可以通过以下方式配置
-     * [code]
+     * ```javascript
      *   // 在引入define.js之前配置NEJ
      *   window.NEJ_CONF ={
      *       clipboard:'/other/path/nej_clipboard.swf'
      *   };
-     * [/code]
+     * ```
      * 使用举例
      * 页面结构：
-     * [code type="html"]
+     * ```html
      *   <!-- 粘贴按钮 -->
      *   <input id="clearBtn" type="button" value="清空"/>
-     * [/code]
+     * ```
      * 脚本绑定清空功能：
-     * [code]
+     * ```javascript
      *   // 绑定清空按钮功能
      *   nej.e._$bindClearAction('clearBtn');
-     * [/code]
+     * ```
      * @api    {nej.e._$bindClearAction}
      * @param  {String|Node} 操作节点
      * @return {Void}

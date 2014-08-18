@@ -16,11 +16,11 @@ NEJ.define([
     /**
      * 区域移动功能封装<br />
      * 页面结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="box"></div>
-     * [/code]
+     * ```
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _box = _e._$get('box');
      *   var _dg = _p._$$Dragger._$allocate({body:_box,
      *     overflow:false,
@@ -33,36 +33,36 @@ NEJ.define([
      *         _dg._$getPosition();
      *     }
      *   })
-     * [/code]
+     * ```
      * @class   {nej.ut._$$Dragger} 区域移动功能封装
      * @extends {nej.ut._$$EventTarget}
      * @param   {Object}                   可选配置参数
-     * @config  {Node}           view      视窗节点，默认为documentElement或body节点
-     * @config  {String|Node}    body      移动控件节点
-     * @config  {String|Node}    mbar      触发移动节点ID或者对象，默认为body参数输入节点
-     * @config  {Boolean}        overflow  是否允许超出view范围
-     * @config  {Number}         direction 移动方向，默认为0，0-水平+垂直、1-水平、2-垂直
+     * @property  {Node}           view      视窗节点，默认为documentElement或body节点
+     * @property  {String|Node}    body      移动控件节点
+     * @property  {String|Node}    mbar      触发移动节点ID或者对象，默认为body参数输入节点
+     * @property  {Boolean}        overflow  是否允许超出view范围
+     * @property  {Number}         direction 移动方向，默认为0，0-水平+垂直、1-水平、2-垂直
      *
      * [hr]
      * 位置变化之前触发事件
      * @event  {onbeforechange}
      * @param  {Object}      位置信息
-     * @config {Number} top  离父节点顶部距离
-     * @config {Number} left 离父节点左边距离
+     * @property {Number} top  离父节点顶部距离
+     * @property {Number} left 离父节点左边距离
      *
      * [hr]
      * 位置变化触发事件
      * @event  {onchange}
      * @param  {Object}      位置信息
-     * @config {Number} top  离父节点顶部距离
-     * @config {Number} left 离父节点左边距离
+     * @property {Number} top  离父节点顶部距离
+     * @property {Number} left 离父节点左边距离
      *
      * [hr]
      * 拖拽结束触发事件
      * @event  {ondragend}
      * @param  {Object}      位置信息
-     * @config {Number} top  离父节点顶部距离
-     * @config {Number} left 离父节点左边距离
+     * @property {Number} top  离父节点顶部距离
+     * @property {Number} left 离父节点左边距离
      *
      */
     _p._$$Dragger = _k._$klass();
@@ -177,10 +177,10 @@ NEJ.define([
     /**
      * 设置位置<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 在允许范围内设置盒子的位置
      *   _dg._$setPosition({top:100,left:100});
-     * [/code]
+     * ```
      * @method {_$setPosition}
      * @param  {Object} 位置信息
      * @return {Void}
@@ -207,9 +207,9 @@ NEJ.define([
     /**
      * 取当前位置<br />
      * 脚本举例
-     * [code]
+     * ```javascript
      *   _dg._$getPosition();
-     * [/code]
+     * ```
      * @method {_$getPosition}
      * @return {Object} 当前位置，{x:100,y:100}
      */

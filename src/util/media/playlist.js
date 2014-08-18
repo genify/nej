@@ -16,7 +16,7 @@ NEJ.define([
     /**
      * 多媒体播放列表管理控件
      * 脚本举例
-     * [code]
+     * ```javascript
      *   var _playlist = nej.ut._$$PlayList._$allocate({
      *       mode:1,
      *       list:[{id:1,url:'a.mp3'},...],
@@ -35,37 +35,37 @@ NEJ.define([
      *   _playlist._$prev();
      *   // 修改播放模式
      *   _playlist._$setPlayMode(2);
-     * [/code]
+     * ```
      *
      * @class   {nej.ut._$$PlayList}
      * @extends {nej.ut._$$EventTarget}
      *
      * @param   {Object}  可选配置参数
-     * @config  {Array}   list  多媒体列表
-     * @config  {Number}  mode  播放模式
+     * @property  {Array}   list  多媒体列表
+     * @property  {Number}  mode  播放模式
      *
      * [hr]
      * 当前媒体变化事件
      * @event  {onmediachange}
      * @param  {Object}  媒体信息
-     * @config {Number}  index 当前媒体索引
-     * @config {Number}  last  上一个媒体索引
-     * @config {Array}   list  播放列表
+     * @property {Number}  index 当前媒体索引
+     * @property {Number}  last  上一个媒体索引
+     * @property {Array}   list  播放列表
      *
      * [hr]
      * 多媒体追加触发事件，如果处理过程中将data置空则不追加
      * @event  {onbeforeappend}
      * @param  {Object}   媒体信息
-     * @config {Variable} data  媒体对象
-     * @config {Array}    list  播放列表
-     * @config {Number}   index 当前媒体索引
+     * @property {Variable} data  媒体对象
+     * @property {Array}    list  播放列表
+     * @property {Number}   index 当前媒体索引
      *
      * [hr]
      * 播放模式变化事件
      * @event  {onmodechange}
      * @param  {Object}  模式信息
-     * @config {Number}  mode 当前播放模式
-     * @config {Number}  last 上一个播放模式
+     * @property {Number}  mode 当前播放模式
+     * @property {Number}  last 上一个播放模式
      */
     _p._$$PlayList = _k._$klass();
     _pro = _p._$$PlayList._$extend(_t._$$EventTarget);

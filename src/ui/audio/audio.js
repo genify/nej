@@ -26,9 +26,9 @@ NEJ.define([
      * @uses    module:util/audio/audio._$$MediaAudio
      * @extends module:ui/base._$$Abstract
      * @param   {Object}  可选配置参数
-     * @config  {String}  url       音乐地址
-     * @config  {String}  title     音乐标题
-     * @config  {Boolean} autostart 自动开始播放
+     * @property  {String}  url       音乐地址
+     * @property  {String}  title     音乐标题
+     * @property  {Boolean} autostart 自动开始播放
      */
     /**
      * 状态变化事件
