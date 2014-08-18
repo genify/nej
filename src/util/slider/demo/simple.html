@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NEJ实例 - 简易滑块</title>
+    <meta charset="utf-8" />
+    
+    <style>
+        .track{width:300px;background:#aaa;}
+        .pogrs{position:relative;height:20px;background:#f00;width:30%;}
+        .thumb{position:absolute;top:-5px;right:-5px;width:10px;height:30px;background:#0b0;}
+    </style>
+    
+  </head>
+  <body>
+    
+    <div class="track" id="track">
+      <div class="pogrs" id="progress">
+        <span class="thumb" id="thumb">&nbsp;</span>
+      </div>
+    </div>
+    
+    <script src="../../../define.js"></script>
+    <script>
+        NEJ.define([
+            'util/slider/simple'
+        ],function(_t){
+            _t._$$SimpleSlider._$allocate({
+                track:'track',
+                thumb:'thumb',
+                progress:'progress',
+                onslidechange:function(_event){
+                    console.log(_event.ratio);
+                },
+                onslidestop:function(_event){
+                    console.log(_event.ratio);
+                }
+            });
+        });
+    </script>
+  </body>
+</html>

@@ -460,7 +460,11 @@ NEJ.define([
      */
     _p._$escape = (function(){
         var _reg = /<br\/?>$/,
-            _map = {r:/\<|\>|\&|\r|\n|\s|\'|\"/g,'<':'&lt;','>':'&gt;','&':'&amp;',' ':'&nbsp;','"':'&quot;',"'":'&#39;','\n':'<br/>','\r':''};
+            _map = {
+                r:/\<|\>|\&|\r|\n|\s|\'|\"/g,
+                '<':'&lt;','>':'&gt;','&':'&amp;',' ':'&nbsp;',
+                '"':'&quot;',"'":'&#39;','\n':'<br/>','\r':''
+            };
         return function(_content){
             _content = _p._$encode(_map,_content);
             return _content.replace(_reg,'<br/><br/>');

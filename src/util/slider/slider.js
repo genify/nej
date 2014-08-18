@@ -5,57 +5,72 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module util/slider/slider */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/element.js',
-    '{lib}base/event.js',
-    '{lib}util/event.js',
-    '{lib}util/dragger/dragger.js'
+    'base/global',
+    'base/klass',
+    'base/element',
+    'base/event',
+    'util/event',
+    'util/dragger/dragger'
 ],function(NEJ,_k,_e,_v,_t,_t0,_p,_o,_f,_r){
     var _pro;
     /**
-     * 滑动器算法<br />
-     * 页面结构举例
-     * [code type="html"]
-     *   <style type="text/css">
-     *       #slide{position:absolute;top:0;height:20px;line-height:20px;width:20px;background:green;}
-     *       #track{position:relative;height:20px;line-height:20px;width:100%;background:pink;}
-     *   </style>
-     *   <div id="track"><div id="slide"></div></div>
-     * [/code]
+     * 滑动器算法
+     *
+     * 样式举例
+     * ```css
+     * #slide{position:absolute;top:0;height:20px;line-height:20px;width:20px;background:green;}
+     * #track{position:relative;height:20px;line-height:20px;width:100%;background:pink;}
+     * ```
+     * 
+     * 结构举例
+     * ```html
+     * <div id="track">
+     *   <div id="slide">&nbsp;</div>
+     * </div>
+     * ```
+     * 
      * 脚本举例
-     * [code]
-     *   var _sd = _p._$$Slider._$allocate({
-     *       range:{x:[0,100]},
-     *       slide:'slide',
-     *       track:'track',
-     *       onchange:function(_obj){
-     *           _e._$style(_e._$get('slide'),{left:_obj.x.value});
-     *       }
-     *   });
-     * [/code]
-     * @class   {nej.ut._$$Slider} 滑动器算法
-     * @extends {nej.ut._$$EventTarget}
-     * @param   {Object} 可选配置参数
-     * @config  {Object}      range 滑动范围，默认为滑块可运动范围，如{x:[0,100],y:[0,1000]}
-     * @config  {String|Node} slide 滑动节点
-     * @config  {String|Node} track 滑动轨道节点
-     *
-     * [hr]
-     *
-     * @event  {onchange} 滑动触发事件，输入格式如{x:{rate:0.4,value:40},y:{rate:0.5,value:50}}
-     * @config {Boolean} stopped 是否停止
-     * @config {Object}  x          {rate:0.4,value:40}
-     * @config {Object}  y          {rate:0.5,value:50}
+     * ```javascript
+     * NEJ.define([
+     *     'util/slider/slider'
+     * ],function(_t){
+     *     var _slider = _t._$$Slider._$allocate({
+     *         range:{x:[0,100]},
+     *         slide:'slide',
+     *         track:'track',
+     *         onchange:function(_obj){
+     *             _e._$style('slide',{left:_obj.x.value});
+     *         }
+     *     });
+     * });
+     * ```
+     * @class    module:util/slider/slider._$$Slider
+     * @extends  module:util/event._$$EventTarget
+     * @param    {Object}      config    - 可选配置参数
+     * @property {Object}      range     - 滑动范围，默认为滑块可运动范围，如{x:[0,100],y:[0,1000]}
+     * @property {String|Node} thumb     - 滑块节点
+     * @property {String|Node} track     - 滑动轨道节点
+     * @property {Number}      direction - 滑动方向控制，0 - 水平垂直[默认]，1 - 水平，2 - 垂直
+     */
+    /**
+     * 滑动触发事件，输入格式如{x:{rate:0.4,value:40},y:{rate:0.5,value:50}}
+     * 
+     * @event    module:util/slider/slider._$$Slider#onchange
+     * @param    {Object}  event   - 滑动信息
+     * @property {Boolean} stopped - 是否停止
+     * @property {Object}  x       - 水平滑动信息，如{rate:0.4,value:40}
+     * @property {Object}  y       - 垂直滑动信息，如{rate:0.5,value:50}
      *
      */
     _p._$$Slider = _k._$klass();
     _pro = _p._$$Slider._$extend(_t._$$EventTarget);
     /**
      * 控件初始化
+     * 
      * @protected
-     * @method {__init}
+     * @method module:util/slider/slider._$$Slider#__init
      * @return {Void}
      */
     _pro.__init = function(){
@@ -67,16 +82,19 @@ NEJ.define([
     };
     /**
      * 控件重置
+     * 
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
+     * @method module:util/slider/slider._$$Slider#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
         this.__super(_options);
         this.__dopt.view = _e._$get(_options.track);
-        this.__dopt.body = _e._$get(_options.slide);
+        this.__dopt.body = _e._$get(_options.thumb)||
+                           _e._$get(_options.slide);
         this.__dopt.mbar = this.__dopt.view;
+        this.__dopt.direction = parseInt(_options.direction)||0;
         this._$setRange(_options.range);
         this.__doInitDomEvent([
             [this.__dopt.view,'mousedown',
@@ -86,8 +104,9 @@ NEJ.define([
     };
     /**
      * 控件销毁
+     * 
      * @protected
-     * @method {__destroy}
+     * @method module:util/slider/slider._$$Slider#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -101,8 +120,9 @@ NEJ.define([
     };
     /**
      * 活动过程触发事件
+     * 
      * @protected
-     * @method {__onChange}
+     * @method module:util/slider/slider._$$Slider#__onChange
      * @param  {Object} 位置信息
      * @return {Void}
      */
@@ -112,38 +132,44 @@ NEJ.define([
             _rngx = this.__range.x,
             _rngy = this.__range.y;
         this._$dispatchEvent('onchange',{
-            stopped:!!_end
-           ,x:{rate:_ratex,value:_ratex*(_rngx[1]-_rngx[0])}
-           ,y:{rate:_ratey,value:_ratey*(_rngy[1]-_rngy[0])}
+            stopped:!!_end,
+            x:{rate:_ratex,value:_ratex*(_rngx[1]-_rngx[0])},
+            y:{rate:_ratey,value:_ratey*(_rngy[1]-_rngy[0])}
         });
     };
     /**
      * 滑动到指定位置
+     * 
      * @protected
-     * @method {__onSlideToPosition}
+     * @method module:util/slider/slider._$$Slider#__onSlideToPosition
      * @param  {Event} 事件对象
      * @return {Void}
      */
     _pro.__onSlideToPosition = function(_event){
         var _offset = _e._$offset(this.__dopt.view),
-            _pointer = {x:_v._$pageX(_event),
-                        y:_v._$pageY(_event)},
-            _delta = {x:Math.floor(this.__dopt.body.offsetWidth/2),
-                      y:Math.floor(this.__dopt.body.offsetHeight/2)};
+            _pointer = {
+                x:_v._$pageX(_event),
+                y:_v._$pageY(_event)
+            },
+            _delta = {
+                x:Math.floor(this.__dopt.body.offsetWidth/2),
+                y:Math.floor(this.__dopt.body.offsetHeight/2)
+            };
         this.__dragger._$setPosition({
             top:_pointer.y-_offset.y-_delta.y,
             left:_pointer.x-_offset.x-_delta.x
         });
     };
     /**
-     * 设置滑块可移动范围<br />
+     * 设置滑块可移动范围
+     * 
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 设置可移动范围，单位px
-     *   _sd._$setRange({x:[0,99],y:[0,10]});
-     * [/code]
-     * @method {_$setRange}
-     * @param  {Object} 可移动范围，不传则根据轨道自动计算
+     *   _slider._$setRange({x:[0,99],y:[0,10]});
+     * ```
+     * @method module:util/slider/slider._$$Slider#_$setRange
+     * @param  {Object} arg0 - 可移动范围，不传则根据轨道自动计算
      * @return {Void}
      */
     _pro._$setRange = function(_range){
@@ -165,22 +191,23 @@ NEJ.define([
                   (this.__dopt.view.clientHeight-
                    this.__dopt.body.offsetHeight);
         this.__range = {
-            x:_range.x||[0,_mx]
-           ,y:_range.y||[0,_my]
+            x:_range.x||[0,_mx],
+            y:_range.y||[0,_my]
         };
         // adjust position
         if (!!_rate) this._$setPosition(_rate);
     };
     /**
-     * 设置滑动比例<br />
+     * 设置滑动比例
+     * 
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 设置滑动到此位置，按比例算
-     *   _sd._$setPosition({x:0.4,y:0.5});
-     * [/code]
-     * @method {_$setPosition}
-     * @param  {Object} 滑动比例，范围[0,1]，格式如{x:0.4,y:0.5}
-     * @return {nej.ut._$$Slider}
+     *   _slider._$setPosition({x:0.4,y:0.5});
+     * ```
+     * @method module:util/slider/slider._$$Slider#_$setPosition
+     * @param  {Object} arg0 - 滑动比例，范围[0,1]，格式如{x:0.4,y:0.5}
+     * @return {Void}
      */
     _pro._$setPosition = function(_rate){
         _rate = _rate||_o;
