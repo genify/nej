@@ -405,7 +405,7 @@ NEJ.define([
                 !_cursor[this.__flag]){
                 delete this.__flag;
                 return;
-            } 
+            }
             this.__offset = {
                 x:_v._$pageX(_event),
                 y:_v._$pageY(_event)
