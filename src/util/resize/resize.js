@@ -5,18 +5,28 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _f = NEJ.F,
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _p = _('nej.ut'),
-        _proResize;
-    if (!!_p._$$Resize) return;
+/** @module util/resize/resize */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'base/event',
+    'base/element',
+    'util/event',
+    'util/dragger/dragger'
+],function(NEJ,_k,_v,_e,_t0,_t1,_p,_o,_f,_r){
+    var _pro;
+    /**
+     * 容器大小位置信息对象
+     * @typedef  {Object} module:util/resize/resize._$$Resize~SizeModel
+     * @property {Number} top    距离上
+     * @property {Number} left   距离左
+     * @property {Number} width  宽
+     * @property {Number} height 高
+     */
     /**
      * 区域大小调节功能封装，方位示意图
-     * [code]
+     * 
+     * ```javascript
      *    //  5------ 1 ------6
      *    //  |               |
      *    //  |               |
@@ -24,22 +34,23 @@ var f = function(){
      *    //  |               |
      *    //  |               |
      *    //  8------ 3 ------7
-     * [/code]
+     * ```
      * 
      * 各位置对应的手势及样式标识如下表所示：
-     * [ntb]
-     *   1 | 向上改变大小，对应鼠标手型n-resize，默认样式名js-rs-1
-     *   2 | 向右改变大小，对应鼠标手型e-resize，默认样式名js-rs-2
-     *   3 | 向下改变大小，对应鼠标手型s-resize，默认样式名js-rs-3
-     *   4 | 向左改变大小，对应鼠标手型w-resize，默认样式名js-rs-4
-     *   5 | 向左上改变大小，对应鼠标手型nw-resize，默认样式名js-rs-5
-     *   6 | 向右上改变大小，对应鼠标手型ne-resize，默认样式名js-rs-6
-     *   7 | 向右下改变大小，对应鼠标手型se-resize，默认样式名js-rs-7
-     *   8 | 向左下改变大小，对应鼠标手型sw-resize，默认样式名js-rs-8
-     * [/ntb]
+     *
+     * | 标识 | 说明 |
+     * | :--- | :--- |
+     * | 1    | 向上改变大小，对应鼠标手型n-resize，默认样式名js-rs-1 |
+     * | 2    | 向右改变大小，对应鼠标手型e-resize，默认样式名js-rs-2 |
+     * | 3    | 向下改变大小，对应鼠标手型s-resize，默认样式名js-rs-3 |
+     * | 4    | 向左改变大小，对应鼠标手型w-resize，默认样式名js-rs-4 |
+     * | 5    | 向左上改变大小，对应鼠标手型nw-resize，默认样式名js-rs-5 |
+     * | 6    | 向右上改变大小，对应鼠标手型ne-resize，默认样式名js-rs-6 |
+     * | 7    | 向右下改变大小，对应鼠标手型se-resize，默认样式名js-rs-7 |
+     * | 8    | 向左下改变大小，对应鼠标手型sw-resize，默认样式名js-rs-8 |
      * 
      * 样式举例
-     * [code type="css"]
+     * ```css
      *   #box{width:500px;height:500px;border:solid 1px #ccc;position:relative;}
      *   #box span{position:absolute;}
      *   .lefttop{top:0;left:0;width:5px;height:5px;line-height:5px;background:transparent;z-index:99;cursor:nw-resize;overflow:hidden}
@@ -50,10 +61,10 @@ var f = function(){
      *   .bottom{bottom:0;width:100%;height:5px;line-height:5px;background:transparent;z-index:98;cursor:s-resize;overflow:hidden}
      *   .leftbottom{bottom:0;left:0;width:5px;height:5px;line-height:5px;background:transparent;z-index:99;cursor:sw-resize;overflow:hidden}
      *   .left{left:0;width:5px;height:100%;background:transparent;z-index:98;cursor:w-resize;overflow:hidden}
-     * [/code]
+     * ```
      * 
      * 结构举例
-     * [code type="html"]
+     * ```html
      *   <div id="box">
      *       <span class="lefttop"> </span>
      *       <span class="top"> </span>
@@ -64,112 +75,103 @@ var f = function(){
      *       <span class="leftbottom"> </span>
      *       <span class="left"> </span>
      *   </div>
-     * [/code]
+     * ```
      * 
      * 脚本举例
-     * [code]
-     *   var _p = NEJ.P('nej.ut'),
-     *       _e = NEJ.P('nej._e');
-     *   _p._$$Resize._$allocate({
-     *       body:'box',
-     *       // 自己传样式
-     *       flag:{
-     *           1:'top',
-     *           2:'right',
-     *           3:'bottom',
-     *           4:'left',
-     *           5:'lefttop',
-     *           6:'righttop',
-     *           7:'rightbottom',
-     *           8:'leftbottom'
-     *       },
-     *       onresizestart:function(_event){
-     *           // TODO
-     *           // _event.top
-     *           // _event.left
-     *           // _event.width
-     *           // _event.height
-     *       },
-     *       onresize: function(_event){
-     *           // TODO
-     *           // _event.top
-     *           // _event.left
-     *           // _event.width
-     *           // _event.height
-     *       },
-     *       onresizeend:function(_event){
-     *           // TODO
-     *           // _event.top
-     *           // _event.left
-     *           // _event.width
-     *           // _event.height
-     *       },
-     *       onmove:function(_event){
-     *           // TODO
-     *           // _event.top
-     *           // _event.left
-     *           // _event.width
-     *           // _event.height
-     *       }
-     *   });
-     * [/code]
-     * @class   {nej.ut._$$Resize} 区域大小调节功能封装
-     * @extends {nej.ut._$$EventTarget}
-     * @param   {Object} 可选配置参数
-     * @config  {Node}         view  视窗节点，默认为documentElement或body节点
-     * @config  {String|Node}  body  大小变化区域节点
-     * @config  {Object}       flag  各方向节点样式标识
-     * @config  {Boolean}      lock  是否锁定宽高比
-     * @config  {Object}       min   最小保留值，{width:50,height:50}
+     * ```javascript
+     * NEJ.define([
+     *     'util/resize/resize'
+     * ],function(_t){
+     *     _t._$$Resize._$allocate({
+     *         body:'box',
+     *         // 自己传样式
+     *         flag:{
+     *             1:'top',
+     *             2:'right',
+     *             3:'bottom',
+     *             4:'left',
+     *             5:'lefttop',
+     *             6:'righttop',
+     *             7:'rightbottom',
+     *             8:'leftbottom'
+     *         },
+     *         onresizestart:function(_event){
+     *             // TODO
+     *             // _event.top
+     *             // _event.left
+     *             // _event.width
+     *             // _event.height
+     *         },
+     *         onresize: function(_event){
+     *             // TODO
+     *             // _event.top
+     *             // _event.left
+     *             // _event.width
+     *             // _event.height
+     *         },
+     *         onresizeend:function(_event){
+     *             // TODO
+     *             // _event.top
+     *             // _event.left
+     *             // _event.width
+     *             // _event.height
+     *         },
+     *         onmove:function(_event){
+     *             // TODO
+     *             // _event.top
+     *             // _event.left
+     *             // _event.width
+     *             // _event.height
+     *         }
+     *     });
+     * });
+     * ```
+     * @class   module:util/resize/resize._$$Resize
+     * @extends module:util/event._$$EventTarget
      * 
-     * [hr]
-     * 大小变化开始触发事件
-     * @event  {onresizestart}
-     * @param  {Object} 事件信息
-     * @cofnig {Number} top    距离上
-     * @cofnig {Number} left   距离左
-     * @cofnig {Number} width  宽
-     * @cofnig {Number} height 高
-     * 
-     * [hr]
-     * 大小变化触发事件
-     * @event  {onresize}
-     * @param  {Object} 事件信息
-     * @cofnig {Number} top    距离上
-     * @cofnig {Number} left   距离左
-     * @cofnig {Number} width  宽
-     * @cofnig {Number} height 高
-     * 
-     * [hr]
-     * 大小变化结束触发事件
-     * @event  {onresizeend} 
-     * @param  {Object} 事件信息
-     * @cofnig {Number} top    距离上
-     * @cofnig {Number} left   距离左
-     * @cofnig {Number} width  宽
-     * @cofnig {Number} height 高
-
-     * [hr]
-     * 区域移动触发事件
-     * @event  {onmove} 
-     * @param  {Object} 事件信息
-     * @cofnig {Number} top    距离上
-     * @cofnig {Number} left   距离左
-     * @cofnig {Number} width  宽
-     * @cofnig {Number} height 高
-     * 
+     * @param    {Object}      conifg - 可选配置参数
+     * @property {Node}        view   - 视窗节点，默认为documentElement或body节点
+     * @property {String|Node} body   - 大小变化区域节点
+     * @property {Object}      flag   - 各方向节点样式标识
+     * @property {Boolean}     lock   - 是否锁定宽高比
+     * @property {Object}      min    - 最小保留值，{width:50,height:50}
      */
-    _p._$$Resize = NEJ.C();
-      _proResize = _p._$$Resize._$extend(_p._$$EventTarget);
+    /** 
+     * 大小变化开始触发事件
+     * 
+     * @event  module:util/resize/resize._$$Resize#onresizestart
+     * @param {module:util/resize/resize._$$Resize~SizeModel} event - 事件信息
+     */
+    /** 
+     * 大小变化触发事件
+     * 
+     * @event  module:util/resize/resize._$$Resize#onresize
+     * @param {module:util/resize/resize._$$Resize~SizeModel} event - 事件信息
+     */
+    /** 
+     * 大小变化结束触发事件
+     * 
+     * @event  module:util/resize/resize._$$Resize#onresizeend
+     * @param {module:util/resize/resize._$$Resize~SizeModel} event - 事件信息
+     */
+    /**
+     * 区域移动触发事件
+     * 
+     * @event  module:util/resize/resize._$$Resize#onmove
+     * @param {module:util/resize/resize._$$Resize~SizeModel} event - 事件信息
+     */
+    _p._$$Resize = _k._$klass();
+    _pro = _p._$$Resize._$extend(_t0._$$EventTarget);
     /**
      * 控件重置
+     * 
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
+     * @method module:util/resize/resize._$$Resize#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
-    _proResize.__reset = function(_options){
-        this.__supReset(_options);
+    _pro.__reset = function(_options){
+        this.__super(_options);
         var _min = _options.min||_o;
         this.__body = _e._$get(_options.body);
         this.__minx = parseInt(_min.width)||20;
@@ -187,7 +189,7 @@ var f = function(){
             }
         }
         this.__doInitNode(_options.flag||_o);
-        this.__dragger = _p._$$Dragger._$allocate({
+        this.__dragger = _t1._$$Dragger._$allocate({
             body:this.__body,
             view:this.__view,
             onchange:this.__onResizeMove._$bind(this)
@@ -195,25 +197,29 @@ var f = function(){
     };
     /**
      * 控件销毁
+     * 
      * @protected
-     * @method {__destroy}
+     * @method module:util/resize/resize._$$Resize#__destroy
      * @return {Void}
      */
-    _proResize.__destroy = function(){
-        this.__supDestroy();
-        if (!!this.__dragger)
-            this.__dragger = this.__dragger._$recycle();
+    _pro.__destroy = function(){
+        this.__super();
+        if (!!this.__dragger){
+            this.__dragger._$recycle();
+            delete this.__dragger;
+        }
         delete this.__body;
         delete this.__view;
     };
     /**
      * 初始化节点
+     * 
      * @protected
-     * @method {__doInitNode}
-     * @param  {Object} 样式映射表
+     * @method module:util/resize/resize._$$Resize#__doInitNode
+     * @param  {Object} arg0 - 样式映射表
      * @return {Void}
      */
-    _proResize.__doInitNode = function(_class){
+    _pro.__doInitNode = function(_class){
         var _arr = [];
         for(var i=1,_list,_node;i<9;i++){
             _list = _e._$getByClassName(this.
@@ -238,9 +244,12 @@ var f = function(){
     };
     /**
      * 锁定比例计算位置大小信息
+     *
+     * @protected
+     * @method module:util/resize/resize._$$Resize#__doCalBoxWithLock
      * @return {Object} 位置大小信息
      */
-    _proResize.__doCalBoxWithLock = function(_flag,_event,_delta){
+    _pro.__doCalBoxWithLock = function(_flag,_event,_delta){
         switch(_flag){
             // top
             case 1:
@@ -331,9 +340,12 @@ var f = function(){
     };
     /**
      * 不锁定比例计算位置大小信息
+     *
+     * @protected
+     * @method module:util/resize/resize._$$Resize#__doCalBoxWithoutLock
      * @return {Object} 位置大小信息
      */
-    _proResize.__doCalBoxWithoutLock = function(_event,_delta){
+    _pro.__doCalBoxWithoutLock = function(_event,_delta){
         var _tmp;
         // top
         if (this.__flag==1||
@@ -375,12 +387,13 @@ var f = function(){
     };
     /**
      * 开始调整大小触发事件
+     * 
      * @protected
-     * @method {__onResizeStart}
-     * @param  {Event} 事件对象
+     * @method module:util/resize/resize._$$Resize#__onResizeStart
+     * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
-    _proResize.__onResizeStart = (function(){
+    _pro.__onResizeStart = (function(){
         var _cursor = {1:'n-resize',2:'e-resize',
                        3:'s-resize',4:'w-resize',
                        5:'nw-resize',6:'ne-resize',
@@ -417,12 +430,13 @@ var f = function(){
     })();
     /**
      * 大小调整过程触发事件
+     * 
      * @protected
-     * @method {__onResizing}
-     * @param  {Event} 事件对象
+     * @method module:util/resize/resize._$$Resize#__onResizing
+     * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
-    _proResize.__onResizing = function(_event){
+    _pro.__onResizing = function(_event){
         if (!this.__flag) return;
         var _offset = {x:_v._$pageX(_event),
                        y:_v._$pageY(_event)};
@@ -455,12 +469,13 @@ var f = function(){
     };
     /**
      * 结束调整大小触发事件
+     * 
      * @protected
-     * @method {__onResizEnd}
-     * @param  {Event} 事件对象
+     * @method module:util/resize/resize._$$Resize#__onResizEnd
+     * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
-    _proResize.__onResizEnd = function(_event){
+    _pro.__onResizEnd = function(_event){
         if (!this.__flag) return;
         delete this.__box;
         delete this.__flag;
@@ -471,20 +486,21 @@ var f = function(){
     };
     /**
      * 大小区域移动触发事件
+     *
+     * @protected
+     * @method module:util/resize/resize._$$Resize#__onResizeMove
      * @return  {Void}
      */
-    _proResize.__onResizeMove = function(_event){
+    _pro.__onResizeMove = function(_event){
         this._$dispatchEvent('onmove',this._$getResizeBox());
     };
     /**
      * 取区域节点位置大小信息
-     * @return {Object} 信息
-     * @cofnig {Number} top    距离上
-     * @cofnig {Number} left   距离左
-     * @cofnig {Number} width  宽
-     * @cofnig {Number} height 高
+     *
+     * @method module:util/resize/resize._$$Resize#_$getResizeBox
+     * @return {module:util/resize/resize._$$Resize~SizeModel} 信息
      */
-    _proResize._$getResizeBox = function(){
+    _pro._$getResizeBox = function(){
         var _style = this.__body.style;
         return {
             top:parseInt(_style.top)||0,
@@ -493,6 +509,10 @@ var f = function(){
             height:this.__body.offsetHeight
         };
     };
-};
-NEJ.define('{lib}util/resize/resize.js',
-          ['{lib}util/dragger/dragger.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});
