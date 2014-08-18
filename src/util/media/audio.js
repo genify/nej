@@ -5,50 +5,58 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    // variable declaration
-    var _  = NEJ.P,
-        _p = _('nej.ut'),
-        _pro;
-    if (!!_p._$$MediaAudio) return;
+/** @module util/media/audio */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'util/media/media'
+],function(NEJ,_k,_t,_p,_o,_f,_r){
     /**
-     * 音频播放控件<br />
+     * 音频播放控件
+     * 
      * 脚本举例
      * ```javascript
-     *   // 首先生成播放对象,只负责逻辑部分，要配合UI来使用
-     *   // preload：是否预加载
-     *   // url：音频地址
-     *   var _mda = _p._$$MediaAudio._$allocate({
-     *       preload:false,
-     *       url:'http://127.0.0.1:8000/nej-baseline/res/test.mp3',
-     *       onstatechange:function(_event){
-     *           // 状态改变的回调
-     *           // 0 | 当前停止状态
-     *           // 1 | 当前缓冲状态
-     *           // 2 | 当前播放状态
-     *           // 3 | 当前暂停状态
-     *           // 4 | 播放结束状态
-     *       }
-     *   });
-     *   // 开始播放
-     *   _mda._$play();
-     *   // 暂停播放
-     *   _mda._$pause();
-     *   // 停止播放
-     *   _mda._$stop();
+     * NEJ.define([
+     *     'util/media/audio'
+     * ],function(_t){
+     *     // 首先生成播放对象,只负责逻辑部分，要配合UI来使用
+     *     // preload：是否预加载
+     *     // url：音频地址
+     *     var _audio = _t._$$MediaAudio._$allocate({
+     *         preload:false,
+     *         url:'http://127.0.0.1:8000/nej-baseline/res/test.mp3',
+     *         onstatechange:function(_event){
+     *             // 状态改变的回调
+     *             // 0 | 当前停止状态
+     *             // 1 | 当前缓冲状态
+     *             // 2 | 当前播放状态
+     *             // 3 | 当前暂停状态
+     *             // 4 | 播放结束状态
+     *         }
+     *     });
+     *     
+     *     // 开始播放
+     *     _audio._$play();
+     *     // 暂停播放
+     *     _audio._$pause();
+     *     // 停止播放
+     *     _audio._$stop();
+     * });
      * ```
-     * @class   {nej.ut._$$MediaAudio} 音频播放控件
-     * @extends {nej.ut._$$Media}
-     * @param   {Object} 可选配置参数
-     * @property  {String} url 音频地址
+     * 
+     * @class    module:util/media/audio._$$MediaAudio
+     * @extends  module:util/media/media._$$Media
+     * @param    {Object} config - 可选配置参数
+     * @property {String} url    - 音频地址
      */
-    _p._$$MediaAudio = NEJ.C();
-    _pro = _p._$$MediaAudio._$extend(_p._$$Media);
+    _p._$$MediaAudio = _k._$klass();
+    _pro = _p._$$MediaAudio._$extend(_t._$$Media);
     /**
      * 控件重置
+     * 
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
+     * @method module:util/media/audio._$$MediaAudio#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -72,22 +80,24 @@ var f = function(){
             this.__audio,'error',
             this.__onError._$bind(this)
         ]]);
-        this.__supReset(_options);
+        this.__super(_options);
     };
     /**
      * 销毁控件
+     * 
      * @protected
-     * @method {__destroy}
+     * @method module:util/media/audio._$$MediaAudio#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         delete this.__audio;
     };
     /**
      * 执行播放操作
+     * 
      * @protected
-     * @method {__doPlay}
+     * @method module:util/media/audio._$$MediaAudio#__doPlay
      * @return {Void}
      */
     _pro.__doPlay = function(){
@@ -99,8 +109,9 @@ var f = function(){
     };
     /**
      * 执行暂停操作
+     * 
      * @protected
-     * @method {__doPause}
+     * @method module:util/media/audio._$$MediaAudio#__doPause
      * @return {Void}
      */
     _pro.__doPause = function(){
@@ -108,8 +119,9 @@ var f = function(){
     };
     /**
      * 执行停止操作
+     * 
      * @protected
-     * @method {__doStop}
+     * @method module:util/media/audio._$$MediaAudio#__doStop
      * @return {Void}
      */
     _pro.__doStop = function(){
@@ -121,8 +133,9 @@ var f = function(){
     };
     /**
      * 文件载入触发事件
+     * 
      * @protected
-     * @method {__onLoading}
+     * @method module:util/media/audio._$$MediaAudio#__onLoading
      * @return {Void}
      */
     _pro.__onLoading = function(){
@@ -132,8 +145,9 @@ var f = function(){
     };
     /**
      * 暂停触发事件
+     * 
      * @protected
-     * @method {__onPause}
+     * @method module:util/media/audio._$$MediaAudio#__onPause
      * @return {Void}
      */
     _pro.__onPause = function(){
@@ -146,8 +160,9 @@ var f = function(){
     };
     /**
      * 播放过程触发事件
+     * 
      * @protected
-     * @method {__onPlaying}
+     * @method module:util/media/audio._$$MediaAudio#__onPlaying
      * @return {Void}
      */
     _pro.__onPlaying = function(){
@@ -167,6 +182,9 @@ var f = function(){
     };
     /**
      * 播放错误事件
+     *
+     * @protected
+     * @method module:util/media/audio._$$MediaAudio#__onError
      * @param  {Event} 事件信息
      * @return {Void}
      */
@@ -179,8 +197,9 @@ var f = function(){
     };
     /**
      * 设置播放时间
+     * 
      * @protected
-     * @method {__setCurrentTime}
+     * @method module:util/media/audio._$$MediaAudio#__setCurrentTime
      * @return {Void}
      */
     _pro.__setCurrentTime = function(_time){
@@ -189,8 +208,9 @@ var f = function(){
     };
     /**
      * 获取播放时间
+     * 
      * @protected
-     * @method {__getCurrentTime}
+     * @method module:util/media/audio._$$MediaAudio#__getCurrentTime
      * @return {Number} 当前时间
      */
     _pro.__getCurrentTime = function(){
@@ -198,8 +218,9 @@ var f = function(){
     };
     /**
      * 设置音量
+     * 
      * @protected
-     * @method {__setVolume}
+     * @method module:util/media/audio._$$MediaAudio#__setVolume
      * @return {Void}
      */
     _pro.__setVolume = function(_volume){
@@ -207,8 +228,9 @@ var f = function(){
     };
     /**
      * 获取音量
+     * 
      * @protected
-     * @method {__getVolume}
+     * @method module:util/media/audio._$$MediaAudio#__getVolume
      * @return {Number} 音量值
      */
     _pro.__getVolume = function(){
@@ -216,15 +238,17 @@ var f = function(){
     };
     /**
      * 取媒体总时长
-     * @method {_$duration}
+     * 
+     * @method module:util/media/audio._$$MediaAudio#_$duration
      * @return {Number} 媒体总时长
      */
     _pro._$duration = function(){
         return !this.__audio?0:this.__audio.duration;
     };
-};
-NEJ.define(
-    '{lib}util/media/audio.js',[
-    '{lib}base/event.js',
-    '{lib}util/media/media.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});

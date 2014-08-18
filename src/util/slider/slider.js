@@ -123,7 +123,7 @@ NEJ.define([
      * 
      * @protected
      * @method module:util/slider/slider._$$Slider#__onChange
-     * @param  {Object} 位置信息
+     * @param  {Object} arg0 - 位置信息
      * @return {Void}
      */
     _pro.__onChange = function(_event,_end){
