@@ -1,10 +1,17 @@
+/*
+ * ------------------------------------------
+ * 占位提示接口平台适配实现文件
+ * @version  1.0
+ * @author   genify(caijf@corp.netease.com)
+ * ------------------------------------------
+ */
 NEJ.define([
-    '{lib}base/element.js',
-	'{lib}base/event.js',
+    'base/element',
+	'base/event',
 	'./holder.js'
 ],function(_e,_v,_h,_p,_o,_f,_r){
-	// ie6-9 holder patch
-	NEJ.patch('2.0<=TR<=5.0',function(){
+	// for ie9-
+	NEJ.patch('TR<=5.0',function(){
 		// variable declaration
 		/**
 		 * 节点占位符行为，高版本浏览器用样式处理
@@ -56,23 +63,19 @@ NEJ.define([
 		            display:!_input.value?'':'none'
 		        });
 		    };
-		    return _h.__setPlaceholder._$aop(
-		            function(_event){
-		                _event.stopped = !0;
-		                var _args = _event.args,
-		                    _input = _e._$get(_args[0]);
-		                // has been placeholded
-		                if (_cache[_input.id]!=null)
-		                    return;
-		                _doWrapInput(_input,_args[1]);
-		                _cache[_input.id] = 1;
-		                // listen blur and focus event
-		                _v._$addEvent(_input,'blur',_onBlur._$bind(null));
-		                _v._$addEvent(_input,'focus',_onFocus._$bind(null));
-		                _v._$addEvent(_input,'input',_onInput._$bind(null));
-		        	});
-			})();
-		});
-
-		return _h;
+		    return function(_input,_clazz){
+                // has been placeholded
+                if (_cache[_input.id]!=null)
+                    return;
+                _doWrapInput(_input,_clazz);
+                _cache[_input.id] = 1;
+                // listen blur and focus event
+                _v._$addEvent(_input,'blur',_onBlur._$bind(null));
+                _v._$addEvent(_input,'focus',_onFocus._$bind(null));
+                _v._$addEvent(_input,'input',_onInput._$bind(null));
+        	};
+		})();
+    });
+    
+	return _h;
 });
