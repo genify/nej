@@ -24,23 +24,26 @@ NEJ.define([
     /**
      * 音频播放器
      *
-     * @class   module:ui/audio/mp3._$$MP3Player
-     * @uses    {util/slider/slider.simple_$$SimpleSlider}
-     * @uses    {util/media/playlist#_$$PlayList}
-     * @extends {ui/base#._$$Abstract}
-     * @param   {Object}  可选配置参数
-     * @property  {String|Node} parent     父节点
-     * @property  {String}      mode       播放模式，0:列表(默认)，1:单曲，2:随机
-     * @property  {Array}       list       歌曲列表
-     * @property  {Boolean}     autostart  是否自动开始，0:不自动，1:自动(默认)
+     * @class     module:ui/audio/mp3._$$MP3Player
+     * @uses      module:util/slider/simple._$$SimpleSlider
+     * @uses      module:util/media/playlist._$$PlayList
+     * @extends   module:ui/base._$$Abstract
+     * @param     {Object}      config     - 可选配置参数
+     * @property  {String|Node} parent     - 父节点
+     * @property  {String}      mode       - 播放模式，0:列表(默认)，1:单曲，2:随机
+     * @property  {Array}       list       - 歌曲列表
+     * @property  {Boolean}     autostart  - 是否自动开始，0:不自动，1:自动(默认)
      */
     _p._$$MP3Player = _k._$klass();
     _pro = _p._$$MP3Player._$extend(_u._$$Abstract);
 
     /**
      * 重置控件
-     * @param  {Objec} _options 可选配置参数
-     * @return {void}
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__reset
+     * @param  {Objec} _options - 可选配置参数
+     * @return {Void}
      */
     _pro.__reset = function(_options){
         this.__super(_options);
@@ -57,7 +60,10 @@ NEJ.define([
 
     /**
      * 销毁控件
-     * @return {void}
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__destroy
+     * @return {Void}
      */
     _pro.__destroy = function(){
         this.__doClearComponent();
@@ -66,8 +72,9 @@ NEJ.define([
 
     /**
      * 初始化播放器结构
+     *
      * @protected
-     * @method {__initXGui}
+     * @method ui/audio/mp3._$$MP3Player#__initXGui
      * @return {Void}
      */
     _pro.__initXGui = function(){
@@ -77,8 +84,9 @@ NEJ.define([
 
     /**
      * 初始化结构
+     *
      * @protected
-     * @method {__initNode}
+     * @method ui/audio/mp3._$$MP3Player#__initNode
      * @return {Void}
      */
     _pro.__initNode = function(){
@@ -113,8 +121,11 @@ NEJ.define([
 
     /**
      * 播放器点击事件
-     * @param  {[type]} _event [description]
-     * @return {void}
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__onAction
+     * @param  {Event} _event - 事件对象
+     * @return {Void}
      */
     _pro.__onAction = function(_event){
         var _action;
@@ -139,7 +150,10 @@ NEJ.define([
 
     /**
      * 更新音量大小图标
-     * @return {void}
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__onVolumeChange
+     * @return {Void}
      */
     _pro.__onVolumeChange = (function(){
         var _map = ['m-vmax','m-vmin','m-vzero'],
@@ -160,7 +174,11 @@ NEJ.define([
 
     /**
      * 播放模式切换
-     * @return {void}
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__doModeChange
+     * @param  {Event} _event - 事件对象
+     * @return {Void}
      */
     _pro.__doModeChange = function(_event){
         var _mode = this.__playlist._$getPlayMode();
@@ -169,7 +187,10 @@ NEJ.define([
 
     /**
      * 切换前一首
-     * @return {void}
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__onPre
+     * @return {Void}
      */
     _pro.__onPre = function(){
         this.__playlist._$prev();
@@ -177,7 +198,11 @@ NEJ.define([
 
     /**
      * 播放或暂停
-     * @return {void}
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__onPlay
+     * @param  {Event} _event - 事件对象
+     * @return {Void}
      */
     _pro.__onPlay = function(_event){
         if (!!this.__audio){
@@ -194,7 +219,10 @@ NEJ.define([
 
     /**
      * 切换下一首
-     * @return {void}
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__onNext
+     * @return {Void}
      */
     _pro.__onNext = function(){
         this.__playlist._$next();
@@ -202,8 +230,11 @@ NEJ.define([
 
     /**
      * 播放状态更新
-     * @param  {[type]} _event [description]
-     * @return {void}
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__onStateChange
+     * @param  {Event} _event - 事件对象
+     * @return {Void}
      */
     _pro.__onStateChange = function(_event){
         var _state = _event.state;
@@ -222,8 +253,11 @@ NEJ.define([
 
     /**
      * 更新时间轴
-     * @param  {[type]} _event [description]
-     * @return {void}
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__onTimeUpdate
+     * @param  {Event} _event - 事件对象
+     * @return {Void}
      */
     _pro.__onTimeUpdate = function(_event){
         if (!this.__timeSlider)
@@ -242,6 +276,10 @@ NEJ.define([
 
     /**
      * 格式化秒为小时或分钟
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__doFormatSecond
+     * @param  {Number}  _second - 秒数
      * @return {String}  格式化好的时间
      */
     _pro.__doFormatSecond = function(_second){
@@ -255,8 +293,11 @@ NEJ.define([
 
     /**
      * 设置播放时间
-     * @param  {[type]} _event [description]
-     * @return {void}
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__onTimeSlideStop
+     * @param  {Event} _event - 事件对象
+     * @return {Void}
      */
     _pro.__onTimeSlideStop = function(_event){
         if (!this.__audio._$duration()) return;
@@ -266,8 +307,11 @@ NEJ.define([
 
     /**
      * 设置音量
-     * @param  {[type]} _event [description]
-     * @return {void}
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__onVolSlideStop
+     * @param  {Event} _event - 事件对象
+     * @return {Void}
      */
     _pro.__onVolSlideStop = function(_event){
         var _value = _event.ratio;
@@ -281,7 +325,11 @@ NEJ.define([
 
     /**
      * 更新播放模式
-     * @return {void}
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__onModeChange
+     * @param  {Event} _event - 事件对象
+     * @return {Void}
      */
     _pro.__onModeChange = (function(){
         var _map = ['m-repeatb m-repeatd','m-repeatb-1 m-repeatd-1','m-shuffleb m-shuffled'],
@@ -292,10 +340,13 @@ NEJ.define([
     })();
 
     /**
-     * [__onMediaChange description]
-     * @param  {[type]} _options [description]
-     * @param  {[type]} _event   [description]
-     * @return {void}
+     * 多媒体状态改变
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__onMediaChange
+     * @param  {Object} _options - 配置信息
+     * @param  {Event} arg0 - 事件对象
+     * @return {Void}
      */
     _pro.__onMediaChange = function(_options,_event){
         if (_event.index < 0){
@@ -330,8 +381,10 @@ NEJ.define([
 
     /**
      * 指定播放歌曲
-     * @param  {Number}  歌曲列表的下标，默认为0
-     * @return {void}
+     *
+     * @method ui/audio/mp3._$$MP3Player#_$playByIndex
+     * @param  {Number} arg0 -  歌曲列表的下标，默认为0
+     * @return {Void}
      */
     _pro._$playByIndex = function(_index){
         _index = _index || 0;
@@ -341,7 +394,9 @@ NEJ.define([
 
     /**
      * 开始播放
-     * @return {void}
+     *
+     * @method ui/audio/mp3._$$MP3Player#_$play
+     * @return {Void}
      */
     _pro._$play = function(){
         this.__autostart = !0;
@@ -350,8 +405,12 @@ NEJ.define([
 
     /**
      * 刷新播放列表
-     * @param  {Array} _list 歌曲列表
-     * @return {void}
+     *
+     * @method ui/audio/mp3._$$MP3Player#_$refreshList
+     * @param    {Object} arg0 - 配置信息
+     * @property {Array}  mode - 歌曲播放模式
+     * @property {Array}  list - 歌曲列表
+     * @return   {Void}
      */
     _pro._$refreshList = function(_options){
         var _mode = _options.mode||0,

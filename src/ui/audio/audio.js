@@ -25,10 +25,10 @@ NEJ.define([
      * @class   module:ui/audio/audio._$$AudioPlayer
      * @uses    module:util/audio/audio._$$MediaAudio
      * @extends module:ui/base._$$Abstract
-     * @param   {Object}  可选配置参数
-     * @property  {String}  url       音乐地址
-     * @property  {String}  title     音乐标题
-     * @property  {Boolean} autostart 自动开始播放
+     * @param     {Object}  config    - 可选配置参数
+     * @property  {String}  url       - 音乐地址
+     * @property  {String}  title     - 音乐标题
+     * @property  {Boolean} autostart - 自动开始播放
      */
     /**
      * 状态变化事件
@@ -69,7 +69,7 @@ NEJ.define([
      *
      * @protected
      * @method ui/audio/audio._$$AudioPlayer#__reset
-     * @param  {Object} 可选配置参数
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -105,6 +105,7 @@ NEJ.define([
      *
      * @protected
      * @method ui/audio/audio._$$AudioPlayer#__getAudio
+     * @param  {String} arg0 - 音频URI
      * @return {Object} 音频对象
      */
     _pro.__getAudio = function(_source){
@@ -116,7 +117,7 @@ NEJ.define([
      *
      * @protected
      * @method ui/audio/audio._$$AudioPlayer#__onStateChange
-     * @param {Object} 事件对象
+     * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
     _pro.__onStateChange = (function(){
@@ -140,6 +141,7 @@ NEJ.define([
     };
     /**
      * 暂停播放
+     *
      * @method ui/audio/audio._$$AudioPlayer#_$pause
      * @return {Void}
      */
@@ -149,6 +151,7 @@ NEJ.define([
     };
     /**
      * 停止播放
+     *
      * @method ui/audio/audio._$$AudioPlayer#_$stop
      * @return {Void}
      */

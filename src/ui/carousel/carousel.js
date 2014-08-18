@@ -23,53 +23,61 @@ NEJ.define([
     /**
      * 卡片播放器对象
      *
-     * @class   module:nej.ui._$$Carousel 卡片播放器控件
-     * @extends {nej.ut._$$EventTarget}
-     * @param   {Object} 可选配置参数
-     * @property  {String|Node} parent     卡片所在父容器节点
-     * @property  {Number}        mode      动画模式(1:3d;2:2d;3:left/top)
-     * @property  {Number}        current   当前选中项
-     * @property  {Number}        buffer     预加载卡片个数
-     * @property  {Boolean}       nofollow  无跟随
-     * @property  {Boolean}       nobounce  无弹性
-     * @property  {Object}        indicator 指示器参数
+     * @class     module:ui/carousel/carousel._$$Carousel
+     * @extends   module:util/event._$$EventTarget
+     * @param     {Object}      config    - 可选配置参数
+     * @property  {String|Node} parent    - 卡片所在父容器节点
+     * @property  {Number}      mode      - 动画模式(1:3d;2:2d;3:left/top)
+     * @property  {Number}      current   - 当前选中项
+     * @property  {Number}      buffer    - 预加载卡片个数
+     * @property  {Boolean}     nofollow  - 无跟随
+     * @property  {Boolean}     nobounce  - 无弹性
+     * @property  {Object}      indicator - 指示器参数
+     */
+    /**
+     * 添加卡片
      *
-     * [hr]
+     * @event  module:ui/carousel/carousel._$$Carousel#onaddcard
+     * @param  {Number} index - 卡片索引
      *
-     * @event  {onaddcard} 添加卡片
-     * @param  {Number} 卡片索引
+     */
+    /**
+     * 准备滚动到某张卡片
      *
-     * [hr]
+     * @event  module:ui/carousel/carousel._$$Carousel#onbeforescroll
+     * @param  {Number}  index  -  卡片索引
+     * @param  {Boolean} islast - 是否最后一张
+     */
+    /**
+     * 滚动到某张卡片
      *
-     * @event  {onbeforescroll} 准备滚动到某张卡片
-     * @param  {Number}  卡片索引
-     * @param  {Boolean} 是否最后一张
+     * @event  module:ui/carousel/carousel._$$Carousel#onscroll
+     * @param  {Number}  index  -  卡片索引
+     * @param  {Boolean} islast - 是否最后一张
      *
-     * [hr]
+     */
+    /**
+     * 回收卡片处理函数
      *
-     * @event  {onscroll} 滚动到某张卡片
-     * @param  {Number}  卡片索引
-     * @param  {Boolean} 是否最后一张
+     * @event  module:ui/carousel/carousel._$$Carousel#onrecycle
+     * @param  {Number} index - 回收的卡片索引
+     * @param  {Object} node  - 卡片的容器节点
+     */
+    /**
+     * 弹性释放事件处理函数
      *
-     * [hr]
-     *
-     * @event  {onrecycle} 回收卡片处理函数
-     * @param  {Number} 回收的卡片索引
-     * @param  {Object} 卡片的容器节点
-     *
-     * [hr]
-     *
-     * @event  {onbouncerelease} 弹性释放事件处理函数
-     * @param  {Object} 事件对象
+     * @event  module:ui/carousel/carousel._$$Carousel#onbouncerelease
+     * @param  {Event} arg0 - 事件对象
      *
      */
     _p._$$Carousel = _k._$klass();
     _pro = _p._$$Carousel._$extend(_t._$$EventTarget,!0);
     /**
      * 控件重置
+     *
      * @protected
-     * @method {__reset}
-     * @param {Object} 重置属性
+     * @method module:ui/carousel/carousel._$$Carousel#__reset
+     * @param  {Object} arg0 - 重置属性
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -124,16 +132,18 @@ NEJ.define([
     };
     /**
      * 获得配置参数(子类实现)
-     * @protected
-     * @method {__getConfig}
+     *
+     * @abstract
+     * @method module:ui/carousel/carousel._$$Carousel#__getConfig
      * @return {Object}    配置参数对象
      */
     _pro.__getConfig = f;
     /**
      * 检测键盘事件
+     *
      * @protected
-     * @method {__onKeyDown}
-     * @param  {Object} 事件对象
+     * @method module:ui/carousel/carousel._$$Carousel#__onKeyDown
+     * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
     _pro.__onKeyDown = function(_event){
@@ -146,8 +156,9 @@ NEJ.define([
     };
     /**
      * 获得当前卡片总长度
+     *
      * @protected
-     * @method {__getLength}
+     * @method module:ui/carousel/carousel._$$Carousel#__getLength
      * @return {Number}
      */
     _pro.__getLength = function(){
@@ -155,9 +166,10 @@ NEJ.define([
     };
     /**
      * 判断当前图片是否最后一张
+     *
      * @protected
-     * @method {__isLast}
-     * @param  {Number} 是否最后一张
+     * @method module:ui/carousel/carousel._$$Carousel#__isLast
+     * @param  {Number} index - 当前图片索引
      * @return {Boolean}
      */
     _pro.__isLast = function(_index){
@@ -165,9 +177,10 @@ NEJ.define([
     };
     /**
      * 判断是否滚动到下一张
+     *
      * @protected
-     * @method {__isNext}
-     * @param  {Number} 滚动距离
+     * @method module:ui/carousel/carousel._$$Carousel#__isNext
+     * @param  {Number} arg0 - 滚动距离
      * @return {Boolean}
      */
     _pro.__isNext = function(_movement){
@@ -175,9 +188,10 @@ NEJ.define([
     }
     /**
      * 判断是否滚动到前一张
+     *
      * @protected
-     * @method {__isPrev}
-     * @param  {Number} 滚动距离
+     * @method module:ui/carousel/carousel._$$Carousel#__isPrev
+     * @param  {Number} arg0 - 滚动距离
      * @return {Boolean}
      */
     _pro.__isPrev = function(_movement){
@@ -185,9 +199,10 @@ NEJ.define([
     }
     /**
      * 拖动开始事件处理函数
+     *
      * @protected
-     * @method {__onDragStart}
-     * @param  {Object} 事件对象
+     * @method module:ui/carousel/carousel._$$Carousel#__onDragStart
+     * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
     _pro.__onDragStart = function(_event){
@@ -204,9 +219,10 @@ NEJ.define([
     };
     /**
      * 拖动事件处理函数
+     *
      * @protected
-     * @method {__onDrag}
-     * @param  {Object} 事件对象
+     * @method module:ui/carousel/carousel._$$Carousel#__onDrag
+     * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
     _pro.__onDrag = function(_event){
@@ -230,9 +246,10 @@ NEJ.define([
     };
     /**
      * 拖动结束事件处理函数
+     *
      * @protected
-     * @method {__onDragEnd}
-     * @param  {Object} 事件对象
+     * @method module:ui/carousel/carousel._$$Carousel#__onDragEnd
+     * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
     _pro.__onDragEnd = function(_event){
@@ -252,8 +269,9 @@ NEJ.define([
     };
     /**
      * 弹性释放时
+     *
      * @protected
-     * @method {__onBounceRelease}
+     * @method module:ui/carousel/carousel._$$Carousel#__onBounceRelease
      * @return {Void}
      */
     _pro.__onBounceRelease = function(){
@@ -265,8 +283,11 @@ NEJ.define([
     }
     /**
      * 滚动事件
+     *
      * @protected
-     * @method {__fireEvent}
+     * @method module:ui/carousel/carousel._$$Carousel#__fireEvent
+     * @param  {Event}  arg0 - 事件对象
+     * @param  {Object} arg1 - 配置参数
      * @return {Void}
      */
     _pro.__fireEvent = function(_event,_param){
@@ -289,9 +310,10 @@ NEJ.define([
     };
     /**
      * 待添加Item列表
+     *
      * @protected
-     * @method {__addToAddList}
-     * @param  {Number} 项索引
+     * @method module:ui/carousel/carousel._$$Carousel#__addToAddList
+     * @param  {Number} arg0 - 项索引
      * @return {Void}
      */
     _pro.__addToAddList = function(_index){
@@ -300,9 +322,10 @@ NEJ.define([
     }
     /**
      * 待删除Item列表
+     *
      * @protected
-     * @method {__addToDelList}
-     * @param  {Number} 项索引
+     * @method module:ui/carousel/carousel._$$Carousel#__addToDelList
+     * @param  {Number} arg0 - 项索引
      * @return {Void}
      */
     _pro.__addToDelList = function(_index){
@@ -312,9 +335,9 @@ NEJ.define([
     }
     /**
      * 动画播放列表
+     *
      * @protected
-     * @method {__addToAniList}
-     * @param  {Number} 项索引
+     * @method module:ui/carousel/carousel._$$Carousel#__addToAniList
      * @return {Void}
      */
     _pro.__addToAniList = function(){
@@ -325,10 +348,11 @@ NEJ.define([
     }
     /**
      * 滚动到指定卡片
+     *
      * @protected
-     * @method {__scrollTo}
-     * @param  {Number} 卡片索引
-     * @param  {Number} 偏移量
+     * @method module:ui/carousel/carousel._$$Carousel#__scrollTo
+     * @param  {Number} arg0 - 卡片索引
+     * @param  {Number} arg1 - 偏移量
      * @return {Void}
      */
     _pro.__scrollTo = function(_index,_offset){
@@ -339,8 +363,9 @@ NEJ.define([
     };
     /**
      * 更新所有卡片的位置
+     *
      * @protected
-     * @method {__updatePosition}
+     * @method module:ui/carousel/carousel._$$Carousel#__updatePosition
      * @return {Void}
      */
     _pro.__updatePosition = function(){
@@ -361,9 +386,10 @@ NEJ.define([
     };
     /**
      * 设置卡片的位置
+     *
      * @protected
-     * @method {__setItemPosition}
-     * @param  {Number} 卡片索引
+     * @method module:ui/carousel/carousel._$$Carousel#__setItemPosition
+     * @param  {Number} arg0 - 卡片索引
      * @return {Void}
      */
     _pro.__setItemPosition = function(_index){
@@ -387,9 +413,10 @@ NEJ.define([
     };
     /**
      * 计算卡片偏移量
+     *
      * @protected
-     * @method {__getItemOffset}
-     * @param  {Number}  项索引
+     * @method module:ui/carousel/carousel._$$Carousel#__getItemOffset
+     * @param  {Number} arg0 - 项索引
      * @return {Number} 偏移量
      */
     _pro.__getItemOffset = function(_index){
@@ -397,10 +424,11 @@ NEJ.define([
     };
     /**
      * 添加卡片
+     *
      * @protected
-     * @method {__addItem}
-     * @param  {Number} 开始索引
-     * @param  {Number} 结束索引
+     * @method module:ui/carousel/carousel._$$Carousel#__addItem
+     * @param  {Number} arg0 - 开始索引
+     * @param  {Number} arg1 - 结束索引
      * @return {Void}
      */
     _pro.__addItem = function(_start,_end){
@@ -415,8 +443,10 @@ NEJ.define([
     };
     /**
      * 滚动停止处理函数
+     *
      * @protected
-     * @method {__onTransitionEnd}
+     * @method module:ui/carousel/carousel._$$Carousel#__onTransitionEnd
+     * @param  {Event} _event - 事件对象
      * @return {Void}
      */
     _pro.__onTransitionEnd = function(_event){
@@ -425,8 +455,9 @@ NEJ.define([
     };
     /**
      * 动画结束处理函数
+     *
      * @protected
-     * @method {__doTransitionEnd}
+     * @method module:ui/carousel/carousel._$$Carousel#__doTransitionEnd
      * @return {Void}
      */
     _pro.__doTransitionEnd = function(){
@@ -447,8 +478,9 @@ NEJ.define([
     };
     /**
      * 控件销毁函数
+     *
      * @protected
-     * @method {__destroy}
+     * @method module:ui/carousel/carousel._$$Carousel#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -470,10 +502,10 @@ NEJ.define([
     };
     /**
      * 卡片回收
+     *
      * @protected
-     * @method {__delItem}
-     * @param  {Number} 回收的卡片索引
-     * @param  {Object} 卡片的容器节点
+     * @method module:ui/carousel/carousel._$$Carousel#__delItem
+     * @param  {Number} arg0 - 回收的卡片索引
      * @return {Void}
      */
     _pro.__delItem = function(_index){
@@ -489,10 +521,11 @@ NEJ.define([
     };
     /**
      * 卡片回收默认处理
+     *
      * @protected
-     * @method {__onRecycleItem}
-     * @param  {Number} 回收项的索引
-     * @param  {Object} 卡片的容器节点
+     * @method module:ui/carousel/carousel._$$Carousel#__onRecycleItem
+     * @param  {Number}       arg0 - 回收项的索引
+     * @param  {Node|String}  arg1 - 卡片的容器节点
      * @return {Void}
      */
     _pro.__onRecycleItem = function(_index,_node){
@@ -500,8 +533,8 @@ NEJ.define([
     };
     /**
      * 锁住控件
-     * @method {_$lock}
-     * @param {Boolean} 是否加锁
+     * @method module:ui/carousel/carousel._$$Carousel#_$lock
+     * @param  {Boolean} arg0 - 是否加锁
      * @return {Void}
      */
     _pro._$lock = function(_isLock){
@@ -509,10 +542,10 @@ NEJ.define([
     };
     /**
      * 刷新接口
-     * @method {_$refresh}
-     * @param  {Object} 刷新参数
-     * @property {Number} current  当前页
-     * @return {Void}
+     * @method module:ui/carousel/carousel._$$Carousel#_$refresh
+     * @param    {Object} options - 刷新参数
+     * @property {Number} current - 当前页
+     * @return   {Void}
      */
     _pro._$refresh = function(_options){
         _options = _options||{};
@@ -522,7 +555,7 @@ NEJ.define([
     };
     /**
      * 滚动到下一张
-     * @method {_$scrollToNext}
+     * @method module:ui/carousel/carousel._$$Carousel#_$scrollToNext
      * @return {Void}
      */
     _pro._$scrollToNext = function(){
@@ -544,7 +577,7 @@ NEJ.define([
     };
     /**
      * 滚动到上一张
-     * @method {_$scrollToPrev}
+     * @method module:ui/carousel/carousel._$$Carousel#_$scrollToPrev
      * @return {Void}
      */
     _pro._$scrollToPrev = function(){
@@ -563,8 +596,8 @@ NEJ.define([
     };
     /**
      * 滚到当前项
-     * @method {_$scrollToCurrent}
-     * @param  {Object} 卡片索引
+     * @method module:ui/carousel/carousel._$$Carousel#_$scrollToCurrent
+     * @param  {Number} arg0 - 卡片索引
      * @return {Void}
      */
     _pro._$scrollToCurrent = function(_index){
@@ -587,10 +620,10 @@ NEJ.define([
     };
     /**
      * 添加卡片到容器
-     * @method {_$appendItem}
-     * @param  {Object}      卡片索引
-     * @param  {Node|String} 添加的卡片内容
-     * @return {nej.ui._$$Carousel}
+     * @method module:ui/carousel/carousel._$$Carousel#_$appendItem
+     * @param  {Object}      arg0 - 卡片索引
+     * @param  {Node|String} arg1 - 添加的卡片内容
+     * @return {Void}
      */
     _pro._$appendItem = function(_index,_node){
         var _container = this.__parent,
@@ -606,8 +639,8 @@ NEJ.define([
     };
     /**
      * 异步添加项到容器末尾
-     * @method {_$appendMore}
-     * @param  {String} 添加的卡片内容
+     * @method module:ui/carousel/carousel._$$Carousel#_$appendMore
+     * @param  {String} arg0 - 添加的卡片内容
      * @return {nej.ui._$$Carousel}
      */
     _pro._$appendMore = function(_html){
@@ -619,7 +652,7 @@ NEJ.define([
     };
     /**
      * 返回当前卡片索引
-     * @method {_$getCurrentIndex}
+     * @method module:ui/carousel/carousel._$$Carousel#_$getCurrentIndex
      * @return {Number}
      */
     _pro._$getCurrentIndex = function(){
@@ -627,8 +660,8 @@ NEJ.define([
     }
     /**
      * 根据卡片索引获得卡片
-     * @method {_$getItemByIndex}
-     * @param  {Object} 卡片索引
+     * @method module:ui/carousel/carousel._$$Carousel#_$getItemByIndex
+     * @param  {Number} arg0 - 卡片索引
      * @return {Node}
      */
     _pro._$getItemByIndex = function(_index){
@@ -636,8 +669,8 @@ NEJ.define([
     };
     /**
      * 滚动到指定项
-     * @method {_$scrollTo}
-     * @param  {Number} 卡片索引
+     * @method module:ui/carousel/carousel._$$Carousel#_$scrollTo
+     * @param  {Number} arg0 - 卡片索引
      * @return {Void}
      */
     _pro._$scrollTo = function(_index){
