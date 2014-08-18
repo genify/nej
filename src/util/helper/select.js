@@ -5,20 +5,23 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module util/helper/select */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/element.js',
-    '{lib}base/event.js',
-    '{lib}util/event.js'
+    'base/global',
+    'base/klass',
+    'base/element',
+    'base/event',
+    'util/event'
 ],function(NEJ,_k,_e,_v,_t,_p,_o,_f,_r){
     // variable declaration
     var _pro;
     /**
-     * 选择助手控件<br />
-     * 结构举例：
-     * [code type="html"]
-     *  <div id="xxx">
+     * 选择助手控件
+     * 
+     * 结构举例
+     * ```html
+     *  <!-- 搜索祖先节点，找到设置了tabindex大于1000的节点来响应键盘上下事件，找不到为document -->
+     *  <div id="xxx" tabindex="1005">
      *    <p>aaaaaaaaaaaaaa</p>
      *    <p>bbbbbbbbbbbbbb</p>
      *    <p>cccccccccccccc</p>
@@ -27,50 +30,58 @@ NEJ.define([
      *    <p>ffffffffffffff</p>
      *    <p>gggggggggggggg</p>
      *  </div>
-     * [/code]
+     * ```
+     * 
      * 脚本举例
-     * [code]
-     *    nej.ut._$$SelectHelper._$allocate({
-     *        parent:'xxx',
-     *        loopable:!0,
-     *        onchange:function(_event){
-     *            // _event.last
-     *            // _event.target
-     *            console.log('selection change -> '+_event.target.innerText);
-     *        },
-     *        onselect:function(_event){
-     *            // _event.target
-     *            console.log('select -> '+_event.target.innerText);
-     *        }
-     *    });
-     * [/code]
-     * @class   {nej.ut._$$SelectHelper} 音频播放控件
-     * @extends {nej.ut._$$EventTarget}
-     * @param   {Object} 可选配置参数
-     * @config  {String|Node} parent   容器节点，从该容器开始往上遍历找到设置了tabindex大于1000的节点来响应键盘上下事件，找不到为document
-     * @config  {String}      clazz    用于标识可选择的节点，不传则为body下的子节点
-     * @config  {String}      selected 选中节点样式标识，默认为js-selected
-     * @config  {String}      hover    鼠标移入样式标识，默认同selected，如果hover样式和selected不一样，确保selected样式优先级高于hover
-     * @config  {Boolean}     loopable 是否允许循环选择
-     *
-     * [hr]
+     * ```javascript
+     * NEJ.define([
+     *     'util/helper/select'
+     * ],function(_t){
+     *     var _helper = _t._$$SelectHelper._$allocate({
+     *          parent:'xxx',
+     *          loopable:!0,
+     *          onchange:function(_event){
+     *              // _event.last
+     *              // _event.target
+     *              console.log('selection change -> '+_event.target.innerText);
+     *          },
+     *          onselect:function(_event){
+     *              // _event.target
+     *              console.log('select -> '+_event.target.innerText);
+     *          }
+     *     });
+     * });
+     * ```
+     * @class    module:util/helper/select._$$SelectHelper
+     * @extends  module:util/event._$$EventTarget
+     * @param    {Object}      config   - 可选配置参数
+     * @property {String|Node} parent   - 容器节点，从该容器开始往上遍历找到设置了tabindex大于1000的节点来响应键盘上下事件，找不到为document
+     * @property {String}      clazz    - 用于标识可选择的节点，不传则为body下的子节点
+     * @property {String}      selected - 选中节点样式标识，默认为js-selected
+     * @property {String}      hover    - 鼠标移入样式标识，默认同selected，如果hover样式和selected不一样，确保selected样式优先级高于hover
+     * @property {Boolean}     loopable - 是否允许循环选择
+     */
+    /**
      * 选择项变化触发事件
-     * @event   {onchange}
-     * @param   {Object} 选择信息
-     * @config  {Node} target  当前选中项
-     * @config  {Node} last    上次选中项
-     *
-     * [hr]
+     * @event    module:util/helper/select._$$SelectHelper#onchange
+     * @param    {Object} event  - 选择信息
+     * @property {Node}   target - 当前选中项
+     * @property {Node}   last   - 上次选中项
+     */
+    /**
      * 选中某项触发事件，用户敲回车或者鼠标单击选项时触发此事件
-     * @event   {onselect}
-     * @param   {Object} 选择信息
-     * @config  {Node} target  当前选中项
+     * @event    module:util/helper/select._$$SelectHelper#onselect
+     * @param    {Object} event  - 选择信息
+     * @property {Node}   target - 当前选中项
      */
     _p._$$SelectHelper = _k._$klass();
     _pro = _p._$$SelectHelper._$extend(_t._$$EventTarget);
     /**
      * 控件重置
-     * @param  {Object} 配置信息
+     *
+     * @protected
+     * @method module:util/helper/select._$$SelectHelper#__reset
+     * @param  {Object} arg0 - 配置信息
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -109,6 +120,9 @@ NEJ.define([
     };
     /**
      * 控件销毁
+     *
+     * @protected
+     * @method module:util/helper/select._$$SelectHelper#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -123,8 +137,11 @@ NEJ.define([
     };
     /**
      * 判断节点是否选项节点
-     * @param  {Node}    节点
-     * @return {Boolean} 是否选项
+     *
+     * @protected
+     * @method module:util/helper/select._$$SelectHelper#__isItemElement
+     * @param  {Node} ar0 - 节点
+     * @return {Boolean}    是否选项
      */
     _pro.__isItemElement = function(_element){
         if (!!this.__clazz){
@@ -136,6 +153,9 @@ NEJ.define([
     };
     /**
      * 取键盘检测节点
+     *
+     * @protected
+     * @method module:util/helper/select._$$SelectHelper#__getKeyBoardParent
      * @return {Node} 节点
      */
     _pro.__getKeyBoardParent = (function(){
@@ -149,6 +169,9 @@ NEJ.define([
     })();
     /**
      * 根据样式取项节点
+     *
+     * @protected
+     * @method module:util/helper/select._$$SelectHelper#__getItemElement
      * @return {Node} 节点
      */
     _pro.__getItemElement = function(_class){
@@ -159,6 +182,9 @@ NEJ.define([
     };
     /**
      * 同步选中状态
+     *
+     * @protected
+     * @method module:util/helper/select._$$SelectHelper#__doSyncSelection
      * @return {Void}
      */
     _pro.__doSyncSelection = function(_event,_class){
@@ -176,6 +202,9 @@ NEJ.define([
     };
     /**
      * 节点滚动至可视区域
+     *
+     * @protected
+     * @method module:util/helper/select._$$SelectHelper#__doScrollToView
      * @return {Void}
      */
     _pro.__doScrollToView = function(_element){
@@ -195,6 +224,9 @@ NEJ.define([
     };
     /**
      * 解析选择状态
+     *
+     * @protected
+     * @method module:util/helper/select._$$SelectHelper#__doParseSelection
      * @return {Object} 状态信息
      */
     _pro.__doParseSelection = function(_event,_class){
@@ -208,7 +240,10 @@ NEJ.define([
     };
     /**
      * 触发键盘选择实践
-     * @param  {Event} 事件对象
+     *
+     * @protected
+     * @method module:util/helper/select._$$SelectHelper#__doCheckKBAction
+     * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
     _pro.__doCheckKBAction = function(_event){
@@ -246,6 +281,9 @@ NEJ.define([
     };
     /**
      * 回车事件
+     *
+     * @protected
+     * @method module:util/helper/select._$$SelectHelper#__doCheckKBEnter
      * @return {Void}
      */
     _pro.__doCheckKBEnter = function(_event){
@@ -255,6 +293,9 @@ NEJ.define([
     };
     /**
      * 点击事件
+     *
+     * @protected
+     * @method module:util/helper/select._$$SelectHelper#__onCheckClick
      * @return {Void}
      */
     _pro.__onCheckClick = function(_event){
@@ -271,6 +312,9 @@ NEJ.define([
     };
     /**
      * 鼠标移入事件
+     *
+     * @protected
+     * @method module:util/helper/select._$$SelectHelper#__onCheckHover
      * @return {Void}
      */
     _pro.__onCheckHover = function(_event){
@@ -285,6 +329,9 @@ NEJ.define([
     };
     /**
      * 鼠标移出事件
+     *
+     * @protected
+     * @method module:util/helper/select._$$SelectHelper#__onCheckLeave
      * @return {Void}
      */
     _pro.__onCheckLeave = function(_event){
@@ -298,6 +345,8 @@ NEJ.define([
     };
     /**
      * 取当前选中的节点
+     *
+     * @method module:util/helper/select._$$SelectHelper#_$getSelectedNode
      * @return {Node} 当前选中节点
      */
     _pro._$getSelectedNode = function(){
