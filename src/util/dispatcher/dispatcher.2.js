@@ -995,6 +995,17 @@ var f = function(){
         return this;
     };
     /**
+     * 隐藏私有分组
+     * @param  {String} 分组ID
+     * @return {Void}
+     */
+    _pro._$hideGroup = function(_gid){
+        var _group = this.__groups[_gid];
+        if (!!_group){
+            _group._$hide();
+        }
+    };
+    /**
      * 重定向模块，此接口支持
      * <ul>
      *   <li>私有模块重定向</li>

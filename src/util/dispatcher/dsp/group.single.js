@@ -153,11 +153,17 @@ var f = function(){
         return this;
     };
     /**
-     * 隐藏指定UMI的模块，不做任何处理
-     * @param  {String}                   模块UMI
-     * @return {nej.ut.p._$$GroupManager} 分组管理器实例
+     * 隐藏当前分组
+     * @return {Void}
      */
-    _proSingleGroupManager._$hideUMI = _f;
+    _proSingleGroupManager._$hide = function(){
+        if (!this.__source){
+            return;
+        }
+        this._$hideUMI(this.__source._$getPath());
+        delete this.__cmroot;
+        delete this.__source;
+    };
 };
 NEJ.define('{lib}util/dispatcher/dsp/group.single.js',
           ['{lib}util/dispatcher/dsp/group.js'],f);
