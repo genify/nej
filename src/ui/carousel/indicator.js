@@ -16,17 +16,17 @@ NEJ.define([
     /**
      * 指示器对象
      *
-     * @class   module:nej.ui._$$Indicator
-     * @extends {nej.ut._$$EventTarget}
-     * @param   {Object} 可选配置参数
-     * @property  {String|Node} parent 控件所在容器节点
-     * @property  {Number}       cindex 当前指示项
-     * @property  {String}       cstyle 当前指示项样式
+     * @class     module:nej.ui._$$Indicator
+     * @extends   module:util/event._$$EventTarget
+     * @param     {Object} arg0 - 可选配置参数
+     * @property  {String|Node}  parent - 控件所在容器节点
+     * @property  {Number}       cindex - 当前指示项
+     * @property  {String}       cstyle - 当前指示项样式
      *
      * [hr]
      *
      * @event  {onactive} 指定项触发事件
-     * @param  {Number}   指定项在所有项目中的位置
+     * @param  {Number} arg0 - 指定项在所有项目中的位置
      *
      */
     _p._$$Indicator = _k._$klass();
@@ -35,7 +35,7 @@ NEJ.define([
      * 控件重置
      * @protected
      * @method {__reset}
-     * @param  {Object} 可选配置参数
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -52,7 +52,7 @@ NEJ.define([
      * 点击指示器事件
      * @protected
      * @method {__onActive}
-     * @param  {Object} 事件对象
+     * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
     _pro.__onActive = function(_event){
@@ -68,7 +68,7 @@ NEJ.define([
     /**
      * 更新指示器位置
      * @method {_$update}
-     * @param  {Object} 当前项索引
+     * @param  {Number} arg0 - 当前项索引
      * @return {Void}
      */
     _pro._$update = function(_current){
