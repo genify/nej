@@ -14,7 +14,8 @@ NEJ.define([
     /**
      * 列表项基类对象
      *
-     * @class   {nej.ui._$$ListItem}
+     *
+     * @class   module:nej.ui._$$ListItem
      * @extends {nej.ui._$$Item}
      * @param   {Object}  配置参数
      * @config  {String}  pkey  主键字段名称，默认为id

@@ -25,7 +25,8 @@ NEJ.define([
         _pro;
     /**
      * 富媒体编辑器基类封装
-     * @class   {nej.ui._$$Editor} 富媒体编辑器基类封装
+     *
+     * @class   module:nej.ui._$$Editor 富媒体编辑器基类封装
      * @uses    {nej.ut._$$EditorArea}
      * @uses    {nej.ut._$$EditorToolbar}
      * @extends {nej.ui._$$Abstract}

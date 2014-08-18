@@ -54,7 +54,8 @@ NEJ.define([
      *       {parent:'item-box'}
      *   );
      * [/code]
-     * @class   {nej.ui._$$Item} 列表项控件基类
+     *
+     * @class   module:nej.ui._$$Item 列表项控件基类
      * @extends {nej.ui._$$Abstract}
      * @param   {Object} 可选配置参数
      * @config  {Object} data 当前项绑定的数据

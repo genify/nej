@@ -5,6 +5,7 @@
  * @author   huxueliang(huxueliang@corp.netease.com)
  * ------------------------------------------
  */
+/** @module ui/carousel/carousel */
 NEJ.define([
     '{lib}base/global.js',
     '{lib}base/klass.js',
@@ -21,7 +22,8 @@ NEJ.define([
     var _pro;
     /**
      * 卡片播放器对象
-     * @class   {nej.ui._$$Carousel} 卡片播放器控件
+     *
+     * @class   module:nej.ui._$$Carousel 卡片播放器控件
      * @extends {nej.ut._$$EventTarget}
      * @param   {Object} 可选配置参数
      * @config  {String|Node} parent     卡片所在父容器节点

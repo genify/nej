@@ -19,7 +19,8 @@ NEJ.define([
         _seed_fnt;
     /**
      * 字体字号选择卡片基类
-     * @class   {nej.ui.cmd._$$FontCard} 字体字号选择卡片基类
+     *
+     * @class   module:nej.ui.cmd._$$FontCard 字体字号选择卡片基类
      * @extends {nej.ui._$$CardWrapper}
      * @param   {Object} 可选配置参数
      *

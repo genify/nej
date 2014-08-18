@@ -72,7 +72,8 @@ NEJ.define([
      *   })
      *
      * [/code]
-     * @class   {_$$AbstractPager}
+     *
+     * @class   module:_$$AbstractPager
      * @extends {ui/base#_$$Abstract}
      * @param   {Object} 可选配置参数
      * @config  {Number} index  当前页码

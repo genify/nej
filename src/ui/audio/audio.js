@@ -5,6 +5,7 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module ui/audio/audio */
 NEJ.define([
     '{lib}base/global.js',
     '{lib}base/klass.js',
@@ -20,26 +21,28 @@ NEJ.define([
         _seed_html;
     /**
      * 音频播放器
-     * @class   {_$$AudioPlayer}
-     * @uses    {util/audio/audio#_$$MediaAudio}
-     * @extends {ui/base#_$$Abstract}
+     *
+     * @class   module:ui/audio/audio._$$AudioPlayer
+     * @uses    module:util/audio/audio._$$MediaAudio
+     * @extends module:ui/base._$$Abstract
      * @param   {Object}  可选配置参数
      * @config  {String}  url       音乐地址
      * @config  {String}  title     音乐标题
      * @config  {Boolean} autostart 自动开始播放
-     *
-     * [hr]
+     */
+    /**
      * 状态变化事件
-     * @event  {onstatechange}
-     * @param  {Object}        事件对象
      *
+     * @event  module:ui/audio/audio._$$AudioPlayer#onstatechange
+     * @param  {Object} arg0 - 事件对象
      */
     _p._$$AudioPlayer = _k._$klass();
     _pro = _p._$$AudioPlayer._$extend(_u._$$Abstract);
     /**
      * 初始化外观信息
+     *
      * @protected
-     * @method {__initXGui}
+     * @method module:ui/audio/audio._$$AudioPlayer#__initXGui
      * @return {Void}
      */
     _pro.__initXGui = function(){
@@ -48,8 +51,9 @@ NEJ.define([
     };
     /**
      * 初始化节点
+     *
      * @protected
-     * @method {__initNode}
+     * @method ui/audio/audio._$$AudioPlayer#__initNode
      * @return {Void}
      */
     _pro.__initNode = function(){
@@ -62,8 +66,9 @@ NEJ.define([
     };
     /**
      * 控件重置
+     *
      * @protected
-     * @method {__reset}
+     * @method ui/audio/audio._$$AudioPlayer#__reset
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
@@ -74,8 +79,9 @@ NEJ.define([
     };
     /**
      * 控件销毁
+     *
      * @protected
-     * @method {__destroy}
+     * @method ui/audio/audio._$$AudioPlayer#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -86,8 +92,9 @@ NEJ.define([
     };
     /**
      * 操作事件
+     *
      * @protected
-     * @method {__onAction}
+     * @method ui/audio/audio._$$AudioPlayer#__onAction
      * @return {Void}
      */
     _pro.__onAction = function(){
@@ -95,8 +102,9 @@ NEJ.define([
     };
     /**
      * 返回音频对象
+     *
      * @protected
-     * @method {__getAudio}
+     * @method ui/audio/audio._$$AudioPlayer#__getAudio
      * @return {Object} 音频对象
      */
     _pro.__getAudio = function(_source){
@@ -105,8 +113,9 @@ NEJ.define([
     };
     /**
      * 音频控件状态变化回调事件
+     *
      * @protected
-     * @method {__onStateChange}
+     * @method ui/audio/audio._$$AudioPlayer#__onStateChange
      * @param {Object} 事件对象
      * @return {Void}
      */
@@ -122,7 +131,7 @@ NEJ.define([
     })();
     /**
      * 播放音乐
-     * @method {_$play}
+     * @method ui/audio/audio._$$AudioPlayer#_$play
      * @return {Void}
      */
     _pro._$play = function(){
@@ -131,7 +140,7 @@ NEJ.define([
     };
     /**
      * 暂停播放
-     * @method {_$pause}
+     * @method ui/audio/audio._$$AudioPlayer#_$pause
      * @return {Void}
      */
     _pro._$pause = function(){
@@ -140,7 +149,7 @@ NEJ.define([
     };
     /**
      * 停止播放
-     * @method {_$stop}
+     * @method ui/audio/audio._$$AudioPlayer#_$stop
      * @return {Void}
      */
     _pro._$stop = function(){

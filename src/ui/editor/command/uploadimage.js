@@ -22,7 +22,8 @@ NEJ.define([
         _seed_html;
     /**
      * 图片上传控件
-     * @class   {nej.ui.cmd._$$UploadImageCard} 图片上传控件
+     *
+     * @class   module:nej.ui.cmd._$$UploadImageCard 图片上传控件
      * @uses    {nej.ut._$$Tab}
      * @extends {nej.ui.cmd._$$WindowWrapper}
      * @param   {Object} 可选配置参数

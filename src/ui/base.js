@@ -31,7 +31,8 @@ NEJ.define([
      *    });
      * [/code]
      *
-     * @class   {_$$Abstract}
+     *
+     * @class   module:_$$Abstract
      * @extends {_$$EventTarget}
      *
      * @param   {Object} 可选配置参数

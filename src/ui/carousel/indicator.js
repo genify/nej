@@ -15,7 +15,8 @@ NEJ.define([
     var _pro;
     /**
      * 指示器对象
-     * @class   {nej.ui._$$Indicator}
+     *
+     * @class   module:nej.ui._$$Indicator
      * @extends {nej.ut._$$EventTarget}
      * @param   {Object} 可选配置参数
      * @config  {String|Node} parent 控件所在容器节点

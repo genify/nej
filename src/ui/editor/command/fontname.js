@@ -16,7 +16,8 @@ NEJ.define([
         _seed_html;
     /**
      * 字体选择控件
-     * @class   {nej.ui.cmd._$$FontNameCard} 字体选择控件
+     *
+     * @class   module:nej.ui.cmd._$$FontNameCard 字体选择控件
      * @extends {nej.ui.cmd._$$FontCard}
      * @param   {Object} 可选配置参数
      *

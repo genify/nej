@@ -27,7 +27,8 @@ NEJ.define([
     /**
      * 复杂表情控件
      *
-     * @class   {nej.ui._$$ComplexPortrait}
+     *
+     * @class   module:nej.ui._$$ComplexPortrait
      * @extends {nej.ut._$$EventTarget}
      * @uses    {nej.ut._$$Portrait}
      * @param   {Object} 可选配置参数

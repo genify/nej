@@ -20,7 +20,8 @@ NEJ.define([
     /**
      * 简易表情控件
      *
-     * @class   {nej.ui._$$SimplePortrait}
+     *
+     * @class   module:nej.ui._$$SimplePortrait
      * @extends {nej.ui._$$Abstract}
      * @uses    {nej.ui._$$Portrait}
      * @param   {Object} 可选配置参数

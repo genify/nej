@@ -47,7 +47,8 @@ NEJ.define([
      *       _pager._$bind('pagerCnt2');
      *   })
      * [/code]
-     * @class   {_$$Pager}
+     *
+     * @class   module:_$$Pager
      * @uses    {util/page/page#_$$Page}
      * @extends {ui/base#_$$Abstract}
      * @param   {Object} 可选配置参数

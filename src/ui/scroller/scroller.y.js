@@ -19,7 +19,8 @@ var f = function(){
                      .#<uispace>{top:0;right:1px;width:6px;}');
     /**
      * 垂直滚动控件
-     * @class   {nej.ui._$$ScrollerY} 垂直滚动控件
+     *
+     * @class   module:nej.ui._$$ScrollerY 垂直滚动控件
      * @extends {nej.ui._$$Scroller}
      * @param   {Object} 可选配置参数
      */

@@ -25,7 +25,8 @@ NEJ.define([
     /**
      * 表情控件
      *
-     * @class   {nej.ui._$$Portrait}
+     *
+     * @class   module:nej.ui._$$Portrait
      * @extends {nej.ui._$$Abstract}
      * @param   {Object} 可选配置参数
      * @config  {Number} size  表情大小，30或60，默认为30，目前支持30*30和60*60

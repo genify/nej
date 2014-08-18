@@ -18,7 +18,8 @@ NEJ.define([
         _seed_css;
     /**
      * 超链接卡片
-     * @class   {nej.ui.cmd._$$LinkCard} 超链接卡片
+     *
+     * @class   module:nej.ui.cmd._$$LinkCard 超链接卡片
      * @extends {nej.ui._$$CardWrapper}
      * @param   {Object} 可选配置参数
      *

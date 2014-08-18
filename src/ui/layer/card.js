@@ -42,7 +42,8 @@ NEJ.define([
      *   // 默认就是显示的，此方法对应_$hide();
      *   _card._$show();
      * [/code]
-     * @class   {nej.ui._$$Card} 卡片控件
+     *
+     * @class   module:nej.ui._$$Card 卡片控件
      * @extends {nej.ui._$$Layer}
      * @param   {Object} 可选配置参数
      * @config  {String}  top    卡片垂直位置

@@ -48,7 +48,8 @@ NEJ.define([
      *       }
      *   });
      * [/code]
-     * @class   {nej.ui._$$DatePick} 日期选择控件
+     *
+     * @class   module:nej.ui._$$DatePick 日期选择控件
      * @uses    {nej.ut._$$Calendar}
      * @extends {nej.ui._$$CardWrapper}
      * @param   {Object} 可选配置参数

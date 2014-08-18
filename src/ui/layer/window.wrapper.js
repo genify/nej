@@ -37,7 +37,8 @@ NEJ.define([
      *       }
      *   });
      * [/code]
-     * @class   {nej.ui._$$WindowWrapper} 弹出窗体封装基类对象
+     *
+     * @class   module:nej.ui._$$WindowWrapper 弹出窗体封装基类对象
      * @extends {nej.ui._$$LayerWrapper}
      * @param   {Object} 可选配置参数
      *

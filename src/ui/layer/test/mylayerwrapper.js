@@ -15,10 +15,11 @@ var f = function(){
         _proMyCardWrapper;
     if (!!_p._$$MyCardWrapper) return;
     /**
-     * @class   {nej.ui._$$MyCardWrapper} 弹出卡片封装基类对象
+     *
+     * @class   module:nej.ui._$$MyCardWrapper 弹出卡片封装基类对象
      * @extends {nej.ui._$$LayerWrapper}
      * @param   {Object} 可选配置参数
-     *                            
+     *
      */
     _p._$$MyCardWrapper = NEJ.C();
     _proMyCardWrapper = _p._$$MyCardWrapper._$extend(_p._$$LayerWrapper);

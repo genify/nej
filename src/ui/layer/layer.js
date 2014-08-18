@@ -67,7 +67,8 @@ NEJ.define([
      *       }
      *   });
      * [/code]
-     * @class   {nej.ui._$$Layer} 弹出层控件基类
+     *
+     * @class   module:nej.ui._$$Layer 弹出层控件基类
      * @extends {nej.ui._$$Abstract}
      * @param   {Object} 可选配置参数
      * @config  {String|Node} content     内容HTML代码或者节点对象

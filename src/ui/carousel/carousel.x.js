@@ -5,6 +5,7 @@
  * @author   huxueliang(huxueliang@corp.netease.com)
  * ------------------------------------------
  */
+/** @module ui/carousel/x */
 NEJ.define([
     '{lib}base/global.js',
     '{lib}base/klass.js',
@@ -14,7 +15,8 @@ NEJ.define([
     var _pro;
     /**
      * 卡片水平播放器对象
-     * @class   {nej.ui._$$CarouselX} 卡片水平播放器控件
+     *
+     * @class   module:nej.ui._$$CarouselX 卡片水平播放器控件
      * @extends {nej.ui._$$Carousel}
      */
     _p._$$CarouselX = _k._$klass();

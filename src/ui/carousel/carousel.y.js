@@ -14,7 +14,8 @@ NEJ.define([
     var _pro;
     /**
      * 卡片水平播放器对象
-     * @class   {nej.ui._$$CarouselY} 卡片水平播放器控件
+     *
+     * @class   module:nej.ui._$$CarouselY 卡片水平播放器控件
      * @extends {nej.ui._$$Carousel}
      */
     _p._$$CarouselY = _k._$klass();

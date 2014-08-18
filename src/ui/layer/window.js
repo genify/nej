@@ -35,7 +35,8 @@ NEJ.define([
      *   // 显示窗口，默认实例化后会显示，如果_$hide()后需要手动调用
      *   _window._$show();
      * [/code]
-     * @class   {nej.ui._$$Window} 窗体控件
+     *
+     * @class   module:nej.ui._$$Window 窗体控件
      * @extends {nej.ui._$$Layer}
      * @param   {Object} 可选配置参数
      * @config  {String}                         title       窗口标题

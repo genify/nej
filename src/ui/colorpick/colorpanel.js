@@ -35,7 +35,8 @@ NEJ.define([
      *       }
      *   });
      * [/code]
-     * @class   {nej.ui._$$ColorPanel} 颜色选择面板控件
+     *
+     * @class   module:nej.ui._$$ColorPanel 颜色选择面板控件
      * @uses    {nej.ut._$$SliderXY}
      * @uses    {nej.ut._$$SliderY}
      * @extends {nej.ui._$$Abstract}

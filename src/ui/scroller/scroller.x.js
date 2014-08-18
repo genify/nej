@@ -19,7 +19,8 @@ var f = function(){
                      .#<uispace>{bottom:1px;left:0;height:4px;}');
     /**
      * 水平滚动控件
-     * @class   {nej.ui._$$ScrollerX} 水平滚动控件
+     *
+     * @class   module:nej.ui._$$ScrollerX 水平滚动控件
      * @extends {nej.ui._$$Scroller}
      * @param   {Object} 可选配置参数
      */

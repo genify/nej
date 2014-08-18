@@ -30,7 +30,8 @@ NEJ.define([
      *       }
      *   });
      * [/code]
-     * @class   {nej.ui._$$ComplexColorPick}
+     *
+     * @class   module:nej.ui._$$ComplexColorPick
      * @extends {nej.ui._$$SimpleColorPick}
      * @param   {Object} 可选配置参数
      * @config  {String} defaultColor 默认颜色值

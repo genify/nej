@@ -43,7 +43,8 @@ NEJ.define([
      *       onselect:_onselect._$bind(this)
      *   });
      * [/code]
-     * @class   {nej.ui._$$Suggest} 提示建议控件
+     *
+     * @class   module:nej.ui._$$Suggest 提示建议控件
      * @uses    {nej.ut._$$Suggest}
      * @extends {nej.ui._$$Abstract}
      * @param   {Object} 可选配置参数

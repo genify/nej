@@ -16,7 +16,8 @@ NEJ.define([
         _seed_css;
     /**
      * 范围选择控件封装
-     * @class   {nej.ui._$$Range} 范围选择控件封装
+     *
+     * @class   module:nej.ui._$$Range 范围选择控件封装
      * @extends {nej.ui._$$Abstract}
      * @param   {Object} 可选配置参数
      *

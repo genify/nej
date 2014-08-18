@@ -31,7 +31,8 @@ NEJ.define([
      *       content:'<div style="width:100px;height:100px;margin:0 auto;margin-top:150px;">搞一点盖层的内容</div>'
      *   });
      * [/code]
-     * @class   {nej.ui._$$Mask} 盖层控件
+     *
+     * @class   module:nej.ui._$$Mask 盖层控件
      * @extends {nej.ui._$$Abstract}
      * @param   {Object} 可选配置参数
      * @config  {String|Node} content 内容节点或者HTML代码

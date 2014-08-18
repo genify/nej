@@ -5,6 +5,7 @@
  * @author   cheng-lin(cheng-lin@corp.netease.com)
  * ------------------------------------------
  */
+/** @module ui/audio/mp3 */
 NEJ.define([
     '{lib}base/global.js',
     '{lib}base/klass.js',
@@ -22,7 +23,8 @@ NEJ.define([
         _seed_html;
     /**
      * 音频播放器
-     * @class   {_$$MP3Player}
+     *
+     * @class   module:ui/audio/mp3._$$MP3Player
      * @uses    {util/slider/slider.simple_$$SimpleSlider}
      * @uses    {util/media/playlist#_$$PlayList}
      * @extends {ui/base#._$$Abstract}

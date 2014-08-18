@@ -41,7 +41,8 @@ NEJ.define([
      *       }
      *   });
      * [/code]
-     * @class   {nej.ui._$$ColorPick}
+     *
+     * @class   module:nej.ui._$$ColorPick
      * @uses    {nej.ui._$$ColorPanel}
      * @extends {nej.ui._$$Abstract}
      * @param   {Object} 可选配置参数

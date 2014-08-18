@@ -68,7 +68,8 @@ NEJ.define([
      *       }
      *   });
      * [/code]
-     * @class   {nej.ui._$$LayerWrapper} 弹出层封装基类对象
+     *
+     * @class   module:nej.ui._$$LayerWrapper 弹出层封装基类对象
      * @extends {nej.ui._$$Abstract}
      * @param   {Object} 可选配置参数
      *

@@ -23,7 +23,8 @@ NEJ.define([
     /**
      * 范围裁剪控件封装
      *
-     * @class   {nej.ui._$$Range}
+     *
+     * @class   module:nej.ui._$$Range
      * @extends {nej.ui._$$Abstract}
      * @param   {Object}  可选配置参数，其他参数见nej.ut._$$Resize控件所示
      * @config  {Object}  size 初始大小，输入任意两个值，其中ratio为width/height，{width:100,height:200,ratio:0.5}

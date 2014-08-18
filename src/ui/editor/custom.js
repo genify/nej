@@ -33,7 +33,8 @@ NEJ.define([
         _seed_html;
     /**
      * 富媒体编辑器封装
-     * @class   {nej.ui._$$CustomEditor} 富媒体编辑器封装
+     *
+     * @class   module:nej.ui._$$CustomEditor 富媒体编辑器封装
      * @extends {nej.ui._$$Editor}
      * @param   {Object} 可选配置参数
      */

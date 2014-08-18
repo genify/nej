@@ -16,7 +16,8 @@ NEJ.define([
         _seed_css;
     /**
      * 颜色选择卡片
-     * @class   {nej.ui.cmd._$$ComplexColorCard} 颜色选择卡片
+     *
+     * @class   module:nej.ui.cmd._$$ComplexColorCard 颜色选择卡片
      * @extends {nej.ui.cmd._$$ColorCard}
      * @param   {Object} 可选配置参数
      * @config  {String} color 颜色值

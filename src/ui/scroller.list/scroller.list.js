@@ -20,18 +20,19 @@ var f = function(){
     var _seed_css = e._$pushCSSText('.#<uispace>{position:relative;}');
     /**
      * 列表滚动控件
-     * @class   {nej.ui._$$ListScroller} 列表滚动控件
+     *
+     * @class   module:nej.ui._$$ListScroller 列表滚动控件
      * @extends {nej.ui._$$Abstract}
      * @param   {Object} 可选配置参数
      * @config  {Object} config 滚动参数配置信息
-     * 
+     *
      * [hr]
-     * 
+     *
      * @event  {onscroll} 列表滚动触发事件
      * @param  {Number} _offset 当前位置
-     * 
+     *
      * [hr]
-     * 
+     *
      * @event  {onbounce} 弹性触发事件
      * @param  {Object} 弹性信息
      * @config {Number} movement  偏移量
@@ -40,17 +41,17 @@ var f = function(){
      *  正向滚动(远离顶部的滚动) | <0
      *  反向滚动(接近顶部的滚动) | >0
      * [/ntb]
-     * 
+     *
      * [hr]
-     * 
+     *
      * @event  {onbouncestart} 弹性开始时触发事件
-     * 
+     *
      * [hr]
-     * 
+     *
      * @event  {onlistupdate} 列表更新触发事件
      * @param  {Node} 更新后的节点
      * [hr]
-     * 
+     *
      * @event  {onbeforeclear} 列表清除之前触发事件
      * @param  {Node} 缓存的节点
      */
@@ -174,7 +175,7 @@ var f = function(){
      */
     __proListScroller.__doPerformNode = function(_node){
         this.__scroller._$isInViewPoint(_node)
-        ? this.__doPerformAppend(_node.id) 
+        ? this.__doPerformAppend(_node.id)
         : this.__doPerformRecycle(_node.id);
     };
     /**
