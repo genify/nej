@@ -49,7 +49,7 @@ NEJ.define([
      * ```
      *
      * @class   module:_$$Pager
-     * @uses    {util/page/page#_$$Page}
+     * @uses    {util/page/page#_$$PageFragment}
      * @extends {ui/base#_$$Abstract}
      * @param   {Object} 可选配置参数
      * @property  {Number} index 当前页码
@@ -79,7 +79,7 @@ NEJ.define([
         if (_options.total==null)
             _options.total = 10000;
         this.__super(_options);
-        this.__page = _t0._$$SimplePage._$allocate(this.__popt);
+        this.__page = _t0._$$PageSimple._$allocate(this.__popt);
     };
 
     if (CMPT){

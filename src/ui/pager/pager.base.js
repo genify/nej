@@ -42,7 +42,7 @@ NEJ.define([
      *       // 表现为,首页 上一页 5 6 7 8 9 10 下一页 末页
      *       _pro.__reset = function(_options){
      *           this.__super(_options);
-     *           this.__page = _t._$$Page._$allocate(this.__popt);
+     *           this.__page = _t._$$PageFragment._$allocate(this.__popt);
      *           };
      *
      *      // reset之前生成需要的页码结构

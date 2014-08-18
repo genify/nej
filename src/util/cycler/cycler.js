@@ -93,7 +93,7 @@ NEJ.define([
         this.__popt.list  = _list;
         this.__popt.total = _list.length;
         this.__popt.event = _options.event;
-        this.__pager = _t0._$$SimplePage._$allocate(this.__popt);
+        this.__pager = _t0._$$PageSimple._$allocate(this.__popt);
     };
     /**
      * 控件销毁

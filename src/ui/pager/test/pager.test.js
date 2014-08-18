@@ -75,7 +75,7 @@ var f = function(){
 	
 	test('util page.simple',function(){
 		var _page = e._$get('page');
-		var _ps = t._$$SimplePage._$allocate({
+		var _ps = t._$$PageSimple._$allocate({
 			list:e._$getByClassName(_page,'zpgi'),
 			event:'click',
 			pbtn:e._$getByClassName(_page,'zprv')[0],

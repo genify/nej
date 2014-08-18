@@ -157,7 +157,7 @@ NEJ.define([
                 }
             );
             this.__gopt.total = Math.ceil(_list.length/this.__gopt.limit);
-            this.__pager = _t3._$$SimplePage._$allocate(this.__gopt);
+            this.__pager = _t3._$$PageSimple._$allocate(this.__gopt);
             this.__bopt.list = _e._$getChildren(this.__tbox);
             this.__taber = _t2._$$Tab._$allocate(this.__bopt);
         };
