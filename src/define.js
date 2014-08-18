@@ -1048,7 +1048,7 @@
      * }
      * ```
      *
-     * @name CMPT
+     * @name external:window.CMPT
      * @constant {Boolean}
      */
     p.CMPT = !0;
@@ -1062,7 +1062,7 @@
      * }
      * ```
      *
-     * @name DEBUG
+     * @name external:window.DEBUG
      * @constant {Boolean}
      */
     p.DEBUG = !0;

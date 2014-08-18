@@ -6,11 +6,11 @@
  * ------------------------------------------
  */
 NEJ.define([
-    '{lib}base/util.js',
-    '{lib}base/event.js',
-    '{lib}base/platform.js',
-    '{lib}util/event/event.js',
-    '{lib}util/timer/animation.js',
+    'base/util',
+    'base/event',
+    'base/platform',
+    'util/event/event',
+    'util/timer/animation',
     '{platform}history.js'
 ],function(_u,_v,_m,_t0,_t1,_h,_p,_o,_f,_r){
     var _reg1 = /^[#?]+/,
@@ -25,8 +25,8 @@ NEJ.define([
     };
     /*
      * 设置地址
-     * @param  {String}  _url      页面地址
-     * @param  {Boolean} _replaced 是否不保存历史
+     * @param  {String}  页面地址
+     * @param  {Boolean} 是否不保存历史
      * @return {Void}
      */
     var _setLocation = function(_url,_replaced){
@@ -62,9 +62,10 @@ NEJ.define([
     });
     /**
      * 重定向路径
-     * @api    {location.redirect}
-     * @param  {String}  路径
-     * @param  {Boolean} 是否替换原来的历史
+     * 
+     * @method external:location.redirect
+     * @param  {String}  arg0 - 路径
+     * @param  {Boolean} arg1 - 是否替换原来的历史
      * @return {Void}
      */
     location.redirect = function(_url,_replaced){
@@ -72,7 +73,8 @@ NEJ.define([
     };
     /**
      * 启动地址检测
-     * @api    {location.active}
+     * 
+     * @method external:location.active
      * @return {Void}
      */
     location.active = (function(){
@@ -143,13 +145,19 @@ NEJ.define([
         };
     })();
     /**
+     * 地址信息对象
+     * 
+     * @typedef  {Object} external:location~LocationModel
+     * @property {String} path  - 路径信息，不带查询参数
+     * @property {String} href  - 完整路径，带查询参数
+     * @property {Object} query - 查询参数解析出来的对象
+     */
+    /**
      * 解析地址信息
-     * @api    {location.parse}
-     * @param  {String} 地址
-     * @return {Object} 地址信息
-     * @property {String} path  路径信息，不带查询参数
-     * @property {String} href  完整路径，带查询参数
-     * @property {Object} query 查询参数解析出来的对象
+     * 
+     * @method external:location.parse
+     * @param  {String} arg0 - 地址
+     * @return {external:location~LocationModel} 地址信息
      */
     location.parse = (function(){
         var _reg0 = /^https?:\/\/.*?\//i,
@@ -175,15 +183,29 @@ NEJ.define([
     })();
     /**
      * 判断路径和当前地址栏路径是否一致
-     * @api    {location.same}
-     * @param  {String}  路径
-     * @return {Boolean} 是否一致
+     * 
+     * @method external:location.same
+     * @param  {String}  arg0 - 路径
+     * @return {Boolean}        是否一致
      */
     location.same = function(_url){
         return _getLocation().href==_url;
     };
-    
-    // extend onurlchange event on location
+    /**
+     * 地址变化之前触发事件
+     *
+     * @event    external:location.onbeforeurlchange
+     * @param    {Object}  event   - 地址信息
+     * @property {external:location~LocationModel} oldValue - 旧地址信息
+     * @property {external:location~LocationModel} newValue - 新地址信息
+     * @property {Boolean} stopped - 是否阻止地址跳转
+     */
+    /**
+     * 地址变化触发事件
+     *
+     * @event    external:location.onurlchange
+     * @param    {external:location~LocationModel} event - 地址信息
+     */
     _t0._$$CustomEvent._$allocate({
         element:location,
         event:['beforeurlchange','urlchange']

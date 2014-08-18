@@ -14,6 +14,14 @@
  * @external document
  */
 /**
+ * 全局location对象
+ * @external location
+ */
+/**
+ * 全局history对象
+ * @external history
+ */
+/**
  * 内置函数对象扩展
  * @external Function
  */
