@@ -9,9 +9,9 @@
 NEJ.define([
     'base/global',
     'base/klass',
-    'util/page/base',
-    'base/util'
-],function(NEJ,_k,_t,_u,_p,_o,_f,_r){
+    'base/util',
+    './base.js'
+],function(NEJ,_k,_u,_t,_p,_o,_f,_r){
     // variable declaration
     var _pro;
     /**

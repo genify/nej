@@ -11,7 +11,7 @@ NEJ.define([
     'base/klass',
     'base/element',
     'base/util',
-    'util/page/base'
+    './base.js'
 ],function(NEJ,_k,_e,_u,_t,_p,_o,_f,_r){
     // variable declaration
     var _pro;

@@ -9,7 +9,7 @@
 NEJ.define([
     'base/global',
     'base/klass',
-    'util/slider/slider'
+    './slider.js'
 ],function(NEJ,_k,_t,_p,_o,_f,_r){
     var _pro;
     /**

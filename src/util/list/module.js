@@ -5,154 +5,172 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module util/list/module */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/util.js',
-    '{lib}base/event.js',
-    '{lib}base/element.js',
-    '{lib}ui/item/list.js',
-    '{lib}ui/pager/pager.js',
-    '{lib}util/event.js',
-    '{lib}util/template/jst.js',
-    '{lib}util/template/tpl.js',
-    '{lib}util/cache/list.js'
+    'base/global',
+    'base/klass',
+    'base/util',
+    'base/event',
+    'base/element',
+    'ui/item/list',
+    'ui/pager/pager',
+    'util/event',
+    'util/template/jst',
+    'util/template/tpl',
+    'util/cache/list'
 ],function(NEJ,_k,_u,_v,_e,_i0,_i1,_t0,_t1,_t2,_t3,_p,_o,_f,_r){
     var _pro;
     /**
      * 列表模块基类
      *
-     * @class   {_$$ListModule}
-     * @extends {_$$EventTarget}
+     * @class    module:util/list/module._$$ListModule
+     * @extends  module:util/event._$$EventTarget
      *
-     * @param   {Object}               可选配置参数
-     * @property  {String|Node}   parent 列表容器节点
-     * @property  {Number}        limit  每页显示数量，默认10项
-     * @property  {Number}        first  首页显示数量，默认为limit的值
-     * @property  {String|Object} item   列表JST模版标识或者Item配置，{clazz:'xxx',klass:_$$Item||'jst key',prefix:'xxx'}
-     * @property  {Object}        cache  缓存配置信息，{key:'primary key',lkey:'list key',data:{},ext:{},klass:_$$CacheList,list:[],clear:true,total:200}
-     * @property  {Object}        pager  分页器配置信息，{parent:'xxx',klass:_$$Pager,index:2,fixed:true}
-     *
-     * [hr]
+     * @param    {Object}        config - 可选配置参数
+     * @property {String|Node}   parent - 列表容器节点
+     * @property {Number}        limit  - 每页显示数量，默认10项
+     * @property {Number}        first  - 首页显示数量，默认为limit的值
+     * @property {String|Object} item   - 列表JST模版标识或者Item配置，{clazz:'xxx',klass:_$$Item||'jst key',prefix:'xxx'}
+     * @property {Object}        cache  - 缓存配置信息，{key:'primary key',lkey:'list key',data:{},ext:{},klass:_$$CacheList,list:[],clear:true,total:200}
+     * @property {Object}        pager  - 分页器配置信息，{parent:'xxx',klass:_$$Pager,index:2,fixed:true}
+     */
+    /**
      * 下拉刷新列表之前处理业务逻辑，可用于处理loading状态的显示
-     * @event  {onbeforepullrefresh}
-     * @param  {Object}          事件信息
-     * @property {Node}    parent  容器节点
-     * @property {String}  value   设置此参数返回用以显示loading的html代码或者节点
-     * @property {Boolean} stopped 设置此参数用以表明loading已处理，后续逻辑忽略处理loading状态
-     *
-     * [hr]
+     * 
+     * @event    module:util/list/module._$$ListModule#onbeforepullrefresh
+     * @param    {Object}  event   - 事件信息
+     * @property {Node}    parent  - 容器节点
+     * @property {String}  value   - 设置此参数返回用以显示loading的html代码或者节点
+     * @property {Boolean} stopped - 设置此参数用以表明loading已处理，后续逻辑忽略处理loading状态
+     */
+    /**
      * 下拉刷新列表载入之后处理业务逻辑，可用于处理loading状态的隐藏
-     * @event  {onafterpullrefresh}
-     * @param  {Object}          事件信息
-     * @property {Node}    parent  容器节点
-     * @property {String}  value   设置此参数返回用以显示loading的html代码
-     * @property {Boolean} stopped 设置此参数用以表明loading已处理，后续逻辑忽略处理loading状态
-     *
-     * [hr]
+     * 
+     * @event    module:util/list/module._$$ListModule#onafterpullrefresh
+     * @param    {Object}  event   - 事件信息
+     * @property {Node}    parent  - 容器节点
+     * @property {String}  value   - 设置此参数返回用以显示loading的html代码
+     * @property {Boolean} stopped - 设置此参数用以表明loading已处理，后续逻辑忽略处理loading状态
+     */
+    /**
      * 加载列表之前处理业务逻辑，可用于处理loading状态的显示
-     * @event  {onbeforelistload}
-     * @param  {Object}          事件信息
-     * @property {Node}    parent  容器节点
-     * @property {String}  value   设置此参数返回用以显示loading的html代码或者节点
-     * @property {Boolean} stopped 设置此参数用以表明loading已处理，后续逻辑忽略处理loading状态
-     *
-     * [hr]
+     * 
+     * @event    module:util/list/module._$$ListModule#onbeforelistload
+     * @param    {Object}  event   - 事件信息
+     * @property {Node}    parent  - 容器节点
+     * @property {String}  value   - 设置此参数返回用以显示loading的html代码或者节点
+     * @property {Boolean} stopped - 设置此参数用以表明loading已处理，后续逻辑忽略处理loading状态
+     */
+    /**
      * 列表载入之后处理业务逻辑，可用于处理loading状态的隐藏
-     * @event  {onafterlistload}
-     * @param  {Object}          事件信息
-     * @property {Node}    parent  容器节点
-     * @property {String}  value   设置此参数返回用以显示loading的html代码
-     * @property {Boolean} stopped 设置此参数用以表明loading已处理，后续逻辑忽略处理loading状态
-     *
-     * [hr]
+     * 
+     * @event    module:util/list/module._$$ListModule#onafterlistload
+     * @param    {Object}  event   - 事件信息
+     * @property {Node}    parent  - 容器节点
+     * @property {String}  value   - 设置此参数返回用以显示loading的html代码
+     * @property {Boolean} stopped - 设置此参数用以表明loading已处理，后续逻辑忽略处理loading状态
+     */
+    /**
      * 为空列表时显示的信息
-     * @event  {onemptylist}
-     * @param  {Object}          事件信息
-     * @property {Node}    parent  容器节点
-     * @property {String}  value   设置此参数返回用以显示的html代码
-     * @property {Boolean} stopped 设置此参数用以表明已处理，后续逻辑忽略处理状态
-     *
-     * [hr]
+     * 
+     * @event    module:util/list/module._$$ListModule#onemptylist
+     * @param    {Object}  event   - 事件信息
+     * @property {Node}    parent  - 容器节点
+     * @property {String}  value   - 设置此参数返回用以显示的html代码
+     * @property {Boolean} stopped - 设置此参数用以表明已处理，后续逻辑忽略处理状态
+     */
+    /**
      * 页码变化触发事件
-     * @event  {onpagechange}
-     * @param  {Object}          事件信息
-     * @property {Number}  index   当前页码
-     * @property {Boolean} stopped 设置此参数用以表明已处理，后续逻辑忽略分页处理
-     *
-     * [hr]
+     * 
+     * @event    module:util/list/module._$$ListModule#onpagechange
+     * @param    {Object}  event   - 事件信息
+     * @property {Number}  index   - 当前页码
+     * @property {Boolean} stopped - 设置此参数用以表明已处理，后续逻辑忽略分页处理
+     */
+    /**
      * 列表显示之前处理业务逻辑，此事件确保列表有数据
-     * @event  {onbeforelistrender}
-     * @param  {Object}          事件信息
-     * @property {Node}    parent  容器节点
-     *
-     * [hr]
+     * 
+     * @event    module:util/list/module._$$ListModule#onbeforelistrender
+     * @param    {Object} event  - 事件信息
+     * @property {Node}   parent - 容器节点
+     */
+    /**
      * 列表显示之后处理业务逻辑，此事件确保列表有数据
-     * @event  {onafterlistrender}
-     * @param  {Object}          事件信息
-     * @property {Node}    parent  容器节点
-     *
-     * [hr]
+     * 
+     * @event    module:util/list/module._$$ListModule#onafterlistrender
+     * @param    {Object} event  - 事件信息
+     * @property {Node}   parent - 容器节点
+     */
+    /**
      * 列表清除之前处理业务逻辑
-     * @event  {onbeforelistclear}
-     * @param  {Object}          事件信息
-     * @property {Node}    parent  容器节点
-     *
-     * [hr]
+     * 
+     * @event    module:util/list/module._$$ListModule#onbeforelistclear
+     * @param    {Object} event  - 事件信息
+     * @property {Node}   parent - 容器节点
+     */
+    /**
      * 请求更新列表项数据，主要用于处理删除之前的确认，
      * 确认完成后可调用模块的_$delete接口将数据从服务器上删除
-     * @event  {ondelete}
-     * @param  {Object}  列表项数据
-     *
-     * [hr]
+     * 
+     * @event  module:util/list/module._$$ListModule#ondelete
+     * @param  {Object} event - 列表项数据
+     */
+    /**
      * 删除列表项之前回调，主要用来预处理调用Cache中的删除接口时的信息
-     * @event  {onbeforedelete}
-     * @param  {Object}  事件信息
-     * @property {String} id   列表项标识
-     * @property {String} key  列表标识
-     * @property {Object} data 列表项数据
-     *
-     * [hr]
+     * 
+     * @event    module:util/list/module._$$ListModule#onbeforedelete
+     * @param    {Object} event - 事件信息
+     * @property {String} id    - 列表项标识
+     * @property {String} key   - 列表标识
+     * @property {Object} data  - 列表项数据
+     */
+    /**
      * 删除列表项之后回调，主要用来额外处理列表呈现的业务逻辑
-     * @event  {onafterdelete}
-     * @param  {Object}  事件信息
-     * @property {String}  key     列表标识
-     * @property {Object}  data    删除的列表项数据
-     * @property {Boolean} stopped 是否阻止列表刷新逻辑
-     *
-     * [hr]
+     * 
+     * @event    module:util/list/module._$$ListModule#onafterdelete
+     * @param    {Object}  event   - 事件信息
+     * @property {String}  key     - 列表标识
+     * @property {Object}  data    - 删除的列表项数据
+     * @property {Boolean} stopped - 是否阻止列表刷新逻辑
+     */
+    /**
      * 请求更新列表项数据，针对JST模版的用户点击行为，
      * 主要用于处理收集更新数据，更新数据收集完成后可调用模块的_$update接口将数据更新到服务器
-     * @event  {onupdate}
-     * @param  {Object}  列表项数据
-     *
-     * [hr]
+     * 
+     * @event  module:util/list/module._$$ListModule#onupdate
+     * @param  {Object} event - 列表项数据
+     */
+    /**
      * 更新列表项之前回调，主要用来预处理调用Cache中的更新接口时的信息
-     * @event  {onbeforeupdate}
-     * @param  {Object}  事件信息
-     * @property {String} id   列表项标识
-     * @property {String} key  列表标识
-     * @property {Object} data 列表项数据
-     *
-     * [hr]
+     * 
+     * @event    module:util/list/module._$$ListModule#onbeforeupdate
+     * @param    {Object} event - 事件信息
+     * @property {String} id    - 列表项标识
+     * @property {String} key   - 列表标识
+     * @property {Object} data  - 列表项数据
+     */
+    /**
      * 更新列表项之后回调，主要用来额外处理列表呈现的业务逻辑
-     * @event  {onafterupdate}
-     * @param  {Object}  事件信息
-     * @property {String}  key     列表标识
-     * @property {Object}  data    删除的列表项数据
-     * @property {Boolean} stopped 是否阻止列表刷新逻辑
-     *
-     * [hr]
+     * 
+     * @event    module:util/list/module._$$ListModule#onafterupdate
+     * @param    {Object}  event   - 事件信息
+     * @property {String}  key     - 列表标识
+     * @property {Object}  data    - 删除的列表项数据
+     * @property {Boolean} stopped - 是否阻止列表刷新逻辑
+     */
+    /**
      * 错误处理回调
-     * @event  {onerror}
+     * 
+     * @event  module:util/list/module._$$ListModule#onerror
      */
     _p._$$ListModule = _k._$klass();
     _pro = _p._$$ListModule._$extend(_t0._$$EventTarget);
     /**
      * 控件重置
+     * 
      * @protected
-     * @method {__reset}
-     * @param  {Object} 配置参数
+     * @method module:util/list/module._$$ListModule#__reset
+     * @param  {Object} arg0 - 配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -169,8 +187,9 @@ NEJ.define([
     };
     /**
      * 控件销毁
+     * 
      * @protected
-     * @method {__destroy}
+     * @method module:util/list/module._$$ListModule#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -196,8 +215,9 @@ NEJ.define([
     };
     /**
      * 根据数据ID取项节点ID
+     * 
      * @protected
-     * @method {__getItemBodyId}
+     * @method module:util/list/module._$$ListModule#__getItemBodyId
      * @param  {String} 数据ID
      * @return {String} 节点ID
      */
@@ -207,8 +227,11 @@ NEJ.define([
     };
     /**
      * 取项标识
-     * @param  {String} 数据标识
-     * @return {String} 项标识
+     *
+     * @protected
+     * @method module:util/list/module._$$ListModule#__getItemId
+     * @param  {String} arg0 - 数据标识
+     * @return {String}        项标识
      */
     _pro.__getItemId = function(_id){
         var _prefix = (this.__iopt||_o).prefix||'';
@@ -216,9 +239,12 @@ NEJ.define([
     };
     /**
      * 取当前偏移量的分页信息
-     * @param  {Number} 偏移位置
-     * @param  {Number} 长度
-     * @return {Object} 分页信息，如：{index:1,total:4}
+     *
+     * @protected
+     * @method module:util/list/module._$$ListModule#__getPageInfo
+     * @param  {Number} arg0 - 偏移位置
+     * @param  {Number} arg1 - 长度
+     * @return {Object}        分页信息，如：{index:1,total:4}
      */
     _pro.__getPageInfo = function(_point,_offset,_limit,_length){
         var _result = {
@@ -235,9 +261,10 @@ NEJ.define([
     };
     /**
      * 重置JST模版
+     * 
      * @protected
-     * @method {__doResetJSTTemplate}
-     * @param  {String} JST标识
+     * @method module:util/list/module._$$ListModule#__doResetJSTTemplate
+     * @param  {String} arg0 - JST标识
      * @return {Void}
      */
     _pro.__doResetJSTTemplate = function(_key){
@@ -250,7 +277,10 @@ NEJ.define([
     };
     /**
      * 重置列表项模版配置
-     * @param  {String|Object} 列表项模版配置
+     *
+     * @protected
+     * @method module:util/list/module._$$ListModule#__doResetTemplate
+     * @param  {String|Object} arg0 - 列表项模版配置
      * @return {Void}
      */
     _pro.__doResetTemplate = function(_item){
@@ -277,7 +307,10 @@ NEJ.define([
     };
     /**
      * 重置缓存信息配置
-     * @param  {Object} 缓存配置
+     *
+     * @protected
+     * @method module:util/list/module._$$ListModule#__doResetCache
+     * @param  {Object} arg0 - 缓存配置
      * @return {Void}
      */
     _pro.__doResetCache = function(_cache){
@@ -323,6 +356,9 @@ NEJ.define([
     };
     /**
      * 重置分页器配置
+     *
+     * @protected
+     * @method module:util/list/module._$$ListModule#__doResetPager
      * @param  {Object} 分页器配置
      * @return {Void}
      */
@@ -341,6 +377,9 @@ NEJ.define([
     };
     /**
      * 清理列表容器
+     *
+     * @protected
+     * @method module:util/list/module._$$ListModule#__doClearListBox
      * @return {Void}
      */
     _pro.__doClearListBox = (function(){
@@ -363,6 +402,9 @@ NEJ.define([
     })();
     /**
      * 切换分页器的显示状态
+     *
+     * @protected
+     * @method module:util/list/module._$$ListModule#__doSwitchPagerShow
      * @return {Void}
      */
     _pro.__doSwitchPagerShow = function(_display){
@@ -376,6 +418,9 @@ NEJ.define([
     };
     /**
      * 通过分页器刷新当前页
+     *
+     * @protected
+     * @method module:util/list/module._$$ListModule#__doRefreshByPager
      * @return {Void}
      */
     _pro.__doRefreshByPager = function(){
@@ -391,9 +436,10 @@ NEJ.define([
     };
     /**
      * 页码变化处理逻辑
+     * 
      * @protected
-     * @method {__doChangePage}
-     * @param  {Object} 页码信息
+     * @method module:util/list/module._$$ListModule#__doChangePage
+     * @param  {Object} arg0 - 页码信息
      * @return {Void}
      */
     _pro.__doChangePage = function(_event){
@@ -401,9 +447,10 @@ NEJ.define([
     };
     /**
      * 偏移量变化处理逻辑
+     * 
      * @protected
-     * @method {__doChangeOffset}
-     * @param  {Number} 偏移量
+     * @method module:util/list/module._$$ListModule#__doChangeOffset
+     * @param  {Number} arg0 - 偏移量
      * @return {Void}
      */
     _pro.__doChangeOffset = function(_offset){
@@ -412,14 +459,20 @@ NEJ.define([
     };
     /**
      * 生成请求对象信息
-     * @param  {Object} 预处理请求信息
-     * @return {Object} 处理后请求信息
+     *
+     * @protected
+     * @method module:util/list/module._$$ListModule#__doGenRequestOpt
+     * @param  {Object} arg0 - 预处理请求信息
+     * @return {Object}        处理后请求信息
      */
     _pro.__doGenRequestOpt = function(_options){
         return _options;
     };
     /**
      * 加载数据列表
+     *
+     * @protected
+     * @method module:util/list/module._$$ListModule#__doLoadList
      * @return {Void}
      */
     _pro.__doLoadList = function(){
@@ -440,7 +493,10 @@ NEJ.define([
     };
     /**
      * 数据列表载入完成回调
-     * @param  {Object} 请求信息
+     *
+     * @protected
+     * @method module:util/list/module._$$ListModule#__cbListLoad
+     * @param  {Object} arg0 - 请求信息
      * @return {Void}
      */
     _pro.__cbListLoad = function(_options){
@@ -492,7 +548,10 @@ NEJ.define([
     };
     /**
      * 前向刷新数据列表载入完成回调
-     * @param  {Object} 请求信息
+     *
+     * @protected
+     * @method module:util/list/module._$$ListModule#__cbPullRefresh
+     * @param  {Object} arg0 - 请求信息
      * @return {Void}
      */
     _pro.__cbPullRefresh = function(_options){
@@ -506,9 +565,12 @@ NEJ.define([
     };
     /**
      * 同步分页器
-     * @param  {Number}  页码索引
-     * @param  {Number}  总页数
-     * @return {Boolean} 是否重置页码
+     *
+     * @protected
+     * @method module:util/list/module._$$ListModule#__doSyncPager
+     * @param  {Number}  arg0 - 页码索引
+     * @param  {Number}  arg1 - 总页数
+     * @return {Boolean}        是否重置页码
      */
     _pro.__doSyncPager = function(_index,_total){
         if (!!this.__pager){
@@ -545,7 +607,10 @@ NEJ.define([
     };
     /**
      * 格式化数据
-     * @param  {Object} 数据信息
+     *
+     * @protected
+     * @method module:util/list/module._$$ListModule#__doFormatData
+     * @param  {Object} arg0 - 数据信息
      * @return {Void}
      */
     _pro.__doFormatData = (function(){
@@ -561,8 +626,11 @@ NEJ.define([
     })();
     /**
      * 分离脏数据
-     * @param  {Object} 数据信息
-     * @return {String} 数据标识
+     *
+     * @protected
+     * @method module:util/list/module._$$ListModule#__doSplitDirty
+     * @param  {Object} arg0 - 数据信息
+     * @return {String}        数据标识
      */
     _pro.__doSplitDirty = function(_data){
         var _id = _data[this.__iopt.pkey];
@@ -574,8 +642,11 @@ NEJ.define([
     };
     /**
      * 插入单项
-     * @param  {String} 插入位置
-     * @param  {Object} 数据对象
+     *
+     * @protected
+     * @method module:util/list/module._$$ListModule#__doInsertOneItem
+     * @param  {String} arg0 - 插入位置
+     * @param  {Object} arg1 - 数据对象
      * @return {Void}
      */
     _pro.__doInsertOneItem = (function(){
@@ -610,15 +681,17 @@ NEJ.define([
     })();
     /**
      * 加载数据之前处理逻辑，子类实现具体业务逻辑
-     * @protected
-     * @method {__doBeforeListLoad}
+     * 
+     * @abstract
+     * @method module:util/list/module._$$ListModule#__doBeforeListLoad
      * @return {Void}
      */
     _pro.__doBeforeListLoad = _f;
     /**
      * 数据载入之后处理逻辑，子类实现具体业务逻辑
-     * @protected
-     * @method {__doBeforeListShow}
+     * 
+     * @abstract
+     * @method module:util/list/module._$$ListModule#__doBeforeListShow
      * @return {Void}
      */
     _pro.__doBeforeListShow = function(_name){
@@ -632,17 +705,19 @@ NEJ.define([
     };
     /**
      * 列表绘制之前处理逻辑，子类实现具体业务逻辑
-     * @protected
-     * @method {__doBeforeListRender}
+     * 
+     * @abstract
+     * @method module:util/list/module._$$ListModule#__doBeforeListRender
      * @return {Void}
      */
     _pro.__doBeforeListRender = _f;
     /**
      * 呈现提示信息
+     * 
      * @protected
-     * @method {__doRenderMessage}
-     * @param  {String} 消息内容
-     * @param  {String} 位置信息
+     * @method module:util/list/module._$$ListModule#__doRenderMessage
+     * @param  {String} arg0 - 消息内容
+     * @param  {String} arg1 - 位置信息
      * @return {Void}
      */
     _pro.__doRenderMessage = function(_message,_pos){
@@ -659,10 +734,11 @@ NEJ.define([
     };
     /**
      * 通过事件回调检测显示信息
+     * 
      * @protected
-     * @method {__doShowMessage}
-     * @param  {String} 事件名称
-     * @param  {String} 默认显示内容
+     * @method module:util/list/module._$$ListModule#__doShowMessage
+     * @param  {String} arg0 - 事件名称
+     * @param  {String} arg1 - 默认显示内容
      * @return {Void}
      */
     _pro.__doShowMessage = function(_name,_default,_pos){
@@ -678,28 +754,34 @@ NEJ.define([
     };
     /**
      * 列表为空时处理逻辑，子类实现具体业务逻辑
-     * @protected
-     * @method {__doShowEmpty}
+     * 
+     * @abstract
+     * @method module:util/list/module._$$ListModule#__doShowEmpty
      * @return {Void}
      */
     _pro.__doShowEmpty = _f;
     /**
      * 以jst模版方式绘制列表，子类实现具体业务逻辑
-     * @protected
-     * @method {__doShowListByJST}
+     * 
+     * @abstract
+     * @method module:util/list/module._$$ListModule#__doShowListByJST
      * @return {Void}
      */
     _pro.__doShowListByJST = _f;
     /**
      * 以item模版方式绘制列表，子类实现具体业务逻辑
-     * @protected
-     * @method {__doShowListByItem}
+     * 
+     * @abstract
+     * @method module:util/list/module._$$ListModule#__doShowListByItem
      * @return {Void}
      */
     _pro.__doShowListByItem = _f;
     /**
      * 检查列表行为
-     * @param  {Event} 事件对象
+     *
+     * @protected
+     * @method module:util/list/module._$$ListModule#__onCheckAction
+     * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
     _pro.__onCheckAction = (function(){
@@ -723,19 +805,21 @@ NEJ.define([
     })();
     /**
      * 添加列表项回调，子类按需实现具体业务逻辑
-     * @protected
-     * @method {__cbItemAdd}
+     * 
+     * @abstract
+     * @method module:util/list/module._$$ListModule#__cbItemAdd
      * @return {Void}
      */
     _pro.__cbItemAdd = _f;
     /**
      * 删除列表项
+     * 
      * @protected
-     * @method {__doDeleteItem}
-     * @param  {Object} 列表项信息
-     * @property {String} id   项标识
-     * @property {Object} data 项绑定的数据信息
-     * @return {Void}
+     * @method   module:util/list/module._$$ListModule#__doDeleteItem
+     * @param    {Object} arg0 - 列表项信息
+     * @property {String} id   - 项标识
+     * @property {Object} data - 项绑定的数据信息
+     * @return   {Void}
      */
     _pro.__doDeleteItem = function(_event){
         var _data = _event.data||{},
@@ -749,19 +833,21 @@ NEJ.define([
     };
     /**
      * 删除列表项回调，子类按需实现具体业务逻辑
-     * @protected
-     * @method {__cbItemDelete}
+     * 
+     * @abstract
+     * @method module:util/list/module._$$ListModule#__cbItemDelete
      * @return {Void}
      */
     _pro.__cbItemDelete = _f;
     /**
      * 更新列表项
+     * 
      * @protected
-     * @method {__doUpdateItem}
-     * @param  {Object} 列表项信息
-     * @property {String} id   项标识
-     * @property {Object} data 项绑定的数据信息
-     * @return {Void}
+     * @method   module:util/list/module._$$ListModule#__doUpdateItem
+     * @param    {Object} arg0 - 列表项信息
+     * @property {String} id   - 项标识
+     * @property {Object} data - 项绑定的数据信息
+     * @return   {Void}
      */
     _pro.__doUpdateItem = function(_event){
         var _data = _event.data||{},
@@ -774,8 +860,9 @@ NEJ.define([
     };
     /**
      * 更新列表项回调，子类可按需重写具体业务逻辑
+     * 
      * @protected
-     * @method {__cbItemUpdate}
+     * @method module:util/list/module._$$ListModule#__cbItemUpdate
      * @return {Void}
      */
     _pro.__cbItemUpdate = function(_event){
@@ -810,9 +897,10 @@ NEJ.define([
     };
     /**
      * 验证操作结果
+     * 
      * @protected
-     * @method {__doCheckResult}
-     * @param  {Object} 事件信息
+     * @method module:util/list/module._$$ListModule#__doCheckResult
+     * @param  {Object} arg0 - 事件信息
      * @return {Void}
      */
     _pro.__doCheckResult = function(_event,_name){
@@ -827,22 +915,29 @@ NEJ.define([
     };
     /**
      * 追加数据片段回调
-     * @param  {Number} 偏移量
-     * @param  {Number} 数量
+     *
+     * @abstract
+     * @method module:util/list/module._$$ListModule#__cbAppendList
+     * @param  {Number} arg0 - 偏移量
+     * @param  {Number} arg1 - 数量
      * @return {Void}
      */
     _pro.__cbAppendList = _f;
     /**
      * 前向追加数据片段回调
-     * @param  {Number} 偏移量
-     * @param  {Number} 数量
+     *
+     * @abstract
+     * @method module:util/list/module._$$ListModule#__cbUnshiftList
+     * @param  {Number} arg0 - 偏移量
+     * @param  {Number} arg1 - 数量
      * @return {Void}
      */
     _pro.__cbUnshiftList = _f;
     /**
      * 列表变化回调（删除/添加），子类按需实现具体业务逻辑
+     * 
      * @protected
-     * @method {__cbListChange}
+     * @method module:util/list/module._$$ListModule#__cbListChange
      * @return {Void}
      */
     _pro.__cbListChange = function(_event){
@@ -876,8 +971,9 @@ NEJ.define([
     };
     /**
      * 更新某一项数据
-     * @method {_$update}
-     * @param  {Object} 需要更新的数据
+     * 
+     * @method module:util/list/module._$$ListModule#_$update
+     * @param  {Object} arg0 - 需要更新的数据
      * @return {Void}
      */
     _pro._$update = function(_item){
@@ -885,8 +981,9 @@ NEJ.define([
     };
     /**
      * 删除某一项数据
-     * @method {_$delete}
-     * @param  {Object} 需要删除的数据
+     * 
+     * @method module:util/list/module._$$ListModule#_$delete
+     * @param  {Object} arg0 - 需要删除的数据
      * @return {Void}
      */
     _pro._$delete = function(_item){
@@ -894,8 +991,9 @@ NEJ.define([
     };
     /**
      * 添加一项数据
-     * @method {_$add}
-     * @param  {Object} 需要添加的数据
+     * 
+     * @method module:util/list/module._$$ListModule#_$add
+     * @param  {Object} arg0 - 需要添加的数据
      * @return {Void}
      */
     _pro._$add = function(_item){
@@ -906,15 +1004,19 @@ NEJ.define([
     };
     /**
      * 取缓存实例
-     * @return {_$$CacheList}
+     * 
+     * @method module:util/list/module._$$ListModule#_$cache
+     * @return {module:util/cache/list._$$CacheList} 列表缓存实例
      */
     _pro._$cache = function(){
         return this.__cache;
     };
     /**
      * 往前追加列表项
-     * @param  {Object} 数据信息
-     * @return {Number} 插入项标识
+     *
+     * @method module:util/list/module._$$ListModule#_$unshift
+     * @param  {Object} arg0 - 数据信息
+     * @return {Number}        插入项标识
      */
     _pro._$unshift = function(_data){
         this.__doInsertOneItem(
@@ -925,8 +1027,10 @@ NEJ.define([
     };
     /**
      * 往后追加列表项
-     * @param  {Object} 数据信息
-     * @return {Number} 插入项标识
+     *
+     * @method module:util/list/module._$$ListModule#_$append
+     * @param  {Object} arg0 - 数据信息
+     * @return {Number}        插入项标识
      */
     _pro._$append = function(_data){
         this.__doInsertOneItem(
@@ -937,8 +1041,9 @@ NEJ.define([
     };
     /**
      * 刷新模块
-     * @method {_$refresh}
-     * @param  {Number} 刷新到的页码
+     * 
+     * @method module:util/list/module._$$ListModule#_$refresh
+     * @param  {Number} arg0 - 刷新到的页码
      * @return {Void}
      */
     _pro._$refresh = function(){
@@ -947,7 +1052,8 @@ NEJ.define([
     };
     /**
      * 先清数据再刷新模块
-     * @method {_$refreshWithClear}
+     * 
+     * @method module:util/list/module._$$ListModule#_$refreshWithClear
      * @return {Void}
      */
     _pro._$refreshWithClear = function(){
@@ -955,8 +1061,9 @@ NEJ.define([
         this._$refresh();
     };
     /**
-     * 前向刷新列表，子类实现具体业务逻辑
-     * @method {_$pullRefresh}
+     * 前向刷新列表
+     * 
+     * @method module:util/list/module._$$ListModule#_$pullRefresh
      * @return {Void}
      */
     _pro._$pullRefresh = function(){
@@ -977,6 +1084,8 @@ NEJ.define([
     };
     /**
      * 取列表总数
+     *
+     * @method module:util/list/module._$$ListModule#_$getTotal
      * @return {Number} 列表总数
      */
     _pro._$getTotal = function(){
@@ -984,6 +1093,8 @@ NEJ.define([
     };
     /**
      * 取分页器实例
+     *
+     * @method module:util/list/module._$$ListModule#_$getPager
      * @return {Void}
      */
     _pro._$getPager = function(){
@@ -991,8 +1102,10 @@ NEJ.define([
     };
     /**
      * 取列表项节点
-     * @param  {String} 数据标识
-     * @return {Node}   节点
+     *
+     * @method module:util/list/module._$$ListModule#_$getItemBody
+     * @param  {String} arg0 - 数据标识
+     * @return {Node}          节点
      */
     _pro._$getItemBody = function(_id){
         if (!!this.__ikey){
@@ -1011,7 +1124,9 @@ NEJ.define([
         }
     };
     /**
-     * 判断列表是否载入完成s
+     * 判断列表是否载入完成
+     *
+     * @method module:util/list/module._$$ListModule#_$isLoaded
      * @return {Boolean}
      */
     _pro._$isLoaded = function(){

@@ -9,11 +9,11 @@
 NEJ.define([
     'base/global',
     'base/klass',
-    'util/event',
     'base/util',
     'base/element',
-    'base/event'
-],function(NEJ,_k,_t,_u,_e,_v,_p,_o,_f,_r){
+    'base/event',
+    'util/event'
+],function(NEJ,_k,_u,_e,_v,_t,_p,_o,_f,_r){
     var _pro;
     /**
      * 分页逻辑封装基类
