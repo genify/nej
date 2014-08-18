@@ -5,15 +5,15 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _f = NEJ.F,
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _p = _('nej.ut'),
-        _proResize;
-    if (!!_p._$$Resize) return;
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{lib}base/event.js',
+    '{lib}util/event.js',
+    '{lib}util/dragger/dragger.js'
+],function(NEJ,_k,_e,_v,_t,_t0,_p,_o,_f,_r){
+    var _pro;
     /**
      * 区域大小调节功能封装，方位示意图
      * [code]
@@ -25,7 +25,7 @@ var f = function(){
      *    //  |               |
      *    //  8------ 3 ------7
      * [/code]
-     * 
+     *
      * 各位置对应的手势及样式标识如下表所示：
      * [ntb]
      *   1 | 向上改变大小，对应鼠标手型n-resize，默认样式名js-rs-1
@@ -37,7 +37,7 @@ var f = function(){
      *   7 | 向右下改变大小，对应鼠标手型se-resize，默认样式名js-rs-7
      *   8 | 向左下改变大小，对应鼠标手型sw-resize，默认样式名js-rs-8
      * [/ntb]
-     * 
+     *
      * 样式举例
      * [code type="css"]
      *   #box{width:500px;height:500px;border:solid 1px #ccc;position:relative;}
@@ -51,7 +51,7 @@ var f = function(){
      *   .leftbottom{bottom:0;left:0;width:5px;height:5px;line-height:5px;background:transparent;z-index:99;cursor:sw-resize;overflow:hidden}
      *   .left{left:0;width:5px;height:100%;background:transparent;z-index:98;cursor:w-resize;overflow:hidden}
      * [/code]
-     * 
+     *
      * 结构举例
      * [code type="html"]
      *   <div id="box">
@@ -65,7 +65,7 @@ var f = function(){
      *       <span class="left"> </span>
      *   </div>
      * [/code]
-     * 
+     *
      * 脚本举例
      * [code]
      *   var _p = NEJ.P('nej.ut'),
@@ -121,7 +121,7 @@ var f = function(){
      * @config  {Object}       flag  各方向节点样式标识
      * @config  {Boolean}      lock  是否锁定宽高比
      * @config  {Object}       min   最小保留值，{width:50,height:50}
-     * 
+     *
      * [hr]
      * 大小变化开始触发事件
      * @event  {onresizestart}
@@ -130,7 +130,7 @@ var f = function(){
      * @cofnig {Number} left   距离左
      * @cofnig {Number} width  宽
      * @cofnig {Number} height 高
-     * 
+     *
      * [hr]
      * 大小变化触发事件
      * @event  {onresize}
@@ -139,10 +139,10 @@ var f = function(){
      * @cofnig {Number} left   距离左
      * @cofnig {Number} width  宽
      * @cofnig {Number} height 高
-     * 
+     *
      * [hr]
      * 大小变化结束触发事件
-     * @event  {onresizeend} 
+     * @event  {onresizeend}
      * @param  {Object} 事件信息
      * @cofnig {Number} top    距离上
      * @cofnig {Number} left   距离左
@@ -151,16 +151,16 @@ var f = function(){
 
      * [hr]
      * 区域移动触发事件
-     * @event  {onmove} 
+     * @event  {onmove}
      * @param  {Object} 事件信息
      * @cofnig {Number} top    距离上
      * @cofnig {Number} left   距离左
      * @cofnig {Number} width  宽
      * @cofnig {Number} height 高
-     * 
+     *
      */
-    _p._$$Resize = NEJ.C();
-      _proResize = _p._$$Resize._$extend(_p._$$EventTarget);
+    _p._$$Resize = _k._$klass();
+    _pro = _p._$$Resize._$extend(_t._$$EventTarget);
     /**
      * 控件重置
      * @protected
@@ -168,8 +168,8 @@ var f = function(){
      * @param  {Object} 可选配置参数
      * @return {Void}
      */
-    _proResize.__reset = function(_options){
-        this.__supReset(_options);
+    _pro.__reset = function(_options){
+        this.__super(_options);
         var _min = _options.min||_o;
         this.__body = _e._$get(_options.body);
         this.__minx = parseInt(_min.width)||20;
@@ -187,7 +187,7 @@ var f = function(){
             }
         }
         this.__doInitNode(_options.flag||_o);
-        this.__dragger = _p._$$Dragger._$allocate({
+        this.__dragger = _t0._$$Dragger._$allocate({
             body:this.__body,
             view:this.__view,
             onchange:this.__onResizeMove._$bind(this)
@@ -199,8 +199,8 @@ var f = function(){
      * @method {__destroy}
      * @return {Void}
      */
-    _proResize.__destroy = function(){
-        this.__supDestroy();
+    _pro.__destroy = function(){
+        this.__super();
         if (!!this.__dragger)
             this.__dragger = this.__dragger._$recycle();
         delete this.__body;
@@ -213,7 +213,7 @@ var f = function(){
      * @param  {Object} 样式映射表
      * @return {Void}
      */
-    _proResize.__doInitNode = function(_class){
+    _pro.__doInitNode = function(_class){
         var _arr = [];
         for(var i=1,_list,_node;i<9;i++){
             _list = _e._$getByClassName(this.
@@ -240,7 +240,7 @@ var f = function(){
      * 锁定比例计算位置大小信息
      * @return {Object} 位置大小信息
      */
-    _proResize.__doCalBoxWithLock = function(_flag,_event,_delta){
+    _pro.__doCalBoxWithLock = function(_flag,_event,_delta){
         switch(_flag){
             // top
             case 1:
@@ -333,7 +333,7 @@ var f = function(){
      * 不锁定比例计算位置大小信息
      * @return {Object} 位置大小信息
      */
-    _proResize.__doCalBoxWithoutLock = function(_event,_delta){
+    _pro.__doCalBoxWithoutLock = function(_event,_delta){
         var _tmp;
         // top
         if (this.__flag==1||
@@ -380,7 +380,7 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    _proResize.__onResizeStart = (function(){
+    _pro.__onResizeStart = (function(){
         var _cursor = {1:'n-resize',2:'e-resize',
                        3:'s-resize',4:'w-resize',
                        5:'nw-resize',6:'ne-resize',
@@ -392,7 +392,7 @@ var f = function(){
                 !_cursor[this.__flag]){
                 delete this.__flag;
                 return;
-            } 
+            }
             this.__offset = {
                 x:_v._$pageX(_event),
                 y:_v._$pageY(_event)
@@ -422,7 +422,7 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    _proResize.__onResizing = function(_event){
+    _pro.__onResizing = function(_event){
         if (!this.__flag) return;
         var _offset = {x:_v._$pageX(_event),
                        y:_v._$pageY(_event)};
@@ -460,7 +460,7 @@ var f = function(){
      * @param  {Event} 事件对象
      * @return {Void}
      */
-    _proResize.__onResizEnd = function(_event){
+    _pro.__onResizEnd = function(_event){
         if (!this.__flag) return;
         delete this.__box;
         delete this.__flag;
@@ -473,7 +473,7 @@ var f = function(){
      * 大小区域移动触发事件
      * @return  {Void}
      */
-    _proResize.__onResizeMove = function(_event){
+    _pro.__onResizeMove = function(_event){
         this._$dispatchEvent('onmove',this._$getResizeBox());
     };
     /**
@@ -484,7 +484,7 @@ var f = function(){
      * @cofnig {Number} width  宽
      * @cofnig {Number} height 高
      */
-    _proResize._$getResizeBox = function(){
+    _pro._$getResizeBox = function(){
         var _style = this.__body.style;
         return {
             top:parseInt(_style.top)||0,
@@ -493,6 +493,10 @@ var f = function(){
             height:this.__body.offsetHeight
         };
     };
-};
-NEJ.define('{lib}util/resize/resize.js',
-          ['{lib}util/dragger/dragger.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});

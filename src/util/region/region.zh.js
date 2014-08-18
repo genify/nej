@@ -5,14 +5,14 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _e = _('nej.e'),
-        _u = _('nej.u'),
-        _p = _('nej.ut'),
-        _pro;
-    if (!!_p._$$RegionSelector) return;
+NEJ.define([
+    '{lib}base/global.js',
+    '{lib}base/klass.js',
+    '{lib}base/element.js',
+    '{lib}base/util.js',
+    '{lib}util/event.js'
+],function(NEJ,_k,_e,_u,_t,_p,_o,_f,_r){
+    var _pro;
     /**
      * 三级联动区域选择控件<br />
      * 页面结构举例
@@ -43,15 +43,15 @@ var f = function(){
      * @config  {String|Node}                   area     地区选择控件
      * @config  {nej.ut._$$CacheListAbstract}   cache    数据缓存实例
      * @config  {Object}                        data     初始地区信息，如{province:'浙江省',city:'杭州市',area:'滨江区'}
-     * 
+     *
      * [hr]
      * 区域变化触发事件
-     * @event   {onchange} 
+     * @event   {onchange}
      * @param   {String}   变化类型(province/city/area)
-     * 
+     *
      */
-    _p._$$RegionSelector = NEJ.C();
-    _pro = _p._$$RegionSelector._$extend(_p._$$EventTarget);
+    _p._$$RegionSelector = _k._$klass();
+    _pro = _p._$$RegionSelector._$extend(_t._$$EventTarget);
     /**
      * 控件重置
      * @protected
@@ -60,7 +60,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         var _nmap = {
             province:_e._$get(_options.province)
            ,city:_e._$get(_options.city)
@@ -90,7 +90,7 @@ var f = function(){
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         if (!!this.__cache){
             this.__cache._$recycle();
             delete this.__cache;
@@ -215,16 +215,17 @@ var f = function(){
      * @config {String} province 省
      * @config {String} city     市
      * @config {String} area     区
-     * @return {nej.ut._$$RegionSelector}
+     * @return {Void}
      */
     _pro._$setRegion = function(_data,_nochange){
         this.__data = _data||_o;
         if (!_nochange)
             this.__doSetValue('province');
-        return this;
     };
-};
-NEJ.define(
-    '{lib}util/region/region.zh.js',[
-    '{lib}util/event.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui'),_p);
+    }
+
+    return _p;
+});
