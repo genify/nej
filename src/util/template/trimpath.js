@@ -40,6 +40,10 @@
  * ------------------------------------------
  */
 (function(){
+    /**
+     * TrimPath模版引擎名字空间
+     * @namespace TrimPath
+     */
     // init TrimPath
     if (typeof TrimPath==='undefined'){
         TrimPath = {};
@@ -94,8 +98,8 @@
     })();
     /*
      * 解析{for x in b}字符串的前缀
-     * @param  {Array} _part 按空格拆分的值,['for','x','in','b']
-     * @return {String}      解析后的前缀值
+     * @param  {Array}  按空格拆分的值,['for','x','in','b']
+     * @return {String} 解析后的前缀值
      */
     var _doParsePrefixFor = function(_part){
         if (_part[2]!='in')
@@ -129,8 +133,8 @@
     };
     /*
      * 解析{list seq as x}或者{list 1..100 as x}字符串的前缀
-     * @param  {Array} _part 按空格拆分的值,['list','seq','as','x']
-     * @return {String}       解析后的前缀值
+     * @param  {Array}  按空格拆分的值,['list','seq','as','x']
+     * @return {String} 解析后的前缀值
      */
     var _doParsePrefixList = function(_part){
         if (_part[2]!='as')
@@ -158,8 +162,8 @@
     };
     /*
      * 解析{macro macroName(arg1,arg2,...argN)}字符串的前缀
-     * @param  {Array} _part 按空格拆分的值,['macro','macroName(arg1,arg2,...argN)']
-     * @return {String}       解析后的前缀值
+     * @param  {Array}  按空格拆分的值,['macro','macroName(arg1,arg2,...argN)']
+     * @return {String} 解析后的前缀值
      */
     var _doParsePrefixMacro = function(_part){
         if (!_part||!_part.length) return;
@@ -169,8 +173,8 @@
     };
     /*
      * 解析{include "text-template-id"}字符串前缀
-     * @param  {Array} _part 按空格拆分的值,['include','"text-template-id"']
-     * @return {String}      解析后的前缀值
+     * @param  {Array}  按空格拆分的值,['include','"text-template-id"']
+     * @return {String} 解析后的前缀值
      */
     var _doParsePrefixInline = function(_part){
         if (!_part[1]) 
@@ -230,8 +234,8 @@
     };
     /*
      * 解析语句，如{if customer != null && customer.balance > 1000}
-     * @param  {String} _content 待解析语句
-     * @param  {Array}  _out     内容输出
+     * @param  {String} 待解析语句
+     * @param  {Array}  内容输出
      * @return {Void}
      */
     var _doParseStatement = (function(){
@@ -264,9 +268,9 @@
     })();
     /*
      * 解析表达式，如['firstName','default:"John Doe"','capitalize']
-     * @param  {Array}  _exps  表达式内容
-     * @param  {Number} _index 表达式索引
-     * @param  {Array}  _out   内容输出
+     * @param  {Array}  表达式内容
+     * @param  {Number} 表达式索引
+     * @param  {Array}  内容输出
      * @return {Void}
      */
     var _doParseExpression = function(_exps,_out){
@@ -291,8 +295,8 @@
     };
     /*
      * 解析内容，内容中可能包含换行
-     * @param  {String} _content 待解析语句
-     * @param  {Array}  _out     内容输出
+     * @param  {String} 待解析语句
+     * @param  {Array}  内容输出
      * @return {Void}
      */
     var _doParseSectionText = function(_content,_out){
@@ -311,8 +315,8 @@
     };
     /*
      * 解析内容，内容中可能包含${a}或者${%a%}取值语句
-     * @param  {String} _content 待解析语句
-     * @param  {Array}  _out     内容输出
+     * @param  {String} 待解析语句
+     * @param  {Array}  内容输出
      * @return {Void}
      */
     var _doParseSectionTextLine = (function(){
@@ -345,8 +349,8 @@
     })();
     /*
      * 解析纯文本内容，不包含需要解析的内容
-     * @param  {String} _content 待解析内容
-     * @param  {Array}  _out     内容输出
+     * @param  {String} 待解析内容
+     * @param  {Array}  内容输出
      * @return {Void}
      */
     var _doParseText = (function(){
@@ -363,8 +367,8 @@
     })();
     /*
      * 解析模板为执行函数
-     * @param  {String}   _content 模板内容
-     * @return {Function}          模板执行函数
+     * @param  {String}   模板内容
+     * @return {Function} 模板执行函数
      */
     var _doParseTemplate = (function(){
         var _rtab = /\t/g,
@@ -459,6 +463,18 @@
     // interface
     /**
      * 取模板随机数种子
+     *
+     * 代码举例
+     * ```javascript
+     * NEJ.define([
+     *     'util/template/trimpath.nej'
+     * ],function(){
+     *     // 模版统一随机标识
+     *     var _seed = TrimPath.seed();
+     * });
+     * ```
+     * 
+     * @method TrimPath.seed
      * @return {String} 随机数种子
      */
     TrimPath.seed = function(){
@@ -466,10 +482,28 @@
     };
     /**
      * 根据模板的序列号合并模板数据
-     * @param  {String} 模板序列号
-     * @param  {Object} 模板数据
-     * @param  {Object} 扩展接口
-     * @return {String} 合并数据后的内容
+     * 
+     * 代码举例
+     * ```javascript
+     * NEJ.define([
+     *     'util/template/trimpath'
+     * ],function(){
+     *     // 模版合并数据
+     *     var _html = TrimPath.merge(
+     *         _jst_id,{
+     *             a:'aaaaaa',
+     *             b:'bbbbbbbbbb',
+     *             c:'cccccccccccc'
+     *         }
+     *     );
+     * });
+     * ```
+     *
+     * @method TrimPath.merge
+     * @param  {String} arg0 - 模板序列号
+     * @param  {Object} arg1 - 模板数据
+     * @param  {Object} arg2 - 扩展接口
+     * @return {String}        合并数据后的内容
      */
     TrimPath.merge = (function(){
         var _fcache = {};
@@ -502,9 +536,27 @@
     })();
     /**
      * 添加JST模板，JST模板可以是节点的值
-     * @param  {String}  JST模板内容
-     * @param  {Boolean} 是否保留节点
-     * @return {String}  JST模板在缓存中的序列号
+     *
+     * 代码举例
+     * ```javascript
+     * NEJ.define([
+     *     'util/template/trimpath'
+     * ],function(){
+     *     // 解析缓存模版
+     *     var _jst_id = TrimPath.merge(
+     *         '<div>\
+     *              <p>${a}</p>\
+     *              <p>${b}</p>\
+     *              <p>${c}</p>\
+     *          </div>'
+     *     );
+     * });
+     * ```
+     *
+     * @method TrimPath.parse
+     * @param  {String}  arg0 - JST模板内容
+     * @param  {Boolean} arg1 - 是否保留节点
+     * @return {String}         JST模板在缓存中的标识
      */
     TrimPath.parse = (function(){
         var _xeed = +new Date;

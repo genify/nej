@@ -5,80 +5,81 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module util/template/tpl */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/util.js',
-    '{lib}base/event.js',
-    '{lib}base/element.js',
-    '{lib}util/template/jst.js',
-    '{lib}util/event/event.js',
-    '{lib}util/ajax/tag.js',
-    '{lib}util/ajax/xdr.js'
+    'base/global',
+    'base/util',
+    'base/event',
+    'base/element',
+    'util/template/jst',
+    'util/event/event',
+    'util/ajax/tag',
+    'util/ajax/xdr'
 ],function(NEJ,_u,_v,_e,_y,_t,_j0,_j1,_p,_o,_f,_r){
     var _cache = {}, // template cache
         _skey  = (+new Date)+'-';
     /**
-     * 解析模板集合<br/>
+     * 解析模板集合
      * 
      * 结构举例
-     * [code type="html"]
-     *   <textarea name="jst" id="jst-box">
-     *       <div>${name}</div>
-     *   </textarea>
-     *   <textarea name="txt" id="txt-box">
-     *       <div>pure text</div>
-     *   </textarea>
-     *   <textarea name="ntp" id="ntp-box">
-     *       <div>ntp</div>
-     *   </textarea>
-     *   <textarea name="js" id="js-box" data-src='/nej-baseline/src/define.js'></textarea>
-     *   <textarea name="css" id="css-box" data-src='/nej-baseline/qunit/base/qunit.css'></textarea>
-     *   <textarea name="html" id="html-box" data-src='/nej-baseline/qunit/html/ui/audioTest.html'></textarea>
-     *   <textarea name="res" id="res-box" data-src='http://pagead2.googlesyndication.com/simgad/15167196758298977737'></textarea>
-     * [/code]
+     * ```html
+     * <textarea name="jst" id="jst-box">
+     *     <div>${name}</div>
+     * </textarea>
+     * <textarea name="txt" id="txt-box">
+     *     <div>pure text</div>
+     * </textarea>
+     * <textarea name="ntp" id="ntp-box">
+     *     <div>ntp</div>
+     * </textarea>
+     * <textarea name="js" id="js-box" data-src='/nej-baseline/src/define.js'></textarea>
+     * <textarea name="css" id="css-box" data-src='/nej-baseline/qunit/base/qunit.css'></textarea>
+     * <textarea name="html" id="html-box" data-src='/nej-baseline/qunit/html/ui/audioTest.html'></textarea>
+     * <textarea name="res" id="res-box" data-src='http://pagead2.googlesyndication.com/simgad/15167196758298977737'></textarea>
+     * ```
      * 
      * 脚本举例
-     * [code]
-     *   NEJ.define([
-     *       '{lib}util/template/tpl.js'
-     *   ],function(_p){
-     *       // 调用_$addHtmlTemplate接口缓存模版，id为key
-     *       // 要用的时候通过_$getHtmlTemplate(key,{数据})合并模版后返回字符串
-     *       _p._$parseTemplate('jst-box');
-     *       // 生成结果：<div>jack</div>
-     *       _p._$getTextTemplate('jst-box').trim();
-     *   
-     *       // 通过_$addTextTemplate接口缓存纯文本,id为key
-     *       _p._$parseTemplate('txt-box');
-     *       // 要用的时候通过_e._$getTextTemplate(key)取到纯文本
-     *       _p._$getTextTemplate('txt-box')
-     *   
-     *   
-     *       // 通过_$addNodeTemplate接口缓存节点，第一次如果是字符串，缓存字符串，id为key
-     *       _p._$parseTemplate('ntp-box');
-     *       // 要用的时候通过_$getNodeTemplate('ntp-box')取出节点，
-     *       // 如果缓存中是字符串,取的时候要重新转换成节点，然后重新缓存一边，下次直接是取节点
-     *       _p._$getNodeTemplate('ntp-box');
-     *   
-     *       // 加载id为js-box的textarea节点data-src指定的js文件
-     *       _p._$parseTemplate('js-box');
-     *   
-     *       // 加载id为css-box的textarea节点data-src指定的css文件
-     *       _p._$parseTemplate('css-box');
-     *   
-     *       // 加载id为html-box的textarea节点data-src指定的html文件
-     *       _p._$parseTemplate('html-box');
-     *   
-     *       // 加载id为res-box的textarea节点data-src指定的纯文本文件
-     *       _p._$parseTemplate('res-box');
-     *   });
-     * [/code]
+     * ```javascript
+     * NEJ.define([
+     *     'util/template/tpl'
+     * ],function(_p){
+     *     // 调用_$addHtmlTemplate接口缓存模版，id为key
+     *     // 要用的时候通过_$getHtmlTemplate(key,{数据})合并模版后返回字符串
+     *     _p._$parseTemplate('jst-box');
+     *     // 生成结果：<div>jack</div>
+     *     _p._$getTextTemplate('jst-box').trim();
      * 
-     * @api    {_$parseTemplate}
-     * @param  {String|Node} 模板集合节点
-     * @param  {Object}      可选配置参数
-     * @config {String} root 根路径，相对规则
-     * @return {Void}
+     *     // 通过_$addTextTemplate接口缓存纯文本,id为key
+     *     _p._$parseTemplate('txt-box');
+     *     // 要用的时候通过_e._$getTextTemplate(key)取到纯文本
+     *     _p._$getTextTemplate('txt-box')
+     * 
+     * 
+     *     // 通过_$addNodeTemplate接口缓存节点，第一次如果是字符串，缓存字符串，id为key
+     *     _p._$parseTemplate('ntp-box');
+     *     // 要用的时候通过_$getNodeTemplate('ntp-box')取出节点，
+     *     // 如果缓存中是字符串,取的时候要重新转换成节点，然后重新缓存一边，下次直接是取节点
+     *     _p._$getNodeTemplate('ntp-box');
+     * 
+     *     // 加载id为js-box的textarea节点data-src指定的js文件
+     *     _p._$parseTemplate('js-box');
+     * 
+     *     // 加载id为css-box的textarea节点data-src指定的css文件
+     *     _p._$parseTemplate('css-box');
+     * 
+     *     // 加载id为html-box的textarea节点data-src指定的html文件
+     *     _p._$parseTemplate('html-box');
+     * 
+     *     // 加载id为res-box的textarea节点data-src指定的纯文本文件
+     *     _p._$parseTemplate('res-box');
+     * });
+     * ```
+     * 
+     * @method   module:util/template/tpl._$parseTemplate
+     * @param    {String|Node} arg0 - 模板集合节点
+     * @param    {Object}      arg1 - 可选配置参数
+     * @property {String}      root - 根路径，相对规则
+     * @return   {Void}
      */
     _p._$parseTemplate = (function(){
         var _count = 0;
@@ -232,69 +233,69 @@ NEJ.define([
         };
     })();
     /**
-     * 添加文本模板<br />
+     * 添加文本模板
      * 
      * 脚本举例
-     * [code]
-     *   // 通过_e._$addTextTemplate接口缓存纯文本,id为key
-     *   _e._$addTextTemplate('txt-box','i am content');
-     *   // 要用的时候通过_e._$getTextTemplate(key)取到纯文本
-     *   _e._$getTextTemplate('txt-box')
-     * [/code]
+     * ```javascript
+     * // 通过_e._$addTextTemplate接口缓存纯文本,id为key
+     * _e._$addTextTemplate('txt-box','i am content');
+     * // 要用的时候通过_e._$getTextTemplate(key)取到纯文本
+     * _e._$getTextTemplate('txt-box')
+     * ```
      * 
-     * @api    {_$addTextTemplate}
-     * @see    {_$getTextTemplate}
-     * @param  {String} 模板键值
-     * @param  {String} 模板内容
+     * @method module:util/template/tpl._$addTextTemplate
+     * @see    module:util/template/tpl._$getTextTemplate
+     * @param  {String} arg0 - 模板键值
+     * @param  {String} arg1 - 模板内容
      * @return {Void}
      */
     _p._$addTextTemplate = function(_key,_value){
         _cache[_key] = _value||'';
     };
     /**
-     * 取文本模板<br />
+     * 取文本模板
      * 
      * 脚本举例
-     * [code]
-     *   NEJ.define([
-     *       '{lib}util/template/tpl.js'
-     *   ],function(_p){
-     *       // 通过_$addTextTemplate接口缓存纯文本,id为key
-     *       _p._$addTextTemplate('txt-box','i am content');
-     *       // 要用的时候通过_$getTextTemplate(key)取到纯文本
-     *       _p._$getTextTemplate('txt-box')
-     *   });
-     * [/code]
+     * ```javascript
+     * NEJ.define([
+     *     'util/template/tpl'
+     * ],function(_p){
+     *     // 通过_$addTextTemplate接口缓存纯文本,id为key
+     *     _p._$addTextTemplate('txt-box','i am content');
+     *     // 要用的时候通过_$getTextTemplate(key)取到纯文本
+     *     _p._$getTextTemplate('txt-box')
+     * });
+     * ```
      * 
-     * @api    {_$getTextTemplate}
-     * @see    {_$addTextTemplate}
-     * @param  {String} 模板键值
-     * @return {String} 模板内容
+     * @method module:util/template/tpl._$getTextTemplate
+     * @see    module:util/template/tpl._$addTextTemplate
+     * @param  {String} arg0 - 模板键值
+     * @return {String}        模板内容
      */
     _p._$getTextTemplate = function(_key){
         return _cache[_key]||'';
     };
     /**
-     * 添加节点模板<br />
+     * 添加节点模板
      * 
      * 脚本举例
-     * [code]
-     *   NEJ.define([
-     *       '{lib}util/template/tpl.js'
-     *   ],function(_p){
-     *       // 通过_$addNodeTemplate接口缓存节点，第一次如果是字符串，缓存字符串，id为key
-     *       _p._$addNodeTemplate(node,'ntp-box');
-     *       // 要用的时候通过_$getNodeTemplate('ntp-box')取出节点，
-     *       // 如果缓存中是字符串,取的时候要重新转换成节点，然后重新缓存一边，下次直接是取节点
-     *       _p._$getNodeTemplate('ntp-box');
-     *   });
-     * [/code]
+     * ```javascript
+     * NEJ.define([
+     *     'util/template/tpl'
+     * ],function(_p){
+     *     // 通过_$addNodeTemplate接口缓存节点，第一次如果是字符串，缓存字符串，id为key
+     *     _p._$addNodeTemplate(node,'ntp-box');
+     *     // 要用的时候通过_$getNodeTemplate('ntp-box')取出节点，
+     *     // 如果缓存中是字符串,取的时候要重新转换成节点，然后重新缓存一边，下次直接是取节点
+     *     _p._$getNodeTemplate('ntp-box');
+     * });
+     * ```
      * 
-     * @api    {_$addNodeTemplate}
-     * @see    {_$getNodeTemplate}
-     * @param  {String|Node} 模板
-     * @param  {String}      模板序列号
-     * @return {String}      模板序列号
+     * @method module:util/template/tpl._$addNodeTemplate
+     * @see    module:util/template/tpl._$getNodeTemplate
+     * @param  {String|Node} arg0 - 模板
+     * @param  {String}      arg1 - 模板序列号
+     * @return {String}             模板序列号
      */
     _p._$addNodeTemplate = function(_element,_key){
         _key = _key||_u._$randNumberString();
@@ -304,25 +305,25 @@ NEJ.define([
         return _key;
     };
     /**
-     * 取节点模板<br />
+     * 取节点模板
      * 
      * 脚本举例
-     * [code]
-     *   NEJ.define([
-     *       '{lib}util/template/tpl.js'
-     *   ],function(_p){
-     *       // 通过_$addNodeTemplate接口缓存节点，第一次如果是字符串，缓存字符串，id为key
-     *       _p._$addNodeTemplate('txt-box');
-     *       // 要用的时候通过_$getNodeTemplate('ntp-box')取出节点，
-     *       // 如果缓存中是字符串,取的时候要重新转换成节点，然后重新缓存一边，下次直接是取节点
-     *       _p._$getNodeTemplate('ntp-box');
-     *   });
-     * [/code]
+     * ```javascript
+     * NEJ.define([
+     *     'util/template/tpl'
+     * ],function(_p){
+     *     // 通过_$addNodeTemplate接口缓存节点，第一次如果是字符串，缓存字符串，id为key
+     *     _p._$addNodeTemplate('txt-box');
+     *     // 要用的时候通过_$getNodeTemplate('ntp-box')取出节点，
+     *     // 如果缓存中是字符串,取的时候要重新转换成节点，然后重新缓存一边，下次直接是取节点
+     *     _p._$getNodeTemplate('ntp-box');
+     * });
+     * ```
      * 
-     * @api    {_$getNodeTemplate}
-     * @see    {_$addNodeTemplate}
-     * @param  {String} 模板序列号
-     * @return {Node}   节点模板
+     * @method module:util/template/tpl._$getNodeTemplate
+     * @see    module:util/template/tpl._$addNodeTemplate
+     * @param  {String} arg0 - 模板序列号
+     * @return {Node}          节点模板
      */
     _p._$getNodeTemplate = function(_key){
         if (!_key) return null;
@@ -336,65 +337,65 @@ NEJ.define([
         return _value.cloneNode(!0);
     };
     /**
-     * 取ITEM模板列表<br />
+     * 取ITEM模板列表
      * 
      * 结构举例
-     * [code type="html"]
-     *    <div id="item-box"></div>
-     * [/code]
+     * ```html
+     * <div id="item-box"></div>
+     * ```
      * 
      * 脚本举例
-     * [code]
-     *   NEJ.define([
-     *       '{lib}base/klass.js',
-     *       '{lib}ui/item/item.js',
-     *       '{lib}util/template/tpl.js'
-     *   ],function(_k,_i,_t,_p){
-     *       var _pro;
-     *       var _html_key = _t._$addNodeTemplate('<div>123</div>');
+     * ```javascript
+     * NEJ.define([
+     *     'base/klass',
+     *     'ui/item/item',
+     *     'util/template/tpl'
+     * ],function(_k,_i,_t,_p){
+     *     var _pro;
+     *     var _html_key = _t._$addNodeTemplate('<div>123</div>');
      * 
-     *       _p._$$MyItem = _k._$klass();
-     *       _pro = _p._$$MyItem._$extend(_i._$$Item);
+     *     _p._$$MyItem = _k._$klass();
+     *     _pro = _p._$$MyItem._$extend(_i._$$Item);
      * 
-     *       _pro.__reset = function(_options){
-     *           this.__data = _options.data;
-     *           this.__super(_options);
-     *       }
+     *     _pro.__reset = function(_options){
+     *         this.__data = _options.data;
+     *         this.__super(_options);
+     *     }
      * 
-     *       _pro.__doRefresh = function(){
-     *           this.__body.innerText = this.__data.name;
-     *       };
-     *  
-     *       _pro.__initXGui = function(){
-     *           this.__seed_html = _html_key;
-     *       };
+     *     _pro.__doRefresh = function(){
+     *         this.__body.innerText = this.__data.name;
+     *     };
+     *
+     *     _pro.__initXGui = function(){
+     *         this.__seed_html = _html_key;
+     *     };
      * 
-     *       return _p;
-     *   });
-     * [/code]
+     *     return _p;
+     * });
+     * ```
      * 
      * 脚本举例
-     * [code]
-     *   NEJ.define([
-     *       '/path/to/my/item.js',
-     *       '{lib}util/template/tpl.js'
-     *   ],function(_t,_p){
-     *       // _$getItemTemplate接口生成item列表
-     *       // 返回一个item的列表，可以循环调用_$recycle()，来销毁
-     *       var _items = _p._$getItemTemplate(
-     *           [{name:'jack'},{name:'sean'}],
-     *           _t._$$MyItem,{parent:'item-box'}
-     *       );
-     *   });
-     * [/code]
+     * ```javascript
+     * NEJ.define([
+     *     '/path/to/my/item.js',
+     *     'util/template/tpl'
+     * ],function(_t,_p){
+     *     // _$getItemTemplate接口生成item列表
+     *     // 返回一个item的列表，可以循环调用_$recycle()，来销毁
+     *     var _items = _p._$getItemTemplate(
+     *         [{name:'jack'},{name:'sean'}],
+     *         _t._$$MyItem,{parent:'item-box'}
+     *     );
+     * });
+     * ```
      * 
-     * @api    {_$getItemTemplate}
-     * @param  {Array}          数据列表
-     * @param  {_$$Item}        列表项构造函数
-     * @param  {Object}         可选配置参数，其他参数参见item指定的构造函数的配置参数
-     * @config {Number} offset  起始指针【包含】，默认0
-     * @config {Number} limit   分配数据长度或者数量，默认为列表长度
-     * @return {Array}          ITEM模板列表
+     * @method   module:util/template/tpl._$getItemTemplate
+     * @param    {Array}   arg0   - 数据列表
+     * @param    {module:ui/item/item._$$Item} arg1   - 列表项构造函数
+     * @param    {Object}  arg2   - 可选配置参数，其他参数参见item指定的构造函数的配置参数
+     * @property {Number}  offset - 起始指针【包含】，默认0
+     * @property {Number}  limit  - 分配数据长度或者数量，默认为列表长度
+     * @return   {Array}            ITEM模板列表
      */
     _p._$getItemTemplate = (function(){
         var _doFilter = function(_value,_key){
@@ -430,22 +431,22 @@ NEJ.define([
         };
     })();
     /**
-     * 根据ID取列表项对象<br />
+     * 根据ID取列表项对象
      * 
      * 脚本举例
-     * [code]
-     *   NEJ.define([
-     *       '{lib}util/template/tpl.js'
-     *   ],function(_p){
-     *       // 通过id拿某一项item
-     *       // id是生成item的时候，'itm'+日期字符串生成,存在于_instance.__id变量中
-     *       var _item = _p._$getItemById('itm-123');
-     *   });
-     * [/code]
+     * ```javascript
+     * NEJ.define([
+     *     'util/template/tpl'
+     * ],function(_p){
+     *     // 通过id拿某一项item
+     *     // id是生成item的时候，'itm'+日期字符串生成,存在于_instance.__id变量中
+     *     var _item = _p._$getItemById('itm-123');
+     * });
+     * ```
      * 
-     * @api    {_$getItemById}
-     * @param  {String}  列表项
-     * @return {_$$Item} 列表项实例
+     * @method module:util/template/tpl._$getItemById
+     * @param  {String} arg0 - 列表项
+     * @return {module:ui/item/item._$$Item} 列表项实例
      */
     _p._$getItemById = function(_id){
         return _cache[_id];
