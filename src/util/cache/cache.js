@@ -94,7 +94,7 @@ NEJ.define([
      * 
      * @param   {Object} config - 配置参数
      */
-    _p._$$CacheAbstract = NEJ.C();
+    _p._$$CacheAbstract = _k._$klass();
     _pro = _p._$$CacheAbstract._$extend(_t._$$EventTarget);
     /**
      * 初始化函数

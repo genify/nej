@@ -55,7 +55,7 @@ NEJ.define([
      * @property   {Object}   data   节点缓存的数据信息
      * 
      */
-    _p._$$Node = NEJ.C();
+    _p._$$Node = _k._$klass();
     _pro = _p._$$Node._$extend(_t._$$EventTarget);
     /**
      * 控件初始化
