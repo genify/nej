@@ -5,36 +5,37 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module util/dispatcher/dsp/group */
 NEJ.define([
-    '{lib}base/util.js',
-    '{lib}base/klass.js',
-    '{lib}base/constant.js',
-    '{lib}base/element.js',
-    '{lib}util/ajax/tag.js',
-    '{lib}util/event.js',
-    '{lib}util/template/tpl.js',
+    'base/util',
+    'base/klass',
+    'base/constant',
+    'base/element',
+    'util/ajax/tag',
+    'util/event',
+    'util/template/tpl',
     './util.js'
 ],function(_u,_k,_g,_e,_j,_t0,_t1,_t2,_p,_o,_f,_r){
     var _pro;
     /**
      * 模块分组管理器
      * 
-     * @class   {_$$GroupManager}
-     * @extends {_$$EventTarget}
+     * @class   module:util/dispatcher/dsp/group._$$GroupManager
+     * @extends module:util/event._$$EventTarget
      * 
-     * @param  {Object}  可选配置参数
-     * @property {_$$Node}       root       树根节点
-     * @property {_$$Dispatcher} dispatcher 调度器
+     * @param    {Object} config - 可选配置参数
+     * @property {module:util/dispatcher/dsp/node._$$Node} root - 树根节点
+     * @property {module:util/dispatcher/dispatcher._$$Dispatcher} dispatcher - 调度器
      */
     _p._$$GroupManager = _k._$klass();
     _pro = _p._$$GroupManager._$extend(_t0._$$EventTarget);
     /**
      * 控件重置
+     * 
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
-     * @property {_$$Node} root 树根节点
-     * @return {Void}
+     * @method   module:util/dispatcher/dsp/group._$$GroupManager#__reset
+     * @param    {Object} arg0 - 可选配置参数
+     * @return   {Void}
      */
     _pro.__reset = function(_options){
         this.__super(_options);
@@ -44,8 +45,9 @@ NEJ.define([
     };
     /**
      * 控件销毁
+     * 
      * @protected
-     * @method {__destroy}
+     * @method module:util/dispatcher/dsp/group._$$GroupManager#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -56,9 +58,10 @@ NEJ.define([
     };
     /**
      * 判断父节点是否被阻止行为
+     * 
      * @protected
-     * @method {__isStopped}
-     * @param  {_$$Node} 节点
+     * @method module:util/dispatcher/dsp/group._$$GroupManager#__isStopped
+     * @param  {module:util/dispatcher/dsp/node._$$Node} arg0 - 节点
      * @return {Boolean} 是否被阻止
      */
     _pro.__isStopped = function(_node){
@@ -68,9 +71,10 @@ NEJ.define([
     };
     /**
      * 清理阻止标记
+     * 
      * @protected
-     * @method {__doClearStopped}
-     * @param  {_$$Node} 节点
+     * @method module:util/dispatcher/dsp/group._$$GroupManager#__doClearStopped
+     * @param  {module:util/dispatcher/dsp/node._$$Node} arg0 - 节点
      * @return {Void}
      */
     _pro.__doClearStopped = function(_node){
@@ -80,10 +84,11 @@ NEJ.define([
     };
     /**
      * 隐藏模块
+     * 
      * @protected
-     * @method {__doModuleHide}
-     * @param  {_$$Node} 起始节点（包含）
-     * @param  {_$$Node} 结束节点（不包含）
+     * @method module:util/dispatcher/dsp/group._$$GroupManager#__doModuleHide
+     * @param  {module:util/dispatcher/dsp/node._$$Node} arg0 - 起始节点（包含）
+     * @param  {module:util/dispatcher/dsp/node._$$Node} arg1 - 结束节点（不包含）
      * @return {Void}
      */
     _pro.__doModuleHide = function(_from,_to){
@@ -91,10 +96,11 @@ NEJ.define([
     };
     /**
      * 模块显示并检测
+     * 
      * @protected
-     * @method {__doModuleShow}
-     * @param  {_$$Node} 起始节点（包含）
-     * @param  {_$$Node} 结束节点（不包含）
+     * @method module:util/dispatcher/dsp/group._$$GroupManager#__doModuleShow
+     * @param  {module:util/dispatcher/dsp/node._$$Node} arg0 - 起始节点（包含）
+     * @param  {module:util/dispatcher/dsp/node._$$Node} arg1 - 结束节点（不包含）
      * @return {Void}
      */
     _pro.__doModuleShow = function(_from,_to){
@@ -103,9 +109,10 @@ NEJ.define([
     };
     /**
      * 刷新模块
+     * 
      * @protected
-     * @method {__doModuleRefresh}
-     * @param  {_$$Node} 节点对象
+     * @method module:util/dispatcher/dsp/group._$$GroupManager#__doModuleRefresh
+     * @param  {module:util/dispatcher/dsp/node._$$Node} arg0 - 节点对象
      * @return {Void}
      */
     _pro.__doModuleRefresh = function(_node){
@@ -114,11 +121,12 @@ NEJ.define([
     };
     /**
      * 标记操作
+     * 
      * @protected
-     * @method {__doModuleCheck}
-     * @param  {String}  调度类型
-     * @param  {_$$Node} 起始节点（包含）
-     * @param  {_$$Node} 结束节点（不包含）
+     * @method module:util/dispatcher/dsp/group._$$GroupManager#__doModuleCheck
+     * @param  {String}  arg0 - 调度类型
+     * @param  {module:util/dispatcher/dsp/node._$$Node} arg1 - 起始节点（包含）
+     * @param  {module:util/dispatcher/dsp/node._$$Node} arg2 - 结束节点（不包含）
      * @return {Void}
      */
     _pro.__doModuleCheck = function(_type,_from,_to){
@@ -138,9 +146,10 @@ NEJ.define([
     };
     /**
      * 执行模块行为
+     * 
      * @protected
-     * @method {__doModuleAction}
-     * @param  {_$$Node} 节点对象
+     * @method module:util/dispatcher/dsp/group._$$GroupManager#__doModuleAction
+     * @param  {module:util/dispatcher/dsp/node._$$Node} arg0 - 节点对象
      * @return {Boolean} 节点行为是否执行完成
      */
     _pro.__doModuleAction = function(_node){
@@ -181,10 +190,11 @@ NEJ.define([
     };
     /**
      * 调度模块事件，如果模块已经载入则调度相应操作，如果模块未载入则先载入模块
+     * 
      * @protected
-     * @method {__doModuleDispatch}
-     * @param  {_$$Node} 节点对象
-     * @param  {String}  事件名称 onshow/onhide/onrefresh
+     * @method module:util/dispatcher/dsp/group._$$GroupManager#__doModuleDispatch
+     * @param  {module:util/dispatcher/dsp/node._$$Node} arg0 - 节点对象
+     * @param  {String}  arg1 - 事件名称 onshow/onhide/onrefresh
      * @return {Void}
      */
     _pro.__doModuleDispatch = (function(){
@@ -267,8 +277,9 @@ NEJ.define([
     })();
     /**
      * 判断UMI是否属于该分组管理器
-     * @method {_$hasUMI}
-     * @param  {String}  模块UMI
+     * 
+     * @method module:util/dispatcher/dsp/group._$$GroupManager#_$hasUMI
+     * @param  {String}  arg0 - 模块UMI
      * @return {Boolean} 是否属于该分组管理器
      */
     _pro._$hasUMI = function(_umi){
@@ -276,8 +287,9 @@ NEJ.define([
     };
     /**
      * 将UMI加入分组管理器中
-     * @method {_$addUMI}
-     * @param  {String} 模块UMI
+     * 
+     * @method module:util/dispatcher/dsp/group._$$GroupManager#_$addUMI
+     * @param  {String} arg0 - 模块UMI
      * @return {Void}
      */
     _pro._$addUMI = function(_umi){
@@ -285,8 +297,9 @@ NEJ.define([
     };
     /**
      * 删除分组管理器中的UMI
-     * @method {_$delUMI}
-     * @param  {Object} 模块UMI
+     * 
+     * @method module:util/dispatcher/dsp/group._$$GroupManager#_$delUMI
+     * @param  {Object} arg0 - 模块UMI
      * @return {Void}
      */
     _pro._$delUMI = function(_umi){
@@ -294,8 +307,9 @@ NEJ.define([
     };
     /**
      * 指定UMI的模块载入完成
-     * @method {_$loadedUMI}
-     * @param  {String} 模块UMI
+     * 
+     * @method module:util/dispatcher/dsp/group._$$GroupManager#_$loadedUMI
+     * @param  {String} arg0 - 模块UMI
      * @return {Void}
      */
     _pro._$loadedUMI = function(_umi){
@@ -307,8 +321,9 @@ NEJ.define([
     };
     /**
      * 调度到指定UMI的模块
-     * @method {_$dispatchUMI}
-     * @param  {String} 模块UMI
+     * 
+     * @method module:util/dispatcher/dsp/group._$$GroupManager#_$dispatchUMI
+     * @param  {String} arg0 - 模块UMI
      * @return {Void}
      */
     _pro._$dispatchUMI = function(_umi){
@@ -320,8 +335,9 @@ NEJ.define([
     };
     /**
      * 隐藏指定UMI的模块
-     * @method {_$hideUMI}
-     * @param  {String} 模块UMI
+     * 
+     * @method module:util/dispatcher/dsp/group._$$GroupManager#_$hideUMI
+     * @param  {String} arg0 - 模块UMI
      * @return {Void}
      */
     _pro._$hideUMI = function(_umi){

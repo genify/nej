@@ -20,7 +20,7 @@ function(){
      * @property  {String}
      */
     _pp._$$Root = NEJ.C();
-    _pro = _pp._$$Root._$extend(_pm._$$AbstractModule);
+    _pro = _pp._$$Root._$extend(_pm._$$ModuleAbstract);
 
     _pro.__reset = function(_options){
         this.__supReset(_options);

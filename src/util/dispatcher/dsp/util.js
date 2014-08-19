@@ -5,10 +5,11 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module util/dispatcher/dsp/util */
 NEJ.define([
-    '{lib}base/util.js',
+    'base/util',
     './node.js',
-    '../module.base.js'
+    '../module.js'
 ],function(_u,_t0,_t1,_p,_o,_f,_r){
     /*
      * 解析UMI对应的节点
@@ -34,10 +35,11 @@ NEJ.define([
     };
     /**
      * 根据UMI取对应的节点
-     * @api    {_$getNodeByUMI}
-     * @param  {_$Node} 根节点
-     * @param  {String} UMI值
-     * @return {_$Node} UMI对应的节点
+     * 
+     * @method module:util/dispatcher/dsp/util._$getNodeByUMI
+     * @param  {module:util/dispatcher/dsp/node._$Node} arg0 - 根节点
+     * @param  {String} arg1 - UMI值
+     * @return {module:util/dispatcher/dsp/node._$Node} UMI对应的节点
      */
     _p._$getNodeByUMI = (function(){
         var _doSearch = function(_parent,_name){
@@ -53,10 +55,11 @@ NEJ.define([
     })();
     /**
      * 根据UMI追加对应的节点
-     * @api    {_$appendNodeByUMI}
-     * @param  {_$Node} 根节点
-     * @param  {String} UMI值
-     * @return {_$Node} UMI对应的节点
+     * 
+     * @method module:util/dispatcher/dsp/util._$appendNodeByUMI
+     * @param  {module:util/dispatcher/dsp/node._$Node} arg0 - 根节点
+     * @param  {String} arg1 - UMI值
+     * @return {module:util/dispatcher/dsp/node._$Node} UMI对应的节点
      */
     _p._$appendNodeByUMI = (function(){
         // build tree
@@ -91,10 +94,11 @@ NEJ.define([
     })();
     /**
      * 取两个节点的公共
-     * @api    {_$getCommonRoot}
-     * @param  {_$Node} 匹配节点
-     * @param  {_$Node} 匹配节点
-     * @return {_$Node} 公共节点
+     * 
+     * @method module:util/dispatcher/dsp/util._$getCommonRoot
+     * @param  {module:util/dispatcher/dsp/node._$Node} arg0 - 匹配节点
+     * @param  {module:util/dispatcher/dsp/node._$Node} arg1 - 匹配节点
+     * @return {module:util/dispatcher/dsp/node._$Node}        公共节点
      */
     _p._$getCommonRoot = function(_root,_source,_target){
         if (!_source||!_target) return _root;
@@ -112,9 +116,10 @@ NEJ.define([
     };
     /**
      * 广度优先搜索
-     * @api    {_$breadthFirstSearch}
-     * @param  {_$Node}   起始节点
-     * @param  {Function} 搜索过程处理函数
+     * 
+     * @method module:util/dispatcher/dsp/util._$breadthFirstSearch
+     * @param  {module:util/dispatcher/dsp/node._$Node} arg0 - 起始节点
+     * @param  {Function} arg1 - 搜索过程处理函数
      * @return {Void}
      */
     _p._$breadthFirstSearch = function(_root,_handler){
@@ -131,8 +136,9 @@ NEJ.define([
     };
     /**
      * 判断是否节点实例
-     * @api    {_$isNode}
-     * @param  {_$$Node} 节点
+     * 
+     * @method module:util/dispatcher/dsp/util._$isNode
+     * @param  {module:util/dispatcher/dsp/node._$$Node} arg0 - 节点
      * @return {Boolean} 是否节点实例
      */
     _p._$isNode = function(_node){
@@ -140,18 +146,20 @@ NEJ.define([
     };
     /**
      * 判断是否模块实例
-     * @api    {_$isModule}
-     * @param  {nej.ut._$$Module} 模块实例
+     * 
+     * @method module:util/dispatcher/dsp/util._$isModule
+     * @param  {module:util/dispatcher/module._$$ModuleAbstract} arg0 - 模块实例
      * @return {Boolean}          是否模块实例
      */
     _p._$isModule = function(_module){
-        return _module instanceof _t1._$$AbstractModule;
+        return _module instanceof _t1._$$ModuleAbstract;
     };
     /**
      * 判断给定UMI是否代表私有模块
-     * @api    {_$isUMIPrivate}
-     * @param  {Object}  UMI值
-     * @return {Boolean} 是否私有模块
+     * 
+     * @method module:util/dispatcher/dsp/util._$isUMIPrivate
+     * @param  {String}  arg0 - UMI值
+     * @return {Boolean}        是否私有模块
      */
     _p._$isUMIPrivate = (function(){
         var _reg = /^\/?\?(?=\/|$)/;
@@ -160,36 +168,36 @@ NEJ.define([
         };
     })();
     /**
-     * 路径转UMI<br/>
+     * 路径转UMI
      * 
      * 转换逻辑
-     * <ol>
-     *   路径按照"?"或者"#"分割
-     *   识别私有模块，条件：第一个元素为"/"同时第二个元素以"?"开始
-     *   非私有模块返回第一个元素，私有模块返回用"?"合并的第一和第二个元素
-     * </ol>
+     * 
+     * 1. 路径按照"?"或者"#"分割
+     * 2. 识别私有模块，条件：第一个元素为"/"同时第二个元素以"?"开始
+     * 3. 非私有模块返回第一个元素，私有模块返回用"?"合并的第一和第二个元素
      * 
      * 转换举例
-     * <pre>
-     *     /a/b              ->   /a/b
-     *     /a/b?a=aa         ->   /a/b
-     *     /a/b#a=aa         ->   /a/b
-     *     /a/b?a=aa#b=bb    ->   /a/b
-     *     /a/b#a=aa?b=bb    ->   /a/b
-     *     /a/b?/a/b         ->   /a/b
-     *     /a/b#/a/b         ->   /a/b
-     *     /?/a/b            ->   /?/a/b
-     *     /?/a/b?a=aa       ->   /?/a/b
-     *     /?/a/b#a=aa       ->   /?/a/b
-     *     /?/a/b?a=aa#b=bb  ->   /?/a/b
-     *     /?/a/b#a=aa?b=bb  ->   /?/a/b
-     *     /?a=aa            ->   /
-     *     /#a=aa            ->   /
-     * </pre>
+     * ```
+     * /a/b              ->   /a/b
+     * /a/b?a=aa         ->   /a/b
+     * /a/b#a=aa         ->   /a/b
+     * /a/b?a=aa#b=bb    ->   /a/b
+     * /a/b#a=aa?b=bb    ->   /a/b
+     * /a/b?/a/b         ->   /a/b
+     * /a/b#/a/b         ->   /a/b
+     * /?/a/b            ->   /?/a/b
+     * /?/a/b?a=aa       ->   /?/a/b
+     * /?/a/b#a=aa       ->   /?/a/b
+     * /?/a/b?a=aa#b=bb  ->   /?/a/b
+     * /?/a/b#a=aa?b=bb  ->   /?/a/b
+     * /?a=aa            ->   /
+     * /#a=aa            ->   /
+     * ```
      * 
-     * @api    {_$path2umi}
-     * @param  {String} 路径，可带查询参数
-     * @return {String} 模块UMI
+     * @method module:util/dispatcher/dsp/util._$path2umi
+     * 
+     * @param  {String} arg0 - 路径，可带查询参数
+     * @return {String}        模块UMI
      */
     _p._$path2umi = (function(){
         var _reg = /[\?#]/;

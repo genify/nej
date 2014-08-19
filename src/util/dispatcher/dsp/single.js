@@ -5,9 +5,10 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module util/dispatcher/dsp/single */
 NEJ.define([
-    '{lib}base/klass.js',
-    '{lib}base/element.js',
+    'base/klass',
+    'base/element',
     './util.js',
     './group.js'
 ],function(_k,_e,_t0,_t1,_p,_o,_f,_r){
@@ -15,18 +16,19 @@ NEJ.define([
     /**
      * 模块分组管理器
      * 
-     * @class   {_$$SingleGroupManager}
-     * @extends {_$$GroupManager}
+     * @class   module:util/dispatcher/dsp/single._$$GroupManagerSingle
+     * @extends module:util/dispatcher/dsp/group._$$GroupManager
      * 
-     * @param  {Object}  可选配置参数
-     * @property {Boolean} classed 是否需要切换样式
+     * @param    {Object}  config  - 可选配置参数
+     * @property {Boolean} classed - 是否需要切换样式
      */
-    _p._$$SingleGroupManager = _k._$klass();
-    _pro = _p._$$SingleGroupManager._$extend(_t1._$$GroupManager);
+    _p._$$GroupManagerSingle = _k._$klass();
+    _pro = _p._$$GroupManagerSingle._$extend(_t1._$$GroupManager);
     /**
      * 控件重置
+     * 
      * @protected
-     * @method {__reset}
+     * @method module:util/dispatcher/dsp/single._$$GroupManagerSingle#__reset
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -35,8 +37,9 @@ NEJ.define([
     };
     /**
      * 控件销毁
+     * 
      * @protected
-     * @method {__destroy}
+     * @method module:util/dispatcher/dsp/single._$$GroupManagerSingle#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -46,8 +49,9 @@ NEJ.define([
     };
     /**
      * 判断当前模块是否可以退出
-     * @method {_$exitable}
-     * @param  {Object}  目标信息
+     * 
+     * @method module:util/dispatcher/dsp/single._$$GroupManagerSingle#_$exitable
+     * @param  {Object}  arg0 - 目标信息
      * @return {Boolean} 是否允许退出当前模块
      */
     _pro._$exitable = function(_event){
@@ -63,7 +67,8 @@ NEJ.define([
     };
     /**
      * 刷新当前模块
-     * @method {_$refresh}
+     * 
+     * @method module:util/dispatcher/dsp/single._$$GroupManagerSingle#_$refresh
      * @return {Void}
      */
     _pro._$refresh = function(){
@@ -77,21 +82,22 @@ NEJ.define([
     };
     /**
      * 调度到指定UMI的模块,大致调度策略为:
-     * <ol>
-     *   <li>计算原始节点与目标节点的公共节点</li>
-     *   <li>依次刷新根节点到公共节点之间的节点上注册的模块</li>
-     *   <li>依次隐藏原始节点到公共节点之间的节点上注册的模块</li>
-     *   <li>依次显示公共节点到目标节点之间的节点上注册的模块</li>
-     * </ol>
+     * 
+     * 1. 计算原始节点与目标节点的公共节点
+     * 2. 依次刷新根节点到公共节点之间的节点上注册的模块
+     * 3. 依次隐藏原始节点到公共节点之间的节点上注册的模块
+     * 4. 依次显示公共节点到目标节点之间的节点上注册的模块
+     *   
      * 执行过程中遇到任何需要动态载入的模块均自动载入,
-     * 子节点执行操作之前必须确保父节点已执行完相应操作<br/>
+     * 子节点执行操作之前必须确保父节点已执行完相应操作
+     * 
      * 以下两种情况忽略本次调度逻辑:
-     * <ul>
-     *   <li>需要调度的UMI非本组管理器的UMI</li>
-     *   <li>需要调度的UMI上没有注册模块</li>
-     * </ul>
-     * @method {_$dispatchUMI}
-     * @param  {String} 模块UMI
+     * 
+     * * 需要调度的UMI非本组管理器的UMI
+     * * 需要调度的UMI上没有注册模块
+     * 
+     * @method module:util/dispatcher/dsp/single._$$GroupManagerSingle#_$dispatchUMI
+     * @param  {String} arg0 - 模块UMI
      * @return {Void}
      */
     _pro._$dispatchUMI = function(_umi){
@@ -151,8 +157,9 @@ NEJ.define([
     };
     /**
      * 指定UMI的模块载入完成
-     * @method {_$loadedUMI}
-     * @param  {String} 模块UMI
+     * 
+     * @method module:util/dispatcher/dsp/single._$$GroupManagerSingle#_$loadedUMI
+     * @param  {String} arg0 - 模块UMI
      * @return {Void}
      */
     _pro._$loadedUMI = function(_umi){
