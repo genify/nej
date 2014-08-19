@@ -5,121 +5,147 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module util/calendar/calendar */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/element.js',
-    '{lib}base/event.js',
-    '{lib}base/util.js',
-    '{lib}util/event.js'
+    'base/global',
+    'base/klass',
+    'base/element',
+    'base/event',
+    'base/util',
+    'util/event'
 ],function(NEJ,_k,_e,_v,_u,_t,_p,_o,_f,_r){
     var _pro;
     /**
-     * 日历算法<br/>
+     * 日历算法
      *
-     * 日期范围举例：
-     * [ntb]
-     *     [0,0]                                     | 全部日期可选【默认】
-     *     [0,new Date]                              | 可选当前日期之前的
-     *     [new Date,0]                              | 可选当前日期之后的
-     *     [new Date(1997,1,1),new Date(2000,1,1)]   | 可选指定范围的日期
-     * [/ntb]
-     * 页面结构举例
+     * 日期范围说明
+     *
+     * | 范围 | 说明 |
+     * | :--- | :--- |
+     * | [0,0]                                   | 全部日期可选【默认】 |
+     * | [0,new Date]                            | 可选当前日期之前的 |
+     * | [new Date,0]                            | 可选当前日期之后的 |
+     * | [new Date(1997,1,1),new Date(2000,1,1)] | 可选指定范围的日期 |
+     * 
+     * 结构举例
      * ```html
-     *   <div id="datepick-box">
-     *       <div id="days"></div>
-     *       <div id="year"></div>
-     *       <div id="month"></div>
-     *       <div id="yprv">前一年</div>
-     *       <div id="mprv">前一月</div>
-     *       <div id="ynxt">后一年</div>
-     *       <div id="mnxt">后一月</div>
-     *   </div>
+     * <div id="datepick-box">
+     *   <div id="days"></div>
+     *   <div id="year"></div>
+     *   <div id="month"></div>
+     *   <div id="yprv">前一年</div>
+     *   <div id="mprv">前一月</div>
+     *   <div id="ynxt">后一年</div>
+     *   <div id="mnxt">后一月</div>
+     * </div>
      * ```
+     *
+     * 脚本举例
      * ```javascript
-     *   var _ut= NEJ.P('nej.ut'),
-     *       _e = NEJ.P('nej.e');
-     *   // 前选范围
-     *   var pDate = new Date(2011,7,9);
-     *   // 后选范围
-     *   var nDate = new Date(2013,7,9);
-     *   var _days = _e._$get('days');
-     *   _html = _e._$addHtmlTemplate('{list 1..2 as x}<div>{list 1..6 as y}<p class="z-day"></p>{/list}</div>{/list}');
-     *   _days.innerHTML = _e._$getHtmlTemplate(_html);
-     *   var _dp = _ut._$$Calendar._$allocate({
-     *       parent:_e._$get('datepick-box'),
-     *       offset:1,
-     *       list:_e._$getByClassName(_days,"z-day"),
-     *       year:_e._$get('year'),
-     *       month:_e._$get('month'),
-     *       yprv:_e._$get('yprv'),
-     *       mprv:_e._$get('mprv'),
-     *       ynxt:_e._$get('ynxt'),
-     *       mnxt:_e._$get('mnxt'),
-     *       onchange:function(_date){
-     *           // 日期列表变化
-     *       },
-     *       onselect:function(_date){
-     *           // 选择了一个日期，返回此日期
-     *       },
-     *       // 日期的范围，超过范围不可选
-     *       range:[pDate,nDate]
-     *   });
+     * NEJ.define([
+     *     'util/calendar/calendar'
+     * ],function(_t){
+     *     // 构建日期列表
+     *     var _days = _e._$get('days');
+     *     _html = _e._$addHtmlTemplate('{list 1..2 as x}<div>{list 1..6 as y}<p class="z-day"></p>{/list}</div>{/list}');
+     *     _days.innerHTML = _e._$getHtmlTemplate(_html);
+     *     // 分配日历功能
+     *     var _calendar = _t._$$Calendar._$allocate({
+     *         parent:'datepick-box',
+     *         list:_e._$getByClassName(_days,"z-day"),
+     *         offset:1,
+     *         year:'year',
+     *         month:'month',
+     *         yprv:'yprv',
+     *         mprv:'mprv',
+     *         ynxt:'ynxt',
+     *         mnxt:'mnxt',
+     *         // 日期的范围，超过范围不可选
+     *         range:[new Date(2011,7,9),new Date(2013,7,9)],
+     *         onchange:function(_date){
+     *             // 日期列表变化
+     *         },
+     *         onselect:function(_date){
+     *             // 选择了一个日期，返回此日期
+     *         }
+     *     });
+     *   
+     * });
      * ```
-     * @class   {nej.ut._$$Calendar}
-     * @extends {nej.ut._$$EventTarget}
+     * 
+     * @class    module:util/calendar/calendar._$$Calendar
+     * @extends  module:util/event._$$EventTarget
      *
-     * @param   {Object}      可选配置参数
-     * @property  {Number}      offset   开始星期偏移，默认为0，0-星期天、1-星期一 ...
-     * @property  {Array}       list     日期显示节点列表
-     * @property  {Number}      year     年份显示节点
-     * @property  {Number}      month    月份显示节点
-     * @property  {String|Node} mprv     上一月按钮节点
-     * @property  {String|Node} mnxt     下一月按钮节点
-     * @property  {String|Node} yprv     上一年按钮节点
-     * @property  {String|Node} ynxt     下一年按钮节点
-     * @property  {String|Node} wprv     上一星期按钮节点
-     * @property  {String|Node} wnxt     下一星期按钮节点
-     * @property  {String|Node} dprv     上一天按钮节点
-     * @property  {String|Node} dnxt     下一天按钮节点
-     * @property  {Array}       range    日期可选范围，默认全部可选
-     * @property  {String}      selected 当前项样式，默认为js-selected
-     * @property  {String}      extended 扩展项样式，默认为js-extended
-     * @property  {String}      disabled 禁用项样式，默认为js-disabled
-     * @property  {Date}        date     显示日期，默认为当前时间
-     *
-     * [hr]
-     *
-     * @event {onchange}
-     * @param {Date} 当前日期
-     *
-     * [hr]
-     *
-     * @event {onselect}
-     * @param {Date} 当前日期
-     *
+     * @param    {Object}      config   - 可选配置参数
+     * @property {Number}      offset   - 开始星期偏移，默认为0，0-星期天、1-星期一 ...
+     * @property {Array}       list     - 日期显示节点列表
+     * @property {Number}      year     - 年份显示节点
+     * @property {Number}      month    - 月份显示节点
+     * @property {String|Node} mprv     - 上一月按钮节点
+     * @property {String|Node} mnxt     - 下一月按钮节点
+     * @property {String|Node} yprv     - 上一年按钮节点
+     * @property {String|Node} ynxt     - 下一年按钮节点
+     * @property {String|Node} wprv     - 上一星期按钮节点
+     * @property {String|Node} wnxt     - 下一星期按钮节点
+     * @property {String|Node} dprv     - 上一天按钮节点
+     * @property {String|Node} dnxt     - 下一天按钮节点
+     * @property {Array}       range    - 日期可选范围，默认全部可选
+     * @property {String}      selected - 当前项样式，默认为js-selected
+     * @property {String}      extended - 扩展项样式，默认为js-extended
+     * @property {String}      disabled - 禁用项样式，默认为js-disabled
+     * @property {Date}        date     - 显示日期，默认为当前时间
+     */
+    /**
+     * 日期变化事件
+     * 
+     * @event module:util/calendar/calendar._$$Calendar#onchange
+     * @param {Date} date - 当前日期
+     */
+    /**
+     * 日期选中事件
+     * 
+     * @event module:util/calendar/calendar._$$Calendar#onselect
+     * @param {Date} date - 选中日期
      */
     _p._$$Calendar = _k._$klass();
     _pro = _p._$$Calendar._$extend(_t._$$EventTarget);
     /**
      * 控件重置
+     * 
      * @protected
-     * @method {__reset}
-     * @param  {Object}       可选配置参数
+     * @method module:util/calendar/calendar._$$Calendar#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
         this.__super(_options);
-        this.__doInitDomEvent([
-            [_options.mprv,'click',this.__onMonthChange._$bind(this,-1)]
-           ,[_options.mnxt,'click',this.__onMonthChange._$bind(this, 1)]
-           ,[_options.yprv,'click',this.__onYearChange._$bind(this,-1)]
-           ,[_options.ynxt,'click',this.__onYearChange._$bind(this, 1)]
-           ,[_options.wprv,'click',this.__onWeekChange._$bind(this,-1)]
-           ,[_options.wnxt,'click',this.__onWeekChange._$bind(this, 1)]
-           ,[_options.wprv,'click',this.__onDayChange._$bind(this,-1)]
-           ,[_options.wnxt,'click',this.__onDayChange._$bind(this, 1)]
-        ]);
+        // init event
+        // TODO delegate event
+        this.__doInitDomEvent([[
+            _options.mprv,'click',
+            this.__onMonthChange._$bind(this,-1)
+        ],[
+            _options.mnxt,'click',
+            this.__onMonthChange._$bind(this, 1)
+        ],[
+            _options.yprv,'click',
+            this.__onYearChange._$bind(this,-1)
+        ],[
+            _options.ynxt,'click',
+            this.__onYearChange._$bind(this, 1)
+        ],[
+            _options.wprv,'click',
+            this.__onWeekChange._$bind(this,-1)
+        ],[
+            _options.wnxt,'click',
+            this.__onWeekChange._$bind(this, 1)
+        ],[
+            _options.wprv,'click',
+            this.__onDayChange._$bind(this,-1)
+        ],[
+            _options.wnxt,'click',
+            this.__onDayChange._$bind(this, 1)
+        ]]);
         this.__offset = _options.offset||0;
         this.__nyear  = _e._$get(_options.year);
         this.__nmonth = _e._$get(_options.month);
@@ -132,8 +158,9 @@ NEJ.define([
     };
     /**
      * 控件销毁
+     * 
      * @protected
-     * @method {__destroy}
+     * @method module:util/calendar/calendar._$$Calendar#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -145,33 +172,34 @@ NEJ.define([
     };
     /**
      * 可选范围检测
+     * 
      * @protected
-     * @method {__doRangeCheck}
-     * @param  {Array} 可选择范围
+     * @method module:util/calendar/calendar._$$Calendar#__doRangeCheck
+     * @param  {Array} arg0 - 可选择范围
      * @return {Void}
      */
     _pro.__doRangeCheck = function(_range){
         this.__range = _range||[];
         var _value = this.__range[0];
-        this.__range[0] = _u._$isDate(_value)
-                        ? (+_value):(_value||0);
+        this.__range[0] = _u._$isDate(_value)?(+_value):(_value||0);
         var _value = this.__range[1];
-        this.__range[1] = _u._$isDate(_value)
-                        ? (+_value):(_value||0);
+        this.__range[1] = _u._$isDate(_value)?(+_value):(_value||0);
     };
     /**
      * 检查日期列表
+     * 
      * @protected
-     * @method {__doDateListCheck}
-     * @param  {Array} 日期显示列表
+     * @method module:util/calendar/calendar._$$Calendar#__doDateListCheck
+     * @param  {Array} arg0 - 日期显示列表
      * @return {Void}
      */
     _pro.__doDateListCheck = (function(){
         var _doCheck = function(_node){
             this.__list.push(_node);
-            this.__doInitDomEvent([
-                [_node,'click',this.__onDateChange._$bind(this)]
-            ]);
+            this.__doInitDomEvent([[
+                _node,'click',
+                this.__onDateChange._$bind(this)
+            ]]);
         };
         return function(_list){
             this.__list = [];
@@ -180,12 +208,13 @@ NEJ.define([
     })();
     /**
      * 保存日期信息
+     * 
      * @protected
-     * @method {__doSaveDateInfo}
-     * @param  {Node}   节点
-     * @param  {Number} 年份
-     * @param  {Number} 月份
-     * @param  {Number} 日期
+     * @method module:util/calendar/calendar._$$Calendar#__doSaveDateInfo
+     * @param  {Node}   arg0 - 节点
+     * @param  {Number} arg1 - 年份
+     * @param  {Number} arg2 - 月份
+     * @param  {Number} arg3 - 日期
      * @return {Void}
      */
     _pro.__doSaveDateInfo = (function(){
@@ -206,16 +235,16 @@ NEJ.define([
             }else{
                 _e._$delClassName(_node,this.__selected);
             }
-            _isDisabled(this.__range,
-                       +new Date(_year,_month-1,_date))
-            ? _e._$addClassName(_node,this.__disabled)
-            : _e._$delClassName(_node,this.__disabled);
+            _isDisabled(this.__range,+new Date(_year,_month-1,_date))
+                ? _e._$addClassName(_node,this.__disabled)
+                : _e._$delClassName(_node,this.__disabled);
         };
     })();
     /**
      * 同步日历显示
+     * 
      * @protected
-     * @method {__doSyncDateShow}
+     * @method module:util/calendar/calendar._$$Calendar#__doSyncDateShow
      * @return {Void}
      */
     _pro.__doSyncDateShow = (function(){
@@ -275,9 +304,10 @@ NEJ.define([
     })();
     /**
      * 调整年份
+     * 
      * @protected
-     * @method {__onYearChange}
-     * @param  {Number} 步进
+     * @method module:util/calendar/calendar._$$Calendar#__onYearChange
+     * @param  {Number} arg0 - 步进
      * @return {Void}
      */
     _pro.__onYearChange = function(_flag){
@@ -287,9 +317,10 @@ NEJ.define([
     };
     /**
      * 调整月份
+     * 
      * @protected
-     * @method {__onMonthChange}
-     * @param  {Number} 步进
+     * @method module:util/calendar/calendar._$$Calendar#__onMonthChange
+     * @param  {Number} arg0 - 步进
      * @return {Void}
      */
     _pro.__onMonthChange = function(_flag){
@@ -307,9 +338,10 @@ NEJ.define([
     };
     /**
      * 日期选择触发事件
+     * 
      * @protected
-     * @method {__onDateChange}
-     * @param  {Event} 事件对象
+     * @method module:util/calendar/calendar._$$Calendar#__onDateChange
+     * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
     _pro.__onDateChange = function(_event){
@@ -325,9 +357,10 @@ NEJ.define([
     };
     /**
      * 周变化触发事件
+     * 
      * @protected
-     * @method {__onWeekChange}
-     * @param  {Number} 上下周标识
+     * @method module:util/calendar/calendar._$$Calendar#__onWeekChange
+     * @param  {Number} arg0 - 上下周标识
      * @return {Void}
      */
     _pro.__onWeekChange = function(_flag){
@@ -335,21 +368,25 @@ NEJ.define([
     };
     /**
      * 日变化触发事件
+     * 
      * @protected
-     * @method {__onDayChange}
-     * @param  {Number} 上下日标识
+     * @method module:util/calendar/calendar._$$Calendar#__onDayChange
+     * @param  {Number} arg0 - 上下日标识
      * @return {Void}
      */
     _pro.__onDayChange = function(_flag){
         // TODO something
     };
     /**
-     * 设置日期<br/>
+     * 设置日期
+     *
+     * 脚本举例
      * ```javascript
-     *   _dp._$setDate('1998-09-28');
+     * _calendar._$setDate('1998-09-28');
      * ```
-     * @method {_$setDate}
-     * @param  {String|Number|Date} 日期
+     * 
+     * @method module:util/calendar/calendar._$$Calendar#_$setDate
+     * @param  {String|Number|Date} arg0 - 日期
      * @return {Void}
      */
     _pro._$setDate = function(_date){
@@ -360,17 +397,18 @@ NEJ.define([
         this.__doSyncDateShow();
     };
     /**
-     * 取当前选择时间<br/>
+     * 取当前选择时间
+     *
+     * 脚本举例
      * ```javascript
-     *   _dp._$getDate();
+     * _calendar._$getDate();
      * ```
-     * @method {_$getDate}
+     * 
+     * @method module:util/calendar/calendar._$$Calendar#_$getDate
      * @return {Date} 当前选择时间
      */
     _pro._$getDate = function(){
-        return new Date(this.__year,
-                        this.__month-1,
-                        this.__date);
+        return new Date(this.__year,this.__month-1,this.__date);
     };
 
     if (CMPT){
