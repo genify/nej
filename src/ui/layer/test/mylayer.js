@@ -25,6 +25,7 @@ var f = function(){
     _proMyLayer = _p._$$MyLayer._$extend(_p._$$Layer);
     /**
      * 控件重置
+     *
      * @protected
      * @method {__reset}
      * @param  {Object} 可选配置参数
@@ -35,6 +36,7 @@ var f = function(){
     };
     /**
      * 控件销毁
+     *
      * @protected
      * @method {__destroy}
      * @return {Void}
@@ -44,6 +46,7 @@ var f = function(){
     };
     /**
      * 初始化外观信息
+     *
      * @protected
      * @method {__initXGui}
      * @return {Void}
@@ -53,6 +56,7 @@ var f = function(){
     };
     /**
      * 初始化节点
+     *
      * @protected
      * @method {__initNode}
      * @return {Void}

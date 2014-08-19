@@ -20,7 +20,8 @@ NEJ.define([
         _seed_html,
         _pro;
     /**
-     * 窗体控件<br />
+     * 窗体控件
+     *
      * 脚本举例
      * ```javascript
      *   var _window = _p._$$Window._$allocate({
@@ -62,6 +63,7 @@ NEJ.define([
     _pro = _p._$$Window._$extend(_i0._$$Layer);
     /**
      * 控件初始化
+     *
      * @protected
      * @method {__init}
      * @return {Void}
@@ -73,6 +75,7 @@ NEJ.define([
     };
     /**
      * 控件重置
+     *
      * @protected
      * @method {__reset}
      * @param  {Object} 可选配置参数
@@ -89,6 +92,7 @@ NEJ.define([
     };
     /**
      * 控件销毁
+     *
      * @protected
      * @method {__destroy}
      * @return {Void}
@@ -108,6 +112,7 @@ NEJ.define([
     };
     /**
      * 初始化外观信息
+     *
      * @protected
      * @method {__initXGui}
      * @return {Void}
@@ -118,6 +123,7 @@ NEJ.define([
     };
     /**
      * 初始化节点
+     *
      * @protected
      * @method {__initNode}
      * @return {Void}
@@ -139,6 +145,7 @@ NEJ.define([
     };
     /**
      * 关闭窗口
+     *
      * @protected
      * @method {__onClose}
      * @param  {Event} 事件对象
@@ -151,6 +158,7 @@ NEJ.define([
     };
     /**
      * 窗口开始拖动过程
+     *
      * @protected
      * @method {__onDragStart}
      * @param  {Event} 事件信息
@@ -161,6 +169,7 @@ NEJ.define([
     };
     /**
      * 窗口拖动过程
+     *
      * @protected
      * @method {__onDragging}
      * @param  {Object} 窗口位置信息
@@ -175,6 +184,7 @@ NEJ.define([
     };
     /**
      * 窗口位置调整
+     *
      * @protected
      * @method {__doPositionAlign}
      * @return {Void}
@@ -206,6 +216,7 @@ NEJ.define([
     })();
     /**
      * 显示盖层
+     *
      * @protected
      * @method {__doShowMask}
      * @return {Void}
@@ -221,6 +232,7 @@ NEJ.define([
     };
     /**
      * 隐藏窗体
+     *
      * @protected
      * @method {__doHide}
      * @return {Void}
@@ -232,6 +244,7 @@ NEJ.define([
     };
     /**
      * 设置盖层构造
+     *
      * @protected
      * @method {__setMask}
      * @param  {nej.ui._$$Mask|Boolean} 盖层构造
@@ -255,7 +268,8 @@ NEJ.define([
         this.__mclz = null;
     };
     /**
-     * 设置标题<br />
+     * 设置标题
+     *
      * 脚本举例
      * ```javascript
      *   _window._$setTitle('设置浮层标题');
@@ -272,7 +286,8 @@ NEJ.define([
         return this;
     };
     /**
-     * 设置窗体对齐方式<br />
+     * 设置窗体对齐方式
+     *
      * 脚本举例
      * ```javascript
      *   // 设置对齐方式，默认是center,middle
@@ -298,7 +313,8 @@ NEJ.define([
         };
     })();
     /**
-     * 显示窗体<br />
+     * 显示窗体
+     *
      * 脚本举例
      * ```javascript
      *   _window._$show();

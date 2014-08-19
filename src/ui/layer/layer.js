@@ -14,7 +14,8 @@ NEJ.define([
 ],function(NEJ,_k,_e,_u,_i,_p,_o,_f,_r){
     var _pro;
     /**
-     * 弹出层控件基类<br />
+     * 弹出层控件基类
+     *
      * 脚本举例
      * ```javascript
      *   // 第一步：继承此基类生成新类
@@ -27,7 +28,7 @@ NEJ.define([
      *   };
      *
      *   _proMyLayer.__initNode = function(){
-     *       this.__supInitNode();
+     *       this.__super();
      *       // this.__ncnt作为放置卡片内容的容器
      *       this.__ncnt = this.__body;
      *   };
@@ -69,7 +70,7 @@ NEJ.define([
      * ```
      *
      * @class   module:nej.ui._$$Layer 弹出层控件基类
-     * @extends {nej.ui._$$Abstract}
+     * @extends module:ui/base._$$Abstract
      * @param   {Object} 可选配置参数
      * @property  {String|Node} content     内容HTML代码或者节点对象
      * @property  {Boolean}     destroyable 调用隐藏时是否自动回收，默认不自动回收
@@ -89,6 +90,7 @@ NEJ.define([
     _pro = _p._$$Layer._$extend(_i._$$Abstract);
     /**
      * 控件重置
+     *
      * @protected
      * @method {__reset}
      * @param  {Object} 可选配置参数
@@ -105,6 +107,7 @@ NEJ.define([
     };
     /**
      * 控件销毁
+     *
      * @protected
      * @method {__destroy}
      * @return {Void}
@@ -118,6 +121,7 @@ NEJ.define([
     };
     /**
      * 初始化内容区域，子类实现具体逻辑
+     *
      * @protected
      * @method {__doInitContent}
      * @param  {Node} 内容区容器节点
@@ -126,6 +130,7 @@ NEJ.define([
     _pro.__doInitContent = _f;
     /**
      * 调整显示位置，子类实现具体业务逻辑
+     *
      * @protected
      * @method {__doPositionAlign}
      * @return {Void}
@@ -133,6 +138,7 @@ NEJ.define([
     _pro.__doPositionAlign = _f;
     /**
      * 控件隐藏
+     *
      * @protected
      * @method {__doHide}
      * @return {Void}
@@ -145,7 +151,8 @@ NEJ.define([
         }
     };
     /**
-     * 设置层显示内容<br />
+     * 设置层显示内容
+     *
      * 脚本举例
      * ```javascript
      *   // 设置层里面展示的内容
@@ -166,7 +173,8 @@ NEJ.define([
         this._$dispatchEvent('oncontentready',this.__ncnt);
     };
     /**
-     * 设置位置<br />
+     * 设置位置
+     *
      * 脚本举例
      * ```javascript
      *   // 设置浮层位置
@@ -191,7 +199,8 @@ NEJ.define([
         }
     };
     /**
-     * 显示控件<br />
+     * 显示控件
+     *
      * 脚本举例
      * ```javascript
      *   // 显示浮层
@@ -210,7 +219,8 @@ NEJ.define([
         }
     };
     /**
-     * 隐藏控件<br />
+     * 隐藏控件
+     *
      * 脚本举例
      * ```javascript
      *   // 隐藏浮层

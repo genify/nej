@@ -5,6 +5,7 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module ui/layer/card */
 NEJ.define([
     '{lib}base/global.js',
     '{lib}base/klass.js',
@@ -56,6 +57,7 @@ NEJ.define([
     _pro = _p._$$Card._$extend(_i0._$$Layer);
     /**
      * 控件重置
+     *
      * @protected
      * @method {__reset}
      * @param  {Object} 可选配置参数
@@ -75,6 +77,7 @@ NEJ.define([
     };
     /**
      * 控件销毁
+     *
      * @protected
      * @method {__destroy}
      * @return {Void}
@@ -90,6 +93,7 @@ NEJ.define([
     };
     /**
      * 初始化外观信息
+     *
      * @protected
      * @method {__initXGui}
      * @return {Void}
@@ -99,6 +103,7 @@ NEJ.define([
     };
     /**
      * 初始化节点
+     *
      * @protected
      * @method {__initNode}
      * @return {Void}
@@ -132,6 +137,7 @@ NEJ.define([
     };
     /**
      * 设置对齐方式
+     *
      * @protected
      * @method {__setAlign}
      * @param  {String} 对齐方式
@@ -149,6 +155,7 @@ NEJ.define([
     })();
     /**
      * 根据适应方式取位置信息
+     *
      * @protected
      * @method {__doCalPosition}
      * @param  {String} 适应位置
@@ -190,6 +197,7 @@ NEJ.define([
     };
     /**
      * 调整显示位置
+     *
      * @protected
      * @method {__doPositionAlign}
      * @return {Void}
@@ -210,6 +218,7 @@ NEJ.define([
 
     /**
      * 根据卡片规则计算左上角的坐标
+     *
      * @protected
      * @method {__doFindPosition}
      * @return {Object} 卡片左上角坐标{top:20,left:10}
@@ -262,7 +271,8 @@ NEJ.define([
         return {top:_y,left:_x};
     };
     /**
-     * 通过参照节点显示卡片位置<br />
+     * 通过参照节点显示卡片位置
+     *
      * 脚本举例
      * ```javascript
      *   // 卡片显示的时候，根据target节点来定位,卡片位置固定

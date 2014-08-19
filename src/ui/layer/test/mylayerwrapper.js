@@ -25,6 +25,7 @@ var f = function(){
     _proMyCardWrapper = _p._$$MyCardWrapper._$extend(_p._$$LayerWrapper);
     /**
      * 构建弹层控件实例，子类实现具体业务逻辑
+     *
      * @protected
      * @method {__getLayerInstance}
      * @return {nej.ui._$$Layer} 弹层控件实例
@@ -34,6 +35,7 @@ var f = function(){
     };
     /**
      * 初始化弹层控件可选配置参数
+     *
      * @protected
      * @method {__doInitLayerOptions}
      * @return {Void}

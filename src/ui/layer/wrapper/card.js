@@ -48,7 +48,7 @@ NEJ.define([
      * });
      * ```
      *
-     * @class   module:ui/layer/wrapper/card._$$CardWrapper 弹出卡片封装基类对象
+     * @class   module:ui/layer/wrapper/card._$$CardWrapper
      * @extends module:ui/layer/wrapper/layer._$$LayerWrapper
      * @param   {Object} arg0 - 可选配置参数
      *
@@ -103,7 +103,7 @@ NEJ.define([
      * @method module:ui/layer/wrapper/card._$$CardWrapper._$attach
      * @param    {String|Node} arg0 -      执行节点
      *
-     * @param    {Object}   arg0  - 构建卡片配置参数
+     * @param    {Object}   arg1  - 构建卡片配置参数
      * @property {String}   event - 触发显示卡片事件名称，默认为click事件
      * @property {Boolean}  fixed - 是否固定位置，如果已固定位置则卡片显示位置不会自动计算
      * @property {Object}   delta   四周偏移，默认全为0，{top:0,right:0,bottom:0,left:0}
