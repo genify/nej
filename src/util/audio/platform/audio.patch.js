@@ -1,20 +1,23 @@
+/*
+ * ------------------------------------------
+ * 平台适配接口实现文件
+ * @version  1.0
+ * @author   genify(caijf@corp.netease.com)
+ * ------------------------------------------
+ */
 define([
     './audio.js'
 ],function(_h,_p,_o,_f,_r){
-	// ie6-8 audio patch
-	NEJ.patch('TR<=4.0',['{lib}util/media/flash.js'],function(_t){
+	// for ie8-
+	NEJ.patch('TR<=4.0',['util/media/flash'],function(_t){
 	    /**
-	     * 取音频播放器实例
-	     * @return {Object} 配置信息
-	     * @return {nej.ut._$$Media} 音频播放器实例
+	     * 取音频播放器实例d
+	     * @param  {Object} 配置信息
+	     * @return {_$$Media} 音频播放器实例
 	     */
-	    _h.__getAudioInst =
-	    _h.__getAudioInst._$aop(function(_event){
-	        // use flash player for ie8-
-            _event.stopped = !0;
-            _event.value = _t._$$MediaFlash.
-	                           _$allocate(_event.args[0]);
-	    });
+	    _h.__getAudioInst = function(_options){
+	        return _t._$$MediaFlash._$allocate(_options);
+	    };
 	});
 
 	return _h;

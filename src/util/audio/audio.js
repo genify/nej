@@ -5,67 +5,102 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module util/audio/audio */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/util.js',
+    'base/global',
+    'base/util',
     '{platform}audio.js'
 ],function(NEJ,_u,_h,_p,_o,_f,_r){
     /**
      * 取音频播放器实例
-     * @api    {_$audio}
-     * @param  {Object} 配置信息
-     * @return {util/media#_$$Media} 音频播放器实例
+     *
+     * 脚本举例
+     * ```javascript
+     * NEJ.define([
+     *     'util/audio/audio'
+     * ],function(_e){
+     *     // 取音频播放器实例
+     *     var _audio = _e._$audio({
+     *         preload:false,
+     *         url:'http://127.0.0.1:8000/nej-baseline/res/test.mp3',
+     *         onstatechange:function(_event){
+     *              // 状态改变的回调
+     *              // 0 | 当前停止状态
+     *              // 1 | 当前缓冲状态
+     *              // 2 | 当前播放状态
+     *              // 3 | 当前暂停状态
+     *              // 4 | 播放结束状态
+     *         }
+     *     });
+     *     // 播放
+     *     _audio._$play();
+     *     // 暂停
+     *     _audio._$pause();
+     *     // 停止
+     *     _audio._$stop();
+     * });
+     * ```
+     * 
+     * @method module:util/audio/audio._$audio
+     * @param  {Object} arg0 - 配置信息
+     * @return {module:util/media/media._$$Media} 音频播放器实例
      */
     _p._$audio = function(_options){
         return _h.__getAudioInst(_options);
     };
     /**
-     * 播放音频，代码示例
+     * 作为背景播放音频
+     *
+     * 播放状态值说明
+     *
+     * | 状态值 | 说明 |
+     * | :---   | :--- |
+     * | 0 | 当前停止状态 |
+     * | 1 | 当前缓冲状态 |
+     * | 2 | 当前播放状态 |
+     * | 3 | 当前暂停状态 |
+     * 
+     * 脚本举例
      * ```javascript
-     *   NEJ.define([
-     *       '{lib}util/audio/audio.js'
-     *   ],function(_e){
-     *       // 播放音频
-     *       // 如果之前有音频在播放
-     *       // 则会先触发之前音频的0状态onstatechange事件
-     *       _e._$playBgSound(
-     *           'http://a.b.com/a/a.mp3',{
-     *               key:'test-audio'
-     *               extra:'xxx_id',
-     *               onstatechange:function(_event){
-     *                   // _event.state -> 状态值
-     *                 // _event.data  -> extra值
-     *               },
-     *               onerror:function(_event){
-     *                   // _event.code  -> 错误类型
-     *               }
-     *           }
-     *       );
-     *       // 停止音频播放
-     *       // 如果有音频在播放
-     *       // 则会触发0状态的onstatechange事件
-     *       _e._$stopBgSound('test-audio');
-     *   });
+     * NEJ.define([
+     *     'util/audio/audio'
+     * ],function(_e){
+     *     // 播放音频
+     *     // 如果之前有音频在播放
+     *     // 则会先触发之前音频的0状态onstatechange事件
+     *     _e._$play(
+     *         'http://a.b.com/a/a.mp3',{
+     *             key:'test-audio'
+     *             extra:'xxx_id',
+     *             onstatechange:function(_event){
+     *                 // _event.state -> 状态值
+     *               // _event.data  -> extra值
+     *             },
+     *             onerror:function(_event){
+     *                 // _event.code  -> 错误类型
+     *             }
+     *         }
+     *     );
+     *     // 停止音频播放
+     *     // 如果有音频在播放
+     *     // 则会触发0状态的onstatechange事件
+     *     _e._$stop('test-audio');
+     * });
      * ```
-     * @api    {_$playBgSound}
-     * @param  {String} 音频文件地址
-     * @param  {Object} 可选配置参数
-     * @property {String}   key           播放标识，同一标识只允许一个播放实例
-     * @property {Variable} extra         onstatechange/onerror时传回数据
-     * @property {Number}   retry         出错重试次数，0表示不重试，默认为0
-     * @property {Number}   interval      如果设置了retry则通过此参数指定每次重试间隔，单位毫秒，默认500
-     * @property {Function} onstatechange 播放状态变化回调事件，state值为
-     *                                  [ntb]
-     *                                   0 | 当前停止状态
-     *                                   1 | 当前缓冲状态
-     *                                   2 | 当前播放状态
-     *                                   3 | 当前暂停状态
-     *                                  [/ntb]
-     * @property {Function} ontimeupdate 时间轴变化事件，输入{current:1.000,duration:50.000,data:'extra data'}
-     * @property {Function} onerror      播放异常回调事件
-     * @return {Void}
+     * 
+     * @method   module:util/audio/audio._$play
+     * @param    {String}   arg0          - 音频文件地址
+     * @param    {Object}   arg1          - 可选配置参数
+     * @property {String}   key           - 播放标识，同一标识只允许一个播放实例
+     * @property {Variable} extra         - onstatechange/onerror时传回数据
+     * @property {Number}   retry         - 出错重试次数，0表示不重试，默认为0
+     * @property {Number}   interval      - 如果设置了retry则通过此参数指定每次重试间隔，单位毫秒，默认500
+     * @property {Function} onstatechange - 播放状态变化回调事件，state值见说明
+     * @property {Function} ontimeupdate  - 时间轴变化事件，输入{current:1.000,duration:50.000,data:'extra data'}
+     * @property {Function} onerror       - 播放异常回调事件
+     * @return   {Void}
      */
-    _p._$playBgSound = (function(){
+    _p._$play = (function(){
         // audio player cache
         // url   - audio url
         // conf  - play config
@@ -148,12 +183,12 @@ NEJ.define([
         };
         /**
          * 停止单例音频播放
-         * @api    {_$stopBgSound}
-         * @see    {_$playBgSound}
-         * @param  {String} 播放标识
+         * @method module:util/audio/audio._$stop
+         * @see    module:util/audio/audio._$play
+         * @param  {String} arg0 - 播放标识
          * @return {Void}
          */
-        _p._$stopBgSound = function(_key){
+        _p._$stop = function(_key){
             var _cch = _pcache[_key||'auto-audio'];
             if (!!_cch){
                 _cch.audio._$stop();
@@ -180,7 +215,10 @@ NEJ.define([
     })();
 
     if (CMPT){
-        NEJ.copy(NEJ.P('nej.e'),_p);
+        var _x = NEJ.P('nej.e');
+        _x._$audio = _p._$audio;
+        _x._$playBgSound = _p._$play;
+        _x._$stopBgSound = _p._$stop;
     }
 
     return _p;
