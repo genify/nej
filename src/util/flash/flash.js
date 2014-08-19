@@ -29,7 +29,6 @@ NEJ.define([
      *  1. JS中使用window.onflashevent监听flash中的事件（此步骤NEJ已封装）
      *  2. Flash通过flashvars参数输入当前flash的ID，如 &lt;param name="flashvars" value="id=ab&a=b"/&gt;
      *  3. Flash在需要触发事件时调用window.onflashevent回调函数，并输入一个Object作为参数,Object信息包括
-     *     id     [String] - 传入的FlashID
      *     type   [String] - 鼠标事件类型，如click/mouseover/mouseout/play/pause...
      *     target [String] - 触发事件的flash标识，通过flashvars参数输入的id参数，做了encodeURIComponent，如a%23b
      *     ... 
