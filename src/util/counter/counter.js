@@ -5,52 +5,53 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module util/counter/counter */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/element.js',
-    '{lib}base/event.js',
-    '{lib}base/util.js'
+    'base/global',
+    'base/element',
+    'base/event',
+    'base/util'
 ],function(NEJ,_e,_v,_u,_p,_o,_f,_r){
     /**
      * 输入框计数器，使用属性设置输入的总长度限制，
      * 以下两个属性只能同时设置一个，maxlength优先级高于data-max-length
-     * [ntb]
-     *   属性名                                 | 描述
-     *   data-max-length | 输入长度必须小于此设置，一个中文算两个字符，适用于text/textarea
-     *   maxlength       | 输入长度必须小于此设置，一个中文算一个字符，适用于text/textarea
-     * [/ntb]
+     * 
+     * | 属性名 | 描述 |
+     * | :---   | :--- |
+     * | data-max-length | 输入长度必须小于此设置，一个中文算两个字符，适用于text/textarea |
+     * | maxlength       | 输入长度必须小于此设置，一个中文算一个字符，适用于text/textarea |
      *
      * 结构举例：
      * ```html
-     *   <input type="text" id="input-id-0" maxlength="100"/>
-     *   <input type="text" id="input-id-1" data-max-length="100"/>
-     *   <textarea id="textarea-id-0" maxlength="100"></textarea>
-     *   <textarea id="textarea-id-1" data-max-length="100"></textarea>
+     * <input type="text" id="input-id-0" maxlength="100"/>
+     * <input type="text" id="input-id-1" data-max-length="100"/>
+     * <textarea id="textarea-id-0" maxlength="100"></textarea>
+     * <textarea id="textarea-id-1" data-max-length="100"></textarea>
      * ```
      *
      * 脚本举例：
      * ```javascript
-     *   // 统一定义名字空间所写
-     *   var _  = NEJ.P,
-     *       _e = _('nej.e');
-     *
-     *   // 使用属性
-     *   _e._$counter('input-id-0',{
-     *          onchange:function(_event){
-     *              // 自定义提示内容
-     *              _event.value = '还可输入'+_event.delta+'字';
-     *       }
-     *   });
+     * NEJ.define([
+     *     'util/counter/counter'
+     * ],function(_e){
+     *     // 使用属性
+     *     _e._$counter('input-id-0',{
+     *         onchange:function(_event){
+     *                // 自定义提示内容
+     *                _event.value = '还可输入'+_event.delta+'字';
+     *         }
+     *     });
+     * });
      * ```
      *
-     * @api    {nej.e._$counter}
-     * @param  {String|Node} 输入节点
-     * @param  {Object}      配置参数
-     * @property {String}   nid      显示提示信息节点标识
-     * @property {Number}   max      最大字数限制，优先级大于标签上配置的属性，一个中文算一个字符，默认100个字符
-     * @property {String}   clazz    计数器显示样式
-     * @property {Function} onchange 字数变化触发回调，{input:'xx',length:2,delta:98}
-     * @return {Void}
+     * @method   module:util/counter/counter._$counter
+     * @param    {String|Node} arg0    - 输入节点
+     * @param    {Object}      arg1    - 配置参数
+     * @property {String}      nid     - 显示提示信息节点标识
+     * @property {Number}      max     - 最大字数限制，优先级大于标签上配置的属性，一个中文算一个字符，默认100个字符
+     * @property {String}      clazz   - 计数器显示样式
+     * @property {Function}   onchange - 字数变化触发回调，{input:'xx',length:2,delta:98}
+     * @return   {Void}
      */
     _p._$counter = (function(){
         var _reg0 = /[\r\n]/gi,
