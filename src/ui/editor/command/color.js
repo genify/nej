@@ -5,6 +5,7 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module ui/editor/command/color */
 NEJ.define([
     '{lib}base/global.js',
     '{lib}base/klass.js',
@@ -17,23 +18,25 @@ NEJ.define([
     /**
      * 颜色选择卡片
      *
-     * @class   module:nej.ui.cmd._$$ColorCard 颜色选择卡片
-     * @extends {nej.ui._$$CardWrapper}
-     * @param   {Object} 可选配置参数
-     * @property  {String} color 颜色值
+     * @class    module:ui/editor/command/color._$$ColorCard
+     * @extends  module:ui/layer/wrapper/card._$$CardWrapper
+     * @param    {Object} arg0  - 可选配置参数
+     * @property {String} color - 颜色值
+     */
+    /**
+     * 颜色选中回调函数
      *
-     * [hr]
-     *
-     * @event  {onchange} 颜色选中回调函数
-     * @param  {String}   颜色值
+     * @event  module:ui/editor/command/color._$$ColorCard#onchange
+     * @param  {String} color - 颜色值
      *
      */
     _p._$$ColorCard = _k._$klass();
     _pro = _p._$$ColorCard._$extend(_i0._$$CardWrapper);
     /**
      * 控件初始化
+     *
      * @protected
-     * @method {__init}
+     * @method module:ui/editor/command/color._$$ColorCard#__init
      * @return {Void}
      */
     _pro.__init = function(){
@@ -44,9 +47,10 @@ NEJ.define([
     };
     /**
      * 控件重置
+     *
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
+     * @method module:ui/editor/command/color._$$ColorCard#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -58,8 +62,9 @@ NEJ.define([
     };
     /**
      * 控件回收
+     *
      * @protected
-     * @method {__destroy}
+     * @method module:ui/editor/command/color._$$ColorCard#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -72,6 +77,9 @@ NEJ.define([
     };
     /**
      * 取取色器实例
+     *
+     * @protected
+     * @method module:ui/editor/command/color._$$ColorCard#__getColorPicker
      * @return {Void}
      */
     _pro.__getColorPicker = function(){
@@ -80,10 +88,12 @@ NEJ.define([
     };
     /**
      * 颜色选择回调
+     *
      * @protected
-     * @method {__onColorSelect}
-     * @param  {String} 颜色值
-     * @return {Void}
+     * @method module:ui/editor/command/color._$$ColorCard#__onColorSelect
+     * @param    {Object} arg0  - 颜色配置
+     * @property {String} color - 颜色值
+     * @return   {Void}
      */
     _pro.__onColorSelect = function(_event){
         this._$dispatchEvent('onchange',_event.color);

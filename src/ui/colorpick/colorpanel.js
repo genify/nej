@@ -5,6 +5,7 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module ui/colorpick/colorpanel */
 NEJ.define([
     '{lib}base/global.js',
     '{lib}base/klass.js',
@@ -22,39 +23,47 @@ NEJ.define([
         _seed_html;
     /**
      * 颜色选择面板控件<br />
+     *
      * 页面结构举例
      * ```html
-     *   <div id='colorpanel-box'></div>
+     * <div id='colorpanel-box'></div>
      * ```
+     *
      * 脚本举例
      * ```javascript
-     *   var _cp = _p._$$ColorPanel._$allocate({
-     *       parent:'colorpanel-box',
-     *       onchange:function(_color){
-     *           // 选择颜色或者亮度的时候触发
-     *       }
-     *   });
+     * NEJ.define([
+     *     '{lib}ui/colorpick/colorpanel.js'
+     * ],function(_i0,_p,_o,_f,_r){
+     *     var _cp = _i0._$$ColorPanel._$allocate({
+     *         parent:'colorpanel-box',
+     *         onchange:function(_color){
+     *             // 选择颜色或者亮度的时候触发
+     *         }
+     *     });
+     * });
      * ```
      *
-     * @class   module:nej.ui._$$ColorPanel 颜色选择面板控件
-     * @uses    {nej.ut._$$SliderXY}
-     * @uses    {nej.ut._$$SliderY}
-     * @extends {nej.ui._$$Abstract}
-     * @param   {Object} 可选配置参数
-     * @property  {String} color RGB颜色值，默认为#fff
+     * @class    module:ui/colorpick/colorpanel._$$ColorPanel
+     * @uses     module:util/slider/xy._$$SliderXY
+     * @uses     module:util/slider/y._$$SliderY
+     * @extends  module:ui/event._$$Abstract
+     * @param    {Object} arg0 - 可选配置参数
+     * @property {String} color - RGB颜色值，默认为#fff
+     */
+    /**
+     * 颜色变化触发事件
      *
-     * [hr]
-     *
-     * @event  {onchange} 颜色变化触发事件
-     * @param  {String}   RGB颜色串
+     * @event  module:ui/colorpick/colorpanel._$$ColorPanel#onchange
+     * @param  {String} arg0 - RGB颜色串
      *
      */
     _p._$$ColorPanel = _k._$klass();
     _pro = _p._$$ColorPanel._$extend(_i._$$Abstract);
     /**
      * 控件初始化
+     *
      * @protected
-     * @method {__init}
+     * @method module:ui/colorpick/colorpanel._$$ColorPanel#__init
      * @return {Void}
      */
     _pro.__init = function(){
@@ -65,9 +74,10 @@ NEJ.define([
     };
     /**
      * 控件重置
+     *
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
+     * @method module:ui/colorpick/colorpanel._$$ColorPanel#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -78,8 +88,9 @@ NEJ.define([
     };
     /**
      * 控件销毁
+     *
      * @protected
-     * @method {__destroy}
+     * @method module:ui/colorpick/colorpanel._$$ColorPanel#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -92,8 +103,9 @@ NEJ.define([
     };
     /**
      * 初始化外观信息
+     *
      * @protected
-     * @method {__initXGui}
+     * @method module:ui/colorpick/colorpanel._$$ColorPanel#__initXGui
      * @return {Void}
      */
     _pro.__initXGui = function(){
@@ -102,8 +114,9 @@ NEJ.define([
     };
     /**
      * 初始化节点
+     *
      * @protected
-     * @method {__initNode}
+     * @method module:ui/colorpick/colorpanel._$$ColorPanel#__initNode
      * @return {Void}
      */
     _pro.__initNode = function(){
@@ -117,8 +130,9 @@ NEJ.define([
     };
     /**
      * 颜色变化回调
+     *
      * @protected
-     * @method {__doColorChange}
+     * @method module:ui/colorpick/colorpanel._$$ColorPanel#__doColorChange
      * @return {Void}
      */
     _pro.__doColorChange = function(){
@@ -126,9 +140,10 @@ NEJ.define([
     };
     /**
      * 亮度变化触发事件
+     *
      * @protected
-     * @method {__onLightChange}
-     * @param  {Object} 位置信息
+     * @method module:ui/colorpick/colorpanel._$$ColorPanel#__onLightChange
+     * @param  {Object} arg0 - 位置信息
      * @return {Void}
      */
     _pro.__onLightChange = function(_event){
@@ -140,9 +155,10 @@ NEJ.define([
     };
     /**
      * 色度饱和度变化触发事件
+     *
      * @protected
-     * @method {__onHueSatChange}
-     * @param  {Object} 位置信息
+     * @method module:ui/colorpick/colorpanel._$$ColorPanel#__onHueSatChange
+     * @param  {Object} arg0 - 位置信息
      * @return {Void}
      */
     _pro.__onHueSatChange = function(_event){
@@ -163,14 +179,16 @@ NEJ.define([
         this.__doColorChange();
     };
     /**
-     * 设置颜色<br />
+     * 设置颜色
+     *
      * 脚本举例
      * ```javascript
-     *   // 先把颜色转成rgb，然后转成hsl,在一个面板设置sh，在另外一个面板设置l
-     *   _cp._$setColor('#000');
+     * // 先把颜色转成rgb，然后转成hsl,在一个面板设置sh，在另外一个面板设置l
+     * _cp._$setColor('#000');
      * ```
-     * @method {_$setColor}
-     * @param  {String} 颜色值
+     *
+     * @method module:ui/colorpick/colorpanel._$$ColorPanel#_$setColor
+     * @param  {String} arg0 - 颜色值
      * @return {Void}
      */
     _pro._$setColor = function(_color){

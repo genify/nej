@@ -5,6 +5,7 @@
  * @author   cheng-lin(cheng-lin@corp.netease.com)
  * ------------------------------------------
  */
+/** @module ui/editor/command/uploadimage */
 NEJ.define([
     '{lib}base/global.js',
     '{lib}base/klass.js',
@@ -23,41 +24,44 @@ NEJ.define([
     /**
      * 图片上传控件
      *
-     * @class   module:nej.ui.cmd._$$UploadImageCard 图片上传控件
-     * @uses    {nej.ut._$$Tab}
-     * @extends {nej.ui.cmd._$$WindowWrapper}
-     * @param   {Object} 可选配置参数
-     * @property  {String|Node} parent            父容器
-     * @property  {Boolean}     draggable        是否可拖拽
-     * @property  {Boolean}     destroyable      关闭是否销毁
-     * @property  {String}      title               卡片标题
-     * @property  {String}      fDesc             自定义错误提示1
-     * @property  {String}      oDesc            自定义错误提示2
-     * @property  {String}      swfUrl           Flash文件路径
-     * @property  {String}      baseUrl          Flash文件路径的前缀
-     * @property  {Number}      flashWidth       Flash宽度
-     * @property  {Number}      flashHeight      Flash高度
-     * @property  {String}      userdefinesize 图片尺寸，默认750x750x0x90;350x350x0x85
-     * @property  {String}      saveorigin     是否保存源文件,默认false
-     * @property  {String}      responsetype   响应格式,默认xml
-     * @property  {String}      rotatedegree   旋转角度，默认0
-     * @property  {String}      stamptype      水印类型，默认无
-     * @property  {String}      stampstring    水印内容，默认无
-     * @property  {String}      sitefrom         产品名称
+     * @class     module:ui/editor/command/uploadimage._$$UploadImageCard
+     * @uses      module:util/tab/tab._$$Tab
+     * @extends   module:ui/layer/wrapper/window._$$WindowWrapper
+     * @param     {Object}      arg0           -  可选配置参数
+     * @property  {String|Node} parent         -  父容器
+     * @property  {Boolean}     draggable      -  是否可拖拽
+     * @property  {Boolean}     destroyable    -  关闭是否销毁
+     * @property  {String}      title          -  卡片标题
+     * @property  {String}      fDesc          -  自定义错误提示1
+     * @property  {String}      oDesc          -  自定义错误提示2
+     * @property  {String}      swfUrl         -  Flash文件路径
+     * @property  {String}      baseUrl        -  Flash文件路径的前缀
+     * @property  {Number}      flashWidth     -  Flash宽度
+     * @property  {Number}      flashHeight    -  Flash高度
+     * @property  {String}      userdefinesize - 图片尺寸，默认750x750x0x90;350x350x0x85
+     * @property  {String}      saveorigin     -  是否保存源文件,默认false
+     * @property  {String}      responsetype   -  响应格式,默认xml
+     * @property  {String}      rotatedegree   -  旋转角度，默认0
+     * @property  {String}      stamptype      -  水印类型，默认无
+     * @property  {String}      stampstring    -  水印内容，默认无
+     * @property  {String}      sitefrom       -  产品名称
+     */
+    /**
+     * Flash开始初始化
      *
-     * [hr]
+     * @event  module:ui/editor/command/uploadimage._$$UploadImageCard#oninitflash
+     */
+    /**
+     * Flash初始化完成
      *
-     * @event  {oninitflash} Flash开始初始化
+     * @event  module:ui/editor/command/uploadimage._$$UploadImageCard#onflashinited
+     */
+    /**
+     * 图片上传完成
      *
-     * [hr]
-     *
-     * @event  {onflashinited} Flash初始化完成
-     *
-     * [hr]
-     *
-     * @event  {onchange} 图片上传完成
-     * @param  {String}   命令名称
-     * @param  {Object}   Flash返回的图片对象
+     * @event  module:ui/editor/command/uploadimage._$$UploadImageCard#onchange
+     * @param  {String} arg0 - 命令名称
+     * @param  {Object} arg1 - Flash返回的图片对象
      *
      */
     _p._$$UploadImageCard = _k._$klass();
@@ -65,9 +69,10 @@ NEJ.define([
 
     /**
      * 重置卡片
+     *
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可配置参数
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__reset
+     * @param  {Object} arg0 - 可配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -83,9 +88,10 @@ NEJ.define([
 
     /**
      * 初始化卡片
+     *
      * @protected
-     * @method {__init}
-     * @param {Object} 可配置参数
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__init
+     * @param  {Object} arg0 - 可配置参数
      * @return {Void}
      */
     _pro.__init = function(_options){
@@ -123,8 +129,9 @@ NEJ.define([
 
     /**
      * 初始化节点
+     *
      * @protected
-     * @method {__initNode}
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__initNode
      * @return {Void}
      */
     _pro.__initNode = function(){
@@ -155,8 +162,9 @@ NEJ.define([
 
     /**
      * 动态构建控件节点模板
+     *
      * @protected
-     * @method {__initNodeTemplate}
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__initNodeTemplate
      * @return {Void}
      */
     _pro.__initXGui = function(){
@@ -166,9 +174,10 @@ NEJ.define([
 
     /**
      * 注册flash回调方法
+     *
      * @protected
-     * @method {__doRegiestFlashEvent}
-     * @param  {String} Flash回调方法的命名空间
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__doRegiestFlashEvent
+     * @param  {String} arg0 - Flash回调方法的命名空间
      * @return {Void}
      */
     _pro.__doRegiestFlashEvent = function(_space){
@@ -182,11 +191,12 @@ NEJ.define([
 
     /**
      * 图片上传完成的回调
+     *
      * @protected
-     * @method {__onUploadComplete}
-     * @param  {Number} flash的操作id
-     * @param  {String} 图片上传状态码
-     * @param  {Object} 相册返回的图片对象
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__onUploadComplete
+     * @param  {Number} id       - flash的操作id
+     * @param  {String} code     - 图片上传状态码
+     * @param  {Object} photoObj - 相册返回的图片对象
      * @return {Void}
      */
     _pro.__onUploadComplete = function(_id,_code,_photoObj){
@@ -202,9 +212,10 @@ NEJ.define([
 
     /**
      * 上传图片出错信息设置
+     *
      * @protected
-     * @method {__onShowErrorTips}
-     * @param  {String} 错误信息
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__onShowErrorTips
+     * @param  {String} arg0 - 错误信息
      * @return {Void}
      */
     _pro.__onShowErrorTips = function(_message){
@@ -213,8 +224,9 @@ NEJ.define([
 
     /**
      * 开始图片上传
+     *
      * @protected
-     * @method {__onUploadStart}
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__onUploadStart
      * @return {Void}
      */
     _pro.__onUploadStart = function(){
@@ -223,9 +235,10 @@ NEJ.define([
 
     /**
      * flash加载完成回调
+     *
      * @protected
-     * @method {__onFlashReady}
-     * @param  {Object} Flash对象
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__onFlashReady
+     * @param  {Object} arg0 - Flash对象
      * @return {Void}
      */
     _pro.__onFlashReady = function(_flash){
@@ -235,8 +248,9 @@ NEJ.define([
 
     /**
      * 提交网络图片
+     *
      * @protected
-     * @method {__onSubmitImgUrl}
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__onSubmitImgUrl
      * @return {Void}
      */
     _pro.__onSubmitImgUrl = function(){
@@ -245,8 +259,9 @@ NEJ.define([
 
     /**
      * 图片链接错误
+     *
      * @protected
-     * @method {__onImgUrlError}
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__onImgUrlError
      * @return {Void}
      */
     _pro.__onImgUrlError = function(){
@@ -255,8 +270,9 @@ NEJ.define([
 
     /**
      * 图片链接正确
+     *
      * @protected
-     * @method {__onImgLoad}
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__onImgLoad
      * @return {Void}
      */
     _pro.__onImgLoad = function(){
@@ -269,41 +285,46 @@ NEJ.define([
 
     /**
      * 图片上传前操作，子类实现
-     * @protected
-     * @method {__onbeforeupload}
+     *
+     * @abstract
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__onbeforeupload
      * @return {Void}
      */
     _pro.__onbeforeupload = _f;
 
     /**
      * 图片上传后操作，子类实现
-     * @protected
-     * @method {__onafterupload}
+     *
+     * @abstract
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__onafterupload
      * @return {Void}
      */
     _pro.__onafterupload = _f;
 
     /**
      * 图片上传错误，子类实现
-     * @protected
-     * @method {__uploadError}
+     *
+     * @abstract
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__uploadError
      * @return {Void}
      */
     _pro.__uploadError = _f;
 
     /**
      * 图片上传进程回调，子类实现
-     * @protected
-     * @method {__showProgress}
+     *
+     * @abstract
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__showProgress
      * @return {Void}
      */
     _pro.__showProgress = _f;
 
     /**
      * 切换tab
+     *
      * @protected
-     * @method {__onTabChange}
-     * @param  {Object} 当前Tab对象
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__onTabChange
+     * @param  {Object} arg0 - 当前Tab对象
      * @return {Void}
      */
     _pro.__onTabChange = function(_event){

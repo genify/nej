@@ -15,11 +15,13 @@ NEJ.define([
     var _pro,
         _seed_css;
     /**
-     * 卡片控件<br />
+     * 卡片控件
+     *
      * 页面结构举例
      * ```html
      *   <div id="card-box" class="box"></div>
      * ```
+     *
      * 脚本举例
      * ```javascript
      *   var _  = NEJ.P,

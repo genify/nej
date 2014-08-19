@@ -5,6 +5,7 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module ui/editor/command/font */
 NEJ.define([
     '{lib}base/global.js',
     '{lib}base/klass.js',
@@ -20,14 +21,15 @@ NEJ.define([
     /**
      * 字体字号选择卡片基类
      *
-     * @class   module:nej.ui.cmd._$$FontCard 字体字号选择卡片基类
-     * @extends {nej.ui._$$CardWrapper}
-     * @param   {Object} 可选配置参数
+     * @class   module:ui/editor/command/font._$$FontCard
+     * @extends module:ui/layer/wrapper/card._$$CardWrapper
+     * @param   {Object} arg0 - 可选配置参数
+     */
+    /**
+     * 字号/字体选中回调函数
      *
-     * [hr]
-     *
-     * @event  {onchange} 字号/字体选中回调函数
-     * @param  {String}   字号/字体
+     * @event  module:ui/editor/command/font._$$FontCard#onchange
+     * @param  {String} font - 字号/字体
      *
      */
     _p._$$FontCard = _k._$klass();
@@ -47,8 +49,9 @@ NEJ.define([
     };
     /**
      * 控件销毁
+     *
      * @protected
-     * @method {__destroy}
+     * @method module:ui/editor/command/font._$$FontCard#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -57,8 +60,9 @@ NEJ.define([
     };
     /**
      * 初始化外观信息
+     *
      * @protected
-     * @method {__initXGui}
+     * @method module:ui/editor/command/font._$$FontCard#__initXGui
      * @return {Void}
      */
     _pro.__initXGui = function(){
@@ -66,8 +70,9 @@ NEJ.define([
     };
     /**
      * 初始化节点
+     *
      * @protected
-     * @method {__initNode}
+     * @method module:ui/editor/command/font._$$FontCard#__initNode
      * @return {Void}
      */
     _pro.__initNode = function(){
@@ -79,9 +84,10 @@ NEJ.define([
     };
     /**
      * 构建字体大小选择列表
+     *
      * @protected
-     * @method {__doGenFontListXhtml}
-     * @param  {Object} 字体大小列表信息
+     * @method module:ui/editor/command/font._$$FontCard#__doGenFontListXhtml
+     * @param  {Object} arg0 - 字体大小列表信息
      * @return {Void}
      */
     _pro.__doGenFontListXhtml = function(_data){
@@ -89,9 +95,10 @@ NEJ.define([
     };
     /**
      * 字体大小选择事件
+     *
      * @protected
-     * @method {__onFontSelect}
-     * @param  {Event} 事件对象
+     * @method module:ui/editor/command/font._$$FontCard#__onFontSelect
+     * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
     _pro.__onFontSelect = (function(){
@@ -110,8 +117,9 @@ NEJ.define([
     })();
     /**
      * 取字体字号提示文字
-     * @static
-     * @method {_$getText}
+     *
+     * @method module:ui/editor/command/font._$$FontCard._$getText
+     * @param  {String} value - 字体/字号
      * @return {String} 字体/字号
      */
     _p._$$FontCard._$getText = function(_value){

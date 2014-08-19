@@ -5,6 +5,7 @@
  * @author   huxueliang(huxueliang@corp.netease.com)
  * ------------------------------------------
  */
+/** @module ui/carousel/carousel */
 NEJ.define([
     '{lib}base/global.js',
     '{lib}base/klass.js',
@@ -18,9 +19,9 @@ NEJ.define([
     /**
      * 卡片播放器对象
      *
-     * @class   module:nej.ui._$$CarouselList 卡片播放器控件
-     * @extends {nej.ut._$$EventTarget}
-     * @param  {Object} 可选配置参数
+     * @class    module:nej.ui._$$CarouselList 卡片播放器控件
+     * @extends  module:util/event._$$EventTarget
+     * @param    {Object} 可选配置参数
      * @property {String|Node} parent    卡片所在父容器节点
      * @property {Number}      current   当前选中项
      * @property {Number}      buffer    预加载卡片个数

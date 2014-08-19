@@ -5,6 +5,7 @@
  * @author   cheng-lin(cheng-lin@corp.netease.com)
  * ------------------------------------------
  */
+/** @module ui/editor/command/link */
 NEJ.define([
     '{lib}base/global.js',
     '{lib}base/klass.js',
@@ -19,23 +20,29 @@ NEJ.define([
     /**
      * 超链接卡片
      *
-     * @class   module:nej.ui.cmd._$$LinkCard 超链接卡片
-     * @extends {nej.ui._$$CardWrapper}
-     * @param   {Object} 可选配置参数
+     * @class    module:ui/editor/command/link._$$LinkCard
+     * @extends  module:ui/layer/wrapper/window._$$CardWrapper
+     * @param    {Object}  arg0 - 可选配置参数
+     * @property {Boolean} draggable   - 是否可拖动
+     * @property {Boolean} destroyable - 关闭是否销毁
+     * @property {String}  title       - 卡片标题
+     * @property {Boolean} name        - 超链接名称
+     */
+    /**
+     * 超链接地址有误
      *
-     * [hr]
+     * @event module:ui/editor/command/link._$$LinkCard#onErrorLink
+     * @param {Number} arg0 - 错误码
+     * | 错误码| 含义              |
+     * | :---  | :---              |
+     * | 0     | 不是以http://开头 |
+     * | 1     | 地址中有空白字符  |
+     */
+    /**
+     * 超链接通过检验
      *
-     * @event {onErrorLink} 超链接地址有误
-     * @param {Number}       错误码
-     * [ntb]
-     *  0 | 不是以http://开头
-     *  1 | 地址中有空白字符
-     * [/ntb]
-     *
-     * [hr]
-     *
-     * @event {onchange} 超链接通过检验
-     * @param {String}   超链接地址
+     * @event module:ui/editor/command/link._$$LinkCard#onchange
+     * @param {String} arg0 - 超链接地址
      *
      */
     _p._$$LinkCard = _k._$klass();
@@ -43,8 +50,9 @@ NEJ.define([
 
     /**
      * 初始化外观信息
+     *
      * @protected
-     * @method {__initXGui}
+     * @method module:ui/editor/command/link._$$LinkCard#__initXGui
      * @return {Void}
      */
     _pro.__initXGui = function(){
@@ -54,8 +62,9 @@ NEJ.define([
 
     /**
      * 初始化节点
+     *
      * @protected
-     * @method {__initNode}
+     * @method module:ui/editor/command/link._$$LinkCard#__initNode
      * @return {Void}
      */
     _pro.__initNode = function(){
@@ -67,14 +76,15 @@ NEJ.define([
 
     /**
      * 控件重置
+     *
      * @protected
-     * @method {__reset}
-     * @param  {Object}  可选配置参数
-     * @property {Boolean} draggable   是否可拖动
-     * @property {Boolean} destroyable 关闭是否销毁
-     * @property {String}  title          卡片标题
-     * @property {Boolean} name        超链接名称
-     * @return {Void}
+     * @method   module:ui/editor/command/link._$$LinkCard#__reset
+     * @param    {Object}  arg0        - 可选配置参数
+     * @property {Boolean} draggable   - 是否可拖动
+     * @property {Boolean} destroyable - 关闭是否销毁
+     * @property {String}  title       - 卡片标题
+     * @property {Boolean} name        - 超链接名称
+     * @return   {Void}
      */
     _pro.__reset = function(_options){
         //默认以document为parent
@@ -97,8 +107,9 @@ NEJ.define([
 
     /**
      * 取消
+     *
      * @protected
-     * @method {__onCancel}
+     * @method module:ui/editor/command/link._$$LinkCard#__onCancel
      * @return {Void}
      */
     _pro.__onCancel = function(){
@@ -107,34 +118,39 @@ NEJ.define([
 
     /**
      * 完成链接
+     *
      * @protected
-     * @method {__onOK}
+     * @method module:ui/editor/command/link._$$LinkCard#__onOK
      * @return {Void}
      */
-    _pro.__onOK = function(){
-        var _link = {};
-        _link.name = _u._$escape(this.__inputs[0].value);
-        _link.href = this.__inputs[1].value;
-        var _reg = /^(?:http(s)?:\/\/)[^\s].?/,_reg2 = /^(?:http(s)?:\/\/).*/;
-        var _flag = _link.href.search(_reg),_flag2= _link.href.search(_reg2);
-        if(_flag2 < 0){
-            this._$dispatchEvent('onErrorLink',0);
-            return;
-        }
-        if(_flag < 0){
-            this._$dispatchEvent('onErrorLink',1);
-            return;
-        }
-        this._$dispatchEvent('onchange',_link);
-        this._$hide();
-    };
-
+    _pro.__onOK = (function(){
+        var _reg = /^(?:http(s)?:\/\/)[^\s].?/,
+            _reg2 = /^(?:http(s)?:\/\/).*/;
+        return function(){
+            var _link = {};
+            _link.name = _u._$escape(this.__inputs[0].value);
+            _link.href = this.__inputs[1].value;
+            var _flag = _link.href.search(_reg),
+                _flag2= _link.href.search(_reg2);
+            if(_flag2 < 0){
+                this._$dispatchEvent('onErrorLink',0);
+                return;
+            }
+            if(_flag < 0){
+                this._$dispatchEvent('onErrorLink',1);
+                return;
+            }
+            this._$dispatchEvent('onchange',_link);
+            this._$hide();
+        };
+    })();
 
     /**
      * 显示错误信息
+     *
      * @protected
-     * @method {__showErrorTips}
-     * @param  {Object} 错误信息
+     * @method module:ui/editor/command/link._$$LinkCard#__showErrorTips
+     * @param  {Object} arg0 - 错误信息
      * @return {Void}
      */
     _pro.__showErrorTips = function(_message){
@@ -143,8 +159,9 @@ NEJ.define([
 
     /**
      * 控件回收
+     *
      * @protected
-     * @method {__destroy}
+     * @method module:ui/editor/command/link._$$LinkCard#__destroy
      * @return {Void}
      */
     _pro.__onKeyPress = function(_event){
@@ -155,7 +172,9 @@ NEJ.define([
 
     /**
      * 提供聚焦到input的接口
-     * @return {[type]} [description]
+     *
+     * @method module:ui/editor/command/link._$$LinkCard#_$doFocus
+     * @return {Void}
      */
     _pro._$doFocus = function(){
         this.__inputs[1].focus();

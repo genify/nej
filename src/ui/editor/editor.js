@@ -5,6 +5,7 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module ui/editor/editor */
 NEJ.define([
     '{lib}base/global.js',
     '{lib}base/klass.js',
@@ -26,21 +27,22 @@ NEJ.define([
     /**
      * 富媒体编辑器基类封装
      *
-     * @class   module:nej.ui._$$Editor 富媒体编辑器基类封装
-     * @uses    {nej.ut._$$EditorArea}
-     * @uses    {nej.ut._$$EditorToolbar}
-     * @extends {nej.ui._$$Abstract}
-     * @param   {Object} 可选配置参数
-     * @property  {Boolean}   focus    是否自动聚焦
-     * @property  {String} content  文本内容
+     * @class     module:ui/editor/editor._$$Editor
+     * @uses      module:util/editor/area._$$EditorArea
+     * @uses      module:util/editor/toolbar._$$EditorToolbar
+     * @extends   module:ui/base._$$Abstract
+     * @param     {Object}  arg0    - 可选配置参数
+     * @property  {Boolean} focus   - 是否自动聚焦
+     * @property  {String}  content - 文本内容
      *
      */
     _p._$$Editor = _k._$klass();
     _pro = _p._$$Editor._$extend(_i._$$Abstract);
     /**
      * 控件初始化
+     *
      * @protected
-     * @method {__init}
+     * @method module:ui/editor/editor._$$Editor#__init
      * @return {Void}
      */
     _pro.__init = function(){
@@ -50,9 +52,10 @@ NEJ.define([
     };
     /**
      * 控件重置
+     *
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
+     * @method module:ui/editor/editor._$$Editor#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -72,8 +75,9 @@ NEJ.define([
     };
     /**
      * 控件销毁
+     *
      * @protected
-     * @method {__destroy}
+     * @method module:ui/editor/editor._$$Editor#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -84,8 +88,9 @@ NEJ.define([
     };
     /**
      * 初始化外观信息
+     *
      * @protected
-     * @method {__initXGui}
+     * @method module:ui/editor/editor._$$Editor#__initXGui
      * @return {Void}
      */
     _pro.__initXGui = function(){
@@ -93,8 +98,9 @@ NEJ.define([
     };
     /**
      * 初始化节点
+     *
      * @protected
-     * @method {__initNode}
+     * @method module:ui/editor/editor._$$Editor#__initNode
      * @return {Void}
      */
     _pro.__initNode = function(){
@@ -106,9 +112,10 @@ NEJ.define([
     };
     /**
      * 获取按钮html代码
+     *
      * @protected
-     * @method {__doGenCmdXhtml}
-     * @param  {Object} 命令数据
+     * @method module:ui/editor/editor._$$Editor#__doGenCmdXhtml
+     * @param  {Object} arg0 - 命令数据
      * @return {String} html代码
      */
     _pro.__doGenCmdXhtml = function(_data){
@@ -116,8 +123,9 @@ NEJ.define([
     };
     /**
      * 获取字号选择html代码
+     *
      * @protected
-     * @method {__doGenFontSizeXhtml}
+     * @method module:ui/editor/editor._$$Editor#__doGenFontSizeXhtml
      * @return {String} html代码
      */
     _pro.__doGenFontSizeXhtml = function(){
@@ -126,8 +134,9 @@ NEJ.define([
     };
     /**
      * 获取字体选择html代码
+     *
      * @protected
-     * @method {__doGenFontNameXhtml}
+     * @method module:ui/editor/editor._$$Editor#__doGenFontNameXhtml
      * @return {String} html代码
      */
     _pro.__doGenFontNameXhtml = function(){
@@ -136,9 +145,10 @@ NEJ.define([
     };
     /**
      * 获取编辑器html代码
+     *
      * @protected
-     * @method {__doGenEditorXhtml}
-     * @param  {Object} 命令数据
+     * @method module:ui/editor/editor._$$Editor#__doGenEditorXhtml
+     * @param  {Object} arg0 - 命令数据
      * @return {Void}
      */
     _pro.__doGenEditorXhtml = function(_data){
@@ -146,7 +156,7 @@ NEJ.define([
     };
     /**
      * 取编辑内容
-     * @method {_$getContent}
+     * @method module:ui/editor/editor._$$Editor#_$getContent
      * @return {String} 内容
      */
     _pro._$getContent = function(){
@@ -154,7 +164,7 @@ NEJ.define([
     };
     /**
      * 取编辑内容里的图片id和url列表
-     * @method {_$getContent}
+     * @method module:ui/editor/editor._$$Editor#_$getContent
      * @return {Array} 编辑内中的图片ID+@+图片地址的列表，根据ID是否为0判断是否需要放入列表
      */
     _pro._$getPhotoIdsAndUrls = (function(){
@@ -179,7 +189,7 @@ NEJ.define([
     })();
     /**
      * 取纯文本编辑内容
-     * @method {_$getTextContent}
+     * @method module:ui/editor/editor._$$Editor#_$getTextContent
      * @return {String} 内容
      */
     _pro._$getTextContent = function(){
@@ -187,8 +197,8 @@ NEJ.define([
     };
     /**
      * 设置编辑内容
-     * @method {_$setContent}
-     * @param  {String} 内容
+     * @method module:ui/editor/editor._$$Editor#_$setContent
+     * @param  {String} arg0 - 内容
      * @return {Void}
      */
     _pro._$setContent = function(_content){
@@ -196,8 +206,8 @@ NEJ.define([
     };
     /**
      * 注册命令实现
-     * @method {_$registCommand}
-     * @param  {Array|nej.ut._$$EditorCommand} 命令实现类构造
+     * @method module:ui/editor/editor._$$Editor#_$registCommand
+     * @param  {Array|nej.ut._$$EditorCommand} arg0 - 命令实现类构造
      * @return {Void}
      */
     _pro._$registCommand = function(_class){
@@ -205,7 +215,7 @@ NEJ.define([
     };
     /**
      * 显示编辑器
-     * @method {_$show}
+     * @method module:ui/editor/editor._$$Editor#_$show
      * @return {Void}
      */
     _pro._$show = function(){
@@ -213,7 +223,7 @@ NEJ.define([
     };
     /**
      * 隐藏编辑器
-     * @method {_$hide}
+     * @method module:ui/editor/editor._$$Editor#_$hide
      * @return {Void}
      */
     _pro._$hide = function(){
@@ -228,10 +238,6 @@ NEJ.define([
         for(var i=0;i<_row;i++)
             for(var j=0;j<_col;j++)
                 _arr.push('.#<uispace> .z-i-'+i+j+'{background-position:-'+(16*j)+'px -'+(40+i*16)+'px;}');
-//        _row = 5;
-//        for(var i=0;i<_row;i++)
-//            for(var j=0;j<_col;j++)
-//                _arr.push('.#<uispace> .z-x-'+i+j+'{background-position:-'+(80+26*j)+'px -'+(70+i*26)+'px;}');
         return _arr.join('');
     };
     // ui css text

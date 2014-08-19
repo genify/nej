@@ -5,7 +5,7 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-
+/** @module ui/editor/custom */
 NEJ.define([
     '{lib}base/global.js',
     '{lib}base/klass.js',
@@ -34,16 +34,17 @@ NEJ.define([
     /**
      * 富媒体编辑器封装
      *
-     * @class   module:nej.ui._$$CustomEditor 富媒体编辑器封装
-     * @extends {nej.ui._$$Editor}
-     * @param   {Object} 可选配置参数
+     * @class   module:ui/editor/custom._$$CustomEditor
+     * @extends module:ui/editor/editor._$$Editor
+     * @param   {Object} arg0 - 可选配置参数
      */
     _p._$$CustomEditor =_k._$klass();
     _pro = _p._$$CustomEditor._$extend(_i0._$$Editor);
     /**
      * 初始化外观信息
+     *
      * @protected
-     * @method {__initXGui}
+     * @method module:ui/editor/custom._$$CustomEditor#__initXGui
      * @return {Void}
      */
     _pro.__initXGui = function(){
@@ -52,8 +53,9 @@ NEJ.define([
     };
     /**
      * 动态构建控件节点模板
+     *
      * @protected
-     * @method {__initNodeTemplate}
+     * @method module:ui/editor/custom._$$CustomEditor#__initNodeTemplate
      * @return {Void}
      */
     _pro.__initNodeTemplate = (function(){

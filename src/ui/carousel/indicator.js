@@ -5,6 +5,7 @@
  * @author   huxueliang(huxueliang@corp.netease.com)
  * ------------------------------------------
  */
+/** @module ui/carousel/indicator */
 NEJ.define([
     '{lib}base/global.js',
     '{lib}base/klass.js',
@@ -16,16 +17,17 @@ NEJ.define([
     /**
      * 指示器对象
      *
-     * @class     module:nej.ui._$$Indicator
+     * @class     module:ui/carousel/indicator._$$Indicator
      * @extends   module:util/event._$$EventTarget
-     * @param     {Object} arg0 - 可选配置参数
+     * @param     {Object}       arg0   - 可选配置参数
      * @property  {String|Node}  parent - 控件所在容器节点
      * @property  {Number}       cindex - 当前指示项
      * @property  {String}       cstyle - 当前指示项样式
+     */
+    /**
+     * 指定项触发事件
      *
-     * [hr]
-     *
-     * @event  {onactive} 指定项触发事件
+     * @event  module:ui/carousel/indicator._$$Indicator#onactive
      * @param  {Number} arg0 - 指定项在所有项目中的位置
      *
      */
@@ -33,8 +35,9 @@ NEJ.define([
     _pro = _p._$$Indicator._$extend(_t._$$EventTarget);
     /**
      * 控件重置
+     *
      * @protected
-     * @method {__reset}
+     * @method module:ui/carousel/indicator._$$Indicator#__reset
      * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
@@ -50,8 +53,9 @@ NEJ.define([
     };
     /**
      * 点击指示器事件
+     *
      * @protected
-     * @method {__onActive}
+     * @method module:ui/carousel/indicator._$$Indicator#__onActive
      * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
@@ -67,7 +71,8 @@ NEJ.define([
     };
     /**
      * 更新指示器位置
-     * @method {_$update}
+     *
+     * @method module:ui/carousel/indicator._$$Indicator#_$update
      * @param  {Number} arg0 - 当前项索引
      * @return {Void}
      */

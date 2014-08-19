@@ -5,6 +5,7 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module ui/editor/command/fontsize */
 NEJ.define([
     '{lib}base/global.js',
     '{lib}base/klass.js',
@@ -17,21 +18,22 @@ NEJ.define([
     /**
      * 字号选择控件
      *
-     * @class   module:nej.ui.cmd._$$FontSizeCard 字号选择控件
-     * @extends {nej.ui.cmd._$$FontCard}
-     * @param   {Object} 可选配置参数
+     * @class   module:ui/editor/command/fontsize._$$FontSizeCard
+     * @extends module:ui/editor/command/font._$$FontCard
+     * @param   {Object} arg0 - 可选配置参数
+     */
+    /**
+     * 字号选中回调函数
      *
-     * [hr]
-     *
-     * @event {onselect} 字号选中回调函数
-     * @param {String}   字号
+     * @event module:ui/editor/command/fontsize._$$FontSizeCard#onselect
+     * @param {String} arg0 - 字号
      *
      */
     _p._$$FontSizeCard = _k._$klass();
     _pro = _p._$$FontSizeCard._$extend(_u._$$FontCard);
     /**
      * 字号选项列表
-     * @type Array
+     * @member {Array}
      */
     _p._$$FontSizeCard.list =
       [{name:'小',style:'x-small',value:1}
@@ -41,8 +43,9 @@ NEJ.define([
       ,{name:'极大',style:'x-large',value:5}];
     /**
      * 初始化外观信息
+     *
      * @protected
-     * @method {__initXGui}
+     * @method module:ui/editor/command/fontsize._$$FontSizeCard#__initXGui
      * @return {Void}
      */
     _pro.__initXGui = function(){
@@ -51,8 +54,9 @@ NEJ.define([
     };
     /**
      * 动态构建控件节点模板
+     *
      * @protected
-     * @method {__initNodeTemplate}
+     * @method module:ui/editor/command/fontsize._$$FontSizeCard#__initNodeTemplate
      * @return {Void}
      */
     _pro.__initNodeTemplate = function(){

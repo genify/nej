@@ -5,6 +5,7 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module ui/datepick/datepick */
 NEJ.define([
     '{lib}base/global.js',
     '{lib}base/klass.js',
@@ -21,53 +22,62 @@ NEJ.define([
         _seed_date,
         _seed_action = _u._$uniqueID();
     /**
-     * 日期选择控件<br />
+     * 日期选择控件
+     *
      * 页面结构举例
      * ```html
-     *   <style>
-     *       // 注意，样式的优先级
-     *       // 扩展 < 当前 < 禁止
-     *       #datepick-box .js-extended{background:green;}
-     *       #datepick-box .js-selected{background:yellow;}
-     *       #datepick-box .js-disabled{background:red;}
-     *   </style>
-     *   <div id="datepick-box"></div>
+     * <style>
+     *     // 注意，样式的优先级
+     *     // 扩展 < 当前 < 禁止
+     *     #datepick-box .js-extended{background:green;}
+     *     #datepick-box .js-selected{background:yellow;}
+     *     #datepick-box .js-disabled{background:red;}
+     * </style>
+     * <div id="datepick-box"></div>
      * ```
+     *
      * 脚本举例
      * ```javascript
-     *   var pDate = new Date(1997,7,9)
-     *   var nDate = new Date(2013,7,9);
-     *   var _dp = _p._$$DatePick._$allocate({
-     *       parent:_e._$get('datepick-box'),
-     *       // 默认选中日期
-     *       date:'2012-10-10',
-     *       // 设置日期的可选范围
-     *       range:[pDate,nDate],
-     *       onchange:function(_date){
-     *           // 选择了一个日期，返回此日期
-     *       }
-     *   });
+     * NEJ.define([
+     *     '{lib}base/element.js',
+     *     '{lib}ui/datepick/datepick.js'
+     * ],function(_e,_i0,_p,_o,_f,_r){
+     *     var pDate = new Date(1997,7,9)
+     *     var nDate = new Date(2013,7,9);
+     *     var _dp = _i0._$$DatePick._$allocate({
+     *         parent:_e._$get('datepick-box'),
+     *         // 默认选中日期
+     *         date:'2012-10-10',
+     *         // 设置日期的可选范围
+     *         range:[pDate,nDate],
+     *         onchange:function(_date){
+     *             // 选择了一个日期，返回此日期
+     *         }
+     *     });
+     * });
      * ```
      *
-     * @class   module:nej.ui._$$DatePick 日期选择控件
-     * @uses    {nej.ut._$$Calendar}
-     * @extends {nej.ui._$$CardWrapper}
-     * @param   {Object} 可选配置参数
-     * @property  {Date}  date  设置日期
-     * @property  {Array} range 可选范围
+     * @class     module:ui/datepick/datepick._$$DatePick
+     * @uses      module:util/calendar/calendar._$$Calendar
+     * @extends   module:ui/layer/card._$$CardWrapper
+     * @param     {Object} arg0  - 可选配置参数
+     * @property  {Date}   date  - 设置日期
+     * @property  {Array}  range - 可选范围
+     */
+    /**
+     * 日期变化触发事件
      *
-     * [hr]
-     *
-     * @event  {onchange} 日期变化触发事件
-     * @param  {Date} 日期
+     * @event  module:ui/datepick/datepick._$DatePick#onchange
+     * @param  {Date} arg0 - 日期
      *
      */
     _p._$$DatePick = _k._$klass();
     _pro = _p._$$DatePick._$extend(_i0._$$CardWrapper);
     /**
      * 控件初始化
+     *
      * @protected
-     * @method {__init}
+     * @method module:ui/datepick/datepick._$$DatePick#__init
      * @return {Void}
      */
     _pro.__init = function(){
@@ -78,9 +88,10 @@ NEJ.define([
     };
     /**
      * 控件重置
+     *
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
+     * @method module:ui/datepick/datepick._$$DatePick#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -92,8 +103,9 @@ NEJ.define([
     };
     /**
      * 控件销毁
+     *
      * @protected
-     * @method {__destroy}
+     * @method module:ui/datepick/datepick._$$DatePick#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -107,8 +119,9 @@ NEJ.define([
     };
     /**
      * 初始化外观信息
+     *
      * @protected
-     * @method {__initXGui}
+     * @method module:ui/datepick/datepick._$$DatePick#__initXGui
      * @return {Void}
      */
     _pro.__initXGui = function(){
@@ -117,8 +130,9 @@ NEJ.define([
     };
     /**
      * 初始化节点
+     *
      * @protected
-     * @method {__initNode}
+     * @method module:ui/datepick/datepick._$$DatePick#__initNode
      * @return {Void}
      */
     _pro.__initNode = function(){
@@ -135,8 +149,9 @@ NEJ.define([
     };
     /**
      * 动态构建控件节点模板
+     *
      * @protected
-     * @method {__initNodeTemplate}
+     * @method module:ui/datepick/datepick._$$DatePick#__initNodeTemplate
      * @return {Void}
      */
     _pro.__initNodeTemplate = function(){
@@ -150,9 +165,10 @@ NEJ.define([
     };
     /**
      * 日期变化回调函数
+     *
      * @protected
-     * @method {__onDateChange}
-     * @param  {Date} 日期
+     * @method module:ui/datepick/datepick._$$DatePick#__onDateChange
+     * @param  {Date} arg0 - 日期
      * @return {Void}
      */
     _pro.__onDateChange = function(_date){
@@ -164,13 +180,15 @@ NEJ.define([
         this._$hide();
     };
     /**
-     * 设置日期<br />
+     * 设置日期
+     *
      * 脚本举例
      * ```javascript
-     *   _dp._$setDate('2012-12-21');
+     * _dp._$setDate('2012-12-21');
      * ```
-     * @method {_$setDate}
-     * @param  {Date} 日期
+     *
+     * @method module:ui/datepick/datepick._$$DatePick#_$setDate
+     * @param  {Date} arg0 - 日期
      * @return {Void}
      */
     _pro._$setDate = function(_date){
@@ -178,14 +196,15 @@ NEJ.define([
         this.__calendar._$setDate(_date);
     };
     /**
-     * 取当前时间<br />
-     * <br />
+     * 取当前时间
+     *
      * 脚本举例
      * ```javascript
-     *   // 返回一个Date对象
-     *   var _date = _dp._$getDate();
+     * // 返回一个Date对象
+     * var _date = _dp._$getDate();
      * ```
-     * @method {_$getDate}
+     *
+     * @method module:ui/datepick/datepick._$$DatePick#_$getDate
      * @return {Date} 日期
      */
     _pro._$getDate = function(){

@@ -5,6 +5,7 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module ui/editor/command/fontname */
 NEJ.define([
     '{lib}base/global.js',
     '{lib}base/klass.js',
@@ -17,21 +18,23 @@ NEJ.define([
     /**
      * 字体选择控件
      *
-     * @class   module:nej.ui.cmd._$$FontNameCard 字体选择控件
-     * @extends {nej.ui.cmd._$$FontCard}
-     * @param   {Object} 可选配置参数
+     * @class   module:ui/editor/command/fontname._$$FontNameCard
+     * @extends module:ui/editor/command/font._$$FontCard
+     * @param   {Object} arg0 - 可选配置参数
+     */
+    /**
+     * 字体选中回调函数
      *
-     * [hr]
-     *
-     * @event {onselect} 字体选中回调函数
-     * @param {String}   字体
+     * @event module:ui/editor/command/fontname._$$FontNameCard#onselect
+     * @param {String} arg0 - 字体
      *
      */
     _p._$$FontNameCard = _k._$klass();
     _pro = _p._$$FontNameCard._$extend(_i0._$$FontCard);
     /**
      * 字体选项列表
-     * @type Array
+     *
+     * @member {Array}
      */
     _p._$$FontNameCard.list =
       [{name:'宋体'}
@@ -50,8 +53,9 @@ NEJ.define([
       ,{name:'Times New Roman'}];
     /**
      * 初始化外观信息
+     *
      * @protected
-     * @method {__initXGui}
+     * @method module:ui/editor/command/fontname._$$FontNameCard#__initXGui
      * @return {Void}
      */
     _pro.__initXGui = function(){
@@ -60,8 +64,9 @@ NEJ.define([
     };
     /**
      * 动态构建控件节点模板
+     *
      * @protected
-     * @method {__initNodeTemplate}
+     * @method module:ui/editor/command/fontname._$$FontNameCard#__initNodeTemplate
      * @return {Void}
      */
     _pro.__initNodeTemplate = function(){

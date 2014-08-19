@@ -5,14 +5,16 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module ui/colorpick/util */
 NEJ.define([
     '{lib}base/global.js',
     '{lib}base/util.js'
 ],function(NEJ,_u,_p,_o,_f,_r){
     /**
      * 判断色值是否合法
-     * @api    {nej.ut.c._$isColor}
-     * @param  {String}  颜色值
+     *
+     * @method module:ui/colorpick/util._$isColor
+     * @param  {String}  arg0 -  颜色值
      * @return {Boolean} 是否合法
      */
     _p._$isColor = (function(){
@@ -23,8 +25,9 @@ NEJ.define([
     })();
     /**
      * 判断是否完整格式的颜色值，如#ffffff
-     * @api    {nej.ut.c._$isFullColor}
-     * @param  {String}  颜色值
+     *
+     * @method module:ui/colorpick/util._$isFullColor
+     * @param  {String}  arg0 -  颜色值
      * @return {Boolean} 是否完整格式
      */
     _p._$isFullColor = (function(){
@@ -35,8 +38,9 @@ NEJ.define([
     })();
     /**
      * 提取色值的RGB信息
-     * @api    {nej.ut.c._$color2rgb}
-     * @param  {String} 颜色值，#ffffff或者#fff
+     *
+     * @method module:ui/colorpick/util._$color2rgb
+     * @param  {String} arg0 - 颜色值，#ffffff或者#fff
      * @return {Object} RGB信息，{r:23,g:25,b:67}
      */
     _p._$color2rgb = (function(){
@@ -62,8 +66,9 @@ NEJ.define([
     })();
     /**
      * RGB色值转HLS色值
-     * @api    {nej.ut.c._$rgb2hsl}
-     * @param  {Object} RGB信息，如{r:23,g:24,b:35}
+     *
+     * @method module:ui/colorpick/util._$rgb2hsl
+     * @param  {Object} arg0 - RGB信息，如{r:23,g:24,b:35}
      * @return {Object} HSL信息，如{h:0.7,l:0.6,s:0.9}
      */
     _p._$rgb2hsl = function(_rgb){
@@ -96,8 +101,9 @@ NEJ.define([
     };
     /**
      * HSL色值转RGB色串
-     * @api    {nej.ut.c._$hsl2color}
-     * @param  {Object} HSL信息，{h:0.7,l:0.6,s:0.9}
+     *
+     * @method module:ui/colorpick/util._$hsl2color
+     * @param  {Object} arg0 - HSL信息，{h:0.7,l:0.6,s:0.9}
      * @return {String} RGB颜色串
      */
     _p._$hsl2color = (function(){
@@ -141,8 +147,9 @@ NEJ.define([
     })();
     /**
      * RGB颜色串转HSL色值
-     * @api    {nej.ut.c._$color2hsl}
-     * @param  {String} 颜色串
+     *
+     * @method module:ui/colorpick/util._$color2hsl
+     * @param  {String} arg0 - 颜色串
      * @return {Object} HSL信息，如{h:0.7,l:0.6,s:0.9}
      */
     _p._$color2hsl = function(_color){
