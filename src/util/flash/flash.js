@@ -11,10 +11,10 @@ NEJ.define([
     'base/element',
     'base/event',
     'base/util',
-    '{platform}flash.js',
     'util/template/jst',
-    'util/timer/animation'
-],function(NEJ,_e,_v,_u,_h,_t0,_t1,_p,_o,_f,_r){
+    'util/timer/animation',
+    '{platform}flash.js'
+],function(NEJ,_e,_v,_u,_t0,_t1,_h,_p,_o,_f,_r){
     var _seed_html;
     /**
      * 页面嵌入flash，NEJ嵌入Flash如果需要同JS交互的遵循以下规则

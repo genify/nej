@@ -83,7 +83,7 @@ NEJ.define([
            ,[_nmap.province,'change',this.__onChange._$bind(this,'province')]
         ]);
         this.__cache = _options.cache||
-            _p._$$RegionCacheZH._$allocate();
+            _p._$$CacheRegionZH._$allocate();
         this.__cache._$setEvent(
             'onlistload',
             this.__onListLoad._$bind(this)

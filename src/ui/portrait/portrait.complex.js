@@ -52,7 +52,7 @@ NEJ.define([
             clazz:'zptrt',
             cache:{
                 data:{},
-                klass:_t4._$$PortraitCache
+                klass:_t4._$$CachePortrait
             }
         };
         this.__topt = {
@@ -84,7 +84,7 @@ NEJ.define([
         this.__popt.onselect = _options.onselect;
         delete _options.onselect;
         this.__super(_options);
-        this.__cache = _t4._$$PortraitCache
+        this.__cache = _t4._$$CachePortrait
                          ._$allocate(this.__copt);
         this.__cache._$getList(this.__topt);
     };
