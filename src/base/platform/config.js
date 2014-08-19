@@ -6,7 +6,7 @@
  * ------------------------------------------
  */
 NEJ.define([
-    '{lib}base/global.js'
+    'base/global'
 ],function(NEJ,_p,_o,_f,_r){
     var _cache = {};
     /**

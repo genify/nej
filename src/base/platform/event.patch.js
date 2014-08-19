@@ -7,7 +7,7 @@
  */
 NEJ.define([
     './event.js',
-    '{lib}base/util.js'
+    'base/util'
 ],function(_h,_u,_p,_o,_f,_r){
     // for ie10+
     NEJ.patch('TR>=6.0',function(){

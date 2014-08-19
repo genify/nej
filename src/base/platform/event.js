@@ -6,8 +6,8 @@
  * ------------------------------------------
  */
 NEJ.define([
-    '{lib}base/util.js',
-    '{lib}base/platform.js'
+    'base/util',
+    'base/platform'
 ],function(_u,_m,_p,_o,_f,_r){
     /**
      * 验证事件信息
