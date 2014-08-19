@@ -30,7 +30,7 @@ NEJ.define([
             top:Math.floor((_box.parentNode.offsetHeight-_height)/2)+'px'
         });
         // cover flash
-        _t0._$flash(_u.merge({
+        _t0._$flash(_u._$merge({
             parent:_box,
             target:_element,
             width:'100%',height:'100%',
