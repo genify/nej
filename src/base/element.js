@@ -1928,14 +1928,19 @@ NEJ.define([
      * @return {String}        样式标识
      */
     _p._$pushCSSText = (function(){
-        var _reg = /#<.*?>/g,
+        var _reg = /#<(.*?)>/g,
             _seed = +new Date;
-        return function(_css){
+        return function(_css,_data){
             if (!_cspol){
                 _cspol = [];
             }
-            var _class = 'auto-'+_u._$uniqueID();
-            _cspol.push(_css.replace(_reg,_class));
+            var _class = 'auto-'+_u._$uniqueID(),
+                _dmap = _u._$merge({uispace:_class},_data);
+            _cspol.push(
+                _css.replace(_reg,function($1,$2){
+                    return _dmap[$2]||$1;
+                })
+            );
             return _class;
         };
     })();
