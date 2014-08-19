@@ -1,11 +1,18 @@
+/*
+ * ------------------------------------------
+ * 需要平台适配的接口实现文件
+ * @version  1.0
+ * @author   genify(caijf@corp.netease.com)
+ * ------------------------------------------
+ */
 NEJ.define([
-	'{lib}base/platform.js'
+	'base/platform'
 ],function(_m,_p,_o,_f,_r){
 	// ie8-
 	NEJ.patch('TR<=5.0',['./3rd.json.js']);
 
 	// ie6 json patch
-    NEJ.patch('TR==2.0',['./3rd.json.js'],function(JSON){
+    NEJ.patch('TR==2.0',['./3rd.json.js'],function(){
 	    // eval for big string
 	    JSON.parse = (function(){
 	        // check save json string
@@ -24,5 +31,6 @@ NEJ.define([
 	        });
 	    })();
 	});
-	return _p;
+
+	return JSON;
 });

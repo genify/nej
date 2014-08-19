@@ -5,9 +5,10 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module util/encode/base64 */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/util.js'
+    'base/global',
+    'base/util'
 ],function(NEJ,_u,_p,_o,_f,_r){
     // implement
     var __b64tab = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/',
@@ -138,41 +139,63 @@ NEJ.define([
         };
     })();
     /**
-     * Base64解码数据<br />
+     * Base64解码数据
+     * 
      * 脚本举例
      * ```javascript
-     *   // 测试一些字符，编码，反编码
-     *   var _strList = ['a','null','function','error','return','switch','if','!0',
-     *   'UNdefined','NULL','Function','ERROR','return 1'];
-     *   for(var i = 0; i < _strList.length; i++){
-     *       var _str = _strList[i];
-     *       var _str2b64 = p._$str2b64(_str);
-     *       var _b642str = p._$b642str(_str2b64);
-     *   }
+     * NEJ.define([
+     *     'util/encode/base64'
+     * ],function(_u){
+     *     // 测试一些字符，编码，反编码
+     *     var _arr = [
+     *         'a','null','function','error',
+     *         'return','switch','if','!0',
+     *         'UNdefined','NULL','Function',
+     *         'ERROR','return 1'
+     *     ];
+     *     for(var i=0,l=_arr.length,_it,_b64,_str;i<l;i++){
+     *         _it = _arr[i];
+     *         _b64 = _u._$str2b64(_it);
+     *         _str = _u._$b642str(_b64);
+     *     }
+     * });
      * ```
-     * @api    {nej.u._$b642str}
-     * @param  {String} 数据
-     * @return {String} 解码后数据
+     * 
+     * @method module:util/encode/base64._$b642str
+     * @see    module:util/encode/base64._$str2b64
+     * @param  {String} arg0 - 数据
+     * @return {String}        解码后数据
      */
     _p._$b642str = function(_data){
         return __bin2utf8(__b642bin(_data));
     };
     /**
-     * Base64编码数据<br />
+     * Base64编码数据
+     * 
      * 脚本举例
      * ```javascript
-     *   // 测试一些字符，编码，反编码
-     *   var _strList = ['a','null','function','error','return','switch','if','!0',
-     *   'UNdefined','NULL','Function','ERROR','return 1'];
-     *   for(var i = 0; i < _strList.length; i++){
-     *       var _str = _strList[i];
-     *       var _str2b64 = p._$str2b64(_str);
-     *       var _b642str = p._$b642str(_str2b64);
-     *   }
+     * NEJ.define([
+     *     'util/encode/base64'
+     * ],function(_u){
+     *     // 测试一些字符，编码，反编码
+     *     var _arr = [
+     *         'a','null','function','error',
+     *         'return','switch','if','!0',
+     *         'UNdefined','NULL','Function',
+     *         'ERROR','return 1'
+     *     ];
+     *     for(var i=0,l=_arr.length,_it,_b64,_str;i<l;i++){
+     *         _it = _arr[i];
+     *         _b64 = _u._$str2b64(_it);
+     *         _str = _u._$b642str(_b64);
+     *     }
+     * });
      * ```
-     * @api    {nej.u._$str2b64}
-     * @param  {String} 数据
-     * @return {String} 编码后数据
+     * 
+     * @method module:util/encode/base64._$str2b64
+     * @see    module:util/encode/base64._$b642str
+     * @param  {String} arg0 - 数据
+     * @return {String}        编码后数据
      */
     _p._$str2b64 = function(_data){
         try{
