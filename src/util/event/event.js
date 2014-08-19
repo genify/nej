@@ -5,69 +5,79 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module util/event/event */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/element.js',
-    '{lib}base/event.js',
-    '{lib}base/util.js',
-    '{lib}util/event.js'
+    'base/global',
+    'base/klass',
+    'base/element',
+    'base/event',
+    'base/util',
+    'util/event'
 ],function(NEJ,_k,_e,_v,_u,_t,_p,_o,_f,_r){
     /**
-     * 自定义事件封装对象，封装的事件支持通过事件相关接口进行添加、删除等操作<br/>
+     * 自定义事件封装对象，封装的事件支持通过事件相关接口进行添加、删除等操作
      * 
      * 脚本举例
      * ```javascript
-     *   NEJ.define([
-     *       '{lib}base/event.js'
-     *       '{lib}util/event.js'
-     *   ],function(_v,_t){
-     *       // 支持自定义事件
-     *       _t._$$CustomEvent._$allocate({
-     *           element:window,
-     *           event:'onok'
-     *       });
+     * NEJ.define([
+     *     'base/event'
+     *     'util/event'
+     * ],function(_v,_t){
+     *     // 支持自定义事件
+     *     _t._$$CustomEvent._$allocate({
+     *         element:window,
+     *         event:'ok'
+     *     });
      * 
-     *       // 添加自定义事件 
-     *       _v._$addEvent(window,'ok',function(){alert(0);});
-     *       _v._$addEvent(window,'ok',function(){alert(1);});
-     *       // 删除自定义事件
-     *       _v._$delEvent(window,'ok',function(){alert(0);});
-     *       _v._$clearEvent(window,'ok');
-     *       // 触发自定义事件
-     *       window.onok({a:'aaaaa'});
-     *       _v._$dispatchEvent(window,'ok',{a:'aaaaa'});
-     *   });
+     *     // 添加自定义事件 
+     *     _v._$addEvent(window,'ok',function(){alert(0);});
+     *     _v._$addEvent(window,'ok',function(){alert(1);});
+     *     
+     *     // 删除自定义事件
+     *     _v._$delEvent(window,'ok',function(){alert(0);});
+     *     _v._$clearEvent(window,'ok');
+     *     
+     *     // 触发自定义事件
+     *     window.onok({a:'aaaaa'});
+     *     _v._$dispatchEvent(window,'ok',{a:'aaaaa'});
+     * });
      * ```
      * 
-     * @class   {_$$CustomEvent}
-     * @extends {_$$EventTarget}
+     * @class    module:util/event/event._$$CustomEvent
+     * @extends  module:util/event._$$EventTarget
      * 
-     * @param   {Object} 可选配置参数
-     * @property  {String|Node}  element 事件关联节点ID或者对象，默认为window对象
-     * @property  {String|Array} event   事件名称或者名称列表
-     * 
-     * [hr]
+     * @param    {Object}       config  - 可选配置参数
+     * @property {String|Node}  element - 事件关联节点ID或者对象，默认为window对象
+     * @property {String|Array} event   - 事件名称或者名称列表
+     */
+    /** 
      * 初始化时触发事件
-     * @event  {oninit}
-     * @param  {Object} 事件信息
      * 
-     * [hr]
+     * @event module:util/event/event._$$CustomEvent#oninit
+     * @param {Object} event - 事件信息
+     */
+    /** 
      * 事件调度前触发事件
-     * @event  {ondispatch}
-     * @param  {Object} 事件信息
      * 
-     * [hr]
+     * @event    module:util/event/event._$$CustomEvent#ondispatch
+     * @param    {Object} event - 事件信息
+     * @property {String} type  - 事件类型
+     */
+    /**
      * 添加事件时触发事件
-     * @event  {oneventadd}
-     * @param  {Object} 事件信息
+     * 
+     * @event    module:util/event/event._$$CustomEvent#oneventadd
+     * @param    {Object}   event    - 事件信息
+     * @property {String}   type     - 事件类型
+     * @property {Function} listener - 事件执行函数
      */
     _p._$$CustomEvent = _k._$klass();
     _pro = _p._$$CustomEvent._$extend(_t._$$EventTarget);
     /**
      * 控件初始化
+     * 
      * @protected
-     * @method {__init}
+     * @method module:util/event/event._$$CustomEvent#__init
      * @return {Void}
      */
     _pro.__init = function(){
@@ -78,9 +88,10 @@ NEJ.define([
     };
     /**
      * 控件重置
+     * 
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
+     * @method module:util/event/event._$$CustomEvent#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -93,8 +104,9 @@ NEJ.define([
     };
     /**
      * 销毁控件
+     * 
      * @protected
-     * @method {__destroy}
+     * @method module:util/event/event._$$CustomEvent#__destroy
      * @return {Void}
      */
     _pro.__destroy = (function(){
@@ -115,11 +127,12 @@ NEJ.define([
     })();
     /**
      * 判断是否需要代理事件
+     * 
      * @protected
-     * @method {__isDelegate}
-     * @param  {String|Node} 节点
-     * @param  {String}      事件
-     * @return {Boolean}     是否需要代理事件
+     * @method module:util/event/event._$$CustomEvent#__isDelegate
+     * @param  {String|Node} arg0 - 节点
+     * @param  {String}      arg1 - 事件
+     * @return {Boolean}            是否需要代理事件
      */
     _pro.__isDelegate = function(_element,_type){
         _element = _e._$get(_element);
@@ -128,9 +141,10 @@ NEJ.define([
     };
     /**
      * 初始化事件
+     * 
      * @protected
-     * @method {__doEventInit}
-     * @param  {String} 事件名称
+     * @method module:util/event/event._$$CustomEvent#__doEventInit
+     * @param  {String} arg0 - 事件名称
      * @return {Void}
      */
     _pro.__doEventInit = function(_event){
@@ -152,9 +166,10 @@ NEJ.define([
     };
     /**
      * 绑定事件
+     * 
      * @protected
-     * @method {__doEventBind}
-     * @param  {String} 事件名称
+     * @method module:util/event/event._$$CustomEvent#__doEventBind
+     * @param  {String} arg0 - 事件名称
      * @return {Void}
      */
     _pro.__doEventBind = function(_type){
@@ -171,10 +186,11 @@ NEJ.define([
     };
     /**
      * 添加事件
+     * 
      * protected
-     * @method {__doEventAdd}
-     * @param  {String}   事件名称
-     * @param  {Function} 事件回调
+     * @method module:util/event/event._$$CustomEvent#__doEventAdd
+     * @param  {String}   arg0 - 事件名称
+     * @param  {Function} arg1 - 事件回调
      * @return {Void}
      */
     _pro.__doEventAdd = function(_type,_handler,_front){
@@ -190,10 +206,11 @@ NEJ.define([
     };
     /**
      * 删除事件
+     * 
      * protected
-     * @method {__doEventDelete}
-     * @param  {String}   事件名称
-     * @param  {Function} 事件回调
+     * @method module:util/event/event._$$CustomEvent#__doEventDelete
+     * @param  {String}   arg0 - 事件名称
+     * @param  {Function} arg1 - 事件回调
      * @return {Void}
      */
     _pro.__doEventDelete = function(_type,_handler){
@@ -216,10 +233,11 @@ NEJ.define([
     };
     /**
      * 事件调度
+     * 
      * protected
-     * @method {__doEventDispatch}
-     * @param  {String} 事件名称
-     * @param  {Object} 事件对象
+     * @method module:util/event/event._$$CustomEvent#__doEventDispatch
+     * @param  {String} arg0 - 事件名称
+     * @param  {Object} arg1 - 事件对象
      * @return {Void}
      */
     _pro.__doEventDispatch = function(_type,_event){
@@ -244,8 +262,9 @@ NEJ.define([
     };
     /**
      * 增强事件操作API
+     * 
      * protected
-     * @method {__doEventAPIEnhance}
+     * @method module:util/event/event._$$CustomEvent#__doEventAPIEnhance
      * @return {Void}
      */
     _pro.__doEventAPIEnhance = (function(){
@@ -302,14 +321,10 @@ NEJ.define([
             }
             // enhance event api
             this.__enhanced = true;
-            _v._$addEvent = 
-            _v._$addEvent._$aop(_doAddEvent._$bind(this));
-            _v._$delEvent = 
-            _v._$delEvent._$aop(_doDelEvent._$bind(this));
-            _v._$clearEvent = 
-            _v._$clearEvent._$aop(_doClearEvent._$bind(this));
-            _v._$dispatchEvent = 
-            _v._$dispatchEvent._$aop(_doDispatchEvent._$bind(this));
+            _v._$addEvent = _v._$addEvent._$aop(_doAddEvent._$bind(this));
+            _v._$delEvent = _v._$delEvent._$aop(_doDelEvent._$bind(this));
+            _v._$clearEvent = _v._$clearEvent._$aop(_doClearEvent._$bind(this));
+            _v._$dispatchEvent = _v._$dispatchEvent._$aop(_doDispatchEvent._$bind(this));
         };
     })();
     
