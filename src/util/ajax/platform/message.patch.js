@@ -7,8 +7,8 @@
  */
 NEJ.define([
     './message.js',
-    '{lib}base/util.js',
-    '{lib}base/event.js'
+    'base/util',
+    'base/event'
 ],function(_h,_u,_v,_p,_o,_f,_r){
     // for ie8-9
     NEJ.patch('4.0<=TR<=5.0',function(){
@@ -24,8 +24,8 @@ NEJ.define([
     });
     // for ie7-
     NEJ.patch('TR<=3.0',[
-        '{lib}util/event/event.js',
-        '{lib}util/encode/json.js'
+        'util/event/event',
+        'util/encode/json'
     ],function(_t){
         var _key = 'MSG|',
             _queue = [];

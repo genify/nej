@@ -7,10 +7,10 @@
  */
 /** @module util/event */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/event.js',
-    '{lib}base/util.js'
+    'base/global',
+    'base/klass',
+    'base/event',
+    'base/util'
 ],function(NEJ,_k,_v,_u,_p,_o,_f,_r){
     var _pro;
     /**

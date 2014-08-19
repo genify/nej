@@ -6,7 +6,7 @@
  * ------------------------------------------
  */
 NEJ.define([
-    '{lib}base/element.js'
+    'base/element'
 ],function(_e,_p,_o,_f,_r){
     /**
      * 删除IFrame节点，保留历史

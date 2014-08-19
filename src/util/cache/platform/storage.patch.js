@@ -10,8 +10,8 @@ NEJ.define([
 ],function(_h,_p,_o,_f,_r){
     // for ie7-
     NEJ.patch('TR<=3.0',[
-        '{lib}base/config.js',
-        '{lib}util/flash/flash.js'
+        'base/config',
+        'util/flash/flash'
     ],function(_c,_e){
         var _localStorage;
         /*

@@ -7,7 +7,7 @@
  */
 NEJ.define([
     './animation.js',
-    '{lib}base/platform.js'
+    'base/platform'
 ],function(_h,_m){
     // for ie9-
     NEJ.patch('TR<=5.0',function(){

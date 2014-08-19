@@ -6,7 +6,7 @@
  * ------------------------------------------
  */
 NEJ.define([
-    '{lib}base/platform.js'
+    'base/platform'
 ],function(_m,_p,_o,_f,_r){
     var _this = this,
         _prefix = _m._$KERNEL.prefix.pro;

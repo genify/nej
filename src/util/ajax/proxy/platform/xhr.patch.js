@@ -7,7 +7,7 @@
  */
 NEJ.define([
     './xhr.js',
-    '{lib}base/util.js'
+    'base/util'
 ],function(_h,_u,_p,_o,_f,_r){
     // for ie6-
     NEJ.patch('TR<=2.0',function(){

@@ -7,8 +7,8 @@
  */
 /** @module util/placeholder/placeholder */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/element.js',
+    'base/global',
+    'base/element',
     '{platform}holder.js'
 ],function(NEJ,_e,_h,_p,_o,_f,_r){
     /**

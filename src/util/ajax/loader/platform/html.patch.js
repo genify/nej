@@ -7,8 +7,8 @@
  */
 NEJ.define([
     './html.js',
-    '{lib}base/element.js',
-    '{lib}base/platform.js'
+    'base/element',
+    'base/platform'
 ],function(_h,_e,_m,_p,_o,_f,_r){
     // for ie6-
     NEJ.patch('TR<=2.0',function(){

@@ -7,7 +7,7 @@
  */
 NEJ.define([
     './history.js',
-    '{lib}base/element.js'
+    'base/element'
 ],function(_h,_e,_p,_o,_f,_r){
 	// for ie8-
 	NEJ.patch('TR<=4.0',function(){
