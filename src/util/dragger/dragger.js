@@ -5,73 +5,86 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module util/dragger/dragger */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/element.js',
-    '{lib}base/event.js',
-    '{lib}util/event.js'
+    'base/global',
+    'base/klass',
+    'base/element',
+    'base/event',
+    'util/event'
 ],function(NEJ,_k,_e,_v,_t,_p,_o,_f,_r){
     var _pro;
     /**
-     * 区域移动功能封装<br />
-     * 页面结构举例
+     * 区域移动功能封装
+     * 
+     * 结构举例
      * ```html
-     *   <div id="box"></div>
+     * <div id="box"></div>
      * ```
+     * 
      * 脚本举例
      * ```javascript
-     *   var _box = _e._$get('box');
-     *   var _dg = _p._$$Dragger._$allocate({body:_box,
-     *     overflow:false,
-     *     direction:0,
-     *     onchange:function(_event){
-     *         // 拖动回调获取位置信息
-     *     },
-     *     ondragend:function(_event){
-     *         // 拖动结束，返回当前位置，或者用_$getPosition接口取到当前位置信息
-     *         _dg._$getPosition();
-     *     }
-     *   })
+     * NEJ.define([
+     *     'util/dragger/dragger'
+     * ],function(_t){
+     *     var _dragger = _t._$$Dragger._$allocate({
+     *         body:'box',
+     *         overflow:false,
+     *         direction:0,
+     *         onchange:function(_event){
+     *             // 拖动回调获取位置信息
+     *             var _postion = this._$getPosition();
+     *         },
+     *         ondragend:function(_event){
+     *             // 拖动结束，返回当前位置，或者用_$getPosition接口取到当前位置信息
+     *             var _postion = this._$getPosition();
+     *         }
+     *     });
+     * });
      * ```
-     * @class   {nej.ut._$$Dragger} 区域移动功能封装
-     * @extends {nej.ut._$$EventTarget}
-     * @param   {Object}                   可选配置参数
-     * @property  {Node}           view      视窗节点，默认为documentElement或body节点
-     * @property  {String|Node}    body      移动控件节点
-     * @property  {String|Node}    mbar      触发移动节点ID或者对象，默认为body参数输入节点
-     * @property  {Boolean}        overflow  是否允许超出view范围
-     * @property  {Number}         direction 移动方向，默认为0，0-水平+垂直、1-水平、2-垂直
-     *
-     * [hr]
+     * 
+     * @class    module:util/dragger/dragger._$$Dragger
+     * @extends  module:util/event._$$EventTarget
+     * 
+     * @param    {Object}      config    - 可选配置参数
+     * @property {Node}        view      - 视窗节点，默认为documentElement或body节点
+     * @property {String|Node} body      - 移动控件节点
+     * @property {String|Node} mbar      - 触发移动节点ID或者对象，默认为body参数输入节点
+     * @property {Boolean}     overflow  - 是否允许超出view范围
+     * @property {Number}      direction - 移动方向，默认为0，0-水平+垂直、1-水平、2-垂直
+     */
+    /**
      * 位置变化之前触发事件
-     * @event  {onbeforechange}
-     * @param  {Object}      位置信息
-     * @property {Number} top  离父节点顶部距离
-     * @property {Number} left 离父节点左边距离
-     *
-     * [hr]
+     * 
+     * @event    module:util/dragger/dragger._$$Dragger#onbeforechange
+     * @param    {Object} event - 位置信息
+     * @property {Number} top   - 离父节点顶部距离
+     * @property {Number} left  - 离父节点左边距离
+     */
+    /**
      * 位置变化触发事件
-     * @event  {onchange}
-     * @param  {Object}      位置信息
-     * @property {Number} top  离父节点顶部距离
-     * @property {Number} left 离父节点左边距离
-     *
-     * [hr]
+     * 
+     * @event    module:util/dragger/dragger._$$Dragger#onchange
+     * @param    {Object} event - 位置信息
+     * @property {Number} top   - 离父节点顶部距离
+     * @property {Number} left  - 离父节点左边距离
+     */
+    /**
      * 拖拽结束触发事件
-     * @event  {ondragend}
-     * @param  {Object}      位置信息
-     * @property {Number} top  离父节点顶部距离
-     * @property {Number} left 离父节点左边距离
-     *
+     * 
+     * @event    module:util/dragger/dragger._$$Dragger#ondragend
+     * @param    {Object} event - 位置信息
+     * @property {Number} top   - 离父节点顶部距离
+     * @property {Number} left  - 离父节点左边距离
      */
     _p._$$Dragger = _k._$klass();
     _pro = _p._$$Dragger._$extend(_t._$$EventTarget);
     /**
      * 控件重置
+     * 
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
+     * @method module:util/dragger/dragger._$$Dragger#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -95,8 +108,9 @@ NEJ.define([
     };
     /**
      * 控件销毁
+     * 
      * @protected
-     * @method {__destroy}
+     * @method module:util/dragger/dragger._$$Dragger#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -107,8 +121,9 @@ NEJ.define([
     };
     /**
      * 取移动的最大范围
+     * 
      * @protected
-     * @method {__getMaxRange}
+     * @method module:util/dragger/dragger._$$Dragger#__getMaxRange
      * @return {Object} 范围值
      */
     _pro.__getMaxRange = function(){
@@ -123,9 +138,10 @@ NEJ.define([
     };
     /**
      * 开始移动
+     * 
      * @protected
-     * @method {__onDragStart}
-     * @param  {Event} 事件对象
+     * @method module:util/dragger/dragger._$$Dragger#__onDragStart
+     * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
     _pro.__onDragStart = function(_event){
@@ -139,9 +155,10 @@ NEJ.define([
     };
     /**
      * 移动过程
+     * 
      * @protected
-     * @method {__onDragging}
-     * @param  {Event} 事件对象
+     * @method module:util/dragger/dragger._$$Dragger#__onDragging
+     * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
     _pro.__onDragging = function(_event){
@@ -163,9 +180,10 @@ NEJ.define([
     };
     /**
      * 结束移动
+     * 
      * @protected
-     * @method {__onDragEnd}
-     * @param  {Event} 事件对象
+     * @method module:util/dragger/dragger._$$Dragger#__onDragEnd
+     * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
     _pro.__onDragEnd = function(_event){
@@ -175,15 +193,19 @@ NEJ.define([
         this._$dispatchEvent('ondragend',this._$getPosition());
     };
     /**
-     * 设置位置<br />
+     * 设置位置
+     * 
      * 脚本举例
      * ```javascript
-     *   // 在允许范围内设置盒子的位置
-     *   _dg._$setPosition({top:100,left:100});
+     * // 在允许范围内设置盒子的位置
+     * _dragger._$setPosition({top:100,left:100});
      * ```
-     * @method {_$setPosition}
-     * @param  {Object} 位置信息
-     * @return {Void}
+     * 
+     * @method   module:util/dragger/dragger._$$Dragger#_$setPosition
+     * @param    {Object} arg0 - 位置信息
+     * @property {Number} top  - 垂直位置
+     * @property {Number} left - 水平位置
+     * @return   {Void}
      */
     _pro._$setPosition = function(_event){
         if (!this.__overflow){
@@ -205,13 +227,15 @@ NEJ.define([
         this._$dispatchEvent('onchange',_event);
     };
     /**
-     * 取当前位置<br />
+     * 取当前位置
+     * 
      * 脚本举例
      * ```javascript
-     *   _dg._$getPosition();
+     * _dragger._$getPosition();
      * ```
-     * @method {_$getPosition}
-     * @return {Object} 当前位置，{x:100,y:100}
+     * 
+     * @method module:util/dragger/dragger._$$Dragger#_$getPosition
+     * @return {Object} 当前位置，{top:100,left:100}
      */
     _pro._$getPosition = function(){
         return {
