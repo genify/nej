@@ -6,42 +6,53 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module util/data/region/zh */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}util/cache/abstract.js'
+    'base/global',
+    'base/klass',
+    'util/cache/abstract'
 ],function(NEJ,_k,_t0,_p,_o,_f,_r){
     var _pro;
     /**
-     * 中国行政划区数据缓存，使用方式
+     * 中国行政划区数据缓存
+     *
+     * 脚本举例
      * ```javascript
+     * NEJ.define([
+     *     'util/data/region/zh'
+     * ],function(_t){
+     *     var _cache = _t._$$CacheRegionZH._$allocate();
+     *     
      *     // 取省份列表
-     *     cache._$getList({key:'province'});
+     *     _cache._$getList({key:'province'});
      *     // 取某个省份的城市列表
      *     // key为'city-'+省份名称
-     *     cache._$getList({key:'city-浙江省'});
+     *     _cache._$getList({key:'city-浙江省'});
      *     // 取某个省份城市下的区域列表
      *     // key为'area-'+省份名称+'-'+城市名称
-     *     cache._$getList({key:'area-浙江省-杭州市'});
+     *     _cache._$getList({key:'area-浙江省-杭州市'});
+     * });
      * ```
-     * @class   {nej.ut._$$RegionCacheZH} 中国行政划区数据缓存
-     * @extends {nej.ut._$$CacheListAbstract}
-     * @param   {Object} _options 可选配置参数
-     *
+     * 
+     * @class   module:util/data/region/zh._$$CacheRegionZH
+     * @extends module:util/cache/abstract._$$CacheListAbstract
+     * 
+     * @param   {Object} config 可选配置参数
      */
-    _p._$$RegionCacheZH = _k._$klass();
-    _pro = _p._$$RegionCacheZH._$extend(_t0._$$CacheListAbstract);
+    _p._$$CacheRegionZH = _k._$klass();
+    _pro = _p._$$CacheRegionZH._$extend(_t0._$$CacheListAbstract);
     /**
      * 从服务器端载入列表
+     * 
      * @protected
-     * @method {__doLoadList}
-     * @param  {Object}          请求信息
-     * @property {String}   key    列表标识
-     * @property {Number}   offset 偏移量
-     * @property {Number}   limit  数量
-     * @property {String}   data   请求相关数据
-     * @property {Function} onload 列表载入回调
-     * @return {Void}
+     * @method   module:util/data/region/zh._$$CacheRegionZH#__doLoadList
+     * @param    {Object}   arg0   - 请求信息
+     * @property {String}   key    - 列表标识
+     * @property {Number}   offset - 偏移量
+     * @property {Number}   limit  - 数量
+     * @property {String}   data   - 请求相关数据
+     * @property {Function} onload - 列表载入回调
+     * @return   {Void}
      */
     _pro.__doLoadList = function(_options){
         var _list,
@@ -62,9 +73,10 @@ NEJ.define([
     };
     /**
      * 判断给定省份是否有三级目录
-     * @method {_$hasArea}
-     * @param  {String}  省份
-     * @return {Boolean} 是否有三级目录
+     * 
+     * @method module:util/data/region/zh._$$CacheRegionZH#_$hasArea
+     * @param  {String}  arg0 - 省份
+     * @return {Boolean}        是否有三级目录
      */
     _pro._$hasArea = function(_province){
         return !_dmap.s[_province];
@@ -444,7 +456,7 @@ NEJ.define([
      };
 
     if (CMPT){
-        NEJ.copy(NEJ.P('nej.ut'),_p);
+        NEJ.P('nej.ut')._$$RegionCacheZH = _p._$$CacheRegionZH;
     }
 
     return _p;
