@@ -5,65 +5,75 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module util/cycler/cycler */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/element.js',
-    '{lib}base/event.js',
-    '{lib}base/util.js',
-    '{lib}util/event.js',
-    '{lib}util/page/page.simple.js'
+    'base/global',
+    'base/klass',
+    'base/element',
+    'base/event',
+    'base/util',
+    'util/event',
+    'util/page/simple'
 ],function(NEJ,_k,_e,_v,_u,_t,_t0,_p,_o,_f,_r){
     var _pro;
     /**
-     * 循环播放封装对象<br/>
-     * 页面结构举例
+     * 循环播放封装对象
+     * 
+     * 结构举例
      * ```html
-     *   <div id="nbox"></div>
-     *   <ul id="pbox">
-     *       <li>1</li>
-     *       <li>2</li>
-     *       <li>3</li>
-     *   </ul>
+     * <div id="nbox"></div>
+     * <ul id="pbox">
+     *   <li>1</li>
+     *   <li>2</li>
+     *   <li>3</li>
+     * </ul>
      * ```
+     * 
      * 脚本举例
      * ```javascript
-     *   var _p = NEJ.P('nej.ut');
-     *   var _cyc = _p._$$Cycler._$allocate(
-     *   {
-     *       list:['http://xxxx.com/xxx.jpg',
-     *       'http://xxxx.com/xxx.jpg',
-     *       'http://xxxx.com/xxx.jpg'],
-     *       nbox:'nbox',
-     *       pbox:'pbox',
-     *       event:'click',
-     *       interval:5,
-     *       onchange:function(_index){
-     *           // 切换页面的回调，_index从1到3
-     *       }
-     *   });
+     * NEJ.define([
+     *     'util/cycler/cycler'
+     * ],function(_t){
+     *     var _cycler = _t._$$Cycler._$allocate({
+     *         list:[
+     *             'http://xxxx.com/xxx.jpg',
+     *             'http://xxxx.com/xxx.jpg',
+     *             'http://xxxx.com/xxx.jpg'
+     *         ],
+     *         nbox:'nbox',
+     *         pbox:'pbox',
+     *         event:'click',
+     *         interval:5,
+     *         onchange:function(_index){
+     *             // 切换页面的回调，_index从1到3
+     *         }
+     *     });
+     * });
      * ```
-     * @class   {nej.ut._$$Cycler} 循环播放封装对象
-     * @extends {nej.ut._$$EventTarget}
-     * @param   {Object}      可选配置参数
-     * @property  {Array}       list         图片地址列表
-     * @property  {String|Node} nbox         图片容器节点
-     * @property  {String|Node} pbox         页码索引容器节点
-     * @property  {String}      event        页码切换事件名称
-     * @property  {Number}      interval     轮播时间间隔，单位秒，默认为2s
+     * 
+     * @class    module:util/cycler/cycler._$$Cycler
+     * @extends  module:util/event._$$EventTarget
+     * 
+     * @param    {Object}      config   - 可选配置参数
+     * @property {Array}       list     - 图片地址列表
+     * @property {String|Node} nbox     - 图片容器节点
+     * @property {String|Node} pbox     - 页码索引容器节点
+     * @property {String}      event    - 页码切换事件名称
+     * @property {Number}      interval - 轮播时间间隔，单位秒，默认为2s
+     */
+    /**
+     * 图片切换事件
      *
-     * [hr]
-     *
-     * @event {onchange}
-     * @param {Number} 页码信息
-     *
+     * @event module:util/cycler/cycler._$$Cycler#onchange
+     * @param {Number} event - 页码信息
      */
     _p._$$Cycler = _k._$klass();
     _pro = _p._$$Cycler._$extend(_t._$$EventTarget);
     /**
      * 控件初始化
+     * 
      * @protected
-     * @method {__init}
+     * @method module:util/cycler/cycler._$$Cycler#__init
      * @return {Void}
      */
     _pro.__init = function(){
@@ -75,13 +85,10 @@ NEJ.define([
     };
     /**
      * 控件重置
+     * 
      * @protected
-     * @method {__reset}
-     * @param   {Object}       可选配置参数
-     * @property  {Array}       list      图片地址列表
-     * @property  {String|Node} nbox      图片容器节点
-     * @property  {String|Node} pbox      页码索引容器节点
-     * @property  {String}      event     页码切换事件名称
+     * @method module:util/cycler/cycler._$$Cycler#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -97,8 +104,9 @@ NEJ.define([
     };
     /**
      * 控件销毁
+     * 
      * @protected
-     * @method {__destroy}
+     * @method module:util/cycler/cycler._$$Cycler#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -111,11 +119,12 @@ NEJ.define([
     };
     /**
      * 页面变化回调
+     * 
      * @protected
-     * @method {__onPageChange}
-     * @param  {Object} 页码信息
-     * @property {Number} index 页码信息
-     * @return {Void}
+     * @method   module:util/cycler/cycler._$$Cycler#__onPageChange
+     * @param    {Object} arg0  - 页码信息
+     * @property {Number} index - 页码信息
+     * @return   {Void}
      */
     _pro.__onPageChange = function(_event){
         this.__timer = window.clearTimeout(this.__timer);
@@ -127,8 +136,9 @@ NEJ.define([
     };
     /**
      * 去到下一页
+     * 
      * @protected
-     * @method {__onNextPage}
+     * @method module:util/cycler/cycler._$$Cycler#__onNextPage
      * @return {Void}
      */
     _pro.__onNextPage = function(){
@@ -138,9 +148,10 @@ NEJ.define([
     };
     /**
      * 图片载入完成触发事件
+     * 
      * @protected
-     * @method {__onImageLoad}
-     * @param  {Boolean} 是否载入成功
+     * @method module:util/cycler/cycler._$$Cycler#__onImageLoad
+     * @param  {Boolean} arg0 - 是否载入成功
      * @return {Void}
      */
     _pro.__onImageLoad = function(_isok){
@@ -149,14 +160,16 @@ NEJ.define([
         _e._$setStyle(this.__image,'opacity',1);
     };
     /**
-     * 设置图片<br/>
+     * 设置图片
+     * 
      * 脚本举例
      * ```javascript
-     *   // 在回调里突然想换另外一张图片来展示
-     *   _cyc._$setImage('http://abc.com/abc.jpg');
+     * // 在回调里突然想换另外一张图片来展示
+     * _cycler._$setImage('http://abc.com/abc.jpg');
      * ```
-     * @method {_$setImage}
-     * @param  {String} 图片地址
+     * 
+     * @method module:util/cycler/cycler._$$Cycler#_$setImage
+     * @param  {String} arg0 - 图片地址
      * @return {Void}
      */
     _pro._$setImage = (function(){
