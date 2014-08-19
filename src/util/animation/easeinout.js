@@ -5,57 +5,62 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module util/animation/easeinout */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/util.js',
-    '{lib}util/animation/bezier.js'
+    'base/global',
+    'base/klass',
+    'base/util',
+    './bezier.js'
 ],function(NEJ,_k,_u,_t0,_p,_o,_f,_r){
     // variable declaration
     var _pro;
     /**
-     * 先慢后快再慢动画<br/>
-     * 页面结构举例
+     * 先慢后快再慢动画
+     * 
+     * 结构举例
      * ```html
-     *   <div id='id-bounce1'></div>
+     * <div id='id-bounce1'></div>
      * ```
+     * 
      * 脚本举例
      * ```javascript
-     *   var _box = document.getElementById('id-bounce1'),_easeinout;
-     *   var options = {
-     *       from:{
-     *           offset: 100,
-     *           velocity: 10
-     *       },
-     *       to{
-     *           offset:200
-     *       },
-     *       duration:1000,
-     *       onupdate: function(offset){
-     *           _box.style.left = offset.offset + 'px';
-     *       },
-     *       onstop: function(){
-     *           _easeinout = nej.ut._$$AnimEaseInOut._$recycle(_easeinout);
-     *       }
-     *   }
-     *   // 创建减速动画实例
-     *   _easeinout  = nej.ut._$$AnimEaseInOut._$allocate(options);
-     *   // 开始动画
-     *   _easeinout._$play();
+     * NEJ.define([
+     *     'util/animation/easeinout'
+     * ],function(_t){
+     *     // 创建动画实例
+     *     var _easeinout  = _t._$$AnimEaseInOut._$allocate({
+     *         from:{
+     *             offset:100
+     *         },
+     *         to:{
+     *             offset:200
+     *         },
+     *         duration:1000,
+     *         onupdate:function(_event){
+     *             _box.style.left = _event.offset + 'px';
+     *         },
+     *         onstop:function(){
+     *             this._$recycle();
+     *         }
+     *     });
+     *     // 开始动画
+     *     _easeinout._$play();
+     * });
      * ```
-     * @class   {nej.ut._$$AnimEaseInOut} 先慢后快再慢动画
-     * @extends {nej.ut._$$AnimBezier}
-     * @param   {Object} 可选配置参数
-     * @property  {String} timing   时间函数，easeinout
+     * 
+     * @class   module:util/animation/easeinout._$$AnimEaseInOut
+     * @extends module:util/animation/bezier._$$AnimBezier
+     * 
+     * @param   {Object} config 可选配置参数
      */
     _p._$$AnimEaseInOut = _k._$klass();
     _pro = _p._$$AnimEaseInOut._$extend(_t0._$$AnimBezier);
     /**
      * 控件重置
+     * 
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
-     * @property {String} timing   时间函数，easeinout
+     * @method module:util/animation/easeinout._$$AnimEaseInOut#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
