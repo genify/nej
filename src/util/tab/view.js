@@ -12,7 +12,7 @@ NEJ.define([
     'base/element',
     'base/util',
     'util/event'
-],function(NEJ,_e,_u,_t,_p,_o,_f,_r){
+],function(NEJ,_k,_e,_u,_t,_p,_o,_f,_r){
     var _pro;
     /**
      * 标签切换控件封装
