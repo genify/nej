@@ -465,8 +465,11 @@ NEJ.define([
         var _doAddTemplate = function(_node){
             var _type = _node.name.toLowerCase();
             switch(_type){
-                case 'jst':
+                 case 'jst':
                     _y._$addHtmlTemplate(_node,!0);
+                return;
+                case 'txt':
+                    _p._$addTextTemplate(_node.id,_node.value||'');
                 return;
                 case 'ntp':
                     _p._$addNodeTemplate(_node.value||'',_node.id);

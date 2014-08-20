@@ -1,0 +1,15 @@
+.#<uispace>{width:210px;border:1px solid #aaa;font-size:14px;text-align:center;}
+.#<uispace> .zact{line-height:30px;overflow:hidden;zoom:1;}
+.#<uispace> .zact .zfl{float:left;}
+.#<uispace> .zact .zfr{float:right;}
+.#<uispace> .zact .zbtn{padding:0 5px;cursor:pointer;}
+.#<uispace> .zact .ztxt{margin-left:10px;}
+.#<uispace> .zday{table-layout:fixed;border-collapse:collapse;width:100%;}
+.#<uispace> .zday th{font-weight:normal;}
+.#<uispace> .zday a{display:block;height:22px;line-height:22px;color:#333;text-decoration:none;}
+.#<uispace> .zday a:hover{background:#eee;}
+.#<uispace> .zday a.js-extended{color:#aaa;}
+.#<uispace> .zday a.js-selected,
+.#<uispace> .zday a.js-selected:hover{background:#DAE4E7;}
+.#<uispace> .zday a.js-disabled,
+.#<uispace> .zday a.js-disabled:hover{background:#fff;color:#eee;cursor:default;}

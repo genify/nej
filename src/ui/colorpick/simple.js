@@ -19,9 +19,9 @@ NEJ.define([
 ],function(NEJ,_k,_e,_v,_i,_t0,_t1,_css,_html,_p,_o,_f,_r){
     var _pro,
         _seed_css = _e._$pushCSSText(_css,{root:_c._$get('root')}),
-        _ui_seed  = _t0._$parseUITemplate(_html);
-        _seed_html  = _ui_seed['_seed_html'],
-        _seed_color = _ui_seed['_seed_color'];
+        _seed_ui  = _t0._$parseUITemplate(_html);
+        _seed_html  = _seed_ui['_seed_html'],
+        _seed_color = _seed_ui['_seed_color'];
     /**
      * 颜色选择控件
      *
