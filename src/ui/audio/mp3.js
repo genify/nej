@@ -21,7 +21,7 @@ NEJ.define([
     'text!./mp3.html'
 ],function(NEJ,_k,_e,_v,_u,_c,_t0,_t1,_t2,_t3,_css,_html,_p,_o,_f,_r) {
     var _pro,
-        _seed_css = _e._$pushCSSText(_css),
+        _seed_css = _e._$pushCSSText(_css,{root:_c._$get('root')}),
         _seed_html= _t3._$addNodeTemplate(_html);
     /**
      * 音频播放器

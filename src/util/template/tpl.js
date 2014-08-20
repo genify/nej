@@ -478,7 +478,7 @@ NEJ.define([
         };
         return function(_html,_map){
             _map = _map||{};
-            var _element = _u._$html2node(_html),
+            var _element = _e._$html2node(_html),
                 _tmap = {};
             if (!!_element){
                  var _list = _element.tagName=='TEXTAREA' ? [_element]

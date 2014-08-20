@@ -26,7 +26,7 @@ module('依赖模块');
 test('define',function(){expect(0);
     define('{pro}custom.test.js',[
         '../custom.js',
-        '/base/element'
+        'base/element'
         ],f);
 });
 // test('define',function(){expect(0);
@@ -34,7 +34,7 @@ test('define',function(){expect(0);
 //         'base/platform',
 //         '../mywidget/{platform}hack.js',
 //         '../../..////../src/ui/editor/custom.js',
-//         '/base/element',
+//         'base/element',
 //         '{pro}log.js'
 //         ],f);
 // });

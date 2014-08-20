@@ -1,6 +1,6 @@
 .#<uispace> .m-pre, .#<uispace> .m-play, .#<uispace> .m-next, .#<uispace> .m-cur, .#<uispace> .m-pause, .#<uispace> .m-volmin,
 .#<uispace> .m-volminc, .#<uispace> .m-shuffled, .#<uispace> .m-repeatd-1, .#<uispace> .m-shufflec, .#<uispace> .m-repeatd, .#<uispace> .m-repeatc,
-.#<uispace> .m-volmax, .#<uispace> .m-volmaxc{background:url('+_c._$get('root')+'audio_sprite.png) no-repeat 9999px 9999px;}
+.#<uispace> .m-volmax, .#<uispace> .m-volmaxc{background:url(#<root>audio_sprite.png) no-repeat 9999px 9999px;}
 .#<uispace> .m-player{height:40px;min-width:530px;background:#606060;cursor:default}
 .#<uispace> .m-player .ctl{width:300px; float:left;}
 .#<uispace> .m-pre{height:10px;width:16px;background-position:0 0;float:left;margin-top:14px;margin-left: 10px;}
@@ -25,7 +25,7 @@
 .#<uispace> .m-timeline-1{margin-top:0px;width:90px;position:absolute;}
 .#<uispace> .m-progress{background:green;margin-top:-1px;}
 .#<uispace> .m-cur{position:absolute;right:-5px;margin-left:-5px;background-position:0 -302px;height:10px;width:10px;}
-.#<uispace> .m-cur2{position:absolute;right:-5px;margin-left:-5px;background:url('+_c._$get('root')+'audio_sprite.png) no-repeat 9999px 9999px;width:10px;background-position:0 -302px;}
+.#<uispace> .m-cur2{position:absolute;right:-5px;margin-left:-5px;background:url(#<root>audio_sprite.png) no-repeat 9999px 9999px;width:10px;background-position:0 -302px;}
 .#<uispace> .m-cur:active, .#<uispace> .m-cur2:active{background-position:0 -328px;}
 .#<uispace> .m-shuffled{background-position:0 -262px;}
 .#<uispace> .m-shufflec{background-position:-56px -115px;}

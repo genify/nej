@@ -16,8 +16,8 @@ NEJ.define([
     'ui/base',
     'ui/colorpick/colorpanel',
     'ui/colorpick/util',
-    'text!./clolorpick.css',
-    'text!./clolorpick.html'
+    'text!./colorpick.css',
+    'text!./colorpick.html'
 ],function(NEJ,_k,_c,_e,_v,_t0,_i,_i0,_i1,_css,_html,_p,_o,_f,_r){
     var _pro,
         _seed_css = _e._$pushCSSText(_css,{root:_c._$get('root')}),

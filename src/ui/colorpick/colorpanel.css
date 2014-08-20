@@ -5,7 +5,7 @@
 .#<uispace> .zwrp .zshw{height:104px;border:1px solid #bdbabd;}
 .#<uispace> .zpnl{float:left;}
 .#<uispace> .zpnl .zdot{width:9px;background-position:0 0;}
-.#<uispace> .zpnl .zshw{width:104px;background:url('+_c._$get('root')+'nej_color.png) no-repeat;}
+.#<uispace> .zpnl .zshw{width:104px;background:url(#<root>nej_color.png) no-repeat;}
 .#<uispace> .zhlt{float:right;padding:3px 7px;}
 .#<uispace> .zhlt .zdot{width:44px;background-position:0 -30px;}
-.#<uispace> .zhlt .zshw{width:26px;background:url('+_c._$get('root')+'nej_color_mask.png) repeat-x;}
+.#<uispace> .zhlt .zshw{width:26px;background:url(#<root>nej_color_mask.png) repeat-x;}
