@@ -374,11 +374,9 @@ NEJ.define([
                 _body1 = _doc.documentElement;
             _u._$forEach(
                 _farr,function(_item){
-                    debugger;
                     var _main = _item.main;
                     _u._$forEach(
                         _item.sub,function(_key){
-                            debugger;
                             _result[_main+_key] = _fmap[_main](
                                 _key,_body0,_body1,_result
                             );
