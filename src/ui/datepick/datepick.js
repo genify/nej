@@ -7,14 +7,14 @@
  */
 /** @module ui/datepick/datepick */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/element.js',
-    '{lib}base/util.js',
-    '{lib}ui/layer/card.wrapper.js',
-    '{lib}util/calendar/calendar.js',
-    '{lib}util/template/tpl.js',
-    '{lib}util/template/jst.js'
+    'base/global',
+    'base/klass',
+    'base/element',
+    'base/util',
+    'ui/layer/card.wrapper',
+    'util/calendar/calendar',
+    'util/template/tpl',
+    'util/template/jst'
 ],function(NEJ,_k,_e,_u,_i0,_t0,_t1,_t2,_p,_o,_f,_r){
     var _pro,
         _seed_css,
@@ -39,8 +39,8 @@ NEJ.define([
      * 脚本举例
      * ```javascript
      * NEJ.define([
-     *     '{lib}base/element.js',
-     *     '{lib}ui/datepick/datepick.js'
+     *     'base/element',
+     *     'ui/datepick/datepick'
      * ],function(_e,_i0,_p,_o,_f,_r){
      *     var pDate = new Date(1997,7,9)
      *     var nDate = new Date(2013,7,9);

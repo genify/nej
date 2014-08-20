@@ -5,42 +5,47 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module ui/range/range */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/element.js',
-    '{lib}ui/base.js',
-    '{lib}util/range/range.js'
+    'base/global',
+    'base/klass',
+    'base/element',
+    'ui/base',
+    'util/range/range'
 ],function(NEJ,_k,_e,_i,_t0,_p,_o,_f,_r){
     var _pro,
         _seed_css;
     /**
      * 范围选择控件封装
      *
-     * @class   module:nej.ui._$$Range 范围选择控件封装
-     * @extends {nej.ui._$$Abstract}
-     * @param   {Object} 可选配置参数
+     * @class   module:ui/range/range._$$Range
+     * @extends module:ui/base._$$Abstract
+     * @param   {Object} arg0 - 可选配置参数
+     */
+    /**
+     * 页码切换事件
      *
-     * [hr]
+     * @event  module:ui/range/range._$$Range#onchange
+     * @param  {Object} arg0 -   区域信息
+     */
+    /**
+     * 区域变化之后触发事件
      *
-     * @event  {onchange} 页码切换事件
-     * @param  {Object}   区域信息
+     * @event  module:ui/range/range._$$Range#onafterchange
+     */
+    /**
+     * 区域变化之前触发事件
      *
-     * [hr]
-     *
-     * @event  {onafterchange} 区域变化之后触发事件
-     *
-     * [hr]
-     *
-     * @event  {onbeforechange} 区域变化之前触发事件
-     * @param  {Object}   区域信息
+     * @event  module:ui/range/range._$$Range#onbeforechange
+     * @param  {Object} arg0 -   区域信息
      */
     _p._$$Range = _k._$klass();
     _pro = _p._$$Range._$extend(_i._$$Abstract);
     /**
      * 初始化控件
+     *
      * @protected
-     * @method {__init}
+     * @method module:ui/range/range._$$Range#__init
      * @return {Void}
      */
     _pro.__init = function(){
@@ -53,9 +58,10 @@ NEJ.define([
     };
     /**
      * 重置控件
+     *
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
+     * @method module:ui/range/range._$$Range#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -65,8 +71,9 @@ NEJ.define([
     };
     /**
      * 控件销毁
+     *
      * @protected
-     * @method {__destroy}
+     * @method module:ui/range/range._$$Range#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -77,8 +84,9 @@ NEJ.define([
     };
     /**
      * 初始化外观信息
+     *
      * @protected
-     * @method {__initXGui}
+     * @method module:ui/range/range._$$Range#__initXGui
      * @return {Void}
      */
     _pro.__initXGui = function(){
@@ -86,8 +94,9 @@ NEJ.define([
     };
     /**
      * 初始化结构
+     *
      * @protected
-     * @method {__initNode}
+     * @method module:ui/range/range._$$Range#__initNode
      * @return {Void}
      */
     _pro.__initNode = function(){
@@ -97,9 +106,10 @@ NEJ.define([
     };
     /**
      * 区域变化触发事件
+     *
      * @protected
-     * @method {__onRangeChange}
-     * @param  {Object} 区域信息
+     * @method module:ui/range/range._$$Range#__onRangeChange
+     * @param  {Object} arg0 - 区域信息
      * @return {Void}
      */
     _pro.__onRangeChange = function(_event){
@@ -107,9 +117,10 @@ NEJ.define([
     };
     /**
      * 区域变化触发事件
+     *
      * @protected
-     * @method {__onBeforeRangeChange}
-     * @param  {Object} 区域信息
+     * @method module:ui/range/range._$$Range#__onBeforeRangeChange
+     * @param  {Object} arg0 - 区域信息
      * @return {Void}
      */
     _pro.__onBeforeRangeChange = function(_event){
@@ -117,9 +128,10 @@ NEJ.define([
     };
     /**
      * 区域变化触发事件
+     *
      * @protected
-     * @method {__onAfterRangeChange}
-     * @param  {Object} 区域信息
+     * @method module:ui/range/range._$$Range#__onAfterRangeChange
+     * @param  {Object} arg0 - 区域信息
      * @return {Void}
      */
     _pro.__onAfterRangeChange = function(){

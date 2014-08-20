@@ -21,5 +21,5 @@ var f = function(){
 }
 module('依赖模块');
 test('define',function(){expect(0);
-    define('{pro}audio.test.js',['{lib}ui/audio/audio.js'],f);
+    define('{pro}audio.test.js',['ui/audio/audio'],f);
 });

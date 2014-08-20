@@ -7,11 +7,11 @@
  */
 /** @module ui/editor/command/simple */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/element.js',
-    '{lib}ui/editor/command/color.js',
-    '{lib}ui/colorpick/colorpick.simple.js'
+    'base/global',
+    'base/klass',
+    'base/element',
+    'ui/editor/command/color',
+    'ui/colorpick/colorpick.simple'
 ],function(NEJ,_k,_e,_i0,_i1,_p,_o,_f,_r){
     var _pro,
         _seed_css;

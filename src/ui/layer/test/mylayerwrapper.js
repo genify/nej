@@ -48,5 +48,5 @@ var f = function(){
     };
 };
 define('{pro}mylayerwrapper.js',
-      ['{lib}ui/layer/layer.wrapper.js'
+      ['ui/layer/layer.wrapper'
       ,'{pro}mylayer.js'],f);

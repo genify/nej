@@ -7,11 +7,11 @@
  */
 /** @module ui/editor/command/fontname */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/element.js',
-    '{lib}ui/editor/command/font.js',
-    '{lib}util/template/tpl.js'
+    'base/global',
+    'base/klass',
+    'base/element',
+    'ui/editor/command/font',
+    'util/template/tpl'
 ],function(NEJ,_k,_e,_i0,_t0,_p,_o,_f,_r){
     var _pro,
         _seed_html;

@@ -12,16 +12,16 @@ var f = function(){
      * @class   弹出层封装基类对象
      * @extends {nej.ui._$$CardWrapper}
      * @param   {Object} _options 可选配置参数
-     * 
+     *
      */
     _p._$$MyWindow = NEJ.C();
       _proMyWindow = _p._$$MyWindow._$extend(_p._$$WindowWrapper);
       _supMyWindow = _p._$$MyWindow._$supro;
-    
+
     _proMyWindow.__initXGui = function(){
         this.__seed_html = _seed_html;
     };
-	
+
 	_proMyWindow.__reset = function(_options){
 		_options = _options || {};
         _options.draggable = !!_options.draggable ? true : false;
@@ -30,4 +30,4 @@ var f = function(){
 	};
 };
 define('{pro}mywindow.js',
-      ['{lib}ui/layer/window.wrapper.js'],f);
+      ['ui/layer/window.wrapper'],f);

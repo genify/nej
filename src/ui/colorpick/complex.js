@@ -7,14 +7,15 @@
  */
 /** @module ui/colorpick/complex */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/util.js',
-    '{lib}ui/colorpick/colorpick.simple.js',
-    '{lib}util/template/jst.js'
-],function(NEJ,_k,_u,_i0,_t0,_p,_o,_f,_r){
+    'base/global',
+    'base/klass',
+    'base/util',
+    'ui/colorpick/colorpick.simple',
+    'util/template/jst',
+    'text!./complex.html'
+],function(NEJ,_k,_u,_i0,_t0,_html,_p,_o,_f,_r){
     var _pro,
-        _seed_color;
+        _seed_color = _t0._$addHtmlTemplate(_html);
     /**
      * 颜色选择控件
      *
@@ -26,7 +27,7 @@ NEJ.define([
      * 脚本举例
      * ```javascript
      * NEJ.define([
-     *     '{lib}ui/colorpick/complex.js'
+     *     'ui/colorpick/complex'
      * ],function(_i0,_p,_o,_f,r){
      *     var _cp = _i0._$$ComplexColorPick._$allocate({
      *         parent:'colorpanel-box',
@@ -108,13 +109,6 @@ NEJ.define([
             );
         };
     })();
-
-    // color list
-    _seed_color = _t0._$addHtmlTemplate('\
-        {list xlist as x}\
-        <a class="zitm zitm2" style="background-color:#${x}" data-value="#${x}" href="#">&nbsp;</a>\
-        {/list}'
-    );
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ui'),_p);

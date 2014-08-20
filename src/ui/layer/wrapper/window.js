@@ -7,10 +7,10 @@
  */
 /** @module ui/layer/wrapper/window */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}ui/layer/layer.wrapper.js',
-    '{lib}ui/layer/window.js'
+    'base/global',
+    'base/klass',
+    'ui/layer/layer.wrapper',
+    'ui/layer/window'
 ],function(NEJ,_k,_i0,_i1,_p,_o,_f,_r){
     var _pro;
     /**
@@ -18,25 +18,36 @@ NEJ.define([
      *
      * 脚本举例
      * ```javascript
-     * // 第一步：继承此类，生成一个新类
-     * _p = NEJ.P('nej.ui');
-     * _p._$$MyWindow = NEJ.C();
-     * var _seed_html = _e._$addNodeTemplate('<div>您要展示的内容部分</div>');
-     * _proMyWindow = _p._$$MyWindow._$extend(_p._$$WindowWrapper);
-     * // 生成窗体的展示内容
-     * _proMyWindow.__initXGui = function(){
-     *     this.__seed_html = _seed_html;
-     * };
-     * // 第二步:实例化一个窗体控件
-     * var _myCard = _p._$$MyWindow._$allocate({
-     *     parent:document.body,
-     *     title:'窗口标题',
-     *     draggable:false,
-     *     // 是否有盖层
-     *     mask:true,
-     *     onclose:function(){
-     *       // 关闭窗口的回调
-     *     }
+     * NEJ.define([
+     *     'base/klass',
+     *     'base/element',
+     *     'ui/layer/wrapper/window'
+     * ],function(_i0,_p,_o,_f,_r){
+     *     // 第一步：继承此类，生成一个新类
+     *     _p = NEJ.P('nej.ui');
+     *     _p._$$MyWindow = _k._$klass();
+     *     var _seed_html = _e._$addNodeTemplate('<div>您要展示的内容部分</div>');
+     *     _proMyWindow = _p._$$MyWindow._$extend(_i0._$$WindowWrapper);
+     *     // 生成窗体的展示内容
+     *     _proMyWindow.__initXGui = function(){
+     *         this.__seed_html = _seed_html;
+     *     };
+     * });
+     *
+     * NEJ.define([
+     *     '/path/custom/to/mywindow.js'
+     * ],function(_i0,_p,_o,_f,_r){
+     *     // 第二步:实例化一个窗体控件
+     *     var _myCard = _i0._$$MyWindow._$allocate({
+     *         parent:document.body,
+     *         title:'窗口标题',
+     *         draggable:false,
+     *         // 是否有盖层
+     *         mask:true,
+     *         onclose:function(){
+     *           // 关闭窗口的回调
+     *         }
+     *     });
      * });
      * ```
      *
@@ -52,7 +63,7 @@ NEJ.define([
      *
      * @protected
      * @method module:ui/layer/wrapper/window._$$WindowWrapper#__getLayerInstance
-     * @return {nej.ui._$$Layer} 弹层控件实例
+     * @return {module:ui/layer/layer._$$Layer} 弹层控件实例
      */
     _pro.__getLayerInstance = function(){
         return _i1._$$Window._$allocate(this.__lopt);

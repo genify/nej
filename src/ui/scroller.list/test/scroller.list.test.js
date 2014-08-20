@@ -1,12 +1,12 @@
 var f = function(){
     //定义测试模块
     module("ui-scrollList");
-    
+
     var _  = NEJ.P,
         _e = _('nej.e'),
         _p = _('nej.ui'),
 		_t = _('nej.ut');
-        
+
     //开始单元测试
 //    test('scrollList',function(){
 //        stop();
@@ -39,7 +39,7 @@ var f = function(){
 //            }
 //        }));
 //    });
-	
+
 	test('profile',function(){
         stop();
 		var _sp = _t._$$ScrollPerf._$allocate({
@@ -77,7 +77,7 @@ var f = function(){
             }
         }));
     });
-	
+
 //	test('profile image',function(){
 //        stop();
 //        var _sp = _t._$$ScrollPerf._$allocate({
@@ -119,7 +119,7 @@ var f = function(){
 module('依赖模块');
 test('define',function(){expect(0);
     define('{pro}scroller.list.test.js',
-    ['{lib}util/profile/profile.js',
-     '{lib}ui/scroller.list/scroller.list.js',
-     '{lib}ui/pullrefresh/pullrefresh.js'],f);
+    ['util/profile/profile',
+     'ui/scroller.list/scroller.list',
+     'ui/pullrefresh/pullrefresh'],f);
 });

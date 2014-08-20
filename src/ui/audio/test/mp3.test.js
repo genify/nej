@@ -4,7 +4,7 @@ var f = function(){
     var _  = NEJ.P,
         _e = _('nej.e'),
         _p = _('nej.ui');
-        
+
     //开始单元测试
     test('mp3',function(){
     	expect(0);
@@ -54,5 +54,5 @@ var f = function(){
 }
 module('依赖模块');
 test('define',function(){expect(0);
-    define('{pro}mp3.test.js',['{lib}ui/audio/mp3.js'],f);
+    define('{pro}mp3.test.js',['ui/audio/mp3'],f);
 });

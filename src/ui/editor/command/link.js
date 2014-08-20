@@ -7,12 +7,12 @@
  */
 /** @module ui/editor/command/link */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/element.js',
-    '{lib}base/util.js',
-    '{lib}ui/layer/window.wrapper.js',
-    '{lib}util/template/tpl.js'
+    'base/global',
+    'base/klass',
+    'base/element',
+    'base/util',
+    'ui/layer/window.wrapper',
+    'util/template/tpl'
 ],function(NEJ,_k,_e,_u,_i,_t0,_p,_o,_f,_r){
     var _pro,
         _seed_html,

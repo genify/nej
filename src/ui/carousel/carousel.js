@@ -7,16 +7,16 @@
  */
 /** @module ui/carousel/carousel */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/platform.js',
-    '{lib}base/element.js',
-    '{lib}base/event.js',
-    '{lib}base/util.js',
-    '{lib}util/event.js',
-    '{lib}util/gesture/drag.js',
-    '{lib}util/timer/animation.js',
-    '{lib}ui/carousel/indicator.js'
+    'base/global',
+    'base/klass',
+    'base/platform',
+    'base/element',
+    'base/event',
+    'base/util',
+    'util/event',
+    'util/gesture/drag',
+    'util/timer/animation',
+    'ui/carousel/indicator'
 ],function(NEJ,_k,_m,_e,_v,_u,_t,_t0,_t1,_i0,_p,_o,_f,_r){
     // variable declaration
     var _pro;

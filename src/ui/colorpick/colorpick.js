@@ -7,19 +7,21 @@
  */
 /** @module ui/colorpick/colorpick */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/config.js',
-    '{lib}base/element.js',
-    '{lib}base/event.js',
-    '{lib}util/template/tpl.js',
-    '{lib}ui/base.js',
-    '{lib}ui/colorpick/colorpanel.js',
-    '{lib}ui/colorpick/util.js'
-],function(NEJ,_k,_c,_e,_v,_t0,_i,_i0,_i1,_p,_o,_f,_r){
+    'base/global',
+    'base/klass',
+    'base/config',
+    'base/element',
+    'base/event',
+    'util/template/tpl',
+    'ui/base',
+    'ui/colorpick/colorpanel',
+    'ui/colorpick/util',
+    'text!./clolorpick.css',
+    'text!./clolorpick.html'
+],function(NEJ,_k,_c,_e,_v,_t0,_i,_i0,_i1,_css,_html,_p,_o,_f,_r){
     var _pro,
-        _seed_css,
-        _seed_html;
+        _seed_css = _e._$pushCSSText(_css,{root:_c._$get('root')}),
+        _seed_html= _t0._$addNodeTemplate(_html);
     /**
      * 颜色选择控件
      *
@@ -31,7 +33,7 @@ NEJ.define([
      * 脚本举例
      * ```javascript
      * NEJ.define([
-     *     '{lib}ui/colorpick/colorpick.js'
+     *     'ui/colorpick/colorpick'
      * ],function(_i0,_p,_o,_f,_r){
      *     var _cp = _i0._$$ColorPick._$allocate({
      *         parent:'colorpanel-box',
@@ -208,26 +210,6 @@ NEJ.define([
     _pro._$setColor = function(_color){
         this.__panel._$setColor(_color);
     };
-
-    // ui css text
-    _seed_css = _e._$pushCSSText('\
-        .#<uispace> .zbx{background:url('+_c._$get('root')+'nej_color_btn.png) no-repeat -50px -50px;}\
-        .#<uispace> .zinf{width:160px;margin:0 auto;padding-bottom:2px;overflow:hidden;font-size:12px;}\
-        .#<uispace> .zinf .zfl{float:left;}\
-        .#<uispace> .zinf .zes{width:19px;height:19px;margin:0 2px 0 3px;background-position:-22px 0;cursor:pointer;}\
-        .#<uispace> .zinf .zpv{width:17px;height:17px;border:1px solid #bdbabd;}\
-        .#<uispace> .zinf .ztxt{width:56px;height:13px;line-height:13px;}\
-        .#<uispace> .zinf .zbtn{width:49px;height:20px;line-height:20px;padding:0;cursor:pointer;}');
-    // ui html code
-    _seed_html = _t0._$addNodeTemplate('\
-        <div class="'+_seed_css+'">\
-          <div class="zinf">\
-            <span class="zfl zes zbx js-ztag" title="清除颜色">&nbsp;</span>\
-            <span class="zfl zpv js-ztag">&nbsp;</span>\
-            <label class="zfl">#<input class="ztxt js-ztag" type="text" maxlength="6"/></label>\
-            <input class="zfl zbtn js-ztag" type="button" value="确定"/>\
-          </div>\
-        </div>');
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ui'),_p);

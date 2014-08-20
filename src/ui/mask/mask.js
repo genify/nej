@@ -5,46 +5,53 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module ui/maks/mask */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/constant.js',
-    '{lib}base/element.js',
-    '{lib}base/util.js',
-    '{lib}ui/base.js'
+    'base/global',
+    'base/klass',
+    'base/constant',
+    'base/element',
+    'base/util',
+    'ui/base'
 ],function(NEJ,_k,_g,_e,_u,_i,_p,_o,_f,_r){
     var _pro,
         _seed_css;
     /**
-     * 盖层控件<br />
+     * 盖层控件
+     *
      * 页面结构举例
      * ```html
-     *   <style type="text/css">
-     *       .box{position:relative;}
-     *   </style>
-     *   <div id="mask-box" class="box"></div>
+     * <style type="text/css">
+     *     .box{position:relative;}
+     * </style>
+     * <div id="mask-box" class="box"></div>
      * ```
+     *
      * 脚本举例
      * ```javascript
-     *   var _mask = _p._$$Mask._$allocate({
-     *       parent:document.body,
-     *       content:'<div style="width:100px;height:100px;margin:0 auto;margin-top:150px;">搞一点盖层的内容</div>'
-     *   });
+     * NEJ.define([
+     *     'ui/maks/mask'
+     * ],function(_i0,_p,_o,_f,_r){
+     *     var _mask = _i0._$$Mask._$allocate({
+     *         parent:document.body,
+     *         content:'<div style="width:100px;height:100px;margin:0 auto;margin-top:150px;">搞一点盖层的内容</div>'
+     *     });
+     * });
      * ```
      *
-     * @class   module:nej.ui._$$Mask 盖层控件
-     * @extends {nej.ui._$$Abstract}
-     * @param   {Object} 可选配置参数
-     * @property  {String|Node} content 内容节点或者HTML代码
-     *
+     * @class     module:ui/maks/mask._$$Mask
+     * @extends   module:ui/base._$$Abstract
+     * @param     {Object}      arg0    - 可选配置参数
+     * @property  {String|Node} content - 内容节点或者HTML代码
      */
     _p._$$Mask = _k._$klass();
     _pro = _p._$$Mask._$extend(_i._$$Abstract);
     /**
      * 控件重置
+     *
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
+     * @method module:ui/maks/mask._$$Mask#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -56,8 +63,9 @@ NEJ.define([
     };
     /**
      * 控件销毁
+     *
      * @protected
-     * @method {__destroy}
+     * @method module:ui/maks/mask._$$Mask#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -66,22 +74,25 @@ NEJ.define([
     };
     /**
      * 初始化外观
+     *
      * @protected
-     * @method {__initXGui}
+     * @method module:ui/maks/mask._$$Mask#__initXGui
      * @return {Void}
      */
     _pro.__initXGui = function(){
         this.__seed_css = _seed_css;
     };
     /**
-     * 显示盖层<br />
+     * 显示盖层
+     *
      * ```javascript
-     *   // 先隐藏盖层
-     *   _mask._$hide();
-     *   // 显示盖层
-     *   _mask._$show();
+     * // 先隐藏盖层
+     * _mask._$hide();
+     * // 显示盖层
+     * _mask._$show();
      * ```
-     * @method {_$show}
+     *
+     * @method module:ui/maks/mask._$$Mask#_$show
      * @return {Void}
      */
     _pro._$show = function(){

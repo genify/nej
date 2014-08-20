@@ -5,8 +5,8 @@ var f = function(){
         _v = _('nej.v'),
 		_e = _('nej.e'),
 		_p = _('nej.ui');
-		
-		
+
+
 	//开始单元测试
 	test('carouselX',function(){
 		stop();
@@ -36,9 +36,9 @@ var f = function(){
 			setTimeout(function(){
 				start();
 			},10000);
-		
+
 	});
-	
+
 	//开始单元测试
 	test('carouselY',function(){
 		expect(0);
@@ -46,5 +46,5 @@ var f = function(){
 }
 module('依赖模块');
 test('define',function(){expect(0);
-	define('{pro}carousel.test.js',['{lib}ui/carousel/carousel.x.js','{lib}ui/carousel/carousel.y.js'],f);
+	define('{pro}carousel.test.js',['ui/carousel/carousel.x','ui/carousel/carousel.y'],f);
 });

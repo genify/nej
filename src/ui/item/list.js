@@ -7,9 +7,9 @@
  */
 /** @module ui/item/list */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}ui/item/item.js'
+    'base/global',
+    'base/klass',
+    'ui/item/item'
 ],function(NEJ,_k,_i0,_p,_o,_f,_r){
     var _pro;
     /**

@@ -7,16 +7,16 @@
  */
 /** @module ui/editor/command/uploadimage */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/config.js',
-    '{lib}base/element.js',
-    '{lib}base/event.js',
-    '{lib}base/util.js',
-    '{lib}ui/layer/window.wrapper.js',
-    '{lib}util/tab/tab.js',
-    '{lib}util/flash/flash.js',
-    '{lib}util/template/tpl.js'
+    'base/global',
+    'base/klass',
+    'base/config',
+    'base/element',
+    'base/event',
+    'base/util',
+    'ui/layer/window.wrapper',
+    'util/tab/tab',
+    'util/flash/flash',
+    'util/template/tpl'
 ],function(NEJ,_k,_c,_e,_v,_u,_i0,_t0,_t1,_t2,_p,_o,_f,_r){
     var _pro,
         _seed_css,

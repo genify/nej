@@ -55,5 +55,5 @@ var f = function(){
 }
 module('依赖模块');
 test('define',function(){expect(0);
-    define('{pro}datepick.test.js',['{lib}ui/datepick/datepick.js'],f);
+    define('{pro}datepick.test.js',['ui/datepick/datepick'],f);
 });

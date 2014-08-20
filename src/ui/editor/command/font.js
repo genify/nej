@@ -7,13 +7,13 @@
  */
 /** @module ui/editor/command/font */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/element.js',
-    '{lib}base/event.js',
-    '{lib}base/util.js',
-    '{lib}ui/layer/card.wrapper.js',
-    '{lib}util/template/jst.js'
+    'base/global',
+    'base/klass',
+    'base/element',
+    'base/event',
+    'base/util',
+    'ui/layer/card.wrapper',
+    'util/template/jst'
 ],function(NEJ,_k,_e,_v,_u,_i,_t0,_p,_o,_f,_r){
     var _pro,
         _seed_css,

@@ -7,12 +7,12 @@
  */
 /** @module ui/layer/wrapper/layer */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/element.js',
-    '{lib}base/util.js',
-    '{lib}ui/base.js',
-    '{lib}ui/layer/layer.js'
+    'base/global',
+    'base/klass',
+    'base/element',
+    'base/util',
+    'ui/base',
+    'ui/layer/layer'
 ],function(NEJ,_k,_e,_u,_i,_i0,_p,_o,_f,_r){
     var _pro;
     /**
@@ -22,8 +22,8 @@ NEJ.define([
      * ```javascript
      * // 第一步：继承此基类生成新类
      * NEJ.define([
-     *     '{lib}base/element.js',
-     *     '{lib}ui/layer/wrapper/layer.js'
+     *     'base/element',
+     *     'ui/layer/wrapper/layer'
      * ],function(_e,_i0,_p,_o,_f,_r){
      *     var _seed_css = _e._$pushCSSText('.#<uispace>
      *     {position:absolute;background:#fff;}');
@@ -42,8 +42,8 @@ NEJ.define([
      * });
      * // 下面是对layerwrapper的描述
      * NEJ.define([
-     *     '{lib}base/klass.js',
-     *     '{lib}ui/layer/wrapper/layer.js',
+     *     'base/klass',
+     *     'ui/layer/wrapper/layer',
      *     '/path/custom/to/layer.js'
      * ],function(_k,_i0,_i1,_p,_o,_f,_r){
      *     // 首先：继承layerwrapper基类生成的一个新类
@@ -164,8 +164,8 @@ NEJ.define([
      *
      * 脚本举例
      * ```javascript
-     *   // 显示浮层
-     *   _ly._$show();
+     * // 显示浮层
+     * _ly._$show();
      * ```
      *
      * @method module:ui/layer/wrapper/layer._$$LayerWrapper#_$show
@@ -181,9 +181,10 @@ NEJ.define([
      *
      * 脚本举例
      * ```javascript
-     *   // 隐藏弹层
-     *   _ly._$hide();
+     * // 隐藏弹层
+     * _ly._$hide();
      * ```
+     *
      * @method module:ui/layer/wrapper/layer._$$LayerWrapper#_$hide
      * @return {Void}
      */

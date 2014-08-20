@@ -7,17 +7,17 @@
  */
 /** @module ui/editor/editor */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/config.js',
-    '{lib}base/element.js',
-    '{lib}base/event.js',
-    '{lib}base/util.js',
-    '{lib}ui/base.js',
-    '{lib}util/editor/editor.js',
-    '{lib}util/template/jst.js',
-    '{lib}util/editor/area.js',
-    '{lib}util/editor/toolbar.js'
+    'base/global',
+    'base/klass',
+    'base/config',
+    'base/element',
+    'base/event',
+    'base/util',
+    'ui/base',
+    'util/editor/editor',
+    'util/template/jst',
+    'util/editor/area',
+    'util/editor/toolbar'
 ],function(NEJ,_k,_c,_e,_v,_u,_i,_t0,_t1,_t2,_t3,_p,_o,_f,_r){
     var _seed_css,
         _seed_icmd,

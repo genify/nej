@@ -7,11 +7,11 @@
  */
 /** @module ui/editor/command/color */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/element.js',
-    '{lib}ui/layer/card.wrapper.js',
-    '{lib}ui/colorpick/colorpick.js'
+    'base/global',
+    'base/klass',
+    'base/element',
+    'ui/layer/card.wrapper',
+    'ui/colorpick/colorpick'
 ],function(NEJ,_k,_e,_i0,_i1,_p,_o,_f,_r){
     var _pro,
         _seed_css;

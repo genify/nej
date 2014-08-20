@@ -6,7 +6,7 @@ var f = function(){
             this._ui = nej.ui;
         }
     });
-    
+
     //开始单元测试
     test('生成一个suggest', function() {
         expect(0);
@@ -22,12 +22,11 @@ var f = function(){
             onchange:_onchage._$bind(this),
             onselect:_onselect._$bind(this)
         });
-        
+
     });
 }
 module('依赖模块');
 test('define',function(){expect(0);
     define('{pro}suggest.test.js',
-    ['{lib}ui/suggest/suggest.js','{lib}base/element.js'],f);
+    ['ui/suggest/suggest','base/element'],f);
 });
-  

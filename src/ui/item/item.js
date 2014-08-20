@@ -7,9 +7,9 @@
  */
 /** @module ui/item/item */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}ui/base.js'
+    'base/global',
+    'base/klass',
+    'ui/base'
 ],function(NEJ,_k,_i,_p,_o,_f,_r){
     var _pro;
     /**
@@ -24,8 +24,8 @@ NEJ.define([
      * 脚本举例
      * ```javascript
      * NEJ.define([
-     *     '{lib}base/klass.js',
-     *     '{lib}ui/item/item.js'
+     *     'base/klass',
+     *     'ui/item/item'
      * ],function(_k,_i0,_p,_o,_f,_r){
      *     var _  = NEJ.P,
      *         _p = _('nej.ut'),
@@ -52,7 +52,7 @@ NEJ.define([
      * // 第二步：生成item列表
      * // 可以自己循环list，生成item
      * NEJ.define([
-     *     '{lib}base/event.js',
+     *     'base/event',
      *     'path/to/custom/myitem.js'
      * ],function(_e,_i0,_p,_o,_f,_r){
      *     var _item = _i0._$$MyItem._$allocate({
