@@ -473,11 +473,10 @@ NEJ.define([
                 return;
             }
         };
-
         return function(_html,_map){
+            _map = _map||{};
             var _element = _u._$html2node(_html),
                 _tmap = {};
-            _map = _map||{};
             if (!!_element){
                  var _list = _element.tagName=='TEXTAREA' ? [_element]
                               : _u._$object2array(
@@ -490,18 +489,10 @@ NEJ.define([
                             var _key = _id.replace(_reg,function($1,$2){
                                 return $2;
                             });
-                            if (!_map[_key]){
-                                var _uid = _u._$uniqueID();
-                                _tmap[_key] = _uid;
-                            }else{
-                                _id = _map[_key];
-                                _tmap[_key] = _id;
-                            }
+                            _tmap[_key] = !_map[_key] ? _u._$uniqueID() : _map[_key];
                             _node.id = _tmap[_key];
-                            _doAddTemplate(_node);
-                        }else{
-                            _doAddTemplate(_node);
                         }
+                        _doAddTemplate(_node);
                     }
                 });
                 _e._$remove(_element,!0);
