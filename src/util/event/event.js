@@ -14,6 +14,7 @@ NEJ.define([
     'base/util',
     'util/event'
 ],function(NEJ,_k,_e,_v,_u,_t,_p,_o,_f,_r){
+    var _pro;
     /**
      * 自定义事件封装对象，封装的事件支持通过事件相关接口进行添加、删除等操作
      * 

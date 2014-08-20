@@ -13,6 +13,7 @@ NEJ.define([
     'util/event',
     'util/helper/select'
 ],function(NEJ,_k,_e,_t0,_t1,_p,_o,_f,_r){
+    var _pro;
     /**
      * 建议提示控件
      *

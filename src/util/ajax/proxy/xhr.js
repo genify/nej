@@ -12,6 +12,7 @@ NEJ.define([
     'base/klass',
     '{platform}xhr.js'
 ],function(_t,_u,_k,_h,_p,_o,_f,_r){
+    var _pro;
     /**
      * Ajax代理对象
      * 

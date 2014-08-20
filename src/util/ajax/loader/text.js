@@ -12,6 +12,7 @@ NEJ.define([
     'base/element',
     'util/ajax/xdr'
 ],function(_t,_k,_e,_j,_p,_o,_f,_r){
+    var _pro;
     /**
      * 文本资源加载器
      * 

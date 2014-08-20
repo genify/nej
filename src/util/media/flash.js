@@ -13,6 +13,7 @@ NEJ.define([
     'util/flash/flash',
     './media.js'
 ],function(NEJ,_k,_c,_e,_t,_p,_o,_f,_r){
+    var _pro;
     /**
      * 音频播放控件
      * 

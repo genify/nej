@@ -13,6 +13,7 @@ NEJ.define([
     'base/util',
     'util/event'
 ],function(NEJ,_k,_e,_u,_t,_p,_o,_f,_r){
+    var _pro;
     /**
      * 三级联动区域选择控件
      * 

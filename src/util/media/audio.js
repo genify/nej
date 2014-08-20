@@ -11,6 +11,7 @@ NEJ.define([
     'base/klass',
     './media.js'
 ],function(NEJ,_k,_t,_p,_o,_f,_r){
+    var _pro;
     /**
      * 音频播放控件
      * 
