@@ -142,6 +142,31 @@
         return _doParseDependency(_xlist,_result);
     };
     /*
+     * 解析插件信息
+     * @param  {String} _uri 地址
+     * @return {Array}       插件信息
+     */
+    var _doParsePlugin = (function(){
+        var _pmap = {
+            text:function(_uri){
+                _doLoadText(_uri);
+            }
+        };
+        return function(_uri){
+            var _brr = [],
+                _type = null,
+                _arr = _uri.split('!'),
+                _fun = _pmap[_arr[0].toLowerCase()];
+            if (!!_fun){
+                _type = _arr.shift();
+            }
+            _brr.push(_arr.join('!'));
+            _brr.push(_fun||_doLoadScript);
+            _brr.push(_type);
+            return _brr;
+        };
+    })();
+    /*
      * 初始化平台信息
      * @param  {String} _config 平台配置信息
      * @return {Void}
@@ -373,29 +398,33 @@
             return _absolute(_uri)&&_uri.indexOf('./')<0 ?
                    _uri : _anchor.getAttribute('href',4); // ie6/7
         };
-        var _amdpath = function(_uri){
+        var _amdpath = function(_uri,_type){
             // start with {xx} or /xx/xx
             // end with .js
-            if (_reg4.test(_uri)||_reg5.test(_uri)){
+            // absolute uri
+            if (_reg4.test(_uri)||
+                _reg5.test(_uri)||
+                _absolute(_uri)){
                 return _uri;
             }
             // lib/base/klass -> {lib}base/klass.js
             // pro/util/a     -> {pro}util/a.js
             var _arr = _uri.split('/'),
-                _path = __config.root[_arr[0]];
+                _path = __config.root[_arr[0]],
+                _sufx = !_type?'.js':'';
             if (!!_path){
                 _arr.shift();
-                return _path+_arr.join('/')+'.js';
+                return _path+_arr.join('/')+_sufx;
             }
             // for base/klass -> {lib}base/klass.js
-            return '{lib}'+_arr.join('/')+'.js';
+            return '{lib}'+_arr.join('/')+_sufx;
         };
-        return function(_uri,_base){
+        return function(_uri,_base,_type){
             if(_isTypeOf(_uri,'Array')){
                 var _list = [];
                 for(var i = 0; i < _uri.length; i++){
                     _list.push(
-                        _doFormatURI(_uri[i],_base)
+                        _doFormatURI(_uri[i],_base,_type)
                     );
                 }
                 return _list;
@@ -407,7 +436,7 @@
             if (_base&&_uri.indexOf('.')==0){
                 _uri = _root(_base)+_uri;
             }
-            _uri = _slash(_amdpath(_uri));
+            _uri = _slash(_amdpath(_uri,_type));
             var _uri = _uri.replace(
                 _reg,function($1,$2){
                     return __config.root[$2]||$2;
@@ -528,6 +557,57 @@
         }
         return !0;
     };
+    /*
+     * 载入依赖文本
+     * @param  {String} _uri 文本地址
+     * @return {Void}
+     */
+    var _doLoadText = (function(){
+        var _msid,
+            _msxml = [
+                'Msxml2.XMLHTTP.6.0',
+                'Msxml2.XMLHTTP.3.0',
+                'Msxml2.XMLHTTP.4.0',
+                'Msxml2.XMLHTTP.5.0',
+                'MSXML2.XMLHTTP',
+                'Microsoft.XMLHTTP'
+            ];
+        var _getXHR = function(){
+            if (!!p.XMLHttpRequest){
+                return new p.XMLHttpRequest();
+            }
+            if (!!_msid){
+                return new ActiveXObject(_msid);
+            }
+            for(var i=0,l=_msxml.length,_it;i<l;i++){
+                try{
+                    _it = _msxml[i];
+                    var _xhr = new ActiveXObject(_it);
+                    _msid = _it;
+                    return _xhr;
+                }catch(e){
+                    // ignore
+                }
+            }
+        };
+        return function(_uri){
+            if (!_uri) return;
+            var _state = __scache[_uri];
+            if (_state!=null) return;
+            // load text
+            __scache[_uri] = 0;
+            var _xhr = _getXHR();
+            _xhr.onreadystatechange = function(){
+                if (_xhr.readyState==4){
+                    __scache[_uri] = 2;
+                    __rcache[_uri] = _xhr.responseText||'';
+                    _doCheckLoading();
+                }
+            };
+            _xhr.open('GET',_uri,!0);
+            _xhr.send(null);
+        };
+    })();
     /*
      * 载入依赖脚本
      * @param  {String} _uri 脚本地址
@@ -769,6 +849,7 @@
             if (!!_callback){
                 _pths = _doMergePatched(_callback);
             }
+            // complete relative uri
             _doComplete(_deps,_uri);
             __scache[_uri] = 1;
             // push to load queue
@@ -783,12 +864,17 @@
                 _list = _xmap[_it];
                 if (!!_list&&!!_list.length){
                     var _kmap = {};
-                    for(var k=0,j=_list.length,_itt,_itm;k<j;k++){
+                    for(var k=0,j=_list.length,_itt,_itm,_arr,_type;k<j;k++){
                         _itt = _list[k];
-                        _itm = _doFormatURI(_itt,_uri);
+                        // 0 - url
+                        // 1 - load function
+                        // 2 - resource type
+                        _arr = _doParsePlugin(_itt);
+                        _itm = _doFormatURI(_arr[0],_uri,_arr[2]);
                         _kmap[_itt] = _itm;
                         _list[k] = _itm;
-                        _doLoadScript(_itm);
+                        // load resource
+                        _arr[1](_itm);
                     }
                     if (_it==='h'&&!!_xmap.f){
                         _xmap.f.kmap = _kmap;
