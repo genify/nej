@@ -11,10 +11,11 @@ NEJ.define([
     'base/klass',
     'base/element',
     'ui/editor/command/color',
-    'ui/colorpick/colorpick.simple'
-],function(NEJ,_k,_e,_i0,_i1,_p,_o,_f,_r){
+    'ui/colorpick/colorpick.simple',
+    'text!./simple.css',
+],function(NEJ,_k,_e,_i0,_i1,_css,_p,_o,_f,_r){
     var _pro,
-        _seed_css;
+        _seed_css = _e._$pushCSSText(_css);
     /**
      * 颜色选择卡片
      *
@@ -43,8 +44,6 @@ NEJ.define([
         this.__copt.clazz = _seed_css;
         return _i1._$$SimpleColorPick._$allocate(this.__copt);
     };
-    // ui css seed
-    _seed_css = _e._$pushCSSText('.#<uispace>{width:160px;padding:5px 0;border:1px solid #9FAC87;}');
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ui.cmd'),_p);

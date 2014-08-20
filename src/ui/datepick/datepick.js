@@ -14,11 +14,13 @@ NEJ.define([
     'ui/layer/card.wrapper',
     'util/calendar/calendar',
     'util/template/tpl',
-    'util/template/jst'
-],function(NEJ,_k,_e,_u,_i0,_t0,_t1,_t2,_p,_o,_f,_r){
+    'util/template/jst',
+    'text!./datepick.css',
+    'text!./datepick.html'
+],function(NEJ,_k,_e,_u,_i0,_t0,_t1,_t2,_css,_html,_p,_o,_f,_r){
     var _pro,
-        _seed_css,
         _seed_html,
+        _seed_css = _e._$pushCSSText(_css),
         _seed_ui = _t1._$parseUITemplate(_html),
         _seed_date = _seed_ui['_seed_date'],
         _seed_action = _seed_ui['_seed_action'];

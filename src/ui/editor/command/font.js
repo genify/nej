@@ -13,11 +13,13 @@ NEJ.define([
     'base/event',
     'base/util',
     'ui/layer/card.wrapper',
-    'util/template/jst'
-],function(NEJ,_k,_e,_v,_u,_i,_t0,_p,_o,_f,_r){
+    'util/template/jst',
+    'text!./font.css',
+    'text!./font.html'
+],function(NEJ,_k,_e,_v,_u,_i,_t0,_css,_html,_p,_o,_f,_r){
     var _pro,
-        _seed_css,
-        _seed_fnt;
+        _seed_css = _e._$pushCSSText(_css),
+        _seed_fnt = _t0._$addHtmlTemplate(_html);
     /**
      * 字体字号选择卡片基类
      *
@@ -129,22 +131,6 @@ NEJ.define([
             });
         return (this.list[_index]||_o).name;
     };
-    // ui css text
-    _seed_css = _e._$pushCSSText('\
-        .#<uispace>{border:1px solid #9FAC87;font-size:12px;text-align:left;}\
-        .#<uispace> .zitm{display:block;position:relative;margin:1px;outline:none;padding:2px 0 2px 8px;border:1px solid #ddd;color:#000;background-color:#fff;text-decoration:none;}\
-        .#<uispace> .zitm:hover{background-color:#e5e5e1;text-decoration:none;}\
-        .#<uispace> .zitm .ztip{position:absolute;top:2px;right:5px;font-size:10px;}\
-    ');
-    // ui font size list
-    _seed_fnt = _t0._$addHtmlTemplate('\
-        {list xlist as x}\
-        <a class="zitm" hidefocus="true" style="${style}:${x.style|default:x.name};" data-index="${x_index}">\
-          ${x.name}\
-          {if !!x.tip}<span class="ztip">${x.tip}</span>{/if}\
-        </a>\
-        {/list}\
-    ');
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ui.cmd'),_p);

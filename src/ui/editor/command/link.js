@@ -12,11 +12,13 @@ NEJ.define([
     'base/element',
     'base/util',
     'ui/layer/window.wrapper',
-    'util/template/tpl'
-],function(NEJ,_k,_e,_u,_i,_t0,_p,_o,_f,_r){
+    'util/template/tpl',
+    'text!./link.css',
+    'text!./link.html'
+],function(NEJ,_k,_e,_u,_i,_t0,_css,_html,_p,_o,_f,_r){
     var _pro,
-        _seed_html,
-        _seed_css;
+        _seed_html = _t0._$addNodeTemplate(_html),
+        _seed_css = _e._$pushCSSText(_css);
     /**
      * 超链接卡片
      *
@@ -180,27 +182,6 @@ NEJ.define([
         this.__inputs[1].focus();
         this.__inputs[1].value = 'http://';
     };
-
-    // ui html code
-    _seed_html = _t0._$addNodeTemplate('\
-        <div>\
-          <div class="u-row f-cb"><div class="u-edit f-cb"><div class="f-fl u-title">标题</div><input class="f-fl ipt" type="text" /></div></div>\
-          <div class="f-cb"><div class="u-edit f-cb"><div class="f-fl u-title">链接</div><input class="f-fl ipt" type="text" value="http://" /></div></div>\
-          <div class="u-error j-error"></div>\
-          <div class="btn f-cb">\
-              <a class="f-fr slave j-btn"><span>取消 </span></a>\
-              <a class="f-fr main right j-btn"><span>确定 </span></a>\
-            </div>\
-        </div>');
-    // ui css seed
-    _seed_css = _e._$pushCSSText('.#<uispace>{padding:20px 20px \
-        32px 20px;}\
-        .#<uispace> .u-title{color:#ccc;height:35px;line-height:35px;border-bottom: solid 1px #ccc;}\
-        .#<uispace> .u-row{margin-bottom:10px;}\
-        .#<uispace> .u-error{color:red;padding-top:10px;font-size:12px;height:2em;}\
-        .#<uispace> .u-edit{position: relative;z-index: 101;background: #FAFAFA;border: 1px solid #DFDFDF;-webkit-box-shadow: inset 1px 1px 2px #DFDFDF;-moz-box-shadow: inset 1px 1px 2px #dfdfdf;box-shadow: inset 1px 1px 2px #DFDFDF;}\
-        .#<uispace> .btn a{border:solid 1px #ccc;padding:5px;}\
-        .#<uispace> .ipt{display:block;font-size: 14px;position: relative;z-index: 101;line-height:35px;height:35px;width: 290px;resize: none;background: transparent;border: none;color: #444;overflow:hidden;}');
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ui.cmd'),_p);

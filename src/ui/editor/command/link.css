@@ -1,0 +1,7 @@
+.#<uispace>{padding:20px 20px 32px 20px;}
+.#<uispace> .u-title{color:#ccc;height:35px;line-height:35px;border-bottom: solid 1px #ccc;}
+.#<uispace> .u-row{margin-bottom:10px;}
+.#<uispace> .u-error{color:red;padding-top:10px;font-size:12px;height:2em;}
+.#<uispace> .u-edit{position: relative;z-index: 101;background: #FAFAFA;border: 1px solid #DFDFDF;-webkit-box-shadow: inset 1px 1px 2px #DFDFDF;-moz-box-shadow: inset 1px 1px 2px #dfdfdf;box-shadow: inset 1px 1px 2px #DFDFDF;}
+.#<uispace> .btn a{border:solid 1px #ccc;padding:5px;}
+.#<uispace> .ipt{display:block;font-size: 14px;position: relative;z-index: 101;line-height:35px;height:35px;width: 290px;resize: none;background: transparent;border: none;color: #444;overflow:hidden;}

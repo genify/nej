@@ -19,7 +19,7 @@ NEJ.define([
 ],function(NEJ,_k,_e,_v,_i,_t0,_t1,_css,_html,_p,_o,_f,_r){
     var _pro,
         _seed_css = _e._$pushCSSText(_css,{root:_c._$get('root')}),
-        _seed_ui  = _t0._$parseUITemplate(_html);
+        _seed_ui  = _t0._$parseUITemplate(_html),
         _seed_html  = _seed_ui['_seed_html'],
         _seed_color = _seed_ui['_seed_color'];
     /**
