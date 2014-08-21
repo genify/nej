@@ -12,7 +12,7 @@ NEJ.define([
     'base/element',
     'ui/editor/command/color',
     'ui/colorpick/colorpick.simple',
-    'text!./simple.css',
+    'text!./simple.css'
 ],function(NEJ,_k,_e,_i0,_i1,_css,_p,_o,_f,_r){
     var _pro,
         _seed_css = _e._$pushCSSText(_css);

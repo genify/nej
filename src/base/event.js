@@ -68,12 +68,12 @@ NEJ.define([
      * 节点添加事件，
      * 支持添加自定义事件，
      * 对于自定义事件的实现逻辑由其他模块负责实现
-     * 
+     *
      * 结构举例
      * ```html
      *   <div id="abc">123</div>
      * ```
-     * 
+     *
      * 脚本举例
      * ```javascript
      *   NEJ.define([
@@ -85,14 +85,14 @@ NEJ.define([
      *               // TODO something
      *           },false
      *       );
-     * 
+     *
      *       // 添加自定义事件，回车事件
      *       _v._$addEvent(
      *           'abc','enter',function(_event){
      *               // TODO something
      *           },false
      *       );
-     * 
+     *
      *       // 添加多个事件，用空格分隔
      *       _v._$addEvent(
      *           'abc','mouseover click mousedown',
@@ -102,7 +102,7 @@ NEJ.define([
      *       );
      *   });
      * ```
-     * 
+     *
      * @method module:base/event._$addEvent
      * @see    module:base/event._$delEvent
      * @param  {String|Node} arg0 - 节点ID或者对象
@@ -158,12 +158,12 @@ NEJ.define([
     })();
     /**
      * 节点删除事件，输入参数必须保证与添加接口_$addEvent输入参数完全一致
-     * 
+     *
      * 结构举例
      * ```html
      *   <div id="abc">123</div>
      * ```
-     * 
+     *
      * 脚本举例
      * ```javascript
      *   NEJ.define([
@@ -174,7 +174,7 @@ NEJ.define([
      *           // TODO something
      *           alert('0');
      *       };
-     * 
+     *
      *       // 添加事件
      *       _v._$addEvent('abc','mouseover',_doCallback,false);
      *       // 删除事件，这里参数必须保持完全一致
@@ -187,7 +187,7 @@ NEJ.define([
      *               alert('0');
      *           },false
      *       );
-     * 
+     *
      *       // 删除多个事件
      *       _v._$delEvent(
      *           'abc','mouseover click mouseup',
@@ -195,7 +195,7 @@ NEJ.define([
      *       );
      *   });
      * ```
-     * 
+     *
      * @method module:base/event._$delEvent
      * @see    module:base/event._$addEvent
      * @param  {String|Node} arg0 - 节点ID或者对象
@@ -254,12 +254,12 @@ NEJ.define([
     })();
     /**
      * 清除节点事件
-     * 
+     *
      * 结构举例
      * ```html
      *   <div id="abc">123</div>
      * ```
-     * 
+     *
      * 脚本举例
      * ```javascript
      *   NEJ.define([
@@ -281,18 +281,18 @@ NEJ.define([
      *               // TODO something
      *           }
      *       );
-     * 
+     *
      *       // 清除节点所有事件，包括两个mouseover事件和一个custom事件
      *       _v._$clearEvent('abc');
-     *   
+     *
      *       // 清除节点指定类型事件，只清除两个mouseover事件
      *       _v._$clearEvent('abc','mouseover');
-     *      
+     *
      *       // 清除多个事件，用空格分隔
      *       _v._$clearEvent('abc','mouseover custom');
      *   });
      * ```
-     * 
+     *
      * @method module:base/event._$clearEvent
      * @see    module:base/event._$delEvent
      * @param  {String|Node} arg0 - 节点ID或者对象
@@ -300,12 +300,11 @@ NEJ.define([
      * @return {Void}
      */
     _p._$clearEvent = (function(){
-        var _doClearEvent = function(_id,_list){
+        var _doClearEvent = function(_id,_name,_list){
             _u._$reverseEach(
                 _list,function(_item){
                     _p._$delEvent(
-                        _id,_item.type,
-                        _item.func,_item.capt
+                        _id,_name,_item.sfun,_item.capt
                     );
                 }
             );
@@ -320,7 +319,7 @@ NEJ.define([
                     // clear event by type
                     _u._$forEach(
                         _type,function(_name){
-                            _doClearEvent(_id,_cch_id[_name]);
+                            _doClearEvent(_id,_name,_cch_id[_name]);
                         }
                     );
                 }else{
@@ -336,16 +335,16 @@ NEJ.define([
     })();
     /**
      * 触发对象的某个事件，注：对于IE浏览器该接口节点事件有以下限制
-     * 
+     *
      * * 捕获阶段支持需要浏览器IE9+
      * * 节点上自定义事件支持需要浏览器IE9+
-     * 
-     * 
+     *
+     *
      * 结构举例
      * ```html
      *   <div id="abc">123</div>
      * ```
-     * 
+     *
      * 脚本举例
      * ```javascript
      *   NEJ.define([
@@ -360,7 +359,7 @@ NEJ.define([
      *       );
      *       // 触发鼠标事件
      *       _v._$dispatchEvent('abc','click');
-     * 
+     *
      *       // 注册自定义事件
      *       _v._$addEvent(
      *           'abc','ok',function(_event){
@@ -371,7 +370,7 @@ NEJ.define([
      *       _v._$dispatchEvent('abc','ok');
      *   });
      * ```
-     * 
+     *
      * @method module:base/event._$dispatchEvent
      * @param  {String|Node} arg0 - 节点ID或者对象
      * @param  {String}      arg1 - 鼠标事件类型，不区分大小写，多个事件用空格分隔
@@ -392,7 +391,7 @@ NEJ.define([
     };
     /**
      * 获取触发事件的节点，可以传入过滤接口来遍历父节点找到符合条件的节点
-     * 
+     *
      * 结构举例
      * ```html
      *   <div id="a">
@@ -405,7 +404,7 @@ NEJ.define([
      *     </p>
      *   </div>
      * ```
-     * 
+     *
      * 脚本举例
      * ```javascript
      *   NEJ.define([
@@ -419,7 +418,7 @@ NEJ.define([
      *               // TODO something
      *           }
      *       );
-     * 
+     *
      *       // 事件触发，取id是a的节点
      *       _v._$addEvent(
      *           'b','click',fucntion(_event){
@@ -430,26 +429,26 @@ NEJ.define([
      *                   }
      *               );
      *               // TODO something
-     * 
+     *
      *               // class含link或者属性含link或者data-link的节点
      *               var _node = _v._$getElement(_event,'link');
-     * 
+     *
      *               // 仅匹配class即 class="link xx xxx"
      *               var _node = _v._$getElement(_event,'c:link');
-     * 
+     *
      *               // 仅匹配dataset即 data-link="aaaa"
      *               var _node = _v._$getElement(_event,'d:link');
-     * 
+     *
      *               // 仅匹配attributer即 link="aaa"
      *               var _node = _v._$getElement(_event,'a:link');
-     *               
+     *
      *               // 仅匹配tag即 <label>
      *               var _node = _v._$getElement(_event,'t:label');
      *           }
      *       );
      *   });
      * ```
-     * 
+     *
      * @method module:base/event._$getElement
      * @param  {Event}    arg0 - 事件对象
      * @param  {Function} arg1 - 过滤接口
@@ -463,7 +462,7 @@ NEJ.define([
             if (_arr.length>1){
                 if (!_exmap){
                     _exmap = {
-                        a:_e._$attr, 
+                        a:_e._$attr,
                         d:_e._$dataset,
                         c:_e._$hasClassName,
                         t:function(n,v){return (n.tagName||'').toLowerCase()===v;}
@@ -486,7 +485,7 @@ NEJ.define([
                 _filter = arguments[1];
             if (!_filter){
                 return _element;
-            } 
+            }
             if (_u._$isString(_filter)){
                 _filter = _doFilter._$bind(null,_filter);
             }
@@ -504,14 +503,14 @@ NEJ.define([
     })();
     /**
      * 阻止事件，包括默认事件和传递事件
-     * 
+     *
      * 结构举例
      * ```html
      *   <div id="a">
      *     <a href="xxx.html" id="b">123</a>
      *   </div>
      * ```
-     * 
+     *
      * 脚本举例
      * ```javascript
      *   NEJ.define([
@@ -525,7 +524,7 @@ NEJ.define([
      *               _v._$stop(_event);
      *           }
      *       );
-     * 
+     *
      *       // a节点上的点击事件不会触发
      *       _v._$addEvent(
      *           'a','click',function(_event){
@@ -535,7 +534,7 @@ NEJ.define([
      *       );
      *   });
      * ```
-     * 
+     *
      * @method module:base/event._$stop
      * @see    module:base/event._$stopBubble
      * @see    module:base/event._$stopDefault
@@ -548,14 +547,14 @@ NEJ.define([
     };
     /**
      * 阻止事件的冒泡传递
-     * 
+     *
      * 结构举例
      * ```html
      *   <div id="a">
      *     <a href="xxx.html" id="b">123</a>
      *   </div>
      * ```
-     * 
+     *
      * 脚本举例
      * ```javascript
      *   NEJ.define([
@@ -569,7 +568,7 @@ NEJ.define([
      *               _v._$stopBubble(_event);
      *           }
      *       );
-     * 
+     *
      *       // a节点上的点击事件不会触发
      *       _v._$addEvent(
      *           'a','click',function(_event){
@@ -578,8 +577,8 @@ NEJ.define([
      *           }
      *       );
      *   });
-     * ``` 
-     * 
+     * ```
+     *
      * @see    module:base/event._$stop}
      * @method module:base/event._$stopBubble
      * @param  {Event} arg0 - 要阻止的事件对象
@@ -594,14 +593,14 @@ NEJ.define([
     };
     /**
      * 阻止标签的默认事件
-     * 
+     *
      * 结构举例
      * ```html
      *   <div id="a">
      *     <a href="xxx.html" id="b">123</a>
      *   </div>
      * ```
-     * 
+     *
      * 脚本举例
      * ```javascript
      *   NEJ.define([
@@ -614,7 +613,7 @@ NEJ.define([
      *               _v._$stopDefault(_event);
      *           }
      *       );
-     * 
+     *
      *       // a节点上的点击事件仍然会触发
      *       _v._$addEvent(
      *           'a','click',function(_event){
@@ -624,7 +623,7 @@ NEJ.define([
      *       );
      *   });
      * ```
-     * 
+     *
      * @method module:base/event._$stopDefault
      * @see    module:base/event._$stop
      * @param  {Event} arg0 - 要阻止的事件对象
@@ -639,12 +638,12 @@ NEJ.define([
     };
     /**
      * 取事件相对于页面的位置
-     * 
+     *
      * 结构举例
      * ```html
      *   <div id="abc" style="width:100%;height:100%;">123</div>
      * ```
-     * 
+     *
      * 脚本举例
      * ```javascript
      *   NEJ.define([
@@ -659,7 +658,7 @@ NEJ.define([
      *       );
      *   });
      * ```
-     * 
+     *
      * @method module:base/event._$page
      * @see    module:base/event._$pageX
      * @see    module:base/event._$pageY
@@ -674,12 +673,12 @@ NEJ.define([
     };
     /**
      * 取事件相对于页面左侧的位置
-     * 
+     *
      * 结构举例
      * ```html
      *   <div id="abc" style="width:100%;height:100%;">123</div>
      * ```
-     * 
+     *
      * 脚本举例
      * ```javascript
      *   NEJ.define([
@@ -694,7 +693,7 @@ NEJ.define([
      *       );
      *   });
      * ```
-     * 
+     *
      * @method module:base/event._$pageX
      * @see    module:base/event._$pageY
      * @param  {Event}  arg0 - 事件对象
@@ -706,12 +705,12 @@ NEJ.define([
     };
     /**
      * 取事件相对于页面顶部的位置
-     * 
+     *
      * 结构举例
      * ```html
      *   <div id="abc" style="width:100%;height:100%;">123</div>
      * ```
-     * 
+     *
      * 脚本举例
      * ```javascript
      *   NEJ.define([
@@ -726,7 +725,7 @@ NEJ.define([
      *       );
      *   });
      * ```
-     * 
+     *
      * @method module:base/event._$pageY
      * @see    module:base/event._$pageX
      * @param  {Event}  arg0 - 事件对象
@@ -736,7 +735,7 @@ NEJ.define([
         return _event.pageY!=null?_event.pageY:
                (_event.clientY+_e._$getPageBox().scrollTop);
     };
-    
+
     if (CMPT){
         var _v = NEJ.P('nej.v'),
             _x = NEJ.P('nej.x');
@@ -744,6 +743,6 @@ NEJ.define([
         NEJ.copy(_x,_p);
         _x.isChange = !0;
     }
-    
+
     return _p;
 });

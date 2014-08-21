@@ -9,7 +9,7 @@
 NEJ.define([
     'base/global',
     'base/klass',
-    '{platform}effect',
+    '{platform}effect.js',
     'base/element',
     'base/util',
     'util/event'

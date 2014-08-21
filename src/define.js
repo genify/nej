@@ -45,7 +45,7 @@
      */
     var _doInit = function(){
         if (!p.console)
-            p.console = {log:_doLog};
+            p.console = {log:_doLog,warn:_doLog};
         // do init add loaded script and remove node
         var _list = d.getElementsByTagName('script');
         if (!_list||!_list.length) return;
@@ -374,7 +374,7 @@
             _reg1= /([^:])\/+/g,
             _reg3= /[^\/]*$/,
             _reg4= /\.js$/i,
-            _reg5= /^[{\/]/,
+            _reg5= /^[{\/\.]/,
             _anchor = d.createElement('a');
         var _absolute = function(_uri){
             return _uri.indexOf('://')>0;
@@ -399,7 +399,7 @@
                    _uri : _anchor.getAttribute('href',4); // ie6/7
         };
         var _amdpath = function(_uri,_type){
-            // start with {xx} or /xx/xx
+            // start with {xx} or /xx/xx or ./ or ../
             // end with .js
             // absolute uri
             if (_reg4.test(_uri)||
@@ -674,18 +674,32 @@
         };
         var _exec = function(_list,_pmap){
             if (!_pmap) return;
-            var _map = {};
+            // find platform patch list
+            var _arr = [];
             for(var i=0,l=_list.length,_it;i<l;i++){
                 _it = _list[i];
                 if (_pmap[_it]){
-                    _map[_it] = !0;
-                    _map[_pmap[_it]] = !0;
+                    _arr.push(_it);
                 }
             }
+            // index queue by file name
+            var _map = {};
             for(var i=0,l=__xqueue.length,_it;i<l;i++){
                 _it = __xqueue[i];
-                if (!!_map[_it.n]){
-                    _doExecFunction(_it);
+                _map[_it.n] = _it;
+            }
+            // execute platform patch
+            for(var i=0,l=_arr.length,_it,_item;i<l;i++){
+                _it = _arr[i];
+                // exec hack.js
+                _item = _map[_it];
+                if (!!_item){
+                    _doExecFunction(_item);
+                }
+                // exec hack.patch.js
+                _item = _map[_pmap[_it]];
+                if (!!_item){
+                    _doExecFunction(_item);
                 }
             }
         };

@@ -6,8 +6,9 @@
  * ------------------------------------------
  */
 NEJ.define([
-    'base/global'
-],function(NEJ,_p,_o,_f,_r){
+    'base/global',
+    'base/element'
+],function(NEJ,_e,_p,_o,_f,_r){
     var _suffix = {
         'opacity':1,
         'z-index':1,

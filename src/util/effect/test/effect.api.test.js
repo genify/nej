@@ -16,7 +16,7 @@ var f = function() {
                 opacity:0.01,
 	    		onstop:function(_event){
                     console.log('fadeout stop')
-	    			_fdi(_box);
+	    			// _fdi(_box);
 	    		},
 	    		onplaystate:function(_event){
                     console.log('fadeout' + _event.opacity)
@@ -29,7 +29,7 @@ var f = function() {
                 duration:3,
 	    		onstop:function(_event){
                     console.log('fadein stop')
-	    			_fdo(_box);
+	    			// _fdo(_box);
 	    		},
 	    		onplaystate:function(_event){
                     console.log('fadein' + _event.opacity)

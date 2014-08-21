@@ -38,7 +38,7 @@ NEJ.define([
      * @extends module:ui/editor/editor._$$Editor
      * @param   {Object} arg0 - 可选配置参数
      */
-    _p._$$CustomEditor =_k._$klass();
+    _p._$$CustomEditor = _k._$klass();
     _pro = _p._$$CustomEditor._$extend(_i0._$$Editor);
     /**
      * 初始化外观信息

@@ -5,7 +5,7 @@ var f = function(){
 	var e = NEJ.P('nej.e');
 	var v = NEJ.P('nej.v');
 	//开始单元测试
-	/**test('event',function(){
+	test('event',function(){
 		var _node = e._$get('js-node');
 		var _num = 0,_ele,_ele2,_pageX,_pageY;
 		var _dispatch = function(_node){
@@ -84,7 +84,7 @@ var f = function(){
 		_dispatch(_node.children[0]);
 		equal(_num,10,'阻止掉事件捕获');
 	});
-	
+
 	asyncTest("检测事件触发点", function(){
 		var _pageX,_pageY;
 		var _f2 = function(_e){
@@ -99,16 +99,17 @@ var f = function(){
 		var _node = e._$get('js-node');
 		v._$addEvent(_node,'click',_f2);
 	});
-	
+
 	module('event常规测试');
-	
+
 	test('null',function(){
+		expect(0);
 		var _node = e._$get('js-node');
 		var _f = function(){};
 		v._$addEvent(_node,'click',_f);
 		v._$delEvent(null,'click',_f);
 	});
-	
+
 	test('input event',function(){
 		stop();
 		var _input = e._$get('js-input');
@@ -125,7 +126,7 @@ var f = function(){
 		});
 		v._$dispatchEvent(_textarea,'input');
 	});
-	
+
 	test('load event',function(){
 		stop();
 		var _iframe = e._$get('js-iframe');
@@ -135,7 +136,7 @@ var f = function(){
 		});
 		_iframe.src = 'http://www.baidu.com';
 	});
-	
+
 	test('transitionend event',function(){
 		stop();
 		var _node = e._$get('js-node');
@@ -144,9 +145,9 @@ var f = function(){
 			start();
 		});
 		e._$css3d(_node,'rotate',{x:2,y:1,z:0,a:'-75deg'});
-	});*/
-	
-	if(p._$IS.desktop){
+	});
+
+	/**if(p._$IS.desktop){
 		test('mouse event',function(){
 			stop();
 			var _box = e._$get('js-box');
@@ -176,8 +177,8 @@ var f = function(){
 				start();
 			});
 		});
-	}
-	
+	}*/
+
 }
 module('依赖模块');
 test('define',function(){expect(0);

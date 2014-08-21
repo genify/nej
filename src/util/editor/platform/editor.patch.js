@@ -190,6 +190,7 @@ NEJ.define([
 	});
 
 	 // ie7-10
+	NEJ.patch('3.0<=TR<=6.0',['./editor.td.js']);
 
 	// ie11+
 	NEJ.patch('TR>=7.0',function(){

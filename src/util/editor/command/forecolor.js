@@ -9,7 +9,7 @@
 NEJ.define([
     'base/global',
     'base/klass',
-    'util/editor/command/color',
+    'util/editor/command/color'
 ],function(NEJ,_k,_t0,_p,_o,_f,_r){
     var _pro;
     /**

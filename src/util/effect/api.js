@@ -10,7 +10,7 @@ NEJ.define([
     'base/element',
     'base/event',
     'base/util',
-    '{platform}effect.api',
+    '{platform}effect.api.js',
     'util/effect/effect'
 ],function(_e,_v,_u,_h,_t0,_p,_o,_f,_r) {
     /**
@@ -480,7 +480,7 @@ NEJ.define([
     })();
 
     if (CMPT){
-        NEJ.copy(NEJ.P('nej.ut'),_p);
+        NEJ.copy(NEJ.P('nej.e'),_p);
     }
 
     return _p;
