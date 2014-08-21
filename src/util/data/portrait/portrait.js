@@ -17,7 +17,11 @@ NEJ.define([
     var _pro;
     /**
      * 表情数据缓存，缓存对象可直接用于nej.ut._$$ListModule
-     *
+     * 
+     * 表情资源可通过以下git仓库直接下载到本地
+     * 
+     * {@link https://github.com/genify/nej-portrait.git}
+     * 
      * 脚本举例
      * ```javascript
      * NEJ.define([
