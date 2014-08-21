@@ -7,20 +7,23 @@
  */
 /** @module ui/datepick/datepick */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/element.js',
-    '{lib}base/util.js',
-    '{lib}ui/layer/card.wrapper.js',
-    '{lib}util/calendar/calendar.js',
-    '{lib}util/template/tpl.js',
-    '{lib}util/template/jst.js'
-],function(NEJ,_k,_e,_u,_i0,_t0,_t1,_t2,_p,_o,_f,_r){
+    'base/global',
+    'base/klass',
+    'base/element',
+    'base/util',
+    'ui/layer/card.wrapper',
+    'util/calendar/calendar',
+    'util/template/tpl',
+    'util/template/jst',
+    'text!./datepick.css',
+    'text!./datepick.html'
+],function(NEJ,_k,_e,_u,_i0,_t0,_t1,_t2,_css,_html,_p,_o,_f,_r){
     var _pro,
-        _seed_css,
         _seed_html,
-        _seed_date,
-        _seed_action = _u._$uniqueID();
+        _seed_css = _e._$pushCSSText(_css),
+        _seed_ui = _t1._$parseUITemplate(_html),
+        _seed_date = _seed_ui['_seed_date'],
+        _seed_action = _seed_ui['_seed_action'];
     /**
      * 日期选择控件
      *
@@ -39,8 +42,8 @@ NEJ.define([
      * 脚本举例
      * ```javascript
      * NEJ.define([
-     *     '{lib}base/element.js',
-     *     '{lib}ui/datepick/datepick.js'
+     *     'base/element',
+     *     'ui/datepick/datepick'
      * ],function(_e,_i0,_p,_o,_f,_r){
      *     var pDate = new Date(1997,7,9)
      *     var nDate = new Date(2013,7,9);
@@ -210,44 +213,6 @@ NEJ.define([
     _pro._$getDate = function(){
         return this.__calendar._$getDate();
     };
-    // ui css text
-    _seed_css = _e._$pushCSSText('\
-        .#<uispace>{width:210px;border:1px solid #aaa;font-size:14px;text-align:center;}\
-        .#<uispace> .zact{line-height:30px;overflow:hidden;zoom:1;}\
-        .#<uispace> .zact .zfl{float:left;}\
-        .#<uispace> .zact .zfr{float:right;}\
-        .#<uispace> .zact .zbtn{padding:0 5px;cursor:pointer;}\
-        .#<uispace> .zact .ztxt{margin-left:10px;}\
-        .#<uispace> .zday{table-layout:fixed;border-collapse:collapse;width:100%;}\
-        .#<uispace> .zday th{font-weight:normal;}\
-        .#<uispace> .zday a{display:block;height:22px;line-height:22px;color:#333;text-decoration:none;}\
-        .#<uispace> .zday a:hover{background:#eee;}\
-        .#<uispace> .zday a.js-extended{color:#aaa;}\
-        .#<uispace> .zday a.js-selected,\
-        .#<uispace> .zday a.js-selected:hover{background:#DAE4E7;}\
-        .#<uispace> .zday a.js-disabled,\
-        .#<uispace> .zday a.js-disabled:hover{background:#fff;color:#eee;cursor:default;}\
-    ');
-    // ui date html
-    _seed_date = _t2._$addHtmlTemplate('\
-        <table class="zday">\
-          <tr>{list ["日","一","二","三","四","五","六"] as x}<th>${x}</th>{/list}</tr>\
-          {list 1..6 as x}\
-          <tr>{list 1..7 as y}<td><a href="javascript:void(0);" class="js-ztag"></a></td>{/list}</tr>\
-          {/list}\
-        </table>\
-    ');
-    // button html
-    _t1._$addTextTemplate(_seed_action,'\
-        <div class="zact">\
-          <span class="zbtn zfl" title="上一年">&lt;&lt;</span>\
-          <span class="zbtn zfl" title="上一月">&lt;</span>\
-          <span class="zbtn zfr" title="下一年">&gt;&gt;</span>\
-          <span class="zbtn zfr" title="下一月">&gt;</span>\
-          <span class="ztxt"></span>年\
-          <span class="ztxt"></span>月\
-        </div>\
-    ');
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ui'),_p);

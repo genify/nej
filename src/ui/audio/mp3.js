@@ -7,20 +7,22 @@
  */
 /** @module ui/audio/mp3 */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/element.js',
-    '{lib}base/event.js',
-    '{lib}ui/base.js',
-    '{lib}base/config.js',
-    '{lib}util/slider/slider.simple.js',
-    '{lib}util/media/playlist.js',
-    '{lib}util/audio/audio.js',
-    '{lib}util/template/tpl.js'
-],function(NEJ,_k,_e,_v,_u,_c,_t0,_t1,_t2,_t3,_p,_o,_f,_r) {
+    'base/global',
+    'base/klass',
+    'base/element',
+    'base/event',
+    'ui/base',
+    'base/config',
+    'util/slider/slider.simple',
+    'util/media/playlist',
+    'util/audio/audio',
+    'util/template/tpl',
+    'text!./mp3.css',
+    'text!./mp3.html'
+],function(NEJ,_k,_e,_v,_u,_c,_t0,_t1,_t2,_t3,_css,_html,_p,_o,_f,_r) {
     var _pro,
-        _seed_css,
-        _seed_html;
+        _seed_css = _e._$pushCSSText(_css,{root:_c._$get('root')}),
+        _seed_html= _t3._$addNodeTemplate(_html);
     /**
      * 音频播放器
      *
@@ -428,77 +430,6 @@ NEJ.define([
             this.__playlist._$setPlayList(_list);
         }
     };
-    _seed_css = _e._$pushCSSText('\
-      .#<uispace> .m-pre, .#<uispace> .m-play, .#<uispace> .m-next, .#<uispace> .m-cur, .#<uispace> .m-pause, .#<uispace> .m-volmin,\
-      .#<uispace> .m-volminc, .#<uispace> .m-shuffled, .#<uispace> .m-repeatd-1, .#<uispace> .m-shufflec, .#<uispace> .m-repeatd, .#<uispace> .m-repeatc,\
-      .#<uispace> .m-volmax, .#<uispace> .m-volmaxc{background:url('+_c._$get('root')+'audio_sprite.png) no-repeat 9999px 9999px;}\
-      .#<uispace> .m-player{height:40px;min-width:530px;background:#606060;cursor:default}\
-      .#<uispace> .m-player .ctl{width:300px; float:left;}\
-      .#<uispace> .m-pre{height:10px;width:16px;background-position:0 0;float:left;margin-top:14px;margin-left: 10px;}\
-      .#<uispace> .m-pre:active, .#<uispace> .m-preatv{background-position:-104px -1px;}\
-      .#<uispace> .m-play{height:11px;width:10px;background-position:2px -28px;float:left;margin:14px 20px 0;}\
-      .#<uispace> .m-play:active{background-position:-202px -36px;}\
-      .#<uispace> .m-pause{height:11px;width:10px;background-position:0 -96px;float:left;margin:14px 20px 0;}\
-      .#<uispace> .m-pause:active{background-position:-155px -36px;}\
-      .#<uispace> .m-next{height:10px;width:16px;background-position:0 -61px;float:left;margin-top:14px;}\
-      .#<uispace> .m-next:active, .#<uispace>  .m-nextatv{background-position:-103px -81px;}\
-      .#<uispace> .m-player .loop{width:120px;float:right}\
-      .#<uispace> .m-curtime{float: right;margin-right: 10px;color:#fff;line-height: 40px;}\
-      .#<uispace> .m-time{float: left;margin-left: 10px;color:#fff;line-height: 40px;}\
-      .#<uispace> .m-player .timeline{height:25px;position:absolute;left:315px;right:120px;bottom:0;top:0;width:135px;padding-top:15px;}\
-      .#<uispace> .m-vol{height:27px;width:90px;padding:13px 0 0 20px;float:left;}\
-      .#<uispace> .m-volicn{width:20px;height:20px;margin:10px 0 0 10px;float:left}\
-      .#<uispace> .m-vzero .m-volminc{background-position:0 -354px;width:100%;height:100%;float:left;}\
-      .#<uispace> .m-vmin .m-volminc{background-position:0 -124px;width:100%;height:100%;float:left;}\
-      .#<uispace> .m-vmax .m-volminc{background-position:0 -155px;width:100%;height:100%;float:left;}\
-      .#<uispace> .m-timeline{position:absolute;width:100%;height:8px;border-radius:4px;background:#3b3b3b;border-top:1px solid #212121;border-bottom:1px solid #636363}\
-      .#<uispace> .m-timelinei{width:0%;}\
-      .#<uispace> .m-timeline-1{margin-top:0px;width:90px;position:absolute;}\
-      .#<uispace> .m-progress{background:green;margin-top:-1px;}\
-      .#<uispace> .m-cur{position:absolute;right:-5px;margin-left:-5px;background-position:0 -302px;height:10px;width:10px;}\
-      .#<uispace> .m-cur2{position:absolute;right:-5px;margin-left:-5px;background:url('+_c._$get('root')+'audio_sprite.png) no-repeat 9999px 9999px;width:10px;background-position:0 -302px;}\
-      .#<uispace> .m-cur:active, .#<uispace> .m-cur2:active{background-position:0 -328px;}\
-      .#<uispace> .m-shuffled{background-position:0 -262px;}\
-      .#<uispace> .m-shufflec{background-position:-56px -115px;}\
-      .#<uispace> .m-repeatb, .m-repeatb-1, .m-shuffleb{height:22px;width:32px;float:right;margin:10px 10px 0 0 }\
-      .#<uispace> .m-repeatd{background-position:0 -187px;}\
-      .#<uispace> .m-repeatd-1{background-position:0 -225px;}\
-      .#<uispace> .m-repeatc{background-position:-56px -149px;}\
-      .m-cnt{width:600px;position: relative;}');
-    _seed_html = _t3._$addNodeTemplate('\
-      <div class="m-cnt '+_seed_css+'">\
-        <div class="cse">\
-          <div class="m-player">\
-            <div class="ctl">\
-              <span class="f-ib m-pre" data-name="pre">&nbsp;</span>\
-              <span class="f-ib m-play ztag" data-name="play">&nbsp;</span>\
-              <span class="f-ib m-next" data-name="next" value="next">&nbsp;</span>\
-              <div class="m-vol">\
-                <div class="f-ib m-timeline m-timeline-1 vtag">\
-                  <div class="f-ib m-timeline m-progress m-timeline-1 vtag">\
-                    <span class="f-ib m-cur2 vtag">&nbsp;</span>\
-                  </div>\
-                </div>\
-              </div>\
-              <span class="m-volicn ztag m-vmax f-ib">\
-                <span class="f-ib m-volminc">&nbsp;</span>\
-              </span>\
-              <span class="m-curtime ztag">00:00</span>\
-            </div>\
-            <div class="timeline">\
-              <div class="m-timeline ttag">\
-                <div class="m-timeline m-progress ttag m-timelinei">\
-                  <span class="m-cur ttag">&nbsp;</span>\
-                </div>\
-              </div>\
-            </div>\
-            <div class="loop">\
-              <span class="m-time ztag">00:00</span>\
-              <span class="m-repeatb m-repeatd ztag" data-name="mode">&nbsp;</span>\
-            </div>\
-          </div>\
-        </div>\
-      </div>');
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ui'),_p);

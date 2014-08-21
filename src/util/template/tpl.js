@@ -20,7 +20,7 @@ NEJ.define([
         _skey  = (+new Date)+'-';
     /**
      * 解析模板集合
-     * 
+     *
      * 结构举例
      * ```html
      * <textarea name="jst" id="jst-box">
@@ -37,7 +37,7 @@ NEJ.define([
      * <textarea name="html" id="html-box" data-src='/nej-baseline/qunit/html/ui/audioTest.html'></textarea>
      * <textarea name="res" id="res-box" data-src='http://pagead2.googlesyndication.com/simgad/15167196758298977737'></textarea>
      * ```
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -48,33 +48,33 @@ NEJ.define([
      *     _p._$parseTemplate('jst-box');
      *     // 生成结果：<div>jack</div>
      *     _p._$getTextTemplate('jst-box').trim();
-     * 
+     *
      *     // 通过_$addTextTemplate接口缓存纯文本,id为key
      *     _p._$parseTemplate('txt-box');
      *     // 要用的时候通过_e._$getTextTemplate(key)取到纯文本
      *     _p._$getTextTemplate('txt-box')
-     * 
-     * 
+     *
+     *
      *     // 通过_$addNodeTemplate接口缓存节点，第一次如果是字符串，缓存字符串，id为key
      *     _p._$parseTemplate('ntp-box');
      *     // 要用的时候通过_$getNodeTemplate('ntp-box')取出节点，
      *     // 如果缓存中是字符串,取的时候要重新转换成节点，然后重新缓存一边，下次直接是取节点
      *     _p._$getNodeTemplate('ntp-box');
-     * 
+     *
      *     // 加载id为js-box的textarea节点data-src指定的js文件
      *     _p._$parseTemplate('js-box');
-     * 
+     *
      *     // 加载id为css-box的textarea节点data-src指定的css文件
      *     _p._$parseTemplate('css-box');
-     * 
+     *
      *     // 加载id为html-box的textarea节点data-src指定的html文件
      *     _p._$parseTemplate('html-box');
-     * 
+     *
      *     // 加载id为res-box的textarea节点data-src指定的纯文本文件
      *     _p._$parseTemplate('res-box');
      * });
      * ```
-     * 
+     *
      * @method   module:util/template/tpl._$parseTemplate
      * @param    {String|Node} arg0 - 模板集合节点
      * @param    {Object}      arg1 - 可选配置参数
@@ -234,7 +234,7 @@ NEJ.define([
     })();
     /**
      * 添加文本模板
-     * 
+     *
      * 脚本举例
      * ```javascript
      * // 通过_e._$addTextTemplate接口缓存纯文本,id为key
@@ -242,7 +242,7 @@ NEJ.define([
      * // 要用的时候通过_e._$getTextTemplate(key)取到纯文本
      * _e._$getTextTemplate('txt-box')
      * ```
-     * 
+     *
      * @method module:util/template/tpl._$addTextTemplate
      * @see    module:util/template/tpl._$getTextTemplate
      * @param  {String} arg0 - 模板键值
@@ -254,7 +254,7 @@ NEJ.define([
     };
     /**
      * 取文本模板
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -266,7 +266,7 @@ NEJ.define([
      *     _p._$getTextTemplate('txt-box')
      * });
      * ```
-     * 
+     *
      * @method module:util/template/tpl._$getTextTemplate
      * @see    module:util/template/tpl._$addTextTemplate
      * @param  {String} arg0 - 模板键值
@@ -277,7 +277,7 @@ NEJ.define([
     };
     /**
      * 添加节点模板
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -290,7 +290,7 @@ NEJ.define([
      *     _p._$getNodeTemplate('ntp-box');
      * });
      * ```
-     * 
+     *
      * @method module:util/template/tpl._$addNodeTemplate
      * @see    module:util/template/tpl._$getNodeTemplate
      * @param  {String|Node} arg0 - 模板
@@ -306,7 +306,7 @@ NEJ.define([
     };
     /**
      * 取节点模板
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -319,7 +319,7 @@ NEJ.define([
      *     _p._$getNodeTemplate('ntp-box');
      * });
      * ```
-     * 
+     *
      * @method module:util/template/tpl._$getNodeTemplate
      * @see    module:util/template/tpl._$addNodeTemplate
      * @param  {String} arg0 - 模板序列号
@@ -338,12 +338,12 @@ NEJ.define([
     };
     /**
      * 取ITEM模板列表
-     * 
+     *
      * 结构举例
      * ```html
      * <div id="item-box"></div>
      * ```
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -353,15 +353,15 @@ NEJ.define([
      * ],function(_k,_i,_t,_p){
      *     var _pro;
      *     var _html_key = _t._$addNodeTemplate('<div>123</div>');
-     * 
+     *
      *     _p._$$MyItem = _k._$klass();
      *     _pro = _p._$$MyItem._$extend(_i._$$Item);
-     * 
+     *
      *     _pro.__reset = function(_options){
      *         this.__data = _options.data;
      *         this.__super(_options);
      *     }
-     * 
+     *
      *     _pro.__doRefresh = function(){
      *         this.__body.innerText = this.__data.name;
      *     };
@@ -369,11 +369,11 @@ NEJ.define([
      *     _pro.__initXGui = function(){
      *         this.__seed_html = _html_key;
      *     };
-     * 
+     *
      *     return _p;
      * });
      * ```
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -388,7 +388,7 @@ NEJ.define([
      *     );
      * });
      * ```
-     * 
+     *
      * @method   module:util/template/tpl._$getItemTemplate
      * @param    {Array}   arg0   - 数据列表
      * @param    {module:ui/item/item._$$Item} arg1   - 列表项构造函数
@@ -419,7 +419,7 @@ NEJ.define([
                 _instance = _item._$allocate(_opt);
                 var _id = _instance._$getId();
                 _cache[_id] = _instance;
-                _instance._$recycle = 
+                _instance._$recycle =
                 _instance._$recycle._$aop(
                     function(_id,_instance){
                         delete _cache[_id];
@@ -432,7 +432,7 @@ NEJ.define([
     })();
     /**
      * 根据ID取列表项对象
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -443,7 +443,7 @@ NEJ.define([
      *     var _item = _p._$getItemById('itm-123');
      * });
      * ```
-     * 
+     *
      * @method module:util/template/tpl._$getItemById
      * @param  {String} arg0 - 列表项
      * @return {module:ui/item/item._$$Item} 列表项实例
@@ -451,10 +451,62 @@ NEJ.define([
     _p._$getItemById = function(_id){
         return _cache[_id];
     };
-    
+
+    /**
+     * 解析UI模板集合
+     *
+     * @method module:util/template/tpl._$parseUITemplate
+     * @param  {String} html - 待解析字符串
+     * @param  {Object} map  - 模版id的对应map
+     * @return {Object} 模版id的map
+     */
+    _p._$parseUITemplate = (function(){
+        var _reg  = /#<([a-zA-Z0-9_]+)>/;
+        var _doAddTemplate = function(_node){
+            var _type = _node.name.toLowerCase();
+            switch(_type){
+                 case 'jst':
+                    _y._$addHtmlTemplate(_node,!0);
+                return;
+                case 'txt':
+                    _p._$addTextTemplate(_node.id,_node.value||'');
+                return;
+                case 'ntp':
+                    _p._$addNodeTemplate(_node.value||'',_node.id);
+                return;
+            }
+        };
+        return function(_html,_map){
+            _map = _map||{};
+            var _element = _e._$html2node(_html),
+                _tmap = {};
+            if (!!_element){
+                 var _list = _element.tagName=='TEXTAREA' ? [_element]
+                              : _u._$object2array(
+                                    _element.getElementsByTagName('textarea')
+                                );
+                _u._$forEach(_list,function(_node){
+                    var _id = _node.id;
+                    if (!!_id){
+                        if (_reg.test(_id)){
+                            var _key = _id.replace(_reg,function($1,$2){
+                                return $2;
+                            });
+                            _tmap[_key] = !_map[_key] ? _u._$uniqueID() : _map[_key];
+                            _node.id = _tmap[_key];
+                        }
+                        _doAddTemplate(_node);
+                    }
+                });
+                _e._$remove(_element,!0);
+                return _tmap;
+            }
+        };
+    })();
+
     if (CMPT){
         NEJ.copy(NEJ.P('nej.e'),_p);
     }
-    
+
     return _p;
 });

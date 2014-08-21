@@ -5,44 +5,76 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module ui/scroller/scroller */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/element.js',
-    '{lib}base/event.js',
-    '{lib}base/util.js',
-    '{lib}ui/base.js',
-    '{lib}util/gesture/tap.js',
-    '{lib}util/gesture/drag.js',
-    '{lib}util/animation/bounce.js',
-    '{lib}util/animation/easeout.js',
-    '{lib}util/animation/decelerate.js'
+    'base/global',
+    'base/klass',
+    'base/element',
+    'base/event',
+    'base/util',
+    'ui/base',
+    'util/gesture/tap',
+    'util/gesture/drag',
+    'util/animation/bounce',
+    'util/animation/easeout',
+    'util/animation/decelerate'
 ],function(NEJ,_k,_e,_v,_u,_i,_t0,_t1,_t2,_t3,_t4,_p,_o,_f,_r){
     // variable declaration
     var _pro;
     /**
+     * 滚动配置信息
+     * @typedef  {Object}      module:ui/scroller/scroller._$$Scroller~Config
+     * @property {Float}       bcfactor - 弹性移动距离与触点移动距离比例，默认0.5 表示触点移动2px弹性增加1px
+     * @property {Float}       minbar - 滚动条保留的最小高度与窗体可视高度比例，默认1/3
+     * @property {Number}      reset  - 滚动加速检测时间间隔【单位ms】，默认350，连续滚动操作350ms后重新开始计算加速初始速度
+     * @property {Number}      acceleration - 减速度，值越大加速越慢，默认30
+     * @property {Number}      minvelocity  - 加速最小初始速度，默认为1
+     * @property {String|Node} container    - 内容容器节点ID或者对象
+     */
+    /**
      * 滚动控件
-     * @class   滚动控件
-     * @extends nej.ui._$$Abstract
-     * @param  {Object} _options 可选配置参数
-     *                           config        [Object]      - 滚动配置信息
-     *                                                         bcfactor     [Float]  - 弹性移动距离与触点移动距离比例，默认0.5 表示触点移动2px弹性增加1px
-     *                                                         minbar       [Float]  - 滚动条保留的最小高度与窗体可视高度比例，默认1/3
-     *                                                         reset        [Number] - 滚动加速检测时间间隔【单位ms】，默认350，连续滚动操作350ms后重新开始计算加速初始速度
-     *                                                         acceleration [Number] - 减速度，值越大加速越慢，默认30
-     *                                                         minvelocity  [Number] - 加速最小初始速度，默认为1
-     *                           container     [String|Node] - 内容容器节点ID或者对象
-     *                           onscroll      [Function]    - 滚动过程触发事件
-     *                           onscrollend   [Function]    - 滚动动画结束触发事件（不包括弹性）
-     *                           onbounce      [Function]    - 弹性效果过程触发事件
-     *                           onbouncend    [Function]    - 弹性结束触发事件
-     *                           onbouncestart [Function]    - 弹性开始触发事件
-     *                           onrelease     [Function]    - 释放滚动触发事件
+     * @class    module:ui/scroller/scroller._$$Scroller
+     * @extends  module:ui/base._$$Abstract
+     * @param    {Object} options - 可选配置参数
+     * @property {module:ui/scroller/scroller._$$Scroller~Config} config  - 滚动配置信息
+     */
+    /**
+     * 滚动过程触发事件
+     *
+     * @event module:ui/scroller/scroller._$$Scroller#onscroll
+     */
+    /**
+     * 滚动动画结束触发事件（不包括弹性）
+     *
+     * @event module:ui/scroller/scroller._$$Scroller#onscrollend
+     */
+    /**
+     * 弹性效果过程触发事件
+     *
+     * @event module:ui/scroller/scroller._$$Scroller#onbounce
+     */
+    /**
+     * 弹性结束触发事件
+     *
+     * @event module:ui/scroller/scroller._$$Scroller#onbouncend
+     */
+    /**
+     * 弹性开始触发事件
+     *
+     * @event module:ui/scroller/scroller._$$Scroller#onbouncestart
+     */
+    /**
+     * 释放滚动触发事件
+     *
+     * @event module:ui/scroller/scroller._$$Scroller#onrelease
      */
     _p._$$Scroller = _k._$klass();
     _pro = _p._$$Scroller._$extend(_i._$$Abstract);
     /**
      * 初始化控件
+     *
+     * @protected
+     * @method module:ui/scroller/scroller._$$Scroller#__init
      * @return {Void}
      */
     _pro.__init = function(){
@@ -66,12 +98,17 @@ NEJ.define([
     };
     /**
      * 取滚动配置信息，子类实现具体逻辑
+     *
+     * @abstract
      * @return {Object} 滚动配置信息
      */
     _pro.__getConfig = f;
     /**
      * 控件重置
-     * @param  {Object} _options 可选配置参数
+     *
+     * @protected
+     * @method module:ui/scroller/scroller._$$Scroller#__reset
+     * @param  {Object} _options - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -92,6 +129,9 @@ NEJ.define([
     };
     /**
      * 控件销毁
+     *
+     * @protected
+     * @method module:ui/scroller/scroller._$$Scroller#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -102,6 +142,9 @@ NEJ.define([
     };
     /**
      * 刷新滚动控件参数
+     *
+     * @protected
+     * @method module:ui/scroller/scroller._$$Scroller#__refresh
      * @return {Void}
      */
     _pro.__refresh = (function(){
@@ -130,6 +173,9 @@ NEJ.define([
     })();
     /**
      * 清理定时器
+     *
+     * @protected
+     * @method module:ui/scroller/scroller._$$Scroller#__clearScrollBarTimer
      * @return {Void}
      */
     _pro.__clearScrollBarTimer = function(){
@@ -138,6 +184,9 @@ NEJ.define([
     };
     /**
      * 显示滚动条
+     *
+     * @protected
+     * @method module:ui/scroller/scroller._$$Scroller#__showScrollBar
      * @return {Void}
      */
     _pro.__showScrollBar = function(){
@@ -148,6 +197,9 @@ NEJ.define([
     };
     /**
      * 隐藏滚动条
+     *
+     * @protected
+     * @method module:ui/scroller/scroller._$$Scroller#__hideScrollBar
      * @return {Void}
      */
     _pro.__hideScrollBar = function(){
@@ -161,6 +213,9 @@ NEJ.define([
     };
     /**
      * 取偏移量
+     *
+     * @protected
+     * @method module:ui/scroller/scroller._$$Scroller#__getOffset
      * @return {Number} 偏移量
      */
     _pro.__getOffset = function(){
@@ -170,11 +225,16 @@ NEJ.define([
     };
     /**
      * 取弹性距离
-     * @param  {Number} _offset 偏移量
+     *
+     * @protected
+     * @method module:ui/scroller/scroller._$$Scroller#__getOutofBounce
+     * @param  {Number} _offset - 偏移量
      * @return {Number}         弹性距离
-     *                          <0  - 下超出
-     *                          =0  - 非弹性超出
-     *                          >0  - 上超出
+     * |        数值         |        含义          |
+     * |        :---         |        :---          |
+     * |        <0           |        下超出        |
+     * |        =0           |        非弹性超出    |
+     * |        >0           |        上超出        |
      */
     _pro.__getOutofBounce = function(_offset){
         var _out = _offset==null?this.__offset:_offset;
@@ -188,7 +248,10 @@ NEJ.define([
     };
     /**
      * 刷新布局信息
-     * @param  {Boolean} _force 强制刷新
+     *
+     * @protected
+     * @method module:ui/scroller/scroller._$$Scroller#__doRefresh
+     * @param  {Boolean} _force - 强制刷新
      * @return {Void}
      */
     _pro.__doRefresh = function(_force){
@@ -197,6 +260,11 @@ NEJ.define([
     };
     /**
      * 恢复弹性
+     *
+     * @protected
+     * @method module:ui/scroller/scroller._$$Scroller#__doRevertBounce
+     * @param  {Number} _offset   - 弹性距离
+     * @param  {Number} _duration - 持续时间
      * @return {Void}
      */
     _pro.__doRevertBounce = function(_offset,_duration){
@@ -214,6 +282,9 @@ NEJ.define([
     };
     /**
      * 弹性恢复动画回收
+     *
+     * @protected
+     * @method module:ui/scroller/scroller._$$Scroller#__doStopBounceRevert
      * @return {Void}
      */
     _pro.__doStopBounceRevert = function(){
@@ -223,7 +294,11 @@ NEJ.define([
     };
     /**
      * 更新弹性恢复
-     * @param  {Number} _offset 偏移量
+     *
+     * @protected
+     * @method   module:ui/scroller/scroller._$$Scroller#__doUpdateBounceRevert
+     * @param    {Object} _event  - 偏移量对象
+     * @property {Number} offset  - 偏移量
      * @return {Void}
      */
     _pro.__doUpdateBounceRevert = function(_event){
@@ -231,6 +306,10 @@ NEJ.define([
     };
     /**
      * 减速动画回收
+     *
+     * @protected
+     * @method module:ui/scroller/scroller._$$Scroller#__doStopDecelerate
+     * @param  {Boolean} _nohide  - 是否回收
      * @return {Void}
      */
     _pro.__doStopDecelerate = function(_nohide){
@@ -243,9 +322,13 @@ NEJ.define([
     };
     /**
      * 减速动画
-     * @param  {Number} _offset   偏移量
-     * @param  {Number} _velocity 当前速度
-     * @return {Void}
+     *
+     * @protected
+     * @method   module:ui/scroller/scroller._$$Scroller#__doUpdateDecelerate
+     * @param    {Object} _event   - 配置参数
+     * @property {Number} offset   - 偏移量
+     * @property {Number} velocity - 当前速度
+     * @return   {Void}
      */
     _pro.__doUpdateDecelerate = function(_event){
         var _offset = _event.offset,
@@ -263,6 +346,9 @@ NEJ.define([
     };
     /**
      * 弹性动画回收
+     *
+     * @protected
+     * @method module:ui/scroller/scroller._$$Scroller#__doStopBounce
      * @return {Void}
      */
     _pro.__doStopBounce = function(){
@@ -272,7 +358,11 @@ NEJ.define([
     };
     /**
      * 弹性动画
-     * @param  {Number} _offset 偏移量
+     *
+     * @protected
+     * @method module:ui/scroller/scroller._$$Scroller#__doUpdateBounce
+     * @param    {Object} _event  - 偏移量对象
+     * @property {Number} offset  - 偏移量
      * @return {Void}
      */
     _pro.__doUpdateBounce = function(_event){
@@ -280,7 +370,10 @@ NEJ.define([
     };
     /**
      * 滚动至指定位置
-     * @param  {Number} _delta 偏移量
+     *
+     * @protected
+     * @method module:ui/scroller/scroller._$$Scroller#__doScrollBy
+     * @param  {Number} _delta - 偏移量
      * @return {Void}
      */
     _pro.__doScrollBy = function(_delta){
@@ -288,7 +381,10 @@ NEJ.define([
     };
     /**
      * 滚动至指定位置
-     * @param  {Number} _offset 偏移量
+     *
+     * @protected
+     * @method module:ui/scroller/scroller._$$Scroller#__doScrollTo
+     * @param  {Number} _offset - 偏移量
      * @return {Void}
      */
     _pro.__doScrollTo = function(_offset){
@@ -341,6 +437,9 @@ NEJ.define([
     };
     /**
      * 开始触摸触发事件
+     *
+     * @protected
+     * @method module:ui/scroller/scroller._$$Scroller#__onTouchStart
      * @return {Void}
      */
     _pro.__onTouchStart = function(){
@@ -358,7 +457,10 @@ NEJ.define([
     };
     /**
      * 开始事件
-     * @param  {Touch} _touch 触点对象
+     *
+     * @protected
+     * @method module:ui/scroller/scroller._$$Scroller#__onDragStart
+     * @param  {Touch} _touch - 触点对象
      * @return {Void}
      */
     _pro.__onDragStart = function(){
@@ -371,7 +473,10 @@ NEJ.define([
     };
     /**
      * 过程事件
-     * @param  {Touch} _touch 触点对象
+     *
+     * @protected
+     * @method module:ui/scroller/scroller._$$Scroller#__onDragging
+     * @param  {Touch} _touch - 触点对象
      * @return {Void}
      */
     _pro.__onDragging = function(_touch){
@@ -386,7 +491,10 @@ NEJ.define([
     };
     /**
      * 结束事件
-     * @param  {Touch} _touch 触点对象
+     *
+     * @protected
+     * @method module:ui/scroller/scroller._$$Scroller#__onDragEnd
+     * @param  {Touch} _touch - 触点对象
      * @return {Void}
      */
     _pro.__onDragEnd = function(_touch){
@@ -414,6 +522,9 @@ NEJ.define([
     };
     /**
      * 动画结束触发事件
+     *
+     * @protected
+     * @method module:ui/scroller/scroller._$$Scroller#__onTransitionEnd
      * @return {Void}
      */
     _pro.__onTransitionEnd = function(){
@@ -421,7 +532,8 @@ NEJ.define([
     };
     /**
      * 控件节点追加至容器
-     * @param  {String|Node} 控件所在容器节点
+     * @method module:ui/scroller/scroller._$$Scroller#_$appendTo
+     * @param  {String|Node} arg0 - 控件所在容器节点
      * @return {Void}
      */
     _pro._$appendTo = function(_parent){
@@ -438,6 +550,7 @@ NEJ.define([
     };
     /**
      * 恢复弹性
+     * @method module:ui/scroller/scroller._$$Scroller#_$revertBounce
      * @return {Void}
      */
     _pro._$revertBounce = function(){
@@ -449,7 +562,8 @@ NEJ.define([
     };
     /**
      * 判断偏移是否在可视范围内
-     * @param  {String|Node} _element 检测节点
+     * @method module:ui/scroller/scroller._$$Scroller#_$isInViewPoint
+     * @param  {String|Node} _element - 检测节点
      * @return {Boolean}              是否在可视范围内
      */
     _pro._$isInViewPoint = function(_element){
@@ -465,6 +579,7 @@ NEJ.define([
     };
     /**
      * 取当前滚动高度
+     * @method module:ui/scroller/scroller._$$Scroller#_$getScrollTop
      * @return {Number} 滚动高度
      */
     _pro._$getScrollTop = function(){
@@ -474,8 +589,9 @@ NEJ.define([
     };
     /**
      * 滚动至偏移位置
-     * @param  {Number}  _delta   偏移量
-     * @param  {Boolean} _refresh 是否需要刷新
+     * @method module:ui/scroller/scroller._$$Scroller#_$scrollBy
+     * @param  {Number}  _delta   - 偏移量
+     * @param  {Boolean} _refresh - 是否需要刷新
      * @return {Void}
      */
     _pro._$scrollBy = function(_delta,_refresh){
@@ -485,8 +601,9 @@ NEJ.define([
     };
     /**
      * 滚动至指定位置
-     * @param  {Number}  _offset  偏移量
-     * @param  {Boolean} _refresh 是否需要刷新
+     * @method module:ui/scroller/scroller._$$Scroller#_$scrollTo
+     * @param  {Number}  _offset  - 偏移量
+     * @param  {Boolean} _refresh - 是否需要刷新
      * @return {Void}
      */
     _pro._$scrollTo = function(_offset,_refresh){
@@ -502,7 +619,8 @@ NEJ.define([
     };
     /**
      * 滚动至顶部
-     * @param  {Boolean} _refresh 是否需要刷新
+     * @method module:ui/scroller/scroller._$$Scroller#_$scrollTop
+     * @param  {Boolean} _refresh - 是否需要刷新
      * @return {Void}
      */
     _pro._$scrollTop = function(_refresh){
@@ -511,7 +629,8 @@ NEJ.define([
     };
     /**
      * 滚动至中部
-     * @param  {Boolean} _refresh 是否需要刷新
+     * @method module:ui/scroller/scroller._$$Scroller#_$scrollMiddle
+     * @param  {Boolean} _refresh - 是否需要刷新
      * @return {Void}
      */
     _pro._$scrollMiddle = function(_refresh){
@@ -520,7 +639,8 @@ NEJ.define([
     };
     /**
      * 滚动至底部
-     * @param  {Boolean} _refresh 是否需要刷新
+     * @method module:ui/scroller/scroller._$$Scroller#_$scrollBottom
+     * @param  {Boolean} _refresh - 是否需要刷新
      * @return {Void}
      */
     _pro._$scrollBottom = function(_refresh){
@@ -529,8 +649,9 @@ NEJ.define([
     };
     /**
      * 滚动到指定元素
-     * @param  {String|Node} _element 目标元素
-     * @param  {Boolean}     _refresh 是否需要刷新
+     * @method module:ui/scroller/scroller._$$Scroller#_$scrollToElement
+     * @param  {String|Node} _element - 目标元素
+     * @param  {Boolean}     _refresh - 是否需要刷新
      * @return {Void}
      */
     _pro._$scrollToElement = function(_element,_refresh){

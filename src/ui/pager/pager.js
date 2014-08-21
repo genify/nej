@@ -5,26 +5,29 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module ui/pager/pager */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/element.js',
-    '{lib}ui/pager/pager.base.js',
-    '{lib}util/page/page.js'
+    'base/global',
+    'base/klass',
+    'base/element',
+    'ui/pager/pager.base',
+    'util/page/page'
 ],function(NEJ,_k,_e,_i0,_t0,_p,_o,_f,_r){
     // variable declaration
     var _pro;
     /**
-     * 分页器控件封装<br />
+     * 分页器控件封装
+     *
      * 页面结构举例
      * ```html
      *   <div id="pagerCnt">page</div>
      *   <div id="pagerCnt2">page</div>
      * ```
+     *
      * 脚本举例
      * ```javascript
      *   NEJ.define([
-     *       '{lib}ui/pager/pager.js'
+     *       'ui/pager/pager'
      *   ],function(_u,_p,_o,_f,_r){
      *           // 默认第一页
      *       var _setIndex = 1;
@@ -50,30 +53,32 @@ NEJ.define([
      *   })
      * ```
      *
-     * @class   module:_$$Pager
-     * @uses    {util/page/page#_$$PageFragment}
-     * @extends {ui/base#_$$Abstract}
-     * @param   {Object}  可选配置参数
-     * @property  {Number}  index 当前页码
-     * @property  {Number}  total 总页码数
-     * @property  {Boolean} noend 无尾页显示
-     *
-     * [hr]
+     * @class     module:ui/pager/pager._$$Pager
+     * @uses      module:util/page/page._$$PageFragment
+     * @extends   module:ui/base._$$Abstract
+     * @param     {Object}  arg0 - 可选配置参数
+     * @property  {Number}  index - 当前页码
+     * @property  {Number}  total - 总页码数
+     * @property  {Boolean} noend - 无尾页显示
+     */
+    /**
      * 页码切换事件，输入{last:3,index:1,total:12}
-     * @event  {onchange}
-     * @param  {Object} 页码状态对象
-     * @property {Number} last  上一次的页码
-     * @property {Number} index 当前要切换的页面
-     * @property {Number} total  总页面数
+     *
+     * @event  module:ui/pager/pager._$$Pager#onchange
+     * @param  {Object}   arg0  - 页码状态对象
+     * @property {Number} last  - 上一次的页码
+     * @property {Number} index - 当前要切换的页面
+     * @property {Number} total - 总页面数
      *
      */
     _p._$$Pager = _k._$klass();
     _pro = _p._$$Pager._$extend(_i0._$$AbstractPager);
     /**
      * 控件重置
+     *
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
+     * @method module:ui/pager/pager._$$Pager#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -84,9 +89,10 @@ NEJ.define([
     };
     /**
      * 页面变化触发事件
+     *
      * @protected
-     * @method {__onChange}
-     * @param  {Object} 事件对象
+     * @method module:ui/pager/pager._$$Pager#__onChange
+     * @param  {Object} arg0 - 事件对象
      * @return {Void}
      */
     _pro.__onChange = function(_event){

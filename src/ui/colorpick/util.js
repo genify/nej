@@ -7,8 +7,8 @@
  */
 /** @module ui/colorpick/util */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/util.js'
+    'base/global',
+    'base/util'
 ],function(NEJ,_u,_p,_o,_f,_r){
     /**
      * 判断色值是否合法

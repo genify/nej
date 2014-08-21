@@ -7,20 +7,22 @@
  */
 /** @module ui/colorpick/colorpanel */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/config.js',
-    '{lib}base/element.js',
-    '{lib}base/event.js',
-    '{lib}util/template/tpl.js',
-    '{lib}util/slider/slider.y.js',
-    '{lib}util/slider/slider.xy.js',
-    '{lib}ui/base.js',
-    '{lib}ui/colorpick/util.js'
-],function(NEJ,_k,_c,_e,_v,_t0,_t1,_t2,_i,_i0,_p,_o,_f,_r){
+    'base/global',
+    'base/klass',
+    'base/config',
+    'base/element',
+    'base/event',
+    'util/template/tpl',
+    'util/slider/slider.y',
+    'util/slider/slider.xy',
+    'ui/base',
+    'ui/colorpick/util',
+    'text!./colorpanel.css',
+    'text!./colorpanel.html'
+],function(NEJ,_k,_c,_e,_v,_t0,_t1,_t2,_i,_i0,_css,_html,_p,_o,_f,_r){
     var _pro,
-        _seed_css,
-        _seed_html;
+        _seed_css = _e._$pushCSSText(_css,{root:_c._$get('root')}),
+        _seed_html= _t0._$addNodeTemplate(_html);
     /**
      * 颜色选择面板控件<br />
      *
@@ -32,7 +34,7 @@ NEJ.define([
      * 脚本举例
      * ```javascript
      * NEJ.define([
-     *     '{lib}ui/colorpick/colorpanel.js'
+     *     'ui/colorpick/colorpanel'
      * ],function(_i0,_p,_o,_f,_r){
      *     var _cp = _i0._$$ColorPanel._$allocate({
      *         parent:'colorpanel-box',
@@ -203,32 +205,6 @@ NEJ.define([
         });
         this.__doColorChange();
     };
-
-    // ui css text
-    _seed_css = _e._$pushCSSText('\
-        .#<uispace>{width:160px;margin:0 auto;overflow:hidden;$<user-select>:none;}\
-        .#<uispace> .zbg{background:url('+_c._$get('root')+'nej_color_btn.png) no-repeat -50px -50px;}\
-        .#<uispace> .zwrp{position:relative;padding:3px;zoom:1;cursor:default;font-size:1px;}\
-        .#<uispace> .zwrp .zdot{position:absolute;top:0;left:0;height:9px;overflow:hidden;}\
-        .#<uispace> .zwrp .zshw{height:104px;border:1px solid #bdbabd;}\
-        .#<uispace> .zpnl{float:left;}\
-        .#<uispace> .zpnl .zdot{width:9px;background-position:0 0;}\
-        .#<uispace> .zpnl .zshw{width:104px;background:url('+_c._$get('root')+'nej_color.png) no-repeat;}\
-        .#<uispace> .zhlt{float:right;padding:3px 7px;}\
-        .#<uispace> .zhlt .zdot{width:44px;background-position:0 -30px;}\
-        .#<uispace> .zhlt .zshw{width:26px;background:url('+_c._$get('root')+'nej_color_mask.png) repeat-x;}');
-    // ui html code
-    _seed_html = _t0._$addNodeTemplate('\
-        <div class="'+_seed_css+'">\
-          <div class="zwrp zpnl js-ztag">\
-            <span class="zdot zbg js-ztag">&nbsp;</span>\
-            <div class="zshw">&nbsp;</div>\
-          </div>\
-          <div class="zwrp zhlt js-ztag">\
-            <span class="zdot zbg js-ztag">&nbsp;</span>\
-            <div class="zshw js-ztag">&nbsp;</div>\
-          </div>\
-        </div>');
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ui'),_p);

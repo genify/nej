@@ -67,4 +67,4 @@ var f = function(){
     };
 };
 define('{pro}mylayer.js',
-      ['{lib}ui/layer/layer.js'],f);
+      ['ui/layer/layer'],f);

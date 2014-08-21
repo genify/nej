@@ -5,68 +5,78 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module ui/suggest/suggest */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/element.js',
-    '{lib}base/util.js',
-    '{lib}ui/base.js',
-    '{lib}util/suggest/suggest.js',
-    '{lib}util/template/tpl.js'
+    'base/global',
+    'base/klass',
+    'base/element',
+    'base/util',
+    'ui/base',
+    'util/suggest/suggest',
+    'util/template/tpl'
 ],function(NEJ,_k,_e,_u,_i,_t0,_t1,_p,_o,_f,_r){
     var _seed_css,
         _seed_item,
         _pro;
     /**
-     * 提示建议控件<br />
+     * 提示建议控件
+     *
      * 页面结构举例
      * ```html
-     *   <input type='text' id='suggest-input' />
+     * <input type='text' id='suggest-input' />
      * ```
+     *
      * 脚本举例
      * ```javascript
-     *   var _ui = NEJ.P('nej.ui');
-     *   var _input = this._e._$get('suggest-input');
-     *   // 输入框内容变化回调
-     *   var _onchage = function(_value){
-     *       // 根据输入框的值，获取需要展示的列表，返回给控件展示
-     *       _suggest._$setList(['1','2','3','4']);
-     *   };
-     *   // 选择某一项的回调
-     *   var _onselect = function(_value){
-     *       // 返回选中的值
-     *   };
-     *   // 生成下拉列表实例
-     *   var _suggest = _ui._$$Suggest._$allocate({
-     *       input:_input,
-     *       onchange:_onchage._$bind(this),
-     *       onselect:_onselect._$bind(this)
-     *   });
+     * NEJ.define([
+     *     'base/element',
+     *     'ui/suggest/suggest',
+     * ],function(_e,_i0,_p,_o,_f,_r){
+     *     var _input = _e._$get('suggest-input');
+     *     // 输入框内容变化回调
+     *     var _onchage = function(_value){
+     *         // 根据输入框的值，获取需要展示的列表，返回给控件展示
+     *         _suggest._$setList(['1','2','3','4']);
+     *     };
+     *     // 选择某一项的回调
+     *     var _onselect = function(_value){
+     *         // 返回选中的值
+     *     };
+     *     // 生成下拉列表实例
+     *     var _suggest = _i0._$$Suggest._$allocate({
+     *         input:_input,
+     *         onchange:_onchage._$bind(this),
+     *         onselect:_onselect._$bind(this)
+     *     });
+     * });
      * ```
      *
-     * @class   module:nej.ui._$$Suggest 提示建议控件
-     * @uses    {nej.ut._$$Suggest}
-     * @extends {nej.ui._$$Abstract}
-     * @param   {Object} 可选配置参数
-     * @property  {Node|String} input 输入框节点或者ID
+     * @class     module:ui/suggest/suggest._$$Suggest
+     * @uses      module:util/suggest/suggest._$$Suggest
+     * @extends   module:ui/base._$$Abstract
+     * @param     {Object}      arg0   - 可选配置参数
+     * @property  {Node|String} input - 输入框节点或者ID
+     */
+    /**
+     * 选中触发事件
      *
-     * [hr]
+     * @event  module:ui/suggest/suggest._$$Suggest#onselect
+     * @param  {String} arg0 -   选中值
+     */
+    /**
+     * 输入内容变化触发事件
      *
-     * @event  {onselect} 选中触发事件
-     * @param  {String}   选中值
-     *
-     * [hr]
-     *
-     * @event  {onchange} 输入内容变化触发事件
-     * @param  {String}   输入内容
+     * @event  module:ui/suggest/suggest._$$Suggest#onchange
+     * @param  {String} arg0 -   输入内容
      *
      */
     _p._$$Suggest = _k._$klass();
     _pro = _p._$$Suggest._$extend(_i._$$Abstract);
     /**
      * 控件初始化
+     *
      * @protected
-     * @method {__init}
+     * @method module:ui/suggest/suggest._$$Suggest#__init
      * @return {Void}
      */
     _pro.__init = function(){
@@ -78,9 +88,10 @@ NEJ.define([
     };
     /**
      * 控件重置
+     *
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
+     * @method module:ui/suggest/suggest._$$Suggest#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -91,8 +102,9 @@ NEJ.define([
     };
     /**
      * 控件销毁
+     *
      * @protected
-     * @method {__destroy}
+     * @method module:ui/suggest/suggest._$$Suggest#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -105,8 +117,9 @@ NEJ.define([
     };
     /**
      * 初始化外观信息
+     *
      * @protected
-     * @method {__initXGui}
+     * @method module:ui/suggest/suggest._$$Suggest#__initXGui
      * @return {Void}
      */
     _pro.__initXGui = function(){
@@ -114,8 +127,9 @@ NEJ.define([
     };
     /**
      * 初始化节点
+     *
      * @protected
-     * @method {__initNode}
+     * @method module:ui/suggest/suggest._$$Suggest#__initNode
      * @return {Void}
      */
     _pro.__initNode = function(){
@@ -124,9 +138,10 @@ NEJ.define([
     };
     /**
      * 输入内容变化触发事件
+     *
      * @protected
-     * @method {__onChange}
-     * @param  {String} 输入内容
+     * @method module:ui/suggest/suggest._$$Suggest#__onChange
+     * @param  {String} arg0 - 输入内容
      * @return {Void}
      */
     _pro.__onChange = function(_value){
@@ -134,24 +149,27 @@ NEJ.define([
     };
     /**
      * 选中建议项触发事件
+     *
      * @protected
-     * @method {__onSelect}
-     * @param  {String} 选中值
+     * @method module:ui/suggest/suggest._$$Suggest#__onSelect
+     * @param  {String} arg0 - 选中值
      * @return {Void}
      */
     _pro.__onSelect = function(_value,_options){
         this._$dispatchEvent('onselect',_value,_options);
     };
     /**
-     * 设置建议列表<br />
+     * 设置建议列表
+     *
      * 脚本举例
      * ```javascript
-     *   // 设置下拉列表的值
-     *   _suggest._$setList(['1','2','3','4']);
+     * // 设置下拉列表的值
+     * _suggest._$setList(['1','2','3','4']);
      * ```
-     * @method {_$setList}
-     * @param  {String|Array} 列表html代码或者数据列表
-     * @param  {String}       列表项标识样式
+     *
+     * @method module:ui/suggest/suggest._$$Suggest#_$setList
+     * @param  {String|Array} _html  - 列表html代码或者数据列表
+     * @param  {String}       _clazz - 列表项标识样式
      * @return {Void}
      */
     _pro._$setList = function(_html,_clazz){

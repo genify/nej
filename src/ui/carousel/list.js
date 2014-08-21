@@ -7,12 +7,12 @@
  */
 /** @module ui/carousel/list */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/element.js',
-    '{lib}util/event.js',
-    '{lib}ui/loading/loading.js',
-    '{lib}ui/carousel/carousel.x.js'
+    'base/global',
+    'base/klass',
+    'base/element',
+    'util/event',
+    'ui/loading/loading',
+    'ui/carousel/carousel.x'
 ],function(NEJ,_k,_e,_t,_i0,_i1,_p,_o,_f,_r){
     // variable declaration
     var _pro;

@@ -7,18 +7,22 @@
  */
 /** @module ui/colorpick/simple */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/element.js',
-    '{lib}base/event.js',
-    '{lib}ui/base.js',
-    '{lib}util/template/tpl.js',
-    '{lib}util/template/jst.js'
-],function(NEJ,_k,_e,_v,_i,_t0,_t1,_p,_o,_f,_r){
+    'base/global',
+    'base/klass',
+    'base/config',
+    'base/element',
+    'base/event',
+    'ui/base',
+    'util/template/tpl',
+    'util/template/jst',
+    'text!./simple.css',
+    'text!./simple.html'
+],function(NEJ,_k,_c,_e,_v,_i,_t0,_t1,_css,_html,_p,_o,_f,_r){
     var _pro,
-        _seed_css,
-        _seed_html,
-        _seed_color;
+        _seed_css = _e._$pushCSSText(_css,{root:_c._$get('root')}),
+        _seed_ui  = _t0._$parseUITemplate(_html),
+        _seed_html  = _seed_ui['_seed_html'],
+        _seed_color = _seed_ui['_seed_color'];
     /**
      * 颜色选择控件
      *
@@ -30,7 +34,7 @@ NEJ.define([
      * 脚本举例
      * ```javascript
      * NEJ.define([
-     *     '{lib}ui/colorpick/simple.js'
+     *     'ui/colorpick/simple'
      * ],function(_i0,_p,_o,_f,_r){
      *     var _cp = _i0._$$SimpleColorPick._$allocate({
      *         parent:'colorpanel-box',
@@ -208,33 +212,6 @@ NEJ.define([
             color:_color
         });
     };
-
-    // ui css text
-    _seed_css = _e._$pushCSSText('\
-        .#<uispace>{text-align:left;}\
-        .#<uispace> .zdft{display:block;padding:3px 1px 3px 5px;margin:3px;cursor:pointer;}\
-        .#<uispace> .zdft:hover{padding:2px 0 2px 4px;background:#ffeec2;border:1px solid #000080;text-decoration:none;}\
-        .#<uispace> .zprv{display:block;width:28px;height:11px;overflow:hidden;border:1px solid #aca899;}\
-        .#<uispace> .zbox{width:152px;margin:0 5px;overflow:hidden;}\
-        .#<uispace> .zbox .zitm{display:block;float:left;width:11px;height:11px;overflow:hidden;margin:3px;border:1px solid #aca899;cursor:pointer;}\
-        .#<uispace> .zbox2{width:220px;margin-left:9px;border-width:1px 0 0 1px;border-color:#000;border-style:solid;}\
-        .#<uispace> .zbox2 .zitm2{width:10px;height:10px;margin:-1px 0 0 -1px;border-color:#000;}'
-    );
-    // ui html code
-    _seed_html = _t0._$addNodeTemplate('\
-        <div class="'+_seed_css+'">\
-          <a class="zdft" title="去除颜色" href="#">\
-            <span class="zprv j-flag">&nbsp;</span>\
-          </a>\
-          <div class="zbox j-flag"></div>\
-        </div>'
-    );
-    // color list
-    _seed_color = _t1._$addHtmlTemplate('\
-        {list xlist as x}\
-        <a class="zitm" title="${x.t}" style="background-color:${x.v}" data-value="${x.v}" href="#">&nbsp;</a>\
-        {/list}'
-    );
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ui'),_p);

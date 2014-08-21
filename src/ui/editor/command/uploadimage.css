@@ -1,0 +1,12 @@
+.#<uispace>{width:336px;}
+.#<uispace> .m-iframe{position:absolute;height:0px;width:0px;left:-9000px;}
+.#<uispace> .u-upload-file{height:0px;width:0px;font-size:0px;}
+.#<uispace> .u-error{color:red;padding-top:10px;}
+.#<uispace> .choose_file{position:relative;margin-bottom:10px;}
+.#<uispace> .choose_file object{position:absolute;left:0;top:0;}
+.#<uispace> .web_img{margin-bottom:8px;}
+.#<uispace> .web_img .u-edit{margin-bottom:10px;}
+.#<uispace> .u-desc{color:#ccc;}
+.#<uispace> .middle{color:#528CE0;}
+.#<uispace> .u-btn{cursor:pointer;color:#528CE0;}
+.#<uispace> .u-image{width:0px;height:0px;visibility:hidden;}

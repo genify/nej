@@ -7,9 +7,9 @@
  */
 /** @module ui/carousel/y */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}ui/carousel/carousel.js'
+    'base/global',
+    'base/klass',
+    'ui/carousel/carousel'
 ],function(NEJ,_k,_i0,_p,_o,_f,_r){
     // variable declaration
     var _pro;

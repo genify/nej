@@ -5,18 +5,19 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module ui/portrait/portrait */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/constant.js',
-    '{lib}base/element.js',
-    '{lib}base/event.js',
-    '{lib}base/util.js',
-    '{lib}ui/base.js',
-    '{lib}ui/pager/pager.simple.js',
-    '{lib}util/list/module.pager.js',
-    '{lib}util/template/tpl.js',
-    '{lib}util/template/jst.js'
+    'base/global',
+    'base/klass',
+    'base/constant',
+    'base/element',
+    'base/event',
+    'base/util',
+    'ui/base',
+    'ui/pager/pager.simple',
+    'util/list/module.pager',
+    'util/template/tpl',
+    'util/template/jst'
 ],function(NEJ,_k,_g,_e,_v,_u,_i,_i0,_t0,_t1,_t2,_p,_o,_f,_r){
     // variable declaration
     var _pro,
@@ -25,20 +26,20 @@ NEJ.define([
     /**
      * 表情控件
      *
-     *
-     * @class   module:nej.ui._$$Portrait
-     * @extends {nej.ui._$$Abstract}
-     * @param   {Object} 可选配置参数
-     * @property  {Number} size  表情大小，30或60，默认为30，目前支持30*30和60*60
-     * @property  {String} page  分页标识前缀，默认为js-page-
-     * @property  {Object} cache 数据缓存配置
-     *
-     * [hr]
+     * @class     module:ui/portrait/portrait._$$Portrait
+     * @extends   module:ui/base._$$Abstract
+     * @param     {Object} arg0  - 可选配置参数
+     * @property  {Number} size  - 表情大小，30或60，默认为30， 目前支持30*30和60*60
+     * @property  {String} page  - 分页标识前缀，默认为js-page-
+     * @property  {Object} cache - 数据缓存配置
+     */
+    /**
      * 表情选中事件
-     * @event   {onselect}
-     * @param   {Object} 表情数据对象
-     * @property  {String} text 表情描述
-     * @property  {String} url  表情文件地址
+     *
+     * @event     module:ui/portrait/portrait._$$Portrait#onselect
+     * @param     {Object} arg0 - 表情数据对象
+     * @property  {String} text - 表情描述
+     * @property  {String} url  - 表情文件地址
      *
      */
     _p._$$Portrait = _k._$klass();
@@ -63,9 +64,10 @@ NEJ.define([
     };
     /**
      * 控件重置
+     *
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
+     * @method module:ui/portrait/portrait._$$Portrait#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = (function(){
@@ -89,6 +91,9 @@ NEJ.define([
     })();
     /**
      * 控件销毁
+     *
+     * @protected
+     * @method module:ui/portrait/portrait._$$Portrait#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -110,6 +115,9 @@ NEJ.define([
     };
     /**
      * 初始化外观
+     *
+     * @protected
+     * @method module:ui/portrait/portrait._$$Portrait#__initXGui
      * @return {Void}
      */
     _pro.__initXGui = function(){
@@ -118,6 +126,9 @@ NEJ.define([
     };
     /**
      * 初始化控件节点
+     *
+     * @protected
+     * @method module:ui/portrait/portrait._$$Portrait#__initNode
      * @return {Void}
      */
     _pro.__initNode = function(){
@@ -146,7 +157,10 @@ NEJ.define([
     };
     /**
      * 通过事件取表情数据
-     * @param  {Event}  事件对象
+     *
+     * @protected
+     * @method module:ui/portrait/portrait._$$Portrait#__getPortraitByEvent
+     * @param  {Event} arg0 -  事件对象
      * @return {Object} 表情数据
      */
     _pro.__getPortraitByEvent = function(_event){
@@ -163,7 +177,10 @@ NEJ.define([
     };
     /**
      * 解析预览图片对齐方式
-     * @param  {String} 对齐方式，'left top'
+     *
+     * @protected
+     * @method module:ui/portrait/portrait._$$Portrait#__doParseAlign
+     * @param  {String} arg0 - 对齐方式，'left top'
      * @return {Object} 对齐信息
      */
     _pro.__doParseAlign = function(_align){
@@ -180,8 +197,11 @@ NEJ.define([
     };
     /**
      * 预览表情事件
-     * @param  {Boolean} 是否预览
-     * @param  {Event}  事件对象
+     *
+     * @protected
+     * @method module:ui/portrait/portrait._$$Portrait#__onPreviewPortrait
+     * @param  {Boolean} arg0 - 是否预览
+     * @param  {Event} arg0 -  事件对象
      * @return {Void}
      */
     _pro.__onPreviewPortrait = function(_in,_event){
@@ -209,7 +229,10 @@ NEJ.define([
     };
     /**
      * 选中表情触发事件
-     * @param  {Event} 事件对象
+     *
+     * @protected
+     * @method module:ui/portrait/portrait._$$Portrait#__onSelectPortrait
+     * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
     _pro.__onSelectPortrait = function(_event){
@@ -221,7 +244,10 @@ NEJ.define([
     };
     /**
      * 页码变化触发事件
-     * @param  {Object} 页码信息
+     *
+     * @protected
+     * @method module:ui/portrait/portrait._$$Portrait#__onChangePage
+     * @param  {Object} arg0 - 页码信息
      * @return {Void}
      */
     _pro.__onChangePage = function(_event){

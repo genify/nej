@@ -7,22 +7,26 @@
  */
 /** @module ui/editor/editor */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/config.js',
-    '{lib}base/element.js',
-    '{lib}base/event.js',
-    '{lib}base/util.js',
-    '{lib}ui/base.js',
-    '{lib}util/editor/editor.js',
-    '{lib}util/template/jst.js',
-    '{lib}util/editor/area.js',
-    '{lib}util/editor/toolbar.js'
-],function(NEJ,_k,_c,_e,_v,_u,_i,_t0,_t1,_t2,_t3,_p,_o,_f,_r){
+    'base/global',
+    'base/klass',
+    'base/config',
+    'base/element',
+    'base/event',
+    'base/util',
+    'ui/base',
+    'util/editor/editor',
+    'util/template/jst',
+    'util/editor/area',
+    'util/editor/toolbar',
+    'util/template/tpl',
+    'text!./editor.css',
+    'text!./editor.html'
+],function(NEJ,_k,_c,_e,_v,_u,_i,_t0,_t1,_t2,_t3,_t4,_css,_html,_p,_o,_f,_r){
     var _seed_css,
-        _seed_icmd,
-        _seed_ifnt,
-        _seed_iedt,
+        _seed_ui = _t4._$parseUITemplate(_html),
+        _seed_icmd = _seed_ui['_seed_icmd'],
+        _seed_ifnt = _seed_ui['_seed_ifnt'],
+        _seed_iedt = _seed_ui['_seed_iedt'],
         _pro;
     /**
      * 富媒体编辑器基类封装
@@ -241,51 +245,7 @@ NEJ.define([
         return _arr.join('');
     };
     // ui css text
-    _seed_css = _e._$pushCSSText('\
-        .#<uispace>{width:500px;border:1px solid #ddd;text-align:center;}\
-        .#<uispace> .zbg{background:url('+_c._$get('root')+'nej_editor.png?20131028) no-repeat 100px 100px;}\
-        .#<uispace> .ztbar{height:30px;background-color:#eee;zoom:1;}\
-        .#<uispace> .ztbar:after{display:block;clear:both;visibility:hidden;height:0;content:".";}\
-        .#<uispace> .zitm{float:left;width:24px;height:24px;margin:3px 0;course:pointer;}\
-        .#<uispace> .zitm:hover{background-position:0 0;}\
-        .#<uispace> .zitm.js-selected{background-position:-30px 0;}\
-        .#<uispace> .zitm .zicn{width:16px;height:16px;margin:4px auto 0;overflow:hidden;text-indent:100px;}\
-        .#<uispace> .zitm .ztxt{display:none;}\
-        .#<uispace> .zisp{float:left;width:10px;height:24px;margin:3px 0;background-position:-60px 0;overflow:hidden;}\
-        .#<uispace> .zsel{float:left;position:relative;height:20px;overflow:hidden;line-height:20px;padding:0 5px;margin:4px;border:1px solid #C5C5C5;background:#fff;font-size:12px;text-align:left;cursor:pointer;}\
-        .#<uispace> .zsel .zarw{position:absolute;top:0;right:0;width:18px;height:18px;background-position:0px -244px;}\
-        .#<uispace> .zsel.zfs{width:60px;}\
-        .#<uispace> .zsel.zfm{width:140px;}\
-        .#<uispace> .zarea{height:200px;}\
-        .#<uispace> .zarea iframe{width:100%;height:100%;}'+
-        __doGenIconStyle()
-    );
-    // command list html
-    _seed_icmd = _t1._$addHtmlTemplate('\
-        {list xlist as x}\
-        <div class="zitm zbg ${\'js-\'|seed}" data-command="${x.cmd}" title="${x.txt}">\
-          <div class="zicn zbg ${x.icn}">&nbsp;</div>\
-          <div class="ztxt">${x.txt}</div>\
-        </div>\
-        {/list}\
-        {if defined("hr")&&!!hr}\
-        <div class="zbg zisp">&nbsp;</div>\
-        {/if}\
-    ');
-    // font-size and font-family select html
-    _seed_ifnt = _t1._$addHtmlTemplate('\
-        <div class="zsel ${icn} ${\'js-\'|seed}" data-command="${cmd}">\
-          <span class="${\'js-t-\'|seed}">${txt}</span>\
-          <span class="zarw zbg">&nbsp;</span>\
-        </div>\
-    ');
-    // editor html
-    _seed_iedt = _t1._$addHtmlTemplate('\
-        <div class="'+_seed_css+'">\
-          <div class="ztbar">${toolbar}</div>\
-          <div class="zarea"></div>\
-        </div>\
-    ');
+    _seed_css = _e._$pushCSSText(_css + __doGenIconStyle(),{root:_c._$get('root')});
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ui'),_p);

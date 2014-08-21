@@ -5,46 +5,52 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module ui/base */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/element.js',
-    '{lib}base/util.js',
-    '{lib}util/event.js',
-    '{lib}util/template/tpl.js'
+    'base/global',
+    'base/klass',
+    'base/element',
+    'base/util',
+    'util/event',
+    'util/template/tpl'
 ],function(NEJ,_k,_e,_u,_t,_t0,_p,_o,_f,_r){
     var _pro;
     /**
-     * UI控件基类，框架及项目中所有涉及UI的控件均继承此类<br/>
+     * UI控件基类，框架及项目中所有涉及UI的控件均继承此类
      *
      * 脚本举例
      * ```javascript
-     *    // 分配控件实例
-     *    var ctrl = AAA._$allocate({
-     *        clazz:'xxx',
-     *        parent:document.body
-     *    });
-     *    ctrl._$appendTo(document.body);   // 如果在分配时传入了parent则这步可省略
-     *    ctrl._$appendTo(function(_body){  // 如果需要自定义body插入的位置可以输入函数，返回父容器节点
-     *        _parent.insertAdjacentElement('afterBegin',_body);
-     *        return _parent;
-     *    });
+     * // 分配控件实例
+     * NEJ.define([
+     *     'ui/base'
+     * ],function(_i,_p,_o,_f,_r){
+     *     var ctrl = _i._$allocate({
+     *         clazz:'xxx',
+     *         parent:document.body
+     *     });
+     *     ctrl._$appendTo(document.body);
+     *     // 如果在分配时传入了parent则这步可省略
+     *     ctrl._$appendTo(function(_body){
+     *         // 如果需要自定义body插入的位置可以输入函数，返回父容器节点
+     *         _parent.insertAdjacentElement('afterBegin',_body);
+     *         return _parent;
+     *     });
+     * });
      * ```
      *
-     *
-     * @class   module:_$$Abstract
-     * @extends {_$$EventTarget}
-     *
-     * @param   {Object} 可选配置参数
-     * @property  {String}               clazz  控件样式
-     * @property  {String|Node|Function} parent 控件所在容器节点或者追加控件节点执行函数
+     * @class     module:ui/base._$$Abstract
+     * @extends   module:util/event._$$EventTarget
+     * @param     {Object}               arg0   - 可选配置参数
+     * @property  {String}               clazz  - 控件样式
+     * @property  {String|Node|Function} parent -  控件所在容器节点或者追加控件节点执行函数
      */
     _p._$$Abstract = _k._$klass();
     _pro = _p._$$Abstract._$extend(_t._$$EventTarget);
     /**
      * 初始化
+     *
      * @protected
-     * @method {__init}
+     * @method module:ui/base._$$Abstract#__init
      * @return {Void}
      */
     _pro.__init = function(){
@@ -55,9 +61,10 @@ NEJ.define([
     };
     /**
      * 控件重置
+     *
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
+     * @method module:ui/base._$$Abstract#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -67,8 +74,9 @@ NEJ.define([
     };
     /**
      * 控件销毁
+     *
      * @protected
-     * @method {__destroy}
+     * @method module:ui/base._$$Abstract#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -86,15 +94,17 @@ NEJ.define([
     };
     /**
      * 初始化外观信息，子类实现具体逻辑
+     *
      * @protected
-     * @method {__initXGui}
+     * @method module:ui/base._$$Abstract#__initXGui
      * @return {Void}
      */
     _pro.__initXGui = _f;
     /**
      * 初始化节点，子类重写具体逻辑
+     *
      * @protected
-     * @method {__initNode}
+     * @method module:ui/base._$$Abstract#__initNode
      * @return {Void}
      */
     _pro.__initNode = function(){
@@ -109,16 +119,18 @@ NEJ.define([
     };
     /**
      * 动态构建控件节点模板，子类实现具体逻辑
+     *
      * @protected
-     * @method {__initNodeTemplate}
+     * @method module:ui/base._$$Abstract#__initNodeTemplate
      * @return {Void}
      */
     _pro.__initNodeTemplate = _f;
     /**
      * 添加节点样式
+     *
      * @protected
-     * @method {__doInitClass}
-     * @param  {String} 样式名称
+     * @method module:ui/base._$$Abstract#__doInitClass
+     * @param  {String} arg0 - 样式名称
      * @return {Void}
      */
     _pro.__doInitClass = function(_clazz){
@@ -127,8 +139,9 @@ NEJ.define([
     };
     /**
      * 父节点增加辅助样式
+     *
      * @protected
-     * @method {__doAddParentClass}
+     * @method module:ui/base._$$Abstract#__doAddParentClass
      * @return {Void}
      */
     _pro.__doAddParentClass = function(){
@@ -140,8 +153,9 @@ NEJ.define([
     };
     /**
      * 父节点删除辅助样式
+     *
      * @protected
-     * @method {__doDelParentClass}
+     * @method module:ui/base._$$Abstract#__doDelParentClass
      * @return {Void}
      */
     _pro.__doDelParentClass = function(){
@@ -152,39 +166,39 @@ NEJ.define([
         );
     };
     /**
-     * 取当前控件节点<br />
+     * 取当前控件节点
      *
      * 脚本举例
      * ```javascript
-     *   // _mask是一个继承了此基类的实例化对象
-     *   // 获取当前控件的节点
+     * // _mask是一个继承了此基类的实例化对象
+     * // 获取当前控件的节点
      *   _mask._$getBody();
      * ```
      *
-     * @method {_$getBody}
+     * @method module:ui/base._$$Abstract#_$getBody
      * @return {Node} 控件节点
      */
     _pro._$getBody = function(){
         return this.__body;
     };
     /**
-     * 控件节点追加至容器<br />
+     * 控件节点追加至容器
      *
      * 脚本举例
      * ```javascript
-     *   // _mask是一个继承了此基类的实例化对象
-     *   _mask._$appendTo(document.body);
-     *   // 还可以传方法
-     *   _mask._$appendTo(function(_body){
-     *      // 根据情况插入节点
-     *      var _parent = document.body;
-     *      _parent.insertAdjacentElement('afterBegin',_body);
-     *      return _parent;
-     *   });
+     * // _mask是一个继承了此基类的实例化对象
+     * _mask._$appendTo(document.body);
+     * // 还可以传方法
+     * _mask._$appendTo(function(_body){
+     *    // 根据情况插入节点
+     *    var _parent = document.body;
+     *    _parent.insertAdjacentElement('afterBegin',_body);
+     *    return _parent;
+     * });
      * ```
      *
-     * @method {_$appendTo}
-     * @param  {String|Node|Function} 控件所在容器节点
+     * @method module:ui/base._$$Abstract#_$appendTo
+     * @param  {String|Node|Function} arg0 - 控件所在容器节点
      * @return {Void}
      */
     _pro._$appendTo = function(_parent){
@@ -201,15 +215,15 @@ NEJ.define([
         this.__doAddParentClass();
     };
     /**
-     * 显示控件<br />
+     * 显示控件
      *
      * 脚本举例
      * ```javascript
-     *   // _mask是一个继承了此基类的实例化对象
-     *   _mask._$show();
+     * // _mask是一个继承了此基类的实例化对象
+     * _mask._$show();
      * ```
      *
-     * @method {_$show}
+     * @method module:ui/base._$$Abstract#_$show
      * @return {Void}
      */
     _pro._$show = function(){
@@ -220,15 +234,15 @@ NEJ.define([
         this.__parent.appendChild(this.__body);
     };
     /**
-     * 隐藏控件<br />
+     * 隐藏控件
      *
      * 脚本举例
      * ```javascript
-     *   // _mask是一个继承了此基类的实例化对象
-     *   _mask._$hide();
+     * // _mask是一个继承了此基类的实例化对象
+     * _mask._$hide();
      * ```
      *
-     * @method {_$hide}
+     * @method module:ui/base._$$Abstract#_$hide
      * @return {Void}
      */
     _pro._$hide = function(){

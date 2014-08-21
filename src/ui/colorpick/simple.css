@@ -1,0 +1,8 @@
+.#<uispace>{text-align:left;}
+.#<uispace> .zdft{display:block;padding:3px 1px 3px 5px;margin:3px;cursor:pointer;}
+.#<uispace> .zdft:hover{padding:2px 0 2px 4px;background:#ffeec2;border:1px solid #000080;text-decoration:none;}
+.#<uispace> .zprv{display:block;width:28px;height:11px;overflow:hidden;border:1px solid #aca899;}
+.#<uispace> .zbox{width:152px;margin:0 5px;overflow:hidden;}
+.#<uispace> .zbox .zitm{display:block;float:left;width:11px;height:11px;overflow:hidden;margin:3px;border:1px solid #aca899;cursor:pointer;}
+.#<uispace> .zbox2{width:220px;margin-left:9px;border-width:1px 0 0 1px;border-color:#000;border-style:solid;}
+.#<uispace> .zbox2 .zitm2{width:10px;height:10px;margin:-1px 0 0 -1px;border-color:#000;}

@@ -5,35 +5,51 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module ui/resizer/resizer */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/constant.js',
-    '{lib}base/element.js',
-    '{lib}base/util.js',
-    '{lib}ui/base.js',
-    '{lib}util/resize/resize.js',
-    '{lib}util/template/tpl.js',
-    '{lib}util/template/jst.js'
+    'base/global',
+    'base/klass',
+    'base/constant',
+    'base/element',
+    'base/util',
+    'ui/base',
+    'util/resize/resize',
+    'util/template/tpl',
+    'util/template/jst'
 ],function(NEJ,_k,_g,_e,_u,_i,_t0,_t1,_t2,_p,_o,_f,_r){
     var _pro,
         _seed_css,
         _seed_html,
         _seed_point;
     /**
+     * 初始大小
+     * @typedef  {Object} module:ui/resizer/resizer._$$Resizer~Size
+     * @property {Number} width  - 宽
+     * @property {Number} height - 高
+     * @property {Number} ratio  - 比例
+     */
+    /**
+     * 最大宽高限制
+     * @typedef  {Object} module:ui/resizer/resizer._$$Resizer~Max
+     * @property {Number} width  - 宽
+     * @property {Number} height - 高
+     */
+    /**
      * 范围裁剪控件封装
      *
-     *
-     * @class   module:nej.ui._$$Range
-     * @extends {nej.ui._$$Abstract}
-     * @param   {Object}  可选配置参数，其他参数见nej.ut._$$Resize控件所示
-     * @property  {Object}  size 初始大小，输入任意两个值，其中ratio为width/height，{width:100,height:200,ratio:0.5}
-     * @property  {Object}  max  最大款高限制，{width:300,height:400}
+     * @class     module:ui/resizer/resizer._$$Resizer
+     * @extends   module:ui/base._$$Abstract
+     * @param     {Object} arg0 - 可选配置参数，其他参数见module:util/resize/resize._$$ResizerResize控件所示
+     * @property  {module:ui/resizer/resizer._$$Resizer~Size} size - 初始大小，输入任意两个值，其中ratio为width/height
+     * @property  {module:ui/resizer/resizer._$$Resizer~Max}  max  - 最大宽高限制
      */
     _p._$$Resizer = _k._$klass();
     _pro = _p._$$Resizer._$extend(_i._$$Abstract);
     /**
      * 控件初始化
+     *
+     * @protected
+     * @method module:ui/resizer/resizer._$$Resizer#__init
      * @return {Void}
      */
     _pro.__init = function(){
@@ -48,9 +64,10 @@ NEJ.define([
     };
     /**
      * 控件重置
+     *
      * @protected
-     * @method {__reset}
-     * @param  {Object} 配置参数
+     * @method module:ui/resizer/resizer._$$Resizer#__reset
+     * @param  {Object} arg0 - 配置参数
      * @return {Void}
      */
     _pro.__reset = (function(){
@@ -114,8 +131,9 @@ NEJ.define([
     })();
     /**
      * 控件销毁
+     *
      * @protected
-     * @method {__destroy}
+     * @method module:ui/resizer/resizer._$$Resizer#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -125,8 +143,9 @@ NEJ.define([
     };
     /**
      * 初始化外观信息
+     *
      * @protected
-     * @method {__initXGui}
+     * @method module:ui/resizer/resizer._$$Resizer#__initXGui
      * @return {Void}
      */
     _pro.__initXGui = function(){
@@ -135,8 +154,9 @@ NEJ.define([
     };
     /**
      * 动态构建控件节点模板
+     *
      * @protected
-     * @method {__initNodeTemplate}
+     * @method module:ui/resizer/resizer._$$Resizer#__initNodeTemplate
      * @return {Void}
      */
     _pro.__initNodeTemplate = (function(){
@@ -152,6 +172,9 @@ NEJ.define([
     })();
     /**
      * 初始化节点
+     *
+     * @protected
+     * @method module:ui/resizer/resizer._$$Resizer#__initNode
      * @return {Void}
      */
     _pro.__initNode = function(){
@@ -160,6 +183,9 @@ NEJ.define([
     };
     /**
      * 大小变化之前触发事件
+     *
+     * @protected
+     * @method module:ui/resizer/resizer._$$Resizer#__onBeforeResize
      * @return {Void}
      */
     _pro.__onBeforeResize = function(_event){
@@ -179,12 +205,18 @@ NEJ.define([
         this._$dispatchEvent('onresize',_event);
     };
     /**
+     * 裁剪信息
+     *
+     * @typedef  {Object} module:ui/resizer/resizer._$$Resizer~ResizeBox
+     * @property {Number} top    - 距离上
+     * @property {Number} left   - 距离左
+     * @property {Number} width  - 宽
+     * @property {Number} height - 高
+     */
+    /**
      * 取裁剪信息
-     * @return {Object} 信息
-     * @cofnig {Number} top    距离上
-     * @cofnig {Number} left   距离左
-     * @cofnig {Number} width  宽
-     * @cofnig {Number} height 高
+     *
+     * @return {module:ui/resizer/resizer._$$Resizer~ResizeBox} 信息
      */
     _pro._$getResizeBox = function(){
         return this.__resize._$getResizeBox();

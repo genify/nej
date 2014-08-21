@@ -7,13 +7,13 @@
  */
 /** @module ui/layer/wrapper/card */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/element.js',
-    '{lib}base/event.js',
-    '{lib}base/util.js',
-    '{lib}ui/layer/layer.wrapper.js',
-    '{lib}ui/layer/card.js'
+    'base/global',
+    'base/klass',
+    'base/element',
+    'base/event',
+    'base/util',
+    'ui/layer/layer.wrapper',
+    'ui/layer/card'
 ],function(NEJ,_k,_e,_v,_u,_i0,_i1,_p,_o,_f,_r){
     var _pro;
     /**
@@ -27,8 +27,8 @@ NEJ.define([
      * 脚本举例
      * ```javascript
      * NEJ.define([
-     *     '{lib}base/klass.js',
-     *     '{lib}ui/layer/wrapper/card.js'
+     *     'base/klass',
+     *     'ui/layer/wrapper/card'
      * ],function(_k,_i0,_p,_o,_f,_r){
      *     // 第一步：继承此基类生成一个新类
      *     _p._$$MyCard = _k._$klass();
@@ -61,8 +61,8 @@ NEJ.define([
      * 脚本举例
      * ```javascript
      * NEJ.define([
-     *     '{lib}base/klass.js',
-     *     '{lib}ui/layer/wrapper/card.js'
+     *     'base/klass',
+     *     'ui/layer/wrapper/card'
      * ],function(_k,_i0,_p,_o,_f,_r){
      *     // 第一步：继承此基类生成一个新类
      *     _p._$$MyCard = _k._$klass();

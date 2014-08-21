@@ -7,20 +7,22 @@
  */
 /** @module ui/editor/command/uploadimage */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/config.js',
-    '{lib}base/element.js',
-    '{lib}base/event.js',
-    '{lib}base/util.js',
-    '{lib}ui/layer/window.wrapper.js',
-    '{lib}util/tab/tab.js',
-    '{lib}util/flash/flash.js',
-    '{lib}util/template/tpl.js'
-],function(NEJ,_k,_c,_e,_v,_u,_i0,_t0,_t1,_t2,_p,_o,_f,_r){
+    'base/global',
+    'base/klass',
+    'base/config',
+    'base/element',
+    'base/event',
+    'base/util',
+    'ui/layer/window.wrapper',
+    'util/tab/tab',
+    'util/flash/flash',
+    'util/template/tpl',
+    'text!./uploadimage.css',
+    'text!./uploadimage.html'
+],function(NEJ,_k,_c,_e,_v,_u,_i0,_t0,_t1,_t2,_css,_html,_p,_o,_f,_r){
     var _pro,
-        _seed_css,
-        _seed_html;
+        _seed_css = _e._$pushCSSText(_css),
+        _seed_html = _t2._$addNodeTemplate(_html);
     /**
      * 图片上传控件
      *
@@ -334,48 +336,6 @@ NEJ.define([
         _e._$setStyle(this.__cnts[_index],'display','');
         _e._$setStyle(this.__cnts[(_index+1)%2],'display','none');
     };
-
-    // ui css text
-    _seed_css = _e._$pushCSSText('\
-      .#<uispace>{width:336px;}\
-      .#<uispace> .m-iframe{position:absolute;height:0px;width:0px;left:-9000px;}\
-      .#<uispace> .u-upload-file{height:0px;width:0px;font-size:0px;}\
-      .#<uispace> .u-error{color:red;padding-top:10px;}\
-      .#<uispace> .choose_file{position:relative;margin-bottom:10px;}\
-      .#<uispace> .choose_file object{position:absolute;left:0;top:0;}\
-      .#<uispace> .web_img{margin-bottom:8px;}\
-      .#<uispace> .web_img .u-edit{margin-bottom:10px;}\
-      .#<uispace> .u-desc{color:#ccc;}\
-      .#<uispace> .middle{color:#528CE0;}\
-      .#<uispace> .u-btn{cursor:pointer;color:#528CE0;}\
-      .#<uispace> .u-image{width:0px;height:0px;visibility:hidden;}');
-    // ui html code
-    _seed_html = _t2._$addNodeTemplate('\
-      <div>\
-        <div>\
-          <a class="u-btn f-ib upload j-tab f-fl" name="upload"><span class="img-upload">上传图片</span></a>\
-          <a class="u-btn f-ib extern j-tab" name="extern"><span class="img-extern">引用站外图片</span></a>\
-          <image class="j-ztag u-image" />\
-        </div>\
-        <div class="j-cnt">\
-          <div class="choose_file" name="select_image">\
-            <div class="btn2">\
-              <a class="main middle"><span>选择图片</span></a>\
-            </div>\
-          </div>\
-          <p class="u-desc j-desc"></p>\
-        </div>\
-        <div class="j-cnt">\
-          <div class="f-cb web_img">\
-              <div class="f-fl u-edit"><input class="ipt j-ztag" type="text" /></div>\
-              <div class="btn2 f-fl j-ztag">\
-                <a class="main small"><span>确定</span></a>\
-              </div>\
-          </div>\
-          <p class="u-desc j-desc"></p>\
-        </div>\
-        <div class="u-error j-ztag"></div>\
-      </div>');
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ui.cmd'),_p);

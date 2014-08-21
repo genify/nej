@@ -1,11 +1,11 @@
 var f = function(){
     //定义测试模块
     module("ui-mask");
-    
+
     var _  = NEJ.P,
         _e = _('nej.e'),
         _p = _('nej.ui');
-        
+
     //开始单元测试
     test('mask',function(){
         expect(0);
@@ -19,5 +19,5 @@ var f = function(){
 }
 module('依赖模块');
 test('define',function(){expect(0);
-    define('{pro}mask.test.js',['{lib}ui/mask/mask.js'],f);
+    define('{pro}mask.test.js',['ui/mask/mask'],f);
 });
