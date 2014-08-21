@@ -6,7 +6,7 @@
  * ------------------------------------------
  */
 NEJ.define([
-    '{lib}base/global.js'
+    'base/global'
 ],function(NEJ,_p,_o,_f,_r){
     var _suffix = {
         'opacity':1,
@@ -47,10 +47,6 @@ NEJ.define([
         _e._$setStyle(_node,'transition','none');
         _stop.call(null,_state,_flag);
     };
-
-    if (CMPT){
-        NEJ.copy(NEJ.P('nej.h'),_p);
-    }
 
     return _p;
 });

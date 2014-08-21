@@ -1,9 +1,33 @@
 NEJ.define([
-    '{lib}base/platform.js',
-	'{lib}base/element.js',
-	'{lib}base/util.js',
+    'base/platform',
+	'base/element',
+	'base/util',
 	'./editor.js'
 ],function(_m,_e,_u,_h,_p,_o,_f,_r){
+	// webkit editor patch
+	NEJ.patch('WV',function(){
+	    var __reg_nwrd = /<\/?[\w]+:[\w]+.*?>/gi;
+	    /**
+	     * 验证webkit下内容是否来自Word
+	     * @param  {String} _html 内容
+	     * @return {Boolean}      FF下内容是否来自Word
+	     */
+	    var __isFromWord = function(_html){
+	        return (_html||'').search('</?[\\w]+:[\\w]+.*?>')>=0;
+	    };
+
+	    /**
+	     * webkit清除word过来的冗余内容
+	     * @param  {String} _html 内容
+	     * @return {String} 过滤后的内容
+	     */
+	    _h.__filterWordContent = function(_html){
+	        if(!__isFromWord(_html))
+	            return _html;
+	        return _html.replace(__reg_nwrd,'');
+	    };
+	});
+
 	// gecko editor patch
 	NEJ.patch('GV',function(){
 	    /**
@@ -98,10 +122,48 @@ NEJ.define([
 	    };
 	});
 
+	// ie editor patch
+	NEJ.patch('TR',function(){
+	     var __reg_nwrd = /<\/?[\w]+:[\w]+.*?>/gi,
+	         __reg_cxml = /<\?xml[^>]*>/gi;
+	    /**
+	     * 验证trident下内容是否来自Word
+	     * @param  {String} _html 内容
+	     * @return {Boolean}      trident下内容是否来自Word
+	     */
+	    var __isFromWord = function(_html){
+	        return (_html||'').search('</?[\\w]+:[\\w]+.*?>')>=0;
+	    };
+
+	    /**
+	     * trident清除word过来的冗余内容
+	     * @param  {String} _html 内容
+	     * @return {String} 过滤后的内容
+	     */
+	    _h.__filterWordContent = function(_html){
+	        if(!__isFromWord(_html))
+	            return _html;
+	        return _html.replace(__reg_nwrd,'').replace(__reg_cxml,'');
+	    };
+	});
+
+	// ie6-8
+	NEJ.patch('TR<=4.0',function(){
+        _h.__getSelectText = function(_document){
+            var _range = _h.__getRange(_document);
+            if (!_range) return '';
+            return _range.text;
+        };
+        _h.__getSelectHtml = function(_document){
+            var _range = _h.__getRange(_document);
+	        if (!_range) return '';
+	        var _html = _range.htmlText;
+            return _html||'';
+        };
+    });
+
 	// ie6-9 editor patch
-	NEJ.patch('2.0<=TR<=5.0',['./editor.td.js'],function(){
-	    var __reg_nwrd = /<\/?[\w]+:[\w]+.*?>/gi,
-	        __reg_cxml = /<\?xml[^>]*>/gi;
+	NEJ.patch('2.0<=TR<=5.0',function(){
 	    /**
 	     * 移动光标至节点的指定位置
 	     * @param  {Node}   _node     节点
@@ -125,52 +187,11 @@ NEJ.define([
 	                   }
 	               });
 	    })();
-
-	    /**
-	     * 验证trident下内容是否来自Word
-	     * @param  {String} _html 内容
-	     * @return {Boolean}      trident下内容是否来自Word
-	     */
-	    var __isFromWord = function(_html){
-	        return (_html||'').search('</?[\\w]+:[\\w]+.*?>')>=0;
-	    };
-
-	    /**
-	     * trident清除word过来的冗余内容
-	     * @param  {String} _html 内容
-	     * @return {String} 过滤后的内容
-	     */
-	    _h.__filterWordContent = function(_html){
-	        if(!__isFromWord(_html))
-	            return _html;
-	        return _html.replace(__reg_nwrd,'').replace(__reg_cxml,'');
-	    };
 	});
 
-	// ie10+ editor patch
-	NEJ.patch('TR>=6.0',['./editor.td.js'],function(){
-	    var __reg_nwrd = /<\/?[\w]+:[\w]+.*?>/gi;
-	    /**
-	     * 验证trident1下内容是否来自Word
-	     * @param  {String} _html 内容
-	     * @return {Boolean}      FF下内容是否来自Word
-	     */
-	    var __isFromWord = function(_html){
-	        return (_html||'').search('</?[\\w]+:[\\w]+.*?>')>=0;
-	    };
+	 // ie7-10
 
-	    /**
-	     * trident1清除word过来的冗余内容
-	     * @param  {String} _html 内容
-	     * @return {String} 过滤后的内容
-	     */
-	    _h.__filterWordContent = function(_html){
-	        if(!__isFromWord(_html))
-	            return _html;
-	        return _html.replace(__reg_nwrd,'');
-	    };
-	});
-
+	// ie11+
 	NEJ.patch('TR>=7.0',function(){
 	    /**
 	     * 保存当前选择状态
@@ -214,45 +235,6 @@ NEJ.define([
             _selection.collapseToEnd();
             _win.focus();
 	    }
-	});
-
-	// ie8-
-	NEJ.patch('TR<=4.0',function(){
-        _h.__getSelectText = function(_document){
-            var _range = _h.__getRange(_document);
-            if (!_range) return '';
-            return _range.text;
-        };
-        _h.__getSelectHtml = function(_document){
-            var _range = _h.__getRange(_document);
-	        if (!_range) return '';
-	        var _html = _range.htmlText;
-            return _html||'';
-        };
-    });
-
-	// webkit editor patch
-	NEJ.patch('WV',function(){
-	    var __reg_nwrd = /<\/?[\w]+:[\w]+.*?>/gi;
-	    /**
-	     * 验证webkit下内容是否来自Word
-	     * @param  {String} _html 内容
-	     * @return {Boolean}      FF下内容是否来自Word
-	     */
-	    var __isFromWord = function(_html){
-	        return (_html||'').search('</?[\\w]+:[\\w]+.*?>')>=0;
-	    };
-
-	    /**
-	     * webkit清除word过来的冗余内容
-	     * @param  {String} _html 内容
-	     * @return {String} 过滤后的内容
-	     */
-	    _h.__filterWordContent = function(_html){
-	        if(!__isFromWord(_html))
-	            return _html;
-	        return _html.replace(__reg_nwrd,'');
-	    };
 	});
 
     return _h;

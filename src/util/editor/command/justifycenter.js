@@ -5,22 +5,25 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module util/editor/command/justifycenter */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}util/editor/command/simple.js'
+    'base/global',
+    'base/klass',
+    'util/editor/command/simple'
 ],function(NEJ,_k,_t0,_p,_o,_f,_r){
     /**
      * 居中对齐执行命令封装
-     * @class   {nej.ut.cmd._$$JustifyCenter} 居中对齐执行命令封装
-     * @extends {nej.ut.cmd._$$SimpleCommand}
-     * @param   {Object} 可选配置参数
+     *
+     * @class   module:util/editor/command/justifycenter._$$JustifyCenter
+     * @extends module:util/editor/command/simple._$$SimpleCommand
+     * @param   {Object} options - 可选配置参数
      */
     _p._$$JustifyCenter = _k._$klass();
     _p._$$JustifyCenter._$extend(_t0._$$SimpleCommand);
     /**
      * 命令名称
-     * @type String
+     *
+     * @const {String} module:util/editor/command/justifycenter._$$JustifyCenter.command
      */
     _p._$$JustifyCenter.command = 'justifyCenter';
     // regist command implemention

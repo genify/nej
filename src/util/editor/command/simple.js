@@ -5,25 +5,27 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** util/editor/command/simple */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}util/editor/command.js'
+    'base/global',
+    'base/klass',
+    'util/editor/command'
 ],function(NEJ,_k,_t0,_p,_o,_f,_r){
     var _pro;
     /**
      * 简易命令封装
-     * @class   {nej.ut.cmd._$$SimpleCommand} 简易命令封装
-     * @extends {nej.ut._$$EditorCommand}
-     * @param   {Object} 可选配置参数
+     *
+     * @class   module:util/editor/command/simple._$$SimpleCommand
+     * @extends module:util/editor/command._$$EditorCommand
+     * @param   {Object} options - 可选配置参数
      *
      */
     _p._$$SimpleCommand = _k._$klass();
       _pro = _p._$$SimpleCommand._$extend(_t0._$$EditorCommand);
     /**
      * 执行命令
-     * @method {_$execute}
-     * @param  {Object} 执行参数
+     *
+     * @method module:util/editor/command/simple._$$SimpleCommand#_$execute
      * @return {Void}
      */
     _pro._$execute = function(){
@@ -31,7 +33,8 @@ NEJ.define([
     };
     /**
      * 查询命令是否已经执行
-     * @method {_$queryState}
+     *
+     * @method module:util/editor/command/simple._$$SimpleCommand#_$queryState
      * @return {Boolean} 是否已经被执行，返回null表示不做处理
      */
     _pro._$queryState = function(){

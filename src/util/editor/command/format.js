@@ -1,29 +1,37 @@
 /*
  * ------------------------------------------
- * 斜体执行命令封装实现文件
+ * 清除样式命令封装实现文件
  * @version  1.0
  * @author   cheng-lin(cheng-lin@corp.netease.com)
  * ------------------------------------------
  */
+/** util/editor/command/format */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}util/editor/command.js'
+    'base/global',
+    'base/klass',
+    'util/editor/command'
 ],function(NEJ,_k,_t0,_p,_o,_f,_r){
     /**
-     * 斜体执行命令封装
-     * @class   {nej.ut.cmd._$$Format} 斜体执行命令封装
-     * @extends {nej.ut.cmd._$$SimpleCommand}
+     * 清除样式命令封装
+     *
+     * @class   module:util/editor/command/format._$$Format
+     * @extends module:util/editor/command._$$EditorCommand
      * @param   {Object} 可选配置参数
      */
     _p._$$Format = _k._$klass();
     _pro = _p._$$Format._$extend(_t0._$$EditorCommand);
     /**
      * 命令名称
-     * @type String
+     * @const {String} module:util/editor/command/format._$$Format.command
      */
     _p._$$Format.command = 'format';
 
+    /**
+     * 执行命令
+     *
+     * @method  module:util/editor/command/format._$$Format#_$execute
+     * @return {Void}
+     */
     _pro._$execute = function(){
         this.__editor._$setContentNoStyle();
     };

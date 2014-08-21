@@ -5,22 +5,24 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** util/editor/command/strikethrough */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}util/editor/command/simple.js'
+    'base/global',
+    'base/klass',
+    'util/editor/command/simple'
 ],function(NEJ,_k,_t0,_p,_o,_f,_r){
     /**
      * 删除线执行命令封装
-     * @class   {nej.ut.cmd._$$StrikeThrough} 删除线执行命令封装
-     * @extends {nej.ut.cmd._$$SimpleCommand}
-     * @param   {Object} 可选配置参数
+     *
+     * @class   module:util/editor/command/strikethrough._$$StrikeThrough
+     * @extends module:util/editor/command/simple._$$SimpleCommand
+     * @param   {Object} options - 可选配置参数
      */
     _p._$$StrikeThrough = _k._$klass();
     _p._$$StrikeThrough._$extend(_t0._$$SimpleCommand);
     /**
      * 命令名称
-     * @type String
+     * @const {String} module:util/editor/command/strikethrough._$$StrikeThrough.command
      */
     _p._$$StrikeThrough.command = 'strikethrough';
     // regist command implemention

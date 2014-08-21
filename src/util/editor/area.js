@@ -5,35 +5,39 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module util/editor/area */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/element.js',
-    '{lib}base/event.js',
+    'base/global',
+    'base/klass',
+    'base/element',
+    'base/event',
     '{platform}editor.js',
-    '{lib}util/event.js'
+    'util/event'
 ],function(NEJ,_k,_e,_v,_h,_t,_p,_o,_f,_r){
     var _pro;
     /**
      * 富媒体编辑器输入区封装
-     * @class   {nej.ut._$$EditorArea} 富媒体编辑器输入区封装
-     * @extends {nej.ut._$$EventTarget}
-     * @param   {Object} _options 可选配置参数
-     * @property  {Node|String|Function} parent  父节点或者编辑器加入父节点执行函数
-     * @property  {String}               style   编辑器初始样式
-     * @property  {Boolean}              focus   是否自动聚焦
-     * @property  {String}               content 文本内容
      *
-     * [hr]
+     * @class     module:util/editor/area._$$EditorArea
+     * @extends   module:util/event._$$EventTarget
+     * @param     {Object} options - 可选配置参数
+     * @property  {Node|String|Function} parent  - 父节点或者编辑器加入父节点执行函数
+     * @property  {String}               style   - 编辑器初始样式
+     * @property  {Boolean}              focus   - 是否自动聚焦
+     * @property  {String}               content - 文本内容
+     */
+    /**
+     * 光标改变事件
      *
-     * @event  {onselectionchange}
+     * @event  module:util/editor/area._$$EditorArea#onselectionchange
      */
     _p._$$EditorArea = _k._$klass();
     _pro = _p._$$EditorArea._$extend(_t._$$EventTarget);
     /**
      * 控件初始化
+     *
      * @protected
-     * @method {__init}
+     * @method module:util/editor/area._$$EditorArea#__init
      * @return {Void}
      */
     _pro.__init = function(){
@@ -45,9 +49,10 @@ NEJ.define([
     };
     /**
      * 控件重置
+     *
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
+     * @method module:util/editor/area._$$EditorArea#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = (function(){
@@ -66,8 +71,9 @@ NEJ.define([
     })();
     /**
      * 控件销毁
+     *
      * @protected
-     * @method {__destroy}
+     * @method module:util/editor/area._$$EditorArea#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -80,8 +86,9 @@ NEJ.define([
     };
     /**
      * 保存选中状态
+     *
      * @protected
-     * @method {__doSaveRange}
+     * @method module:util/editor/area._$$EditorArea#__doSaveRange
      * @return {Void}
      */
     _pro.__doSaveRange = function(){
@@ -89,8 +96,9 @@ NEJ.define([
     };
     /**
      * iframe载入完成触发事件
+     *
      * @protected
-     * @method {__onIFrameLoaded}
+     * @method module:util/editor/area._$$EditorArea#__onIFrameLoaded
      * @return {Void}
      */
     _pro.__onIFrameLoaded = function(_iframe){
@@ -133,9 +141,10 @@ NEJ.define([
     };
     /**
      * 文档点击事件
+     *
      * @protected
-     * @method {__onDocumentClick}
-     * @param  {Event} 事件对象
+     * @method module:util/editor/area._$$EditorArea#__onDocumentClick
+     * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
     _pro.__onDocumentClick = function(_event){
@@ -143,8 +152,9 @@ NEJ.define([
     };
     /**
      * 选中内容变化触发事件
+     *
      * @protected
-     * @method {__onSelectionChange}
+     * @method module:util/editor/area._$$EditorArea#__onSelectionChange
      * @return {Void}
      */
     _pro.__onSelectionChange = function(){
@@ -153,9 +163,12 @@ NEJ.define([
     };
     /**
      * 输入事件
-     * @return {[type]} [description]
+     *
+     * @protected
+     * @method  module:util/editor/area._$$EditorArea#__onInputCheck
+     * @return {Void}
      */
-    _pro.__onInputCheck = function(_event){
+    _pro.__onInputCheck = function(){
         if (!!this.__timer){
             window.clearTimeout(this.__timer);
         }
@@ -165,7 +178,10 @@ NEJ.define([
     };
     /**
      * 比较富文本的内容
-     * @return {[type]} [description]
+     *
+     * @protected
+     * @method  module:util/editor/area._$$EditorArea#__doCompareContent
+     * @return {Void}
      */
     _pro.__doCompareContent = function(){
         var _document = this._$getDocument();
@@ -181,8 +197,12 @@ NEJ.define([
     };
 
     /**
-     * 过滤整个style标签
-     * @return {[type]} [description]
+     * 过滤所有style和class标签
+     *
+     * @protected
+     * @method module:util/editor/area._$$EditorArea#__doCompareContent
+     * @param  {String} arg0 - 原始富文本内容
+     * @return {String}        过滤后的富文本内容
      */
     _pro.__doRemoveStyle = (function(){
         var _reg0 = /style="[^"]*"/gi,
@@ -197,8 +217,9 @@ NEJ.define([
     })();
     /**
      * 聚焦编辑器
-     * @method {_$focus}
-     * @param  {Number} 光标位置，默认为0，0-末尾、1-起始、2-不变
+     *
+     * @method module:util/editor/area._$$EditorArea#_$focus
+     * @param  {Number} arg0 - 光标位置，默认为0，0-末尾、1-起始、2-不变
      * @return {Void}
      */
     _pro._$focus = function(_cursor){
@@ -213,7 +234,8 @@ NEJ.define([
     };
     /**
      * 取编辑器文档对象
-     * @method {_$getDocument}
+     *
+     * @method module:util/editor/area._$$EditorArea#_$getDocument
      * @return {Node} 文档对象
      */
     _pro._$getDocument = function(){
@@ -221,9 +243,10 @@ NEJ.define([
     };
     /**
      * 取编辑内容
-     * @param  {Boolean|Number} 是否只保留background-color,font-size,color样式
-     * @param  {Boolean|Number} 是否删除所有style
-     * @method {_$getContent}
+     *
+     * @param  {Boolean|Number} arg0 - 是否只保留background-color,font-size,color样式
+     * @param  {Boolean|Number} arg0 - 是否删除所有style
+     * @method module:util/editor/area._$$EditorArea#_$getContent
      * @return {String} 内容
      */
     _pro._$getContent = function(_filter){
@@ -236,7 +259,8 @@ NEJ.define([
     };
     /**
      * 取纯文本的编辑内容
-     * @method {_$getTextContent}
+     *
+     * @method module:util/editor/area._$$EditorArea#_$getTextContent
      * @return {String} 内容
      */
     _pro._$getTextContent = function(){
@@ -246,8 +270,10 @@ NEJ.define([
         return !_document?'':_text;
     };
     /**
-     * [_$setContentNoStyle description]
-     * @return {[type]} [description]
+     * 过滤style和class标签
+     *
+     * @method module:util/editor/area._$$EditorArea#_$setContentNoStyle
+     * @return {Void}
      */
     _pro._$setContentNoStyle = function(){
         var _node = this._$getSelectNode();
@@ -262,8 +288,9 @@ NEJ.define([
     };
     /**
      * 设置内容
-     * @method {_$setContent}
-     * @param  {String} 编辑内容
+     *
+     * @method module:util/editor/area._$$EditorArea#_$setContent
+     * @param  {String} arg0 - 编辑内容
      * @return {Void}
      */
     _pro._$setContent = function(_content){
@@ -274,10 +301,11 @@ NEJ.define([
     };
     /**
      * 执行编辑命令
-     * @method {_$execCommand}
-     * @param  {String} 命令名称
-     * @param  {String} 命令值
-     * @param  {String} 是否通过style的方式来改变样式，比如superscript命令
+     *
+     * @method module:util/editor/area._$$EditorArea#_$execCommand
+     * @param  {String} arg0 - 命令名称
+     * @param  {String} arg1 - 命令值
+     * @param  {String} arg2 - 是否通过style的方式来改变样式，比如superscript命令
      * @return {Void}
      */
     _pro._$execCommand = function(_command,_value,_css){
@@ -291,9 +319,10 @@ NEJ.define([
     };
     /**
      * 查询命令的状态
-     * @method {_$queryCommand}
-     * @param  {String}   命令名称
-     * @param  {String}   查询类型，State/Enabled/Value
+     *
+     * @method module:util/editor/area._$$EditorArea#_$queryCommand
+     * @param  {String} arg0 -   命令名称
+     * @param  {String} arg1 -   查询类型，State/Enabled/Value
      * @return {Variable} 查询结果
      */
     _pro._$queryCommand = function(_command,_type){
@@ -303,7 +332,8 @@ NEJ.define([
     };
     /**
      * 获取选中内容的文本
-     * @method {_$getSelectText}
+     *
+     * @method module:util/editor/area._$$EditorArea#_$getSelectText
      * @return {String} 文本内容
      */
     _pro._$getSelectText = function(){
@@ -312,7 +342,8 @@ NEJ.define([
     };
     /**
      * 获取选择内容的HTML
-     * @method {_$getSelectHtml}
+     *
+     * @method module:util/editor/area._$$EditorArea#_$getSelectHtml
      * @return  {String} HTML代码
      */
     _pro._$getSelectHtml = function(){
@@ -321,7 +352,8 @@ NEJ.define([
     };
     /**
      * 获取选择内容的父节点
-     * @method {_$getSelectHtml}
+     *
+     * @method module:util/editor/area._$$EditorArea#_$getSelectHtml
      * @return {Node} 父节点
      */
     _pro._$getSelectNode = function(){
@@ -330,15 +362,16 @@ NEJ.define([
     };
     /**
      * 取编辑区域容器位置大小信息
+     *
      * @return {Object} 位置大小信息
-     * [ntb]
-     *  scrollTop     | 滚动垂直偏移
-     *  scrollLeft    | 滚动水平偏移
-     *  clientWidth   | 页面可视宽度
-     *  clientHeight  | 页面可视高度
-     *  scrollWidth   | 页面滚动宽度
-     *  scrollHeight  | 页面滚动高度
-     * [/ntb]
+     * |     属性         |       含义          |
+     * |     :---         |       :---          |
+     * |     scrollTop    |       滚动垂直偏移  |
+     * |     scrollLeft   |       滚动水平偏移  |
+     * |     clientWidth  |       页面可视宽度  |
+     * |     clientHeight |       页面可视高度  |
+     * |     scrollWidth  |       页面滚动宽度  |
+     * |     scrollHeight |       页面滚动高度  |
      */
     _pro._$getAreaBox = function(){
         var _document = this._$getDocument();

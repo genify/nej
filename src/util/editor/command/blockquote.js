@@ -5,30 +5,34 @@
  * @author   cheng-lin(cheng-lin@corp.netease.com)
  * ------------------------------------------
  */
+/** @module util/editor/command/blockquote */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}util/editor/command.js'
+    'base/global',
+    'base/klass',
+    'util/editor/command'
 ],function(NEJ,_k,_t0,_p,_o,_f,_r){
     var _pro;
     /**
      * 引用执行命令封装
-     * @class   {nej.ut.cmd._$$Blockquote} 引用执行命令封装
-     * @extends {nej.ut.cmd._$$SimpleCommand}
-     * @param   {Object} 可选配置参数
+     *
+     * @class   module:util/editor/command/blockquote._$$Blockquote
+     * @extends module:util/editor/command._$$SimpleCommand
+     * @param   {Object} options - 可选配置参数
      */
     _p._$$Blockquote = _k._$klass();
     _pro = _p._$$Blockquote._$extend(_t0._$$EditorCommand);
     /**
      * 命令名称
-     * @type String
+     *
+     * @const {String} module:util/editor/command/blockquote._$$Blockquote.command
      */
     _p._$$Blockquote.command = 'blockquote';
 
     /**
      * 执行命令
-     * @method {_$execute}
-     * @param  {Object} 执行参数
+     *
+     * @method module:util/editor/command/blockquote._$$Blockquote#_$execute
+     * @param  {Object} options - 执行参数
      * @return {Void}
      */
     _pro._$execute = function(_options){

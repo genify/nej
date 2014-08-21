@@ -1,6 +1,6 @@
 <textarea name='jst' id='#<_seed_icmd>'>
 {list xlist as x}
-    <div class="zitm zbg ${js-seed}" data-command="${x.cmd}" title="${x.txt}">
+    <div class="zitm zbg ${'js-'|seed}" data-command="${x.cmd}" title="${x.txt}">
       <div class="zicn zbg ${x.icn}">&nbsp;</div>
       <div class="ztxt">${x.txt}</div>
     </div>
@@ -10,8 +10,8 @@
 {/if}
 </textarea>
 <textarea name='jst' id='#<_seed_ifnt>'>
-<div class="zsel ${icn} ${js-seed}" data-command="${cmd}">
-  <span class="${js-t-seed}">${txt}</span>
+<div class="zsel ${icn} ${'js-'|seed}" data-command="${cmd}">
+  <span class="${'js-t-'|seed}">${txt}</span>
   <span class="zarw zbg">&nbsp;</span>
 </div>
 </textarea>

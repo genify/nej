@@ -1,11 +1,11 @@
 {trim}
   {if !defined("noprv")||!noprv}
-    <a href="#" class="zbtn zprv ${js-p-seed}">${label.prev||"上一页"}</a>
+    <a href="#" class="zbtn zprv ${'js-p-'|seed}">${label.prev||"上一页"}</a>
   {/if}
   {list 1..number as x}
-    <a href="#" class="zpgi zpg${x} ${js-i-seed}"></a>
+    <a href="#" class="zpgi zpg${x} ${'js-i-'|seed}"></a>
   {/list}
   {if !defined("nonxt")||!nonxt}
-    <a href="#" class="zbtn znxt ${js-n-seed}">${label.next||"下一页"}</a>
+    <a href="#" class="zbtn znxt ${'js-n-'|seed}">${label.next||"下一页"}</a>
   {/if}
 {/trim}

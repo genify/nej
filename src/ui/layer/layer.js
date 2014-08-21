@@ -133,7 +133,7 @@ NEJ.define([
     /**
      * 初始化内容区域，子类实现具体逻辑
      *
-     * @protected
+     * @abstract
      * @method module:ui/layer/layer._$$Layer#__doInitContent
      * @param  {Node} arg0 - 内容区容器节点
      * @return {Void}

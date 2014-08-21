@@ -1,6 +1,6 @@
 NEJ.define([
 	'./effect.js',
-	'{lib}base/element.js'
+	'base/element'
 ],function(_h,_e,_p,_o,_f,_r){
 	// ff effect patch
 	NEJ.patch('GV',function(){
@@ -23,11 +23,11 @@ NEJ.define([
 	});
 
 	// ie系列 effect patch
-	NEJ.patch('TR<=5.0',['{lib}base/util.js',
-	          			 '{lib}util/animation/linear.js',
-						 '{lib}util/animation/easein.js',
-						 '{lib}util/animation/easeout.js',
-						 '{lib}util/animation/easeinout.js'],
+	NEJ.patch('TR<=5.0',['base/util',
+	          			 'util/animation/linear',
+						 'util/animation/easein',
+						 'util/animation/easeout',
+						 'util/animation/easeinout'],
 	function(_u,_t0,_t1,_t2,_t3){
 		var _animMap = {
 		  'linear'     : _t0._$$AnimLinear,

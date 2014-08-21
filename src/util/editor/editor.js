@@ -5,30 +5,33 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** util/editor/editor */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/util.js',
-    '{lib}util/event.js',
-    '{lib}util/editor/area.js',
-    '{lib}util/editor/toolbar.js',
-    '{lib}util/editor/command.js'
+    'base/global',
+    'base/klass',
+    'base/util',
+    'util/event',
+    'util/editor/area',
+    'util/editor/toolbar',
+    'util/editor/command'
 ],function(NEJ,_k,_u,_t,_t0,_t1,_t2,_p,_o,_f,_r){
     var _pro;
     /**
      * 富媒体编辑器封装
-     * @class   {nej.ut._$$Editor} 富媒体编辑器封装
-     * @extends {nej.ut._$$EventTarget}
-     * @param   {Object} 可选配置参数
-     * @property  {nej.ut._$$EditorArea}       area       编辑器核心区
-     * @property  {nej.ut._$$EditorToolbar} toolbar 编辑器工具栏
+     *
+     * @class     module:util/editor/editor._$$Editor
+     * @extends   module:util/event._$$EventTarget
+     * @param     {Object}                  arg0    - 可选配置参数
+     * @property  {nej.ut._$$EditorArea}    area    - 编辑器核心区
+     * @property  {nej.ut._$$EditorToolbar} toolbar - 编辑器工具栏
      */
     _p._$$Editor = _k._$klass();
     _pro = _p._$$Editor._$extend(_t._$$EventTarget);
     /**
      * 控件初始化
+     *
      * @protected
-     * @method {__init}
+     * @method module:util/editor/editor._$$Editor#__init
      * @return {Void}
      */
     _pro.__init = function(){
@@ -38,9 +41,10 @@ NEJ.define([
     };
     /**
      * 控件重置
+     *
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
+     * @method module:util/editor/editor._$$Editor#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = (function(){
@@ -77,8 +81,9 @@ NEJ.define([
     })();
     /**
      * 控件销毁
+     *
      * @protected
-     * @method {__destroy}
+     * @method module:util/editor/editor._$$Editor#__destroy
      * @return {Void}
      */
     _pro.__destroy = (function(){
@@ -102,9 +107,10 @@ NEJ.define([
     })();
     /**
      * 取命令实现实例
+     *
      * @protected
-     * @method {__getCommandImpl}
-     * @param  {String}                     命令名称
+     * @method module:util/editor/editor._$$Editor#__getCommandImpl
+     * @param  {String} arg0 - 命令名称
      * @return {nej.ut._$$EditorCommand} 命令实现实例
      */
     _pro.__getCommandImpl = function(_command){
@@ -118,9 +124,10 @@ NEJ.define([
     };
     /**
      * 执行命令触发事件
+     *
      * @protected
-     * @method {__onCommand}
-     * @param  {Object} 命令信息
+     * @method module:util/editor/editor._$$Editor#__onCommand
+     * @param  {Object} arg0 - 命令信息
      * @return {Void}
      */
     _pro.__onCommand = function(_event){
@@ -129,8 +136,9 @@ NEJ.define([
     };
     /**
      * 编辑器选择内容变化触发事件
+     *
      * @protected
-     * @method {__onSelectionChange}
+     * @method module:util/editor/editor._$$Editor#__onSelectionChange
      * @return {Void}
      */
     _pro.__onSelectionChange = (function(){
@@ -155,8 +163,9 @@ NEJ.define([
     })();
     /**
      * 注册命令实现
-     * @method {_$registCommand}
-     * @param  {Array|nej.ut._$$EditorCommand} 命令实现类构造
+     *
+     * @method module:util/editor/editor._$$Editor#_$registCommand
+     * @param  {Array|nej.ut._$$EditorCommand} arg0 - 命令实现类构造
      * @return {Void}
      */
     _pro._$registCommand = function(_class){
@@ -170,8 +179,9 @@ NEJ.define([
     };
     /**
      * 设置编辑内容
-     * @method {_$setContent}
-     * @param  {String} 编辑内容
+     *
+     * @method module:util/editor/editor._$$Editor#_$setContent
+     * @param  {String} arg0 - 编辑内容
      * @return {Void}
      */
     _pro._$setContent = function(_content){
@@ -180,7 +190,8 @@ NEJ.define([
     };
     /**
      * 取编辑内容
-     * @method {_$getContent}
+     *
+     * @method module:util/editor/editor._$$Editor#_$getContent
      * @return {String} 编辑内容
      */
     _pro._$getContent = function(_filter){
@@ -190,7 +201,8 @@ NEJ.define([
 
      /**
      * 取纯文本编辑内容
-     * @method {_$getTextContent}
+     *
+     * @method module:util/editor/editor._$$Editor#_$getTextContent
      * @return {String} 编辑内容
      */
     _pro._$getTextContent = function(){
@@ -199,7 +211,8 @@ NEJ.define([
     };
     /**
      * 取编辑区实例
-     * @method {_$getArea}
+     *
+     * @method module:util/editor/editor._$$Editor#_$getArea
      * @return {nej.ut._$$EditorArea}
      */
     _pro._$getArea = function(){
@@ -207,7 +220,8 @@ NEJ.define([
     };
     /**
      * 取工具条实例
-     * @method {_$getToolbar}
+     *
+     * @method module:util/editor/editor._$$Editor#_$getToolbar
      * @return {nej.ut._$$EditorToolbar}
      */
     _pro._$getToolbar = function(){

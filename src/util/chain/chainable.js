@@ -15,7 +15,7 @@ var f = function() {
     /**
      * TransPort NEJ Methods
      * =================================================
-     * 移植，由于没有更好的方法判断是否是可以与node 
+     * 移植，由于没有更好的方法判断是否是可以与node
      * 这里采用人肉列出方法名的方式, 并将这些方法移入_$()中
      */
 
@@ -27,7 +27,7 @@ var f = function() {
     //     "e" : [//class相关
     //         "addClassName", "delClassName", "hasClassName", "replaceClassName", "toggle",// class相关
     //         //css相关
-    //         "setStyle", "getStyle","css3d", "style", "offset", "getScrollViewPort", 
+    //         "setStyle", "getStyle","css3d", "style", "offset", "getScrollViewPort",
     //         // 动画 特效 UI
     //         "fixed", "effect", "fade", "focus", "highlight", "hover", "page", "placeholder", "tab", "wrapInline",
     //         // 属性相关
@@ -68,6 +68,6 @@ var f = function() {
     // })();
 
 };
-NEJ.define('{lib}util/chain/chainable.js', [
-    '{lib}util/chain/NodeList.js'
+NEJ.define('util/chain/chainable', [
+    'util/chain/NodeList'
     ], f);

@@ -19,7 +19,7 @@ var f = function() {
         _docElem = _doc[_de],
         _testNode = _doc.createElement('div'),
 
-        // assert 
+        // assert
         _textHandle = _testNode.textContent == null? 'innerText' : 'textContent' ,
         _extend = function(_name, _value, _options) {
             _options = _options || {};
@@ -36,7 +36,7 @@ var f = function() {
         },
         /**
          * 根据返回类型决定返回this，还是别的什么
-         * @param  {Mix} _result     
+         * @param  {Mix} _result
          * @param  {String} _methodName 当前方法名
          * @return {Mix}
          */
@@ -111,8 +111,8 @@ var f = function() {
 
     _extend = _extend.autoSet();
 
-    
-  /**    
+
+  /**
     *    将输入的选择器指定节点或节点和节点数组包装成_$$NodeList对象，NodeList是一个类似jQuery的对象
     *    可以进行链式操作，拥有大部分nej.e下的接口，并扩展了一部分jQuery的常用方法。
     *
@@ -155,7 +155,7 @@ var f = function() {
     *    })._$style(["width", "left"])
     *    // 到这里链式结束返回{"width":"80px", "left":"30px"}
     *    ```
-    *    
+    *
     *    复制的NEJ中的接口如下：
     *    [ul]
     *    nej.e._$addClassNam: chainable
@@ -190,7 +190,7 @@ var f = function() {
     *    nej.v._$clearEvent: chainable
     *    nej.v._$delEven: chainablet
     *    nej.v._$dispatchEvent: chainable
-    *    [/ul]   
+    *    [/ul]
     *    nej.$ 支持的选择器与nes选择器一致，具体请参考 https://github.com/leeluolee/nes
     *    页面结构举例
     *    ```html
@@ -216,18 +216,18 @@ var f = function() {
     *    // 找到有class1并且有rel属性的节点集，这时可能会有很多个节点
     *    $("body li.class1[rel]")
     *    // 会过滤出childNodes的节点，其他Array Like也是类似
-    *    $(document.body.childNodes) 
+    *    $(document.body.childNodes)
     *
     *    // 有时候你不确定输入的是什么参数， 安全的再包一次吧，无副作用
     *    $body = $("body")
-    *    $body2 = $($body2) 
+    *    $body2 = $($body2)
     *    ```
     *    @chainable
     *    @api    {nej.$}
     *    @param  {String|Array|_$$NodeList|Node} _selector 可以是选择器、节点、节点数组或另一个_$$NodeList实例
     *    @param  {String|Node|_$$NodeList} _context  代表从这个根节点下查找节点，特别是页面上节点还不存在时，需要传入这个参数
     *    @return {_$$NodeList}           返回_$$NodeList实例
-    */     
+    */
     var $ = nej.$ = function(_selector, _context){
         if(_x.isChange){
             $._$implement(nej.x, {"statics": true});
@@ -283,7 +283,7 @@ var f = function() {
          * $("li:nth-child(2n)")._$hello() // 所有偶数行都被加上了 hello属性
          * // 2. 直接利用静态方法进行扩展(常用语迁移), 上面扩展等价于
          * $._$implement("_$hello", function(_node){
-         *    _node.hello = "Hello World" 
+         *    _node.hello = "Hello World"
          * }, {static: true})
          * // 3. 创建jQuey的wrap 方法
          * // 创建wrap方法
@@ -299,11 +299,11 @@ var f = function() {
          * 当返回值为: this 、 传入节点 、 nej.v 、 nej.e 、 undefined (即不返回)时, 视为setter操作,可以进行链式调用, 如上例:
          * 当返回值为其他类型时: 视为getter操作, 返回节点列表中 第一个元素 的返回值，这个也是jQuery的链式接口的表现
          * [/ul]
-         * 
+         *
          * @api    {nej.$._$implement}
          * @param  {Object} _definition 要扩展的接口集合 (注意不要使用字符串作为键值)
          * @param  {Object} _options 参数  目前只有两个选项{statics: 代表是否是静态接口迁移, override: 是否覆盖原同名方法}
-         * @return {this}    
+         * @return {this}
          */
         _$implement: function(_name, _fn, _options){
             _options = _options || {};
@@ -389,7 +389,7 @@ var f = function() {
     var _rclickEvents = /^(?:click|dblclick|contextmenu|DOMMouseScroll|mouse(?:\w+))$/,
         _rkeyEvents = /^key(?:)/,
         _definitions ={
-        // for insert 
+        // for insert
         // 这里统一视为_node2为插入点
         "insertor":{
             "top":function(_node, _node2){
@@ -409,8 +409,8 @@ var f = function() {
         },
         fixProps :{
             // 确保表单元素属性被正确设置 IE lt9
-            input: 'checked', 
-            option: 'selected', 
+            input: 'checked',
+            option: 'selected',
             textarea: 'value',
             // clone时 , IE某些版本不会正确设置text
             script:"text"
@@ -468,7 +468,7 @@ var f = function() {
                 };
 
                 if(!_e.stopPropagation) _e.stopPropagation = function(){
-                   this.cancelBubble = true; 
+                   this.cancelBubble = true;
                    return this;
                 };
             }
@@ -500,20 +500,20 @@ var f = function() {
 
 
     $._$implement({
-     /**    
+     /**
       * 获取节点样式或者设置节点样式, 这个接口的表现与jQuery的css方法一致, 根据参数不同有不同的表现
       * 比如:
       * ```javascript
       * $('li')._$style(name) //相当于_$getStyle 返回样式值
       * $('li')._$style([name1,name2...]) //相当于多重_$getStyle 返回一个Object(如{"height:20px, width:30px..."})
       * $('li')._$style(name, value) // 相当于setStyle 返回this
-      * $('li')._$style(obj) //相当于多重版setStyle(即原_$style) 返回this        
+      * $('li')._$style(obj) //相当于多重版setStyle(即原_$style) 返回this
       * ```
       * @chainable
       * @api    {nej.$()._$style}
       * @param  {String|Object|Array} _key  可以是String(单取值或设置)，一个对象(多重赋值)，一个数组(多重取值)
       * @param  {String} _value 样式值
-      * @return {_$$Nodelist|String|Object} setter操作返回_$$NodeList，单重取值返回String，多重取值返回样式属性为键的Object，表现与jQuery的css接口一致        
+      * @return {_$$Nodelist|String|Object} setter操作返回_$$NodeList，单重取值返回String，多重取值返回样式属性为键的Object，表现与jQuery的css接口一致
       */
         _$style: function(_key, _value){
             if(!_key) throw Error("缺少css样式名");
@@ -537,7 +537,7 @@ var f = function() {
         * @api    {nej.$()._$attr}
         * @param  {String|Object|Array} _key  可以是String(单取值或设置)，一个对象(多重赋值)，一个数组(多重取值)
         * @param  {String} _value 属性值
-        * @return {_$$Nodelist|String|Object} setter操作返回_$$NodeList，单重取值返回String，多重取值返回样式属性为键的Object，表现与jQuery的css接口一致        
+        * @return {_$$Nodelist|String|Object} setter操作返回_$$NodeList，单重取值返回String，多重取值返回样式属性为键的Object，表现与jQuery的css接口一致
         */
         _$attr: function(_key, _value){
             if(!_key) throw Error("缺少属性名");
@@ -555,39 +555,39 @@ var f = function() {
          * ```javascript
          * // 将1,4,7...class含有strong的li元素分别加上阶梯型的高度
          * $("li.strong:nth-child(3n+1)")._$forEach(function(_node, _index){
-         *     _node.style.height = "" + (_index+1)*10 + "px"; 
+         *     _node.style.height = "" + (_index+1)*10 + "px";
          *     // 这里的this指向实例
-         * })   
+         * })
          * ```
          * 注意callback中传入的节点是裸节点，而不是包装后的_$$NodeList
          * @chainable
          * @api    {nej.$()._$forEach}
          * @param  {Function} _fn 遍历回掉，接受两个参数，当前遍历到的节点和节点下标
-         * @return {_$$NodeList}  
+         * @return {_$$NodeList}
          */
         _$forEach: function(_fn){
             _u._$forEach(this, _fn);
             return this;
         },
 
-      /**     
+      /**
        * 类似于ES5的Array#filter, 一个过滤, 即过滤_$$NodeList的所有节点集并筛选符合的节点
        * 比如:
        * ```javascript
        * // 返回节点集中的匹配选择器.strong:nth-child(3n)的节点
-       * $("li")._$filter(".strong:nth-child(3n)") 
+       * $("li")._$filter(".strong:nth-child(3n)")
 
        * // 相当于  ===>
        * $("li")._$filter(function(_node){
        *     return $(_node)._$matches(".strong:nth-child(3n)");
-       * });        
+       * });
        * ```
        * 注意callback中传入的节点是裸节点，而不是包装后的_$$NodeList
        * @chainable
        * @api    {nej.$()._$filter}
        * @param  {Function|String} _fn 遍历函数，接受两个参数，当前遍历到的节点和节点下标。同时也接受一个Selector，筛选出节点集中满足选择器的节点
-       * @return {_$$NodeList} 
-      */        
+       * @return {_$$NodeList}
+      */
         _$filter: function(_fn){
             var _ret = [],
                 _isSelctor = typeof _fn === "string";
@@ -615,7 +615,7 @@ var f = function() {
          * @chainable
          * @api    {nej.$()._$map}
          * @param  {Function} _fn 遍历callback，接受两个参数，当前遍历到的节点和节点下标
-         * @return {_$$NodeList}  
+         * @return {_$$NodeList}
          */
         _$map:function(_fn){
             var _ret = [],
@@ -656,9 +656,9 @@ var f = function() {
             if(_node.tagName || typeof _node.length !== "number" || _node === window ) _node = [_node];
             $._merge(this, _node, function(_nodum){
                 if(!_isAcceptedNode(_nodum)) return false;
-                var _uid = $._$uid(_nodum); 
+                var _uid = $._$uid(_nodum);
                 if(this._signs[_uid]){
-                    return false; 
+                    return false;
                 }else{
                     this._signs[_uid] = 1;
                     return true;
@@ -697,61 +697,61 @@ var f = function() {
          *
          * Example:
          * ```javascript
-         * $("tr")._$parent() 
+         * $("tr")._$parent()
          * //=> ['tbody', 'thead'],两个是因为节点集中的tr元素可能在tbody或thead中
-         * $("tr")._$parent("tbody") 
+         * $("tr")._$parent("tbody")
          * //=> ['tbody'] 必须满足tbody
-         * $("tr")._$parent(true) 
+         * $("tr")._$parent(true)
          * // =>['tbody', 'thead', 'div', 'body' ....] //会向上查找所有父节点
-         * $("tr")._$parent("tbody, body",true) 
+         * $("tr")._$parent("tbody, body",true)
          * // =>['body', 'tbody'] //会向上查找所有父节点,但是必须满足选择器
          * ```
          * @api    {nej.$()._$parent}
          * @param  {String} _selector 选择器
          * @param  {Boolean} _all     是否获取所有层级的父节点
-         * @return {[type]}           
+         * @return {[type]}
          * @type {[type]}
          */
         _$parent: _traverse("parentNode"),
         /**
          * 与_$parent类似,查找 所有节点 的第一个(或所有根据_all参数)满足关系的 前序兄弟节点 (previousSibling)集, 并返回$NodeList
-         * ```javascript 
-         * $("td")._$prev("th[scope=row]", true) 
-         * // 返回所有在td之前的th元素, 它们的scope属性为 row         
-         * $("td")._$prev("th[scope=row]") 
+         * ```javascript
+         * $("td")._$prev("th[scope=row]", true)
+         * // 返回所有在td之前的th元素, 它们的scope属性为 row
+         * $("td")._$prev("th[scope=row]")
          * // 只返回直接相邻的前节点，如果不满足选择器则返回空节点集
          * ```
-         * @api    {nej.$()._$prev} 
+         * @api    {nej.$()._$prev}
          * @param  {String} _selector 选择器
          * @param  {Boolean} _all     是否获取所有前序节点
-         * @return {[type]}           
+         * @return {[type]}
          */
         _$prev: _traverse("previousSibling"),
         /**
          * 与_$prev类似,查找 所有节点 的第一个(或所有根据_all参数)满足关系的 向后兄弟节点 (nextSibling)集, 并返回$NodeList
-         * @api    {nej.$()._$next} 
+         * @api    {nej.$()._$next}
          * @param  {String} _selector 选择器
          * @param  {Boolean} _all     是否获取所有后序节点
-         * @return {[type]}           
+         * @return {[type]}
          */
         _$next: _traverse("nextSibling"),
         /**
          * 查找到 本节点集中 所有节点 的满足选择器关系的 直接子节点 (或 任意层级子节点 )集, 并返回$NodeList
-         * ```javascript 
+         * ```javascript
          * $("body, table")._$children();
          * // => 相当于 合并body与table的直接子节点
          * $("body, table")._$children("div, thead");
          * // => 只要他们子节点中的div 与 thead元素
          * $("body, table")._$children(true);
-         * // => 这里会获取所有body下的所有层级的子节点(table也在body中) 
+         * // => 这里会获取所有body下的所有层级的子节点(table也在body中)
          * $("body, table")._$children("td:not(:last-child, :nth-child(2n))",true);
          * // => 返回所有层级的td元素并且满足选择器 td:not(:last-child, :nth-child(2n))
          * ```
-         * 
-         * @api    {nej.$()._$children} 
+         *
+         * @api    {nej.$()._$children}
          * @param  {String} _selector 选择器
          * @param  {Boolean} _all     是否获取所有层级的节点
-         * @return {[type]}           
+         * @return {[type]}
          */
         _$children: function(_selector, _all){
             var _ret = $([]);
@@ -775,8 +775,8 @@ var f = function() {
          * ```
          *
          * @chainable
-         * @api    {nej.$()._$siblings} 
-         * @param  {String} _selector 
+         * @api    {nej.$()._$siblings}
+         * @param  {String} _selector
          * @return {_$$NodeList}    这些同级节点会被包装为一个_$$NodeList
          */
         _$siblings: function(_selector){ // sibling 默认就是取所有
@@ -785,15 +785,15 @@ var f = function() {
         /**
          * 这个insert 拥有jQuery的四个接口的功能(before, after, prepend , append) ，分别用_direct参数控制
          *
-         * Example: 
+         * Example:
          * ```javascript
          * //将`a.next`插到`#home`的内部的最上方
          * $('#home')._$insert('a.next', 'up');
          * //将a.next插入到`#home`节点后面
          * $('#home')._$insert('a.next', 'after');
          * ```
-         * 
-         * @api    {nej.$()._$insert} 
+         *
+         * @api    {nej.$()._$insert}
          * @param  {String|Node|_$$NodeList} _selector 代表被插入的节点，可以是选择器、节点或是另外一个_$$NodeList对象
          * @param  {String} _direct   插入位置，可以是节点内的底部、顶部(bottom, top)，或节点同层的前后位置(before, after)，默认为bottom
          * @return {_$$NodeList}    返回this
@@ -814,15 +814,15 @@ var f = function() {
          * 这个_$insert2 拥有jQuery的四个接口的功能(insertBefore, insertAfter, prependTo , appendTo) ，分别用_direct参数控制。其实就是_$insert接口的相反版，
          * 你做的是将被插入节点插入到某个节点的指定位置。
          *
-         * Example: 
+         * Example:
          * ```javascript
          * //将`#home`插到`a.next`的内部的最上方
          * $('#home')._$insert2('a.next', 'up');
          * //将`#home`插入到`a.next`节点后面
          * $('#home')._$insert2('a.next', 'after');
          * ```
-         * 
-         * @api    {nej.$()._$insert2} 
+         *
+         * @api    {nej.$()._$insert2}
          * @param  {String|Node|_$$NodeList} _selector 代表参考节点，可以是选择器、节点或是另外一个_$$NodeList对象
          * @param  {String} _direct   插入位置，可以是节点内的底部、顶部(bottom, top)，或节点同层的前后位置(before, after)，默认为bottom
          * @return {_$$NodeList}    返回this
@@ -838,10 +838,10 @@ var f = function() {
          * ```javascript
          * $('.m-template')._$clone(true)._$insert2('body');//将`.m-template`节点clone一份插入到`body`的内部下方
          * ```
-         * 
-         * @api    {nej.$()._$clone} 
+         *
+         * @api    {nej.$()._$clone}
          * @param  {Boolean} _withContent 是否要克隆子节点
-         * @return {_$$NodeList}   
+         * @return {_$$NodeList}
          */
         _$clone: function(_withContent){
             return this._$map(function(_node){
@@ -860,9 +860,9 @@ var f = function() {
          * ```
          *
          * @chainable
-         * @api    {nej.$()._$text} 
+         * @api    {nej.$()._$text}
          * @param  {content} _content 要插入的内容 , 不传入则认为是getter操作
-         * @return {_$$NodeList|String} setter操作返回_$$NodeList getter操作返回String   
+         * @return {_$$NodeList|String} setter操作返回_$$NodeList getter操作返回String
          */
         _$text: function(_content){
             if(_content === undefined){
@@ -885,9 +885,9 @@ var f = function() {
          * ```
          *
          * @chainable
-         * @api    {nej.$()._$html} 
+         * @api    {nej.$()._$html}
          * @param  {content} _content 要插入的内容 不传入则认为是getter操作
-         * @return {_$$NodeList|String} setter操作返回_$$NodeList getter操作返回String   
+         * @return {_$$NodeList|String} setter操作返回_$$NodeList getter操作返回String
          */
         _$html: function(_content){
             if(_content === undefined){
@@ -911,9 +911,9 @@ var f = function() {
          * ```
          *
          * @chainable
-         * @api    {nej.$()._$html} 
+         * @api    {nej.$()._$html}
          * @param  {content} _content 要插入的内容
-         * @return {_$$NodeList|String} setter操作返回_$$NodeList getter操作返回String   
+         * @return {_$$NodeList|String} setter操作返回_$$NodeList getter操作返回String
          */
         _$val:function(_content){
             if(_content === undefined){
@@ -958,9 +958,9 @@ var f = function() {
             return this._$forEach(function(_node){
                 var _uid = $._$uid(_node);
                 var _handlers, _events, _selectors;
-                if (!(_handlers = $._delegateHandlers[_uid]) || 
+                if (!(_handlers = $._delegateHandlers[_uid]) ||
                     !(_events = _handlers[_event]) || !(_selectors = _events[_selector])){
-                    return; 
+                    return;
                 }
                 for(var _len = _selectors.length;_len--;){
                     var _fn = _selectors[_len];
@@ -977,7 +977,7 @@ var f = function() {
         },
         /**
          * 绑定事件，可以使用事件代理, 与jQuery的on类似
-         * 
+         *
          * __Example:__
          * ```javascript
          * // 1. 普通事件绑定
@@ -999,7 +999,7 @@ var f = function() {
          *     _e.preventDefault()
          *     alert("多个事件类型绑定"+_e.type)
          * })
-         * // 5. 多重事件绑定, 
+         * // 5. 多重事件绑定,
          * $("body")._$on({
          *     "dblclick":function(_e){
          *         alert("多重事件绑定之普通版"+_e.type)
@@ -1010,15 +1010,15 @@ var f = function() {
          * })
          * ```
          * @chainable
-         * @api    {nej.$()._$on} 
+         * @api    {nej.$()._$on}
          * @param  {String|Array|Object} _event     事件名，_event支持多种参数类型会有不同的结果
-         *                             如果_event参数中不包含空格, 则视为简单事件绑定如，click, 
+         *                             如果_event参数中不包含空格, 则视为简单事件绑定如，click,
          *                             如果_event参数中包含空格,则会被split, 左边视为event参数，右边视为_selector参数如'click .next',
          *                             如果_event是个Ojbect,则会视为多重绑定,如{'click .next': callback1, 'mouseover': callback2}
          *                             如果_event是个Array, 则会对多个_event进行同一个函数的绑定, 如['click','mouseover']
          * @param  {String} _selector  如果传入则代表是一个事件代理,可忽略
          * @param  {Function} _handler 回掉函数
-         * @return {_$$NodeList}       
+         * @return {_$$NodeList}
          */
         _$on:function(_event, _selector, _handler){
             if(_event === undefined) throw Error("缺少事件名参数");
@@ -1040,7 +1040,7 @@ var f = function() {
                     _raw.apply(this, arguments);
                 };
                 _raw.real = _handler;//
-            }    
+            }
             if(_selector){ // on ("click", "li.clas1", handler)或 on("click", "li.class1")
                 return this._delegate(_event,_selector, _handler);
             }
@@ -1051,7 +1051,7 @@ var f = function() {
         }.splitProcess().autoSet(),
 
         /**
-         * 为 节点集内的每一个节点 解除事件回调, 类似jQuery的off方法 
+         * 为 节点集内的每一个节点 解除事件回调, 类似jQuery的off方法
          * __Example__
          * ```javascript
          * // 1. 普通事件解绑
@@ -1077,21 +1077,21 @@ var f = function() {
          *     "dblclick td":handler1,
          *     "click tr":handler2
          * });
-         * // 9. 所有事件清除 
+         * // 9. 所有事件清除
          * $("body")._$off() //慎重
          * ```
-         * 
+         *
          * @chainable
-         * @api    {nej.$()._$off} 
+         * @api    {nej.$()._$off}
          * @param  {String|Array|Object} _event 与_$on方法一样，解绑也会根据参数不同可以有很大的灵活度
-         *                                      如果_event参数中不包含空格, 则视为简单事件解绑如，click, 
+         *                                      如果_event参数中不包含空格, 则视为简单事件解绑如，click,
          *                                      如果_event参数中包含空格,则会被split, 左边视为event参数，右边视为_selector参数如'click .next',
          *                                      如果_event是个Ojbect,则会视为多重解绑, 如{'click .next': callback1, 'mouseover': callback2}
          *                                      如果_event是个Array, 则会对多个_event进行同一个函数的解绑, 如['click','mouseover']
          *                                      需要注意_$off与_$on不同的是_event也可以是个空值，代表会解决节点下的所有事件
          * @param  {[type]} _selector [description] 如果传入_selector参数，则会进行事件代理的事件解绑, 可忽略
          * @param  {[type]} _handler  [description] 要解绑对应回调，可忽略
-         * @return {_$$NodeList}      
+         * @return {_$$NodeList}
          */
         _$off:function(_event, _selector, _handler){
             if(typeof _selector === "function"){
@@ -1116,7 +1116,7 @@ var f = function() {
                         delete $._delegateHandlers[_uid]; // 删除所有
                     }
                     _v._$clearEvent(_node, _event);
-                }else{ 
+                }else{
                     if(_handlers) _events = _handlers[_event];
                     if(!_handler){ // off("click")
                         if(_events){
@@ -1132,26 +1132,26 @@ var f = function() {
         }.splitProcess().autoSet(),
         /**
          * 触发每个节点的对应事件, 同nej.v._$dispatchEvent，区别是参数类型自由度高一点
-         *                                      如果_event参数为String, 则视为简单事件触发如，click, 
+         *                                      如果_event参数为String, 则视为简单事件触发如，click,
          *                                      如果_event是个Ojbect,则会视为多重触发, 如{'click': param1, 'mouseover': param2}
          *                                      如果_event是个Array, 则会对多个_event进行触发(公用一个options), 如['click','mouseover']
          * Example:
          * ```javascript
          * //触发一个事件
-         * _$trigger("click", params) 
+         * _$trigger("click", params)
          * //一次触发多个事件(如果有参数，他们共用这个参数)
-         * _$trigger(["click", "mouseover"], params) 
+         * _$trigger(["click", "mouseover"], params)
          * // 触发多个事件有不同参数
          * _$trigger({
          *     "click": params1,
          *     "dblclick": params2
          * })
          * ```
-         * 
-         * @api    {nej.$()._$trigger} 
+         *
+         * @api    {nej.$()._$trigger}
          * @param  {String|Array|Object} _event   可以传入多种参数类型
          * @param  {Whatever} _options 同_$dispatchEvent的_options
-         * @return {_$$NodeList}          
+         * @return {_$$NodeList}
          */
         _$trigger:function(_event, _options){
             if(typeof _event !== 'string') throw Error("事件类型参数错误");
@@ -1166,7 +1166,7 @@ var f = function() {
         splice: function(){ throw Error("don't use the NodeList#splice");}
     });
     // @ remove 无法被混淆的方法
-    // // 无奈 添加 _$before // _$before2   _$bottom _$bottom2等方法    
+    // // 无奈 添加 _$before // _$before2   _$bottom _$bottom2等方法
     // _u._$forIn(_definitions.insertor, function(_value, _key){
     //     $._$implement("_$" + _key, function(){
     //        var _args = _slice.call(arguments);
@@ -1205,9 +1205,9 @@ var f = function() {
     // 把原型还回去, WARN:千万注意
     _fn.reset();
 };
-NEJ.define('{lib}util/chain/NodeList.js', [
-    '{lib}util/query/query.js',
-    '{lib}base/element.js',
-    '{lib}base/util.js'
+NEJ.define('util/chain/NodeList', [
+    'util/query/query',
+    'base/element',
+    'base/util'
     ], f);
 

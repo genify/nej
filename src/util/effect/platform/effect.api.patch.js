@@ -1,7 +1,6 @@
 NEJ.define([
-    './effect.api.js',
-    '{lib}base/element.js'
-],function(_h,_e,_p,_o,_f,_r){
+    'base/element'
+],function(_e,_h,_o,_f,_r){
     // ie8-
     NEJ.patch('TR<=4.0',function(){
         _h.__formatTo = function(_to){

@@ -5,38 +5,42 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** util/editor/toolbar */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/element.js',
-    '{lib}base/event.js',
-    '{lib}base/util.js',
-    '{lib}util/event.js'
+    'base/global',
+    'base/klass',
+    'base/element',
+    'base/event',
+    'base/util',
+    'util/event'
 ],function(NEJ,_k,_e,_v,_u,_t,_p,_o,_f,_r){
     var _pro;
     /**
      * 富媒体编辑器工具栏封装，输入的命令节点需使用以下属性标识
      *  - data-command    指定执行的命令，没有设置此属性将被忽略
-     * @class   {nej.ut._$$EditorToolbar} 富媒体编辑器工具栏封装
-     * @extends {nej.ut._$$EventTarget}
-     * @param   {Object} _options 可选配置参数
-     * @property  {Array}     list      命令节点列表
-     * @property  {String} selected 命令选中样式，默认为js-selected
-     * @property  {String} disabled 命令禁用样式，默认为js-disabled
      *
-     * [hr]
+     * @class     module:util/editor/toolbar._$$EditorToolbar
+     * @extends   module:util/event._$$EventTarget
+     * @param     {Object} _options - 可选配置参数
+     * @property  {Array}  list     - 命令节点列表
+     * @property  {String} selected - 命令选中样式，默认为js-selected
+     * @property  {String} disabled - 命令禁用样式，默认为js-disabled
+     */
+    /**
+     * 命令执行回调
      *
-     * @event  {oncommand}
-     * @param  {Object} 可选配置参数
-     * @property {String} name 命令名称
-     * @property {Node}   node 被命令影响的节点
+     * @event    module:util/editor/toolbar._$$EditorToolbar#oncommand
+     * @param    {Object}   arg0 - 可选配置参数
+     * @property {String}   name - 命令名称
+     * @property {Node}     node - 被命令影响的节点
      */
     _p._$$EditorToolbar = _k._$klass();
     _pro = _p._$$EditorToolbar._$extend(_t._$$EventTarget);
     /**
      * 控件初始化
+     *
      * @protected
-     * @method {__init}
+     * @method module:util/editor/toolbar._$$EditorToolbar#__init
      * @return {Void}
      */
     _pro.__init = function(){
@@ -45,9 +49,10 @@ NEJ.define([
     };
     /**
      * 控件重置
+     *
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
+     * @method module:util/editor/toolbar._$$EditorToolbar#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -58,8 +63,9 @@ NEJ.define([
     };
     /**
      * 控件销毁
+     *
      * @protected
-     * @method {__destroy}
+     * @method module:util/editor/toolbar._$$EditorToolbar#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -70,9 +76,10 @@ NEJ.define([
     };
     /**
      * 执行命令
+     *
      * @protected
-     * @method {__onCommand}
-     * @param  {String} 命令名称
+     * @method module:util/editor/toolbar._$$EditorToolbar#__onCommand
+     * @param  {String} arg0 - 命令名称
      * @return {Void}
      */
     _pro.__onCommand = function(_command){
@@ -85,8 +92,9 @@ NEJ.define([
     };
     /**
      * 添加命令节点
-     * @method {_$addCommand}
-     * @param  {String|Node|Array} 命令节点
+     *
+     * @method module:util/editor/toolbar._$$EditorToolbar#_$addCommand
+     * @param  {String|Node|Array} arg0 - 命令节点
      * @return {Void}
      */
     _pro._$addCommand = function(_node){
@@ -102,7 +110,8 @@ NEJ.define([
     };
     /**
      * 取需要同步选中状态的命令列表
-     * @method {_$getCommandList}
+     *
+     * @method module:util/editor/toolbar._$$EditorToolbar#_$getCommandList
      * @return {Array} 命令列表
      */
     _pro._$getCommandList = function(){
@@ -110,9 +119,10 @@ NEJ.define([
     };
     /**
      * 设置命令的选中状态
-     * @method {_$select}
-     * @param  {String}  命令名称
-     * @param  {Boolean} 是否选中
+     *
+     * @method module:util/editor/toolbar._$$EditorToolbar#_$select
+     * @param  {String}  arg0 - 命令名称
+     * @param  {Boolean} arg1 - 是否选中
      * @return {Void}
      */
     _pro._$select = function(_command,_selected){
@@ -123,9 +133,10 @@ NEJ.define([
     };
     /**
      * 设置命令的禁用状态
-     * @method {_$disable}
-     * @param  {String}  命令名称
-     * @param  {Boolean} 是否禁用
+     *
+     * @method module:util/editor/toolbar._$$EditorToolbar#_$disable
+     * @param  {String}  arg0 - 命令名称
+     * @param  {Boolean} arg1 - 是否禁用
      * @return {Void}
      */
     _pro._$disable = function(_command,_disabled,_class){

@@ -95,7 +95,7 @@ NEJ.define([
     /**
      * 初始化外观信息，子类实现具体逻辑
      *
-     * @protected
+     * @abstract
      * @method module:ui/base._$$Abstract#__initXGui
      * @return {Void}
      */
@@ -120,7 +120,7 @@ NEJ.define([
     /**
      * 动态构建控件节点模板，子类实现具体逻辑
      *
-     * @protected
+     * @abstract
      * @method module:ui/base._$$Abstract#__initNodeTemplate
      * @return {Void}
      */

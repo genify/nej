@@ -6,7 +6,7 @@
  * ------------------------------------------
  */
 NEJ.define([
-    '{lib}base/element.js'
+    'base/element'
 ],function(_e,_p,_o,_f,_r){
     var __empty    = /(?:<(p|div)>(?:\&nbsp\;|<br\/?>)<\/\1>|<br\/?>|\&nbsp\;|\s)+$/gi, // empty content
         __reg_cls0 = /(?:class|lang)="(mso)?[^"]*"/gi,
@@ -226,10 +226,6 @@ NEJ.define([
             return _html;
         };
     })();
-
-    if (CMPT){
-        NEJ.copy(NEJ.P('nej.h'),_p);
-    }
 
     return _p;
 });

@@ -5,30 +5,34 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** util/editor/command/fontsize */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}util/editor/command/font.js',
-    '{lib}ui/editor/command/fontsize.js'
+    'base/global',
+    'base/klass',
+    'util/editor/command/font',
+    'ui/editor/command/fontsize'
 ],function(NEJ,_k,_t0,_i0,_p,_o,_f,_r){
     var _pro;
     /**
      * 字号大小执行命令封装
-     * @class   {nej.ut.cmd._$$FontSize} 字号大小执行命令封装
-     * @extends {nej.ut.cmd._$$Font}
-     * @param   {Object} 可选配置参数
+     *
+     * @class   module:util/editor/command/fontsize._$$FontSize
+     * @extends module:util/editor/command/font._$$Font
+     * @param   {Object} options - 可选配置参数
      */
     _p._$$FontSize = _k._$klass();
     _pro = _p._$$FontSize._$extend(_t0._$$Font);
     /**
      * 命令名称
-     * @type String
+     *
+     * @const {String} module:util/editor/command/backcolor._$$FontSize.command
      */
     _p._$$FontSize.command = 'fontSize';
     /**
      * 显示卡片
+     *
      * @protected
-     * @method {__doShowCard}
+     * @method module:util/editor/command/fontsize._$$FontSize#__doShowCard
      * @return {Void}
      */
     _pro.__doShowCard = function(){
@@ -36,9 +40,10 @@ NEJ.define([
     };
     /**
      * 取提示信息
+     *
      * @protected
-     * @method {__getFontText}
-     * @param  {String} 实际值
+     * @method module:util/editor/command/fontsize._$$FontSize#__getFontText
+     * @param  {String} arg0 - 实际值
      * @return {String} 提示信息
      */
     _pro.__getFontText = function(_value){

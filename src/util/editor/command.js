@@ -5,29 +5,33 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** @module util/editor/command */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}util/event.js'
+    'base/global',
+    'base/klass',
+    'util/event'
 ],function(NEJ,_k,_t,_p,_o,_f,_r){
     var _impls = {},
         _pro;
     /**
-     * 富媒体编辑器执行命令封装，
+     * 富媒体编辑器执行命令封装
+     *
      * 子类实现具体命令时注意：
      * - 指定命令识别名称，通过指定类的name属性实现
      * - 实现命令的具体业务逻辑，通过重写_$execute接口实现
-     * @class   {nej.ut._$$EditorCommand} 富媒体编辑器执行命令封装
-     * @extends {nej.ut._$$EventTarget}
-     * @param   {Object} 可选配置参数
-     * @property  {nej.ut._$$EditorArea}       area       编辑器核心
-     * @property  {nej.ut._$$EditorToolBar} toolbar 工具栏实例
+     *
+     * @class     module:util/editor/command._$$EditorCommand
+     * @extends   module:util/event._$$EventTarget
+     * @param     {Object}                  arg0    - 可选配置参数
+     * @property  {nej.ut._$$EditorArea}    area    - 编辑器核心
+     * @property  {nej.ut._$$EditorToolBar} toolbar - 工具栏实例
      */
     _p._$$EditorCommand = _k._$klass();
     _pro = _p._$$EditorCommand._$extend(_t._$$EventTarget);
     /**
      * 注册命令实现
-     * @method {_$regist}
+     *
+     * @method module:util/editor/command._$$EditorCommand._$regist
      * @return {Void}
      */
     _p._$$EditorCommand._$regist = function(){
@@ -35,8 +39,9 @@ NEJ.define([
     };
     /**
      * 取命令实现构造
-     * @method {_$getImpl}
-     * @param  {String}                     命令名称
+     *
+     * @method module:util/editor/command._$$EditorCommand._$getImpl
+     * @param  {String} arg0 - 命令名称
      * @return {nej.ut._$$EditorCommand} 命令实现
      */
     _p._$$EditorCommand._$getImpl = function(_command){
@@ -44,8 +49,9 @@ NEJ.define([
     };
     /**
      * 控件初始化
+     *
      * @protected
-     * @method {__init}
+     * @method module:util/editor/command._$$EditorCommand#__init
      * @return {Void}
      */
     _pro.__init = function(){
@@ -54,9 +60,10 @@ NEJ.define([
     };
     /**
      * 控件重置
+     *
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
+     * @method module:util/editor/command._$$EditorCommand#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -66,8 +73,9 @@ NEJ.define([
     };
     /**
      * 控件销毁
+     *
      * @protected
-     * @method {__destroy}
+     * @method module:util/editor/command._$$EditorCommand#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -77,21 +85,26 @@ NEJ.define([
     };
     /**
      * 执行命令，子类实现具体业务逻辑
-     * @method {_$execute}
-     * @param  {Object} 执行参数
+     *
+     * @abstract
+     * @method module:util/editor/command._$$EditorCommand#_$execute
+     * @param  {Object} arg0 - 执行参数
      * @return {Void}
      */
     _pro._$execute = _f;
     /**
      * 查询命令值，子类实现具体业务逻辑
-     * @method {_$queryValue}
-     * @param  {Node} 命令按钮节点
+     *
+     * @abstract
+     * @method module:util/editor/command._$$EditorCommand#_$queryValue
+     * @param  {Node} arg0 - 命令按钮节点
      * @return {Void}
      */
     _pro._$queryValue = _f;
     /**
      * 查询命令是否已经执行，子类重写具体业务逻辑
-     * @method {_$queryState}
+     *
+     * @method module:util/editor/command._$$EditorCommand#_$queryState
      * @return {Boolean} 是否已经被执行，返回null表示不做处理
      */
     _pro._$queryState = function(){
@@ -99,7 +112,8 @@ NEJ.define([
     };
     /**
      * 查询命令是否允许被执行，子类重写具体业务逻辑
-     * @method {_$queryEnabled}
+     *
+     * @method module:util/editor/command._$$EditorCommand#_$queryEnabled
      * @return {Boolean} 是否允许被执行，返回null表示不做处理
      */
     _pro._$queryEnabled = function(){

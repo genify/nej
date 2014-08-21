@@ -5,22 +5,25 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** util/editor/command/justifyright */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}util/editor/command/simple.js'
+    'base/global',
+    'base/klass',
+    'util/editor/command/simple'
 ],function(NEJ,_k,_t0,_p,_o,_f,_r){
     /**
      * 右对齐执行命令封装
-     * @class   {nej.ut.cmd._$$JustifyRight} 右对齐执行命令封装
-     * @extends {nej.ut.cmd._$$SimpleCommand}
-     * @param   {Object} 可选配置参数
+     *
+     * @class   module:util/editor/command/justifyright._$$JustifyRight
+     * @extends module:util/editor/command/simple._$$SimpleCommand
+     * @param   {Object} options - 可选配置参数
      */
     _p._$$JustifyRight = _k._$klass();
     _p._$$JustifyRight._$extend(_t0._$$SimpleCommand);
     /**
      * 命令名称
-     * @type String
+     *
+     * @const {String} module:util/editor/command/justifyright._$$JustifyRight.command
      */
     _p._$$JustifyRight.command = 'justifyRight';
     // regist command implemention

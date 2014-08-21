@@ -5,34 +5,39 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** util/editor/command/link */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}util/editor/command/card.js',
-    '{lib}ui/editor/command/link.js'
+    'base/global',
+    'base/klass',
+    'util/editor/command/card',
+    'ui/editor/command/link'
 ],function(NEJ,_k,_t0,_i0,_p,_o,_f,_r){
     var _pro;
     /**
      * 超链接执行命令封装
-     * @class   {nej.ut.cmd._$$Link} 超链接执行命令封装
-     * @extends {nej.ut._$$EditorCommand}
-     * @param   {Object} 可选配置参数
      *
+     * @class   module:util/editor/command/link._$$Link
+     * @extends module:util/editor/command/card._$$CardCommand
+     * @param   {Object} options - 可选配置参数
      */
     _p._$$Link = _k._$klass();
     _pro = _p._$$Link._$extend(_t0._$$CardCommand);
     /*
      * 命令名称
-     * @type {String}
+     *
+     * @const {String} module:util/editor/command/link._$$Link.command
      */
     _p._$$Link.command = 'link';
 
     /**
      * 卡片内容变化回调，子类实现具体业务逻辑
+     *
      * @protected
-     * @method {__onChange}
-     * @param  {Object} _link 链接地址
-     * @return {Void}
+     * @method   module:util/editor/command/link._$$Link#__onChange
+     * @param    {Object} _link - 链接地址对象
+     * @property {String} name  - 链接名称
+     * @property {String} href  - 链接地址
+     * @return   {Void}
      */
     _pro.__onChange = function(_link){
         if(!_link)
@@ -45,8 +50,9 @@ NEJ.define([
 
     /**
      * 显示卡片，一般子类重写
+     *
      * @protected
-     * @method {__doShowCard}
+     * @method module:util/editor/command/link._$$Link#__doShowCard
      * @return {Void}
      */
     _pro.__doShowCard = function(){
@@ -58,8 +64,9 @@ NEJ.define([
 
     /**
      * 子类实现显示具体卡片
+     *
      * @protected
-     * @method {__onShowCard}
+     * @method module:util/editor/command/link._$$Link#__onShowCard
      * @return {Void}
      */
     _pro.__onShowCard = function(){
@@ -75,7 +82,10 @@ NEJ.define([
     };
     /**
      * 链接错误提示
-     * @param  {Object} type 错误类型
+     *
+     * @protected
+     * @method module:util/editor/command/link._$$Link#__onError
+     * @param  {Object} type - 错误类型
      * @return {Void}
      */
     _pro.__onError = function(){

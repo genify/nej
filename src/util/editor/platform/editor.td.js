@@ -6,7 +6,7 @@
  * ------------------------------------------
  */
 NEJ.define([
-    '{lib}base/element.js',
+    'base/element',
     './editor.js'
 ],function(_e,_h,_p,_o,_f,_r){
     var  _rcache = {};

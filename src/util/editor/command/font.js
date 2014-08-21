@@ -5,35 +5,39 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
+/** util/editor/command/font */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/element.js',
-    '{lib}util/editor/command/card.js',
-    '{lib}util/template/jst.js',
+    'base/global',
+    'base/klass',
+    'base/element',
+    'util/editor/command/card',
+    'util/template/jst'
 ],function(NEJ,_k,_e,_t0,_t1,_p,_o,_f,_r){
     var _pro;
     /**
      * 字体/字号执行命令封装
-     * @class   {nej.ut.cmd._$$Font} 字体/字号执行命令封装
-     * @extends {nej.ui.cmd._$$CardCommand}
-     * @param   {Object} 可选配置参数
+     *
+     * @class   module:util/editor/command/font._$$Font
+     * @extends module:util/editor/command/card._$$CardCommand
+     * @param   {Object} arg0 - 可选配置参数
      */
     _p._$$Font = _k._$klass();
     _pro = _p._$$Font._$extend(_t0._$$CardCommand);
     /**
      * 取提示信息
-     * @protected
-     * @method {__getFontText}
+     *
+     * @abstract
+     * @method module:util/editor/command/font._$$Font#__getFontText
      * @param  {String} 实际值
      * @return {String} 提示信息
      */
     _pro.__getFontText = _f;
     /**
      * 字体字号选择回调
+     *
      * @protected
-     * @method {__onChange}
-     * @param  {Object} 大小信息
+     * @method module:util/editor/command/font._$$Font#__onChange
+     * @param  {Object} data - 大小信息
      * @return {Void}
      */
     _pro.__onChange = function(_data){
@@ -42,8 +46,9 @@ NEJ.define([
     };
     /**
      * 查询命令值
-     * @method {_$queryValue}
-     * @param  {Node} 命令按钮节点
+     *
+     * @method module:util/editor/command/font._$$Font#_$queryValue
+     * @param  {Node} node - 命令按钮节点
      * @return {Void}
      */
     _pro._$queryValue = function(_node){

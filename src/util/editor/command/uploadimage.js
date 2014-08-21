@@ -5,32 +5,36 @@
  * @author   cheng-lin(cheng-lin@corp.netease.com)
  * ------------------------------------------
  */
+/** util/editor/command/uploadimage */
 NEJ.define([
-    '{lib}base/global.js',
-    '{lib}base/klass.js',
-    '{lib}base/util.js',
-    '{lib}util/editor/command/card.js',
-    '{lib}ui/editor/command/uploadimage.js'
+    'base/global',
+    'base/klass',
+    'base/util',
+    'util/editor/command/card',
+    'ui/editor/command/uploadimage'
 ],function(NEJ,_k,_u,_t0,_i0,_p,_o,_f,_r){
     var _pro;
     /**
      * 左对齐执行命令封装
-     * @class   {nej.ut.cmd._$$UploadImage} 左对齐执行命令封装
-     * @extends {nej.ut.cmd._$$SimpleCommand}
-     * @param   {Object} 可选配置参数
+     *
+     * @class   module:util/editor/command/uploadimage._$$UploadImage
+     * @extends module:util/editor/command/card._$$CardCommand
+     * @param   {Object} arg0 - 可选配置参数
      */
     _p._$$UploadImage = _k._$klass();
     _pro = _p._$$UploadImage._$extend(_t0._$$CardCommand);
     /**
      * 命令名称
-     * @type String
+     *
+     * @const {String} module:util/editor/command/uploadimage._$$UploadImage.command
      */
     _p._$$UploadImage.command = 'uploadImage';
 
     /**
      * 显示卡片，一般子类重写
+     *
      * @protected
-     * @method {__doShowCard}
+     * @method module:util/editor/command/uploadimage._$$UploadImage#__doShowCard
      * @return {Void}
      */
     _pro.__doShowCard = function(){
@@ -39,6 +43,9 @@ NEJ.define([
 
     /**
      * 子类实现显示具体卡片
+     *
+     * @protected
+     * @method module:util/editor/command/uploadimage._$$UploadImage#__onShowCard
      * @return {Void}
      */
     _pro.__onShowCard = function(){
@@ -51,10 +58,11 @@ NEJ.define([
 
     /**
      * 卡片内容变化回调，子类实现具体业务逻辑
+     *
      * @protected
-     * @method {__onChange}
-     * @param  {Object} 插入图片命令
-     * @param  {Object} 图片对象
+     * @method module:util/editor/command/uploadimage._$$UploadImage#__onChange
+     * @param  {Object} arg0 - 插入图片命令
+     * @param  {Object} arg1 - 图片对象
      * @return {Void}
      */
     _pro.__onChange = function(_commend,_photoObj){
