@@ -451,7 +451,6 @@ NEJ.define([
     _p._$getItemById = function(_id){
         return _cache[_id];
     };
-
     /**
      * 解析UI模板集合
      *
@@ -461,46 +460,27 @@ NEJ.define([
      * @return {Object} 模版id的map
      */
     _p._$parseUITemplate = (function(){
-        var _reg  = /#<([a-zA-Z0-9_]+)>/;
-        var _doAddTemplate = function(_node){
-            var _type = _node.name.toLowerCase();
-            switch(_type){
-                 case 'jst':
-                    _y._$addHtmlTemplate(_node,!0);
-                return;
-                case 'txt':
-                    _p._$addTextTemplate(_node.id,_node.value||'');
-                return;
-                case 'ntp':
-                    _p._$addNodeTemplate(_node.value||'',_node.id);
-                return;
-            }
-        };
-        return function(_html,_map){
+        var _reg = /#<(.+?)>/;
+        return function(_html,_map){ // {abc:'eeee'} // #<abc>
             _map = _map||{};
-            var _element = _e._$html2node(_html),
-                _tmap = {};
-            if (!!_element){
-                 var _list = _element.tagName=='TEXTAREA' ? [_element]
-                              : _u._$object2array(
-                                    _element.getElementsByTagName('textarea')
-                                );
-                _u._$forEach(_list,function(_node){
-                    var _id = _node.id;
-                    if (!!_id){
-                        if (_reg.test(_id)){
-                            var _key = _id.replace(_reg,function($1,$2){
-                                return $2;
-                            });
-                            _tmap[_key] = !_map[_key] ? _u._$uniqueID() : _map[_key];
-                            _node.id = _tmap[_key];
+            var _element = _e._$html2node(_html);
+            _u._$forIn(
+                _element.getElementsByTagName('textarea'),
+                function(_textarea){
+                    _textarea.id = (_textarea.id||'').replace(
+                        _reg,function($1,$2){
+                            var _id = _map[$2];
+                            if (!_id){
+                                _id = 'tpl-'+_u._$uniqueID();
+                                _map[$2] = _id;
+                            }
+                            return _id;
                         }
-                        _doAddTemplate(_node);
-                    }
-                });
-                _e._$remove(_element,!0);
-                return _tmap;
-            }
+                    );
+                }
+            );
+            _p._$parseTemplate(_element);
+            return _map;
         };
     })();
 
