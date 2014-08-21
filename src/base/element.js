@@ -82,15 +82,15 @@ NEJ.define([
         if (!!_node){
             return _node;
         }
-        // node in memory
-        var _node = _h.__getElementById(_fragment,_element);
-        if (!!_node){
-            return _node;
-        }
         // element is node
         if (!_u._$isString(_element)&&
             !_u._$isNumber(_element)){
             return _element;
+        }
+        // node in memory
+        var _node = _h.__getElementById(_fragment,_element);
+        if (!!_node){
+            return _node;
         }
         // element is id
         return document.getElementById(_element);
