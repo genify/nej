@@ -373,6 +373,108 @@ NEJ.deps({
 </script>
 ```
 
+## 循环依赖
+
+当依赖链出现了环时我们就认为出现了循环依赖，依赖管理系统对于循环依赖的处理分两种情况
+
+如下箭头方向表示文件的依赖，如 a.js 依赖 b.js
+
+```
+   a.js  ->  b.js  ->  a.js
+```
+
+* 强依赖：依赖文件之间的接口调用直接出现在文件定义函数中，避免代码出现强依赖，执行过程会出异常
+* 弱依赖：依赖文件之间的接口调用出现在文件定义函数内部的某个接口中，允许出现弱依赖，可以正常处理
+
+### 强依赖
+
+在define接口中输入的执行函数里直接调用了依赖列表中的其他文件中的API的情况
+
+a.js文件
+
+```javascript
+NEJ.define([
+    './b.js'
+],function(b,p){
+
+    // 在此函数中直接调用了b的接口
+    var result = b.api();
+
+    p.api = function(){
+        // TODO
+        return 'aaaaa';
+    };
+
+    return p;
+});
+```
+
+b.js文件
+
+```javascript
+NEJ.define([
+    './a.js'
+],function(a,p){
+
+    // 在此函数中直接调用了a的接口
+    var result = a.api();
+
+    p.api = function(){
+        // TODO
+        return 'bbbbbb';
+    };
+
+    return p;
+});
+```
+
+### 弱依赖
+
+在define接口中输入的执行函数里没有直接调用依赖列表中的其他文件中的API，所有对其他文件的API的调用均在当前文件提供的API中调用的情况
+
+a.js文件
+
+```javascript
+NEJ.define([
+    './b.js'
+],function(b,p){
+
+    // 在其他API中调用了b的接口
+    p.doSomething = function(){
+        var result = b.api();
+    };
+
+    p.api = function(){
+        // TODO
+        return 'aaaaa';
+    };
+
+    return p;
+});
+```
+
+b.js文件
+
+```javascript
+NEJ.define([
+    './a.js'
+],function(a,p){
+
+    // 在其他API中调用了a的接口
+    p.doSomething = function(){
+        var result = b.api();
+    };
+
+    p.api = function(){
+        // TODO
+        return 'bbbbbb';
+    };
+
+    return p;
+});
+```
+
+
 
 ## FAQ
 
