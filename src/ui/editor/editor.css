@@ -13,4 +13,4 @@
 .#<uispace> .zsel.zfs{width:60px;}
 .#<uispace> .zsel.zfm{width:140px;}
 .#<uispace> .zarea{height:200px;}
-        .#<uispace> .zarea iframe{width:100%;height:100%;}
+.#<uispace> .zarea iframe{width:100%;height:100%;overflow:hidden;}

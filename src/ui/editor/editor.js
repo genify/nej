@@ -160,6 +160,7 @@ NEJ.define([
     };
     /**
      * 取编辑内容
+     *
      * @method module:ui/editor/editor._$$Editor#_$getContent
      * @return {String} 内容
      */
@@ -168,6 +169,7 @@ NEJ.define([
     };
     /**
      * 取编辑内容里的图片id和url列表
+     *
      * @method module:ui/editor/editor._$$Editor#_$getContent
      * @return {Array} 编辑内中的图片ID+@+图片地址的列表，根据ID是否为0判断是否需要放入列表
      */
