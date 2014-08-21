@@ -382,7 +382,7 @@ NEJ.define([
 
 ### 步骤一
 
-构建控件目录，可以使用[打包工具](https://github.com/genify/toolkit)的nej-widget指令生成
+构建控件目录，可以使用[NEJ工具集](https://github.com/genify/toolkit)的nej-widget指令生成
 
 ![控件目录](http://img2.ph.126.net/SSxNFLzX53Nb8r5DLuukQg==/6608848834724645147.png)
 
