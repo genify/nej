@@ -10,11 +10,12 @@ NEJ.define([
     'base/global',
     'base/klass',
     'base/element',
-    'ui/scroller/scroller'
-],function(NEJ,_k,_e,_i0,_p,_o,_f,_r){
+    'ui/scroller/scroller',
+    'text!./x.css'
+],function(NEJ,_k,_e,_i0,_css,_p,_o,_f,_r){
     // variable declaration
     var _pro,
-        _seed_css;
+        _seed_css = _e._$pushCSSText(_css);
     /**
      * 滚动配置信息
      * @typedef  {Object} module:ui/scroller/x._$$ScrollerX~Config
@@ -57,11 +58,6 @@ NEJ.define([
         return {f:'h',a:'left',g:'width',t:'pageX',of:'x',
                 ob:'offsetWidth',sb:'scrollWidth',dx:'m41'};
     };
-    // ui css text
-    _seed_css = _e._$pushCSSText('\
-                     .#<uispace>{position:absolute;z-index:10;$<transform>-origin:0 0;$<transition>-property:opacity;$<transition>-duration:250ms;background-color:rgba(0,0,0,0.6);$<border-radius>:4px;border:1px solid rgba(255,255,255,0.2);opacity:0;overflow:hidden;}\
-                     .#<uispace>-view{position:relative;z-index:5;$<transform>:$<translate>;}\
-                     .#<uispace>{bottom:1px;left:0;height:4px;}');
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ui'),_p);

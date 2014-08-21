@@ -13,11 +13,12 @@ NEJ.define([
     'base/util',
     'ui/base',
     'ui/scroller/scroller.y',
-    'ui/pullrefresh/puller'
-],function(NEJ,_k,_e,_u,_i,_i0,_i1,_p,_o,_f,_r){
+    'ui/pullrefresh/puller',
+    'text!./list.css'
+],function(NEJ,_k,_e,_u,_i,_i0,_i1,_css,_p,_o,_f,_r){
     // variable declaration
     var _pro,
-        _seed_css;
+        _seed_css = _e._$pushCSSText(_css);
     /**
      * 列表滚动控件
      *
@@ -457,8 +458,6 @@ NEJ.define([
     _pro._$scrollToElement = function(_element,_refresh){
         this.__scroller._$scrollToElement.apply(this.__scroller,arguments);
     };
-    // ui css text
-    _seed_css = _e._$pushCSSText('.#<uispace>{position:relative;}');
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ui'),_p);

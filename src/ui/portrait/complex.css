@@ -1,0 +1,21 @@
+.#<uispace>{width:410px;border:1px;font-size:12px;text-align:center;}
+.#<uispace>,.#<uispace> .zbrd{border-style:solid;border-color:#aaa;}
+.#<uispace> a{text-decoration:none;}
+.#<uispace> .zbgp{background:url(#<portrait>btn.png) no-repeat;}
+.#<uispace> .zsdb{float:right;width:80px;text-align:left;}
+.#<uispace> .zsdb .zpgr{text-align:center;}
+.#<uispace> .zsdb .zpgr span{display:block;height:24px;margin:0 10px;border-color:#eee;cursor:pointer;}
+.#<uispace> .zsdb .zpup span{border-width:0 0 1px;background-position:center 2px;}
+.#<uispace> .zsdb .zpdn span{border-width:1px 0 0;background-position:center -18px;}
+.#<uispace> .zsdb .zwin{position:relative;height:180px;overflow:hidden;}
+.#<uispace> .zsdb .zlst{position:absolute;top:0;left:0;width:100%;}
+.#<uispace> .zsdb .zlst .zitm{height:22px;line-height:22px;padding-left:5px;border-width:0;}
+.#<uispace> .zsdb .zlst .zitm.js-selected{border-width:1px 0;margin-left:0;}
+.#<uispace> .zsdb .zbtn{display:block;margin-left:1px;color:#777;}
+.#<uispace> .zsdb .zbtn:hover,
+.#<uispace> .zsdb .zlst .zitm.js-selected{background-color:#e5e5e1;color:#000;text-decoration:none;}
+.#<uispace> .zsdb .js-disabled{cursor:default;}
+.#<uispace> .zsdb .js-disabled span{opacity:0.6;filter:alpha(opacity=60);cursor:default;}
+.#<uispace> .zsdb .js-disabled:hover{background-color:transparent;}
+.#<uispace> .zcnt{margin-right:79px;padding:5px 5px 0;border-width:0 1px 0 0;background:#e5e5e1;}
+.#<uispace> .zcnt .zptrt{border:none;}

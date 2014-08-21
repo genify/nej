@@ -17,12 +17,14 @@ NEJ.define([
     'ui/pager/pager.simple',
     'util/list/module.pager',
     'util/template/tpl',
-    'util/template/jst'
-],function(NEJ,_k,_g,_e,_v,_u,_i,_i0,_t0,_t1,_t2,_p,_o,_f,_r){
+    'text!./portrait.css',
+    'text!./portrait.html'
+],function(NEJ,_k,_g,_e,_v,_u,_i,_i0,_t0,_t1,_css,_html,_p,_o,_f,_r){
     // variable declaration
     var _pro,
-        _seed_css,
-        _seed_html;
+        _seed_ui    = _t1._$parseUITemplate(_html),
+        _seed_html  = _seed_ui['_seed_html'],
+        _seed_ilist = _seed_ui['_seed_ilist'];
     /**
      * 表情控件
      *
@@ -270,35 +272,8 @@ NEJ.define([
             _arr.push('.#<uispace> .zlst .z60-'+(i*5+j)+'{background-position:-'+(j*60)+'px -'+(i*60)+'px;}');
         }
     }
-    _seed_css = _e._$pushCSSText('\
-        .#<uispace>{width:310px;padding:5px;background:#e5e5e1;border:1px solid #888;}\
-        .#<uispace> .zlst{position:relative;height:190px;}\
-        .#<uispace> .zlst .zitm{display:block;float:left;margin:-1px 0 0 -1px;text-indent:200px;overflow:hidden;border:1px solid #e5e5e1;cursor:pointer;background:no-repeat;}\
-        .#<uispace> .zlst .zitm:hover{position:relative;border-color:#000;zoom:1;}\
-        .#<uispace> .zlst .z30{width:30px;height:30px;line-height:30px;}\
-        .#<uispace> .zlst .z60{width:61px;height:60px;line-height:60px;}\
-        '+_arr.join('')+'\
-        .#<uispace> .zpbx{padding:5px 0 1px;text-align:right;}\
-        .#<uispace> .zpager .zbtn,.#<uispace> .zpager .zpgi{border:0;margin:0;}\
-        .#<uispace> .zpager .zpgi{display:none;}\
-        .#<uispace> .zpager .js-disabled{color:#777;}\
-        .#<uispace> .js-prev{position:absolute;top:0;left:0;background:#fff no-repeat center center;border:1px solid #888;}\
-        .#<uispace> .js-prev-30{width:60px;height:60px;}\
-        .#<uispace> .js-prev-30 img{display:none;}\
-    ');
-    _seed_html = _t1._$addNodeTemplate('\
-        <div class="'+_seed_css+'">\
-          <div class="zlst j-flag"></div>\
-          <div class="zpbx j-flag"></div>\
-        </div>\
-    ');
-    _seed_ilist = _t2._$addHtmlTemplate('\
-        {list beg..end as y}\
-          {var x=xlist[y]}\
-          <a href="#" hidefocus="true" class="zitm z${size} z${size}-${y%(row*col)}" title="${x.text}"\
-             data-id="${x.id}" data-align="{if y%col<col/2}right{else}left{/if} top">${x.text}</a>\
-        {/list}\
-    ');
+    // ui style
+    _seed_css = _e._$pushCSSText(_css,{arrbg:_arr.join('')});
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ui'),_p);

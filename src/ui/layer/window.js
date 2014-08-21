@@ -15,10 +15,12 @@ NEJ.define([
     'ui/layer/layer',
     'ui/mask/mask',
     'util/dragger/dragger',
-    'util/template/tpl'
-],function(NEJ,_k,_e,_v,_u,_i0,_i1,_t0,_t1,_p,_o,_f,_r){
-    var _seed_css,
-        _seed_html,
+    'util/template/tpl',
+    'text!./window.css',
+    'text!./window.html'
+],function(NEJ,_k,_e,_v,_u,_i0,_i1,_t0,_t1,_css,_html,_p,_o,_f,_r){
+    var _seed_css = _e._$pushCSSText(_css),
+        _seed_html = _t1._$addNodeTemplate(_html),
         _pro;
     /**
      * 窗体控件
@@ -335,22 +337,6 @@ NEJ.define([
         this.__doShowMask();
         return this;
     };
-    // ui css text
-    _seed_css = _e._$pushCSSText('\
-        .#<uispace>{position:absolute;z-index:1000;border:1px solid #aaa;background:#fff;}\
-        .#<uispace> .zbar{line-height:30px;background:#8098E7;border-bottom:1px solid #aaa;}\
-        .#<uispace> .zcnt{padding:10px 5px;}\
-        .#<uispace> .zttl{margin-right:20px;text-align:left;}\
-        .#<uispace> .zcls{position:absolute;top:5px;right:0;width:20px;height:20px;line-height:20px;cursor:pointer;}\
-    ');
-    // ui html code
-    _seed_html = _t1._$addNodeTemplate('\
-        <div class="'+_seed_css+'">\
-          <div class="zbar"><div class="zttl">标题</div></div>\
-          <div class="zcnt"></div>\
-          <span class="zcls" title="关闭窗体">×</span>\
-        </div>\
-    ');
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ui'),_p);

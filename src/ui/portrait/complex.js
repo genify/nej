@@ -15,16 +15,18 @@ NEJ.define([
     'ui/base',
     'ui/portrait/portrait',
     'util/template/tpl',
-    'util/template/jst',
     'util/tab/tab',
     'util/page/page.simple',
-    'util/data/portrait/portrait'
-],function(NEJ,_k,_c,_e,_u,_i,_i0,_t0,_t1,_t2,_t3,_t4,_p,_o,_f,_r){
+    'util/data/portrait/portrait',
+    'text!./complex.css',
+    'text!./complex.html'
+],function(NEJ,_k,_c,_e,_u,_i,_i0,_t0,_t2,_t3,_t4,_css,_html,_p,_o,_f,_r){
     // variable declaration
     var _pro,
-        _seed_css,
-        _seed_html,
-        _seed_ilist;
+        _seed_css  = _e._$pushCSSText(_css,{portrait:_c._$get('portrait')}),
+        _seed_ui   = _t0._$parseUITemplate(_html),
+        _seed_html = _seed_ui['_seed_html'],
+        _seed_ilist= _seed_ui['_seed_ilist'];
     /**
      * 复杂表情控件
      *
@@ -216,45 +218,6 @@ NEJ.define([
         }
         _e._$setStyle(this.__tbox,'top',0-_offset+'px');
     };
-    // init style and html
-    _seed_css = _e._$pushCSSText('\
-        .#<uispace>{width:410px;border:1px;font-size:12px;text-align:center;}\
-        .#<uispace>,.#<uispace> .zbrd{border-style:solid;border-color:#aaa;}\
-        .#<uispace> a{text-decoration:none;}\
-        .#<uispace> .zbgp{background:url('+_c._$get('portrait')+'btn.png) no-repeat;}\
-        .#<uispace> .zsdb{float:right;width:80px;text-align:left;}\
-        .#<uispace> .zsdb .zpgr{text-align:center;}\
-        .#<uispace> .zsdb .zpgr span{display:block;height:24px;margin:0 10px;border-color:#eee;cursor:pointer;}\
-        .#<uispace> .zsdb .zpup span{border-width:0 0 1px;background-position:center 2px;}\
-        .#<uispace> .zsdb .zpdn span{border-width:1px 0 0;background-position:center -18px;}\
-        .#<uispace> .zsdb .zwin{position:relative;height:180px;overflow:hidden;}\
-        .#<uispace> .zsdb .zlst{position:absolute;top:0;left:0;width:100%;}\
-        .#<uispace> .zsdb .zlst .zitm{height:22px;line-height:22px;padding-left:5px;border-width:0;}\
-        .#<uispace> .zsdb .zlst .zitm.js-selected{border-width:1px 0;margin-left:0;}\
-        .#<uispace> .zsdb .zbtn{display:block;margin-left:1px;color:#777;}\
-        .#<uispace> .zsdb .zbtn:hover,\
-        .#<uispace> .zsdb .zlst .zitm.js-selected{background-color:#e5e5e1;color:#000;text-decoration:none;}\
-        .#<uispace> .zsdb .js-disabled{cursor:default;}\
-        .#<uispace> .zsdb .js-disabled span{opacity:0.6;filter:alpha(opacity=60);cursor:default;}\
-        .#<uispace> .zsdb .js-disabled:hover{background-color:transparent;}\
-        .#<uispace> .zcnt{margin-right:79px;padding:5px 5px 0;border-width:0 1px 0 0;background:#e5e5e1;}\
-        .#<uispace> .zcnt .zptrt{border:none;}\
-    ');
-    _seed_html = _t0._$addNodeTemplate('\
-        <div class="'+_seed_css+' zbrd">\
-          <div class="zsdb">\
-            <a class="zbtn zpgr zpup j-flag" href="#" hidefocus="true" title="上一页"><span class="zbrd zbgp">&nbsp;</span></a>\
-            <div class="zwin"><div class="zlst j-flag"></div></div>\
-            <a class="zbtn zpgr zpdn j-flag" href="#" hidefocus="true" title="下一页"><span class="zbrd zbgp">&nbsp;</span></a>\
-          </div>\
-          <div class="zcnt zbrd j-flag"></div>\
-        </div>\
-    ');
-    _seed_tlist = _t1._$addHtmlTemplate('\
-        {list xlist as x}\
-        <a href="#" hidefoucus="true" class="zbtn zitm zbrd" data-value="${x.id}">${x.name}</a>\
-        {/list}\
-    ');
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ui'),_p);

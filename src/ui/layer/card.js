@@ -11,10 +11,11 @@ NEJ.define([
     'base/klass',
     'base/element',
     'base/event',
-    'ui/layer/layer'
-],function(NEJ,_k,_e,_v,_i0,_p,_o,_f,_r){
+    'ui/layer/layer',
+    'text!./card.css'
+],function(NEJ,_k,_e,_v,_i0,_css,_p,_o,_f,_r){
     var _pro,
-        _seed_css;
+        _seed_css = _e._$pushCSSText(_css);
     /**
      * 卡片控件
      *
@@ -375,8 +376,6 @@ NEJ.define([
             this._$show();
         };
     })();
-    // ui css text
-    _seed_css = _e._$pushCSSText('.#<uispace>{position:absolute;background:#fff;}');
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ui'),_p);

@@ -15,12 +15,14 @@ NEJ.define([
     'ui/base',
     'util/resize/resize',
     'util/template/tpl',
-    'util/template/jst'
-],function(NEJ,_k,_g,_e,_u,_i,_t0,_t1,_t2,_p,_o,_f,_r){
+    'util/template/jst',
+    'text!./resizer.css',
+    'text!./resizer.html'
+],function(NEJ,_k,_g,_e,_u,_i,_t0,_t1,_t2,_css,_html,_p,_o,_f,_r){
     var _pro,
-        _seed_css,
-        _seed_html,
-        _seed_point;
+        _seed_css   = _e._$pushCSSText(_css,{blankimage:_g._$BLANK_IMAGE}),
+        _seed_point = _t2._$addHtmlTemplate(_html),
+        _seed_html;
     /**
      * 初始大小
      * @typedef  {Object} module:ui/resizer/resizer._$$Resizer~Size
@@ -163,9 +165,7 @@ NEJ.define([
         var _clazz = ['znt','znr','znb','znl','zpc zntl','zpc zntr','zpc znbr','zpc znbl'];
         return function(){
             _seed_html = _t1._$addNodeTemplate(
-                '<div class="'+_seed_css+'"><div class="zln">'+
-                   _t2._$getHtmlTemplate(_seed_point,{clazz:_clazz})+
-                '</div></div>'
+                _t2._$getHtmlTemplate(_seed_point,{clazz:_clazz})
             );
             this.__seed_html = _seed_html;
         };
@@ -221,26 +221,10 @@ NEJ.define([
     _pro._$getResizeBox = function(){
         return this.__resize._$getResizeBox();
     };
-    // ui css text
-    _seed_css = _e._$pushCSSText('\
-        .#<uispace>-parent{position:relative;}\
-        .#<uispace>{position:absolute;top:0;left:0;border:1px solid #aaa;cursor:move;$<user-select>:none;z-index:1000;}\
-        .#<uispace> .zln{width:48px;height:48px;border:1px solid #fff;background:url('+_g._$BLANK_IMAGE+');}\
-        .#<uispace> .zpc{border:1px solid #aaa;}\
-        .#<uispace> .zpt{position:absolute;width:5px;height:5px;font-size:1px;overflow:hidden;}\
-        .#<uispace> .znt{top:-1px;left:-1px;width:100%;cursor:n-resize;}\
-        .#<uispace> .znr{top:-1px;right:-1px;height:100%;cursor:e-resize;}\
-        .#<uispace> .znb{bottom:-1px;left:-1px;width:100%;cursor:s-resize;}\
-        .#<uispace> .znl{top:-1px;left:-1px;height:100%;cursor:w-resize;}\
-        .#<uispace> .zntl{top:-1px;left:-1px;cursor:nw-resize;}\
-        .#<uispace> .zntr{top:-1px;right:-1px;cursor:ne-resize;}\
-        .#<uispace> .znbr{bottom:-1px;right:-1px;cursor:se-resize;}\
-        .#<uispace> .znbl{bottom:-1px;left:-1px;cursor:sw-resize;}\
-    ');
-    // html code
-    _seed_point = _t2._$addHtmlTemplate('\
-        {list 1..8 as x}\
-        <div class="zpt ${clazz[x-1]} js-rs-${x}">&nbsp;</div>\
-        {/list}\
-    ');
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui'),_p);
+    }
+
+    return _p;
 });

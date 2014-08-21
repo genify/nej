@@ -13,10 +13,12 @@ NEJ.define([
     'base/util',
     'ui/base',
     'util/suggest/suggest',
-    'util/template/tpl'
-],function(NEJ,_k,_e,_u,_i,_t0,_t1,_p,_o,_f,_r){
-    var _seed_css,
-        _seed_item,
+    'util/template/tpl',
+    'text!./suggest.css',
+    'text!./suggest.html'
+],function(NEJ,_k,_e,_u,_i,_t0,_t1,_css,_html,_p,_o,_f,_r){
+    var _seed_css = _e._$pushCSSText(_css),
+        _seed_item = _t1._$addHtmlTemplate(_html),
         _pro;
     /**
      * 提示建议控件
@@ -181,19 +183,6 @@ NEJ.define([
             ? _e._$getChildren(this.__body)
             : _e._$getByClassName(this.__body,_clazz));
     };
-    // ui css text
-    _seed_css = _e._$pushCSSText('\
-        .#<uispace>-parent{position:relative;}\
-        .#<uispace>{position:absolute;border:1px solid #aaa;background:#fff;text-align:left;visibility:hidden;}\
-        .#<uispace> .zitm{height:20px;line-height:20px;cursor:default;}\
-        .#<uispace> .js-selected{background:#1257F9;}\
-    ');
-    // item html
-    _seed_item = _t1._$addHtmlTemplate('\
-        {if defined("xlist")&&!!xlist.length}\
-          {list xlist as x}<div class="zitm">${x}</div>{/list}\
-        {/if}\
-    ');
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ui'),_p);

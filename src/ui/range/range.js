@@ -11,10 +11,11 @@ NEJ.define([
     'base/klass',
     'base/element',
     'ui/base',
-    'util/range/range'
-],function(NEJ,_k,_e,_i,_t0,_p,_o,_f,_r){
+    'util/range/range',
+    'text!./range.css'
+],function(NEJ,_k,_e,_i,_t0,_css,_p,_o,_f,_r){
     var _pro,
-        _seed_css;
+        _seed_css = _e._$pushCSSText(_css);
     /**
      * 范围选择控件封装
      *
@@ -137,8 +138,6 @@ NEJ.define([
     _pro.__onAfterRangeChange = function(){
         this._$dispatchEvent('onafterchange');
     };
-    // ui css text
-    _seed_css = _e._$pushCSSText('.#<uispace>{position:absolute;top:0;left:0;width:0;height:0;overflow:hidden;border:1px solid #0C32F6;background:#B8D4F0;_filter:alpha(opacity=70);opacity:0.7;}');
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ui'),_p);

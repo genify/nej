@@ -12,10 +12,11 @@ NEJ.define([
     'base/constant',
     'base/element',
     'base/util',
-    'ui/base'
-],function(NEJ,_k,_g,_e,_u,_i,_p,_o,_f,_r){
+    'ui/base',
+    'text!./mask.css'
+],function(NEJ,_k,_g,_e,_u,_i,_css,_p,_o,_f,_r){
     var _pro,
-        _seed_css;
+        _seed_css = _e._$pushCSSText(_css,{blankimage:_g._$BLANK_IMAGE});
     /**
      * 盖层控件
      *
@@ -99,8 +100,6 @@ NEJ.define([
         _e._$fullScreen(this.__body);
         _supMask._$show.apply(this,arguments);
     };
-    // ui css text
-    _seed_css = _e._$pushCSSText('.#<uispace>{position:fixed;_position:absolute;z-index:100;top:0;bottom:0;left:0;right:0;width:100%;height:100%;background-image:url('+_g._$BLANK_IMAGE+');}');
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ui'),_p);

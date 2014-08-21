@@ -12,12 +12,14 @@ NEJ.define([
     'base/element',
     'base/util',
     'ui/base',
-    'util/template/jst'
-],function(NEJ,_k,_e,_u,_i,_t0,_p,_o,_f,_r){
+    'util/template/jst',
+    'text!./base.css',
+    'text!./base.html'
+],function(NEJ,_k,_e,_u,_i,_t0,_css,_html,_p,_o,_f,_r){
     // variable declaration
     var _pro,
-        _seed_css,
-        _seed_page;
+        _seed_css = _e._$pushCSSText(_css),
+        _seed_page = _t0._$addHtmlTemplate(_html);
     /**
      * 分页器控件基类封装
      *
@@ -342,26 +344,6 @@ NEJ.define([
         if (!this.__page) return;
         this.__page._$updateTotal(_total);
     };
-    // ui css text
-    _seed_css = _e._$pushCSSText('\
-      .#<uispace>{font-size:12px;line-height:160%;}\
-      .#<uispace> a{margin:0 2px;padding:2px 8px;color:#333;border:1px solid #aaa;text-decoration:none;}\
-      .#<uispace> .js-disabled{cursor:default;}\
-      .#<uispace> .js-selected{cursor:default;background:#bbb;}\
-    ');
-    _seed_page = _t0._$addHtmlTemplate('\
-      {trim}\
-      {if !defined("noprv")||!noprv}\
-        <a href="#" class="zbtn zprv ${\'js-p-\'|seed}">${label.prev||"上一页"}</a>\
-      {/if}\
-      {list 1..number as x}\
-        <a href="#" class="zpgi zpg${x} ${\'js-i-\'|seed}"></a>\
-      {/list}\
-      {if !defined("nonxt")||!nonxt}\
-        <a href="#" class="zbtn znxt ${\'js-n-\'|seed}">${label.next||"下一页"}</a>\
-      {/if}\
-      {/trim}\
-    ');
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ui'),_p);
