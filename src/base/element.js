@@ -340,33 +340,40 @@ NEJ.define([
             return _result;
         };
         var _farr = [
-            {main:'scroll',sub:['Top','Left']},
-            {main:'client',sub:['Width','Height']},
-            {main:'scroll',sub:['Width','Height']}
-        ];
-        var _fmap = {
-            scroll:function(_key,_body0,_body1){
-                return Math.max(
-                    _body0['scroll'+_key],
-                    _body1['scroll'+_key]
-                );
+            {
+                main:'scroll',
+                sub:['Top','Left'],
+                func:function(_key,_body0,_body1){
+                    return Math.max(
+                        _body0['scroll'+_key],
+                        _body1['scroll'+_key]
+                    );
+                }
             },
-            client:function(_key,_body0,_body1){
-                return _getClientBox([
-                    _body0['client'+_key],
-                    _body0['offset'+_key],
-                    _body1['client'+_key],
-                    _body1['offset'+_key]
-                ]);
+            {
+                main:'client',
+                sub:['Width','Height'],
+                func:function(_key,_body0,_body1){
+                    return _getClientBox([
+                        _body0['client'+_key],
+                        _body0['offset'+_key],
+                        _body1['client'+_key],
+                        _body1['offset'+_key]
+                    ]);
+                }
             },
-            scroll:function(_key,_body0,_body1,_result){
-                return Math.max(
-                    _result['client'+_key],
-                    _body0['scroll'+_key],
-                    _body1['scroll'+_key]
-                );
+            {
+                main:'scroll',
+                sub:['Width','Height'],
+                func:function(_key,_body0,_body1,_result){
+                    return Math.max(
+                        _result['client'+_key],
+                        _body0['scroll'+_key],
+                        _body1['scroll'+_key]
+                    );
+                }
             }
-        };
+        ];
         return function(_document){
             var _result = {},
                 _doc   = _document||document,
@@ -377,7 +384,7 @@ NEJ.define([
                     var _main = _item.main;
                     _u._$forEach(
                         _item.sub,function(_key){
-                            _result[_main+_key] = _fmap[_main](
+                            _result[_main+_key] = _item.func(
                                 _key,_body0,_body1,_result
                             );
                         }
