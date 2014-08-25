@@ -38,8 +38,7 @@ NEJ.define([
      * NEJ.define([
      *     '/path/to/api.js',
      *     'util/chain/chainable'
-     * ],function(_x,_t){
-     *     var $ = _t.$;
+     * ],function(_x,$){
      *     // 使用链式调用api
      *     $('body > p')._$api1()._$api2();
      * });

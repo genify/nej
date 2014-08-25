@@ -8,8 +8,9 @@
 /** @module util/toggle/toggle */
 NEJ.define([
     'base/global',
-    'base/element'
-],function(NEJ,_e,_p,_o,_f,_r){
+    'base/element',
+    'base/chain'
+],function(NEJ,_e,_x,_p,_o,_f,_r){
     /**
      * 点击切换样式，可以控制两种效果的交替显示
      *
@@ -95,6 +96,10 @@ NEJ.define([
      * @property {Function}      ontoggle - 节点样式切换触发事件，输入信息{clazz,target,toggled}
      * @return   {Void}
      */
+    /**
+     * @method CHAINABLE._$toggle
+     * @see module:util/toggle/toggle._$toggle
+     */
     _p._$toggle = (function(){
         // click event
         var _doClick = function(_id,_clazz,_ontoggle){
@@ -140,6 +145,8 @@ NEJ.define([
             }
         };
     })();
+    // for chainable method
+    _x._$merge({_$toggle:_p._$toggle});
     
     if (CMPT){
         NEJ.copy(NEJ.P('nej.e'),_p);
