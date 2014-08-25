@@ -31,12 +31,11 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-/** util/query/query */
+/** @module util/query/query */
 NEJ.define([
     'base/global',
-    'base/element',
-    'util/query/nes'
-],function(NEJ,_e,_t0,_p,_o,_f,_r){
+    './nes.js'
+],function(NEJ,_t0,_p,_o,_f,_r){
     /**
      * 节点选择器
      *
@@ -55,14 +54,12 @@ NEJ.define([
      * 脚本示例
      * ```javascript
      * NEJ.define([
-     *     'base/element',
-     *     'util/query/query'
-     * ],function(_e,_t,_p,_o,_f,_r){
+     *     'util/query/query',
+     *     'util/tab/tab'
+     * ],function(_e,_t){
      *     // 使用选择器接口来取列表
-     *     var _list = _e.$all('.w-tab > li');
-     *     // 使用控件
      *     _t._$$Tab._$allocate({
-     *            list:_list,
+     *         list:_e._$all('.w-tab > li'),
      *         onchange:function(_event){
      *                // TODO
      *         }
@@ -70,11 +67,10 @@ NEJ.define([
      * });
      * ```
      *
-     * @method module:util/query/query#_$all
+     * @method module:util/query/query._$all
      * @param  {String} arg0 - 选择器
-     *
      * @param  {Node}   arg1 - 用于匹配的根节点，默认为document
-     * @return {Array}  符合规则的节点列表
+     * @return {Array}         符合规则的节点列表
      */
     _p._$all = function(){
         try{
@@ -100,20 +96,18 @@ NEJ.define([
      *
      * 脚本示例
      * ```javascript
-     *
      * NEJ.define([
      *     'util/query/query'
-     * ],function(_t,_p,_o,_f,_r){
+     * ],function(_t){
      *     // 使用选择器接口来取选中的节点
-     *     var _node = _t.$one('.w-tab > li.js-selected');
+     *     var _node = _t._$one('.w-tab > li.js-selected');
      * });
      * ```
      *
-     * @api    module:util/query/query#_$one
+     * @method module:util/query/query._$one
      * @param  {String} arg0 - 选择器
-     *
      * @param  {Node}   arg1 - 用于匹配的根节点，默认为document
-     * @return {Node}   符合规则的节点
+     * @return {Node}          符合规则的节点
      */
     _p._$one = function(){
         try{
@@ -122,6 +116,7 @@ NEJ.define([
             return null;
         }
     };
+    // for test only
     _p._$g = nes._get;
 
     if (CMPT){
