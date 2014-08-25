@@ -743,14 +743,17 @@
             return _arr;
         };
         var _doMergeResult = function(_uri,_result){
-            var _ret = __rcache[_uri];
-            if (!!_result){
+            var _ret = __rcache[_uri],
+                _iso = {}.toString.call(_result)=='[object Object]';
+            if (!!_result&&!_iso){
+                _ret = _result;
+            }else if (!!_result){
                 _ret = _ret||{};
                 for(var x in _result){
                     _ret[x] = _result[x];
                 }
-                __rcache[_uri] = _ret;
             }
+            __rcache[_uri] = _ret;
             // save platform information
             var _puri = __config.root.lib+'base/platform.js';
             if (_uri===_puri){

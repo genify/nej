@@ -10,7 +10,7 @@ NEJ.define([
     'base/util',
     'base/chain',
     'util/query/query'
-],function(_v,_e,_u,_x,_t,_p,_o,_f,_r){
+],function(_v,_e,_u,_x,_t){
     var fragmentRE = /^\s*<(\w+|!)[^>]*>/,
         // local vals
         _slice = [].slice,
@@ -194,7 +194,7 @@ NEJ.define([
     *    @param  {String|Node|_$$NodeList} _context  代表从这个根节点下查找节点，特别是页面上节点还不存在时，需要传入这个参数
     *    @return {_$$NodeList}           返回_$$NodeList实例
     */
-    var $ = _p.$ = function(_selector, _context){
+    var $ = function(_selector, _context){
         
         // dump nej methods implement
         $._$implement(_x._$dump(), {"statics": true});
@@ -1173,9 +1173,9 @@ NEJ.define([
     _fn.reset();
     
     if (CMPT){
-        nej.$ = _p.$;
+        nej.$ = $;
     }
     
-    return _p;
+    return $;
 });
 
