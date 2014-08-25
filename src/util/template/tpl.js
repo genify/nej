@@ -211,7 +211,43 @@ NEJ.define([
                 return;
             }
         };
-        // extend ontemplateready event on document
+        /**
+         * 模版准备完毕触发事件，包括所有外联模版载入完成
+         * 
+         * 结构举例
+         * ```html
+         * <div id="template-box">
+         *   <textarea name="jst">
+         *     jst tempalte here
+         *   </textarea>
+         *   <!-- text template with id="txt-id-1" in widget.html -->
+         *   <textarea name="html" data-src="./widget.html"></textarea>
+         * </div>
+         * ```
+         *
+         * 脚本举例
+         * ```javascript
+         * NEJ.define([
+         *     'base/event'
+         *     'util/template/tpl'
+         * ],function(_v,_e){
+         *     // 解析模版集合
+         *     _e._$parseTemplate('template-box');
+         * 
+         *     // 在templateready事件中使用外联模版可以保证正确性
+         *     _v._$addEvent(
+         *         document,'templateready',
+         *         function(_event){
+         *             var _text = _e._$getTextTemplate('txt-id-1');
+         *             // TODO
+         *         }
+         *     );
+         * });
+         * ```
+         * 
+         * @event    external:document.ontemplateready
+         * @param    {Object} event - 事件信息
+         */
         _t._$$CustomEvent._$allocate({
             element:document,
             event:'templateready',
