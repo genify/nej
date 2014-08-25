@@ -13,9 +13,10 @@ NEJ.define([
     'base/event',
     'base/util',
     'util/event',
+    'util/focus/focus',
     'util/counter/counter',
     'util/placeholder/placeholder'
-],function(NEJ,_k,_e,_v,_u,_t,_t0,_t1,_p,_o,_f,_r){
+],function(NEJ,_k,_e,_v,_u,_t,_t2,_t0,_t1,_p,_o,_f,_r){
     var _pro;
     /**
      * WEB表单验证封装对象，HTML代码中支持以下属性配置：
@@ -523,7 +524,7 @@ NEJ.define([
             // check focus
             if (!!this.__fopt&&
                 _reg0.test(_node.tagName))
-                _e._$focus(_node,this.__fopt);
+                _t2._$focus(_node,this.__fopt);
             // check validate condition
             var _id = _e._$id(_node);
             // type check

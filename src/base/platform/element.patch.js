@@ -8,9 +8,8 @@
 NEJ.define([
     './element.js',
     'base/platform',
-    'base/util',
-    'base/event'
-],function(_h,_m,_u,_v,_p,_o,_f,_r){
+    'base/util'
+],function(_h,_m,_u,_p,_o,_f,_r){
     // for ie10-
     NEJ.patch('TR<=6.0',function(){
         /**
@@ -325,33 +324,6 @@ NEJ.define([
     // for ie7-
     NEJ.patch('TR<=3.0',function(){
         /**
-         * 节点focus行为
-         * @param  {String|Node} 节点
-         * @param  {Number}      模式
-         * @param  {String}      样式
-         * @return {Void}
-         */
-        _h.__focusElement = (function(){
-            // remove classname onblur
-            var _onBlur = function(_clazz,_event){
-                _e._$delClassName(
-                    _v._$getElement(_event),_clazz
-                );
-            };
-            return _h.__focusElement._$aop(
-                   function(_event){
-                        // patch ie6-7 :focus
-                        var _args = _event.args;
-                        if (_args[1]!=1){
-                            _v._$addEvent(
-                                _args[0],'blur',
-                                _onBlur._$bind(null,_args[2])
-                            );
-                            _args[1] = -1;
-                        }
-                   });
-        })();
-        /**
          * 取节点属性值
          * @param  {Node}   节点
          * @param  {String} 属性名
@@ -386,45 +358,6 @@ NEJ.define([
             );
             return _result;
         };
-        /**
-         * 节点hover行为
-         * @param  {Node}   节点
-         * @param  {String} 样式，默认为js-hover
-         * @return {Void}
-         */
-        _h.__hoverElement = (function(){
-            var _cache = {};
-            // enter element
-            var _doEnter = function(_class,_event){
-                var _element = _event.srcElement,
-                    _name = _element.className;
-                if (_name.indexOf(_class)<0){
-                    _element.className += ' '+_class;
-                }
-            };
-            // leave element
-            var _doLeave = function(_class,_event){
-                var _element = _event.srcElement,
-                    _name = _element.className||'';
-                if (_name.indexOf(_class)>=0){
-                    _element.className = _name.replace(_class,'').trim();
-                }
-            };
-            return function(_element,_class){
-                var _id = _element.id;
-                if (!!_cache[_id]) return;
-                // hover element
-                _cache[_id] = !0;
-                _v._$addEvent(
-                    _id,'mouseenter',
-                    _doEnter._$bind(null,_class)
-                );
-                _v._$addEvent(
-                    _id,'mouseleave',
-                    _doLeave._$bind(null,_class)
-                );
-            };
-        })();
         /**
          * 节点占全屏
          * @param  {Node}   节点

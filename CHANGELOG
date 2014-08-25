@@ -36,6 +36,10 @@ base/util.js
 base/element.js
 - 交换_$getMaxBox接口输入参数顺序
 - 修改_$dom2object第二个参数为非必传参数
+- 独立_$highlight接口至util/highlight/highlight
+- 独立_$hover接口至util/hover/hover
+- 独立_$focus接口至util/focus/focus
+- 独立_$toggle接口至util/toggle/toggle
 
 base/platform.js
 - 删除_$NOT_PATCH
