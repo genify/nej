@@ -4,14 +4,14 @@
  * @author hzzhenghaibo
  * ------------------------------------------
  */
-var f = function() {
-    // import
-    var _  = NEJ.P,
-        _e = _("nej.e"),
-        _v = _("nej.v"),
-        _u = _("nej.u"),
-        _x = _("nej.x"),
-        fragmentRE = /^\s*<(\w+|!)[^>]*>/,
+NEJ.define([
+    'base/event',
+    'base/element',
+    'base/util',
+    'base/chain',
+    'util/query/query'
+],function(_v,_e,_u,_x,_t,_p,_o,_f,_r){
+    var fragmentRE = /^\s*<(\w+|!)[^>]*>/,
         // local vals
         _slice = [].slice,
         _doc = document,
@@ -111,7 +111,6 @@ var f = function() {
 
     _extend = _extend.autoSet();
 
-
   /**
     *    将输入的选择器指定节点或节点和节点数组包装成_$$NodeList对象，NodeList是一个类似jQuery的对象
     *    可以进行链式操作，拥有大部分nej.e下的接口，并扩展了一部分jQuery的常用方法。
@@ -156,43 +155,9 @@ var f = function() {
     *    // 到这里链式结束返回{"width":"80px", "left":"30px"}
     *    ```
     *
-    *    复制的NEJ中的接口如下：
-    *    [ul]
-    *    nej.e._$addClassNam: chainable
-    *    nej.e._$delClassNam: chainable
-    *    nej.e._$hasClassName
-    *    nej.e._$replaceClassName: chainable
-    *    nej.e._$toggle: chainable
-    *    nej.e._$setStyle: chainable
-    *    nej.e._$getStyle
-    *    nej.e._$css3d: chainable
-    *    nej.e._$offset
-    *    nej.e._$getScrollViewPort
-    *    nej.e._$fixed: chainable
-    *    nej.e._$effect: chainable
-    *    nej.e._$fade: chainable
-    *    nej.e._$focus: chainable
-    *    nej.e._$highlight: chainable
-    *    nej.e._$hover: chainable
-    *    nej.e._$page
-    *    nej.e._$placeholder: chainable
-    *    nej.e._$tab
-    *    nej.e._$wrapInline
-    *    nej.e._$attr: chainable
-    *    nej.e._$dataset
-    *    nej.e._$remove: chainable
-    *    nej.e._$removeByEC: chainable
-    *    nej.e._$dom2xml
-    *    nej.e._$bindClearAction: chainable
-    *    nej.e._$bindCopyAction: chainable
-    *    nej.e._$counter
-    *    nej.v._$addEvent: chainable
-    *    nej.v._$clearEvent: chainable
-    *    nej.v._$delEven: chainablet
-    *    nej.v._$dispatchEvent: chainable
-    *    [/ul]
     *    nej.$ 支持的选择器与nes选择器一致，具体请参考 https://github.com/leeluolee/nes
-    *    页面结构举例
+    * 
+    *    结构举例
     *    ```html
     *      <ul>
     *          <li><a href=""></a></li>
@@ -201,6 +166,7 @@ var f = function() {
     *          <li><a href=""></a></li>
     *      </ul>
     *    ```
+    * 
     *    ```javascript
     *      var $ = NEJ.P('nej.$');
     *      $('ul > li:nth-child(2n+1) >a')
@@ -210,7 +176,7 @@ var f = function() {
     *
     *    $接受的参数与jQuery的一致 ，非常灵活
     *    ```javascript
-    *    获得"body"节点， 很明显此时节点集只有一个元素
+    *    // 获得"body"节点， 很明显此时节点集只有一个元素
     *    $("body")
     *
     *    // 找到有class1并且有rel属性的节点集，这时可能会有很多个节点
@@ -222,17 +188,18 @@ var f = function() {
     *    $body = $("body")
     *    $body2 = $($body2)
     *    ```
-    *    @chainable
-    *    @api    {nej.$}
+    * 
+    *    @method CHAINABLE.$
     *    @param  {String|Array|_$$NodeList|Node} _selector 可以是选择器、节点、节点数组或另一个_$$NodeList实例
     *    @param  {String|Node|_$$NodeList} _context  代表从这个根节点下查找节点，特别是页面上节点还不存在时，需要传入这个参数
     *    @return {_$$NodeList}           返回_$$NodeList实例
     */
-    var $ = nej.$ = function(_selector, _context){
-        if(_x.isChange){
-            $._$implement(nej.x, {"statics": true});
-            _x.isChange = false;
-        }
+    var $ = _p.$ = function(_selector, _context){
+        
+        // dump nej methods implement
+        $._$implement(_x._$dump(), {"statics": true});
+        _x._$clear();
+        
         if (typeof _selector === 'string' && _selector.trim().indexOf("<") == 0) {
         var container = document.createElement('div');
             container.innerHTML = _selector;
@@ -251,7 +218,7 @@ var f = function() {
             // if(/\^<[-\w]+/.test(_selector)) return $.fragment(_selector);
             if(_context && _context instanceof _$$NodeList) _context = _context[0];
             if(typeof _context == 'string') _context = $(_context)[0];
-            this._$add(_e._$all(_selector, _context));
+            this._$add(_t._$all(_selector, _context));
         }else if(_selector instanceof _$$NodeList || _isAcceptedNode(_selector) ||
             _selector.length){ // _$$NodeList 或者 是单节点、或者是类数组(如childNodes)
             this._$add(_selector);
@@ -295,12 +262,12 @@ var f = function() {
          * ```
          *
          * 需要注意的是，当静态接口的迁移时，有如下约定(同时也是NEJ原接口在链式调用的表现约定)
-         * [ul]
-         * 当返回值为: this 、 传入节点 、 nej.v 、 nej.e 、 undefined (即不返回)时, 视为setter操作,可以进行链式调用, 如上例:
-         * 当返回值为其他类型时: 视为getter操作, 返回节点列表中 第一个元素 的返回值，这个也是jQuery的链式接口的表现
-         * [/ul]
+         * 
+         * * 当返回值为: this 、 传入节点 、 nej.v 、 nej.e 、 undefined (即不返回)时, 视为setter操作,可以进行链式调用, 如上例:
+         * * 当返回值为其他类型时: 视为getter操作, 返回节点列表中 第一个元素 的返回值，这个也是jQuery的链式接口的表现
+         * 
          *
-         * @api    {nej.$._$implement}
+         * @method CHAINABLE._$implement
          * @param  {Object} _definition 要扩展的接口集合 (注意不要使用字符串作为键值)
          * @param  {Object} _options 参数  目前只有两个选项{statics: 代表是否是静态接口迁移, override: 是否覆盖原同名方法}
          * @return {this}
@@ -509,8 +476,7 @@ var f = function() {
       * $('li')._$style(name, value) // 相当于setStyle 返回this
       * $('li')._$style(obj) //相当于多重版setStyle(即原_$style) 返回this
       * ```
-      * @chainable
-      * @api    {nej.$()._$style}
+      * @method CHAINABLE._$style
       * @param  {String|Object|Array} _key  可以是String(单取值或设置)，一个对象(多重赋值)，一个数组(多重取值)
       * @param  {String} _value 样式值
       * @return {_$$Nodelist|String|Object} setter操作返回_$$NodeList，单重取值返回String，多重取值返回样式属性为键的Object，表现与jQuery的css接口一致
@@ -533,8 +499,8 @@ var f = function() {
         * $('li')._$attr(name, value): 相当于_$attr 返回this
         * $('li')._$attr(obj): 相当于多重版的_$attr 返回this
         * ```
-        * @chainable
-        * @api    {nej.$()._$attr}
+        * 
+        * @method CHAINABLE._$attr
         * @param  {String|Object|Array} _key  可以是String(单取值或设置)，一个对象(多重赋值)，一个数组(多重取值)
         * @param  {String} _value 属性值
         * @return {_$$Nodelist|String|Object} setter操作返回_$$NodeList，单重取值返回String，多重取值返回样式属性为键的Object，表现与jQuery的css接口一致
@@ -560,8 +526,8 @@ var f = function() {
          * })
          * ```
          * 注意callback中传入的节点是裸节点，而不是包装后的_$$NodeList
-         * @chainable
-         * @api    {nej.$()._$forEach}
+         * 
+         * @method CHAINABLE._$forEach
          * @param  {Function} _fn 遍历回掉，接受两个参数，当前遍历到的节点和节点下标
          * @return {_$$NodeList}
          */
@@ -583,8 +549,8 @@ var f = function() {
        * });
        * ```
        * 注意callback中传入的节点是裸节点，而不是包装后的_$$NodeList
-       * @chainable
-       * @api    {nej.$()._$filter}
+       * 
+       * @method CHAINABLE._$filter
        * @param  {Function|String} _fn 遍历函数，接受两个参数，当前遍历到的节点和节点下标。同时也接受一个Selector，筛选出节点集中满足选择器的节点
        * @return {_$$NodeList}
       */
@@ -612,8 +578,8 @@ var f = function() {
          * });
          * ```
          * 注意callback中传入的节点是裸节点，而不是包装后的_$$NodeList
-         * @chainable
-         * @api    {nej.$()._$map}
+         * 
+         * @method CHAINABLE._$map
          * @param  {Function} _fn 遍历callback，接受两个参数，当前遍历到的节点和节点下标
          * @return {_$$NodeList}
          */
@@ -629,7 +595,8 @@ var f = function() {
         },
         /**
          * NodeList中的节点是不保证按文档顺序的(如果是用选择器，则保证是有序的), 你可以手动排序
-         * @api    {nej.$()._$sort}
+         * 
+         * @method CHAINABLE._$sort
          * @return {_$$NodeList}
          */
         _$sort:function(){
@@ -645,8 +612,8 @@ var f = function() {
          * $body._$add($("tbody")) //==> 什么都不会发生 因为重复了
          * $body._$add(document.body.childNodes) //==> 添加所有的body下的子节点,过滤掉不符合的
          * ```
-         * @chainable
-         * @api    {nej.$()._$add}
+         * 
+         * @method CHAINABLE._$add
          * @param  {Node|Array|_$$NodeList} _node 要添加的节点或节点集
          * @return {_$$NodeList}      返回this
          */
@@ -684,8 +651,8 @@ var f = function() {
          *  //返回 true... 这个是当然的, 4倍数的节点当然满足偶数条件
          * ```
          *
-         * @chainable
-         * @api    {nej.$()._$matches}
+         * 
+         * @method CHAINABLE._$matches
          * @param  {String} _selector 供测试的选择器
          * @return {Boolean}          是否通过测试
          */
@@ -706,7 +673,7 @@ var f = function() {
          * $("tr")._$parent("tbody, body",true)
          * // =>['body', 'tbody'] //会向上查找所有父节点,但是必须满足选择器
          * ```
-         * @api    {nej.$()._$parent}
+         * @method CHAINABLE._$parent
          * @param  {String} _selector 选择器
          * @param  {Boolean} _all     是否获取所有层级的父节点
          * @return {[type]}
@@ -721,7 +688,7 @@ var f = function() {
          * $("td")._$prev("th[scope=row]")
          * // 只返回直接相邻的前节点，如果不满足选择器则返回空节点集
          * ```
-         * @api    {nej.$()._$prev}
+         * @method CHAINABLE._$prev
          * @param  {String} _selector 选择器
          * @param  {Boolean} _all     是否获取所有前序节点
          * @return {[type]}
@@ -729,7 +696,7 @@ var f = function() {
         _$prev: _traverse("previousSibling"),
         /**
          * 与_$prev类似,查找 所有节点 的第一个(或所有根据_all参数)满足关系的 向后兄弟节点 (nextSibling)集, 并返回$NodeList
-         * @api    {nej.$()._$next}
+         * @method CHAINABLE._$next
          * @param  {String} _selector 选择器
          * @param  {Boolean} _all     是否获取所有后序节点
          * @return {[type]}
@@ -748,7 +715,7 @@ var f = function() {
          * // => 返回所有层级的td元素并且满足选择器 td:not(:last-child, :nth-child(2n))
          * ```
          *
-         * @api    {nej.$()._$children}
+         * @method CHAINABLE._$children
          * @param  {String} _selector 选择器
          * @param  {Boolean} _all     是否获取所有层级的节点
          * @return {[type]}
@@ -760,7 +727,7 @@ var f = function() {
                 _selector = null;
             }
             this._$forEach(function(_node){
-                var _backed = _all? _e._$all(_selector || "*", _node)
+                var _backed = _all? _t._$all(_selector || "*", _node)
                     : _selector? $(_node.childNodes)._$filter(_selector)
                     : $(_node.childNodes);
                 _ret._$add(_backed);
@@ -774,8 +741,8 @@ var f = function() {
          * $("script")._$siblings("title,h2"); // => 返回script的同级节点中的
          * ```
          *
-         * @chainable
-         * @api    {nej.$()._$siblings}
+         * 
+         * @method CHAINABLE._$siblings
          * @param  {String} _selector
          * @return {_$$NodeList}    这些同级节点会被包装为一个_$$NodeList
          */
@@ -793,7 +760,7 @@ var f = function() {
          * $('#home')._$insert('a.next', 'after');
          * ```
          *
-         * @api    {nej.$()._$insert}
+         * @method CHAINABLE._$insert
          * @param  {String|Node|_$$NodeList} _selector 代表被插入的节点，可以是选择器、节点或是另外一个_$$NodeList对象
          * @param  {String} _direct   插入位置，可以是节点内的底部、顶部(bottom, top)，或节点同层的前后位置(before, after)，默认为bottom
          * @return {_$$NodeList}    返回this
@@ -822,7 +789,7 @@ var f = function() {
          * $('#home')._$insert2('a.next', 'after');
          * ```
          *
-         * @api    {nej.$()._$insert2}
+         * @method CHAINABLE._$insert2
          * @param  {String|Node|_$$NodeList} _selector 代表参考节点，可以是选择器、节点或是另外一个_$$NodeList对象
          * @param  {String} _direct   插入位置，可以是节点内的底部、顶部(bottom, top)，或节点同层的前后位置(before, after)，默认为bottom
          * @return {_$$NodeList}    返回this
@@ -839,7 +806,7 @@ var f = function() {
          * $('.m-template')._$clone(true)._$insert2('body');//将`.m-template`节点clone一份插入到`body`的内部下方
          * ```
          *
-         * @api    {nej.$()._$clone}
+         * @method CHAINABLE._$clone
          * @param  {Boolean} _withContent 是否要克隆子节点
          * @return {_$$NodeList}
          */
@@ -859,8 +826,8 @@ var f = function() {
          * // 获得title(第一个元素)的innerText
          * ```
          *
-         * @chainable
-         * @api    {nej.$()._$text}
+         * 
+         * @method CHAINABLE._$text
          * @param  {content} _content 要插入的内容 , 不传入则认为是getter操作
          * @return {_$$NodeList|String} setter操作返回_$$NodeList getter操作返回String
          */
@@ -884,8 +851,8 @@ var f = function() {
          * // 获得title(第一个元素)的innerHTML
          * ```
          *
-         * @chainable
-         * @api    {nej.$()._$html}
+         * 
+         * @method CHAINABLE._$html
          * @param  {content} _content 要插入的内容 不传入则认为是getter操作
          * @return {_$$NodeList|String} setter操作返回_$$NodeList getter操作返回String
          */
@@ -910,8 +877,8 @@ var f = function() {
          * // 获得title(第一个元素)的innerHTML
          * ```
          *
-         * @chainable
-         * @api    {nej.$()._$html}
+         * 
+         * @method CHAINABLE._$html
          * @param  {content} _content 要插入的内容
          * @return {_$$NodeList|String} setter操作返回_$$NodeList getter操作返回String
          */
@@ -1009,8 +976,8 @@ var f = function() {
          *     }
          * })
          * ```
-         * @chainable
-         * @api    {nej.$()._$on}
+         * 
+         * @method CHAINABLE._$on
          * @param  {String|Array|Object} _event     事件名，_event支持多种参数类型会有不同的结果
          *                             如果_event参数中不包含空格, 则视为简单事件绑定如，click,
          *                             如果_event参数中包含空格,则会被split, 左边视为event参数，右边视为_selector参数如'click .next',
@@ -1081,8 +1048,8 @@ var f = function() {
          * $("body")._$off() //慎重
          * ```
          *
-         * @chainable
-         * @api    {nej.$()._$off}
+         * 
+         * @method CHAINABLE._$off
          * @param  {String|Array|Object} _event 与_$on方法一样，解绑也会根据参数不同可以有很大的灵活度
          *                                      如果_event参数中不包含空格, 则视为简单事件解绑如，click,
          *                                      如果_event参数中包含空格,则会被split, 左边视为event参数，右边视为_selector参数如'click .next',
@@ -1148,7 +1115,7 @@ var f = function() {
          * })
          * ```
          *
-         * @api    {nej.$()._$trigger}
+         * @method CHAINABLE._$trigger
          * @param  {String|Array|Object} _event   可以传入多种参数类型
          * @param  {Whatever} _options 同_$dispatchEvent的_options
          * @return {_$$NodeList}
@@ -1204,10 +1171,11 @@ var f = function() {
     // });
     // 把原型还回去, WARN:千万注意
     _fn.reset();
-};
-NEJ.define('util/chain/NodeList', [
-    'util/query/query',
-    'base/element',
-    'base/util'
-    ], f);
+    
+    if (CMPT){
+        nej.$ = _p.$;
+    }
+    
+    return _p;
+});
 

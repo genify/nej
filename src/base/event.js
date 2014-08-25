@@ -10,8 +10,9 @@ NEJ.define([
     './global.js',
     './element.js',
     './util.js',
+    './chain.js',
     '{platform}event.js'
-],function(NEJ,_e,_u,_h,_p,_o,_f,_r){
+],function(NEJ,_e,_u,_x,_h,_p,_o,_f,_r){
     // {id:{type:[{type:'click',func:function,sfun:function,capt:true},...]}}
     // id   - element id
     // type - event name, no on prefix
@@ -19,7 +20,8 @@ NEJ.define([
     // capt - capture flag
     // sfun - event before wrapper
     // link - events link to this event [[element,type,handler,capture],...]
-    var _xcache = {};
+    var _xcache = {},
+        _y = {}; // chainable methods
     /*
      * 取事件类型列表
      * @param  {String} 事件类型
@@ -111,7 +113,12 @@ NEJ.define([
      * @param  {Boolean}     arg3 - 是否捕获阶段事件，IE低版本浏览器忽略此参数
      * @return {Void}
      */
-    _p._$addEvent = (function(){
+    /**
+     * @method CHAINABLE._$addEvent
+     * @see module:base/event._$addEvent
+     */
+    _p._$addEvent = 
+    _y._$addEvent = (function(){
         // cache event
         // type/handler/link
         var _doCacheEvent = function(_type,_source,_real){
@@ -204,7 +211,12 @@ NEJ.define([
      * @param  {Boolean}     arg3 - 是否捕获阶段事件
      * @return {Void}
      */
-    _p._$delEvent = (function(){
+    /**
+     * @method CHAINABLE._$delEvent
+     * @see module:base/event._$delEvent
+     */
+    _p._$delEvent = 
+    _y._$delEvent = (function(){
         var _unCacheEvent = function(_type,_conf){
             var _id = _e._$id(_conf.element),
                 _cch_id = _xcache[_id]||_o,
@@ -299,7 +311,12 @@ NEJ.define([
      * @param  {String}      arg1 - 事件类型，不带on前缀，不区分大小写，多个事件用空格分隔
      * @return {Void}
      */
-    _p._$clearEvent = (function(){
+    /**
+     * @method CHAINABLE._$clearEvent
+     * @see module:base/event._$clearEvent
+     */
+    _p._$clearEvent = 
+    _y._$clearEvent = (function(){
         var _doClearEvent = function(_id,_name,_list){
             _u._$reverseEach(
                 _list,function(_item){
@@ -377,7 +394,12 @@ NEJ.define([
      * @param  {Object}      arg2 - 传递的参数信息
      * @return {Void}
      */
-    _p._$dispatchEvent = function(_element,_type,_options){
+    /**
+     * @method CHAINABLE._$dispatchEvent
+     * @see module:base/event._$dispatchEvent
+     */
+    _p._$dispatchEvent = 
+    _y._$dispatchEvent = function(_element,_type,_options){
         var _element = _e._$get(_element);
         if (!!_element){
             _u._$forEach(
@@ -735,13 +757,11 @@ NEJ.define([
         return _event.pageY!=null?_event.pageY:
                (_event.clientY+_e._$getPageBox().scrollTop);
     };
-
+    // for chainable method
+    _x._$merge(_y);
+    
     if (CMPT){
-        var _v = NEJ.P('nej.v'),
-            _x = NEJ.P('nej.x');
-        NEJ.copy(_v,_p);
-        NEJ.copy(_x,_p);
-        _x.isChange = !0;
+        NEJ.copy(NEJ.P('nej.v'),_p);
     }
 
     return _p;

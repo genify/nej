@@ -11,10 +11,12 @@ NEJ.define([
     './constant.js',
     './util.js',
     './event.js',
+    './chain.js',
     '{platform}element.js'
-],function(NEJ,_g,_u,_v,_h,_p,_o,_f,_r){
+],function(NEJ,_g,_u,_v,_x,_h,_p,_o,_f,_r){
     // variables
-    var _cspol, // css text pool
+    var _y = {},     // chainable methods
+        _cspol,      // css text pool
         _empol = {}, // elements without id property, eg. document,window
         _fragment = document.createDocumentFragment(); // node in memory
     // init
@@ -38,16 +40,21 @@ NEJ.define([
      *       var _id = _e._$id(_node||"abc");
      *   });
      * ```
-     *
+     * 
      * @method module:base/element._$id
      * @param  {String|Node} arg0 - 节点标识或者对象
      * @return {String}             节点标识
      */
-    _p._$id = function(_element){
+    /**
+     * @method CHAINABLE._$id
+     * @see module:base/element._$id
+     */
+    _p._$id = 
+    _y._$id = function(_element){
         _element = _p._$get(_element);
         if (!_element) return;
         var _id = !!_element.id ? _element.id
-                : 'auto-id-'+_u._$randString(16);
+                : 'auto-id-'+_u._$uniqueID();
         if (!('id' in _element)){
             _empol[_id] = _element;
         }
@@ -125,7 +132,12 @@ NEJ.define([
      * @param  {String}      arg1 - 样式标识
      * @return {Array}              子节点列表
      */
-    _p._$getChildren = function(_element,_clazz){
+    /**
+     * @method CHAINABLE._$getChildren
+     * @see module:base/element._$getChildren
+     */
+    _p._$getChildren = 
+    _y._$getChildren = function(_element,_clazz){
         _element = _p._$get(_element);
         if (!_element) return null;
         var _list = _h.__getChildren(_element);
@@ -167,7 +179,12 @@ NEJ.define([
      * @param  {String}      arg1 - 类名
      * @return {Array}              节点列表
      */
-    _p._$getByClassName = function(_element,_class){
+    /**
+     * @method CHAINABLE._$getByClassName
+     * @see module:base/element._$getByClassName
+     */
+    _p._$getByClassName = 
+    _y._$getByClassName = function(_element,_class){
         _element = _p._$get(_element);
         return !_element ? null :
                 _h.__getElementsByClassName(
@@ -219,7 +236,12 @@ NEJ.define([
      * @property {Function}        filter   - 节点过滤器，返回true表示需要返回的节点，找到第一个即返回
      * @return   {Node}                       符合条件的节点
      */
-    _p._$getSibling = (function(){
+    /**
+     * @method CHAINABLE._$getSibling
+     * @see module:base/element._$getSibling
+     */
+    _p._$getSibling = 
+    _y._$getSibling = (function(){
         var _doFilter = function(){
             return !0;
         };
@@ -461,7 +483,12 @@ NEJ.define([
      * @param  {Node|String} arg0 - 节点
      * @return {Void}
      */
-    _p._$scrollTo = function(_element){
+    /**
+     * @method CHAINABLE._$scrollTo
+     * @see module:base/element._$scrollTo
+     */
+    _p._$scrollTo = 
+    _y._$scrollTo = function(_element){
         var _offset = _p._$offset(_element);
         window.scrollTo(_offset.x,_offset.y);
     };
@@ -496,13 +523,13 @@ NEJ.define([
      *   });
      * ```
      *
-     * @method   module:base/element._$align
-     * @param    {module:base/element~SizeModel} arg0 - 容器大小
-     * @param    {module:base/element~SizeModel} arg1 - 原始大小
-     * @param    {String} arg2 - 对齐方式，水平+空格+垂直，如left top，默认为 center middle，
-     *                           水平：left/center/right，
-     *                           垂直：top/middle/bottom
-     * @return   {module:base/element~PositionModel} 位置信息
+     * @method module:base/element._$align
+     * @param  {module:base/element~SizeModel} arg0 - 容器大小
+     * @param  {module:base/element~SizeModel} arg1 - 原始大小
+     * @param  {String} arg2 - 对齐方式，水平+空格+垂直，如left top，默认为 center middle，
+     *                         水平：left/center/right，
+     *                         垂直：top/middle/bottom
+     * @return {module:base/element~PositionModel} 位置信息
      */
     _p._$align = (function(){
         var _reg = /\s+/;
@@ -562,7 +589,12 @@ NEJ.define([
      * @param  {String|Node} arg1 - 结束节点，没有该参数则计算到根节点
      * @return {Object}             偏移量，如{x:234,y:987}
      */
-    _p._$offset = (function(){
+    /**
+     * @method CHAINABLE._$offset
+     * @see module:base/element._$offset
+     */
+    _p._$offset = 
+    _y._$offset = (function(){
         var _isRoot = function(_element){
             return _element==document.body||
                    _element==document.documentElement;
@@ -615,7 +647,12 @@ NEJ.define([
      * @property {Number}        end   - 结束位置，没有end则表示与start相同
      * @return   {Object}                光标位置，{start:0,end:10}
      */
-    _p._$cursor = function(_textarea,_options){
+    /**
+     * @method CHAINABLE._$cursor
+     * @see module:base/element._$cursor
+     */
+    _p._$cursor = 
+    _y._$cursor = function(_textarea,_options){
         _textarea = _p._$get(_textarea);
         if (!_textarea){
             return {start:0,end:0};
@@ -644,7 +681,12 @@ NEJ.define([
      * @param  {Node} arg0 - 节点
      * @return {Void}
      */
-    _p._$fullScreen = function(_element){
+    /**
+     * @method CHAINABLE._$fullScreen
+     * @see module:base/element._$fullScreen
+     */
+    _p._$fullScreen = 
+    _y._$fullScreen = function(_element){
         _element = _p._$get(_element);
         if (!!_element){
             _h.__fullScreen(
@@ -661,7 +703,12 @@ NEJ.define([
      * @param  {Node} arg0 - 节点
      * @return {Node}        盖层节点
      */
-    _p._$mask = function(_element){
+    /**
+     * @method CHAINABLE._$mask
+     * @see module:base/element._$mask
+     */
+    _p._$mask = 
+    _y._$mask = function(_element){
         _element = _p._$get(_element);
         if (!!_element){
             _p._$id(_element);
@@ -677,7 +724,12 @@ NEJ.define([
      * @param  {Node} arg0 - 节点
      * @return {Node}        盖层节点
      */
-    _p._$unmask = function(_element){
+    /**
+     * @method CHAINABLE._$unmask
+     * @see module:base/element._$unmask
+     */
+    _p._$unmask = 
+    _y._$unmask = function(_element){
         _element = _p._$get(_element);
         if (!!_element){
             _p._$id(_element);
@@ -843,7 +895,12 @@ NEJ.define([
      * @param  {Boolean}     arg1 - 是否禁止事件清理
      * @return {Void}
      */
-    _p._$remove = (function(){
+    /**
+     * @method CHAINABLE._$remove
+     * @see module:base/element._$remove
+     */
+    _p._$remove = 
+    _y._$remove = (function(){
         var _fmap = {
             img:function(_node){
                 _node.src = _g._$BLANK_IMAGE;
@@ -908,7 +965,12 @@ NEJ.define([
      * @param  {String|Node} arg0 - 节点标识或者对象
      * @return {Void}
      */
-    _p._$removeByEC = function(_element){
+    /**
+     * @method CHAINABLE._$removeByEC
+     * @see module:base/element._$removeByEC
+     */
+    _p._$removeByEC = 
+    _y._$removeByEC = function(_element){
         _element = _p._$get(_element);
         if (!!_element){
             _fragment.appendChild(_element);
@@ -950,7 +1012,12 @@ NEJ.define([
      * @param  {String|Node} arg0 - 容器节点
      * @return {Void}
      */
-    _p._$clearChildren = function(_element){
+    /**
+     * @method CHAINABLE._$clearChildren
+     * @see module:base/element._$clearChildren
+     */
+    _p._$clearChildren = 
+    _y._$clearChildren = function(_element){
         _element = _p._$get(_element);
         if (!!_element){
             _u._$reverseEach(
@@ -1012,7 +1079,12 @@ NEJ.define([
      * @property {String}       clazz - 样式名称
      * @return   {Node}                 绝对定位的节点
      */
-    _p._$wrapInline = (function(){
+    /**
+     * @method CHAINABLE._$wrapInline
+     * @see module:base/element._$wrapInline
+     */
+    _p._$wrapInline = 
+    _y._$wrapInline = (function(){
         var _clazz,
             _reg0 = /\s+/;
         var _doInitStyle = function(){
@@ -1086,7 +1158,12 @@ NEJ.define([
      * @param  {String} arg1 - 数据值
      * @return {String}        数据值
      */
-    _p._$dataset = function(_element,_key,_value){
+    /**
+     * @method CHAINABLE._$dataset
+     * @see module:base/element._$dataset
+     */
+    _p._$dataset = 
+    _y._$dataset = function(_element,_key,_value){
         var _id = _p._$id(_element);
         return !_id ? null :
                 _h.__dataset(_element,_key,_value);
@@ -1120,7 +1197,12 @@ NEJ.define([
      * @param  {String}      arg2 - 属性值，如果没有设置此参数则表示取值
      * @return {String}             属性值
      */
-    _p._$attr = function(_element,_name,_value){
+    /**
+     * @method CHAINABLE._$attr
+     * @see module:base/element._$attr
+     */
+    _p._$attr = 
+    _y._$attr = function(_element,_name,_value){
         _element = _p._$get(_element);
         if (!_element){
             return '';
@@ -1200,7 +1282,12 @@ NEJ.define([
      * @param  {String|Node} arg0 - 节点
      * @return {String}             XML代码
      */
-    _p._$dom2xml = function(_element){
+    /**
+     * @method CHAINABLE._$dom2xml
+     * @see module:base/element._$dom2xml
+     */
+    _p._$dom2xml = 
+    _y._$dom2xml = function(_element){
         _element = _p._$get(_element);
         return !_element?'':_h.__serializeDOM2XML(_element);
     };
@@ -1257,7 +1344,12 @@ NEJ.define([
      * @param  {String|Node} arg0 - 节点
      * @return {Object}             转换完成的对象
      */
-     _p._$dom2object = function(_dom,_obj){
+    /**
+     * @method CHAINABLE._$dom2object
+     * @see module:base/element._$dom2object
+     */
+    _p._$dom2object = 
+    _y._$dom2object = function(_dom,_obj){
          _obj = _obj||{};
          _dom = _p._$get(_dom);
          if (!_dom) return _obj;
@@ -1380,7 +1472,12 @@ NEJ.define([
      * @param  {Object}      arg1 - 样式信息{color:'red',width:'100px'}
      * @return {Void}
      */
-    _p._$style = function(_element,_map){
+    /**
+     * @method CHAINABLE._$style
+     * @see module:base/element._$style
+     */
+    _p._$style = 
+    _y._$style = function(_element,_map){
         _element = _p._$get(_element);
         if (!!_element){
             _u._$forIn(_map,function(_value,_name){
@@ -1417,7 +1514,12 @@ NEJ.define([
      * @param  {String}      arg2 - 样式值
      * @return {Void}
      */
-    _p._$setStyle = function(_element,_name,_value){
+    /**
+     * @method CHAINABLE._$setStyle
+     * @see module:base/element._$setStyle
+     */
+    _p._$setStyle = 
+    _y._$setStyle = function(_element,_name,_value){
         _element = _p._$get(_element);
         if (!!_element){
             _h.__setStyleValue(
@@ -1450,7 +1552,12 @@ NEJ.define([
      * @param  {String}      arg1 - 样式名称
      * @return {String}             样式值
      */
-    _p._$getStyle = function(_element,_name){
+    /**
+     * @method CHAINABLE._$getStyle
+     * @see module:base/element._$getStyle
+     */
+    _p._$getStyle = 
+    _y._$getStyle = function(_element,_name){
         _element = _p._$get(_element);
         return !_element ? '' :
                 _h.__getStyleValue(
@@ -1668,7 +1775,12 @@ NEJ.define([
      * @param  {String} arg1 - 单条样式规则
      * @return {CSSRule}       样式规则对象
      */
-    _p._$appendCSSText = function(_element,_css){
+    /**
+     * @method CHAINABLE._$appendCSSText
+     * @see module:base/element._$appendCSSText
+     */
+    _p._$appendCSSText = 
+    _y._$appendCSSText = function(_element,_css){
         _element = _p._$get(_element);
         return !_element ? null :
                 _h.__appendCSSText(
@@ -1706,7 +1818,12 @@ NEJ.define([
      * @param  {String}      arg1 - 要新增的样式类名称
      * @return {Void}
      */
-    _p._$addClassName = function(_element,_class){
+    /**
+     * @method CHAINABLE._$addClassName
+     * @see module:base/element._$addClassName
+     */
+    _p._$addClassName = 
+    _y._$addClassName = function(_element,_class){
         _element = _e._$get(_element);
         if (!!_element){
             _h.__processClassName(
@@ -1744,7 +1861,12 @@ NEJ.define([
      * @param  {String}      arg1 - 要删除的样式类名称
      * @return {Void}
      */
-    _p._$delClassName = function(_element,_class){
+    /**
+     * @method CHAINABLE._$delClassName
+     * @see module:base/element._$delClassName
+     */
+    _p._$delClassName = 
+    _y._$delClassName = function(_element,_class){
         _element = _e._$get(_element);
         if (!!_element){
             _h.__processClassName(
@@ -1785,7 +1907,12 @@ NEJ.define([
      * @param  {String}      arg2 - 要新增的样式类名称
      * @return {Void}
      */
-    _p._$replaceClassName = function(_element,_del,_add){
+    /**
+     * @method CHAINABLE._$replaceClassName
+     * @see module:base/element._$replaceClassName
+     */
+    _p._$replaceClassName = 
+    _y._$replaceClassName = function(_element,_del,_add){
         _element = _e._$get(_element);
         if (!!_element){
             _h.__processClassName(
@@ -1817,7 +1944,12 @@ NEJ.define([
      * @param  {String}      arg1 - 样式串
      * @return {Boolean}            是否含指定样式
      */
-    _p._$hasClassName = function(_element,_class){
+    /**
+     * @method CHAINABLE._$hasClassName
+     * @see module:base/element._$hasClassName
+     */
+    _p._$hasClassName = 
+    _y._$hasClassName = function(_element,_class){
         _element = _e._$get(_element);
         if (!!_element){
             return _h.__hasClassName(_element,_class);
@@ -1874,7 +2006,12 @@ NEJ.define([
      * @param  {Object}      arg2 - 变换值，{x:1,y:2,z:3,a:'30deg'}
      * @return {Void}
      */
-    _p._$css3d = function(_element,_name,_map){
+    /**
+     * @method CHAINABLE._$css3d
+     * @see module:base/element._$css3d
+     */
+    _p._$css3d = 
+    _y._$css3d = function(_element,_name,_map){
         _element = _p._$get(_element);
         if (!!_element){
             var _value = _h.__processTransformValue(_name,_map);
@@ -1883,13 +2020,11 @@ NEJ.define([
             }
         }
     };
-
+    // for chainable
+    _x._$merge(_y);
+    
     if (CMPT){
-        var _e = NEJ.P('nej.e'),
-            _x = NEJ.P('nej.x');
-        NEJ.copy(_e,_p);
-        NEJ.copy(_x,_p);
-        _x.isChange = !0;
+        NEJ.copy(NEJ.P('nej.e'),_p);
     }
 
     return _p;
