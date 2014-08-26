@@ -57,6 +57,10 @@ NEJ.define([
      *                                    form - 文件选择控件封装表单对象，
      *                                    id   - 当前变化的文件选择控件的ID
      */
+    /**
+     * @method CHAINABLE._$bind
+     * @see module:util/file/select._$bind
+     */
     _p._$bind = (function(){
         // init cache
         var _doInitCache = function(_id){
@@ -159,7 +163,7 @@ NEJ.define([
     })();
     /**
      * 根据ID取选中文件的form表单
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -169,7 +173,7 @@ NEJ.define([
      *     var _form = _e._$get(_id);
      * });
      * ```
-     * 
+     *
      * @method module:util/file/select._$get
      * @see    module:util/file/select._$file
      * @param  {String} arg0 - 标识
@@ -187,7 +191,7 @@ NEJ.define([
     };
     /**
      * 根据ID删除选中文件的form表单
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -197,7 +201,7 @@ NEJ.define([
      *     _e._$unbind(_id);
      * });
      * ```
-     * 
+     *
      * @method module:util/file/select._$unbind
      * @see    module:util/file/select._$file
      * @param  {String} arg0 - 标识
@@ -210,6 +214,8 @@ NEJ.define([
             delete _cache[_id];
         }
     };
+    // for chainable method
+    _x._$merge({_$bind,_p._$bind});
 
     if (CMPT){
         var _x = NEJ.P('nej.e');

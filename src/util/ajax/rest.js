@@ -16,7 +16,7 @@ NEJ.define([
 ],function(NEJ,_v,_u,_g,_j,_t,_p,_o,_f,_r){
     /**
      * 使用REST进行数据交互接口
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -32,7 +32,7 @@ NEJ.define([
      *             // 通过设置_error.stopped阻止事件回调到请求的onerror中
      *         }
      *     );
-     * 
+     *
      *     var url = "http://a.b.com/rest/list";
      *     var opt = {
      *          param:{brand:'nokia',model:'9'},
@@ -55,7 +55,7 @@ NEJ.define([
      *     _j._$request(url,opt);
      * });
      * ```
-     * 
+     *
      * @method module:util/ajax/rest._$request
      * @param    {String}  arg0 - 请求地址
      * @param    {Object}  arg1 - 可选配置参数
@@ -70,7 +70,7 @@ NEJ.define([
      * @property {module:util/ajax/xdr.onload} onload   - 请求载入成功回调
      * @property {module:util/ajax/xdr.onerror} onerror - 请求载入失败回调
      * @property {module:util/ajax/xdr.onbeforerequest} onbeforerequest - 发起请求之前回调
-     * 
+     *
      * @return   {Void}
      */
     _p._$request = (function(){
@@ -153,7 +153,7 @@ NEJ.define([
                 if (_value!=null) _exist[$2] = !0;
                 return encodeURIComponent(_value||'')||$1;
             });
-            // parse remain param 
+            // parse remain param
             var _data = _options.data||{};
             _u._$forIn(
                 _param,function(_value,_key){
@@ -196,9 +196,9 @@ NEJ.define([
             _j._$request(_url,_options);
         };
     })();
-    /** 
+    /**
      * 通用载入出错回调函数，所有REST请求的异常均会进入此事件的回调逻辑中
-     * 
+     *
      * @event    external:window.onresterror
      * @param    {Object}   event   - 错误信息
      * @property {Number}   code    - 错误代码
@@ -210,10 +210,10 @@ NEJ.define([
         element:window,
         event:'resterror'
     });
-    
+
     if (CMPT){
         NEJ.P('nej.j')._$requestByREST = _p._$request;
     }
-    
+
     return _p;
 });

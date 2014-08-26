@@ -146,11 +146,11 @@ NEJ.define([
         };
     })();
     // for chainable method
-    _x._$merge({_$toggle:_p._$toggle});
-    
+    _x._$merge(_p);
+
     if (CMPT){
         NEJ.copy(NEJ.P('nej.e'),_p);
     }
-    
+
     return _p;
 });

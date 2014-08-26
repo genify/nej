@@ -40,7 +40,7 @@ NEJ.define([
      *     _audio._$stop();
      * });
      * ```
-     * 
+     *
      * @method module:util/audio/audio._$audio
      * @param  {Object} arg0 - 配置信息
      * @return {module:util/media/media._$$Media} 音频播放器实例
@@ -59,7 +59,7 @@ NEJ.define([
      * | 1 | 当前缓冲状态 |
      * | 2 | 当前播放状态 |
      * | 3 | 当前暂停状态 |
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -87,7 +87,7 @@ NEJ.define([
      *     _e._$stop('test-audio');
      * });
      * ```
-     * 
+     *
      * @method   module:util/audio/audio._$play
      * @param    {String}   arg0          - 音频文件地址
      * @param    {Object}   arg1          - 可选配置参数

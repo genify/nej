@@ -23,8 +23,8 @@ NEJ.define([
     // variable declaration
     var _pro,
         _seed_ui    = _t1._$parseUITemplate(_html),
-        _seed_html  = _seed_ui['_seed_html'],
-        _seed_ilist = _seed_ui['_seed_ilist'];
+        _seed_html  = _seed_ui['seedHtml'],
+        _seed_ilist = _seed_ui['seedIlist'];
     /**
      * 表情控件
      *

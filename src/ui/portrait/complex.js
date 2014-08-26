@@ -25,8 +25,8 @@ NEJ.define([
     var _pro,
         _seed_css  = _e._$pushCSSText(_css,{portrait:_c._$get('portrait')}),
         _seed_ui   = _t0._$parseUITemplate(_html),
-        _seed_html = _seed_ui['_seed_html'],
-        _seed_ilist= _seed_ui['_seed_ilist'];
+        _seed_html = _seed_ui['seedHtml'],
+        _seed_ilist= _seed_ui['seedIlist'];
     /**
      * 复杂表情控件
      *

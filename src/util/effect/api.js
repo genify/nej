@@ -11,8 +11,9 @@ NEJ.define([
     'base/event',
     'base/util',
     '{platform}effect.api.js',
-    'util/effect/effect'
-],function(_e,_v,_u,_h,_t0,_p,_o,_f,_r) {
+    'util/effect/effect',
+    'base/chain'
+],function(_e,_v,_u,_h,_t0,_x,_p,_o,_f,_r) {
     /**
      * 初始化特效参数
      *
@@ -142,7 +143,7 @@ NEJ.define([
      * });
      * ```
      *
-     * @method   module:util/effect/api#_$fadeIn
+     * @method   module:util/effect/api._$fadeIn
      * @param    {Node|String} arg0 - 节点或者节点ID
      *
      * @param    {Object} arg1  - 配置参数
@@ -151,6 +152,10 @@ NEJ.define([
      * @property {Number} delay    - 延迟时间
      * @property {String} duration - 运动时间
      * @return   {Void}
+     */
+    /**
+     * @method CHAINABLE._$fadeIn
+     * @see module:util/effect/api._$fadeIn
      */
     _p._$fadeIn = function(_node,_options){
         return _p.__doFade(_node,_options,1);
@@ -181,7 +186,7 @@ NEJ.define([
      * });
      * ```
      *
-     * @method    module:util/effect/api#_$fadeOut
+     * @method    module:util/effect/api._$fadeOut
      * @param  {Node|String} arg0 - 节点或者节点ID
      *
      * @param  {Object}   arg1 	   - 配置参数
@@ -190,6 +195,10 @@ NEJ.define([
      * @property {Number} delay    - 延迟时间
      * @property {String} duration - 运动时间
      * @return {Void}
+     */
+    /**
+     * @method CHAINABLE._$fadeOut
+     * @see module:util/effect/api._$fadeOut
      */
     _p._$fadeOut = function(_node,_options){
         return _p.__doFade(_node,_options,0);
@@ -212,6 +221,10 @@ NEJ.define([
      * @param  {Node|String} arg0 - 节点或者节点ID
      * @return {Void}
      */
+    /**
+     * @method CHAINABLE._$fadeStop
+     * @see module:util/effect/api._$fadeStop
+     */
     _p._$fadeStop = function(_node){
         _p._$stopEffect(_node);
     };
@@ -232,6 +245,10 @@ NEJ.define([
      *
      * @param  {Node|String} arg0 - 节点或者节点ID
      * @return {Void}
+     */
+    /**
+     * @method CHAINABLE._$stopEffect
+     * @see module:util/effect/api._$stopEffect
      */
     _p._$stopEffect = function(_node){
         _node = _e._$get(_node);
@@ -264,7 +281,7 @@ NEJ.define([
      * });
      * ```
      *
-     * @method   module:util/effect/api#_$moveTo
+     * @method   module:util/effect/api._$moveTo
      * @param    {Node|String} arg0 - 节点或者节点ID
      *
      * @param    {Object} arg1 	    - 配置参数
@@ -274,6 +291,10 @@ NEJ.define([
      * @property {Number} delay     - 延迟时间
      * @property {String} duration  - 运动时间
      * @return {Void}
+     */
+    /**
+     * @method CHAINABLE._$moveTo
+     * @see module:util/effect/api._$moveTo
      */
     _p._$moveTo = function(_node,_position,_options){
         _node = _e._$get(_node);
@@ -336,7 +357,7 @@ NEJ.define([
      * });
      * ```
      *
-     * @method   module:util/effect/api#_$slide
+     * @method   module:util/effect/api._$slide
      * @param    {Node|String} arg0 - 节点或者节点ID
      *
      * @param    {String} arg1     - 滑动的方向
@@ -347,37 +368,39 @@ NEJ.define([
      * @property {String} duration - 运动时间
      * @return {Void}
      */
-    _p._$slide = (function(){
-        return function(_node,_position,_options){
-            _node = _e._$get(_node);
-            if (!!_node.effect) return !1;
-            _options = _p.__initOptions(_options);
-            var _list  = _position.split(':'),
-                _pro0  = _list[0],
-                _styles= [];
-            _styles.push(_position);
-            _node.effect = _t0._$$Effect._$allocate(
-                {
-                    node:_node,
-                    transition:[
-                        {
-                            property:_pro0,
-                            timing:_options.timing||'ease-in',
-                            delay:_options.delay||0,
-                            duration:_options.duration||1
-                        }
-                    ],
-                    styles:_styles,
-                    onstop:function(_state,_flag){
-                        _node.effect = _t0._$$Effect._$recycle(_node.effect);
-                        _options.onstop.call(null,_state,_flag);
-                    },
-                    onplaystate:_options.onplaystate._$bind(_node.effect)
-                }
-            );
-            _node.effect._$start();
-        };
-    })();
+    /**
+     * @method CHAINABLE._$slide
+     * @see module:util/effect/api._$slide
+     */
+    _p._$slide = function(_node,_position,_options){
+        _node = _e._$get(_node);
+        if (!!_node.effect) return !1;
+        _options = _p.__initOptions(_options);
+        var _list  = _position.split(':'),
+            _pro0  = _list[0],
+            _styles= [];
+        _styles.push(_position);
+        _node.effect = _t0._$$Effect._$allocate(
+            {
+                node:_node,
+                transition:[
+                    {
+                        property:_pro0,
+                        timing:_options.timing||'ease-in',
+                        delay:_options.delay||0,
+                        duration:_options.duration||1
+                    }
+                ],
+                styles:_styles,
+                onstop:function(_state,_flag){
+                    _node.effect = _t0._$$Effect._$recycle(_node.effect);
+                    _options.onstop.call(null,_state,_flag);
+                },
+                onplaystate:_options.onplaystate._$bind(_node.effect)
+            }
+        );
+        _node.effect._$start();
+    };
 
     /**
      * toggle效果
@@ -399,7 +422,7 @@ NEJ.define([
      * });
      * ```
      *
-     * @method   module:util/effect/api#_$toggle
+     * @method   module:util/effect/api._$toggle
      * @param    {Node|String} arg0 - 节点或者节点ID
      *
      * @param    {String} arg1     - 需要改变的属性，height或width
@@ -410,6 +433,10 @@ NEJ.define([
      * @property {Number} delay    - 延迟时间
      * @property {String} duration - 运动时间
      * @return {Void}
+     */
+    /**
+     * @method CHAINABLE._$toggleEffect
+     * @see module:util/effect/api._$toggleEffect
      */
     _p._$toggleEffect = (function(){
         var _doCheck = function(_node,_type){
@@ -478,6 +505,8 @@ NEJ.define([
             var _sto = window.setTimeout(function(){_node.effect._$start();}._$bind(this),0);
         };
     })();
+    // for chainable method
+    _x._$merge(_p);
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.e'),_p);

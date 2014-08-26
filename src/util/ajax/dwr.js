@@ -18,7 +18,7 @@ NEJ.define([
         _doFilter = _f,   // 全局异常过滤器
         _xcache   = {},   // 请求缓存
         _cname    = 'JSESSIONID',
-        _xbatch   = null; // 请求临时构造对象，范例 
+        _xbatch   = null; // 请求临时构造对象，范例
                           // {h:{0:{c:function(){},   // callback
                           //        e:function(){}}}, // exception
                           //  p:1,                    // param number
@@ -28,7 +28,7 @@ NEJ.define([
                           //  m:{}}                   // send data
     /**
      * 设置全局异常过滤器
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -38,18 +38,18 @@ NEJ.define([
      *     _j._$setFilter(function(_event){
      *         // _event.code
      *         // _event.message
-     *         
+     *
      *         return _event.code == 401;
      *     });
      * });
      * ```
-     * 
+     *
      * @method module:util/ajax/dwr._$setFilter
      * @param  {Function}  arg0 - 过滤器,过滤器返回值
      *
      * * true  - 不继续执行后续错误处理接口
      * * false - 继续执行后续错误处理接口
-     * 
+     *
      * @return {Void}
      */
     _p._$setFilter = function(_filter){
@@ -82,7 +82,7 @@ NEJ.define([
      *     );
      * });
      * ```
-     * 
+     *
      * @method module:util/ajax/dwr._$setCookieName
      * @param  {String} arg0 - cookie名称
      * @return {Void}
@@ -92,7 +92,7 @@ NEJ.define([
     };
     /**
      * 设置请求标识
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -102,7 +102,7 @@ NEJ.define([
      *     _j._$setBatchId('batchId-12345');
      * });
      * ```
-     * 
+     *
      * @method module:util/ajax/dwr._$setBatchId
      * @param  {String} arg0 - 请求标识
      * @return {Void}
@@ -112,7 +112,7 @@ NEJ.define([
     };
     /**
      * 开始批处理请求<br/>
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -147,7 +147,7 @@ NEJ.define([
      *     _j._$end();
      * });
      * ```
-     * 
+     *
      * @method module:util/ajax/dwr._$begin
      * @see    module:util/ajax/dwr._$end
      * @return {Void}
@@ -174,7 +174,7 @@ NEJ.define([
     };
     /**
      * 使用DWR方式载入数据
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -197,7 +197,7 @@ NEJ.define([
      *     );
      * });
      * ```
-     * 
+     *
      * @method   module:util/ajax/dwr._$request
      * @param    {String}  arg0    - 请求地址,格式为class.method
      * @param    {Object}  arg1    - 可选配置参数
@@ -211,11 +211,11 @@ NEJ.define([
      * @property {Number}  timeout - 请求超时时间
      * @property {Object}  headers - 头信息,批处理请求合并所有头信息,同名的头信息后面请求覆盖前面请求
      * @property {String}  session - CSRF验证的COOKIE名称
-     *  
+     *
      * @property {module:util/ajax/xdr.onload}          onload  - 数据载入回调
      * @property {module:util/ajax/xdr.onerror}         onerror - 请求异常回调
      * @property {module:util/ajax/xdr.onbeforerequest} onbeforerequest - 请求之前回调
-     * 
+     *
      * @return   {Void}
      */
     _p._$request = function(_url,_options){
@@ -261,7 +261,7 @@ NEJ.define([
     };
     /**
      * 结束请求批处理，正式发送请求
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -296,7 +296,7 @@ NEJ.define([
      *     _j._$end();
      * });
      * ```
-     * 
+     *
      * @method module:util/ajax/dwr._$end
      * @see    module:util/ajax/dwr._$begin
      * @return {Void}
@@ -552,7 +552,7 @@ NEJ.define([
         handleException:w['_remoteHandleException'],
         handleBatchException:w['_remoteHandleBatchException']
     }];
-    
+
     if (CMPT){
         var _j = NEJ.P('nej.j');
         _j._$endBatch      = _p._$end;
@@ -562,6 +562,6 @@ NEJ.define([
         _j._$setBatchId    = _p._$setBatchId;
         _j._$setCookieName = _p._$setCookieName;
     }
-    
+
     return _p;
 });

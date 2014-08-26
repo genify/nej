@@ -934,10 +934,10 @@
      *  * 路径以 ./ 或者 ../ 开始的相对路径则相对于当前脚本文件的路径，如 ./util.js
      *
      * ```javascript
-     * // 依赖{lib}base/global.js和{lib}base/util.js
+     * // 依赖base/global和base/util
      * NEJ.define([
-     *    '{lib}base/global.js',
-     *    '{lib}base/util.js'
+     *    'base/global',
+     *    'base/util'
      * ],function(NEJ,u,p,o,f,r){
      *     // u - {lib}base/util.js文件返回的api集合
      *     // p - 允许外界调用的类或者API均定义在p空间下
@@ -963,7 +963,7 @@
      *
      * ```javascript
      * // 仅用于引入依赖文件列表而不执行业务逻辑
-     * NEJ.define(['{lib}base/global.js']);
+     * NEJ.define(['base/global']);
      * ```
      *
      * @method NEJ.define

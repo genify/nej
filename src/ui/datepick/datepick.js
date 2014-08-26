@@ -22,8 +22,8 @@ NEJ.define([
         _seed_html,
         _seed_css = _e._$pushCSSText(_css),
         _seed_ui = _t1._$parseUITemplate(_html),
-        _seed_date = _seed_ui['_seed_date'],
-        _seed_action = _seed_ui['_seed_action'];
+        _seed_date = _seed_ui['seedDate'],
+        _seed_action = _seed_ui['seedAction'];
     /**
      * 日期选择控件
      *

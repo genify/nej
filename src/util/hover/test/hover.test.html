@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>hover测试页</title>
+  		<link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.14.0.css" type="text/css" media="screen" />
+        <script type="text/javascript" src="http://code.jquery.com/qunit/qunit-1.14.0.js"></script>
+        <style>
+        	#box input:hover,#box div:hover,#box p:hover,#box textarea:hover,#box select:hover,#box a:hover{background:red;}
+        	.js-hover{background:green;}
+        </style>
+	</head>
+	<body>
+		<h1 id="qunit-header">Qunit hover test</h1>
+		<h2 id="qunit-banner"></h2>
+		<div id="qunit-testrunner-toolbar"></div>
+		<h2 id="qunit-userAgent"></h2>
+		<ol id="qunit-tests"></ol>
+ 		<div id="qunit-fixture"></div>
+ 		<div id="box">
+ 			<input type='text' value='text' />
+ 			<input type='redio' />
+ 			<input type='password' value='text' />
+ 			<input type='checkbox' />
+ 			<textarea>textarea</textarea>
+ 			<div>div</div>
+ 			<a>a</a>
+ 			<p>p</p>
+ 			<select>
+ 				<option>1</option>
+ 				<option>2</option>
+ 			</select>
+ 			<code>
+ 				javascript
+ 			</code>
+ 		</div>
+		<script src="../../../define.js?pro=./"></script>
+        <script type="text/javascript" src="./hover.test.js"></script>
+	</body>
+</html>
