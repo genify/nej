@@ -9,8 +9,9 @@
 NEJ.define([
     'base/global',
     'base/element',
-    '{platform}hover.js'
-],function(NEJ,_e,_h,_p,_o,_f,_r){
+    '{platform}hover.js',
+    'base/chain'
+],function(NEJ,_e,_h,_x,_p,_o,_f,_r){
     /**
      * 节点hover行为，高版本浏览器用:hover样式处理
      *
@@ -44,6 +45,10 @@ NEJ.define([
      * @param  {String}      arg1 - 样式，默认为js-hover
      * @return {Void}
      */
+    /**
+     * @method CHAINABLE._$hover
+     * @see module:util/hover/hover._$hover
+     */
     _p._$hover = function(_element,_clazz){
         _element = _e._$get(_element);
         if (!!_element){
@@ -55,10 +60,12 @@ NEJ.define([
             );
         }
     };
-    
+     // for chainable method
+    _x._$merge(_p);
+
     if (CMPT){
         NEJ.copy(NEJ.P('nej.e'),_p);
     }
-    
+
     return _p;
 });

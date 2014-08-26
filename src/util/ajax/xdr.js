@@ -13,35 +13,35 @@ NEJ.define([
     'base/element',
     './proxy/xhr.js',
     '{platform}xdr.js'
-],function(NEJ,_g,_u,_e,_t,_h,_p,_o,_f,_r){
-    /** 
+],function(NEJ,_g,_u,_e,_t,_h,_x,_p,_o,_f,_r){
+    /**
      * 载入回调
-     * 
+     *
      * @callback module:util/ajax/xdr.onload
      * @param    {Variable|Object} event - 请求返回数据，根据请求时type指定格式返回，
      *                                     如果请求时指定了result参数，则此处输入为包含额外信息的对象，
      *                                     数据结果从此对象的data属性中取，如{headers:{'x-res-0':'12345', ...},data:{a:'aaa', ...}}
      */
-    /** 
+    /**
      * 出错回调
-     * 
+     *
      * @callback module:util/ajax/xdr.onerror
      * @param    {Object}   event   - 错误信息
      * @property {Number}   code    - 错误代码
      * @property {String}   message - 错误描述
      * @property {Variable} data    - 出错时携带数据
      */
-    /** 
+    /**
      * 请求之前对数据处理回调
-     * 
+     *
      * @callback module:util/ajax/xdr.onbeforerequest
      * @param    {Object} event   - 请求信息
      * @property {Object} request - 请求参数，数据信息 url/sync/cookie/type/method/timeout
      * @property {Object} headers - 请求头信息
      */
-    /** 
+    /**
      * 上传进度回调
-     * 
+     *
      * @callback module:util/ajax/xdr.onuploading
      * @param    {Object} event  - 进度信息
      * @property {Number} loaded - 载入数量
@@ -52,7 +52,7 @@ NEJ.define([
         _doFilter = _f;
     /**
      * 中断请求
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -80,7 +80,7 @@ NEJ.define([
      *     );
      * });
      * ```
-     * 
+     *
      * @method module:util/ajax/xdr._$abort
      * @param  {String} arg0 - 请求标识
      * @return {Void}
@@ -93,7 +93,7 @@ NEJ.define([
     };
     /**
      * 全局请求过滤器，过滤器中可以通过设置输入事件对象的stopped值阻止继续回调
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -103,7 +103,7 @@ NEJ.define([
      *         // _event.type     请求过滤类型
      *         // _event.result   请求结果
      *         // _event.stopped  是否阻止后续逻辑
-     *         
+     *
      *         // 过滤掉404的异常，如果type是onload不做处理
      *         if (_event.type == 'onerror'){
      *             if (_event.result.data == 404){
@@ -125,7 +125,7 @@ NEJ.define([
      *     });
      * });
      * ```
-     * 
+     *
      * @method module:util/ajax/xdr._$filter
      * @param  {Function} arg0 - 过滤器
      * @return {Void}
@@ -135,7 +135,7 @@ NEJ.define([
     };
     /**
      * 发送ajax请求
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -163,7 +163,7 @@ NEJ.define([
      *     );
      * });
      * ```
-     * 
+     *
      * @method   module:util/ajax/xdr._$request
      * @param    {String}   arg0    - 请求地址
      * @param    {Object}   arg1    - 配置参数
@@ -176,20 +176,20 @@ NEJ.define([
      * @property {Object}   headers - 头信息表
      * @property {Boolean}  cookie  - 跨域请求是否带cookie，仅对CORS方式有效
      * @property {Number}   mode    - 请求模式,针对跨域请求采用的请求方式
-     * 
+     *
      * * 0 - 自动模式，高版本使用HTML5的CORS协议，低版本采用Frame代理方式
      * * 1 - 高版本使用HTML5的CORS协议，低版本采用Flash代理方式
      * * 2 - 全部使用Frame代理方式
      * * 3 - 全部使用Flash代理方式
-     *                             
+     *
      * @property {Object}   result  - onload回调输入时需包含的额外信息，已处理额外数据
-     * 
+     *
      * * headers - 服务器返回头信息，如{headers:'x-res-0'}或者{headers:['x-res-0','x-res-1']}
-     * 
+     *
      * @property {module:util/ajax/xdr.onload}          onload  - 数据载入回调
      * @property {module:util/ajax/xdr.onerror}         onerror - 请求异常回调
      * @property {module:util/ajax/xdr.onbeforerequest} onbeforerequest - 请求之前回调
-     * 
+     *
      * @return   {String} 分配给请求的ID
      */
     _p._$request = (function(){
@@ -293,7 +293,7 @@ NEJ.define([
     })();
     /**
      * 文件上传
-     * 
+     *
      * 结构举例
      * ```html
      * <form id="upload" name="upload" action="http://123.163.com:3000/xhr/uploadCallback">
@@ -302,7 +302,7 @@ NEJ.define([
      *    <input type="hidden" name="nej_query" value="http://123.163.com:3000/xhr/progress" />
      * </form>
      * ```
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -326,7 +326,7 @@ NEJ.define([
      *     });
      * });
      * ```
-     * 
+     *
      * @method   module:util/ajax/xdr._$upload
      * @see      module:util/ajax/xdr._$request
      * @param    {HTMLFormElement}  arg0    - 表单对象，待上传的文件及目标地址信息封装在此对象中
@@ -336,12 +336,12 @@ NEJ.define([
      * @property {Number}           mode    - 跨域类型，0/2，见_$request接口说明
      * @property {Object}           headers - 头信息
      * @property {Boolean}          cookie  - 跨域请求是否带cookie，仅对CORS方式有效
-     * 
+     *
      * @property {module:util/ajax/xdr.onload}          onload  - 数据载入回调
      * @property {module:util/ajax/xdr.onerror}         onerror - 请求异常回调
      * @property {module:util/ajax/xdr.onuploading}     onuploading     - 上传进度回调
      * @property {module:util/ajax/xdr.onbeforerequest} onbeforerequest - 请求之前回调
-     * 
+     *
      * @return   {String}                     分配给请求的ID
      */
     _p._$upload = function(_form,_options){
@@ -364,14 +364,14 @@ NEJ.define([
         _option.data = _form;
         _option.method = 'POST';
         _option.timeout = 0;
-        _option.headers[_g._$HEAD_CT] = 
+        _option.headers[_g._$HEAD_CT] =
                         _g._$HEAD_CT_FILE;
         return _p._$request(_form.action,_option);
     };
-    
+
     if (CMPT){
         NEJ.copy(NEJ.P('nej.j'),_p);
     }
-    
+
     return _p;
 });

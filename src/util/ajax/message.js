@@ -14,13 +14,13 @@ NEJ.define([
 ],function(NEJ,_u,_e,_h,_p,_o,_f,_r){
     /**
      * 发送跨文档的消息
-     * 
+     *
      * 结构举例
      * ```html
      * <!-- 注意需要通过source进行双向交互的frame节点必须设置id属性作为标识 -->
      * <iframe id="targetFrame" src="http://a.b.com/a.html"></iframe>
      * ```
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -33,7 +33,7 @@ NEJ.define([
      *         data:'hello c.d.com',
      *         origin:'http://c.d.com'
      *     });
-     * 
+     *
      *     // http://a.b.com/a.html页面代码
      *     // 添加消息监测事件
      *     _v._$addEvent(
@@ -42,13 +42,13 @@ NEJ.define([
      *             // 所以在http://a.b.com页面不会收到任何消息
      *         }
      *     );
-     * 
+     *
      *     // top页面代码
      *     // 发送消息至 http://a.b.com 的页面
      *     _j._$postMessage('targetFrame',{
      *         data:'hello a.b.com'
      *     });
-     * 
+     *
      *     // http://a.b.com/a.html页面代码
      *     // 添加消息监测事件
      *     _v._$addEvent(
@@ -56,10 +56,10 @@ NEJ.define([
      *             // 必须先验证消息来源_event.origin是否你允许的域
      *              if (!_isAllow(_event.origin))
      *                 return;
-     *             
+     *
      *             // 处理_event.data中的消息内容
      *             // TODO something
-     *         
+     *
      *             // 回复消息，使用_event.source
      *             _j._$postMessage(_event.source,{
      *                 data:'hello!',
@@ -69,7 +69,7 @@ NEJ.define([
      *     );
      * });
      * ```
-     * 
+     *
      * @method module:util/ajax/message._$postMessage
      * @param  {String|Window} arg0   - window对象或者Frame的name，或者字符串如_top、_parent、_self
      * @param  {Object}        arg1   - 消息配置
@@ -101,10 +101,10 @@ NEJ.define([
             _h.__postMessage(_target,_data);
         };
     })();
-    
+
     if (CMPT){
         NEJ.copy(NEJ.P('nej.j'),_p);
     }
-    
+
     return _p;
 });

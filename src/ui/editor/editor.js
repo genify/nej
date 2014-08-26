@@ -24,9 +24,9 @@ NEJ.define([
 ],function(NEJ,_k,_c,_e,_v,_u,_i,_t0,_t1,_t2,_t3,_t4,_css,_html,_p,_o,_f,_r){
     var _seed_css,
         _seed_ui = _t4._$parseUITemplate(_html),
-        _seed_icmd = _seed_ui['_seed_icmd'],
-        _seed_ifnt = _seed_ui['_seed_ifnt'],
-        _seed_iedt = _seed_ui['_seed_iedt'],
+        _seed_icmd = _seed_ui['seedIcmd'],
+        _seed_ifnt = _seed_ui['seedIfnt'],
+        _seed_iedt = _seed_ui['seedIedt'],
         _pro;
     /**
      * 富媒体编辑器基类封装

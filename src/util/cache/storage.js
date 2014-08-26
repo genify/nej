@@ -16,7 +16,7 @@ NEJ.define([
     var _cache = {}; // dirty flag
     /**
      * 存储数据
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -28,7 +28,7 @@ NEJ.define([
      *     var _data = _j._$getDataInStorage('name');
      * });
      * ```
-     * 
+     *
      * @method module:util/cache/storage._$setDataInStorage
      * @see    module:util/cache/storage._$getDataInStorage
      * @param  {String}   arg0 - 存储键值
@@ -50,7 +50,7 @@ NEJ.define([
     };
     /**
      * 取存储数据
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -62,7 +62,7 @@ NEJ.define([
      *     var _data = _j._$getDataInStorage('name');
      * });
      * ```
-     * 
+     *
      * @method module:util/cache/storage._$getDataInStorage
      * @see    module:util/cache/storage._$setDataInStorage
      * @param  {String}   arg0 - 存储键值
@@ -76,7 +76,7 @@ NEJ.define([
     };
     /**
      * 取存储数据，如果指定的数据不存在则使用默认数据初始化
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -86,7 +86,7 @@ NEJ.define([
      *     var _data = _j._$getDataInStorageWithDefault('name','jack');
      * });
      * ```
-     * 
+     *
      * @method module:util/cache/storage._$getDataInStorageWithDefault
      * @see    module:util/cache/storage._$setDataInStorage
      * @see    module:util/cache/storage._$getDataInStorage
@@ -104,7 +104,7 @@ NEJ.define([
     };
     /**
      * 删除本地存储数据
-     * 
+     *
      * 脚本举例
      * ```javascript
      *   NEJ.define([
@@ -115,7 +115,7 @@ NEJ.define([
      *       _j._$delDataInStorage('name');
      *   });
      * ```
-     * 
+     *
      * @method module:util/cache/storage._$delDataInStorage
      * @param  {String} arg0 - 存储键值
      * @return {Void}
@@ -126,7 +126,7 @@ NEJ.define([
     };
     /**
      * 清除本地缓存
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -137,7 +137,7 @@ NEJ.define([
      *     _p._$clearDataInStorage();
      * });
      * ```
-     * 
+     *
      * @method module:util/cache/storage._$clearDataInStorage
      * @return {Void}
      */
@@ -150,7 +150,7 @@ NEJ.define([
             _h.__clearStorage();
         };
     })();
-    /** 
+    /**
      * 持久化存储器准备完毕触发事件，
      * 如果存储器已准备完毕则在添加事件时直接触发回调
      *
@@ -173,7 +173,7 @@ NEJ.define([
      *     );
      * });
      * ```
-     * 
+     *
      * @event    external:document.onstorageready
      * @param    {Object} event - 事件信息
      */
@@ -186,7 +186,7 @@ NEJ.define([
             }
         }
     });
-    
+
     // listen storage ready
     var __doFlushTempData = (function(){
         var _doFlush = function(_value,_key,_map){
@@ -202,13 +202,13 @@ NEJ.define([
         document,'storageready',
         __doFlushTempData
     );
-    
+
     // init storage
     _h.__initStorage();
-    
+
     if (CMPT){
         NEJ.copy(NEJ.P('nej.j'),_p);
     }
-    
-    return _p;    
+
+    return _p;
 });

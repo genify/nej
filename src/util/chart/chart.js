@@ -8,7 +8,8 @@ NEJ.define([
     'base/global',
     'base/config',
     'base/element',
-    'util/flash/flash'
+    'util/flash/flash',
+    'base/chain'
 ],function(NEJ,_c,_e,_t0,_p,_o,_f,_r){
     /**
      * 绘制图表对象
@@ -33,6 +34,10 @@ NEJ.define([
      * @property {Object}      data    - 生成图表需要的数据
      * @return   {Void}
      */
+    /**
+     * @method CHAINABLE._$request
+     * @see module:util/chart/chart._$request
+     */
     _p._$drawChart = function(_box,_options){
         _box = _e._$get(_box)||_o;
         _t0._$flash({
@@ -46,6 +51,8 @@ NEJ.define([
             }._$bind(this)
         });
     };
+    // for chainable method
+    _x._$merge(_p);
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.e'),_p);

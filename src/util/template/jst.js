@@ -15,7 +15,7 @@ NEJ.define([
     var _ext = {};
     /**
      * 取模板随机数种子
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -25,14 +25,14 @@ NEJ.define([
      *     var _seed = _p._$getHtmlTemplateSeed();
      * });
      * ```
-     * 
+     *
      * @method module:util/template/jst._$getHtmlTemplateSeed
      * @return {String} 随机数种子
      */
     _p._$getHtmlTemplateSeed = TrimPath.seed;
     /**
      * 根据模板的序列号合并模板数据
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -44,7 +44,7 @@ NEJ.define([
      *     var _html = _p._$getHtmlTemplate(_html_seed,{name:'jack'});
      * });
      * ```
-     * 
+     *
      * @method module:util/template/jst._$getHtmlTemplate
      * @see    module:util/template/jst._$addHtmlTemplate
      * @param  {String} arg0 - 模板序列号
@@ -70,7 +70,7 @@ NEJ.define([
     })();
     /**
      * 添加JST模板，JST模板可以是节点的值
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -80,7 +80,7 @@ NEJ.define([
      *     var _html_seed =  _p._$addHtmlTemplate('<div>${name}</div>');
      * });
      * ```
-     * 
+     *
      * @method module:util/template/jst._$addHtmlTemplate
      * @see    module:util/template/jst._$getHtmlTemplate
      * @param  {String}  arg0 - JST模板内容或者节点ID
@@ -99,12 +99,12 @@ NEJ.define([
     };
     /**
      * 整合模板后输出至指定容器节点
-     * 
+     *
      * 结构举例
      * ```html
      * <div id="box">aaa</div>
      * ```
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -116,7 +116,7 @@ NEJ.define([
      *     _p._$renderHtmlTemplate('box',_html_seed,{name:'jack'});
      * });
      * ```
-     * 
+     *
      * @method module:util/template/jst._$renderHtmlTemplate
      * @param  {String|Node} arg0 - 容器节点
      * @param  {String}      arg1 - 模板序列号
@@ -124,16 +124,20 @@ NEJ.define([
      * @param  {Object}      arg3 - 扩展接口
      * @return {Void}
      */
+    /**
+     * @method CHAINABLE._$renderHtmlTemplate
+     * @see module:util/template/jst._$renderHtmlTemplate
+     */
     _p._$renderHtmlTemplate = function(_parent,_sn,_data,_extend){
         _parent = _e._$get(_parent);
         if (!!_parent){
-            _parent.innerHTML = 
+            _parent.innerHTML =
                 _p._$getHtmlTemplate(_sn,_data,_extend);
         }
     };
     /**
      * 注册JST扩展方法
-     * 
+     *
      * 结构举例
      * ```html
      * <textarea name="jst" id="abc">
@@ -142,7 +146,7 @@ NEJ.define([
      *   </div>
      * </textarea>
      * ```
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -159,7 +163,7 @@ NEJ.define([
      *     );
      * });
      * ```
-     * 
+     *
      * @method module:util/template/jst._$registJSTExt
      * @param  {Object} arg0 - 扩展方法
      * @return {Void}
@@ -167,10 +171,12 @@ NEJ.define([
     _p._$registJSTExt = function(_map){
         _u._$merge(_ext,_map);
     };
-    
+    // for chainable method
+    _x._$merge(_$renderHtmlTemplate,_p._$renderHtmlTemplate);
+
     if (CMPT){
         NEJ.copy(NEJ.P('nej.e'),_p);
     }
-    
+
     return _p;
 });

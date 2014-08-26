@@ -15,13 +15,13 @@ NEJ.define([
 ],function(NEJ,_t0,_t1,_t2,_t3,_p,_o,_f,_r){
     /**
      * 载入完成回调函数
-     * 
+     *
      * @callback module:util/ajax/tag.onload
      * @param    {Variable} event - 请求返回数据
      */
-    /** 
+    /**
      * 载入出错回调函数
-     * 
+     *
      * @callback module:util/ajax/tag.onerror
      * @param    {Object} event   - 错误信息
      * @property {Number} code    - 错误码
@@ -29,7 +29,7 @@ NEJ.define([
      */
     /**
      * 载入脚本文件
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -45,7 +45,7 @@ NEJ.define([
      *     });
      * });
      * ```
-     * 
+     *
      * @method   module:util/ajax/tag._$loadScript
      * @see      module:util/ajax/tag._$queueScript
      * @param    {String}  arg0    - 请求地址
@@ -63,7 +63,7 @@ NEJ.define([
     };
     /**
      * 载入队列脚本并依次执行
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -82,7 +82,7 @@ NEJ.define([
      *     });
      * });
      * ```
-     * 
+     *
      * @method   module:util/ajax/tag._$queueScript
      * @see      module:util/ajax/tag._$loadScript
      * @param    {Array}  arg0    - 脚本队列
@@ -113,7 +113,7 @@ NEJ.define([
      *     });
      * });
      * ```
-     * 
+     *
      * @method   module:util/ajax/tag._$loadStyle
      * @see      module:util/ajax/tag._$queueStyle
      * @param    {String} arg0    - 样式文件地址
@@ -129,7 +129,7 @@ NEJ.define([
     };
     /**
      * 载入样式队列
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -148,7 +148,7 @@ NEJ.define([
      *     });
      * });
      * ```
-     * 
+     *
      * @method   module:util/ajax/tag._$queueStyle
      * @see      module:util/ajax/tag._$loadStyle
      * @param    {Array}  arg0    - 样式队列
@@ -164,7 +164,7 @@ NEJ.define([
     };
     /**
      * 载入HTML文件
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -180,7 +180,7 @@ NEJ.define([
      *     });
      * });
      * ```
-     * 
+     *
      * @method   module:util/ajax/tag._$loadHtml
      * @param    {String} arg0    - 文件地址
      * @param    {Object} arg1    - 可选配置参数
@@ -194,7 +194,7 @@ NEJ.define([
     };
     /**
      * 载入HTML文件
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -210,7 +210,7 @@ NEJ.define([
      *     });
      * });
      * ```
-     * 
+     *
      * @method   module:util/ajax/tag._$loadText
      * @param    {String} arg0    - 文件地址
      * @param    {Object} arg1    - 可选配置参数
@@ -222,10 +222,10 @@ NEJ.define([
     _p._$loadText = function(_url,_options){
         _t0._$$LoaderText._$allocate(_options)._$load(_url);
     };
-    
+
     if (CMPT){
         NEJ.copy(NEJ.P('nej.j'),_p);
     }
-    
+
     return _p;
 });

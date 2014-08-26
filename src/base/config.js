@@ -27,32 +27,8 @@ NEJ.define([
         };
     })();
     /**
-     * 取Frame跨域Ajax代理文件，通过NEJ_CONF的p_frame配置给定域名的代理文件地址
-     * 
-     * @method module:base/config._$getFrameProxy
-     * @see    module:base/config._$get
-     * @param  {String} arg0 - 请求地址或者域名
-     * @return {String}        代理文件地址
-     */
-    _p._$getFrameProxy = function(_url){
-        var _host = _url2host(_url);
-        return _p._$get('frames')[_host]||
-              (_host+'/res/nej_proxy_frame.html');
-    };
-    /**
-     * 取Flash跨域Ajax配置文件，通过NEJ_CONF的p_flash配置给定域名的代理文件地址
-     * 
-     * @method module:base/config._$getFlashProxy
-     * @see    module:base/config._$get
-     * @param  {String} arg0 - 请求地址或者域名
-     * @return {String}        代理文件地址
-     */
-    _p._$getFlashProxy = function(_url){
-        return _p._$get('flashs')[_url2host(_url)];
-    };
-    /**
      * 获取NEJ配置信息，通过NEJ_CONF配置相关信息
-     * 
+     *
      * ```javascript
      *  window.NEJ_CONF = {
      *      // resource root
@@ -92,9 +68,9 @@ NEJ.define([
      *      p_csrf:{cookie:'AntiCSRF',param:'AntiCSRF'}
      *  };
      * ```
-     * 
+     *
      * 配置标识支持
-     * 
+     *
      * | 标识                          | 说明 |
      * | :--              | :-- |
      * | portrait         | 表情根路径 |
@@ -106,7 +82,7 @@ NEJ.define([
      * | clipboard.swf    | 实现剪切板功能的Flash文件地址 |
      * | upload.image.swf | 实现图片上传功能的Flash文件地址 |
      * | storage.swf      | 实现本地存储功能的Flash文件地址 |
-     * 
+     *
      * @method module:base/config._$get
      * @param  {String}   arg0 - 配置标识
      * @return {Variable}        配置信息

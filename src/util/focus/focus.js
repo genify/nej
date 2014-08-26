@@ -10,8 +10,9 @@ NEJ.define([
     'base/global',
     'base/util',
     'base/element',
-    '{platform}focus.js'
-],function(NEJ,_u,_e,_p,_o,_f,_r){
+    '{platform}focus.js',
+    'base/chain'
+],function(NEJ,_u,_e,_x,_p,_o,_f,_r){
     /**
      * 节点focus行为，提供两种模式支持
      *
@@ -63,6 +64,10 @@ NEJ.define([
      * @property {String}      clazz - 聚焦样式，默认js-focus
      * @return   {Void}
      */
+    /**
+     * @method CHAINABLE._$focus
+     * @see module:util/focus/focus._$focus
+     */
     _p._$focus = function(_element,_options){
         _element = _e._$get(_element);
         if (!!_element){
@@ -92,10 +97,12 @@ NEJ.define([
             _h.__focusElement(_element,_mode,_clazz);
         }
     };
-    
+    // for chainable method
+    _x._$merge(_p);
+
     if (CMPT){
         NEJ.copy(NEJ.P('nej.e'),_p);
     }
-    
+
     return _p;
 });

@@ -14,17 +14,17 @@ NEJ.define([
     var _pro;
     /**
      * 样式加载器
-     * 
+     *
      * @class   module:util/ajax/loader/style._$$LoaderStyle
      * @extends module:util/ajax/loader/loader._$$LoaderAbstract
-     * 
+     *
      * @param   {Object} config - 可选配置参数
      */
     _p._$$LoaderStyle = _k._$klass();
     _pro = _p._$$LoaderStyle._$extend(_t._$$LoaderAbstract);
     /**
      * 取资源载入控件
-     * 
+     *
      * @protected
      * @method module:util/ajax/loader/style._$$LoaderStyle#__getRequest
      * @return {Node} 控件节点
@@ -34,7 +34,7 @@ NEJ.define([
     };
     /**
      * 资源载入
-     * 
+     *
      * @protected
      * @method module:util/ajax/loader/style._$$LoaderStyle#__doRequest
      * @param  {Node} 控件节点
@@ -44,6 +44,6 @@ NEJ.define([
         _request.href = this.__url;
         document.head.appendChild(_request);
     };
-    
+
     return _p;
 });

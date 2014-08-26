@@ -13,31 +13,32 @@ NEJ.define([
     'base/util',
     'util/template/jst',
     'util/timer/animation',
-    '{platform}flash.js'
-],function(NEJ,_e,_v,_u,_t0,_t1,_h,_p,_o,_f,_r){
-    var _seed_html;
+    '{platform}flash.js',
+    'text!./flash.html'
+],function(NEJ,_e,_v,_u,_t0,_t1,_h,_html,_p,_o,_f,_r){
+    var _seed_html = _t0._$addHtmlTemplate(_html);
     /**
      * 页面嵌入flash，NEJ嵌入Flash如果需要同JS交互的遵循以下规则
-     * 
+     *
      *  1. Flash对象提供JS可访问接口 inited （返回Boolean值）
      *  2. 如果Flash未初始化完成inited返回为false
      *  3. 如果Flash初始化完成inited返回为true
      *  4. inited返回true表示Flash已完成所有初始化，此时JS可调用Flash的API
-     *  
+     *
      * Flash事件规则
-     *  
+     *
      *  1. JS中使用window.onflashevent监听flash中的事件（此步骤NEJ已封装）
      *  2. Flash通过flashvars参数输入当前flash的ID，如 &lt;param name="flashvars" value="id=ab&a=b"/&gt;
      *  3. Flash在需要触发事件时调用window.onflashevent回调函数，并输入一个Object作为参数,Object信息包括
      *     type   [String] - 鼠标事件类型，如click/mouseover/mouseout/play/pause...
      *     target [String] - 触发事件的flash标识，通过flashvars参数输入的id参数，做了encodeURIComponent，如a%23b
-     *     ... 
-     * 
+     *     ...
+     *
      * 结构举例
      * ```html
      * <div id='flash'></div>
      * ```
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -67,7 +68,7 @@ NEJ.define([
      *     });
      * });
      * ```
-     * 
+     *
      * @method   module:util/flash/flash._$flash
      * @param    {Object}      arg0    - 可选配置参数
      * @property {String}      src     - Flash文件地址，必须指定地址
@@ -182,28 +183,6 @@ NEJ.define([
             _doCheckFlash(_id);
         };
     })();
-    _seed_html = _t0._$addHtmlTemplate('\
-        {var hide  = defined("hidden")&&!!hidden}\
-        {var param = defined("params")&&params||NEJ.O}\
-        {var width = !hide?width:"1px",height = !hide?height:"1px"}\
-        {if hide}<div style="position:absolute;top:0;left:0;width:1px;height:1px;z-index:10000;overflow:hidden;">{/if}\
-        <object classid = "clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"\
-                codebase = "http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab"\
-                width = "${width|default:"100px"}"\
-                height = "${height|default:"100px"}" id="${id}">\
-            <param value="${src}" name="movie">\
-            {for x in param}\
-            <param value="${x}" name="${x_key}"/>\
-            {/for}\
-            <embed src="${src}" name="${id}"\
-                   width="${width|default:"100px"}"\
-                   height="${height|default:"100px"}"\
-                   pluginspage="http://www.adobe.com/go/getflashplayer"\
-                   type="application/x-shockwave-flash"\
-                   {for x in param}${x_key}="${x}" {/for}></embed>\
-        </object>\
-        {if hide}</div>{/if}\
-    ');
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.e'),_p);

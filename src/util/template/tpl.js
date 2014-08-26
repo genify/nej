@@ -14,8 +14,9 @@ NEJ.define([
     'util/template/jst',
     'util/event/event',
     'util/ajax/tag',
-    'util/ajax/xdr'
-],function(NEJ,_u,_v,_e,_y,_t,_j0,_j1,_p,_o,_f,_r){
+    'util/ajax/xdr',
+    'base/chain'
+],function(NEJ,_u,_v,_e,_y,_t,_j0,_j1,_x,_p,_o,_f,_r){
     var _cache = {}, // template cache
         _skey  = (+new Date)+'-';
     /**
@@ -80,6 +81,10 @@ NEJ.define([
      * @param    {Object}      arg1 - 可选配置参数
      * @property {String}      root - 根路径，相对规则
      * @return   {Void}
+     */
+    /**
+     * @method CHAINABLE._$parseTemplate
+     * @see module:util/template/tpl._$parseTemplate
      */
     _p._$parseTemplate = (function(){
         var _count = 0;
@@ -213,7 +218,7 @@ NEJ.define([
         };
         /**
          * 模版准备完毕触发事件，包括所有外联模版载入完成
-         * 
+         *
          * 结构举例
          * ```html
          * <div id="template-box">
@@ -233,7 +238,7 @@ NEJ.define([
          * ],function(_v,_e){
          *     // 解析模版集合
          *     _e._$parseTemplate('template-box');
-         * 
+         *
          *     // 在templateready事件中使用外联模版可以保证正确性
          *     _v._$addEvent(
          *         document,'templateready',
@@ -244,7 +249,7 @@ NEJ.define([
          *     );
          * });
          * ```
-         * 
+         *
          * @event    external:document.ontemplateready
          * @param    {Object} event - 事件信息
          */
@@ -332,6 +337,10 @@ NEJ.define([
      * @param  {String|Node} arg0 - 模板
      * @param  {String}      arg1 - 模板序列号
      * @return {String}             模板序列号
+     */
+    /**
+     * @method CHAINABLE._$addNodeTemplate
+     * @see module:util/template/tpl._$addNodeTemplate
      */
     _p._$addNodeTemplate = function(_element,_key){
         _key = _key||_u._$randNumberString();
@@ -519,6 +528,8 @@ NEJ.define([
             return _map;
         };
     })();
+    // for chainable method
+    _x._$merge({_$parseTemplate:_p._$parseTemplate,_$addNodeTemplate:_p._$addNodeTemplate});
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.e'),_p);
