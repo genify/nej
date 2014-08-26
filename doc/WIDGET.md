@@ -13,7 +13,7 @@ NEJ框架提供了基于常规面向对象的思想构建的控件系统，主�
 
 ## 类模型
 
-因为JavaScript本省没有提供类的概念，在控件系统中提供了一套类模型的解决方案，用以模拟常规面向对象语言中的“类”的概念。
+因为JavaScript本身没有提供类的概念，在控件系统中提供了一套类模型的解决方案，用以模拟常规面向对象语言中的“类”的概念。
 
 类模型的实现见NEJ框架的base/klass模块
 
@@ -89,6 +89,7 @@ NEJ.define([
         this.__super();
         // TODO something
     };
+
     // private 方法
     pro._privateMethod = function(){
 
@@ -97,7 +98,6 @@ NEJ.define([
     pro.__protectedMethod = function(){
         // TODO
     };
-
     // public 方法
     pro._$publicMethod = function(){
         // TODO
@@ -485,26 +485,370 @@ NEJ.define([
 });
 ```
 
+## 控件分类
 
+控件根据其封装元素的差异可以分为通用控件和UI控件两类
 
+* 通用控件：此类控件关注功能业务逻辑的实现，不关注视觉效果
+* UI控件：此类控件会构建一套默认的视觉效果，具体功能逻辑由与之匹配的通用控件来实现
 
+由于UI控件在实际项目中差异性比较大，因此NEJ框架会主要关注通用控件的支持，项目中可以根据通用控件结合实际项目视觉效果来实现项目相关的UI控件
 
+### 通用控件
 
+通用控件只需遵循[控件模型](#控件模型)实现即可
 
+### UI控件
 
+UI控件基于控件模型扩展而来，其抽象实现在 ui/base 模块中的 _$$Abstract 类，UI控件的主要元素包括：
 
+* 样式：控件展示效果样式，独立在控件对应的css文件中
+* 结构：控件组成结构，独立在控件对应的html文件中
+* 逻辑：控件逻辑实现，独立在控件对应的javascript文件中
 
+一个UI控件典型的目录结构为
 
+```
+    widget
+      | - widget.css
+      | - widget.html
+      | - widget.js
+```
 
+#### 样式
 
+每个UI控件都使用一个唯一的样式标识，以防止与其他控件样式冲突，样式文件范例如下：
 
+```css
+.#<uispace>-parent{position:relative;}
+.#<uispace>{position:absolute;border:1px solid #aaa;background:#fff;text-align:left;visibility:hidden;}
+.#<uispace> .zitm{height:20px;line-height:20px;cursor:default;}
+.#<uispace> .js-selected{background:#1257F9;}
+```
 
+这里可以使用 #&lt;KEY&gt; 格式的简单模版来做数据占位，其中
 
+* \#&lt;uispace&gt; - 表示自动生成的样式标识名称
+* \#&lt;uispace&gt;-parent - 表示控件节点的父容器节点的样式
+* 其他参数可以使用#&lt;KEY&gt;来占位，后续使用时输入{KEY:'XXXXX'}的数据即可
 
+#### 结构
 
+每个UI控件可以关联若干的结构模版，模版规则遵循NEJ的[模版系统](./TEMPLATE.md)规范
 
+单个模版文件范例
 
+```html
+<div>
+  <div class="zbar">
+    <div class="zttl">标题</div>
+  </div>
+  <div class="zcnt"></div>
+  <span class="zcls" title="关闭窗体">×</span>
+</div>
+```
 
+多个模版文件范例，模版的ID支持使用 #&lt;KEY&gt; 形式的简单模版做ID占位
+
+```html
+<textarea name='jst' id='#<icmd>'>
+{list xlist as x}
+  <div class="zitm zbg ${'js-'|seed}" data-command="${x.cmd}" title="${x.txt}">
+    <div class="zicn zbg ${x.icn}">&nbsp;</div>
+    <div class="ztxt">${x.txt}</div>
+  </div>
+{/list}
+{if defined("hr")&&!!hr}
+  <div class="zbg zisp">&nbsp;</div>
+{/if}
+</textarea>
+
+<textarea name='jst' id='#<ifnt>'>
+  <div class="zsel ${icn} ${'js-'|seed}" data-command="${cmd}">
+    <span class="${'js-t-'|seed}">${txt}</span>
+    <span class="zarw zbg">&nbsp;</span>
+  </div>
+</textarea>
+
+<textarea name='jst' id='#<iedt>'>
+  <div>
+    <div class="ztbar">${toolbar}</div>
+    <div class="zarea"></div>
+  </div>
+</textarea>
+```
+
+#### 逻辑
+
+逻辑部分主要用来实现UI控件的核心逻辑，主要分以下几部分功能
+
+* 注入样式处理
+* 注入结构处理
+* 控件初始化
+
+##### 注入样式
+
+根据[依赖系统](./DEPENDENCY.md)规则，UI控件使用 text! 注入样式，注入的样式通过 base/element 模块中的 _$pushCSSText 接口做预处理，并返回自动生成的控件样式标识
+
+```javascript
+NEJ.define([
+    'base/element',
+    'ui/base',
+    'text!./widget.css'
+],function(_e,_i,_css,_p){
+    // 将注入的样式做预处理后缓存
+    var _seed_css = _e._$pushCSSText(_css);
+
+    // TODO
+});
+```
+
+如果样式中已做了样式标识无需自动生成则只需缓存样式即可，如
+
+```css
+.ui-suggest-parent{position:relative;}
+.ui-suggest{position:absolute;border:1px solid #aaa;background:#fff;text-align:left;visibility:hidden;}
+.ui-suggest .zitm{height:20px;line-height:20px;cursor:default;}
+.ui-suggest .js-selected{background:#1257F9;}
+```
+
+```javascript
+NEJ.define([
+    'base/element',
+    'ui/base',
+    'text!./widget.css'
+],function(_e,_i,_css,_p){
+    // 将注入的样式缓存
+    _e._$pushCSSText(_css);
+
+    // TODO
+});
+```
+
+##### 注入结构
+
+根据[依赖系统](./DEPENDENCY.md)规则，UI控件使用 text! 注入结构，注入的结构符合[模版系统](./TEMPLATE.md)规则，后续使用 util/template/tpl 模块中的模版处理接口做处理
+
+单个模版结构注入
+
+```javascript
+NEJ.define([
+    'base/element',
+    'util/template/tpl',
+    'ui/base',
+    'text!./widget.css',
+    'text!./widget.html'
+],function(_e,_t,_i,_css,_html,_p){
+    // 将注入的样式做预处理后缓存
+    var _seed_css = _e._$pushCSSText(_css),
+        _seed_html = _t._$addNodeTemplate(_html);
+
+    // TODO
+});
+```
+
+多个模版结构注入
+
+```javascript
+NEJ.define([
+    'base/element',
+    'util/template/tpl',
+    'ui/base',
+    'text!./widget.css',
+    'text!./widget.html'
+],function(_e,_t,_i,_css,_html,_p){
+    // 将注入的样式做预处理后缓存
+    var _seed_css = _e._$pushCSSText(_css);
+
+    // 这里可以自动生成模版ID
+    // 返回 {icmd:'tpl-127363653',ifnt:'tpl-5985857444',iedt:'tpl-48763635374'}
+    var _seed = _t._$parseUITemplate(_html);
+
+    // 这里也可以自己指定模版ID
+    // 可以指定全部的ID，也可以指定某几个，未指定的ID自动生成
+    var _seed = _t._$parseUITemplate(_html,{
+        icmd:'abc',
+        ifnt:'def',
+        iedt:'ghi'
+    });
+
+    // TODO
+});
+```
+
+##### 逻辑实现
+
+UI控件的逻辑实现主要扩展自 ui/base 模块中的 _$$Abstract 类，需要实现外观的设置和结构的初始化
+
+1. 初始化外观
+
+    ```javascript
+    NEJ.define([
+        'base/klass',
+        'base/element',
+        'util/template/tpl',
+        'ui/base',
+        'text!./widget.css',
+        'text!./widget.html'
+    ],function(_k,_e,_t,_i,_css,_html,_p){
+        var _pro;
+
+        // 定义UI控件
+        _p._$$UIWidget = _k._$klass();
+        _pro = _p._$$UIWidget._$extend(_i._$$Abstract);
+
+        // 按需完成通用控件接口重写
+        // _pro.__init ...
+        // _pro.__reset ...
+        // _pro.__destroy ...
+
+        // 初始化外观
+        // 此过程只会在控件第一次创建时进入
+        _pro.__initXGui = (function(){
+            // 将注入的样式/结构做预处理后缓存
+            var _seed_css = _e._$pushCSSText(_css),
+                _seed_html = _t._$addNodeTemplate(_html);
+            return function(){
+                this.__seed_css = _seed_css;
+                this.__seed_html = _seed_html;
+            };
+        })();
+
+        // TODO
+
+        return _p;
+    });
+    ```
+
+2. 初始化结构
+
+    ```javascript
+    NEJ.define([
+        'base/klass',
+        'base/element',
+        'util/template/tpl',
+        'ui/base',
+        'text!./widget.css',
+        'text!./widget.html'
+    ],function(_k,_e,_t,_i,_css,_html,_p){
+        var _pro;
+
+        // 定义UI控件
+        _p._$$UIWidget = _k._$klass();
+        _pro = _p._$$UIWidget._$extend(_i._$$Abstract);
+
+        // 按需完成通用控件接口重写
+        // _pro.__init ...
+        // _pro.__reset ...
+        // _pro.__destroy ...
+
+        // 初始化外观
+        // 此过程只会在控件第一次创建时进入
+        _pro.__initXGui = (function(){
+            // 将注入的样式/结构做预处理后缓存
+            var _seed_css = _e._$pushCSSText(_css),
+                _seed_html = _t._$addNodeTemplate(_html);
+            return function(){
+                this.__seed_css = _seed_css;
+                this.__seed_html = _seed_html;
+            };
+        })();
+
+        // 初始化结构
+        // 此过程只会在控件第一次创建时进入
+        _pro.__initNode = function(){
+            // 调用父类接口通过提供的__seed_html构建控件结构
+            // 构建好的控件结构可以通过this.__body访问
+            this.__super();
+
+            // TODO
+        };
+
+        // TODO
+
+        return _p;
+    });
+    ```
+
+3. 功能实现
+
+    ```javascript
+    NEJ.define([
+        'base/klass',
+        'base/element',
+        'util/template/tpl',
+        'ui/base',
+        'text!./widget.css',
+        'text!./widget.html'
+    ],function(_k,_e,_t,_i,_css,_html,_p){
+        var _pro;
+
+        // 定义UI控件
+        _p._$$UIWidget = _k._$klass();
+        _pro = _p._$$UIWidget._$extend(_i._$$Abstract);
+
+        // 按需完成通用控件接口重写
+        // _pro.__init ...
+        // _pro.__reset ...
+        // _pro.__destroy ...
+
+        // 初始化外观
+        // 此过程只会在控件第一次创建时进入
+        _pro.__initXGui = (function(){
+            // 将注入的样式/结构做预处理后缓存
+            var _seed_css = _e._$pushCSSText(_css),
+                _seed_html = _t._$addNodeTemplate(_html);
+            return function(){
+                this.__seed_css = _seed_css;
+                this.__seed_html = _seed_html;
+            };
+        })();
+
+        // 初始化结构
+        // 此过程只会在控件第一次创建时进入
+        _pro.__initNode = function(){
+            // 调用父类接口通过提供的__seed_html构建控件结构
+            // 构建好的控件结构可以通过this.__body访问
+            this.__super();
+
+            // TODO
+        };
+
+        // 实现控件核心功能
+        _pro._myPrivateMethod = function(){
+            // TODO
+        };
+        _pro.__myProtectedMethod = function(){
+            // TODO
+        };
+        _pro._$myPublicMethod = function(){
+            // TODO
+        };
+
+        // TODO
+
+        return _p;
+    });
+    ```
+
+##### 控件使用
+
+控件的使用同通用控件，这里需要注意的是UI控件需要输入parent配置参数才能在页面上渲染出来，否则构建的控件只存在于内存中，页面上无法看到
+
+```javascript
+NEJ.define([
+    '/path/to/ui/widget.js'
+],function(_i){
+    // 分配控件
+    var _uiwidget = _i._$$UIWidget._$allocate({
+        parent:document.body,  // 注意这里输入parent
+        clazz:'m-ui-widget'
+    });
+
+    // 回收控件
+    _uiwidget = _uiwidget._$recycle();
+});
+```
 
 
 
