@@ -27,6 +27,30 @@ NEJ.define([
         };
     })();
     /**
+     * 取Frame跨域Ajax代理文件，通过NEJ_CONF的p_frame配置给定域名的代理文件地址
+     *
+     * @method module:base/config._$getFrameProxy
+     * @see    module:base/config._$get
+     * @param  {String} arg0 - 请求地址或者域名
+     * @return {String}        代理文件地址
+     */
+    _p._$getFrameProxy = function(_url){
+        var _host = _url2host(_url);
+        return _p._$get('frames')[_host]||
+              (_host+'/res/nej_proxy_frame.html');
+    };
+    /**
+     * 取Flash跨域Ajax配置文件，通过NEJ_CONF的p_flash配置给定域名的代理文件地址
+     *
+     * @method module:base/config._$getFlashProxy
+     * @see    module:base/config._$get
+     * @param  {String} arg0 - 请求地址或者域名
+     * @return {String}        代理文件地址
+     */
+    _p._$getFlashProxy = function(_url){
+        return _p._$get('flashs')[_url2host(_url)];
+    };
+    /**
      * 获取NEJ配置信息，通过NEJ_CONF配置相关信息
      *
      * ```javascript
