@@ -923,6 +923,15 @@
     p.NEJ = {};
     /**
      * 模块定义，单个文件只允许定义一个模块，即只允许执行一次NEJ.define，模块执行函数支持依赖列表注入和名字空间两种方式
+     * 
+     * 文件路径遵循以下规则
+     *  
+     *  * 完整的文件路径，如 http://a.b.com/patch/to/file.js
+     *  * 使用{}标识配置参数，如{root}file.js
+     *  * 直接使用非{}标识配置参数，此时不能加.js后缀，系统自动加.js后缀，如 root/file
+     *  * NEJ库文件可以省略lib标识，如base/element，等价于 lib/base/element，等价于 {lib}base/element.js
+     *  * 其他文本资源采用text!前缀标识，如text!/path/to/file.css，注意开发时如果资源是跨域的请设置好浏览器XHR的跨域支持
+     *  * 路径以 ./ 或者 ../ 开始的相对路径则相对于当前脚本文件的路径，如 ./util.js
      *
      * ```javascript
      * // 依赖{lib}base/global.js和{lib}base/util.js
