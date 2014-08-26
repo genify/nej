@@ -9,8 +9,9 @@
 NEJ.define([
     'base/global',
     'base/element',
-    '{platform}holder.js'
-],function(NEJ,_e,_h,_p,_o,_f,_r){
+    '{platform}holder.js',
+    'base/chain'
+],function(NEJ,_e,_h,_x,_p,_o,_f,_r){
     /**
      * 输入框占位行为，高版本用placeholder属性和样式处理
      *
@@ -47,11 +48,17 @@ NEJ.define([
      * @param  {String}      arg1 - 占位样式名称，默认为js-placeholder
      * @return {Void}
      */
+    /**
+     * @method CHAINABLE._$placeholder
+     * @see module:util/placeholder/placeholder._$placeholder
+     */
     _p._$placeholder = function(_element,_clazz){
         _h.__setPlaceholder(_element,
             _e._$dataset(_element,'holder')
                 ||_clazz||'js-placeholder');
     };
+    // for chainable method
+    _x._$merge(_p);
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.e'),_p);

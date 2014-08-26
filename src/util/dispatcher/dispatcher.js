@@ -24,7 +24,7 @@ NEJ.define([
     var _pro;
     /**
      * 调度器对象，项目仅允许实例化一个调度器
-     * 
+     *
      * 代码举例
      * ```javascript
      * NEJ.define([
@@ -33,7 +33,7 @@ NEJ.define([
      * ],function(_e,_p){
      *     // 取调度器实例
      *     var dispatcher = _p._$$Dispatcher._$getInstance();
-     * 
+     *
      *     // 添加规则
      *     dispatcher._$rule({
      *         title:{
@@ -45,17 +45,17 @@ NEJ.define([
      *             {'/m/b':/^\/m\/d.*$/i}
      *         ]
      *     });
-     * 
+     *
      *     // 注册模块
      *     dispatcher._$regist({
      *         '/m/a':'/m/a.html',
      *         '/m/b':'/m/b.html',
      *         '/m/c':'/m/c.html'
      *     });
-     * 
+     *
      *     // 激活调度器
      *     dispatcher._$active();
-     * 
+     *
      *     // 以上逻辑也可通过构造参数方式输入
      *     var dispatcher = _p._$$Dispatcher._$getInstance({
      *         rules:{
@@ -82,7 +82,7 @@ NEJ.define([
      *         }
      *     })
      *     dispatcher._$active();
-     * 
+     *
      *     // 调度器激活前需确保当前可能出现的模块均已注册到调度器中
      *     // 实际应用中常出现以下情况
      *     var dispatcher = _$$Dispatcher._$getInstance({
@@ -103,18 +103,18 @@ NEJ.define([
      *     dispatcher._$active();
      * });
      * ```
-     * 
+     *
      * @class    module:util/dispatcher/dispatcher._$$Dispatcher
      * @extends  module:util/event._$$EventTarget
-     * 
+     *
      * @param    {Object}  config  - 可选配置参数，已处理的参数列表如下
      * @property {Object}  modules - 模块配置
      * @property {Object}  rules   - 规则配置
      * @property {Boolean} rest    - 是否支持REST风格的UMI解析
      */
-    /** 
+    /**
      * 行为解析之前触发事件，一般用于解析节点中行为相关信息
-     * 
+     *
      * 结构举例
      * ```html
      * <div data-res-id="xxxx"
@@ -124,7 +124,7 @@ NEJ.define([
      *   <!-- content here -->
      * </div>
      * ```
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -141,16 +141,16 @@ NEJ.define([
      *     });
      * });
      * ```
-     * 
+     *
      * @event    module:util/dispatcher/dispatcher._$$Dispatcher#onbeforeaction
      * @param    {Object} event  - 行为相关信息
      * @property {Node}   target - 触发行为的节点对象
      * @property {Event}  event  - 原始事件对象
      * @property {Object} result - 行为相关信息
      */
-    /** 
+    /**
      * 地址变换之前触发事件
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -169,7 +169,7 @@ NEJ.define([
      *     });
      * });
      * ```
-     * 
+     *
      * @event    module:util/dispatcher/dispatcher._$$Dispatcher#onbeforechange
      * @param    {Object} event - 地址信息
      * @property {String} path  - 路径信息，不带查询参数
@@ -180,7 +180,7 @@ NEJ.define([
     _pro = _p._$$Dispatcher._$extend(_t2._$$EventTarget);
     /**
      * 控件初始化
-     * 
+     *
      * @protected
      * @method module:util/dispatcher/dispatcher._$$Dispatcher#__init
      * @return {Void}
@@ -193,7 +193,7 @@ NEJ.define([
     };
     /**
      * 控件重置
-     * 
+     *
      * @protected
      * @method module:util/dispatcher/dispatcher._$$Dispatcher#__reset
      * @param  {Object} arg0 - 可选配置参数
@@ -217,7 +217,7 @@ NEJ.define([
         // for public module umi manager
         this.__doBuildGroup(this.__pbseed);
         // for private module umi manager
-        this.__groups[this.__pvseed] = 
+        this.__groups[this.__pvseed] =
             _t5._$$GroupManager._$allocate({
                 root:this.__root,
                 dispatcher:this
@@ -234,7 +234,7 @@ NEJ.define([
     };
     /**
      * 控件销毁
-     * 
+     *
      * @protected
      * @method module:util/dispatcher/dispatcher._$$Dispatcher#__destroy
      * @return {Void}
@@ -253,7 +253,7 @@ NEJ.define([
     })();
     /**
      * 设置模块配置信息
-     * 
+     *
      * @protected
      * @method module:util/dispatcher/dispatcher._$$Dispatcher#__setModuleConf
      * @param  {String}   arg0 - 模块UMI
@@ -271,7 +271,7 @@ NEJ.define([
     };
     /**
      * 取模块配置信息
-     * 
+     *
      * @protected
      * @method module:util/dispatcher/dispatcher._$$Dispatcher#__getModuleConf
      * @param  {String} arg0 - 模块UMI
@@ -284,7 +284,7 @@ NEJ.define([
     };
     /**
      * 构建分组管理器
-     * 
+     *
      * @protected
      * @method module:util/dispatcher/dispatcher._$$Dispatcher#__doBuildGroup
      * @param  {String} arg0 - 管理器标识
@@ -305,7 +305,7 @@ NEJ.define([
     };
     /**
      * 添加UMI至分组管理器
-     * 
+     *
      * @protected
      * @method module:util/dispatcher/dispatcher._$$Dispatcher#__doAddUMI2Group
      * @param  {String} arg0 - 模块UMI
@@ -324,7 +324,7 @@ NEJ.define([
     };
     /**
      * 重写UMI规则
-     * 
+     *
      * @protected
      * @method module:util/dispatcher/dispatcher._$$Dispatcher#__doRewriteUMI
      * @param  {String} arg0 - 模块UMI
@@ -359,7 +359,7 @@ NEJ.define([
     })();
     /**
      * URL变化触发事件
-     * 
+     *
      * @protected
      * @method module:util/dispatcher/dispatcher._$$Dispatcher#__onURLChange
      * @param  {Object} arg0 - 地址信息
@@ -451,7 +451,7 @@ NEJ.define([
     })();
     /**
      * 点击代理
-     * 
+     *
      * @protected
      * @method module:util/dispatcher/dispatcher._$$Dispatcher#__onClickDelegate
      * @param  {Event} arg0 - 点击事件对象
@@ -507,7 +507,7 @@ NEJ.define([
     })();
     /**
      * 解析行为代理
-     * 
+     *
      * @protected
      * @method module:util/dispatcher/dispatcher._$$Dispatcher#__onActionDelegate
      * @param  {Event} arg0 - 点击事件对象
@@ -542,7 +542,7 @@ NEJ.define([
     };
     /**
      * 添加调度规则
-     * 
+     *
      * 脚本举例
      * ```javascript
      * // 配置模块标题
@@ -551,14 +551,14 @@ NEJ.define([
      *     '/m/b':'模块标题',
      *     '/m/c':'模块标题'
      * });
-     * 
+     *
      * // 配置别名
      * dispatcher._$rule('alias',{
      *     'a':'/m/a',
      *     'b':['/m/b','/m/bb'],
      *     'c':'/m/c'
      * });
-     * 
+     *
      * // 配置与匹配顺序无关重写规则
      * // 重写规则配置结构：{ 目标UMI:重写规则 }
      * // 重写规则可以是字符串（全字符匹配）或者正则表达式
@@ -566,7 +566,7 @@ NEJ.define([
      *     '/m/b':/^\/m\/b.*$/i,
      *     '/m/c':'/m/d'
      * });
-     * 
+     *
      * // 批量配置重写规则
      * // 重写规则内置匹配代码支持
      * // 404 - 当模块不存在时重定向的模块UMI
@@ -575,7 +575,7 @@ NEJ.define([
      *     {'/m/b':/^\/m\/b.*$/i},
      *     {'404':'/m/a'}                 // <---- 模块不存在时定向到/m/a模块
      * ]);
-     * 
+     *
      * // 配置行为，默认为click行为，模块中通过options.input接收配置信息
      * // 默认行为信息解析节点上的以下内容：
      * // data-res-id         资源标识
@@ -596,7 +596,7 @@ NEJ.define([
      *         value:'/m/b' // or function
      *     }
      * });
-     * 
+     *
      * // 批量配置标题和重写规则
      * dispatcher._$rule({
      *     'title':{
@@ -621,7 +621,7 @@ NEJ.define([
      *     }
      * });
      * ```
-     * 
+     *
      * @method module:util/dispatcher/dispatcher._$$Dispatcher#_$rule
      * @param  {String}       arg0 - 规则类型，支持类型: title/rewrite/alias/action
      * @param  {Object|Array} arg1 - 规则配置，对于重写规则存在匹配的先后顺序
@@ -739,35 +739,35 @@ NEJ.define([
     })();
     /**
      * 注册UMI与模块的对应关系
-     * 
+     *
      * 脚本举例
      * ```javascript
      * // 注册模块的模板文件路径
      * dispatcher._$regist('/m/a/','/m/a.html');
-     * 
+     *
      * // 注册模块的配置信息，包括标题和文件路径
      * dispatcher._$regist('/m/a/',{
      *     title:'模块标题',
      *     clazz:'g-ma',
      *     module:'/m/a.html'
      * });
-     * 
+     *
      * // 注册模块的配置信息，包括标题和模块构造器
      * dispatcher._$regist('/m/a/',{
      *     title:'模块标题',
      *     clazz:'g-ma',
      *     module:np.m._$$ModuleA
      * });
-     * 
+     *
      * // 注册模块的构造器
      * dispatcher._$regist('/m/a/',np.m._$$ModuleA);
-     * 
+     *
      * // 注册私有模块指定分组ID，同一分组的私有模块调度时仅显示一个模块
      * dispatcher._$regist('/?/a/b/',{
      *     gid:'234567890',
      *     module:'/m/a/b.html'
      * });
-     * 
+     *
      * // 批量注册模块
      * dispatcher._$regist({
      *     '/m/a/':'/m/a.html',
@@ -796,15 +796,15 @@ NEJ.define([
      *               },
      * });
      * ```
-     * 
+     *
      * @method   module:util/dispatcher/dispatcher._$$Dispatcher#_$regist
      * @param    {String|Object} arg0      - 统一模块标识或者模块批量添加信息
-     * @param    {String|Object|module:util/dispatcher/module._$$ModuleAbstract} 
+     * @param    {String|Object|module:util/dispatcher/module._$$ModuleAbstract}
      *                           arg1      - 模块构造或者模块路径或者模块配置信息
      * @property {String}        gid       - 指定模块分组，仅对私有模块有效，对外模块忽略此配置
      * @property {String}        title     - 模块标题，显示模块时修改页面的标题
      * @property {String}        clazz     - 模块切换时body样式调整，仅对公共模块有效
-     * @property {String|module:util/dispatcher/module._$$ModuleAbstract} 
+     * @property {String|module:util/dispatcher/module._$$ModuleAbstract}
      *                           module    - 指定模块对应的模板文件地址或者模块的构造函数
      * @property {Object}        composite - 组合模块容器对应关系,{pid:umi},其中pid为umi对应模块的容器
      * @return   {Void}
@@ -830,8 +830,8 @@ NEJ.define([
                     this.__root,_umi
                 )._$getData(),
                 _module = _data.module;
-            // ignore if 
-            // - module constructor is registed 
+            // ignore if
+            // - module constructor is registed
             // - module is instanced
             if (_t3._$isModule(_module)||
                 _isModuleClass(_module)){
@@ -878,7 +878,7 @@ NEJ.define([
      * * 0 - 目标消息【默认】，只有目标节点收到消息
      * * 1 - 目标广播，从根节点至路目标节点径上的节点收到消息
      * * 2 - 群体广播，节点下所有子孙子孙节点收到消息
-     * 
+     *
      * @method   module:util/dispatcher/dispatcher._$$Dispatcher#_$message
      * @param    {Object} arg0 - 消息相关信息
      * @property {String} to   - 消息目标UMI
@@ -929,7 +929,7 @@ NEJ.define([
     })();
     /**
      * 发布消息
-     * 
+     *
      * 脚本举例
      * ```javascript
      *   dispatcher._$publish(
@@ -939,7 +939,7 @@ NEJ.define([
      *       }
      *   );
      * ```
-     * 
+     *
      * @method   module:util/dispatcher/dispatcher._$$Dispatcher#_$publish
      * @param    {String} arg0 - 消息类型
      * @param    {Object} arg0 - 消息相关信息
@@ -957,7 +957,7 @@ NEJ.define([
     };
     /**
      * 订阅消息
-     * 
+     *
      * 脚本举例
      * ```javascript
      *   dispatcher._$subscribe(
@@ -969,7 +969,7 @@ NEJ.define([
      *       }
      *   );
      * ```
-     * 
+     *
      * @method module:util/dispatcher/dispatcher._$$Dispatcher#_$subscribe
      * @param  {String}   arg0 - 目标模块的UMI
      * @param  {String}   arg1 - 消息类型
@@ -984,7 +984,7 @@ NEJ.define([
     };
     /**
      * 取消订阅消息
-     * 
+     *
      * 脚本举例
      * ```javascript
      *   dispatcher._$unsubscribe(
@@ -994,7 +994,7 @@ NEJ.define([
      *       }
      *   );
      * ```
-     * 
+     *
      * @method module:util/dispatcher/dispatcher._$$Dispatcher#_$unsubscribe
      * @param  {String}   arg0 - 目标模块的UMI
      * @param  {String}   arg1 - 消息类型
@@ -1009,13 +1009,13 @@ NEJ.define([
     };
     /**
      * 隐藏非分组私有模块
-     * 
+     *
      * 脚本举例
      * ```javascript
      *   // 隐藏私有模块
      *   dispatcher._$hide('/?/m/a/b/');
      * ```
-     * 
+     *
      * @method module:util/dispatcher/dispatcher._$$Dispatcher#_$hide
      * @param  {String} arg0 - 私有模块地址
      * @return {Void}
@@ -1028,16 +1028,16 @@ NEJ.define([
     };
     /**
      * 重定向模块，此接口支持
-     * 
+     *
      * * 私有模块重定向
      * * 可访问模块退出前验证
      * * 重定向地址带查询参数
-     * 
+     *
      * 脚本举例
      * ```javascript
      *   // 重定向私有模块
      *   dispatcher._$redirect('/?/m/a/b?a=aa&b=bb');
-     *   
+     *
      *   // 系统存在需退出验证模块时需使用以下业务逻辑接管页面自动调整的逻辑
      *   _v._$addEvent(document,'click',function(_event){
      *       var _element = _v._$getElement(_event,
@@ -1050,13 +1050,13 @@ NEJ.define([
      *           dispatcher._$redirect(_e._$dataset(_element,'href'));
      *       }
      *   });
-     *   
+     *
      *   // 如果页面带跳转的节点有data-href标识跳转地址的情况可以使用{#_$delegate}处理以上业务逻辑
      *   // <span data-href="#/m/a/?a=aa">aaaa</span>
      *   // <a href="#/m/a/?a=aa" data-href="#/m/a/?a=aa">bbbbbb</a>
      *   dispatcher._$delegate();
      * ```
-     * 
+     *
      * @method   module:util/dispatcher/dispatcher._$$Dispatcher#_$redirect
      * @param    {String}   arg0    - 模块UMI，可以带查询参数
      * @param    {Object}   arg1    - 配置信息
@@ -1090,7 +1090,7 @@ NEJ.define([
     };
     /**
      * 刷新模块
-     * 
+     *
      * @method module:util/dispatcher/dispatcher._$$Dispatcher#_$refresh
      * @param  {String} arg0 - 模块UMI，可以带查询参数
      * @return {Void}
@@ -1107,7 +1107,7 @@ NEJ.define([
     /**
      * 模块切换跳转委托，
      * 如果系统存在需退出验证模块时需使用此接口接管页面自动调整的逻辑
-     * 
+     *
      * @method module:util/dispatcher/dispatcher._$$Dispatcher#_$delegate
      * @see    module:util/dispatcher/dispatcher._$$Dispatcher#_$redirect
      * @return {Void}
@@ -1120,7 +1120,7 @@ NEJ.define([
     };
     /**
      * 激活调度器，激活之前确保注册完会被调用的模块
-     * 
+     *
      * @method module:util/dispatcher/dispatcher._$$Dispatcher#_$active
      * @return {Void}
      */
@@ -1129,7 +1129,7 @@ NEJ.define([
     };
     /**
      * 模块载入回调
-     * 
+     *
      * @method module:util/dispatcher/dispatcher._$$Dispatcher#_$loaded
      * @param  {String} arg0 - 模块UMI
      * @param  {module:util/dispatcher/module._$$ModuleAbstract} arg1 - 模块构造器
@@ -1150,7 +1150,7 @@ NEJ.define([
     };
     /**
      * 启动调度系统
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -1180,14 +1180,14 @@ NEJ.define([
      *     });
      * });
      * ```
-     * 
+     *
      * @method   module:util/dispatcher/dispatcher._$startup
      * @param    {Object} arg0 - 配置信息，其他配置同调度器实例化配置
      * @property {String} tid  - 模版ID，默认template-box
      * @return   {module:util/dispatcher/dispatcher._$$Dispatcher} 调度器实例
      */
     _p._$startup = function(_options){
-        window.dispatcher = 
+        window.dispatcher =
             _p._$$Dispatcher.
             _$getInstance(_options);
         _t7._$dumpModules();
@@ -1204,11 +1204,11 @@ NEJ.define([
         );
         return window.dispatcher;
     };
-    
+
     if (CMPT){
         NEJ.P('nej.e')._$startup = _p._$startup;
         NEJ.P('nej.ut')._$$Dispatcher = _p._$$Dispatcher;
     }
-    
+
     return _p;
 });

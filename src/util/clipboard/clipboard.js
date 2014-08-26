@@ -11,8 +11,9 @@ NEJ.define([
     'base/config',
     'base/util',
     'base/element',
-    'util/flash/flash'
-],function(NEJ,_c,_u,_e,_t0,_p,_o,_f,_r){
+    'util/flash/flash',
+    'base/chain'
+],function(NEJ,_c,_u,_e,_t0,_x,_p,_o,_f,_r){
     /*
      * 覆盖剪切操作功能按钮
      * @param  {Node}   按钮
@@ -49,13 +50,13 @@ NEJ.define([
      *       clipboard:'/other/path/nej_clipboard.swf'
      *   };
      * ```
-     * 
+     *
      * 页面结构
      * ```html
      *   <!-- 复制按钮 -->
      *   <input id="copyBtn" type="button" value="复制"/>
      * ```
-     * 
+     *
      * 脚本绑定复制功能
      * ```javascript
      * NEJ.define([
@@ -70,11 +71,15 @@ NEJ.define([
      *     });
      * });
      * ```
-     * 
+     *
      * @method module:util/clipboard/clipboard._$copy
      * @param  {String|Node}     arg0 - 操作节点
      * @param  {String|Function} arg1 - 要复制的内容，或者动态生成要复制的内容
      * @return {Void}
+     */
+    /**
+     * @method CHAINABLE._$copy
+     * @see module:util/clipboard/clipboard._$copy
      */
     _p._$copy = function(_element,_content){
         _element = _e._$get(_element);
@@ -97,13 +102,13 @@ NEJ.define([
      *       clipboard:'/other/path/nej_clipboard.swf'
      *   };
      * ```
-     * 
+     *
      * 页面结构
      * ```html
      *   <!-- 粘贴按钮 -->
      *   <input id="clearBtn" type="button" value="清空"/>
      * ```
-     * 
+     *
      * 脚本绑定清空功能
      * ```javascript
      * NEJ.define([
@@ -113,16 +118,22 @@ NEJ.define([
      *     _e._$clear('clearBtn');
      * });
      * ```
-     * 
+     *
      * @method module:util/clipboard/clipboard._$clear
      * @param  {String|Node} arg0 - 操作节点
      * @return {Void}
+     */
+    /**
+     * @method CHAINABLE._$clear
+     * @see module:util/clipboard/clipboard._$clear
      */
     _p._$clear =  function(_element){
         _element = _e._$get(_element);
         if (!_element) return;
         _doCoverClipboard(_element,'op=2');
     };
+    // for chainable method
+    _x._$merge(_p);
 
     if (CMPT){
         var _x = NEJ.P('nej.e');

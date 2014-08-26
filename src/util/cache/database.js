@@ -10,12 +10,13 @@ NEJ.define([
     'base/global',
     'base/klass',
     'base/util',
-    'util/event'
-],function(NEJ,_k,_u,_t,_p,_o,_f,_r){
+    'util/event',
+    'base/chain'
+],function(NEJ,_k,_u,_t,_x,_p,_o,_f,_r){
     var _pro;
     /**
      * IndexedDB数据库管理器
-     * 
+     *
      * 代码举例：
      * ```javascript
      * NEJ.define([
@@ -31,7 +32,7 @@ NEJ.define([
      *             // [{id:1,...},{id:2,...},{id:3,...}]
      *         }
      *     });
-     * 
+     *
      *     // 使用API取数据
      *     _t._$requestByDB({
      *         namespace:'music.track',
@@ -44,25 +45,25 @@ NEJ.define([
      *     });
      * });
      * ```
-     * 
+     *
      * @class    module:util/cache/database._$$DataBase
      * @extends  module:util/event._$$EventTarget
-     * 
+     *
      * @param    {Object} config    - 配置参数
      * @property {String} namespace - 名字空间，默认随机生成，格式[DB].[TB]，如 music.track
      * @property {Number} version   - 版本信息，默认使用时间戳作为版本，必须确保在新的namespace下给的version是递增的
      * @property {String} key       - 标识字段名，默认为id
      */
-    /** 
+    /**
      * 数据库准备完成回调
-     * 
+     *
      * @event    module:util/cache/database._$$DataBase#onready
      * @param    {Object}                                 event  - 数据库信息
      * @property {module:util/cache/database._$$DataBase} target - 数据库实例
      */
-    /** 
+    /**
      * 数据库操作失败回调
-     * 
+     *
      * @event    module:util/cache/database._$$DataBase#onerror
      * @param    {Object} event   - 错误信息
      * @property {Number} code    - 错误代码
@@ -72,7 +73,7 @@ NEJ.define([
     _pro = _p._$$DataBase._$extend(_t._$$EventTarget);
     /**
      * 控件重置
-     * 
+     *
      * @protected
      * @method module:util/cache/database._$$DataBase#__reset
      * @param  {Object} arg0 - 配置参数
@@ -121,7 +122,7 @@ NEJ.define([
     })();
     /**
      * 控件回收
-     * 
+     *
      * @protected
      * @method module:util/cache/database._$$DataBase#__destroy
      * @return {Void}
@@ -139,7 +140,7 @@ NEJ.define([
     };
     /**
      * 判断数据库是否已经准备好
-     * 
+     *
      * @protected
      * @method module:util/cache/database._$$DataBase#__isDBReady
      * @return {Boolean} 是否已经准备好
@@ -158,7 +159,7 @@ NEJ.define([
     };
     /**
      * 取存储操作对象
-     * 
+     *
      * @protected
      * @method module:util/cache/database._$$DataBase#__getTransaction
      * @param  {Object}  arg0 - 配置信息
@@ -181,7 +182,7 @@ NEJ.define([
     };
     /**
      * 执行某个操作
-     * 
+     *
      * @protected
      * @method   module:util/cache/database._$$DataBase#__doAction
      * @param    {String}       arg0    - 操作名称，如put/delete
@@ -216,12 +217,12 @@ NEJ.define([
             if (_item!=null){
                 //console.log('do '+_action+' -> '+_item);
                 _tx[_action](_item);
-            } 
+            }
         });
     };
     /**
      * 异步取指定键的数据信息
-     * 
+     *
      * 脚本举例
      * ```javascript
      * // 取单个数据对象
@@ -234,7 +235,7 @@ NEJ.define([
      *         // _error.message
      *     }
      * });
-     * 
+     *
      * // 取一批数据，以Map形式返回结果
      * _db._$get({'123':null,'234':null,...},{
      *     onload:function(_map){
@@ -245,7 +246,7 @@ NEJ.define([
      *         // 同上
      *     }
      * });
-     * 
+     *
      * // 取一批数据，以数组形式返回结果
      * _db._$get(['123','234',...]},{
      *     onload:function(_result){
@@ -257,7 +258,7 @@ NEJ.define([
      *     }
      * });
      * ```
-     * 
+     *
      * @method   module:util/cache/database._$$DataBase#_$get
      * @param    {String|Object|Array} arg0   - 指定数据的键
      * @param    {Object}              arg1   - 其他配置信息
@@ -321,13 +322,13 @@ NEJ.define([
     })();
     /**
      * 添加单条记录，批量添加见_$import接口
-     * 
+     *
      * 脚本举例
      * ```javascript
      * // 添加记录
      * _db._$add({id:'xxxx',name:'yyyyyy',...});
      * ```
-     * 
+     *
      * @method module:util/cache/database._$$DataBase#_$add
      * @param    {Object|Array} arg0    - 数据对象或者列表
      * @param    {Object}       arg1    - 其他配置信息
@@ -340,12 +341,12 @@ NEJ.define([
     };
     /**
      * 更新数据，如果需要更新的数据是个HASH表，则可以使用_$import接口
-     * 
+     *
      * 脚本举例
      * ```javascript
      * // 更新单条记录
      * _db._$update({id:'xxxx',name:'yyyyyy',...});
-     * 
+     *
      * // 更新一个列表的数据
      * _db._$update([
      *     {id:'1111',name:'xxxx',...},
@@ -353,7 +354,7 @@ NEJ.define([
      *     {id:'3333',name:'ggggggg',...}
      * ]);
      * ```
-     * 
+     *
      * @method   module:util/cache/database._$$DataBase#_$update
      * @param    {Array|Object} arg0    - 数据对象或者数据列表
      * @param    {Object}       arg1    - 其他配置信息
@@ -369,7 +370,7 @@ NEJ.define([
     };
     /**
      * 批量导入数据
-     * 
+     *
      * 代码举例
      * ```javascript
      * // 数组形式批量添加记录
@@ -378,7 +379,7 @@ NEJ.define([
      *     {id:'2222',name:'yyyyyy',...},
      *     {id:'3333',name:'yyyyyy',...}
      * ]);
-     * 
+     *
      * // Hash表形式批量添加记录
      * db._$import({
      *     1111:{id:'1111',name:'yyyyyy',...},
@@ -386,7 +387,7 @@ NEJ.define([
      *     3333:{id:'3333',name:'yyyyyy',...}
      * ]});
      * ```
-     * 
+     *
      * @method   module:util/cache/database._$$DataBase#_$import
      * @param    {Array|Object} arg0    - 数据集合或者数据列表
      * @param    {Object}       arg1    - 其他配置信息
@@ -399,16 +400,16 @@ NEJ.define([
     };
     /**
      * 删除记录
-     * 
+     *
      * 脚本举例
      * ```javascript
      * // 删除单条记录
      * _db._$delete('xxxx');
-     * 
+     *
      * // 批量删除数据
      * _db._$delete(['123','234']);
      * ```
-     * 
+     *
      * @method   module:util/cache/database._$$DataBase#_$delete
      * @param    {String|Number|Array} arg0    - 记录标识或者列表
      * @param    {Object}              arg1    - 其他配置信息
@@ -424,13 +425,13 @@ NEJ.define([
     };
     /**
      * 清除表内容
-     * 
+     *
      * 脚本举例
      * ```javascript
      * // 清除表数据
      * _db._$clear();
      * ```
-     * 
+     *
      * @method module:util/cache/database._$$DataBase#_$clear
      * @param    {Object}   arg0    - 其他配置信息
      * @property {Function} onload  - 成功回调
@@ -458,7 +459,7 @@ NEJ.define([
     };
     /**
      * 请求数据库操作，从数据库请求数据
-     * 
+     *
      * 代码举例
      * ```javascript
      * NEJ.define([
@@ -476,7 +477,7 @@ NEJ.define([
      *     });
      * });
      * ```
-     * 
+     *
      * @method   module:util/cache/database._$request
      * @param    {Object}   arg0      - 可配置参数
      * @property {String}   namespace - 名字空间
@@ -518,11 +519,11 @@ NEJ.define([
             }
         });
     };
-    
+
     if (CMPT){
         NEJ.P('nej.j')._$requestByDB = _p._$request;
         NEJ.P('nej.ut')._$$DataBase  = _p._$$DataBase;
     }
-    
+
     return _p;
 });

@@ -8,14 +8,15 @@
 /** @module  util/cache/cookie */
 NEJ.define([
     'base/global',
-    'base/util'
-],function(NEJ,_u,_p,_o,_f,_r){
+    'base/util',
+    'base/chain'
+],function(NEJ,_u,_x,_p,_o,_f,_r){
     /**
      * 设置或者获取cookie
-     * 
+     *
      * * 没有输入第二个参数则表示返回已有cookie
      * * 如果cookie值为空字符串则表示删除cookie
-     * 
+     *
      * 脚本举例
      * ```javascript
      *   NEJ.define([
@@ -24,7 +25,7 @@ NEJ.define([
      *       // 设置cookie的name=abc
      *       var _cookie = _j._$cookie('name','abc');
      *       _j._$cookie('name',{value:'abc'});
-     * 
+     *
      *       // 设置路径，domain(如果domain不同域，cookie设置不会成功),设置过期时间1天;
      *       var _cookie = _j._$cookie('name',{
      *           value:'abc',
@@ -32,13 +33,13 @@ NEJ.define([
      *           domain:'www.163.com',
      *           expires:1
      *       });
-     * 
+     *
      *       // 删除cookie
      *       _j._$cookie('name','');
      *       _j._$cookie('name',{expires:-1});
      *   });
      * ```
-     * 
+     *
      * @method   module:util/cache/cookie._$cookie
      * @param    {String}        arg0    - cookie名称
      * @param    {String|Object} arg1    - cookie值，如果有其他配置信息输入对象，已处理属性包括
@@ -84,10 +85,10 @@ NEJ.define([
             document.cookie = _cookie;
         };
     })();
-    
+
     if (CMPT){
         NEJ.copy(NEJ.P('nej.j'),_p);
     }
-    
+
     return _p;
 });

@@ -10,7 +10,8 @@ NEJ.define([
     'base/global',
     'base/element',
     'base/event',
-    'base/util'
+    'base/util',
+    'base/chain'
 ],function(NEJ,_e,_v,_u,_p,_o,_f,_r){
     var _cache = {};
     /*
@@ -57,7 +58,7 @@ NEJ.define([
      * ```html
      * <a id="button_id">下载文件</a>
      * ```
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -81,6 +82,10 @@ NEJ.define([
      * @property {String|Function} url  - 下载文件地址或者地址生成函数
      * @property {String}          name - 保存的文件名称，没有指定name则取url中文件名
      * @return   {Void}
+     */
+    /**
+     * @method CHAINABLE._$bind
+     * @see module:util/file/save._$bind
      */
     _p._$bind = function(_button,_options){
         var _id = _e._$id(_button);
@@ -108,12 +113,18 @@ NEJ.define([
      * @param  {String|Node} arg0 - 下载点击按钮节点
      * @return {Void}
      */
+    /**
+     * @method CHAINABLE._$unbind
+     * @see module:util/file/save._$unbind
+     */
     _p._$unbind = function(_button){
         var _id = _e._$id(_button);
         if (!_cache[_id]) return;
         delete _cache[_id];
         _v._$delEvent(_id,'click',_doSaveAs);
     };
+    // for chainable method
+    _x._$merge(_p);
 
     if (CMPT){
         var _x = NEJ.P('nej.e');

@@ -9,8 +9,9 @@
 NEJ.define([
     'base/global',
     'base/event',
-    'base/element'
-],function(NEJ,_v,_e,_p,_o,_f,_r){
+    'base/element',
+    'base/chain'
+],function(NEJ,_v,_e,_x,_p,_o,_f,_r){
     /**
      * 节点鼠标或手势按下高亮行为，移动触摸反馈
      *
@@ -41,6 +42,10 @@ NEJ.define([
      * @param  {String|Node} arg0 - 节点
      * @param  {String}      arg1 - 样式，默认为js-highlight
      * @return {Void}
+     */
+    /**
+     * @method CHAINABLE._$highlight
+     * @see module:util/highlight/touch._$highlight
      */
     _p._$highlight = (function(){
         var _cache = {},
@@ -93,10 +98,12 @@ NEJ.define([
             );
         };
     })();
-    
+    // for chainable method
+    _x._$merge(_p);
+
     if (CMPT){
         NEJ.copy(NEJ.P('nej.e'),_p);
     }
-    
+
     return _p;
 });
