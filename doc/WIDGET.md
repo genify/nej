@@ -850,6 +850,178 @@ NEJ.define([
 });
 ```
 
+## 控件规范
+
+项目过程中如果觉得有些控件可以通用，分享给其他项目使用，可以将控件提交到NEJ控件仓库，提交的控件遵循以下规范
+
+### 目录规范
+
+提交的通用控件目录结构为
+
+```
+  widget
+    | - test
+    | - demo
+    | - platform
+    | - widget.js
+```
+
+提交的UI控件的目录结构为
+
+```
+  widget
+    | - test
+    | - demo
+    | - platform
+    | - widget.js
+    | - widget.css
+    | - widget.html
+```
+
+#### test
+
+用于自动化测试控件的代码，后期会统一规范控件的测试方式 （TODO：测试规范）
+
+#### demo
+
+用于放置当前控件的使用场景及使用范例
+
+#### platform
+
+根据NEJ[平台适配系统](./PLATFORM.md)规则，如果控件需要做平台适配则在此目录下实现适配接口，如果无需平台适配则可以不提交此目录
+
+#### widget.css
+
+控件关联的样式文件，如无关联样式可不提交此文件
+
+#### widget.html
+
+控件关联的结构文件，遵循NEJ[模版系统](./TEMPLATE.md)规范，如无关联结构可不提交此文件
+
+#### widget.js
+
+控件核心业务逻辑实现文件
+
+
+### 注释规范
+
+所有注释遵循[JSDOC3](http://usejsdoc.org/)规范，注释描述支持markerdown语法
+
+#### 文件注释
+
+文件起始位置注释文件的描述信息、作者、版本等
+
+```javascript
+    /*
+     * ------------------------------------------
+     * 控件描述内容
+     *
+     * @version  1.0
+     * @author   genify(caijf@corp.netease.com)
+     * ------------------------------------------
+     */
+```
+
+#### 模块注释
+
+使用@module标记注释当前文件的模块，模块名称可被[依赖系统](./DEPENDENCY.md)直接引入使用
+
+```javascript
+    /** @module util/event */
+```
+
+#### 类注释
+
+使用@class、@extends标记注释类及继承关系
+
+```javascript
+    /**
+     * 标签切换控件封装
+     *
+     * 结构举例
+     *
+     * ```html
+     *   <div id="box">
+     *       <a>1</a>
+     *       <a>2</a>
+     *       <a class="js-disabled">3</a>
+     *       <a>4</a>
+     *   </div>
+     * ```
+     *
+     * 脚本举例
+     *
+     * ```javascript
+     * NEJ.define([
+     *     'util/tab/tab'
+     * ],function(_t){
+     *     // 实例化控件
+     *     var _tab = _t._$$Tab._$allocate({
+     *         list:_e._$getChildren('box'),
+     *         index:1,
+     *         onchange:function(_event){
+     *             // TODO
+     *         }
+     *     });
+     *     // 使用控件
+     *     _tab._$go(2);
+     * });
+     * ```
+     *
+     * @class   module:util/tab/tab._$$Tab
+     * @extends module:util/event._$$EventTarget
+     *
+     * @param    {Object}  config   - 可选配置参数
+     * @property {Array}   list     - 标签项列表
+     * @property {Number}  index    - 初始选中项索引值，默认为0
+     * @property {String}  event    - 触发选择事件名称，默认为click
+     * @property {Boolean} inverse  - 是否反过程，true表示选中时删除选中样式，否则选中时添加样式
+     * @property {String}  disabled - 选项禁用样式，默认为js-disabled
+     * @property {String}  selected - 选中样式名，默认为js-selected
+     */
+```
+
+#### 事件注释
+
+使用@event标记注释控件支持的事件
+
+```javascript
+    /**
+     * 标签切换事件，输入{last:1,index:5}
+     *
+     * ```javascript
+     * NEJ.define([
+     *     'util/tab/tab'
+     * ],function(_t){
+     *     // 实例化控件
+     *     var _tab = _t._$$Tab._$allocate({
+     *         list:_e._$getChildren(_e._$get('box')),
+     *         index:1,
+     *         onchange:function(_event){
+     *             // _event.last   上一次的tab索引
+     *             // _event.index  需要切换到的tab索引
+     *             // _event.list   节点列表
+     *             // _event.data   节点上通过data-value设置的内容
+     *             // TODO
+     *         }
+     *     });
+     * });
+     * ```
+     *
+     * @event    module:util/tab/tab._$$Tab#onchange
+     * @param    {Object}  event   - tab信息
+     * @property {Number}  last    - 上一次的tab索引
+     * @property {Number}  index   - 需要切换到的tab索引
+     * @property {Array}   list    - 节点列表
+     * @property {String}  data    - 节点上通过data-value设置的内容
+     * @property {Boolean} stopped - 是否阻止触发节点的默认事件，回调过程中如果设置为false则后续继续触发节点的默认事件
+     */
+```
+
+
+
+
+
 
 
 
