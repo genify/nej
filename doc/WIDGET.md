@@ -1018,14 +1018,58 @@ NEJ.define([
      */
 ```
 
+#### 方法注释
 
+使用@method标记注释控件接口，使用@private、@protected标记注释私有和受保护的方法
 
+```javascript
+    /**
+     * 设置标签选中状态
+     *
+     * @protected
+     * @method module:util/tab/tab._$$Tab#__doTabItemSelect
+     * @param  {Node}    arg0 - 标签节点
+     * @param  {Boolean} arg1 - 是否选中
+     * @return {Void}
+     */
+```
 
+```javascript
+    /**
+     * 切换到指定索引位置
+     *
+     * ```javascript
+     *   // 切换到索引为2的位置，如果当前索引为2则不触发回调
+     *   _tab._$go(2);
+     *   // 切换索引为2，如果当前索引为2也触发onchange回调
+     *   _tab._$go(2,true);
+     * ```
+     *
+     * @method module:util/tab/tab._$$Tab#_$go
+     * @param  {Number}  arg0 - 索引值
+     * @param  {Boolean} arg1 - 是否强行触发onchange事件
+     * @return {Void}
+     */
+```
 
+### 编码规范
 
+#### 前缀规范
 
+控件编码使用前缀标识变量使用范围
 
+* \_    - 私有属性、方法，局部变量，仅限于当前控件范围内使用
+* \__   - 受保护的属性、方法，控件范围及所有子类可使用
+* \_$   - 对外属性、方法，控件外可直接调用
+* \_$$  - 类名前缀，控件外可直接使用
+* on    - 事件前缀，控件外可直接使用
 
+#### 命名规范
 
+控件命名遵循以下规则便于识别
+
+* 类名首字母大写，驼峰形式，如_$$MyClassName等
+* 属性、方法名首字母小写，驼峰形式，如 \_myMethod、\_\_myProtectedMethod、\_$doSomething等
+* 事件名称全小写，采用名称+动词形式，如 onchange、onlistload等
 
 
