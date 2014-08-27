@@ -34,7 +34,7 @@ NEJ.define([
     /**
      * 字体选项列表
      *
-     * @member {Array}
+     * @const {Array} module:ui/editor/command/fontname._$$FontNameCard.list
      */
     _p._$$FontNameCard.list =
       [{name:'宋体'}
