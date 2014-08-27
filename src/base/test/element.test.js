@@ -10,6 +10,40 @@ var f = function(){
         equal(typeof(p._$KERNEL),'object','浏览器是'+p._$KERNEL.browser+'----前缀是'+p._$KERNEL.prefix.css+'----scc3d='+p._$SUPPORT.css3d);
     });
 
+    test('xml2object',function(){
+        var _xml = '<?xml version="1.0" encoding="UTF-8" ?>\
+        <netease>\
+          <albums>\
+              <p><id><code><id>id</id>\
+                  <code>code</code>\
+                  <name>name</name>\</code></id></p>\
+              <album>\
+                  <id>id</id>\
+                  <code>code</code>\
+                  <name>name</name>\
+              </album>\
+          </albums>\
+        </netease>';
+        var _xml2 = '<?xml version="1.0" encoding="UTF-8"?>\
+<netease>\
+<albums>\
+    <code>1</code>\
+    <album>\
+        <id>198114001</id>\
+        <name></name>\
+        <desc></desc>\
+        <auth>2</auth>\
+        <privacy>2</privacy>\
+        <count>110</count>\
+        <tcover>4/zxeW5iOfq3ppXe1etviJwg==/611645124409898904.jpg</tcover>\
+        <coverurl>1/_0CvRVkR39uuLIIEHVSAJQ==/1278740819214249961.jpg</coverurl>\
+        <coverurl160>5/eoc7HI1101yikVJnzbBADg==/3082713944952843165.jpg</coverurl160>\
+    </album>\
+</albums>\
+</netease>';
+        equal(e._$xml2object(_xml2).netease.albums.album.auth,'2','XML转对象');
+    });
+
     QUnit.test('textarea光标测试',function(){
         QUnit.stop();
         var _cursor = e._$get('cursor-area');
