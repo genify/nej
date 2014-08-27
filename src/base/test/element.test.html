@@ -5,8 +5,9 @@
 		<title>element测试页面</title>
   		<link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.14.0.css" type="text/css" media="screen" />
 		<script type="text/javascript" src="http://code.jquery.com/qunit/qunit-1.14.0.js"></script>
-		<style type="text/css">
+		<style id='style-id' type="text/css">
 			#js-node{position: relative;}
+			#bottom{margin:1200px 0 0 2200px;}
 		</style>
 	</head>
 	<body>
@@ -23,11 +24,17 @@
 		<div id="ele" style="position:relative;padding:5px 0 0 10px;">
 			<div id="ele2">123</div>
 		</div>
+		<textarea id="cursor-area">请选中我,3秒后测试开始</textarea>
 		<div id='css3d' class='css3d'>
 			设置css3d属性
 		</div>
+		<div id='ul'><ul>ul</ul><p>p</p><h1>h1</h1></div>
 		<div id='frameCnt'>
 		</div>
+		<div id='bottom'>
+		bottom
+		</div>
+		<div id="full-div">full-div</div>
 		<script src="../../define.js?pro=./"></script>
 		<script type="text/javascript" src="./element.test.js"></script>
 	</body>

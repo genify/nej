@@ -339,7 +339,7 @@ NEJ.define([
      */
     _p.__appendCSSText = function(_element,_css){
         var _sheet = _element.sheet,
-            _length = _element.cssRules.length;
+            _length = _sheet.cssRules.length;
         _sheet.insertRule(_css,_length);
         return _sheet.cssRules[_length];
     };
