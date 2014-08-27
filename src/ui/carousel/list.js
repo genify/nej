@@ -12,7 +12,7 @@ NEJ.define([
     'base/element',
     'util/event',
     'ui/loading/loading',
-    'ui/carousel/carousel.x'
+    'ui/carousel/x'
 ],function(NEJ,_k,_e,_t,_i0,_i1,_p,_o,_f,_r){
     // variable declaration
     var _pro;

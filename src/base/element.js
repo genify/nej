@@ -40,7 +40,7 @@ NEJ.define([
      *       var _id = _e._$id(_node||"abc");
      *   });
      * ```
-     * 
+     *
      * @method module:base/element._$id
      * @param  {String|Node} arg0 - 节点标识或者对象
      * @return {String}             节点标识
@@ -49,7 +49,7 @@ NEJ.define([
      * @method CHAINABLE._$id
      * @see module:base/element._$id
      */
-    _p._$id = 
+    _p._$id =
     _y._$id = function(_element){
         _element = _p._$get(_element);
         if (!_element) return;
@@ -136,7 +136,7 @@ NEJ.define([
      * @method CHAINABLE._$getChildren
      * @see module:base/element._$getChildren
      */
-    _p._$getChildren = 
+    _p._$getChildren =
     _y._$getChildren = function(_element,_clazz){
         _element = _p._$get(_element);
         if (!_element) return null;
@@ -183,7 +183,7 @@ NEJ.define([
      * @method CHAINABLE._$getByClassName
      * @see module:base/element._$getByClassName
      */
-    _p._$getByClassName = 
+    _p._$getByClassName =
     _y._$getByClassName = function(_element,_class){
         _element = _p._$get(_element);
         return !_element ? null :
@@ -240,7 +240,7 @@ NEJ.define([
      * @method CHAINABLE._$getSibling
      * @see module:base/element._$getSibling
      */
-    _p._$getSibling = 
+    _p._$getSibling =
     _y._$getSibling = (function(){
         var _doFilter = function(){
             return !0;
@@ -487,7 +487,7 @@ NEJ.define([
      * @method CHAINABLE._$scrollTo
      * @see module:base/element._$scrollTo
      */
-    _p._$scrollTo = 
+    _p._$scrollTo =
     _y._$scrollTo = function(_element){
         var _offset = _p._$offset(_element);
         window.scrollTo(_offset.x,_offset.y);
@@ -593,7 +593,7 @@ NEJ.define([
      * @method CHAINABLE._$offset
      * @see module:base/element._$offset
      */
-    _p._$offset = 
+    _p._$offset =
     _y._$offset = (function(){
         var _isRoot = function(_element){
             return _element==document.body||
@@ -651,7 +651,7 @@ NEJ.define([
      * @method CHAINABLE._$cursor
      * @see module:base/element._$cursor
      */
-    _p._$cursor = 
+    _p._$cursor =
     _y._$cursor = function(_textarea,_options){
         _textarea = _p._$get(_textarea);
         if (!_textarea){
@@ -685,7 +685,7 @@ NEJ.define([
      * @method CHAINABLE._$fullScreen
      * @see module:base/element._$fullScreen
      */
-    _p._$fullScreen = 
+    _p._$fullScreen =
     _y._$fullScreen = function(_element){
         _element = _p._$get(_element);
         if (!!_element){
@@ -707,7 +707,7 @@ NEJ.define([
      * @method CHAINABLE._$mask
      * @see module:base/element._$mask
      */
-    _p._$mask = 
+    _p._$mask =
     _y._$mask = function(_element){
         _element = _p._$get(_element);
         if (!!_element){
@@ -728,7 +728,7 @@ NEJ.define([
      * @method CHAINABLE._$unmask
      * @see module:base/element._$unmask
      */
-    _p._$unmask = 
+    _p._$unmask =
     _y._$unmask = function(_element){
         _element = _p._$get(_element);
         if (!!_element){
@@ -899,7 +899,7 @@ NEJ.define([
      * @method CHAINABLE._$remove
      * @see module:base/element._$remove
      */
-    _p._$remove = 
+    _p._$remove =
     _y._$remove = (function(){
         var _fmap = {
             img:function(_node){
@@ -969,7 +969,7 @@ NEJ.define([
      * @method CHAINABLE._$removeByEC
      * @see module:base/element._$removeByEC
      */
-    _p._$removeByEC = 
+    _p._$removeByEC =
     _y._$removeByEC = function(_element){
         _element = _p._$get(_element);
         if (!!_element){
@@ -1016,7 +1016,7 @@ NEJ.define([
      * @method CHAINABLE._$clearChildren
      * @see module:base/element._$clearChildren
      */
-    _p._$clearChildren = 
+    _p._$clearChildren =
     _y._$clearChildren = function(_element){
         _element = _p._$get(_element);
         if (!!_element){
@@ -1083,7 +1083,7 @@ NEJ.define([
      * @method CHAINABLE._$wrapInline
      * @see module:base/element._$wrapInline
      */
-    _p._$wrapInline = 
+    _p._$wrapInline =
     _y._$wrapInline = (function(){
         var _clazz,
             _reg0 = /\s+/;
@@ -1162,7 +1162,7 @@ NEJ.define([
      * @method CHAINABLE._$dataset
      * @see module:base/element._$dataset
      */
-    _p._$dataset = 
+    _p._$dataset =
     _y._$dataset = function(_element,_key,_value){
         var _id = _p._$id(_element);
         return !_id ? null :
@@ -1201,7 +1201,7 @@ NEJ.define([
      * @method CHAINABLE._$attr
      * @see module:base/element._$attr
      */
-    _p._$attr = 
+    _p._$attr =
     _y._$attr = function(_element,_name,_value){
         _element = _p._$get(_element);
         if (!_element){
@@ -1286,7 +1286,7 @@ NEJ.define([
      * @method CHAINABLE._$dom2xml
      * @see module:base/element._$dom2xml
      */
-    _p._$dom2xml = 
+    _p._$dom2xml =
     _y._$dom2xml = function(_element){
         _element = _p._$get(_element);
         return !_element?'':_h.__serializeDOM2XML(_element);
@@ -1348,7 +1348,7 @@ NEJ.define([
      * @method CHAINABLE._$dom2object
      * @see module:base/element._$dom2object
      */
-    _p._$dom2object = 
+    _p._$dom2object =
     _y._$dom2object = function(_dom,_obj){
          _obj = _obj||{};
          _dom = _p._$get(_dom);
@@ -1476,7 +1476,7 @@ NEJ.define([
      * @method CHAINABLE._$style
      * @see module:base/element._$style
      */
-    _p._$style = 
+    _p._$style =
     _y._$style = function(_element,_map){
         _element = _p._$get(_element);
         if (!!_element){
@@ -1518,7 +1518,7 @@ NEJ.define([
      * @method CHAINABLE._$setStyle
      * @see module:base/element._$setStyle
      */
-    _p._$setStyle = 
+    _p._$setStyle =
     _y._$setStyle = function(_element,_name,_value){
         _element = _p._$get(_element);
         if (!!_element){
@@ -1556,7 +1556,7 @@ NEJ.define([
      * @method CHAINABLE._$getStyle
      * @see module:base/element._$getStyle
      */
-    _p._$getStyle = 
+    _p._$getStyle =
     _y._$getStyle = function(_element,_name){
         _element = _p._$get(_element);
         return !_element ? '' :
@@ -1779,7 +1779,7 @@ NEJ.define([
      * @method CHAINABLE._$appendCSSText
      * @see module:base/element._$appendCSSText
      */
-    _p._$appendCSSText = 
+    _p._$appendCSSText =
     _y._$appendCSSText = function(_element,_css){
         _element = _p._$get(_element);
         return !_element ? null :
@@ -1822,7 +1822,7 @@ NEJ.define([
      * @method CHAINABLE._$addClassName
      * @see module:base/element._$addClassName
      */
-    _p._$addClassName = 
+    _p._$addClassName =
     _y._$addClassName = function(_element,_class){
         _element = _p._$get(_element);
         if (!!_element){
@@ -1865,7 +1865,7 @@ NEJ.define([
      * @method CHAINABLE._$delClassName
      * @see module:base/element._$delClassName
      */
-    _p._$delClassName = 
+    _p._$delClassName =
     _y._$delClassName = function(_element,_class){
         _element = _p._$get(_element);
         if (!!_element){
@@ -1911,7 +1911,7 @@ NEJ.define([
      * @method CHAINABLE._$replaceClassName
      * @see module:base/element._$replaceClassName
      */
-    _p._$replaceClassName = 
+    _p._$replaceClassName =
     _y._$replaceClassName = function(_element,_del,_add){
         _element = _p._$get(_element);
         if (!!_element){
@@ -1948,7 +1948,7 @@ NEJ.define([
      * @method CHAINABLE._$hasClassName
      * @see module:base/element._$hasClassName
      */
-    _p._$hasClassName = 
+    _p._$hasClassName =
     _y._$hasClassName = function(_element,_class){
         _element = _p._$get(_element);
         if (!!_element){
@@ -2010,7 +2010,7 @@ NEJ.define([
      * @method CHAINABLE._$css3d
      * @see module:base/element._$css3d
      */
-    _p._$css3d = 
+    _p._$css3d =
     _y._$css3d = function(_element,_name,_map){
         _element = _p._$get(_element);
         if (!!_element){
@@ -2022,7 +2022,7 @@ NEJ.define([
     };
     // for chainable
     _x._$merge(_y);
-    
+
     if (CMPT){
         NEJ.copy(NEJ.P('nej.e'),_p);
     }

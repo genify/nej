@@ -172,7 +172,7 @@ NEJ.define([
         _u._$merge(_ext,_map);
     };
     // for chainable method
-    _x._$merge(_$renderHtmlTemplate,_p._$renderHtmlTemplate);
+    _x._$merge({_$renderHtmlTemplate:_p._$renderHtmlTemplate});
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.e'),_p);
