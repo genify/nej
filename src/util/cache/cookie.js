@@ -8,9 +8,8 @@
 /** @module  util/cache/cookie */
 NEJ.define([
     'base/global',
-    'base/util',
-    'base/chain'
-],function(NEJ,_u,_x,_p,_o,_f,_r){
+    'base/util'
+],function(NEJ,_u,_p,_o,_f,_r){
     /**
      * 设置或者获取cookie
      *

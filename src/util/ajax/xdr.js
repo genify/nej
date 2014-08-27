@@ -13,7 +13,7 @@ NEJ.define([
     'base/element',
     './proxy/xhr.js',
     '{platform}xdr.js'
-],function(NEJ,_g,_u,_e,_t,_h,_x,_p,_o,_f,_r){
+],function(NEJ,_g,_u,_e,_t,_h,_p,_o,_f,_r){
     /**
      * 载入回调
      *
