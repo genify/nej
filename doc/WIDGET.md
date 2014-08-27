@@ -526,7 +526,7 @@ UI控件基于控件模型扩展而来，其抽象实现在 ui/base 模块中的
 .#<uispace> .js-selected{background:#1257F9;}
 ```
 
-这里可以使用 #&lt;KEY&gt; 格式的简单模版来做数据占位，其中
+这里可以使用 #&lt;KEY&gt; 格式的简单模板来做数据占位，其中
 
 * \#&lt;uispace&gt; - 表示自动生成的样式标识名称
 * \#&lt;uispace&gt;-parent - 表示控件节点的父容器节点的样式
@@ -534,9 +534,9 @@ UI控件基于控件模型扩展而来，其抽象实现在 ui/base 模块中的
 
 #### 结构
 
-每个UI控件可以关联若干的结构模版，模版规则遵循NEJ的[模版系统](./TEMPLATE.md)规范
+每个UI控件可以关联若干的结构模板，模板规则遵循NEJ的[模板系统](./TEMPLATE.md)规范
 
-单个模版文件范例
+单个模板文件范例
 
 ```html
 <div>
@@ -548,7 +548,7 @@ UI控件基于控件模型扩展而来，其抽象实现在 ui/base 模块中的
 </div>
 ```
 
-多个模版文件范例，模版的ID支持使用 #&lt;KEY&gt; 形式的简单模版做ID占位
+多个模板文件范例，模板的ID支持使用 #&lt;KEY&gt; 形式的简单模板做ID占位
 
 ```html
 <textarea name='jst' id='#<icmd>'>
@@ -627,9 +627,9 @@ NEJ.define([
 
 ##### 注入结构
 
-根据[依赖系统](./DEPENDENCY.md)规则，UI控件使用 text! 注入结构，注入的结构符合[模版系统](./TEMPLATE.md)规则，后续使用 util/template/tpl 模块中的模版处理接口做处理
+根据[依赖系统](./DEPENDENCY.md)规则，UI控件使用 text! 注入结构，注入的结构符合[模板系统](./TEMPLATE.md)规则，后续使用 util/template/tpl 模块中的模板处理接口做处理
 
-单个模版结构注入
+单个模板结构注入
 
 ```javascript
 NEJ.define([
@@ -647,7 +647,7 @@ NEJ.define([
 });
 ```
 
-多个模版结构注入
+多个模板结构注入
 
 ```javascript
 NEJ.define([
@@ -660,11 +660,11 @@ NEJ.define([
     // 将注入的样式做预处理后缓存
     var _seed_css = _e._$pushCSSText(_css);
 
-    // 这里可以自动生成模版ID
+    // 这里可以自动生成模板ID
     // 返回 {icmd:'tpl-127363653',ifnt:'tpl-5985857444',iedt:'tpl-48763635374'}
     var _seed = _t._$parseUITemplate(_html);
 
-    // 这里也可以自己指定模版ID
+    // 这里也可以自己指定模板ID
     // 可以指定全部的ID，也可以指定某几个，未指定的ID自动生成
     var _seed = _t._$parseUITemplate(_html,{
         icmd:'abc',
@@ -896,7 +896,7 @@ NEJ.define([
 
 #### widget.html
 
-控件关联的结构文件，遵循NEJ[模版系统](./TEMPLATE.md)规范，如无关联结构可不提交此文件
+控件关联的结构文件，遵循NEJ[模板系统](./TEMPLATE.md)规范，如无关联结构可不提交此文件
 
 #### widget.js
 
