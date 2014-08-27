@@ -234,6 +234,13 @@ NEJ提供了一套模块调度系统 用于支持单页富应用的系统架构�
 
    ![显示模块](http://img1.ph.126.net/DwnLyinZy9ZG8IX_uwOmsg==/6599306173308730570.png)
 
+## 消息通道
+
+大部分时候我们不需要模块之前的消息通信，实践中也存在一些特殊情况会需要模块之前的消息通信，这里提供两种方式的消息通讯
+
+* 点对点的消息：一个模块发送消息时明确指定目标模块的UMI
+* 观察订阅消息：一个模块可以对外申明发布了什么样的消息，有需要的模块可以订阅该模块UMI上的消息
+
 ## 实例解析
 
 这部分我们用上面的具体实例讲解如何使用NEJ的模块调度系统来拆分一个复杂系统、开发测试模块、整合系统
@@ -513,8 +520,72 @@ NEJ.define([
     return _p;
 });
 ```
+#### 消息
 
-#### 测试
+##### 点对点消息
+
+模块可以通过\_\_doSendMessage接口向指定UMI的模块发送消息，也可以通过实现\_\_onMessage接口来接收其他模块发给他的消息
+
+发送消息
+
+```javascript
+_pro.__doSomething = function(){
+
+    // TODO
+
+    this.__doSendMessage(
+        '/m/setting/account/',{
+            a:'aaaaaa',
+            b:'bbbbbbbbb'
+        }
+    );
+};
+```
+
+接收消息
+
+```javascript
+_pro.__onMessage = function(_event){
+    // _event.from 消息来源
+    // _event.data 消息数据，这里可能是 {a:'aaaaaa',b:'bbbbbbbbb'}
+
+    // TODO
+};
+```
+
+##### 发布订阅消息
+
+发布消息
+
+```javascript
+_pro.__doSomething = function(){
+
+    // TODO
+
+    this.__doPublishMessage(
+        'onok',{
+            a:'aaaaaa',
+            b:'bbbbbbbb'
+        }
+    );
+};
+```
+
+订阅消息
+
+```javascript
+_pro.__doBuild = function(){
+
+    // TODO
+
+    this.__doSubscribeMessage(
+        '/m/message/account/','onok',
+        this.__onMessageReceive._$bind(this)
+    );
+};
+```
+
+#### 自测
 
 创建html页面，使用模板引入模块实现文件
 
@@ -738,4 +809,53 @@ NEJ.define([
 ### 打包发布
 
 打包发布内容详见[NEJ工具集](https://github.com/genify/toolkit)相关文档
+
+## 系统变更
+
+当系统需求变化而进行模块变更我们只需要开发新的模块或删除模块配置即可
+
+### 新增模块
+
+如果新增的模块功能在系统中已经实现，则只需修改配置即可，如上例中我们需要在将日志管理下的标签模块在博客设置中也加一份，访问路径为/m/setting/tag/
+
+![新增模块](http://img0.ph.126.net/s4pv6FZmPal8Jx0m0eNltA==/6619471216560468933.png)
+
+修改规则配置
+
+```javascript
+rules:{
+    // ...
+    alias:{
+        // ...
+        'blog-tag':['/m/blog/tag/','/m/setting/tag/']
+    }
+}
+```
+
+修改模块配置
+
+```javascript
+modules:{
+    // ...
+    '/m/setting/tag/':'module/blog/tag/index.html'
+}
+```
+
+如果要在/?/setting/tab模块的结构模版中增加一个标签即可
+
+```html
+<textarea name="txt" id="module-id-8">
+  <div class="ma-t w-tab f-cb">
+    <a class="itm fl" href="#/setting/account/" data-id="/setting/account/">账号管理</a>
+    <a class="itm fl" href="#/setting/permission/" data-id="/setting/permission/">权限设置</a>
+    <a class="itm fl" href="#/setting/tag/" data-id="/setting/tag/">日志标签</a>
+  </div>
+</textarea>
+```
+
+### 删除模块
+
+将退化的模块从系统中删除只需要将模块对应的UMI配置从模块配置中删除即可，而无需修改具体业务逻辑
+
+
 
