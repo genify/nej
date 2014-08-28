@@ -9,9 +9,9 @@
 NEJ.define([
     'base/global',
     'base/element',
-    '{platform}holder.js',
-    'base/chain'
-],function(NEJ,_e,_h,_x,_p,_o,_f,_r){
+    'base/chain',
+    '{platform}holder.js'
+],function(NEJ,_e,_x,_h,_p,_o,_f,_r){
     /**
      * 输入框占位行为，高版本用placeholder属性和样式处理
      *
