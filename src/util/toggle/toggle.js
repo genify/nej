@@ -9,8 +9,10 @@
 NEJ.define([
     'base/global',
     'base/element',
+    'base/util',
+    'base/event',
     'base/chain'
-],function(NEJ,_e,_x,_p,_o,_f,_r){
+],function(NEJ,_e,_u,_v,_x,_p,_o,_f,_r){
     /**
      * 点击切换样式，可以控制两种效果的交替显示
      *
@@ -68,7 +70,7 @@ NEJ.define([
      * 脚本举例
      * ```javascript
      *   NEJ.define([
-     *       'base/element'
+     *       'util/toggle/toggle'
      *   ],function(_e){
      *       // 自定义切换样式
      *       _e._$toggle('click-bar','toggle-node');

@@ -1,7 +1,7 @@
 var f = function(){
     //定义测试模块
     module("constant");
-    var _p = NEJ.P('nej.g');
+    var _p =    NEJ.P('nej.g');
 
     //开始单元测试
     test('测试静态变量', function() {
