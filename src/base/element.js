@@ -1361,7 +1361,7 @@ NEJ.define([
         }
         var _tmp = {};
         _obj[_name] = _tmp;
-        _p._$forEach(
+        _u._$forEach(
             _list,function(_node){
                 _p._$dom2object(_node,_tmp);
             }
