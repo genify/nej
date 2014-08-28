@@ -10,8 +10,9 @@ NEJ.define([
     'base/global',
     'base/util',
     'base/element',
-    'util/template/trimpath'
-],function(NEJ,_u,_e,_t,_p,_o,_f,_r){
+    'util/template/trimpath',
+    'base/chain'
+],function(NEJ,_u,_e,_t,_x,_p,_o,_f,_r){
     var _ext = {};
     /**
      * 取模板随机数种子

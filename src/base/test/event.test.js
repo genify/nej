@@ -78,7 +78,7 @@ var f = function(){
 		v._$clearEvent(_node);
 		v._$clearEvent(_node.children[0]);
 		v._$addEvent(_node,_eventType,_f,true);
-		//是否捕获阶段
+		//是否捕获阶段 IE没有
 		v._$addEvent(_node.children[0],_eventType,_f2,true);
 		_dispatch(_node.children[0]);
 		equal(_num,10,'阻止掉事件捕获');
@@ -94,10 +94,10 @@ var f = function(){
 		func(_eventType);
 	});
 
-	test('event change',function(){
-		var _eventType = 'change';
-		func(_eventType);
-	});
+	// test('event change',function(){
+	// 	var _eventType = 'change';
+	// 	func(_eventType);
+	// });
 
 	module('event常规测试');
 
@@ -117,6 +117,9 @@ var f = function(){
 			start();
 		});
 		v._$dispatchEvent(_input,'input');
+	});
+
+	test('input event',function(){
 		stop();
 		var _textarea = e._$get('js-textarea');
 		v._$addEvent(_textarea,'input',function(_event){
@@ -147,13 +150,14 @@ var f = function(){
 	});
 
 	asyncTest("检测事件触发点", function(){
+		stop();
 		var _pageX,_pageY;
 		var _f2 = function(_e){
 			if(_e.type == 'click'){
 				_pageX = v._$pageX(_e);
 				_pageY = v._$pageY(_e);
-				equal(typeof _pageX,'number','结果是事件触发的pageX'+_pageX);
-				equal(typeof _pageY,'number','结果是事件触发的pageY'+_pageY);
+				equal(typeof(_pageX),'number','检测事件触发点pageX'+_pageX);
+				equal(typeof(_pageY),'number','检测事件触发点pageY'+_pageY);
 				start();
 			}
 		};
