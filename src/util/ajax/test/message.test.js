@@ -9,7 +9,5 @@ var f = function(){
                 });
 	});
 }
-
-define('{pro}message.test.js',
+NEJ.define('{pro}message.test.js',
     ['{lib}util/ajax/message.js'],f);
-  

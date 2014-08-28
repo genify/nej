@@ -12,7 +12,7 @@ NEJ.define([
 	NEJ.patch('TR<=5.0',['./3rd.json.js']);
 
 	// ie6 json patch
-    NEJ.patch('TR==2.0',['./3rd.json.js'],function(){
+    NEJ.patch('TR==2.0',function(){
 	    // eval for big string
 	    JSON.parse = (function(){
 	        // check save json string

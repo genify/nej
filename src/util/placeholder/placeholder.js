@@ -53,6 +53,7 @@ NEJ.define([
      * @see module:util/placeholder/placeholder._$placeholder
      */
     _p._$placeholder = function(_element,_clazz){
+        _element = _e._$get(_element);
         _h.__setPlaceholder(_element,
             _e._$dataset(_element,'holder')
                 ||_clazz||'js-placeholder');

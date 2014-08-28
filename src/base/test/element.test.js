@@ -147,8 +147,11 @@ var f = function(){
             equal(_css3d,_css3d,'dom转xml字符串，再转成dom节点');
         */
         var _text = '<div id="abc">xxxx</div>';
+        var _t2t = e._$text2type(_text,"xml");
+        equal(typeof(_t2t),'object','text2type');
+        var _text = '{"a":"b"}';
         var _t2t = e._$text2type(_text,"json");
-        equal(_t2t,'<div id="abc">xxxx</div>','text2type');
+        propEqual(_t2t,{"a":"b"},'text2type');
         //_$html2node
         var _ele = e._$html2node('<div id="testnode"><img src="" /></div>');
         equal(_ele.id,'testnode','html代码转节点对象');
@@ -220,7 +223,7 @@ var f = function(){
         equal(_node.className,'node','替换节点的样式类名称，多个样式用空格分隔');
         e._$addClassName(_node,'node');
         equal(e._$hasClassName(_node,'node'),true,'检测节点是否包含指定样式，多个样式用空格分隔，检测时包含其中之一即表示包含');
-        equal(e._$appendCSSText('style-id','#bottom{color:red;}'),'body{color:red;}','appendCSSText');
+        equal(typeof(e._$appendCSSText('style-id','#bottom{color:red;}')),'object','appendCSSText');
     });
 
     QUnit.test('clearChildren',function(){
@@ -247,5 +250,5 @@ var f = function(){
 module('依赖模块');
 test('define',function(){expect(0);
     define('{pro}element.test.js',
-    ['{lib}base/element.js'],f);
+    ['{lib}base/element.js','{lib}util/encode/json.js'],f);
 });
