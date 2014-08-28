@@ -1408,13 +1408,12 @@ NEJ.define([
      *   NEJ.define([
      *       'base/element'
      *   ],function(_e){
-     *       var _text = '<div id="abc">123</div>';
      *       // 转成dom节点
-     *       var _dom = _e._$text2type(_text,"xml");
+     *       var _dom = _e._$text2type('<div id="abc">123</div>',"xml");
      *       // 转成json字符串
-     *       var _json = _e._$text2type(_text,"json");
+     *       var _json = _e._$text2type('{"a":"aaaaaaaaaaaaa"}',"json");
      *       // 原样返回
-     *       var _text = _e._$text2type(_text);
+     *       var _text = _e._$text2type('<div id="abc">123</div>');
      *   });
      * ```
      *
