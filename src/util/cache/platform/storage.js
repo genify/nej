@@ -52,6 +52,6 @@ NEJ.define(function(_p,_o,_f,_r){
     _p.__isStorageReady = function(){
         return !0;
     };
-    
+
     return _p;
 });

@@ -96,7 +96,7 @@ NEJ.define([
 		        },
 		        duration:_durtReal,
 		        onupdate:function(_offset){
-		          if(_node.isStop) return;
+		          // if(_node.isStop) return;
 		          var _value = _offset.offset;
 		          if(!_h.__doCheckProp(_prop)){
 		            _value = _doAdap(_value,_prop);
@@ -106,6 +106,7 @@ NEJ.define([
 		            }
 		        },
 		        onstop:function(_prop,_args){
+		        	_args = _args || [];
 		            var _effect = _node.effects[_index];
 		            if(!_effect) return;
 		                _effect = _cutr._$recycle(_effect);

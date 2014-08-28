@@ -9,7 +9,7 @@ NEJ.define([
     'base/util',
     'base/platform'
 ],function(_u,_m,_p,_o,_f,_r){
-    /** 
+    /**
      * 从DocumentFragment中取指定ID的节点
      * @param  {Document} 文档对象
      * @param  {String}   节点标识
@@ -277,7 +277,7 @@ NEJ.define([
         _style.textContent = _css;
     };
     /**
-     * 对样式进行预处理 
+     * 对样式进行预处理
      * @param  {String} 待处理样式内容
      * @return {String} 处理后样式内容
      */

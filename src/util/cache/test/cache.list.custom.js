@@ -6,12 +6,10 @@ var f = function(){
         _p = _('nej.ut'),
         _j = _('nej.j'),
         _v = _('nej.v'),
-        _proCacheListCustom,
-        _supCacheListCustom;
+        _proCacheListCustom;
     _p._$$CacheListCustom = NEJ.C();
-    _proCacheListCustom = _p._$$CacheListCustom._$extend(_p._$$CacheListAbstract);
-    _supCacheListCustom = _proCacheListCustom._$supro;
-	
+    _proCacheListCustom = _p._$$CacheListCustom._$extend(_p._$$AbstractListCache);
+
 	_proCacheListCustom.__doLoadList = function(_options){
 		var _key    = _options.key;
 		var _data   = _options.data;
@@ -40,7 +38,7 @@ var f = function(){
 //            }
 //        );
 	};
-	
+
 	/**
      * 从服务器中获取一项
      * @param {Object} _options
@@ -60,7 +58,7 @@ var f = function(){
             }
         );
     };
-	
+
     /**
      * 增加一项到服务器
      * @param {Object} _options
@@ -80,7 +78,7 @@ var f = function(){
             }
         );
     };
-	
+
 	/**
      * 从服务器中删除一项
      * @param {Object} _options
@@ -106,7 +104,7 @@ var f = function(){
             //     _p._$$CacheListCustom,'listchange',_event);
         },500);
     };
-	
+
 	/**
      * 更新服务器中的一项
      * @param {Object} _options
@@ -126,7 +124,7 @@ var f = function(){
             }
         );
     };
-    
+
 }
 define('{pro}cache.list.custom.js',['{lib}util/event/event.js','{lib}util/cache/abstract.js'],f);
 

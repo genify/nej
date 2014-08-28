@@ -12,7 +12,7 @@ NEJ.define([
     'base/element',
     '{platform}focus.js',
     'base/chain'
-],function(NEJ,_u,_e,_x,_p,_o,_f,_r){
+],function(NEJ,_u,_e,_h,_x,_p,_o,_f,_r){
     /**
      * 节点focus行为，提供两种模式支持
      *

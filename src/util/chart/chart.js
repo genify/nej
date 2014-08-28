@@ -10,7 +10,7 @@ NEJ.define([
     'base/element',
     'util/flash/flash',
     'base/chain'
-],function(NEJ,_c,_e,_t0,_p,_o,_f,_r){
+],function(NEJ,_c,_e,_t0,_x,_p,_o,_f,_r){
     /**
      * 绘制图表对象
      *

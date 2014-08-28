@@ -20,7 +20,7 @@ function(){
      * @property  {String}
      */
     _pp._$$ModuleC2 = NEJ.C();
-    _pro = _pp._$$ModuleC2._$extend(_pm._$$ModuleAbstract);
+    _pro = _pp._$$ModuleC2._$extend(_pm._$$AbstractModule);
 
     _pro.__doBuild = function(){
         this.__namespace = 'm-c2';

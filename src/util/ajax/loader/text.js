@@ -15,17 +15,17 @@ NEJ.define([
     var _pro;
     /**
      * 文本资源加载器
-     * 
+     *
      * @class   module:util/ajax/loader/text._$$LoaderText
      * @extends module:util/ajax/loader/loader._$$LoaderAbstract
-     * 
+     *
      * @param   {Object} config - 可选配置参数
      */
-    _p._$$LoaderText = _k._$klass(); 
+    _p._$$LoaderText = _k._$klass();
     _pro = _p._$$LoaderText._$extend(_t._$$LoaderAbstract);
     /**
      * 取资源载入控件
-     * 
+     *
      * @protected
      * @method module:util/ajax/loader/style._$$LoaderText#__getRequest
      * @return {Node} 控件节点
@@ -35,7 +35,7 @@ NEJ.define([
     };
     /**
      * 资源载入
-     * 
+     *
      * @protected
      * @method module:util/ajax/loader/style._$$LoaderText#__doRequest
      * @param  {Node} 控件节点
@@ -51,7 +51,7 @@ NEJ.define([
     };
     /**
      * 资源载入成功事件
-     * 
+     *
      * @protected
      * @method module:util/ajax/loader/style._$$LoaderText#__onLoaded
      * @return {Void}
@@ -62,6 +62,6 @@ NEJ.define([
             content:_text
         });
     };
-    
+
     return _p;
 });

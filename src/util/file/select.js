@@ -11,8 +11,9 @@ NEJ.define([
     'base/element',
     'base/event',
     'base/util',
-    '{platform}select.js'
-],function(NEJ,_e,_v,_u,_h,_p,_o,_f,_r){
+    '{platform}select.js',
+    'base/chain'
+],function(NEJ,_e,_v,_u,_h,_x,_p,_o,_f,_r){
     var _cache = {},// {id:{lab:'label',pid:'parent'}}
         _class = _e._$pushCSSText('.#<class>{position:absolute;top:0;left:0;width:0;height:0;overflow:hidden;}');
     /**
@@ -215,7 +216,7 @@ NEJ.define([
         }
     };
     // for chainable method
-    _x._$merge({_$bind,_p._$bind});
+    _x._$merge({_$bind:_p._$bind});
 
     if (CMPT){
         var _x = NEJ.P('nej.e');

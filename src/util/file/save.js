@@ -12,7 +12,7 @@ NEJ.define([
     'base/event',
     'base/util',
     'base/chain'
-],function(NEJ,_e,_v,_u,_p,_o,_f,_r){
+],function(NEJ,_e,_v,_u,_x,_p,_o,_f,_r){
     var _cache = {};
     /*
      * 执行另存为
