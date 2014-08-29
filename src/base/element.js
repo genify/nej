@@ -1166,7 +1166,10 @@ NEJ.define([
     _y._$dataset = function(_element,_key,_value){
         var _id = _p._$id(_element);
         return !_id ? null :
-                _h.__dataset(_element,_key,_value);
+                _h.__dataset(
+                    _p._$get(_element),
+                    _key,_value
+                );
     };
     /**
      * 取某个节点的属性值

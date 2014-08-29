@@ -11,9 +11,9 @@ NEJ.define([
     'base/config',
     'base/util',
     'base/element',
-    'util/flash/flash',
-    'base/chain'
-],function(NEJ,_c,_u,_e,_t0,_x,_p,_o,_f,_r){
+    'base/chain',
+    'util/flash/flash'
+],function(NEJ,_c,_u,_e,_x,_t0,_p,_o,_f,_r){
     /*
      * 覆盖剪切操作功能按钮
      * @param  {Node}   按钮
