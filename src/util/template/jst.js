@@ -175,7 +175,7 @@ NEJ.define([
     // for chainable method
     _x._$merge({_$render:_p._$render});
 
-    if (CMPT){
+    if (CMPT){ 
         var _z = NEJ.P('nej.e');
         _z._$addHtmlTemplate     = _p._$add;
         _z._$getHtmlTemplate     = _p._$get;
