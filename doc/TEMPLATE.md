@@ -865,12 +865,147 @@ ${null|default:"default value"}
 
 ITEM控件提供了结构+逻辑的缓存功能，适合于列表项带复杂逻辑的模版，一般使用ntp模版来封装结构，列表类的ITEM基类抽象在ui/item/list模块中实现，因为ITEM控件也是UI控件，所以遵循[UI控件](./WIDGET.md)的规则
 
+如下图所示的评论列表中，每一项评论又具有回复列表、回复和删除功能，我们可以将这种结构做成ITEM模版
 
+![评论列表](http://img0.ph.126.net/EiEyOdGSqY0PASizUZMynA==/6608813650352806767.png)
 
+ITEM控件的目录结构
 
+```
+  comment
+     | - comment.css    评论项样式
+     | - comment.html   评论项结构
+     | - comment.js     评论项逻辑
+```
 
+comment.html文件使用ntp类型的模版做结构
 
+```html
+<div class="m-cmt">
+  <div class="fce"><img class="j-flag"/></div>
+  <div class="box">
+    <div class="ttl j-flag"><!-- 用户占位 --></div>
+    <div class="cnt j-flag"><!-- 内容占位 --></div>
+    <div class="act j-flag">
+      <a href="#" data-action="reply">回复</a>
+      <a href="#" data-action="delete">删除</a>
+    </div>
+  </div>
+</div>
+```
 
+comment.js文件继承ui/item/list模块的\_$$ListItem类进行扩展
 
+```javascript
+NEJ.define([
+    'base/klass',
+    'base/element',
+    'base/event',
+    'ui/item/list',
+    'util/template/tpl',
+    'text!./comment.css',
+    'text!./comment.html'
+],function(_k,_e,_v,_i,_t,_css,_html,_p,_o,_f,_r){
+    var _pro;
 
+    // 列表项构造
+    _p._$$CommentItem = _k._$klass();
+    _pro = _p._$$CommentItem._$extend(_i._$$ListItem);
 
+    // 外观
+    _pro.__initXGui = (function(){
+        var _seed_css = _e._$pushCSSText(_css),
+            _seed_html = _e._$addNodeTemplate(_html);
+        return function(){
+            this.__seed_css = _seed_css;
+            this.__seed_html = _seed_html;
+        };
+    })();
+
+    // 结构
+    _pro.__initNode = function(){
+        this.__super();
+        // 0 - 头像图片节点
+        // 1 - 用户名节点
+        // 2 - 内容节点
+        // 3 - 操作行为节点
+        var _list = _e._$getByClassName(
+            this.__body,'j-flag'
+        );
+        this.__nface = _list[0];
+        this.__nuser = _list[1];
+        this.__ncont = _list[2];
+        // 事件
+        _v._$addEvent(
+            _list[3],'click',
+            this.__onAction._$bind(this)
+        );
+    };
+
+    // 刷新
+    _pro.__doRefresh = function(_data){
+        this.__nface.src = _data.face;
+        this.__nuser.innerHTML = _data.username;
+        this.__ncont.innerHTML = _data.content;
+        // 子评论列表
+        if (!!_data.replies){
+            // 子评论构造同当前评论项
+            this.__items = _t._$getItemTemplate(
+                _data.replies,this.constructor,{
+                    parent:this.__body,
+                    onreply:this.__onReply._$bind(this),
+                    ondelete:this.__onDelete._$bind(this)
+                }
+            );
+        }
+    };
+
+    // 操作
+    _pro.__onAction = function(_event){
+        var _node = _v._$getElement(_event,'d:action');
+        if (!_node) return;
+        // 操作
+        switch(_e._$dataset(_node,'action')){
+            case 'reply':
+                // 分配回复编辑器控件
+                // 触发onreply事件
+                // TODO
+            break;
+            case 'delete':
+                // 删除确认
+                // 触发ondelete事件
+                // TODO
+            break;
+        }
+    };
+
+    // TODO
+
+    return _p;
+});
+```
+
+在上层应用中使用_$getItemTemplate来分配ITEM控件列表
+
+```javascript
+NEJ.define([
+    'util/template/tpl',
+    '/path/to/comment.js'
+],function(_t,_i){
+
+    // TODO
+
+    var _list = _t._$getItemTemplate(
+        _data.replies,this.constructor,{
+            parent:'list-box',
+            onreply:function(_data){
+                // TODO
+            },
+            ondelete:function(_data){
+                // TODO
+            }
+        }
+    );
+
+});
+```
