@@ -10,9 +10,9 @@ NEJ.define([
     'base/global',
     'base/util',
     'base/element',
-    'util/template/trimpath',
-    'base/chain'
-],function(NEJ,_u,_e,_t,_x,_p,_o,_f,_r){
+    'base/chain',
+    'util/template/trimpath'
+],function(NEJ,_u,_e,_x,_t,_p,_o,_f,_r){
     var _ext = {};
     /**
      * 取模板随机数种子
@@ -23,14 +23,14 @@ NEJ.define([
      *     'util/template/jst'
      * ],function(_p){
      *     // 返回一个标识符
-     *     var _seed = _p._$getHtmlTemplateSeed();
+     *     var _seed = _p._$seed();
      * });
      * ```
      *
-     * @method module:util/template/jst._$getHtmlTemplateSeed
+     * @method module:util/template/jst._$seed
      * @return {String} 随机数种子
      */
-    _p._$getHtmlTemplateSeed = TrimPath.seed;
+    _p._$seed = TrimPath.seed;
     /**
      * 根据模板的序列号合并模板数据
      *
@@ -40,20 +40,20 @@ NEJ.define([
      *     'util/template/jst'
      * ],function(_p){
      *     // 添加模版
-     *     var _html_seed =  _p._$addHtmlTemplate('<div>${name}</div>');
+     *     var _html_seed =  _p._$add('<div>${name}</div>');
      *     // 生成结构<div>jack</div>
-     *     var _html = _p._$getHtmlTemplate(_html_seed,{name:'jack'});
+     *     var _html = _p._$get(_html_seed,{name:'jack'});
      * });
      * ```
      *
-     * @method module:util/template/jst._$getHtmlTemplate
-     * @see    module:util/template/jst._$addHtmlTemplate
+     * @method module:util/template/jst._$get
+     * @see    module:util/template/jst._$add
      * @param  {String} arg0 - 模板序列号
      * @param  {Object} arg1 - 模板数据
      * @param  {Object} arg2 - 扩展接口
      * @return {String}        合并数据后的内容
      */
-    _p._$getHtmlTemplate = (function(){
+    _p._$get = (function(){
         var _doInline = function(_id){
             return !_p._$getTextTemplate?'':
                     _p._$getTextTemplate(_id);
@@ -78,17 +78,17 @@ NEJ.define([
      *     'util/template/jst'
      * ],function(_p){
      *     // 添加模版缓存
-     *     var _html_seed =  _p._$addHtmlTemplate('<div>${name}</div>');
+     *     var _html_seed =  _p._$add('<div>${name}</div>');
      * });
      * ```
      *
-     * @method module:util/template/jst._$addHtmlTemplate
-     * @see    module:util/template/jst._$getHtmlTemplate
+     * @method module:util/template/jst._$add
+     * @see    module:util/template/jst._$get
      * @param  {String}  arg0 - JST模板内容或者节点ID
      * @param  {Boolean} arg1 - 是否保留节点
      * @return {String}         JST模板在缓存中的序列号
      */
-    _p._$addHtmlTemplate = function(_content,_keep){
+    _p._$add = function(_content,_keep){
         if (!_content) return '';
         var _sn,_element = _e._$get(_content);
         if (!!_element){
@@ -112,13 +112,13 @@ NEJ.define([
      *     'util/template/jst'
      * ],function(_p){
      *     // 添加模版缓存
-     *     var _html_seed =  _p._$addHtmlTemplate('<div>${name}</div>');
+     *     var _html_seed =  _p._$add('<div>${name}</div>');
      *     // 把结构塞到box中，生成<div id="box"><div>jack</div></div>
-     *     _p._$renderHtmlTemplate('box',_html_seed,{name:'jack'});
+     *     _p._$render('box',_html_seed,{name:'jack'});
      * });
      * ```
      *
-     * @method module:util/template/jst._$renderHtmlTemplate
+     * @method module:util/template/jst._$render
      * @param  {String|Node} arg0 - 容器节点
      * @param  {String}      arg1 - 模板序列号
      * @param  {Object}      arg2 - 模板数据
@@ -126,14 +126,14 @@ NEJ.define([
      * @return {Void}
      */
     /**
-     * @method CHAINABLE._$renderHtmlTemplate
-     * @see module:util/template/jst._$renderHtmlTemplate
+     * @method CHAINABLE._$render
+     * @see module:util/template/jst._$render
      */
-    _p._$renderHtmlTemplate = function(_parent,_sn,_data,_extend){
+    _p._$render = function(_parent,_sn,_data,_extend){
         _parent = _e._$get(_parent);
         if (!!_parent){
             _parent.innerHTML =
-                _p._$getHtmlTemplate(_sn,_data,_extend);
+                _p._$get(_sn,_data,_extend);
         }
     };
     /**
@@ -154,29 +154,34 @@ NEJ.define([
      *     'util/template/jst'
      * ],function(_p){
      *     // 注册扩展方法 a和b
-     *     _p._$registJSTExt({
+     *     _p._$extend({
      *         a:function(){},
      *         b:function(){}
      *     });
      *     // 模板整合数据
-     *     _p._$renderHtmlTemplate(
+     *     _p._$render(
      *         'box','abc',{name:'jack'}
      *     );
      * });
      * ```
      *
-     * @method module:util/template/jst._$registJSTExt
+     * @method module:util/template/jst._$extend
      * @param  {Object} arg0 - 扩展方法
      * @return {Void}
      */
-    _p._$registJSTExt = function(_map){
+    _p._$extend = function(_map){
         _u._$merge(_ext,_map);
     };
     // for chainable method
-    _x._$merge({_$renderHtmlTemplate:_p._$renderHtmlTemplate});
+    _x._$merge({_$render:_p._$render});
 
-    if (CMPT){
-        NEJ.copy(NEJ.P('nej.e'),_p);
+    if (CMPT){ 
+        var _z = NEJ.P('nej.e');
+        _z._$addHtmlTemplate     = _p._$add;
+        _z._$getHtmlTemplate     = _p._$get;
+        _z._$getHtmlTemplateSeed = _p._$seed;
+        _z._$renderHtmlTemplate  = _p._$render;
+        _z._$registJSTExt        = _p._$extend;
     }
 
     return _p;

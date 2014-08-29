@@ -44,8 +44,8 @@ NEJ.define([
      * NEJ.define([
      *     'util/template/tpl'
      * ],function(_p){
-     *     // 调用_$addHtmlTemplate接口缓存模版，id为key
-     *     // 要用的时候通过_$getHtmlTemplate(key,{数据})合并模版后返回字符串
+     *     // 调用_$add接口缓存模版，id为key
+     *     // 要用的时候通过_$get(key,{数据})合并模版后返回字符串
      *     _p._$parseTemplate('jst-box');
      *     // 生成结果：<div>jack</div>
      *     _p._$getTextTemplate('jst-box').trim();
@@ -194,7 +194,7 @@ NEJ.define([
             var _type = _node.name.toLowerCase();
             switch(_type){
                 case 'jst':
-                    _y._$addHtmlTemplate(_node,!0);
+                    _y._$add(_node,!0);
                 return;
                 case 'txt':
                     _p._$addTextTemplate(_node.id,_node.value||'');

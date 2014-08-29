@@ -223,7 +223,7 @@ NEJ.define([
      */
     _pro.__getItemBodyId = function(_id){
         return this.__getItemId(_id)+
-               _t1._$getHtmlTemplateSeed();
+               _t1._$seed();
     };
     /**
      * 取项标识
@@ -528,7 +528,7 @@ NEJ.define([
             this.__iopt.beg = _offset;
             this.__iopt.end = Math.min(_list.length,_offset+_limit)-1;
             this.__iopt.act = 'list';
-            var _html = _t1._$getHtmlTemplate(
+            var _html = _t1._$get(
                 this.__ikey,this.__iopt
             );
             this.__doShowListByJST(_html);
@@ -662,7 +662,7 @@ NEJ.define([
                 this.__iopt.end = 0;
                 this.__iopt.act = 'add';
                 this.__doShowListByJST(
-                    _t1._$getHtmlTemplate(
+                    _t1._$get(
                         this.__ikey,this.__iopt
                     ),_pos
                 );
@@ -884,7 +884,7 @@ NEJ.define([
             this.__iopt.beg  = _index;
             this.__iopt.end  = _index;
             this.__iopt.act  = 'update';
-            var _html = _t1._$getHtmlTemplate(
+            var _html = _t1._$get(
                 this.__ikey,this.__iopt
             );
             _node.insertAdjacentHTML('afterEnd',_html);

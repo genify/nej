@@ -73,6 +73,14 @@ util/page/page.js
 util/template/tpl.js
 - 删除_e._$setup接口
 
+util/template/jst.js
+- 修改接口名称
+  _$addHtmlTemplate     -> _$add
+  _$getHtmlTemplate     -> _$get
+  _$getHtmlTemplateSeed -> _$seed
+  _$renderHtmlTemplate  -> _$render
+  _$registJSTExt        -> _$extend
+
 util/tab/tab.js
 - onchange事件阻止属性nostop改为stopped
 - 删除nej.e._$tab接口

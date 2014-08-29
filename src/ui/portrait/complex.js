@@ -169,7 +169,7 @@ NEJ.define([
             var _list = this.__cache.
                 _$getListInCache(_options.key);
             _doInit(_list);
-            _e._$renderHtmlTemplate(
+            _e._$render(
                 this.__tbox,_seed_tlist,{
                     xlist:_list
                 }

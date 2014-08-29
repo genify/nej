@@ -53,7 +53,7 @@ NEJ.define([
      */
     _pro._$queryValue = function(_node){
         var _element = _e._$getByClassName(_node,
-                       'js-t-'+_t1._$getHtmlTemplateSeed())[0],
+                       'js-t-'+_t1._$seed())[0],
             _value = this.__getFontText(this
                          .__editor._$queryCommand(this.__name,'Value'));
         if (!_element||!_value) return;
