@@ -1,25 +1,23 @@
-/**
+/*
  * ------------------------------------------
  * 跨文档消息交互API实现文件
  * @version  1.0
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _h = _('nej.h');
+NEJ.define(function(_p,_o,_f,_r){
     /**
      * 格式化源信息
      * @param  {String} 源
      * @return {String} 格式化后源
      */
-    _h.__formatOrigin = (function(){
+    _p.__formatOrigin = (function(){
         var _reg = /^([\w]+?:\/\/.*?(?=\/|$))/i;
         return function(_origin){
             _origin = _origin||'';
-            if (_reg.test(_origin))
+            if (_reg.test(_origin)){
                 return RegExp.$1;
+            }
             return '*';
         };
     })();
@@ -28,7 +26,7 @@ var f = function(){
      * @param  {Variable} 数据
      * @return {Variable} 数据
      */
-    _h.__formatPassData = function(_data){
+    _p.__formatPassData = function(_data){
         return _data;
     };
     /**
@@ -37,14 +35,16 @@ var f = function(){
      * @param  {Object} 发送配置
      * @return {Void}
      */
-    _h.__postMessage = function(_window,_options){
-        if (!_window.postMessage) 
+    _p.__postMessage = function(_window,_options){
+        if (!_window.postMessage){
             return;
+        }
         _options = _options||_o;
         _window.postMessage(
-            _h.__formatPassData(_options.data),
-            _h.__formatOrigin(_options.origin)
+            _p.__formatPassData(_options.data),
+            _p.__formatOrigin(_options.origin)
         );
     };
-};
-NEJ.define('{lib}util/ajax/platform/message.js',['{lib}base/platform.js'],f);
+    
+    return _p;
+});

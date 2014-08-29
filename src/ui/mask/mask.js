@@ -5,52 +5,58 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _g = _('nej.g'),
-        _e = _('nej.e'),
-        _u = _('nej.u'),
-        _v = _('nej.v'),
-        _p = _('nej.ui'),
-        _proMask,
-        _supMask;
-    if (!!_p._$$Mask) return;
-    // ui css text
-    var _seed_css = _e._$pushCSSText('.#<uispace>{position:fixed;_position:absolute;z-index:100;top:0;bottom:0;left:0;right:0;width:100%;height:100%;background-image:url('+_g._$BLANK_IMAGE+');}');
+/** @module ui/maks/mask */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'base/constant',
+    'base/element',
+    'base/util',
+    'ui/base',
+    'text!./mask.css'
+],function(NEJ,_k,_g,_e,_u,_i,_css,_p,_o,_f,_r){
+    var _pro,
+        _seed_css = _e._$pushCSSText(_css,{blankimage:_g._$BLANK_IMAGE});
     /**
-     * 盖层控件<br />
+     * 盖层控件
+     *
      * 页面结构举例
-     * [code type="html"]
-     *   <style type="text/css">
-     *       .box{position:relative;}
-     *   </style>
-     *   <div id="mask-box" class="box"></div>
-     * [/code]
+     * ```html
+     * <style type="text/css">
+     *     .box{position:relative;}
+     * </style>
+     * <div id="mask-box" class="box"></div>
+     * ```
+     *
      * 脚本举例
-     * [code]
-     *   var _mask = _p._$$Mask._$allocate({
-     *       parent:document.body,
-     *       content:'<div style="width:100px;height:100px;margin:0 auto;margin-top:150px;">搞一点盖层的内容</div>'
-     *   });
-     * [/code]
-     * @class   {nej.ui._$$Mask} 盖层控件
-     * @extends {nej.ui._$$Abstract}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
-     * @config  {String|Node} content 内容节点或者HTML代码
-     * 
+     * ```javascript
+     * NEJ.define([
+     *     'ui/maks/mask'
+     * ],function(_i0,_p,_o,_f,_r){
+     *     var _mask = _i0._$$Mask._$allocate({
+     *         parent:document.body,
+     *         content:'<div style="width:100px;height:100px;margin:0 auto;margin-top:150px;">搞一点盖层的内容</div>'
+     *     });
+     * });
+     * ```
+     *
+     * @class     module:ui/maks/mask._$$Mask
+     * @extends   module:ui/base._$$Abstract
+     * @param     {Object}      arg0    - 可选配置参数
+     * @property  {String|Node} content - 内容节点或者HTML代码
      */
-    _p._$$Mask = NEJ.C();
-      _proMask = _p._$$Mask._$extend(_p._$$Abstract);
-      _supMask = _p._$$Mask._$supro;
+    _p._$$Mask = _k._$klass();
+    _pro = _p._$$Mask._$extend(_i._$$Abstract);
     /**
      * 控件重置
+     *
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
+     * @method module:ui/maks/mask._$$Mask#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
-    _proMask.__reset = function(_options){
-        this.__supReset(_options);
+    _pro.__reset = function(_options){
+        this.__super(_options);
         var _content = _options.content||'&nbsp;';
         _u._$isString(_content)
         ? this.__body.innerHTML = _content
@@ -58,39 +64,46 @@ var f = function(){
     };
     /**
      * 控件销毁
+     *
      * @protected
-     * @method {__destroy}
+     * @method module:ui/maks/mask._$$Mask#__destroy
      * @return {Void}
      */
-    _proMask.__destroy = function(){
-        this.__supDestroy();
+    _pro.__destroy = function(){
+        this.__super();
         this.__body.innerHTML = '&nbsp;';
     };
     /**
      * 初始化外观
+     *
      * @protected
-     * @method {__initXGui}
+     * @method module:ui/maks/mask._$$Mask#__initXGui
      * @return {Void}
      */
-    _proMask.__initXGui = function(){
+    _pro.__initXGui = function(){
         this.__seed_css = _seed_css;
     };
     /**
-     * 显示盖层<br />
-     * [code]
-     *   // 先隐藏盖层
-     *   _mask._$hide();
-     *   // 显示盖层
-     *   _mask._$show();
-     * [/code]
-     * @method {_$show}
-     * @return {nej.ui._$$Mask}
+     * 显示盖层
+     *
+     * ```javascript
+     * // 先隐藏盖层
+     * _mask._$hide();
+     * // 显示盖层
+     * _mask._$show();
+     * ```
+     *
+     * @method module:ui/maks/mask._$$Mask#_$show
+     * @return {Void}
      */
-    _proMask._$show = function(){
+    _pro._$show = function(){
         _e._$fullScreen(this.__body);
         _supMask._$show.apply(this,arguments);
-        return this;
     };
-};
-NEJ.define('{lib}ui/mask/mask.js',
-      ['{lib}ui/base.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui'),_p);
+    }
+
+    return _p;
+});

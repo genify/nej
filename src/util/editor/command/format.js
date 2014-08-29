@@ -1,33 +1,46 @@
 /*
  * ------------------------------------------
- * 斜体执行命令封装实现文件
+ * 清除样式命令封装实现文件
  * @version  1.0
  * @author   cheng-lin(cheng-lin@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _p = NEJ.P('nej.ut.cmd'),
-    	_t = NEJ.P('nej.ut');
-    if (!!_p._$$Format) return;
+/** util/editor/command/format */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'util/editor/command'
+],function(NEJ,_k,_t0,_p,_o,_f,_r){
     /**
-     * 斜体执行命令封装
-     * @class   {nej.ut.cmd._$$Format} 斜体执行命令封装
-     * @extends {nej.ut.cmd._$$SimpleCommand}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     * 清除样式命令封装
+     *
+     * @class   module:util/editor/command/format._$$Format
+     * @extends module:util/editor/command._$$EditorCommand
+     * @param   {Object} 可选配置参数
      */
-    _p._$$Format = NEJ.C();
-    _pro = _p._$$Format._$extend(_t._$$EditorCommand);
+    _p._$$Format = _k._$klass();
+    _pro = _p._$$Format._$extend(_t0._$$EditorCommand);
     /**
      * 命令名称
-     * @type String
+     * @const {String} module:util/editor/command/format._$$Format.command
      */
     _p._$$Format.command = 'format';
 
+    /**
+     * 执行命令
+     *
+     * @method  module:util/editor/command/format._$$Format#_$execute
+     * @return {Void}
+     */
     _pro._$execute = function(){
-    	this.__editor._$setContentNoStyle();
+        this.__editor._$setContentNoStyle();
     };
     // regist command implemention
     _p._$$Format._$regist();
-};
-NEJ.define('{lib}util/editor/command/format.js',
-      ['{lib}util/editor/command.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut.cmd'),_p);
+    }
+
+    return _p;
+});

@@ -5,24 +5,33 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _p = NEJ.P('nej.ut.cmd');
-    if (!!_p._$$RemoveFormat) return;
+/** util/editor/command/removeformat */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'util/editor/command/simple'
+],function(NEJ,_k,_t0,_p,_o,_f,_r){
     /**
      * 清除格式执行命令封装
-     * @class   {nej.ut.cmd._$$RemoveFormat} 左对齐执行命令封装
-     * @extends {nej.ut.cmd._$$SimpleCommand}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     *
+     * @class   module:util/editor/command/removeformat._$$RemoveFormat
+     * @extends module:util/editor/command/simple._$$SimpleCommand
+     * @param   {Object} options - 可选配置参数
      */
-    _p._$$RemoveFormat = NEJ.C();
-    _p._$$RemoveFormat._$extend(_p._$$SimpleCommand);
+    _p._$$RemoveFormat = _k._$klass();
+    _p._$$RemoveFormat._$extend(_t0._$$SimpleCommand);
     /**
      * 命令名称
-     * @type String
+     *
+     * @const {String} module:util/editor/command/removeformat._$$RemoveFormat.command
      */
     _p._$$RemoveFormat.command = 'RemoveFormat';
     // regist command implemention
     _p._$$RemoveFormat._$regist();
-};
-NEJ.define('{lib}util/editor/command/removeformat.js',
-          ['{lib}util/editor/command/simple.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut.cmd'),_p);
+    }
+
+    return _p;
+});

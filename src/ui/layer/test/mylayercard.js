@@ -11,7 +11,7 @@ var f = function(){
      * 弹出层封装基类对象，主要实现层里面内容部分的业务逻辑
      * @class   弹出层封装基类对象
      * @extends {nej.ui._$$CardWrapper}
-     * @param   {Object} _options 可选配置参数，已处理参数列表如下
+     * @param   {Object} _options 可选配置参数
      * 
      */
     _p._$$MyLayerCard = NEJ.C();

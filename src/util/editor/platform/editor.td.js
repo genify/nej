@@ -5,12 +5,11 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _p = _('nej.p'),
-        _e = _('nej.e'),
-        _h = _('nej.h'),
-        _rcache = {};  // range cache
+NEJ.define([
+    'base/element',
+    './editor.js'
+],function(_e,_h,_p,_o,_f,_r){
+    var  _rcache = {};
     /**
      * 执行编辑命令
      * @param  {Node}   _document 文档对象
@@ -82,6 +81,7 @@ var f = function(){
         delete _rcache[_id];
     });
 
+<<<<<<< HEAD
     /**
      * 获取range cache
      * @return {Object} range cache对象
@@ -94,3 +94,7 @@ NEJ.define(
     '{lib}util/editor/platform/editor.td.js',[
     './editor.js'
 ],f);
+=======
+    return _h;
+});
+>>>>>>> refs/heads/sandbox

@@ -5,64 +5,75 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
+/** @module util/animation/bounce */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    './animation.js'
+],function(NEJ,_k,_t0,_p,_o,_f,_r){
     // variable declaration
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _p = _('nej.ut'),
-        _pro,_sup;
-    if (!!_p._$$AnimBounce) return;
+    var _pro;
     /**
      * 弹跳动画
-     * [ntb]
+     * 
      * 初始信息包括
-     *  offset    [Number] | 偏移量
-     *  velocity  [Number] | 初速度，单位 px/s
+     * 
+     * * offset    [Number] | 偏移量
+     * * velocity  [Number] | 初速度，单位 px/s
+     *  
      * 无结束信息
-     * [/ntb]
-     * [code]
-     *   var options = {
+     * 
+     * 脚本举例
+     * ```javascript
+      * NEJ.define([
+     *     'util/animation/bounce'
+     * ],function(_t){
+     *     var _bounce = _t._$$AnimBounce._$allocate({
      *         from: {
      *             offset: 100,
      *             velocity: 100
      *         },
      *         acceleration:100,
-     *         onstop: function(){
-     *             // 动画停止后回收控件
-     *             _bounce = nej.ut._$$AnimBounce._$recycle(_bounce);
+     *         onupdate: function(_event){
+     *             // 坐标
+     *             console.log(_event.offset + 'px');
+     *             // 初速度
+     *             console.log(_event.velocity);
      *         }
-     *     }
-     *  var _bounce = nej.ut._$$AnimBounce._$allocate(options);
-     *  _bounce._$play();
-     * [/code]
-     * @class   {nej.ut._$$AnimBounce} 弹跳动画
-     * @extends {nej.ut._$$Animation}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
-     * @config  {Number} acceleration  加速度，值越小弹跳越快
-     * @config  {Number} springtension 张紧度，0-1之间，值越小弹跳距离越大
+     *     });
+     *     // 进行弹性动画
+     *     _bounce._$play();
+     * });
+     * ```
+     * 
+     * @class    module:util/animation/bounce._$$AnimBounce
+     * @extends  module:util/animation/animation._$$Animation
+     * 
+     * @param    {Object} config        - 可选配置参数
+     * @property {Number} acceleration  - 加速度，值越小弹跳越快
+     * @property {Number} springtension - 张紧度，0-1之间，值越小弹跳距离越大
      */
-    _p._$$AnimBounce = NEJ.C();
-    _pro = _p._$$AnimBounce._$extend(_p._$$Animation);
-    _sup = _p._$$AnimBounce._$supro;
+    _p._$$AnimBounce = _k._$klass();
+    _pro = _p._$$AnimBounce._$extend(_t0._$$Animation);
     /**
      * 控件重置
+     * 
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
-     * @config {Number} acceleration  加速度，值越小弹跳越快
-     * @config {Number} springtension 张紧度，0-1之间，值越小弹跳距离越大
-     * @return {Void}
+     * @method module:util/animation/bounce._$$AnimBounce#__reset
+     * @param    {Object} arg0 - 可选配置参数
+     * @return   {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         this.__acceleration = _options.acceleration||30;
         this.__springtension = _options.springtension||0.3;
     };
     /**
      * 动画帧回调
+     * 
      * @protected
-     * @method {__doAnimationFrame}
-     * @param  {Number} 时间值
+     * @method module:util/animation/bounce._$$AnimBounce#__doAnimationFrame
+     * @param  {Number} arg0 - 时间值
      * @return {Void}
      */
     _pro.__doAnimationFrame = function(_time){
@@ -76,39 +87,52 @@ var f = function(){
             _stop = !0;
             _offset = this.__begin.offset;
         }
-        this._$dispatchEvent('onupdate',{offset:_offset});
+        this._$dispatchEvent('onupdate',{
+            offset:_offset
+        });
         return _stop;
     };
     /**
-     * 取消动画监听事件<br/>
+     * 取消动画监听事件
+     * 
      * 脚本举例
-     * [code]
-     *   var options = {
+     * ```javascript
+      * NEJ.define([
+     *     'util/animation/bounce'
+     * ],function(_t){
+     *     var _bounce = _t._$$AnimBounce._$allocate({
      *         from: {
      *             offset: 100,
      *             velocity: 100
      *         },
      *         acceleration:100,
-     *         onstop: function(){
-     *             _bounce = nej.ut._$$AnimBounce._$recycle(_bounce);
+     *         onupdate: function(_event){
+     *             // 坐标
+     *             console.log(_event.offset + 'px');
+     *             // 初速度
+     *             console.log(_event.velocity);
      *         }
-     *     }
-     *   var _bounce = nej.ut._$$AnimBounce._$allocate(options);
-     *   // 进行动画
-     *   _bounce._$play();
-     *   // 停止动画,触发onstop
-     *   _bounce._$stop();
-     * [/code]
-     * @method {_$stop}
-     * @return {nej.ut._$$AnimBounce}
+     *     });
+     *     // 进行弹性动画
+     *     _bounce._$play();
+     *     // 停止动画,触发onstop
+     *     _bounce._$stop();
+     * });
+     * ```
+     * 
+     * @method module:util/animation/bounce._$$AnimBounce#_$stop
+     * @return {Void}
      */
     _pro._$stop = function(){
-        this._$dispatchEvent('onupdate',{offset:this.__begin.offset});
-        _sup._$stop.apply(this,arguments);
-        return this;
+        this._$dispatchEvent('onupdate',{
+            offset:this.__begin.offset
+        });
+        this.__super();
     };
-};
-NEJ.define(
-    '{lib}util/animation/bounce.js',[
-    '{lib}util/animation/animation.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});

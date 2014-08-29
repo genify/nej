@@ -5,21 +5,27 @@
  * @author   cheng-lin(cheng-lin@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _f = NEJ.F,
-        _c = _('nej.c'),
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _p = _('nej.ui.cmd'),
-        _u = _('nej.ui'),
-        _ut= _('nej.ut'),
-        _ul= _('nej.u'),
-        _pro;
-    if (!!_p._$$UploadImageCard) return;
+/** @module ui/editor/command/uploadimage */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'base/config',
+    'base/element',
+    'base/event',
+    'base/util',
+    'ui/layer/window.wrapper',
+    'util/tab/tab',
+    'util/flash/flash',
+    'util/template/tpl',
+    'text!./uploadimage.css',
+    'text!./uploadimage.html'
+],function(NEJ,_k,_c,_e,_v,_u,_i0,_t0,_t1,_t2,_css,_html,_p,_o,_f,_r){
+    var _pro,
+        _seed_css = _e._$pushCSSText(_css),
+        _seed_html = _t2._$addNodeTemplate(_html);
     /**
      * 图片上传控件
+<<<<<<< HEAD
      * @class   {nej.ui.cmd._$$UploadImageCard} 图片上传控件
      * @uses    {nej.ut._$$Tab}
      * @extends {nej.ui.cmd._$$WindowWrapper}
@@ -56,15 +62,63 @@ var f = function(){
      * @param  {String}   命令名称
      * @param  {Object}   Flash返回的图片对象
      *
+=======
+     *
+     * @class     module:ui/editor/command/uploadimage._$$UploadImageCard
+     * @uses      module:util/tab/tab._$$Tab
+     * @extends   module:ui/layer/wrapper/window._$$WindowWrapper
+     * @param     {Object}      arg0           -  可选配置参数
+     * @property  {String|Node} parent         -  父容器
+     * @property  {Boolean}     draggable      -  是否可拖拽
+     * @property  {Boolean}     destroyable    -  关闭是否销毁
+     * @property  {String}      title          -  卡片标题
+     * @property  {String}      fDesc          -  自定义错误提示1
+     * @property  {String}      oDesc          -  自定义错误提示2
+     * @property  {String}      swfUrl         -  Flash文件路径
+     * @property  {String}      baseUrl        -  Flash文件路径的前缀
+     * @property  {Number}      flashWidth     -  Flash宽度
+     * @property  {Number}      flashHeight    -  Flash高度
+     * @property  {String}      userdefinesize - 图片尺寸，默认750x750x0x90;350x350x0x85
+     * @property  {String}      saveorigin     -  是否保存源文件,默认false
+     * @property  {String}      responsetype   -  响应格式,默认xml
+     * @property  {String}      rotatedegree   -  旋转角度，默认0
+     * @property  {String}      stamptype      -  水印类型，默认无
+     * @property  {String}      stampstring    -  水印内容，默认无
+     * @property  {String}      sitefrom       -  产品名称
+>>>>>>> refs/heads/sandbox
      */
+<<<<<<< HEAD
     _p._$$UploadImageCard = NEJ.C();
     _pro = _p._$$UploadImageCard._$extend(_u._$$WindowWrapper);
+=======
+    /**
+     * Flash开始初始化
+     *
+     * @event  module:ui/editor/command/uploadimage._$$UploadImageCard#oninitflash
+     */
+    /**
+     * Flash初始化完成
+     *
+     * @event  module:ui/editor/command/uploadimage._$$UploadImageCard#onflashinited
+     */
+    /**
+     * 图片上传完成
+     *
+     * @event  module:ui/editor/command/uploadimage._$$UploadImageCard#onchange
+     * @param  {String} arg0 - 命令名称
+     * @param  {Object} arg1 - Flash返回的图片对象
+     *
+     */
+    _p._$$UploadImageCard = _k._$klass();
+    _pro = _p._$$UploadImageCard._$extend(_i0._$$WindowWrapper);
+>>>>>>> refs/heads/sandbox
 
     /**
      * 重置卡片
+     *
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可配置参数
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__reset
+     * @param  {Object} arg0 - 可配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
@@ -74,20 +128,21 @@ var f = function(){
         _options.destroyable = _options.destroyable || false;
         _options.title = _options.title || '选择图片';
         _options.mask  = true;
-        this.__supReset(_options);
+        this.__super(_options);
         this.__onShowErrorTips('');
     };
 
     /**
      * 初始化卡片
+     *
      * @protected
-     * @method {__init}
-     * @param {Object} 可配置参数
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__init
+     * @param  {Object} arg0 - 可配置参数
      * @return {Void}
      */
     _pro.__init = function(_options){
         _options = _options||{};
-        this.__supInit(_options);
+        this.__super(_options);
         this.__desc[0].innerText = _options.fDesc || '支持JPG、JPEG、GIF、BMP格式的图片，文件需小于10M';
         this.__desc[1].innerText = _options.oDesc || '网络图片不能超过2M';
         this._$setEvent('oninitflash',_options.oninitflash || _f);
@@ -115,17 +170,18 @@ var f = function(){
             },
             onready: this.__onFlashReady._$bind(this)
         };
-        _e._$flash(this.__hopt);
+        _t1._$flash(this.__hopt);
     };
 
     /**
      * 初始化节点
+     *
      * @protected
-     * @method {__initNode}
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__initNode
      * @return {Void}
      */
     _pro.__initNode = function(){
-        this.__supInitNode();
+        this.__super();
         this.__desc = _e._$getByClassName(this.__body,'j-desc');
         // 0 : 图片上传模式1
         // 1 ：图片上传模式2
@@ -143,7 +199,7 @@ var f = function(){
             selected:'j-selected',
             onchange:this.__onTabChange._$bind(this)
         };
-        this.__tabMg = _ut._$$Tab._$allocate(this.__topt);
+        this.__tabMg = _t0._$$Tab._$allocate(this.__topt);
         _v._$addEvent(_nlist[2],'click',this.__onSubmitImgUrl._$bind(this));
         _v._$addEvent(this.__nimgBox,'error',this.__onImgUrlError._$bind(this));
         _v._$addEvent(this.__nimgBox,'load',this.__onImgLoad._$bind(this));
@@ -152,8 +208,9 @@ var f = function(){
 
     /**
      * 动态构建控件节点模板
+     *
      * @protected
-     * @method {__initNodeTemplate}
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__initNodeTemplate
      * @return {Void}
      */
     _pro.__initXGui = function(){
@@ -163,13 +220,19 @@ var f = function(){
 
     /**
      * 注册flash回调方法
+     *
      * @protected
+<<<<<<< HEAD
      * @method {__doRegiestFlashEvent}
      * @param  {String} Flash回调方法的命名空间
+=======
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__doRegiestFlashEvent
+     * @param  {String} arg0 - Flash回调方法的命名空间
+>>>>>>> refs/heads/sandbox
      * @return {Void}
      */
     _pro.__doRegiestFlashEvent = function(_space){
-        this.__namespace = _space + _ul._$randNumberString(2);
+        this.__namespace = _space + _u._$randNumberString(2);
         var _namespace = NEJ.P(this.__namespace);
         _namespace.uploadStart = this.__onUploadStart._$bind(this);
         _namespace.uploadComplete = this.__onUploadComplete._$bind(this);
@@ -179,11 +242,12 @@ var f = function(){
 
     /**
      * 图片上传完成的回调
+     *
      * @protected
-     * @method {__onUploadComplete}
-     * @param  {Number} flash的操作id
-     * @param  {String} 图片上传状态码
-     * @param  {Object} 相册返回的图片对象
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__onUploadComplete
+     * @param  {Number} id       - flash的操作id
+     * @param  {String} code     - 图片上传状态码
+     * @param  {Object} photoObj - 相册返回的图片对象
      * @return {Void}
      */
     _pro.__onUploadComplete = function(_id,_code,_photoObj){
@@ -199,9 +263,10 @@ var f = function(){
 
     /**
      * 上传图片出错信息设置
+     *
      * @protected
-     * @method {__onShowErrorTips}
-     * @param  {String} 错误信息
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__onShowErrorTips
+     * @param  {String} arg0 - 错误信息
      * @return {Void}
      */
     _pro.__onShowErrorTips = function(_message){
@@ -210,8 +275,9 @@ var f = function(){
 
     /**
      * 开始图片上传
+     *
      * @protected
-     * @method {__onUploadStart}
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__onUploadStart
      * @return {Void}
      */
     _pro.__onUploadStart = function(){
@@ -220,9 +286,10 @@ var f = function(){
 
     /**
      * flash加载完成回调
+     *
      * @protected
-     * @method {__onFlashReady}
-     * @param  {Object} Flash对象
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__onFlashReady
+     * @param  {Object} arg0 - Flash对象
      * @return {Void}
      */
     _pro.__onFlashReady = function(_flash){
@@ -232,8 +299,9 @@ var f = function(){
 
     /**
      * 提交网络图片
+     *
      * @protected
-     * @method {__onSubmitImgUrl}
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__onSubmitImgUrl
      * @return {Void}
      */
     _pro.__onSubmitImgUrl = function(){
@@ -242,8 +310,9 @@ var f = function(){
 
     /**
      * 图片链接错误
+     *
      * @protected
-     * @method {__onImgUrlError}
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__onImgUrlError
      * @return {Void}
      */
     _pro.__onImgUrlError = function(){
@@ -254,8 +323,9 @@ var f = function(){
 
     /**
      * 图片链接正确
+     *
      * @protected
-     * @method {__onImgLoad}
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__onImgLoad
      * @return {Void}
      */
     _pro.__onImgLoad = function(){
@@ -269,41 +339,46 @@ var f = function(){
 
     /**
      * 图片上传前操作，子类实现
-     * @protected
-     * @method {__onbeforeupload}
+     *
+     * @abstract
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__onbeforeupload
      * @return {Void}
      */
     _pro.__onbeforeupload = _f;
 
     /**
      * 图片上传后操作，子类实现
-     * @protected
-     * @method {__onafterupload}
+     *
+     * @abstract
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__onafterupload
      * @return {Void}
      */
     _pro.__onafterupload = _f;
 
     /**
      * 图片上传错误，子类实现
-     * @protected
-     * @method {__uploadError}
+     *
+     * @abstract
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__uploadError
      * @return {Void}
      */
     _pro.__uploadError = _f;
 
     /**
      * 图片上传进程回调，子类实现
-     * @protected
-     * @method {__showProgress}
+     *
+     * @abstract
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__showProgress
      * @return {Void}
      */
     _pro.__showProgress = _f;
 
     /**
      * 切换tab
+     *
      * @protected
-     * @method {__onTabChange}
-     * @param  {Object} 当前Tab对象
+     * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__onTabChange
+     * @param  {Object} arg0 - 当前Tab对象
      * @return {Void}
      */
     _pro.__onTabChange = function(_event){
@@ -314,49 +389,9 @@ var f = function(){
         _e._$setStyle(this.__cnts[(_index+1)%2],'display','none');
     };
 
-    // ui css text
-    var _seed_css = _e._$pushCSSText('\
-      .#<uispace>{width:336px;}\
-      .#<uispace> .m-iframe{position:absolute;height:0px;width:0px;left:-9000px;}\
-      .#<uispace> .u-upload-file{height:0px;width:0px;font-size:0px;}\
-      .#<uispace> .u-error{color:red;padding-top:10px;}\
-      .#<uispace> .choose_file{position:relative;margin-bottom:10px;}\
-      .#<uispace> .choose_file object{position:absolute;left:0;top:0;}\
-      .#<uispace> .web_img{margin-bottom:8px;}\
-      .#<uispace> .web_img .u-edit{margin-bottom:10px;}\
-      .#<uispace> .u-desc{color:#ccc;}\
-      .#<uispace> .middle{color:#528CE0;}\
-      .#<uispace> .u-btn{cursor:pointer;color:#528CE0;}\
-      .#<uispace> .u-image{width:0px;height:0px;visibility:hidden;}');
-    // ui html code
-    var _seed_html = _e._$addNodeTemplate('\
-      <div>\
-        <div>\
-          <a class="u-btn f-ib upload j-tab f-fl" name="upload"><span class="img-upload">上传图片</span></a>\
-          <a class="u-btn f-ib extern j-tab" name="extern"><span class="img-extern">引用站外图片</span></a>\
-          <image class="j-ztag u-image" />\
-        </div>\
-        <div class="j-cnt">\
-          <div class="choose_file" name="select_image">\
-            <div class="btn2">\
-              <a class="main middle"><span>选择图片</span></a>\
-            </div>\
-          </div>\
-          <p class="u-desc j-desc"></p>\
-        </div>\
-        <div class="j-cnt">\
-          <div class="f-cb web_img">\
-              <div class="f-fl u-edit"><input class="ipt j-ztag" type="text" /></div>\
-              <div class="btn2 f-fl j-ztag">\
-                <a class="main small"><span>确定</span></a>\
-              </div>\
-          </div>\
-          <p class="u-desc j-desc"></p>\
-        </div>\
-        <div class="u-error j-ztag"></div>\
-      </div>');
-};
-NEJ.define('{lib}ui/editor/command/uploadimage.js',
-      ['{lib}ui/layer/window.wrapper.js',
-       '{lib}util/tab/tab.js',
-       '{lib}util/flash/flash.js'],f);
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui.cmd'),_p);
+    }
+
+    return _p;
+});

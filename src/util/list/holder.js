@@ -5,50 +5,48 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _f = NEJ.F,
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _p = _('nej.ut'),
-        _pro;
-    if (!!_p._$$ListHolder) return;
+/** @module util/list/holder */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'base/util',
+    'base/element',
+    'util/event'
+],function(NEJ,_k,_u,_e,_t,_p,_o,_f,_r){
+    var _pro;
     /**
      * 列表占位控件
-     * 结构举例：
-     * [code type="html"]
-     *   <div id="scroll-body">
-     *     <div>
-     *       <!-- content here -->
-     *     </div>
-     *     <ul>
-     *       <li>xxxxxxx</li>
-     *       <li>xxxxxxx</li>
-     *     </ul>
-     *   </div>
-     * [/code]
-     * 脚本举例：
-     * [code]
-     *   nej.ut._$$ListHolder._$allocate({
-     *       sbody:'scroll-body'
-     *   });
-     * [/code]
-     * @class   {nej.ut._$$ListHolder}
-     * @extends {nej.ut._$$Event}
      * 
-     * @param   {Object}             可选配置参数
-     * @config  {String|Node}  sbody 滚动容器节点
-     * @config  {String|Node}  hbody 占位容器节点，默认使用滚动容器节点
-     * @config  {Number|Array} limit 可视区域外保留列表项数量控制，通过传入数组控制不同的上下数量
-     * @config  {Boolean}      fixed 列表项高度是否固定，默认为true
-     * @config  {String}       clazz 列表项标识，默认为js-item
+     * 结构举例
+     * ```html
+     * <div id="scroll-body">
+     *   <div>
+     *     <!-- content here -->
+     *   </div>
+     *   <ul>
+     *     <li>xxxxxxx</li>
+     *     <li>xxxxxxx</li>
+     *   </ul>
+     * </div>
+     * ```
+     * 
+     * @class    module:util/list/holder._$$ListHolder
+     * @extends  module:util/event._$$EventTarget
+     *
+     * @param    {Object}       config - 可选配置参数
+     * @property {String|Node}  sbody  - 滚动容器节点
+     * @property {String|Node}  hbody  - 占位容器节点，默认使用滚动容器节点
+     * @property {Number|Array} limit  - 可视区域外保留列表项数量控制，通过传入数组控制不同的上下数量
+     * @property {Boolean}      fixed  - 列表项高度是否固定，默认为true
+     * @property {String}       clazz  - 列表项标识，默认为js-item
      */
-    _p._$$ListHolder = NEJ.C();
-    _pro = _p._$$ListHolder._$extend(_p._$$Event);
+    _p._$$ListHolder = _k._$klass();
+    _pro = _p._$$ListHolder._$extend(_t._$$EventTarget);
     /**
      * 控件初始化
+     *
+     * @protected 
+     * @method module:util/list/holder._$$ListHolder#__init
      * @return {Void}
      */
     _pro.__init = (function(){
@@ -67,14 +65,15 @@ var f = function(){
                 bottom:_e._$create('div')
             };
             _u._$forIn(this.__holders,_doInitHolder);
-            this.__supInit();
+            this.__super();
         };
     })();
     /**
      * 控件重置
+     * 
      * @protected
-     * @method {__reset}
-     * @param  {Object} 配置参数
+     * @method module:util/list/holder._$$ListHolder#__reset
+     * @param  {Object} arg0 - 配置参数
      * @return {Void}
      */
     _pro.__reset = (function(){
@@ -82,7 +81,7 @@ var f = function(){
             _e._$setStyle(_node,'height',0);
         };
         return function(_options){
-            this.__supReset(_options);
+            this.__super(_options);
             this._$limit(_options.limit);
             this.__clazz = _options.clazz||'js-item';
             this.__fixed = _options.fixed;
@@ -112,12 +111,13 @@ var f = function(){
     })();
     /**
      * 控件销毁
+     * 
      * @protected
-     * @method {__destroy}
+     * @method module:util/list/holder._$$ListHolder#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         this._$clearHolder();
         delete this.__fragments;
         delete this.__clazz;
@@ -128,7 +128,10 @@ var f = function(){
     };
     /**
      * 滚动检测
-     * @param  {Event} 事件对象
+     *
+     * @protected
+     * @method module:util/list/holder._$$ListHolder#__doScrollCheck
+     * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
     _pro.__doScrollCheck = function(_event){
@@ -142,7 +145,9 @@ var f = function(){
     };
     /**
      * 设置数量限制
-     * @param  {Number|Array} 限制数量
+     *
+     * @method module:util/list/holder._$$ListHolder#_$limit
+     * @param  {Number|Array} arg0 - 限制数量
      * @return {Void}
      */
     _pro._$limit = function(_limit){
@@ -154,16 +159,18 @@ var f = function(){
     };
     /**
      * 检查列表情况
-     * @param  {Object} 滚动信息
-     * @config {Number} scrollTop    滚动高度
-     * @config {Number} clientHeight 可视高度
-     * @config {Number} offset       初始项偏移量，不传根据滚动容器计算
-     * @config {Array}  list         待检查列表
-     * @return {Void}
+     *
+     * @method   module:util/list/holder._$$ListHolder#_$check
+     * @param    {Object} arg0         - 滚动信息
+     * @property {Number} scrollTop    - 滚动高度
+     * @property {Number} clientHeight - 可视高度
+     * @property {Number} offset       - 初始项偏移量，不传根据滚动容器计算
+     * @property {Array}  list         - 待检查列表
+     * @return   {Void}
      */
     _pro._$check = (function(){
         var _doCalOffset = function(){
-            
+
         };
         return function(_info){
             var _list = _info.list;
@@ -195,16 +202,13 @@ var f = function(){
                     return !0;
                 }
                 // check limit
-                
-                
-                
-                
             },this);
-            
         };
     })();
     /**
      * 清除占位符
+     * 
+     * @method module:util/list/holder._$$ListHolder#_$clearHolder
      * @return {Void}
      */
     _pro._$clearHolder = function(){
@@ -218,8 +222,10 @@ var f = function(){
         delete this.__fragments.tlist;
         delete this.__fragments.blist;
     };
-};
-NEJ.define(
-    '{lib}util/list/holder.js',[
-    '{lib}util/event/event.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});

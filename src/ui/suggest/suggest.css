@@ -1,0 +1,4 @@
+.#<uispace>-parent{position:relative;}
+.#<uispace>{position:absolute;border:1px solid #aaa;background:#fff;text-align:left;visibility:hidden;}
+.#<uispace> .zitm{height:20px;line-height:20px;cursor:default;}
+.#<uispace> .js-selected{background:#1257F9;}

@@ -5,75 +5,120 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _g = _('nej.g'),
-        _i = _('nej.ui'),
-        _p = _('nej.ut'),
-        _pro;
-    if (!!_p._$$Clipper) return;
+/** @module util/clipper/clipper */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'base/constant',
+    'base/element',
+    'base/util',
+    'util/event',
+    'ui/resizer/resizer'
+],function(NEJ,_k,_g,_e,_u,_t,_i,_p,_o,_f,_r){
+    var _pro;
     /**
-     * 图片裁剪器封装对象<br/>
-     * 页面结构举例
-     * [code type="html"]
-     *   
-     * [/code]
+     * 图片裁剪器封装对象
+     *
+     * 样式举例
+     * ```css
+     * .test{padding:20px;overflow:hidden;}
+     * .box{border:1px solid #aaa;}
+     * .mbox{position:relative;float:left;width:500px;height:500px;margin-right:-500px;}
+     * .prev{margin-left:500px;padding-left:20px;}
+     * .pbox{position:relative;margin-bottom:10px;overflow:hidden;}
+     * .pbox-0{width:80px;height:80px;}
+     * .pbox-1{width:120px;height:120px;}
+     * .pbox-2{width:200px;height:200px;}
+     * ```
+     * 
+     * 结构举例
+     * ```html
+     * <div class="test">
+     *   <!-- 裁剪区 -->
+     *   <div class="box mbox" id="clip-main"></div>
+     *   <!-- 预览区 -->
+     *   <div class="prev">
+     *     <div class="box pbox pbox-0" id="clip-preview-0"></div>
+     *     <div class="box pbox pbox-1" id="clip-preview-1"></div>
+     *     <div class="box pbox pbox-2" id="clip-preview-2"></div>
+     *   </div>
+     * </div>
+     * ```
+     * 
      * 脚本举例
-     * [code]
-     *   
-     * [/code]
-     * @class   {nej.ut._$$Clipper} 循环播放封装对象
-     * @extends {nej.ut._$$Event}
-     * @uses    {nej.ui._$$Resizer}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
-     * @config  {String|Node}       mbox 裁剪容器节点
-     * @config  {String|Node|Array} pbox 预览容器节点 
-     * @config  {String}            url  图片地址
-     * @config  {Boolean}           lock 是否锁定比例
-     * @config  {Object}            size 裁剪缩放器初始大小
+     * ```javascript
+     * NEJ.define([
+     *     'util/clipper/clipper'
+     * ],function(_t){
+     *     var _clipper = _t._$$Clipper._$allocate({
+     *         url:'./4.jpg',
+     *         mbox:'clip-main',
+     *         lock:!0,
+     *         pbox:[
+     *             'clip-preview-0',
+     *             'clip-preview-1',
+     *             'clip-preview-2'
+     *         ],
+     *         size:{
+     *             ratio:1,
+     *             width:80
+     *         }
+     *     });
+     * });
+     * ```
      * 
-     * [hr]
-     * 图片载入之前事件
-     * @event  {onbeforeimageload}
-     * @param  {Object}  配置信息
-     * @config {Node}    parent 容器节点
+     * @class    module:util/clipper/clipper._$$Clipper
+     * @extends  module:util/event._$$EventTarget
      * 
-     * [hr]
-     * 图片载入之后事件
-     * @event  {onafterimageload}
-     * @param  {Object}  配置信息
-     * @config {Node}    parent 容器节点
-     * @config {Boolean} loaded 图片是否成功载入
-     * 
-     * [hr]
-     * 图片显示之后事件
-     * @event  {onafterimageshow}
-     * @param  {Object}  配置信息
-     * @config {Node}    parent 容器节点
-     * @config {Float}   ratio  图片缩放比例，显示大小/原始大小
-     * @config {Object}  value  大小调整对象或者大小调整对象配置信息
-     * 
-     * [hr]
-     * 裁剪位置变化事件
-     * @event  {onchange}
-     * @param  {Object} 裁剪信息
-     * @config {Float}  ratio  图片缩放比例
-     * @config {NUmber} top    裁剪距顶部位置
-     * @config {NUmber} left   裁剪距左侧位置
-     * @config {NUmber} width  裁剪宽度
-     * @config {NUmber} height 裁剪高度
-     *  
+     * @param    {Object}            config - 可选配置参数
+     * @property {String|Node}       mbox   - 裁剪容器节点
+     * @property {String|Node|Array} pbox   - 预览容器节点 
+     * @property {String}            url    - 图片地址
+     * @property {Boolean}           lock   - 是否锁定比例
+     * @property {Object}            size   - 裁剪缩放器初始大小
      */
-    _p._$$Clipper = NEJ.C();
-      _pro = _p._$$Clipper._$extend(_p._$$Event);
+    /** 
+     * 图片载入之前事件
+     * 
+     * @event    module:util/clipper/clipper._$$Clipper#onbeforeimageload
+     * @param    {Object}  event  - 事件信息
+     * @property {Node}    parent - 容器节点
+     */
+    /** 
+     * 图片载入之后事件
+     * 
+     * @event    module:util/clipper/clipper._$$Clipper#onafterimageload
+     * @param    {Object}  event  - 事件信息
+     * @property {Node}    parent - 容器节点
+     * @property {Boolean} loaded - 图片是否成功载入
+     */
+    /** 
+     * 图片显示之后事件
+     * 
+     * @event    module:util/clipper/clipper._$$Clipper#onafterimageshow
+     * @param    {Object}  event  - 事件信息
+     * @property {Node}    parent - 容器节点
+     * @property {Float}   ratio  - 图片缩放比例，显示大小/原始大小
+     * @property {Object}  value  - 大小调整对象或者大小调整对象配置信息
+     */
+    /** 
+     * 裁剪位置变化事件
+     * 
+     * @event    module:util/clipper/clipper._$$Clipper#onchange
+     * @param    {Object} event  - 裁剪信息
+     * @property {Float}  ratio  - 图片缩放比例
+     * @property {NUmber} top    - 裁剪距顶部位置
+     * @property {NUmber} left   - 裁剪距左侧位置
+     * @property {NUmber} width  - 裁剪宽度
+     * @property {NUmber} height - 裁剪高度
+     */
+    _p._$$Clipper = _k._$klass();
+    _pro = _p._$$Clipper._$extend(_t._$$EventTarget);
     /**
      * 控件初始化
+     * 
      * @protected
-     * @method {__init}
+     * @method module:util/clipper/clipper._$$Clipper#__init
      * @return {Void}
      */
     _pro.__init = function(){
@@ -82,15 +127,18 @@ var f = function(){
             onmove:this.__onClipping._$bind(this),
             onresize:this.__onClipping._$bind(this)
         };
-        this.__supInit();
+        this.__super();
     };
     /**
      * 控件重置
-     * @param  {Object} 配置参数
+     * 
+     * @protected
+     * @method module:util/clipper/clipper._$$Clipper#__reset
+     * @param  {Object} arg0 - 配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         // init event
         this.__doInitDomEvent([[
             this.__image,'load',
@@ -102,7 +150,7 @@ var f = function(){
         // init node
         this.__pbox = {};
         this.__mbox = _e._$get(_options.mbox);
-        this.__sopt = NEJ.EX({
+        this.__sopt = _u._$fetch({
             lock:!1,
             size:null
         },_options);
@@ -118,16 +166,22 @@ var f = function(){
     };
     /**
      * 控件销毁
+     * 
+     * @protected
+     * @method module:util/clipper/clipper._$$Clipper#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         this.__doClearResizer();
         this.__doClearPreview();
         this.__image.src = _g._$BLANK_IMAGE;
     };
     /**
      * 清除缩放器
+     * 
+     * @protected
+     * @method module:util/clipper/clipper._$$Clipper#__doClearResizer
      * @return {Void}
      */
     _pro.__doClearResizer = function(){
@@ -140,6 +194,9 @@ var f = function(){
     };
     /**
      * 清除预览图片
+     * 
+     * @protected
+     * @method module:util/clipper/clipper._$$Clipper#__doClearPreview
      * @return {Void}
      */
     _pro.__doClearPreview = function(_keeped){
@@ -157,9 +214,12 @@ var f = function(){
     };
     /**
      * 计算图片位置
-     * @param  {Object} 图片尺寸，{width:10,height:20}
-     * @param  {Object} 容器尺寸，{width:200,height:300}
-     * @return {Object} 图片位置，{left:0,top:0,width:10,height:20}
+     * 
+     * @protected
+     * @method module:util/clipper/clipper._$$Clipper#__doCalImagePosition
+     * @param  {Object} arg0 - 图片尺寸，{width:10,height:20}
+     * @param  {Object} arg1 - 容器尺寸，{width:200,height:300}
+     * @return {Object}        图片位置，{left:0,top:0,width:10,height:20}
      */
     _pro.__doCalImagePosition = function(_simg,_sbox){
         var _irat = _simg.width/_simg.height,
@@ -185,6 +245,9 @@ var f = function(){
     };
     /**
      * 计算裁剪预览位置
+     * 
+     * @protected
+     * @method module:util/clipper/clipper._$$Clipper#__doCalClipPosition
      * @return {Void}
      */
     _pro.__doCalClipPosition = function(_clip,_prev){
@@ -199,7 +262,10 @@ var f = function(){
     };
     /**
      * 图片载入完成触发事件
-     * @param  {Boolean} 图片是否成功载入
+     * 
+     * @protected
+     * @method module:util/clipper/clipper._$$Clipper#__onImageLoad
+     * @param  {Boolean} arg0 - 图片是否成功载入
      * @return {Void}
      */
     _pro.__onImageLoad = (function(){
@@ -266,7 +332,7 @@ var f = function(){
             if (_event.value instanceof _i._$$Resizer){
                 this.__resizer = _event.value;
             }else{
-                var _options = NEJ.X(
+                var _options = _u._$merge(
                     this.__sopt,
                     _event.value
                 );
@@ -279,7 +345,10 @@ var f = function(){
     })();
     /**
      * 图片裁剪
-     * @param  {Object} 裁剪信息
+     * 
+     * @protected
+     * @method module:util/clipper/clipper._$$Clipper#__onClipping
+     * @param  {Object} arg0 - 裁剪信息
      * @return {Void}
      */
     _pro.__onClipping = function(_event){
@@ -300,8 +369,11 @@ var f = function(){
     };
     /**
      * 预览图片
-     * @param  {Object} 预览配置
-     * @param  {Object} 裁剪信息
+     * 
+     * @protected
+     * @method module:util/clipper/clipper._$$Clipper#__doPreviewClip
+     * @param  {Object} arg0 - 预览配置
+     * @param  {Object} arg1 - 裁剪信息
      * @return {Void}
      */
     _pro.__doPreviewClip = function(_conf,_box){
@@ -333,7 +405,9 @@ var f = function(){
     };
     /**
      * 设置图片地址
-     * @param  {String} 图片地址
+     * 
+     * @method module:util/clipper/clipper._$$Clipper#_$setURL
+     * @param  {String} arg0 - 图片地址
      * @return {Void}
      */
     _pro._$setURL = function(_url){
@@ -349,7 +423,9 @@ var f = function(){
     };
     /**
      * 添加预览容器节点
-     * @param  {String|Node} 预览容器节点
+     * 
+     * @method module:util/clipper/clipper._$$Clipper#_$addPreview
+     * @param  {String|Node} arg0 - 预览容器节点
      * @return {Void}
      */
     _pro._$addPreview = function(_box){
@@ -370,8 +446,10 @@ var f = function(){
     };
     /**
      * 删除预览视图
-     * @param  {String}  标识
-     * @param  {Boolean} 是否保留最终状态
+     * 
+     * @method module:util/clipper/clipper._$$Clipper#_$delPreview
+     * @param  {String}  arg0 - 标识
+     * @param  {Boolean} arg1 - 是否保留最终状态
      * @return {Void}
      */
     _pro._$delPreview = function(_id,_keep){
@@ -382,8 +460,10 @@ var f = function(){
     };
     /**
      * 取裁剪结果
-     * @param  {String} 预览标识
-     * @return {Object} 裁剪结果
+     * 
+     * @method module:util/clipper/clipper._$$Clipper#_$getClipResult
+     * @param  {String} arg0 - 预览标识
+     * @return {Object}        裁剪结果
      */
     _pro._$getClipResult = function(_id){
         var _conf = this.__pbox[_id];
@@ -400,10 +480,10 @@ var f = function(){
         );
         return _result;
     };
-};
-NEJ.define(
-    '{lib}util/clipper/clipper.js',[
-    '{lib}util/event.js',
-    '{lib}base/constant.js',
-    '{lib}ui/resizer/resizer.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});

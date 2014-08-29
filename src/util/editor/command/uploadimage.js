@@ -5,29 +5,32 @@
  * @author   cheng-lin(cheng-lin@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _f = NEJ.F,
-        _u = _('nej.u'),
-        _p = _('nej.ut.cmd'),
-        _i = _('nej.ui.cmd'),
-        _e = _('nej.e'),
-        _proUploadImage;
-    if (!!_p._$$UploadImage) return;
+/** util/editor/command/uploadimage */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'base/util',
+    'util/editor/command/card',
+    'ui/editor/command/uploadimage'
+],function(NEJ,_k,_u,_t0,_i0,_p,_o,_f,_r){
+    var _pro;
     /**
      * 左对齐执行命令封装
-     * @class   {nej.ut.cmd._$$UploadImage} 左对齐执行命令封装
-     * @extends {nej.ut.cmd._$$SimpleCommand}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     *
+     * @class   module:util/editor/command/uploadimage._$$UploadImage
+     * @extends module:util/editor/command/card._$$CardCommand
+     * @param   {Object} arg0 - 可选配置参数
      */
-    _p._$$UploadImage = NEJ.C();
-    _proUploadImage = _p._$$UploadImage._$extend(_p._$$CardCommand);
+    _p._$$UploadImage = _k._$klass();
+    _pro = _p._$$UploadImage._$extend(_t0._$$CardCommand);
     /**
      * 命令名称
-     * @type String
+     *
+     * @const {String} module:util/editor/command/uploadimage._$$UploadImage.command
      */
     _p._$$UploadImage.command = 'uploadImage';
 
+<<<<<<< HEAD
     /**
      * 初始化方法
      * @protected
@@ -38,23 +41,29 @@ var f = function(){
         this.__supInit();
     };
 
+=======
+>>>>>>> refs/heads/sandbox
     /**
      * 显示卡片，一般子类重写
+     *
      * @protected
-     * @method {__doShowCard}
+     * @method module:util/editor/command/uploadimage._$$UploadImage#__doShowCard
      * @return {Void}
      */
-    _proUploadImage.__doShowCard = function(){
+    _pro.__doShowCard = function(){
         this.__onShowCard();
     };
 
     /**
      * 子类实现显示具体卡片
+     *
+     * @protected
+     * @method module:util/editor/command/uploadimage._$$UploadImage#__onShowCard
      * @return {Void}
      */
-    _proUploadImage.__onShowCard = function(){
+    _pro.__onShowCard = function(){
         if (!this.__uploadCard)
-        this.__uploadCard = _i._$$UploadImageCard._$allocate({
+        this.__uploadCard = _i0._$$UploadImageCard._$allocate({
                 onchange:this.__onChange._$bind(this)
             });
         this.__uploadCard._$show();
@@ -62,14 +71,20 @@ var f = function(){
 
     /**
      * 卡片内容变化回调，子类实现具体业务逻辑
+     *
      * @protected
-     * @method {__onChange}
-     * @param  {Object} 插入图片命令
-     * @param  {Object} 图片对象
+     * @method module:util/editor/command/uploadimage._$$UploadImage#__onChange
+     * @param  {Object} arg0 - 插入图片命令
+     * @param  {Object} arg1 - 图片对象
      * @return {Void}
      */
+<<<<<<< HEAD
     _proUploadImage.__onChange = function(_commend,_photoObj){
         this.__editor._$focus(2);
+=======
+    _pro.__onChange = function(_commend,_photoObj){
+        this.__editor._$focus();
+>>>>>>> refs/heads/sandbox
         var _id = 0,_url;
         if(!!_photoObj.ourl && _photoObj.ourl.indexOf('.gif') > 0){
             //gif图片
@@ -97,6 +112,10 @@ var f = function(){
 
     // regist command implemention
     _p._$$UploadImage._$regist();
-};
-NEJ.define('{lib}util/editor/command/uploadimage.js',
-      ['{lib}util/editor/command/card.js','{lib}ui/editor/command/uploadimage.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut.cmd'),_p);
+    }
+
+    return _p;
+});

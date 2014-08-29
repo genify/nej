@@ -11,7 +11,7 @@ var f = function(){
 //        var _f = function(){
 //            _i =1;
 //        }
-//        var _obj = new c._$$Cache();
+//        var _obj = new c._$$CacheAbstract();
 //        _obj._$setEvent('clickxxx',_f);
 //        _obj._$dispatchEvent('clickxxx');
 //        equal(_i,1,'clickxxx方法被成功调用');
@@ -24,7 +24,7 @@ var f = function(){
 //        var _f = function(_num){
 //            _i = _num;
 //        }
-//        var _obj = new c._$$Cache();
+//        var _obj = new c._$$CacheAbstract();
 //        _obj._$setEvent('click',_f);
 //        _obj._$dispatchEvent('click',5);
 //        equal(_i,5,'方法被成功调用,并且设置的值正确');
@@ -40,7 +40,7 @@ var f = function(){
 //        var _f1 = function(){
 //            
 //        };
-//        var _obj = new c._$$Cache();
+//        var _obj = new c._$$CacheAbstract();
 //        _obj._$batEvent(
 //            {
 //                f0:_f0._$bind(this),
@@ -58,7 +58,7 @@ var f = function(){
 //        var _f0 = function(_num){
 //            _i = _num;
 //        }
-//        var _obj = new c._$$Cache();
+//        var _obj = new c._$$CacheAbstract();
 //        _obj._$setEvent('f0',_f0);
 //        equal(_obj._$hasEvent('f0'),true,'检查有f0这个事件');
 //        start();
@@ -70,7 +70,7 @@ var f = function(){
 //        var _f0 = function(_num){
 //            _i = _num;
 //        }
-//        var _obj = new c._$$Cache();
+//        var _obj = new c._$$CacheAbstract();
 //        _obj._$setEvent('f0',_f0);
 //        _obj._$clearEvent('f0')
 //        equal(_obj._$hasEvent('f0'),false,'f0被清除了');
@@ -79,13 +79,13 @@ var f = function(){
 //    
 //    test('api,在API中分配控件实例，如果指定ID已存在当前控件的实例则直接返回', function() {
 //        stop();
-//        var _obj = new c._$$Cache();
+//        var _obj = new c._$$CacheAbstract();
 //        var _id= 'widget0';
-//        var _cache = nej.ut._$api(_id,c._$$Cache,{});
+//        var _cache = nej.ut._$api(_id,c._$$CacheAbstract,{});
 //        equal(typeof(_cache),'object','分配一个实例控件');
-//        var _flag = nej.ut._$api(_id,c._$$Cache);
+//        var _flag = nej.ut._$api(_id,c._$$CacheAbstract);
 //        equal(typeof(_flag),'object','第3个参数未传，只检查是否有实例存在，有直接放回');
-//        var _flag2 = nej.ut._$api('widget1',c._$$Cache);
+//        var _flag2 = nej.ut._$api('widget1',c._$$CacheAbstract);
 //        equal(_flag2,undefined,'第3个参数未传，只检查是否有实例存在，有直接放回');
 //        start();
 //    });
@@ -96,7 +96,7 @@ var f = function(){
 //        var _f = function(_num){
 //            _i = _num;
 //        }
-//        var _obj = new c._$$Cache();
+//        var _obj = new c._$$CacheAbstract();
 //        _obj._$setEvent('oncachechange',_f);
 //        _obj._$dispatchEvent('oncachechange',10);
 //        equal(_i,10,'oncachechange方法被成功调用,并且设置的值正确');

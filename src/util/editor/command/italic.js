@@ -5,24 +5,33 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _p = NEJ.P('nej.ut.cmd');
-    if (!!_p._$$Italic) return;
+/** util/editor/command/italic */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'util/editor/command/simple'
+],function(NEJ,_k,_t0,_p,_o,_f,_r){
     /**
      * 斜体执行命令封装
-     * @class   {nej.ut.cmd._$$Italic} 斜体执行命令封装
-     * @extends {nej.ut.cmd._$$SimpleCommand}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     *
+     * @class   module:util/editor/command/italic._$$Italic
+     * @extends module:util/editor/command/simple._$$SimpleCommand
+     * @param   {Object} options - 可选配置参数
      */
-    _p._$$Italic = NEJ.C();
-    _p._$$Italic._$extend(_p._$$SimpleCommand);
+    _p._$$Italic = _k._$klass();
+    _p._$$Italic._$extend(_t0._$$SimpleCommand);
     /**
      * 命令名称
-     * @type String
+     *
+     * @const {String} module:util/editor/command/italic._$$Italic.command
      */
     _p._$$Italic.command = 'italic';
     // regist command implemention
     _p._$$Italic._$regist();
-};
-NEJ.define('{lib}util/editor/command/italic.js',
-      ['{lib}util/editor/command/simple.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut.cmd'),_p);
+    }
+
+    return _p;
+});

@@ -5,14 +5,10 @@
  * @author   cheng-lin(cheng-lin@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _f = NEJ.F,
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _h = _('nej.h'),
-        _p = _('nej.p');
+NEJ.define([
+    'base/global',
+    'base/element'
+],function(NEJ,_e,_p,_o,_f,_r){
     var _suffix = {
         'opacity':1,
         'z-index':1,
@@ -25,7 +21,7 @@ var f = function(){
      * @param  {String}  属性
      * @return {Boolean} true表示需要加单位，false表示不需要加单位
      */
-    _h.__doCheckProp = function(_prop){
+    _p.__doCheckProp = function(_prop){
         return (_suffix[_prop] === undefined) && (_prop.indexOf('color') < 0);
     };
     /**
@@ -33,46 +29,25 @@ var f = function(){
      * @param  {Node}   动画节点
      * @param  {String} 动画目标样式
      * @param  {String} 动画变换信息
-     * @return {nej.h} 
+     * @return {Void}
      */
-    _h.__onStart = function(_node,_rules,_anim){
+    _p.__onStart = function(_node,_rules,_anim){
         _anim = _anim.slice(0,-1);
         _e._$setStyle(_node,'transition',_anim);
         _e._$style(_node,_rules);
-        return this;
     };
 
     /**
      * 取消动画
      * @param  {Node}   动画节点
      * @param  {String} 节点目标样式
-     * @return {nej.h}
+     * @return {Void}
      */
-    _h.__onStop = function(_node,_state,_stop,_flag){
+    _p.__onStop = function(_node,_state,_stop,_flag){
         _e._$style(_node,_state);
         _e._$setStyle(_node,'transition','none');
         _stop.call(null,_state,_flag);
-        return this;
     };
 
-    /*
-     * 暂停动画
-     * @param  {Node}   动画节点
-     * @param  {String} 暂停时的节点样式
-     * @return {nej.h} 
-     
-    _h.__onPaused = function(_node,_state){
-        _h.__onStop(_node,_state);
-        return this;
-    };
-    
-     * 暂停后重新开始动画
-     * @param  {Node}   动画节点
-     * @return {nej.h} 
-     
-    _h.__onRestart = function(_node,_rules,_anim){
-        _h.__onStart(_node,_rules,_anim);
-        return this;
-    };*/
-};
-NEJ.define('{lib}util/effect/platform/effect.js',['{lib}base/platform.js'],f);
+    return _p;
+});

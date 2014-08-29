@@ -5,15 +5,16 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _u = _('nej.u'),
-        _p = _('nej.ut.c');
-    if (!!_p._$isColor) return;
+/** @module ui/colorpick/util */
+NEJ.define([
+    'base/global',
+    'base/util'
+],function(NEJ,_u,_p,_o,_f,_r){
     /**
      * 判断色值是否合法
-     * @api    {nej.ut.c._$isColor}
-     * @param  {String}  颜色值
+     *
+     * @method module:ui/colorpick/util._$isColor
+     * @param  {String}  arg0 -  颜色值
      * @return {Boolean} 是否合法
      */
     _p._$isColor = (function(){
@@ -24,8 +25,9 @@ var f = function(){
     })();
     /**
      * 判断是否完整格式的颜色值，如#ffffff
-     * @api    {nej.ut.c._$isFullColor}
-     * @param  {String}  颜色值
+     *
+     * @method module:ui/colorpick/util._$isFullColor
+     * @param  {String}  arg0 -  颜色值
      * @return {Boolean} 是否完整格式
      */
     _p._$isFullColor = (function(){
@@ -36,8 +38,9 @@ var f = function(){
     })();
     /**
      * 提取色值的RGB信息
-     * @api    {nej.ut.c._$color2rgb}
-     * @param  {String} 颜色值，#ffffff或者#fff
+     *
+     * @method module:ui/colorpick/util._$color2rgb
+     * @param  {String} arg0 - 颜色值，#ffffff或者#fff
      * @return {Object} RGB信息，{r:23,g:25,b:67}
      */
     _p._$color2rgb = (function(){
@@ -63,8 +66,9 @@ var f = function(){
     })();
     /**
      * RGB色值转HLS色值
-     * @api    {nej.ut.c._$rgb2hsl}
-     * @param  {Object} RGB信息，如{r:23,g:24,b:35}
+     *
+     * @method module:ui/colorpick/util._$rgb2hsl
+     * @param  {Object} arg0 - RGB信息，如{r:23,g:24,b:35}
      * @return {Object} HSL信息，如{h:0.7,l:0.6,s:0.9}
      */
     _p._$rgb2hsl = function(_rgb){
@@ -97,8 +101,9 @@ var f = function(){
     };
     /**
      * HSL色值转RGB色串
-     * @api    {nej.ut.c._$hsl2color}
-     * @param  {Object} HSL信息，{h:0.7,l:0.6,s:0.9}
+     *
+     * @method module:ui/colorpick/util._$hsl2color
+     * @param  {Object} arg0 - HSL信息，{h:0.7,l:0.6,s:0.9}
      * @return {String} RGB颜色串
      */
     _p._$hsl2color = (function(){
@@ -112,23 +117,23 @@ var f = function(){
         };
         var _hue2rgb = function(_v1,_v2,_hue){
             _hue += _hue<0?1:(_hue>1?-1:0);
-            if ((6*_hue)<1) 
+            if ((6*_hue)<1)
                 return _v1+(_v2-_v1)*6*_hue;
-            if ((2*_hue)<1) 
+            if ((2*_hue)<1)
                 return _v2;
-            if ((3*_hue)<2) 
+            if ((3*_hue)<2)
                 return _v1+(_v2-_v1)*((2/3)-_hue)*6;
             return _v1;
         };
         return function(_hsl){
             var _red,_green,_blue;
             if (!_hsl.s){
-                _red = 
-                _blue = 
+                _red =
+                _blue =
                 _green = _hsl.l*255;
             }else{
                 var _v2 = (_hsl.l<0.5)
-                        ? (_hsl.l*(1+_hsl.s)) 
+                        ? (_hsl.l*(1+_hsl.s))
                         : ((_hsl.l+_hsl.s)-(_hsl.s*_hsl.l)),
                     _v1 = 2*_hsl.l-_v2;
                 _red = 255*_hue2rgb(_v1,_v2,_hsl.h+(1/3));
@@ -142,13 +147,18 @@ var f = function(){
     })();
     /**
      * RGB颜色串转HSL色值
-     * @api    {nej.ut.c._$color2hsl}
-     * @param  {String} 颜色串
+     *
+     * @method module:ui/colorpick/util._$color2hsl
+     * @param  {String} arg0 - 颜色串
      * @return {Object} HSL信息，如{h:0.7,l:0.6,s:0.9}
      */
     _p._$color2hsl = function(_color){
         return _p._$rgb2hsl(_p._$color2rgb(_color));
     };
-};
-NEJ.define('{lib}ui/colorpick/util.js',
-      ['{lib}base/util.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut.c'),_p);
+    }
+
+    return _p;
+});

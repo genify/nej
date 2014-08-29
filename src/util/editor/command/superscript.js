@@ -5,24 +5,33 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _p = NEJ.P('nej.ut.cmd');
-    if (!!_p._$$SuperScript) return;
+/** util/editor/command/superscript */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'util/editor/command/simple'
+],function(NEJ,_k,_t0,_p,_o,_f,_r){
     /**
      * 加粗执行命令封装
-     * @class   {nej.ut.cmd._$$SuperScript} 加粗执行命令封装
-     * @extends {nej.ut.cmd._$$SimpleCommand}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     *
+     * @class   module:util/editor/command/superscript._$$SuperScript
+     * @extends module:util/editor/command/simple._$$SimpleCommand
+     * @param   {Object} options - 可选配置参数
      */
-    _p._$$SuperScript = NEJ.C();
-    _p._$$SuperScript._$extend(_p._$$SimpleCommand);
+    _p._$$SuperScript = _k._$klass();
+    _p._$$SuperScript._$extend(_t0._$$SimpleCommand);
     /**
      * 命令名称
-     * @type String
+     *
+     * @const {String} module:util/editor/command/superscript._$$SuperScript.command
      */
     _p._$$SuperScript.command = 'superscript';
     // regist command implemention
     _p._$$SuperScript._$regist();
-};
-NEJ.define('{lib}util/editor/command/superscript.js',
-      ['{lib}util/editor/command/simple.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut.cmd'),_p);
+    }
+
+    return _p;
+});

@@ -5,24 +5,33 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _p = NEJ.P('nej.ut.cmd');
-    if (!!_p._$$JustifyRight) return;
+/** util/editor/command/justifyright */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'util/editor/command/simple'
+],function(NEJ,_k,_t0,_p,_o,_f,_r){
     /**
      * 右对齐执行命令封装
-     * @class   {nej.ut.cmd._$$JustifyRight} 右对齐执行命令封装
-     * @extends {nej.ut.cmd._$$SimpleCommand}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     *
+     * @class   module:util/editor/command/justifyright._$$JustifyRight
+     * @extends module:util/editor/command/simple._$$SimpleCommand
+     * @param   {Object} options - 可选配置参数
      */
-    _p._$$JustifyRight = NEJ.C();
-    _p._$$JustifyRight._$extend(_p._$$SimpleCommand);
+    _p._$$JustifyRight = _k._$klass();
+    _p._$$JustifyRight._$extend(_t0._$$SimpleCommand);
     /**
      * 命令名称
-     * @type String
+     *
+     * @const {String} module:util/editor/command/justifyright._$$JustifyRight.command
      */
     _p._$$JustifyRight.command = 'justifyRight';
     // regist command implemention
     _p._$$JustifyRight._$regist();
-};
-NEJ.define('{lib}util/editor/command/justifyright.js',
-      ['{lib}util/editor/command/simple.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut.cmd'),_p);
+    }
+
+    return _p;
+});

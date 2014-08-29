@@ -5,38 +5,40 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    // variable declaration
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _e = _('nej.e'),
-        _j = _('nej.j'),
-        _p = _('nej.ut.j'),
-        _pro;
-    if (!!_p._$$TextLoader) return;
+/** @module  util/ajax/loader/text */
+NEJ.define([
+    './loader.js',
+    'base/klass',
+    'base/element',
+    'util/ajax/xdr'
+],function(_t,_k,_e,_j,_p,_o,_f,_r){
+    var _pro;
     /**
      * 文本资源加载器
-     * @class   {nej.ut.j._$$TextLoader} HTML资源加载器
-     * @extends {nej.ut._$$Loader}
-     * @param   {Object} 可选配置参数，已处理的参数列表如下所示
-     * 
+     *
+     * @class   module:util/ajax/loader/text._$$LoaderText
+     * @extends module:util/ajax/loader/loader._$$LoaderAbstract
+     *
+     * @param   {Object} config - 可选配置参数
      */
-    _p._$$TextLoader = NEJ.C(); 
-    _pro = _p._$$TextLoader._$extend(_p._$$Loader);
+    _p._$$LoaderText = _k._$klass();
+    _pro = _p._$$LoaderText._$extend(_t._$$LoaderAbstract);
     /**
      * 取资源载入控件
+     *
      * @protected
-     * @method {__getRequest}
-     * @return {Link} 控件
+     * @method module:util/ajax/loader/style._$$LoaderText#__getRequest
+     * @return {Node} 控件节点
      */
     _pro.__getRequest = function(){
         return null;
     };
     /**
      * 资源载入
+     *
      * @protected
-     * @method {__doRequest}
-     * @param  {Script} 控件
+     * @method module:util/ajax/loader/style._$$LoaderText#__doRequest
+     * @param  {Node} 控件节点
      * @return {Void}
      */
     _pro.__doRequest = function(){
@@ -49,19 +51,17 @@ var f = function(){
     };
     /**
      * 资源载入成功事件
+     *
      * @protected
-     * @method {__onLoaded}
+     * @method module:util/ajax/loader/style._$$LoaderText#__onLoaded
      * @return {Void}
      */
     _pro.__onLoaded = function(_text){
-        this.__doCallback('onloaded',{
+        this.__doCallback('onload',{
             url:this.__url,
             content:_text
         });
     };
-};
-NEJ.define(
-    '{lib}util/ajax/loader/text.js',[
-    '{lib}util/ajax/xdr.js',
-    '{lib}util/ajax/loader/loader.js'
-],f);
+
+    return _p;
+});

@@ -5,12 +5,15 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _cache = {};
+/** @module util/file/save */
+NEJ.define([
+    'base/global',
+    'base/element',
+    'base/event',
+    'base/util',
+    'base/chain'
+],function(NEJ,_e,_v,_u,_x,_p,_o,_f,_r){
+    var _cache = {};
     /*
      * 执行另存为
      * @param  {Event} 节点标识
@@ -50,58 +53,84 @@ var f = function(){
     })();
     /**
      * 绑定文件下载行为
-     * 
+     *
+     * 结构举例
+     * ```html
+     * <a id="button_id">下载文件</a>
+     * ```
+     *
      * 脚本举例
-     * [code]
-     *   // 统一定义名字空间简写
-     *   var _  = NEJ.P,
-     *       _e = _('nej.e');
-     *   // 绑定文件下载行为
-     *   _e._$bindSaveAsAction('button_id');
-     * [/code]
-     * 
-     * @api    {nej.e._$bindSaveAsAction}
-     * @param  {String|Node} 下载点击链接节点，必须是A节点
-     * @param  {Object}      可选配置参数
-     * @config {String|Function} url  下载文件地址或者地址生成函数
-     * @config {String}          name 保存的文件名称，没有指定name则取url中文件名
-     * @return {Void}
+     * ```javascript
+     * NEJ.define([
+     *     'util/file/save'
+     * ],function(_e){
+     *     // 绑定文件下载行为
+     *     _e._$bind('button_id',{
+     *         name:'test.txt',
+     *         url:function(){
+     *             // 动态组装下载地址
+     *             return obj.url+'?'+new Date;
+     *         }
+     *     });
+     * });
+     * ```
+     *
+     * @method   module:util/file/save._$bind
+     * @see      module:util/file/save._$unbind
+     * @param    {String|Node}     arg0 - 下载点击链接节点，必须是A节点
+     * @param    {Object}          arg1 - 可选配置参数
+     * @property {String|Function} url  - 下载文件地址或者地址生成函数
+     * @property {String}          name - 保存的文件名称，没有指定name则取url中文件名
+     * @return   {Void}
      */
-    _e._$bindSaveAsAction = function(_button,_options){
+    /**
+     * @method CHAINABLE._$bind
+     * @see module:util/file/save._$bind
+     */
+    _p._$bind = function(_button,_options){
         var _id = _e._$id(_button);
         if (!!_cache[_id]) return;
         var _node = _e._$get(_button);
         if (_node.tagName!='A') return;
-        _cache[_id] = NEJ.X({},_options);
+        _cache[_id] = _u._$merge({},_options);
         _v._$addEvent(_id,'click',_doSaveAs);
     };
     /**
      * 解绑文件下载行为
-     * 
+     *
      * 脚本举例
-     * [code]
-     *   // 统一定义名字空间简写
-     *   var _  = NEJ.P,
-     *       _e = _('nej.e');
-     *   // 文件另存为
-     *   _e._$unbindSaveAsAction('button_id');
-     * [/code]
-     * 
-     * @api    {nej.e._$unbindSaveAsAction}
-     * @param  {String|Node} 下载点击按钮节点
+     * ```javascript
+     * NEJ.define([
+     *     'util/file/save'
+     * ],function(_e){
+     *     // 解绑文件下载行为
+     *     _e._$unbind('button_id');
+     * });
+     * ```
+     *
+     * @method module:util/file/save._$unbind
+     * @see    module:util/file/save._$bind
+     * @param  {String|Node} arg0 - 下载点击按钮节点
      * @return {Void}
      */
-    _e._$unbindSaveAsAction = function(_button){
+    /**
+     * @method CHAINABLE._$unbind
+     * @see module:util/file/save._$unbind
+     */
+    _p._$unbind = function(_button){
         var _id = _e._$id(_button);
         if (!_cache[_id]) return;
         delete _cache[_id];
         _v._$delEvent(_id,'click',_doSaveAs);
     };
-};
-NEJ.define(
-    '{lib}util/file/save.js',[
-    '{lib}base/platform.js',
-    '{lib}base/element.js',
-    '{lib}base/event.js',
-    '{lib}base/util.js'
-],f);
+    // for chainable method
+    _x._$merge(_p);
+
+    if (CMPT){
+        var _x = NEJ.P('nej.e');
+        _x._$bindSaveAsAction = _p._$bind;
+        _x._$unbindSaveAsAction = _p._$unbind;
+    }
+
+    return _p;
+});

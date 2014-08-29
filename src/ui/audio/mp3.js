@@ -5,82 +5,100 @@
  * @author   cheng-lin(cheng-lin@corp.netease.com)
  * ------------------------------------------
  */
-var f = function() {
-	var _  = NEJ.P,
-		_e = _('nej.e'),
-		_v = _('nej.v'),
-		_c = _('nej.c'),
-		_i = _('nej.ui'),
-		_t = _('nej.ut'),
-		_pro;
-    if (!!_i._$$MP3Player) return;
+/** @module ui/audio/mp3 */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'base/element',
+    'base/event',
+    'ui/base',
+    'base/config',
+    'util/slider/slider.simple',
+    'util/media/playlist',
+    'util/audio/audio',
+    'util/template/tpl',
+    'text!./mp3.css',
+    'text!./mp3.html'
+],function(NEJ,_k,_e,_v,_u,_c,_t0,_t1,_t2,_t3,_css,_html,_p,_o,_f,_r) {
+    var _pro,
+        _seed_css = _e._$pushCSSText(_css,{root:_c._$get('root')}),
+        _seed_html= _t3._$addNodeTemplate(_html);
     /**
      * 音频播放器
-     * @class   {nej.ui._$$MP3Player} 音频播放器
-     * @uses    {nej.ut._$$SimpleSlider}
-     * @extends {nej.ui._$$Abstract}
-     * @param   {Object}  可选配置参数，已处理参数列表如下：
-     * @config  {String|Node} parent     父节点
-     * @config  {String}      mode       播放模式，0:列表(默认)，1:单曲，2:随机
-     * @config  {Array}       list       歌曲列表
-     * @config  {Boolean}     autostart  是否自动开始，0:不自动，1:自动(默认)
-     * @return  {nej.ui._$$MP3Player}   播放器实例
+     *
+     * @class     module:ui/audio/mp3._$$MP3Player
+     * @uses      module:util/slider/simple._$$SimpleSlider
+     * @uses      module:util/media/playlist._$$PlayList
+     * @extends   module:ui/base._$$Abstract
+     * @param     {Object}      config     - 可选配置参数
+     * @property  {String|Node} parent     - 父节点
+     * @property  {String}      mode       - 播放模式，0:列表(默认)，1:单曲，2:随机
+     * @property  {Array}       list       - 歌曲列表
+     * @property  {Boolean}     autostart  - 是否自动开始，0:不自动，1:自动(默认)
      */
-    _i._$$MP3Player = NEJ.C();
-    _pro = _i._$$MP3Player._$extend(_i._$$Abstract);
+    _p._$$MP3Player = _k._$klass();
+    _pro = _p._$$MP3Player._$extend(_u._$$Abstract);
 
     /**
      * 重置控件
-     * @param  {Objec} _options 可选配置参数
-     * @return {void}          
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__reset
+     * @param  {Objec} _options - 可选配置参数
+     * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         this.__vslide.value = _options.volnumber||100;
         this.__autostart = _options.autostart === 0 ? !1 : !0;
         this.__doInitDomEvent([
             [this.__body,'click',this.__onAction._$bind(this)]
         ]);
         if (!this.__volSlider){
-            this.__volSlider = _t._$$SimpleSlider._$allocate(this.__vslide);
+            this.__volSlider = _t0._$$SimpleSlider._$allocate(this.__vslide);
         }
         this._$refreshList(_options);
     };
 
     /**
      * 销毁控件
-     * @return {void}
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__destroy
+     * @return {Void}
      */
     _pro.__destroy = function(){
         this.__doClearComponent();
-        this.__supDestroy();
+        this.__super();
     };
 
     /**
      * 初始化播放器结构
+     *
      * @protected
-     * @method {__initXGui}
+     * @method ui/audio/mp3._$$MP3Player#__initXGui
      * @return {Void}
      */
     _pro.__initXGui = function(){
-    	this.__seed_css = _seed_css;
-    	this.__seed_html = _seed_html;
+        this.__seed_css = _seed_css;
+        this.__seed_html = _seed_html;
     };
 
     /**
      * 初始化结构
+     *
      * @protected
-     * @method {__initNode}
+     * @method ui/audio/mp3._$$MP3Player#__initNode
      * @return {Void}
      */
     _pro.__initNode = function(){
-    	this.__supInitNode();
+        this.__super();
         // 0 - 播放按钮
         // 1 - 小音量
         // 2 - 当前播放时间
         // 3 - 歌曲总时长
         // 4 - 歌曲播放模式
-    	var _list  = _e._$getByClassName(this.__body,'ztag'),
+        var _list  = _e._$getByClassName(this.__body,'ztag'),
             _vlist = _e._$getByClassName(this.__body,'vtag'),
             _tlist = _e._$getByClassName(this.__body,'ttag');
         this.__nplay  = _list[0];
@@ -105,8 +123,11 @@ var f = function() {
 
     /**
      * 播放器点击事件
-     * @param  {[type]} _event [description]
-     * @return {void}
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__onAction
+     * @param  {Event} _event - 事件对象
+     * @return {Void}
      */
     _pro.__onAction = function(_event){
         var _action;
@@ -126,12 +147,15 @@ var f = function() {
             this.__onPlay();
         }else if (_action == 'next'){
             this.__onNext();
-        } 
+        }
     };
 
     /**
      * 更新音量大小图标
-     * @return {void}
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__onVolumeChange
+     * @return {Void}
      */
     _pro.__onVolumeChange = (function(){
         var _map = ['m-vmax','m-vmin','m-vzero'],
@@ -152,7 +176,11 @@ var f = function() {
 
     /**
      * 播放模式切换
-     * @return {void}
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__doModeChange
+     * @param  {Event} _event - 事件对象
+     * @return {Void}
      */
     _pro.__doModeChange = function(_event){
         var _mode = this.__playlist._$getPlayMode();
@@ -161,15 +189,22 @@ var f = function() {
 
     /**
      * 切换前一首
-     * @return {void}
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__onPre
+     * @return {Void}
      */
     _pro.__onPre = function(){
-    	this.__playlist._$prev();
+        this.__playlist._$prev();
     };
 
     /**
      * 播放或暂停
-     * @return {void}
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__onPlay
+     * @param  {Event} _event - 事件对象
+     * @return {Void}
      */
     _pro.__onPlay = function(_event){
         if (!!this.__audio){
@@ -186,19 +221,25 @@ var f = function() {
 
     /**
      * 切换下一首
-     * @return {void}
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__onNext
+     * @return {Void}
      */
     _pro.__onNext = function(){
-    	this.__playlist._$next();
+        this.__playlist._$next();
     };
 
     /**
      * 播放状态更新
-     * @param  {[type]} _event [description]
-     * @return {void}
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__onStateChange
+     * @param  {Event} _event - 事件对象
+     * @return {Void}
      */
     _pro.__onStateChange = function(_event){
-    	var _state = _event.state;
+        var _state = _event.state;
         if (_state == 2){
             _e._$replaceClassName(this.__nplay,'m-play','m-pause');
         }else{
@@ -214,26 +255,33 @@ var f = function() {
 
     /**
      * 更新时间轴
-     * @param  {[type]} _event [description]
-     * @return {void}
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__onTimeUpdate
+     * @param  {Event} _event - 事件对象
+     * @return {Void}
      */
     _pro.__onTimeUpdate = function(_event){
         if (!this.__timeSlider)
-            this.__timeSlider = _t._$$SimpleSlider._$allocate(this.__tslide);
-    	// 播放第二首的current有问题
+            this.__timeSlider = _t0._$$SimpleSlider._$allocate(this.__tslide);
+        // 播放第二首的current有问题
         var _current  = _event.current,
             _duration = _event.duration;
-	    if (parseInt(_current) === 0){
-	    	this.__nctime.innerHTML = '00:00';
+        if (parseInt(_current) === 0){
+            this.__nctime.innerHTML = '00:00';
             this.__nstime.innerHTML = this.__doFormatSecond(_duration);
-	    }
-	    this.__nctime.innerHTML = this.__doFormatSecond(_current);
+        }
+        this.__nctime.innerHTML = this.__doFormatSecond(_current);
         var _played = _current / (_duration ? _duration : 1);
         this.__timeSlider._$setPosition(_played);
     };
 
     /**
      * 格式化秒为小时或分钟
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__doFormatSecond
+     * @param  {Number}  _second - 秒数
      * @return {String}  格式化好的时间
      */
     _pro.__doFormatSecond = function(_second){
@@ -247,8 +295,11 @@ var f = function() {
 
     /**
      * 设置播放时间
-     * @param  {[type]} _event [description]
-     * @return {void}
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__onTimeSlideStop
+     * @param  {Event} _event - 事件对象
+     * @return {Void}
      */
     _pro.__onTimeSlideStop = function(_event){
         if (!this.__audio._$duration()) return;
@@ -258,11 +309,14 @@ var f = function() {
 
     /**
      * 设置音量
-     * @param  {[type]} _event [description]
-     * @return {void}
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__onVolSlideStop
+     * @param  {Event} _event - 事件对象
+     * @return {Void}
      */
     _pro.__onVolSlideStop = function(_event){
-    	var _value = _event.ratio;
+        var _value = _event.ratio;
             _value = _value * this.__vslide.value
         if (!!this.__audio){
             this.__audio._$volume(_value);
@@ -273,7 +327,11 @@ var f = function() {
 
     /**
      * 更新播放模式
-     * @return {void}
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__onModeChange
+     * @param  {Event} _event - 事件对象
+     * @return {Void}
      */
     _pro.__onModeChange = (function(){
         var _map = ['m-repeatb m-repeatd','m-repeatb-1 m-repeatd-1','m-shuffleb m-shuffled'],
@@ -284,10 +342,13 @@ var f = function() {
     })();
 
     /**
-     * [__onMediaChange description]
-     * @param  {[type]} _options [description]
-     * @param  {[type]} _event   [description]
-     * @return {void}
+     * 多媒体状态改变
+     *
+     * @protected
+     * @method ui/audio/mp3._$$MP3Player#__onMediaChange
+     * @param  {Object} _options - 配置信息
+     * @param  {Event} arg0 - 事件对象
+     * @return {Void}
      */
     _pro.__onMediaChange = function(_options,_event){
         if (_event.index < 0){
@@ -304,7 +365,7 @@ var f = function() {
         var _url = _event.list[_event.index];
         if (!this.__audio){
             var _volume = this.__volSlider._$getPosition() * this.__vslide.value;
-            this.__audio =  _e._$audio({
+            this.__audio =  _t2._$audio({
                 preload:_options.preload||false,
                 volume:_volume,
                 onstatechange:this.__onStateChange._$bind(this),
@@ -322,8 +383,10 @@ var f = function() {
 
     /**
      * 指定播放歌曲
-     * @param  {Number}  歌曲列表的下标，默认为0
-     * @return {void}
+     *
+     * @method ui/audio/mp3._$$MP3Player#_$playByIndex
+     * @param  {Number} arg0 -  歌曲列表的下标，默认为0
+     * @return {Void}
      */
     _pro._$playByIndex = function(_index){
         _index = _index || 0;
@@ -333,7 +396,9 @@ var f = function() {
 
     /**
      * 开始播放
-     * @return {void}
+     *
+     * @method ui/audio/mp3._$$MP3Player#_$play
+     * @return {Void}
      */
     _pro._$play = function(){
         this.__autostart = !0;
@@ -342,107 +407,33 @@ var f = function() {
 
     /**
      * 刷新播放列表
-     * @param  {Array} _list 歌曲列表
-     * @return {void}  
+     *
+     * @method ui/audio/mp3._$$MP3Player#_$refreshList
+     * @param    {Object} arg0 - 配置信息
+     * @property {Array}  mode - 歌曲播放模式
+     * @property {Array}  list - 歌曲列表
+     * @return   {Void}
      */
     _pro._$refreshList = function(_options){
         var _mode = _options.mode||0,
             _list = _options.list||[];
-    	if (!this.__playlist){
-    		this.__playlist = _t._$$PlayList._$allocate({
-				mode:_mode,
-				list:_list,
-				onmodechange:this.__onModeChange._$bind(this),
-				onmediachange:this.__onMediaChange._$bind(this,_options)
-			});
-    	}else{
+        if (!this.__playlist){
+            this.__playlist = _t1._$$PlayList._$allocate({
+                mode:_mode,
+                list:_list,
+                onmodechange:this.__onModeChange._$bind(this),
+                onmediachange:this.__onMediaChange._$bind(this,_options)
+            });
+        }else{
             this.__autostart = !0;
-    		this.__playlist._$setPlayMode(_mode);
-    		this.__playlist._$setPlayList(_list);
-    	}
+            this.__playlist._$setPlayMode(_mode);
+            this.__playlist._$setPlayList(_list);
+        }
     };
-    var _seed_css = _e._$pushCSSText('\
-      .#<uispace> .m-pre, .#<uispace> .m-play, .#<uispace> .m-next, .#<uispace> .m-cur, .#<uispace> .m-pause, .#<uispace> .m-volmin,\
-      .#<uispace> .m-volminc, .#<uispace> .m-shuffled, .#<uispace> .m-repeatd-1, .#<uispace> .m-shufflec, .#<uispace> .m-repeatd, .#<uispace> .m-repeatc,\
-      .#<uispace> .m-volmax, .#<uispace> .m-volmaxc{background:url('+_c._$get('root')+'audio_sprite.png) no-repeat 9999px 9999px;}\
-      .#<uispace> .m-player{height:40px;min-width:530px;background:#606060;cursor:default}\
-      .#<uispace> .m-player .ctl{width:300px; float:left;}\
-      .#<uispace> .m-pre{height:30px;width:25px;background-position:0 0;float:left;margin-top:8px;margin-left: 10px;}\
-      .#<uispace> .m-pre:active, .#<uispace> .m-preatv{background-position:-104px -1px;}\
-      .#<uispace> .m-play{height:40px;width:32px;background-position:0 -35px;float:left;margin:2px 4px 0;}\
-      .#<uispace> .m-play:active{background-position:-202px -36px;}\
-      .#<uispace> .m-pause{height:40px;width:32px;background-position:-103px -35px;float:left;margin:2px 4px 0;}\
-      .#<uispace> .m-pause:active{background-position:-155px -36px;}\
-      .#<uispace> .m-next{height:30px;width:25px;background-position:0 -80px;float:left;margin-top:8px;}\
-      .#<uispace> .m-next:active, .#<uispace>  .m-nextatv{background-position:-103px -81px;}\
-      .#<uispace> .m-player .loop{width:120px;float:right}\
-      .#<uispace> .m-curtime{float: right;margin-right: 10px;color:#fff;line-height: 40px;}\
-      .#<uispace> .m-time{float: left;margin-left: 10px;color:#fff;line-height: 40px;}\
-      .#<uispace> .m-player .timeline{height:25px;position:absolute;left:315px;right:120px;bottom:0;top:0;width:135px;padding-top:15px;}\
-      .#<uispace> .m-vol{height:27px;width:90px;padding:13px 0 0 20px;float:left;}\
-      .#<uispace> .m-volicn{width:12px;height:20px;margin:10px 0 0 10px;float:left}\
-      .#<uispace> .m-vzero .m-volminc{background-position:1px -185px;width:5px;height:20px;float:left;}\
-      .#<uispace> .m-vzero .m-volmaxc{background-position:-8px -185px;width:7px;height:20px;float:left;}\
-      .#<uispace> .m-vmin .m-volminc{background-position:-40px -186px;width:5px;height:20px;float:left;}\
-      .#<uispace> .m-vmax .m-volminc{background-position:-40px -186px;width:5px;height:20px;float:left;}\
-      .#<uispace> .m-vmin .m-volmaxc{background-position:-7px -185px;width:7px;margin-left:-1px;height:20px;float:left;}\
-      .#<uispace> .m-vmax .m-volmaxc{background-position:-50px -186px;width:7px;margin-left:-1px;height:20px;float:left;}\
-      .#<uispace> .m-timeline{position:absolute;width:100%;height:8px;border-radius:4px;background:#3b3b3b;border-top:1px solid #212121;border-bottom:1px solid #636363}\
-      .#<uispace> .m-timelinei{width:0%;}\
-      .#<uispace> .m-timeline-1{margin-top:0px;width:90px;position:absolute;}\
-      .#<uispace> .m-progress{background:green;margin-top:-1px;}\
-      .#<uispace> .m-cur{position:absolute;right:-5px;margin-left:-5px;background-position:-73px -186px;height:10px;width:10px;}\
-      .#<uispace> .m-cur2{position:absolute;right:-5px;margin-left:-5px;background:url('+_c._$get('root')+'audio_sprite.png) no-repeat 9999px 9999px;width:10px;background-position: -73px -186px;}\
-      .#<uispace> .m-cur:active, .#<uispace> .m-cur2:active{background-position:-93px -186px;}\
-      .#<uispace> .m-shuffleb{height:20px;width:20px;float:right;margin:10px 10px 0 0 }\
-      .#<uispace> .m-shuffled{background-position:-55px -115px;}\
-      .#<uispace> .m-shufflec{background-position:-56px -115px;}\
-      .#<uispace> .m-repeatb, .m-repeatb-1{height:20px;width:20px;float:right;margin:10px 10px 0 0 }\
-      .#<uispace> .m-repeatd{background-position:-55px -149px;}\
-      .#<uispace> .m-repeatd-1{background-position:-11px -149px;}\
-      .#<uispace> .m-repeatc{background-position:-56px -149px;}\
-      .m-cnt{width:600px;position: relative;}');
-    var _seed_html = _e._$addNodeTemplate('\
-      <div class="m-cnt '+_seed_css+'">\
-        <div class="cse">\
-          <div class="m-player">\
-            <div class="ctl">\
-              <span class="f-ib m-pre" data-name="pre">&nbsp;</span>\
-              <span class="f-ib m-play ztag" data-name="play">&nbsp;</span>\
-              <span class="f-ib m-next" data-name="next" value="next">&nbsp;</span>\
-              <div class="m-vol">\
-                <div class="f-ib m-timeline m-timeline-1 vtag">\
-                  <div class="f-ib m-timeline m-progress m-timeline-1 vtag">\
-                    <span class="f-ib m-cur2 vtag">&nbsp;</span>\
-                  </div>\
-                </div>\
-              </div>\
-              <span class="m-volicn ztag m-vmax f-ib">\
-                <span class="f-ib m-volminc">&nbsp;</span>\
-                <span class="f-ib m-volmaxc">&nbsp;</span>\
-              </span>\
-              <span class="m-curtime ztag">00:00</span>\
-            </div>\
-            <div class="timeline">\
-                <div class="m-timeline ttag">\
-                  <div class="m-timeline m-progress ttag m-timelinei">\
-                    <span class="m-cur ttag">&nbsp;</span>\
-                  </div>\
-                </div>\
-            </div>\
-            <div class="loop">\
-              <span class="m-time ztag">00:00</span>\
-              <span class="m-repeatb m-repeatd ztag" data-name="mode">&nbsp;</span>\
-            </div>\
-          </div>\
-        </div>\
-      </div>');
-};
-NEJ.define(
-    '{lib}ui/audio/mp3.js',[
-    '{lib}ui/base.js',
-    '{lib}util/audio/audio.js',
-    '{lib}base/config.js',
-    '{lib}util/media/playlist.js',
-    '{lib}util/slider/slider.simple.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui'),_p);
+    }
+
+    return _p;
+});

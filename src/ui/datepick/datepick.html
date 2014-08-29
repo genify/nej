@@ -1,0 +1,19 @@
+<textarea name='jst' id='#<seedDate>'>
+	<table class="zday">
+		<tr>{list ["日","一","二","三","四","五","六"] as x}<th>${x}</th>{/list}</tr>
+		{list 1..6 as x}
+		<tr>{list 1..7 as y}<td><a href="javascript:void(0);" class="js-ztag"></a></td>{/list}</tr>
+		{/list}
+    </table>
+</textarea>
+
+<textarea name='txt' id='#<seedAction>'>
+	<div class="zact">
+		<span class="zbtn zfl" title="上一年">&lt;&lt;</span>
+		<span class="zbtn zfl" title="上一月">&lt;</span>
+		<span class="zbtn zfr" title="下一年">&gt;&gt;</span>
+		<span class="zbtn zfr" title="下一月">&gt;</span>
+		<span class="ztxt"></span>年
+		<span class="ztxt"></span>月
+	</div>
+</textarea>

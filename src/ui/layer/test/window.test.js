@@ -1,11 +1,11 @@
 var f = function(){
     //定义测试模块
     module("ui-window");
-    
+
     var _  = NEJ.P,
         _e = _('nej.e'),
         _p = _('nej.ui');
-        
+
     //开始单元测试
     test('window',function(){
         stop();
@@ -24,5 +24,5 @@ var f = function(){
 }
 module('依赖模块');
 test('define',function(){expect(0);
-    define('{pro}window.test.js',['{lib}ui/layer/window.js'],f);
+    define('{pro}window.test.js',['ui/layer/window'],f);
 });

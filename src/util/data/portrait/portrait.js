@@ -5,20 +5,36 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _r = NEJ.R,
-        _c = _('nej.c'),
-        _u = _('nej.u'),
-        _p = _('nej.ut'),
-        _pro;
-    if (!!_p._$$PortraitCache) return;
+/** @module util/data/portrait/portrait */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'base/config',
+    'base/element',
+    'base/util',
+    'util/cache/abstract'
+],function(NEJ,_k,_c,_e,_u,_t0,_p,_o,_f,_r){
+    var _pro;
     /**
      * 表情数据缓存，缓存对象可直接用于nej.ut._$$ListModule
-     * [code]
+     * 
+     * 表情资源可通过以下git仓库直接下载到本地
+     * 
+     * {@link https://github.com/genify/nej-portrait.git}
+     * 
+     * 脚本举例
+     * ```javascript
+     * NEJ.define([
+     *     'util/data/portrait/portrait'
+     * ],function(_t){
+     *     var _cache = _t._$$CachePortrait._$allocate({
+     *         onlistload:function(){
+     *             // TODO
+     *         }
+     *     });
+     *     
      *     // 取表情分类列表
-     *     cache_inst._$getList({
+     *     _cache._$getList({
      *         key:'portrait-type',
      *         offset:0,
      *         limit:1000,
@@ -26,8 +42,9 @@ var f = function(){
      *             type:'type'
      *         }
      *     });
+     *     
      *     // 取某类表情列表
-     *     cache_inst._$getList({
+     *     _cache._$getList({
      *         key:'portrait-face-0',
      *         offset:0,
      *         limit:1000,
@@ -35,25 +52,28 @@ var f = function(){
      *             type:'face'
      *         }
      *     });
-     * [/code]
-     * @class   {nej.ut._$$PortraitCache} 中国行政划区数据缓存
-     * @extends {nej.ut._$$AbstractListCache}
-     * @param   {Object} _options 可选配置参数，已处理参数列表如下
+     * });
+     * ```
      * 
+     * @class   module:util/data/portrait/portrait._$$CachePortrait
+     * @extends module:util/cache/abstract._$$CacheListAbstract
+     * 
+     * @param   {Object} config - 可选配置参数
      */
-    _p._$$PortraitCache = NEJ.C();
-    _pro = _p._$$PortraitCache._$extend(_p._$$AbstractListCache);
+    _p._$$CachePortrait = _k._$klass();
+    _pro = _p._$$CachePortrait._$extend(_t0._$$CacheListAbstract);
     /**
      * 载入表情列表
+     * 
      * @protected
-     * @method {__doLoadList}
-     * @param  {Object}          请求信息
-     * @config {String}   key    列表标识
-     * @config {Number}   offset 偏移量
-     * @config {Number}   limit  数量
-     * @config {String}   data   请求相关数据
-     * @config {Function} onload 列表载入回调
-     * @return {Void}
+     * @method   module:util/data/portrait/portrait._$$CachePortrait#__doLoadList
+     * @param    {Object}   config - 请求信息
+     * @property {String}   key    - 列表标识
+     * @property {Number}   offset - 偏移量
+     * @property {Number}   limit  - 数量
+     * @property {String}   data   - 请求相关数据
+     * @property {Function} onload - 列表载入回调
+     * @return   {Void}
      */
     _pro.__doLoadList = function(_options){
         var _type = (_options.data||_o).type||'',
@@ -132,7 +152,10 @@ var f = function(){
         zhuxiaoliang:['我飞～','跑路喽','快跑','跳舞','扮花花','扮苍蝇','中箭','哭给你看','电死你','出发','吃饭啦','好吃','飘过','泡咖啡','泡茶'],
         popomm:['同意','怕怕','女侠','高兴','做面膜','杂耍','病了','困了','咳咳','生气','不要啊 ','撅嘴','嗯嗯','请安','为什么','怒','爱心','可爱']
     };
-};
-NEJ.define('{lib}util/data/portrait/portrait.js',
-          ['{lib}base/config.js'
-          ,'{lib}util/cache/cache.list.base.js'],f);
+
+    if (CMPT){
+        NEJ.P('nej.ut')._$$PortraitCache = _p._$$CachePortrait;
+    }
+
+    return _p;
+});

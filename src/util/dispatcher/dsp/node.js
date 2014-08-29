@@ -5,140 +5,152 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    // variable declaration
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _u = _('nej.u'),
-        _t = _('nej.ut'),
-        _p = _('nej.ut.p'),
-        _proNode;
-    if (!!_p._$$Node) return;
+/** @module util/dispatcher/dsp/node */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'base/util',
+    'util/event'
+],function(NEJ,_k,_u,_t,_p,_o,_f,_r){
+    var _pro;
     /**
-     * 树节点对象<br/>
+     * 树节点对象
      * 
      * 脚本举例
-     * [code]
-     *   //      ___
-     *   //     |_/_|       <-- 节点名称为"/"的节点
-     *   //     /   \
-     *   //   _/_   _\_ 
-     *   //  |_a_| |_b_|    <-- 节点名称为"b"的节点
+     * ```javascript
+     * NEJ.define([
+     *     'util/dispatcher/dsp/node'
+     * ],function(_p){
+     *     //      ___
+     *     //     |_/_|       <-- 节点名称为"/"的节点
+     *     //     /   \
+     *     //   _/_   _\_ 
+     *     //  |_a_| |_b_|    <-- 节点名称为"b"的节点
      * 
-     *   // 分配一个名称为“/”的节点
-     *   var _root = nej.ut.p._$$Node._$allocate();
-     *   
-     *   // 分配一个名称为“a”的节点，并指定父节点为_root
-     *   var _aNode = nej.ut.p._$$Node._$allocate({
-     *       parent:_root,
-     *       name:'a'
-     *   });
-     *   
-     *   // 分配一个名称为“b”的节点，手动设置父节点
-     *   var _bNode = nej.ut.p._$$Node._$allocate({
-     *       name:'b'
-     *   });
-     *   _bNode._$setParent(_root);
-     *   
-     *   // 回收树，同时回收节点的所有子孙节点
-     *   _root = _root._$recycle();
-     * [/code]
+     *     // 分配一个名称为“/”的节点
+     *     var _root = _p._$$Node._$allocate();
      * 
-     * @class    {nej.ut.p._$$Node}
-     * @extends  {nej.ut._$$Event}
+     *     // 分配一个名称为“a”的节点，并指定父节点为_root
+     *     var _node = _p._$$Node._$allocate({
+     *         parent:_root,
+     *         name:'a'
+     *     });
      * 
-     * @param    {Object} 可选配置参数
-     * @config   {nej.ut.p._$$Node}  父节点
-     * @config   {String}            节点名称，默认为"/"
-     * @config   {Object}            节点缓存的数据信息
+     *     // 分配一个名称为“b”的节点，手动设置父节点
+     *     var _node = _$$Node._$allocate({
+     *         name:'b'
+     *     });
+     *     _node._$setParent(_root);
      * 
+     *     // 回收树，同时回收节点的所有子孙节点
+     *     _root = _root._$recycle();
+     * });
+     * ```
+     * 
+     * @class    module:util/dispatcher/dsp/node._$$Node
+     * @extends  module:util/event._$$EventTarget
+     * 
+     * @param    {Object}  config - 可选配置参数
+     * @property {_$$Node} parent - 父节点
+     * @property {String}  name   - 节点名称，默认为"/"
+     * @property {Object}  data   - 节点缓存的数据信息
      */
-    _p._$$Node = NEJ.C();
-      _proNode = _p._$$Node._$extend(_t._$$Event);
+    _p._$$Node = _k._$klass();
+    _pro = _p._$$Node._$extend(_t._$$EventTarget);
     /**
      * 控件初始化
+     * 
      * @protected
-     * @method {__init}
+     * @method module:util/dispatcher/dsp/node._$$Node#__init
      * @return {Void}
      */
-    _proNode.__init = function(){
-        this.__supInit();
+    _pro.__init = function(){
+        this.__super();
         this.__children = [];
     };
     /**
      * 控件重置
+     * 
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
+     * @method module:util/dispatcher/dsp/node._$$Node#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
-    _proNode.__reset = function(_options){
-        this.__supReset(_options);
+    _pro.__reset = function(_options){
+        this.__super(_options);
         this._$setParent(_options.parent);
         this.__name = _options.name||'/';
         this.__data = _options.data||{};
     };
     /**
      * 控件销毁
+     * 
      * @protected
-     * @method {__destroy}
+     * @method module:util/dispatcher/dsp/node._$$Node#__destroy
      * @return {Void}
      */
-    _proNode.__destroy = (function(){
+    _pro.__destroy = (function(){
         var _doRecycle = function(_node,_index,_list){
             _list.splice(_index,1);
             _node._$recycle();
         };
         return function(){
-            this.__supDestroy();
+            this.__super();
             delete this.__data;
-            _u._$reverseEach(this
-              .__children,_doRecycle);
+            _u._$reverseEach(
+                this.__children,
+                _doRecycle
+            );
             this._$setParent(null);
         };
     })();
     /**
      * 是否节点实例
+     * 
      * @protected
-     * @method {__isNode}
-     * @param  {nej.ut.p._$$Node} 节点
-     * @return {Boolean}        是否节点实例
+     * @method module:util/dispatcher/dsp/node._$$Node#__isNode
+     * @param  {module:util/dispatcher/dsp/node._$$Node} arg0 - 节点
+     * @return {Boolean} 是否节点实例
      */
-    _proNode.__isNode = function(_node){
-        return _node instanceof _p._$$Node;
+    _pro.__isNode = function(_node){
+        return _node instanceof this.constructor;
     };
     /**
      * 是否有子节点
+     * 
      * @protected
-     * @method {__hasChild}
-     * @param  {nej.ut.p._$$Node} 子节点
-     * @return {Boolean}        是否有子节点
+     * @method module:util/dispatcher/dsp/node._$$Node#__hasChild
+     * @param  {module:util/dispatcher/dsp/node._$$Node} arg0 - 子节点
+     * @return {Boolean} 是否有子节点
      */
-    _proNode.__hasChild = function(_child){
+    _pro.__hasChild = function(_child){
         return _u._$indexOf(this.__children,_child)>=0;
     };
     /**
      * 取节点名称
-     * @method {_$getName}
+     * 
+     * @method module:util/dispatcher/dsp/node._$$Node#_$getName
      * @return {String} 节点名称
      */
-    _proNode._$getName = function(){
+    _pro._$getName = function(){
         return this.__name;
     };
     /**
      * 取节点保存的信息
-     * @method {_$getData}
+     * 
+     * @method module:util/dispatcher/dsp/node._$$Node#_$getData
      * @return {Object} 数据信息
      */
-    _proNode._$getData = function(){
+    _pro._$getData = function(){
         return this.__data;
     };
     /**
      * 取当前节点路径
-     * @method {_$getPath}
+     * 
+     * @method module:util/dispatcher/dsp/node._$$Node#_$getPath
      * @return {String} 路径
      */
-    _proNode._$getPath = function(){
+    _pro._$getPath = function(){
         var _parent = this._$getParent(),
             _name = this._$getName();
         if (!_parent) return _name;
@@ -149,67 +161,72 @@ var f = function(){
     };
     /**
      * 取父节点
-     * @method {_$getParent}
-     * @return {nej.ut.p._$$Node} 父节点
+     * 
+     * @method module:util/dispatcher/dsp/node._$$Node#_$getParent
+     * @return {_$$Node} 父节点
      */
-    _proNode._$getParent = function(){
+    _pro._$getParent = function(){
         return this.__parent;
     };
     /**
      * 取子节点列表
-     * @method {_$getChildren}
+     * 
+     * @method module:util/dispatcher/dsp/node._$$Node#_$getChildren
      * @return {Array} 子节点列表
      */
-    _proNode._$getChildren = function(){
+    _pro._$getChildren = function(){
         return this.__children;
     };
     /**
      * 取指定名称的子节点
-     * @method {_$getChildByName}
-     * @param  {String}         名称
-     * @return {nej.ut.p._$$Node} 子节点
+     * 
+     * @method module:util/dispatcher/dsp/node._$$Node#_$getChildByName
+     * @param  {String} arg0 - 名称
+     * @return {module:util/dispatcher/dsp/node._$$Node} 子节点
      */
-    _proNode._$getChildByName = function(_name){
-        var _index = _u._$indexOf(this.__children,
-                     function(_node){
-                         return _name==_node._$getName();
-                     });
+    _pro._$getChildByName = function(_name){
+        var _index = _u._$indexOf(
+            this.__children,function(_node){
+                return _name==_node._$getName();
+            }
+        );
         return this.__children[_index]||null;
     };
     /**
      * 设置父节点
-     * @method {_$setParent}
-     * @param  {nej.ut.p._$$Node} 父节点
-     * @return {nej.ut.p._$$Node} 当前节点
+     * 
+     * @method module:util/dispatcher/dsp/node._$$Node#_$setParent
+     * @param  {module:util/dispatcher/dsp/node._$$Node} arg0 - 父节点
+     * @return {Void}
      */
-    _proNode._$setParent = function(_parent){
+    _pro._$setParent = function(_parent){
         _parent = this.__isNode(_parent)?_parent:null;
         if (_parent==this.__parent) return;
         !!_parent ? _parent._$appendChild(this)
                   : this.__parent._$removeChild(this);
         this.__parent = _parent;
-        return this;
     };
     /**
      * 添加子节点
-     * @method {_$appendChild}
-     * @param  {nej.ut.p._$$Node} 子节点
-     * @return {nej.ut.p._$$Node} 当前节点
+     * 
+     * @method module:util/dispatcher/dsp/node._$$Node#_$appendChild
+     * @param  {module:util/dispatcher/dsp/node._$$Node} arg0 - 子节点
+     * @return {Void}
      */
-    _proNode._$appendChild = function(_child){
+    _pro._$appendChild = function(_child){
         _child = this.__isNode(_child)?_child:null;
         if (!_child||this.__hasChild(_child)) return;
         this.__children.push(_child);
         _child._$setParent(this);
-        return this;
     };
     /**
      * 删除子节点
-     * @method {_$removeChild}
-     * @param  {nej.ut.p._$$Node} 子节点
-     * @return {nej.ut.p._$$Node} 删除的节点
+     * 
+     * @method module:util/dispatcher/dsp/node._$$Node#_$removeChild
+     * @param  {module:util/dispatcher/dsp/node._$$Node} arg0 - 子节点
+     * @return {module:util/dispatcher/dsp/node._$$Node} 删除的节点
      */
-    _proNode._$removeChild = function(_child){
+    _pro._$removeChild = function(_child){
         _child = this.__isNode(_child)?_child:null;
         var _index = _u._$indexOf(this.__children,_child);
         if (_index>=0){
@@ -218,6 +235,6 @@ var f = function(){
         }
         return _child;
     };
-};
-NEJ.define('{lib}util/dispatcher/dsp/node.js'
-     ,['{lib}util/event.js'],f);
+    
+    return _p;
+});

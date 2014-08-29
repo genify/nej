@@ -5,14 +5,15 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _f = NEJ.F,
-        _c = _('nej.c'),
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _x = _('nej.x');
+/** @module util/clipboard/clipboard */
+NEJ.define([
+    'base/global',
+    'base/config',
+    'base/util',
+    'base/element',
+    'base/chain',
+    'util/flash/flash'
+],function(NEJ,_c,_u,_e,_x,_t0,_p,_o,_f,_r){
     /*
      * 覆盖剪切操作功能按钮
      * @param  {Node}   按钮
@@ -30,7 +31,7 @@ var f = function(){
             top:Math.floor((_box.parentNode.offsetHeight-_height)/2)+'px'
         });
         // cover flash
-        _e._$flash(NEJ.X({
+        _t0._$flash(_u._$merge({
             parent:_box,
             target:_element,
             width:'100%',height:'100%',
@@ -39,37 +40,48 @@ var f = function(){
         },_options));
     };
     /**
-     * 绑定复制操作，服务器放置剪切板操作Flash nej_clipboard.swf
+     * 绑定复制操作，服务器放置剪切板操作Flash nej_clipboard.swf，
      * 如果flash文件不在/res/下可以通过以下方式配置
-     * [code]
-     *   // 在引入define.js之前配置NEJ
+     *
+     * 脚本举例
+     * ```javascript
+     *   // 在引入define之前配置NEJ
      *   window.NEJ_CONF ={
      *       clipboard:'/other/path/nej_clipboard.swf'
      *   };
-     * [/code]
-     * 使用举例
-     * 页面结构：
-     * [code type="html"]
+     * ```
+     *
+     * 页面结构
+     * ```html
      *   <!-- 复制按钮 -->
      *   <input id="copyBtn" type="button" value="复制"/>
-     * [/code]
-     * 脚本绑定复制功能：
-     * [code]
-     *   // 或者通过参数在绑定时输入要复制的内容
-     *   nej.e._$bindCopyAction('copyBtn','text to clipboard');
-     *   // 如果要复制的内容动态生成
-     *   nej.e._$bindCopyAction('copyBtn',function(){
-     *       // 此函数必须同步返回结果
-     *       return 'text to clipboard'
-     *   });
-     * [/code]
-     * @api    {nej.e._$bindCopyAction}
-     * @param  {String|Node}     操作节点
-     * @param  {String|Function} 要复制的内容，或者动态生成要复制的内容
-     * @return {nej.e}
+     * ```
+     *
+     * 脚本绑定复制功能
+     * ```javascript
+     * NEJ.define([
+     *     'util/clipboard/clipboard'
+     * ],function(_e){
+     *     // 或者通过参数在绑定时输入要复制的内容
+     *     _e._$copy('copyBtn','text to clipboard');
+     *     // 如果要复制的内容动态生成
+     *     _e._$copy('copyBtn',function(){
+     *         // 此函数必须同步返回结果
+     *         return 'text to clipboard'
+     *     });
+     * });
+     * ```
+     *
+     * @method module:util/clipboard/clipboard._$copy
+     * @param  {String|Node}     arg0 - 操作节点
+     * @param  {String|Function} arg1 - 要复制的内容，或者动态生成要复制的内容
+     * @return {Void}
      */
-    _e._$bindCopyAction = 
-    _x._$bindCopyAction = function(_element,_content){
+    /**
+     * @method CHAINABLE._$copy
+     * @see module:util/clipboard/clipboard._$copy
+     */
+    _p._$copy = function(_element,_content){
         _element = _e._$get(_element);
         if (!_element) return;
         // bind flash
@@ -78,81 +90,56 @@ var f = function(){
                 return _u._$isFunction(_content)?_content():(_content||'');
             }
         });
-        return this;
     };
-    /*
-     * 绑定取剪切板内容操作，服务器放置剪切板操作Flash nej_clipboard.swf
-     * 如果flash文件不在/res/下可以通过以下方式配置
-     * [code]
-     *   // 在引入define.js之前配置NEJ
-     *   window.NEJ_CONF ={
-     *       clipboard:'/other/path/nej_clipboard.swf'
-     *   };
-     * [/code]
-     * 使用举例
-     * 页面结构：
-     * [code type="html"]
-     *   <!-- 粘贴按钮 -->
-     *   <input id="pasteBtn" type="button" value="粘贴"/>
-     * [/code]
-     * 脚本绑定接收剪切板内容功能：
-     * [code]
-     *   // 绑定接收剪切板内容回调
-     *   nej.e._$bindPasteAction('pasteBtn',function(_text){
-     *       // _text is content in clipboard
-     *       // TODO something
-     *   });
-     * [/code]
-     * @param  {String|Node} 操作节点
-     * @param  {Function}    用于接收剪切板数据的回调函数
-     * @return {nej.e}
-     */
-//    _e._$bindPasteAction = function(_element,_callback){
-//        _element = _e._$get(_element);
-//        if (!_element) return;
-//        // bind flash
-//        _doCoverClipboard(_element,'op=1',{
-//            onpaste:_callback||_f
-//        });
-//        return this;
-//    };
     /**
-     * 清空剪切板，服务器放置剪切板操作Flash nej_clipboard.swf
+     * 清空剪切板，服务器放置剪切板操作Flash nej_clipboard.swf，
      * 如果flash文件不在/res/下可以通过以下方式配置
-     * [code]
-     *   // 在引入define.js之前配置NEJ
+     *
+     * 脚本举例
+     * ```javascript
+     *   // 在引入define之前配置NEJ
      *   window.NEJ_CONF ={
      *       clipboard:'/other/path/nej_clipboard.swf'
      *   };
-     * [/code]
-     * 使用举例
-     * 页面结构：
-     * [code type="html"]
+     * ```
+     *
+     * 页面结构
+     * ```html
      *   <!-- 粘贴按钮 -->
      *   <input id="clearBtn" type="button" value="清空"/>
-     * [/code]
-     * 脚本绑定清空功能：
-     * [code]
-     *   // 绑定清空按钮功能
-     *   nej.e._$bindClearAction('clearBtn');
-     * [/code]
-     * @api    {nej.e._$bindClearAction}
-     * @param  {String|Node} 操作节点
-     * @return {nej.e}
+     * ```
+     *
+     * 脚本绑定清空功能
+     * ```javascript
+     * NEJ.define([
+     *     'util/clipboard/clipboard'
+     * ],function(_e){
+     *     // 绑定清空按钮功能
+     *     _e._$clear('clearBtn');
+     * });
+     * ```
+     *
+     * @method module:util/clipboard/clipboard._$clear
+     * @param  {String|Node} arg0 - 操作节点
+     * @return {Void}
      */
-    _e._$bindClearAction = 
-    _x._$bindClearAction =  function(_element){
+    /**
+     * @method CHAINABLE._$clear
+     * @see module:util/clipboard/clipboard._$clear
+     */
+    _p._$clear =  function(_element){
         _element = _e._$get(_element);
-        if (!_element) return this;
+        if (!_element) return;
         _doCoverClipboard(_element,'op=2');
-        return this;
     };
-    _x.isChange = !0;
-};
-NEJ.define(
-    '{lib}util/clipboard/clipboard.js',[
-    '{lib}base/config.js',
-    '{lib}base/util.js',
-    '{lib}base/event.js',
-    '{lib}util/flash/flash.js'
-],f);
+    // for chainable method
+    _x._$merge(_p);
+
+    if (CMPT){
+        var _x = NEJ.P('nej.e');
+        _x._$bindCopyAction = _p._$copy;
+        _x._$bindClearAction = _p._$clear;
+    }
+
+    return _p;
+});

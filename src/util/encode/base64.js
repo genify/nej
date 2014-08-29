@@ -5,9 +5,11 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    // variable declaration
-    var p = NEJ.P('nej.u');
+/** @module util/encode/base64 */
+NEJ.define([
+    'base/global',
+    'base/util'
+],function(NEJ,_u,_p,_o,_f,_r){
     // implement
     var __b64tab = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/',
         __b64char = {},
@@ -77,7 +79,7 @@ var f = function(){
                     else if((c>127)&&(c<2048))
                         _result.push((c>>6)|192,(c&63)|128);
                     // all the signs between 2048 and 66536 => 3byte
-                    else 
+                    else
                         _result.push((c>>12)|224,((c>>6)&63)|128,(c&63)|128);
                 }
             return _result;
@@ -105,7 +107,7 @@ var f = function(){
         }
         // this is again for the padding
         if (_mode == 1)
-            _result[_result.length-1] = 
+            _result[_result.length-1] =
             _result[_result.length-2] = '=';
         if (_mode == 2)
             _result[_result.length-1] = '=';
@@ -137,43 +139,65 @@ var f = function(){
         };
     })();
     /**
-     * Base64解码数据<br />
+     * Base64解码数据
+     * 
      * 脚本举例
-     * [code]
-     *   // 测试一些字符，编码，反编码
-     *   var _strList = ['a','null','function','error','return','switch','if','!0',
-     *   'UNdefined','NULL','Function','ERROR','return 1'];
-     *   for(var i = 0; i < _strList.length; i++){
-     *       var _str = _strList[i];
-     *       var _str2b64 = p._$str2b64(_str);
-     *       var _b642str = p._$b642str(_str2b64);
-     *   }
-     * [/code]
-     * @api    {nej.u._$b642str}
-     * @param  {String} 数据
-     * @return {String} 解码后数据
+     * ```javascript
+     * NEJ.define([
+     *     'util/encode/base64'
+     * ],function(_u){
+     *     // 测试一些字符，编码，反编码
+     *     var _arr = [
+     *         'a','null','function','error',
+     *         'return','switch','if','!0',
+     *         'UNdefined','NULL','Function',
+     *         'ERROR','return 1'
+     *     ];
+     *     for(var i=0,l=_arr.length,_it,_b64,_str;i<l;i++){
+     *         _it = _arr[i];
+     *         _b64 = _u._$str2b64(_it);
+     *         _str = _u._$b642str(_b64);
+     *     }
+     * });
+     * ```
+     * 
+     * @method module:util/encode/base64._$b642str
+     * @see    module:util/encode/base64._$str2b64
+     * @param  {String} arg0 - 数据
+     * @return {String}        解码后数据
      */
-    p._$b642str = function(_data){
+    _p._$b642str = function(_data){
         return __bin2utf8(__b642bin(_data));
     };
     /**
-     * Base64编码数据<br />
+     * Base64编码数据
+     * 
      * 脚本举例
-     * [code]
-     *   // 测试一些字符，编码，反编码
-     *   var _strList = ['a','null','function','error','return','switch','if','!0',
-     *   'UNdefined','NULL','Function','ERROR','return 1'];
-     *   for(var i = 0; i < _strList.length; i++){
-     *       var _str = _strList[i];
-     *       var _str2b64 = p._$str2b64(_str);
-     *       var _b642str = p._$b642str(_str2b64);
-     *   }
-     * [/code]
-     * @api    {nej.u._$str2b64}
-     * @param  {String} 数据
-     * @return {String} 编码后数据
+     * ```javascript
+     * NEJ.define([
+     *     'util/encode/base64'
+     * ],function(_u){
+     *     // 测试一些字符，编码，反编码
+     *     var _arr = [
+     *         'a','null','function','error',
+     *         'return','switch','if','!0',
+     *         'UNdefined','NULL','Function',
+     *         'ERROR','return 1'
+     *     ];
+     *     for(var i=0,l=_arr.length,_it,_b64,_str;i<l;i++){
+     *         _it = _arr[i];
+     *         _b64 = _u._$str2b64(_it);
+     *         _str = _u._$b642str(_b64);
+     *     }
+     * });
+     * ```
+     * 
+     * @method module:util/encode/base64._$str2b64
+     * @see    module:util/encode/base64._$b642str
+     * @param  {String} arg0 - 数据
+     * @return {String}        编码后数据
      */
-    p._$str2b64 = function(_data){
+    _p._$str2b64 = function(_data){
         try{
             // only for x0000-x00ff
             return window.btoa(_data);
@@ -181,5 +205,10 @@ var f = function(){
             return __bin2b64(__utf82bin(_data));
         }
     };
-};
-NEJ.define('{lib}util/encode/base64.js',['{lib}base/global.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.u'),_p);
+    }
+
+    return _p;
+});

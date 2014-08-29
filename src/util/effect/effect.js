@@ -5,18 +5,16 @@
  * @author   cheng-lin(cheng-lin@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _f = NEJ.F,
-        _u = _('nej.u'),
-        _h = _('nej.h'),
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _p = _('nej.ut'),
-        _proEffect;
-    if (!!_p._$$Effect) return;
-
+/** @module util/effect/effect */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    '{platform}effect.js',
+    'base/element',
+    'base/util',
+    'util/event'
+],function(NEJ,_k,_h,_e,_u,_t,_p,_o,_f,_r){
+    var _pro;
     /**
      * 动画特效基类
      * 如果属性没有变化不能写入，此属性的回调不会发生
@@ -27,86 +25,91 @@ var f = function(){
      * 属性单位限定px,不支持em或pt
      *
      * 页面结构举例
-     * [code type="html"]
-     *   <div id='box' style='position:absolute;z-index:10;'>abc</div>
-     * [/code]
-     * 
-     * 脚本举例
-     * [code]
-     *   var _effect = _p._$$Effect._$allocate(
-     *      {
-     *          node:'box',
-     *          transition:[
-     *              {
-     *                  property:'top',
-     *                  timing:'ease-in',
-     *                  delay:1,
-     *                  duration:10
-     *              },
-     *              {
-     *                  property:'z-index',
-     *                  timing:'ease-in',
-     *                  delay:2,
-     *                  duration:10
-     *              }
-     *          ],
-     *          styles:['top:+=460','z-index:999'],
-     *          onstop:function(){
-     *         },
-     *          onplaystate:function(){
-     *          }
-     *      }
-     *  );
-     *  // 所有动画统一轨迹和时间
-     *  var _effect2 = _p._$$Effect._$allocate({
-     *          node:'box',
-     *          transition:[
-     *              {
-     *                  property:'all',
-     *                  timing:'ease-in',
-     *                  delay:1,
-     *                  duration:10
-     *              }
-     *          ],
-     *          styles:['top:+=460','z-index:999'],
-     *          onstop:function(){
-     *         },
-     *          onplaystate:function(){
-     *          }
-     *      });
-     * [/code]
-     * @class   {nej.ut._$$Effect}
-     * @extends {nej.ut._$$Event}
-     * @param   {Object}       可选配置参数，已处理参数列表如下
-     * @config  {String|Node}  node       动画节点
-     * @config  {Array}        transition 动画属性列表
-     * [ntb]
-     *   意义|属性    |运动轨迹      |延迟启动时间    |持续时间 
-     *   属性|property|timing        |delay           |duration     
-     *   值  | width  |[linear,ease-in,ease-out,ease-in-out]|1|10
-     * [/ntb]
-     * @config  {Array}        styles     动画需要改变的css属性
-     * 
-     * [hr]
-     * 动画停止的回调
-     * @event  {onstop}
-     * @return {Void}
+     * ```html
+     * <div id='box' style='position:absolute;z-index:10;'>abc</div>
+     * ```
      *
-     * [hr]
-     * 动画中间状态回调
-     * @event  {onplaystate}
+     * 脚本举例
+     * ```javascript
+     * var _effect = _p._$$Effect._$allocate(
+     *    {
+     *        node:'box',
+     *        transition:[
+     *            {
+     *                property:'top',
+     *                timing:'ease-in',
+     *                delay:1,
+     *                duration:10
+     *            },
+     *            {
+     *                property:'z-index',
+     *                timing:'ease-in',
+     *                delay:2,
+     *                duration:10
+     *            }
+     *        ],
+     *        styles:['top:+=460','z-index:999'],
+     *        onstop:function(){
+     *       },
+     *        onplaystate:function(){
+     *        }
+     *    }
+     * );
+     * // 所有动画统一轨迹和时间
+     * var _effect2 = _p._$$Effect._$allocate({
+     *        node:'box',
+     *        transition:[
+     *            {
+     *                property:'all',
+     *                timing:'ease-in',
+     *                delay:1,
+     *                duration:10
+     *            }
+     *        ],
+     *        styles:['top:+=460','z-index:999'],
+     *        onstop:function(){
+     *       },
+     *        onplaystate:function(){
+     *        }
+     * });
+     * ```
+     *
+     * @class     module:util/effect/effect._$$Effect
+     * @extends   module:util/event._$$EventTarget
+     * @param     {Object}      arg0       - 可选配置参数
+     * @property  {String|Node} node       - 动画节点
+     * @property  {Array}       transition - 动画属性列表
+     * |意义|属性    |延迟启动时间|持续时间|运动轨迹    |
+     * |:---|:---    |:---        |:---    |:---        |
+     * |属性|property|delay       |duration|timing      |
+     * |值  |width   |1           |10      |linear,ease-in,ease-out,ease-in-out|
+     * @property  {Array}      styles      - 动画需要改变的css属性
+     */
+    /**
+     * 动画停止的回调
+     *
+     * @event  module:util/effect/effect._$$Effect#onstop
      * @return {Void}
      */
-    _p._$$Effect = NEJ.C();
-      _proEffect = _p._$$Effect._$extend(_p._$$Event);
+    /**
+     * 动画中间状态回调
+     *
+     * @event  module:util/effect/effect._$$Effect#onplaystate
+     * @return {Void}
+     */
+    _p._$$Effect = _k._$klass();
+    _pro = _p._$$Effect._$extend(_t._$$EventTarget);
 
     /**
      * 初始化方法
-     * @param  {Object}       可选配置参数
-     * @return {Void}          
+     *
+     * @protected
+     * @method module:util/effect/effect._$$Effect#onstop#__reset
+     * @param  {Object} arg0 - 可选配置参数
+     * @return {Void}
      */
-    _proEffect.__reset = function(_options){
-        this.__supReset(_options);
+    _pro.__reset = function(_options){
+        this.__super(_options);
         this.__node   = _e._$get(_options.node);
         this.__styles = _options.styles||[];
         this.__onstop = _options.onstop||_f;
@@ -120,9 +123,12 @@ var f = function(){
 
     /**
      * 销毁对象
+     *
+     * @protected
+     * @method module:util/effect/effect._$$Effect#onstop#__destroy
      * @return {Void}
      */
-    _proEffect.__destroy = function(){
+    _pro.__destroy = function(){
         if(!!this.__intvl){
             this.__intvl = window.clearInterval(this.__intvl);
         }
@@ -134,15 +140,18 @@ var f = function(){
         delete this.__lastProp;
         delete this.__transition;
         delete this.__intvl;
-        this.__supDestroy();
+        this.__super();
     };
 
     /**
      * 监听动画结束事件
-     * @param  {Object} 属性信息
-     * @return {Void}  
+     *
+     * @protected
+     * @method module:util/effect/effect._$$Effect#onstop#__onTransitionEnd
+     * @param  {Event} arg0 - 事件对象
+     * @return {Void}
      */
-    _proEffect.__onTransitionEnd = function(_event){
+    _pro.__onTransitionEnd = function(_event){
         if(!!this.__start&&this.__isLast(_event)){
             this.__start = !1;
             this._$stop();
@@ -151,10 +160,13 @@ var f = function(){
 
     /**
      * 是否是最后结束的属性
-     * @param  {Object}   属性信息
-     * @return {Boolean}  是否是最后结束的属性
+     *
+     * @protected
+     * @method module:util/effect/effect._$$Effect#onstop#__isLast
+     * @param  {Event} arg0 - 事件对象
+     * @return {Boolean}       是否是最后结束的属性
      */
-    _proEffect.__isLast = function(_event){
+    _pro.__isLast = function(_event){
         var _name = _event.propertyName,
             _flag = false;
         _u._$forIn(this.__lastProp,function(_value){
@@ -167,9 +179,12 @@ var f = function(){
     };
     /**
      * 解析出目标样式
+     *
+     * @protected
+     * @method module:util/effect/effect._$$Effect#onstop#__doParseStyle
      * @return {String} 解析好的目标样式
      */
-    _proEffect.__doParseStyle = (function(){
+    _pro.__doParseStyle = (function(){
         // 根据属性的拼写规则，做适当的调整
         var _doParseStyle = function(_style){
             var _list  = _style.split(':'),
@@ -221,9 +236,12 @@ var f = function(){
 
     /**
      * 动画开始后，监听节点的样式
+     *
+     * @protected
+     * @method module:util/effect/effect._$$Effect#onstop#__onPlayState
      * @return {Void}
      */
-    _proEffect.__onPlayState = function(){
+    _pro.__onPlayState = function(){
         this.__state = {};
         _u._$forIn(this.__propMap,function(_value,_prop){
             this.__state[_prop] = _e._$getStyle(this.__node,_prop);
@@ -233,46 +251,52 @@ var f = function(){
 
     /**
      * 开始动画
-     * @method {nej.e._$start}
-     * @return {nej.ut}           
+     *
+     * @protected
+     * @method module:util/effect/effect._$$Effect#onstop#_$start
+     * @return {Void}
      */
-    _proEffect._$start = function(){
+    _pro._$start = function(){
         this.__start = !0;
         _h.__onStart(this.__node,this.__propMap,this.__animRule,this.__onstop);
         this.__intvl = window.setInterval(this.__onPlayState._$bind(this),49);
-        return this;
     };
 
     /**
      * 取消动画
-     * @method {nej.e._$stop}
-     * @return {nej.ut}
+     *
+     * @method module:util/effect/effect._$$Effect#_$stop
+     * @param  {Boolean} flag - 是否取消动画
+     * @return {Void}
      */
-    _proEffect._$stop = function(_flag){
+    _pro._$stop = function(_flag){
         this.__intvl = window.clearInterval(this.__intvl);
         _h.__onStop(this.__node,this.__propMap,this.__onstop,_flag);
-        return this;
     };
 
     /**
      * 暂停动画
-     * @method {nej.e._$paused}
-     * @return {nej.ut}
+     *
+     * @method module:util/effect/effect._$$Effect#_$paused
+     * @return {Void}
      */
-    _proEffect._$paused = function(){
+    _pro._$paused = function(){
        // todo
     };
 
     /**
      * 暂停后重新开始动画
-     * @method {nej.e._$restart}
-     * @return {nej.ut}
+     *
+     * @method module:util/effect/effect._$$Effect#_$restart
+     * @return {Void}
      */
-    _proEffect._$restart = function(){
+    _pro._$restart = function(){
         // todo
     };
-};
-NEJ.define('{lib}util/effect/effect.js',
-      ['{lib}base/element.js'
-      ,'{platform}effect.js'
-      ,'{lib}util/event.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});

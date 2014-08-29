@@ -1,17 +1,15 @@
-var f = function(){
+NEJ.define([
+	'./effect.js',
+	'base/element'
+],function(_h,_e,_p,_o,_f,_r){
 	// ff effect patch
 	NEJ.patch('GV',function(){
-	    var _  = NEJ.P,
-	        _f = NEJ.F,
-	        _h = _('nej.h'),
-	        _e = _('nej.e'),
-	        _p = _('nej.p');
 	    /**
 	     * 执行动画
 	     * @param  {Node}   动画节点
 	     * @param  {String} 动画目标样式
 	     * @param  {String} 动画变换信息
-	     * @return {nej.h} 
+	     * @return {nej.h}
 	     */
 	    _h.__onStart = function(_node,_rules,_anim){
 	        _anim = _anim.slice(0,-1);
@@ -25,25 +23,17 @@ var f = function(){
 	});
 
 	// ie系列 effect patch
-	NEJ.patch('TR<=5.0',['{lib}util/animation/linear.js',
-					'{lib}util/animation/easein.js',
-					'{lib}util/animation/easeout.js',
-					'{lib}util/animation/easeinout.js'],
-	function(){
-		var _  = NEJ.P,
-		    _f = NEJ.F,
-		    _e = _('nej.e'),
-		    _v = _('nej.v'),
-		    _u = _('nej.u'),
-		    _h = _('nej.h'),
-		    _p = _('nej.p'),
-		    _x = _('nej.x'),
-		    _ut= _('nej.ut');
+	NEJ.patch('TR<=5.0',['base/util',
+	          			 'util/animation/linear',
+						 'util/animation/easein',
+						 'util/animation/easeout',
+						 'util/animation/easeinout'],
+	function(_u,_t0,_t1,_t2,_t3){
 		var _animMap = {
-		  'linear'     : _ut._$$AnimLinear,
-		  'ease-in'    : _ut._$$AnimEaseIn,
-		  'ease-out'   : _ut._$$AnimEaseOut,
-		  'ease-in-out': _ut._$$AnimEaseInOut
+		  'linear'     : _t0._$$AnimLinear,
+		  'ease-in'    : _t1._$$AnimEaseIn,
+		  'ease-out'   : _t2._$$AnimEaseOut,
+		  'ease-in-out': _t3._$$AnimEaseInOut
 		};
 
 		/**
@@ -106,7 +96,7 @@ var f = function(){
 		        },
 		        duration:_durtReal,
 		        onupdate:function(_offset){
-		          if(_node.isStop) return;
+		          // if(_node.isStop) return;
 		          var _value = _offset.offset;
 		          if(!_h.__doCheckProp(_prop)){
 		            _value = _doAdap(_value,_prop);
@@ -116,6 +106,7 @@ var f = function(){
 		            }
 		        },
 		        onstop:function(_prop,_args){
+		        	_args = _args || [];
 		            var _effect = _node.effects[_index];
 		            if(!_effect) return;
 		                _effect = _cutr._$recycle(_effect);
@@ -123,13 +114,13 @@ var f = function(){
 		            if(_node.isLastOne === _index){
 		              _stop.apply(this,_args);
 		            }
-		              
+
 		        }._$bind(this,_index)
 		      };
 		    return _options;
 		  };
 		  return _h.__onStart._$aop(function(_event){
-		    _event.stopped = !0;
+		  	_event.stopped = !0;
 		    var _list = _event.args;
 		    var _node = _list[0],
 		        _rules= _list[1],
@@ -154,14 +145,14 @@ var f = function(){
 		    });
 		    return this;
 		  });
-		})(); 
+		})();
 
 		/**
 		 * 取消动画
 		 * @param  {Node}   动画节点
 		 * @return {nej.h}
 		 */
-		_h.__onStop = 
+		_h.__onStop =
 		_h.__onStop._$aop(function(_event){
 		  _event.stopped = !0;
 		  var _list = _event.args;
@@ -173,32 +164,10 @@ var f = function(){
 		  return this;
 		});
 
-		/*
-		 * 暂停动画
-		 * @param  {Node}   动画节点
-		 * @param  {String} 暂停时的节点样式
-		 * @return {nej.h} 
-		 
-		_h.__onPaused = function(_node,_state){
-		    return this;
-		};
-
-		/*
-		 * 暂停后重新开始动画
-		 * @param  {Node}   动画节点
-		 * @return {nej.h} 
-		 
-		_h.__onRestart = function(_node,_rules,_anim){
-		    return this;
-		};*/
-
 		});
-	
+
 	// ie8-
 	NEJ.patch('TR<=4.0',function(){
-		var _  = NEJ.P,
-		    _e = _('nej.e'),
-		    _h = _('nej.h');
 		_h.__formatOpacity = function(_value){
 			return 'filter';
 		};
@@ -212,19 +181,7 @@ var f = function(){
 		_h.__formatTo = function(_to){
 			return _to * 100;
 		};
-
-		_h.__formatNumber = function(_node){
-            var _filter = _e._$getStyle(_node,'filter');
-            // 没设置透明度默认为100
-            if(_filter === ''){
-                _e._$setStyle(_node,'filter','alpha(opacity=100)');
-                _number = 100;
-            }else{
-                _number = parseFloat(_filter.split('=')[1])||0;
-            }
-            return _number;
-		};
-
 	});
-};
-define(['./effect.js'],f);
+
+	return _h;
+});

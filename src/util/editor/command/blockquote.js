@@ -5,40 +5,45 @@
  * @author   cheng-lin(cheng-lin@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _e = _('nej.e'),
-        _h = _('nej.h'),
-        _t = _('nej.ut'),
-        _p = _('nej.ut.cmd'),
-        _proBlockquote;
-    if (!!_p._$$Blockquote) return;
+/** @module util/editor/command/blockquote */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'util/editor/command'
+],function(NEJ,_k,_t0,_p,_o,_f,_r){
+    var _pro;
     /**
      * 引用执行命令封装
-     * @class   {nej.ut.cmd._$$Blockquote} 引用执行命令封装
-     * @extends {nej.ut.cmd._$$SimpleCommand}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     *
+     * @class   module:util/editor/command/blockquote._$$Blockquote
+     * @extends module:util/editor/command._$$SimpleCommand
+     * @param   {Object} options - 可选配置参数
      */
-    _p._$$Blockquote = NEJ.C();
-    _proBlockquote = _p._$$Blockquote._$extend(_t._$$EditorCommand);
+    _p._$$Blockquote = _k._$klass();
+    _pro = _p._$$Blockquote._$extend(_t0._$$EditorCommand);
     /**
      * 命令名称
-     * @type String
+     *
+     * @const {String} module:util/editor/command/blockquote._$$Blockquote.command
      */
     _p._$$Blockquote.command = 'blockquote';
-    
+
     /**
      * 执行命令
-     * @method {_$execute}
-     * @param  {Object} 执行参数
-     * @return {nej.ut.cmd._$$Blockquote}
+     *
+     * @method module:util/editor/command/blockquote._$$Blockquote#_$execute
+     * @param  {Object} options - 执行参数
+     * @return {Void}
      */
-    _proBlockquote._$execute = function(_options){
+    _pro._$execute = function(_options){
         this.__editor._$execCommand('superscript',false,1);
-        return this;
     };
     // regist command implemention
     _p._$$Blockquote._$regist();
-};
-NEJ.define('{lib}util/editor/command/blockquote.js',
-      ['{lib}util/editor/command.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut.cmd'),_p);
+    }
+
+    return _p;
+});

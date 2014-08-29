@@ -5,70 +5,81 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _p = _('nej.ut'),
-        _tkey = 'test-'+(+new Date),
+/** @module util/selector/selector */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'base/event',
+    'base/element',
+    'base/util',
+    'util/event'
+],function(NEJ,_k,_v,_e,_u,_t,_p,_o,_f,_r){
+    var _tkey = 'test-'+(+new Date),
         _pro;
-    if (!!_p._$$MultiSelector) return;
     /**
-     * 多选控件<br />
-     * 页面结构举例
-     * [code type="html"]
-     *   <style type="text/css">
-     *       // 定制选择的样式
-     *       .select{background:pink;}
-     *       // 每一项统一的样式
-     *       #box div{width:30px;height:30px;border:solid 1px #ccc;}
-     *   </style>
-     *   <div id="box"></div>
-     * [/code]
+     * 多选控件
+     *
+     * 样式举例
+     * ```css
+     * .itm{width:30px;height:30px;border:solid 1px #ccc;}
+     * .js-selected{background:pink;}
+     * ```
+     * 
+     * 结构举例
+     * ```html
+     * <div id="box">
+     *   <div class="itm" data-id="0">&nbsp;</div>
+     *   <div class="itm" data-id="1">&nbsp;</div>
+     *   <div class="itm" data-id="2">&nbsp;</div>
+     *   <div class="itm" data-id="3">&nbsp;</div>
+     *   <div class="itm" data-id="4">&nbsp;</div>
+     *   <div class="itm" data-id="5">&nbsp;</div>
+     *   <div class="itm" data-id="6">&nbsp;</div>
+     *   <div class="itm" data-id="7">&nbsp;</div>
+     * </div>
+     * ```
+     * 
      * 脚本举例
-     * [code]
-     *    var _html_seed = _e._$addHtmlTemplate('{list 1..31 as x}\
-     *        <div class="item">${x}</div>\
-     *        {/list}');
-     *    var _  = NEJ.P,
-     *        _e = _('nej._e'),
-     *        _v = _('nej._v'),
-     *        _p = _('nej.ut');
-     *                
-     *    _e._$get('box').innerHTML = _e._$getHtmlTemplate(_html_seed);
-     *    // 支持ctrl和shift多选
-     *    var _ms = _p._$$MultiSelector._$allocate({
-     *        parent:'box',
-     *        item:'item',
-     *        select:'select'
-     *    });
-     * [/code]
-     * @class   {nej.ut._$$MultiSelector} 多选控件
-     * @extends {nej.ut._$$Event}
-     * @param   {Object} 可选配置参数，已处理参数列表如下所示
-     * @config  {Node|String}  parent   容器节点或者ID，如果不输入则在列表的每一项上检测事件
-     * @config  {String}       name     项标识属性名称，默认id，节点通过data-id指定项标识
-     * @config  {String}       item     可选节点样式标识，默认为js-item
-     * @config  {String}       selected 选中样式，默认为js-selected
-     * 
-     * [hr]
-     * 选中变化触发事件
-     * @event {onchange} 
-     * @param {Object} 事件对象
-     * 
+     * ```javascript
+     * NEJ.define([
+     *     'util/selector/selector'
+     * ],function(_t){
+     *     var _selector = _t._$$MultiSelector._$allocate({
+     *         parent:'box',
+     *         item:'itm',
+     *         onchange:function(_event){
+     *             var _selection = this._$getSelection();
+     *             
+     *             // TODO something
+     *         }
+     *     });
+     * });
+     * ```
+     * @class    module:util/selector/selector._$$MultiSelector
+     * @extends  module:util/event._$$EventTarget
+     * @param    {Object}      event    - 可选配置参数
+     * @property {Node|String} parent   - 容器节点或者ID，如果不输入则在列表的每一项上检测事件
+     * @property {String}      name     - 项标识属性名称，默认id，节点通过data-id指定项标识
+     * @property {String}      item     - 可选节点样式标识，默认为js-item
+     * @property {String}      selected - 选中样式，默认为js-selected
      */
-    _p._$$MultiSelector = NEJ.C();
-      _pro = _p._$$MultiSelector._$extend(_p._$$Event);
+    /** 
+     * 选中变化触发事件
+     * 
+     * @event module:util/selector/selector._$$MultiSelector#onchange
+     */
+    _p._$$MultiSelector = _k._$klass();
+    _pro = _p._$$MultiSelector._$extend(_t._$$EventTarget);
     /**
      * 控件重置
+     * 
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
+     * @method module:util/selector/selector._$$MultiSelector#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         this.__last = _tkey;
         this.__selection = {count:0};
         this.__kname = _options.name||'id';
@@ -102,12 +113,13 @@ var f = function(){
     };
     /**
      * 控件销毁
+     * 
      * @protected
-     * @method {__destroy}
+     * @method module:util/selector/selector._$$MultiSelector#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         this.__doItemClear();
         delete this.__last;
         delete this.__list;
@@ -117,20 +129,22 @@ var f = function(){
     };
     /**
      * 判断节点是否被选中
+     * 
      * @protected
-     * @method {__isItemSelected}
-     * @param  {String}  节点标识
-     * @return {Boolean} 是否选中
+     * @method module:util/selector/selector._$$MultiSelector#__isItemSelected
+     * @param  {String}  arg0 - 节点标识
+     * @return {Boolean}        是否选中
      */
     _pro.__isItemSelected = function(_id){
         return !!this.__selection[_id];
     };
     /**
      * 选中节点
+     * 
      * @protected
-     * @method {__doItemAddToSelection}
-     * @param  {String} 节点标识
-     * @param  {Node}   节点对象
+     * @method module:util/selector/selector._$$MultiSelector#__doItemAddToSelection
+     * @param  {String} arg0 - 节点标识
+     * @param  {Node}   arg1 - 节点对象
      * @return {Void}
      */
     _pro.__doItemAddToSelection = function(_id,_element){
@@ -141,10 +155,11 @@ var f = function(){
     };
     /**
      * 反选节点
+     * 
      * @protected
-     * @method {__doItemDelFromSelection}
-     * @param  {String} 节点标识
-     * @param  {Node}   节点对象
+     * @method module:util/selector/selector._$$MultiSelector#__doItemDelFromSelection
+     * @param  {String} arg0 - 节点标识
+     * @param  {Node}   arg1 - 节点对象
      * @return {Void}
      */
     _pro.__doItemDelFromSelection = function(_id,_element){
@@ -155,9 +170,10 @@ var f = function(){
     };
     /**
      * 清除选中项
+     * 
      * @protected
-     * @method {__doItemClear}
-     * @param  {String} 保留节点ID
+     * @method module:util/selector/selector._$$MultiSelector#__doItemClear
+     * @param  {String} arg0 - 保留节点ID
      * @return {Void}
      */
     _pro.__doItemClear = function(_id){
@@ -174,9 +190,10 @@ var f = function(){
     };
     /**
      * 清除选中项
+     * 
      * @protected
-     * @method {__onItemClear}
-     * @param  {Event} 事件对象
+     * @method module:util/selector/selector._$$MultiSelector#__onItemClear
+     * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
     _pro.__onItemClear = function(_event){
@@ -187,9 +204,10 @@ var f = function(){
     };
     /**
      * 选择项
+     * 
      * @protected
-     * @method {__onItemSelect}
-     * @param  {Event} 事件对象
+     * @method module:util/selector/selector._$$MultiSelector#__onItemSelect
+     * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
     _pro.__onItemSelect = function(_event){
@@ -243,6 +261,9 @@ var f = function(){
     };
     /**
      * 检查元素选中情况
+     *
+     * @protected
+     * @method module:util/selector/selector._$$MultiSelector#__onItemSelectCheck
      * @return {Void}
      */
     _pro.__onItemSelectCheck = function(_event){
@@ -264,9 +285,10 @@ var f = function(){
     };
     /**
      * 全选
+     * 
      * @protected
-     * @method {__onItemSelectAll}
-     * @param  {Event} 事件对象
+     * @method module:util/selector/selector._$$MultiSelector#__onItemSelectAll
+     * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
     _pro.__onItemSelectAll = function(_event){
@@ -284,46 +306,50 @@ var f = function(){
         this._$dispatchEvent('onchange');
     };
     /**
-     * 清除选中<br />
+     * 清除选中
+     * 
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 清除所有选中状态
-     *   _ms._$clear();
-     * [/code]
-     * @method {_$clear}
-     * @return {nej.ut._$$MultiSelector}
+     *   _selector._$clear();
+     * ```
+     * @method module:util/selector/selector._$$MultiSelector#_$clear
+     * @return {Void}
      */
     _pro._$clear = function(){
         this.__doItemClear();
         this._$dispatchEvent('onchange');
-        return this;
     };
     /**
-     * 取选项列表<br />
+     * 取选项列表
+     * 
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 获取所有节点列表
-     *   _ms._$getList();
-     * [/code]
-     * @method {_$getList}
+     *   _selector._$getList();
+     * ```
+     * 
+     * @method module:util/selector/selector._$$MultiSelector#_$getList
      * @return {Array} 列表
      */
     _pro._$getList = function(){
         return this.__list;
     };
     /**
-     * 取当前选中信息<br />
+     * 取当前选中信息
+     * 
      * 脚本举例
-     * [code]
+     * ```javascript
      *   // 获取被选中的节点列表
-     *   _ms._$getSelection();
-     * [/code]
-     * @method {_$getSelection}
-     * @param  {Boolean} 是否需要排序
-     * @return {Object}  当前选中信息
+     *   _selector._$getSelection();
+     * ```
+     * 
+     * @method module:util/selector/selector._$$MultiSelector#_$getSelection
+     * @param  {Boolean} arg0 - 是否需要排序
+     * @return {Object}         当前选中信息
      */
     _pro._$getSelection = function(_sorted){
-        var _result = NEJ.X({},this.__selection);
+        var _result = _u._$merge({},this.__selection);
         if (!!_sorted){
             _list = [];
             _u._$forEach(
@@ -337,8 +363,10 @@ var f = function(){
         }
         return _result;
     };
-};
-NEJ.define(
-    '{lib}util/selector/selector.js',[
-    '{lib}util/event.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});

@@ -5,91 +5,101 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
+/** @module util/media/playlist */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'base/util',
+    'util/event'
+],function(NEJ,_k,_u,_t,_p,_o,_f,_r){
     // variable declaration
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _f = NEJ.F,
-        _u = _('nej.u'),
-        _p = _('nej.ut'),
-        _pro;
-    if (!!_p._$$PlayList) return;
+    var _pro;
     /**
      * 多媒体播放列表管理控件
+     * 
      * 脚本举例
-     * [code]
-     *   var _playlist = nej.ut._$$PlayList._$allocate({
-     *       mode:1,
-     *       list:[{id:1,url:'a.mp3'},...],
-     *       onmodechange:function(_event){
-     *           console.log(_event.mode);
-     *           // TODO 同步UI状态
-     *       },
-     *       onmediachange:function(_event){
-     *           console.log(_event.list[_event.index]);
-     *           // TODO 同步播放歌曲
-     *       }
-     *   });
-     *   // 下一首
-     *   _playlist._$next();
-     *   // 上一首
-     *   _playlist._$prev();
-     *   // 修改播放模式
-     *   _playlist._$setPlayMode(2);
-     * [/code]
-     * 
-     * @class   {nej.ut._$$PlayList}
-     * @extends {nej.ut._$$Event}
-     * 
-     * @param   {Object}  可选配置参数
-     * @config  {Array}   list  多媒体列表
-     * @config  {Number}  mode  播放模式
-     *                           
-     * [hr] 
-     * 当前媒体变化事件
-     * @event  {onmediachange}
-     * @param  {Object}  媒体信息
-     * @config {Number}  index 当前媒体索引
-     * @config {Number}  last  上一个媒体索引
-     * @config {Array}   list  播放列表
-     * 
-     * [hr]
-     * 多媒体追加触发事件，如果处理过程中将data置空则不追加
-     * @event  {onbeforeappend}
-     * @param  {Object}   媒体信息
-     * @config {Variable} data  媒体对象
-     * @config {Array}    list  播放列表
-     * @config {Number}   index 当前媒体索引
-     * 
-     * [hr]
-     * 播放模式变化事件
-     * @event  {onmodechange}
-     * @param  {Object}  模式信息
-     * @config {Number}  mode 当前播放模式
-     * @config {Number}  last 上一个播放模式
+     * ```javascript
+     * NEJ.define([
+     *     'util/media/playlist'
+     * ],function(_t){
+     *     var _playlist = _t._$$PlayList._$allocate({
+     *         mode:1,
+     *         list:[{id:1,url:'a.mp3'},...],
+     *         onmodechange:function(_event){
+     *             console.log(_event.mode);
+     *             // TODO 同步UI状态
+     *         },
+     *         onmediachange:function(_event){
+     *             console.log(_event.list[_event.index]);
+     *             // TODO 同步播放歌曲
+     *         }
+     *     });
+     *     // 下一首
+     *     _playlist._$next();
+     *     // 上一首
+     *     _playlist._$prev();
+     *     // 修改播放模式
+     *     _playlist._$setPlayMode(2);
+     * });
+     * ```
+     *
+     * @class    module:util/media/playlist._$$PlayList
+     * @extends  module:util/event._$$EventTarget
+     *
+     * @param    {Object} config - 可选配置参数
+     * @property {Array}  list   - 多媒体列表
+     * @property {Number} mode   - 播放模式
      */
-    _p._$$PlayList = NEJ.C();
-    _pro = _p._$$PlayList._$extend(_p._$$Event);
+    /**
+     * 当前媒体变化事件
+     * 
+     * @event    module:util/media/playlist._$$PlayList#onmediachange
+     * @param    {Object}  event - 媒体信息
+     * @property {Number}  index - 当前媒体索引
+     * @property {Number}  last  - 上一个媒体索引
+     * @property {Array}   list  - 播放列表
+     */
+    /**
+     * 多媒体追加触发事件，如果处理过程中将data置空则不追加
+     * 
+     * @event    module:util/media/playlist._$$PlayList#onbeforeappend
+     * @param    {Object}   event - 媒体信息
+     * @property {Variable} data  - 媒体对象
+     * @property {Array}    list  - 播放列表
+     * @property {Number}   index - 当前媒体索引
+     */
+    /**
+     * 播放模式变化事件
+     * 
+     * @event    module:util/media/playlist._$$PlayList#onmodechange
+     * @param    {Object} event - 模式信息
+     * @property {Number} mode  - 当前播放模式
+     * @property {Number} last  - 上一个播放模式
+     */
+    _p._$$PlayList = _k._$klass();
+    _pro = _p._$$PlayList._$extend(_t._$$EventTarget);
     /**
      * 重置控件
+     * 
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
+     * @method module:util/media/playlist._$$PlayList#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         this._$setPlayMode(_options.mode);
         this._$setPlayList(_options.list);
     };
     /**
      * 销毁控件
+     * 
      * @protected
-     * @method {__destroy}
+     * @method module:util/media/playlist._$$PlayList#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         delete this.__index;
         delete this.__list;
         delete this.__mode;
@@ -97,8 +107,9 @@ var f = function(){
     };
     /**
      * 生成随机列表，子类可重写随机列表生成规则
+     * 
      * @protected
-     * @method {__doGenRandList}
+     * @method module:util/media/playlist._$$PlayList#__doGenRandList
      * @return {Void}
      */
     _pro.__doGenRandList = (function(){
@@ -129,14 +140,15 @@ var f = function(){
     })();
     /**
      * 设置播放模式，非法输入均使用列表循环模式，可用模式值
-     * [ntb]
-     *  值   |   描述
-     *  0   |   列表循环【默认】
-     *  1   |   单曲循环
-     *  2   |   随机播放
-     * [/ntb]
-     * @method {_$setPlayMode}
-     * @param  {Number} 播放模式
+     * 
+     * | 值   |   描述 |
+     * | :--- | :--- |
+     * | 0    |   列表循环【默认】 |
+     * | 1    |   单曲循环 |
+     * | 2    |   随机播放 |
+     * 
+     * @method module:util/media/playlist._$$PlayList#_$setPlayMode
+     * @param  {Number} arg0 - 播放模式
      * @return {Void}
      */
     _pro._$setPlayMode = function(_mode){
@@ -162,8 +174,9 @@ var f = function(){
     };
     /**
      * 获取播放模式
-     * @see    {_$setPlayMode}
-     * @method {_$getPlayMode}
+     * 
+     * @method module:util/media/playlist._$$PlayList#_$getPlayMode
+     * @see    module:util/media/playlist._$$PlayList#_$setPlayMode
      * @return {Number} 播放模式
      */
     _pro._$getPlayMode = function(){
@@ -171,8 +184,9 @@ var f = function(){
     };
     /**
      * 设置前播放列表
-     * @method {_$setPlayList}
-     * @param  {Array} 媒体列表
+     * 
+     * @method module:util/media/playlist._$$PlayList#_$setPlayList
+     * @param  {Array} arg0 - 媒体列表
      * @return {Void}
      */
     _pro._$setPlayList = function(_list){
@@ -191,7 +205,8 @@ var f = function(){
     };
     /**
      * 取当前播放列表
-     * @method {_$getPlayList}
+     * 
+     * @method module:util/media/playlist._$$PlayList#_$getPlayList
      * @return {Array} 媒体列表
      */
     _pro._$getPlayList = function(){
@@ -199,8 +214,9 @@ var f = function(){
     };
     /**
      * 设置播放歌曲索引，没有播放列表或者索引值越界均不做任何处理
-     * @method {_$setPlayIndex}
-     * @param  {Number} 歌曲索引
+     * 
+     * @method module:util/media/playlist._$$PlayList#_$setPlayIndex
+     * @param  {Number} arg0 - 歌曲索引
      * @return {Void}
      */
     _pro._$setPlayIndex = function(_index){
@@ -225,7 +241,8 @@ var f = function(){
     };
     /**
      * 获取播放歌曲索引
-     * @method {_$getPlayIndex}
+     * 
+     * @method module:util/media/playlist._$$PlayList#_$getPlayIndex
      * @return {Number} 歌曲索引
      */
     _pro._$getPlayIndex = function(){
@@ -233,8 +250,9 @@ var f = function(){
     };
     /**
      * 追加多媒体项
-     * @method {_$appendMedia}
-     * @param  {Variable} 多媒体项
+     * 
+     * @method module:util/media/playlist._$$PlayList#_$appendMedia
+     * @param  {Variable} arg0 - 多媒体项
      * @return {Void}
      */
     _pro._$appendMedia = function(_media){
@@ -256,8 +274,9 @@ var f = function(){
     };
     /**
      * 删除多媒体项，索引值越界不做任何处理
-     * @method {_$removeMedia}
-     * @param  {Number} 媒体索引
+     * 
+     * @method module:util/media/playlist._$$PlayList#_$removeMedia
+     * @param  {Number} arg0 - 媒体索引
      * @return {Void}
      */
     _pro._$removeMedia = function(_index){
@@ -278,8 +297,9 @@ var f = function(){
     };
     /**
      * 播放指定偏移量的歌曲
-     * @method {_$play}
-     * @param  {Number} 索引偏移量，可以为0，正数，负数
+     * 
+     * @method module:util/media/playlist._$$PlayList#_$play
+     * @param  {Number} arg0 - 索引偏移量，可以为0，正数，负数
      * @return {Void}
      */
     _pro._$play = (function(){
@@ -307,7 +327,8 @@ var f = function(){
     })();
     /**
      * 自动播放下一首歌曲
-     * @method {_$autoNext}
+     * 
+     * @method module:util/media/playlist._$$PlayList#_$autoNext
      * @return {Void}
      */
     _pro._$autoNext = function(){
@@ -321,7 +342,8 @@ var f = function(){
     };
     /**
      * 播放下一首歌曲
-     * @method {_$next}
+     * 
+     * @method module:util/media/playlist._$$PlayList#_$next
      * @return {Void}
      */
     _pro._$next = function(){
@@ -329,14 +351,17 @@ var f = function(){
     };
     /**
      * 播放上一首歌曲
-     * @method {_$prev}
+     * 
+     * @method module:util/media/playlist._$$PlayList#_$prev
      * @return {Void}
      */
     _pro._$prev = function(){
         this._$play(-1);
     };
-};
-NEJ.define(
-    '{lib}util/media/playlist.js',[
-    '{lib}util/event.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej,ut'),_p);
+    }
+
+    return _p;
+});

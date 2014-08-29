@@ -5,39 +5,47 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
+/** @module ui/portrait/portrait */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'base/constant',
+    'base/element',
+    'base/event',
+    'base/util',
+    'ui/base',
+    'ui/pager/pager.simple',
+    'util/list/module.pager',
+    'util/template/tpl',
+    'text!./portrait.css',
+    'text!./portrait.html'
+],function(NEJ,_k,_g,_e,_v,_u,_i,_i0,_t0,_t1,_css,_html,_p,_o,_f,_r){
     // variable declaration
-    var _  = NEJ.P,
-        _g = _('nej.g'),
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _t = _('nej.ut'),
-        _p = _('nej.ui'),
-        _pro,
-        _seed_css,
-        _seed_html;
-    if (!!_p._$$Portrait) return;
+    var _pro,
+        _seed_ui    = _t1._$parseUITemplate(_html),
+        _seed_html  = _seed_ui['seedHtml'],
+        _seed_ilist = _seed_ui['seedIlist'];
     /**
      * 表情控件
-     * 
-     * @class   {nej.ui._$$Portrait}
-     * @extends {nej.ui._$$Abstract}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
-     * @config  {Number} size  表情大小，30或60，默认为30，目前支持30*30和60*60
-     * @config  {String} page  分页标识前缀，默认为js-page-
-     * @config  {Object} cache 数据缓存配置
-     * 
-     * [hr]
-     * 表情选中事件
-     * @event   {onselect}
-     * @param   {Object} 表情数据对象
-     * @config  {String} text 表情描述
-     * @config  {String} url  表情文件地址
-     * 
+     *
+     * @class     module:ui/portrait/portrait._$$Portrait
+     * @extends   module:ui/base._$$Abstract
+     * @param     {Object} arg0  - 可选配置参数
+     * @property  {Number} size  - 表情大小，30或60，默认为30， 目前支持30*30和60*60
+     * @property  {String} page  - 分页标识前缀，默认为js-page-
+     * @property  {Object} cache - 数据缓存配置
      */
-    _p._$$Portrait = NEJ.C();
-    _pro = _p._$$Portrait._$extend(_p._$$Abstract);
+    /**
+     * 表情选中事件
+     *
+     * @event     module:ui/portrait/portrait._$$Portrait#onselect
+     * @param     {Object} arg0 - 表情数据对象
+     * @property  {String} text - 表情描述
+     * @property  {String} url  - 表情文件地址
+     *
+     */
+    _p._$$Portrait = _k._$klass();
+    _pro = _p._$$Portrait._$extend(_i._$$Abstract);
     /**
      * 控件初始化
      * @return {Void}
@@ -50,17 +58,18 @@ var f = function(){
             pager:{
                 fixed:!0,
                 clazz:'zpager',
-                klass:_p._$$SimplePager
+                klass:_i0._$$SimplePager
             },
             onpagechange:this.__onChangePage._$bind(this)
         };
-        this.__supInit();
+        this.__super();
     };
     /**
      * 控件重置
+     *
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
+     * @method module:ui/portrait/portrait._$$Portrait#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = (function(){
@@ -69,7 +78,7 @@ var f = function(){
             30:{row:6,col:10,size:30}
         };
         return function(_options){
-            this.__supReset(_options);
+            this.__super(_options);
             this.__mopt.cache = _options.cache;
             var _conf = _iconf[_options.size]||_iconf['30'];
             this.__prefix = _options.page||'js-page-';
@@ -79,15 +88,18 @@ var f = function(){
                 this.__nprv.parentNode,
                 'js-prev-'+_conf.size
             );
-            this.__mdl = _t._$$ListModulePG._$allocate(this.__mopt);
+            this.__mdl = _t0._$$ListModulePG._$allocate(this.__mopt);
         };
     })();
     /**
      * 控件销毁
+     *
+     * @protected
+     * @method module:ui/portrait/portrait._$$Portrait#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         if (!!this.__mdl){
             this.__mdl._$recycle();
             delete this.__mdl;
@@ -105,6 +117,9 @@ var f = function(){
     };
     /**
      * 初始化外观
+     *
+     * @protected
+     * @method module:ui/portrait/portrait._$$Portrait#__initXGui
      * @return {Void}
      */
     _pro.__initXGui = function(){
@@ -113,10 +128,13 @@ var f = function(){
     };
     /**
      * 初始化控件节点
+     *
+     * @protected
+     * @method module:ui/portrait/portrait._$$Portrait#__initNode
      * @return {Void}
      */
     _pro.__initNode = function(){
-        this.__supInitNode();
+        this.__super();
         // build preview
         this.__nprv = new Image();
         var _node = _e._$create('div','js-prev');
@@ -141,7 +159,10 @@ var f = function(){
     };
     /**
      * 通过事件取表情数据
-     * @param  {Event}  事件对象
+     *
+     * @protected
+     * @method module:ui/portrait/portrait._$$Portrait#__getPortraitByEvent
+     * @param  {Event} arg0 -  事件对象
      * @return {Object} 表情数据
      */
     _pro.__getPortraitByEvent = function(_event){
@@ -158,7 +179,10 @@ var f = function(){
     };
     /**
      * 解析预览图片对齐方式
-     * @param  {String} 对齐方式，'left top'
+     *
+     * @protected
+     * @method module:ui/portrait/portrait._$$Portrait#__doParseAlign
+     * @param  {String} arg0 - 对齐方式，'left top'
      * @return {Object} 对齐信息
      */
     _pro.__doParseAlign = function(_align){
@@ -175,8 +199,11 @@ var f = function(){
     };
     /**
      * 预览表情事件
-     * @param  {Boolean} 是否预览
-     * @param  {Event}  事件对象
+     *
+     * @protected
+     * @method module:ui/portrait/portrait._$$Portrait#__onPreviewPortrait
+     * @param  {Boolean} arg0 - 是否预览
+     * @param  {Event} arg0 -  事件对象
      * @return {Void}
      */
     _pro.__onPreviewPortrait = function(_in,_event){
@@ -204,7 +231,10 @@ var f = function(){
     };
     /**
      * 选中表情触发事件
-     * @param  {Event} 事件对象
+     *
+     * @protected
+     * @method module:ui/portrait/portrait._$$Portrait#__onSelectPortrait
+     * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
     _pro.__onSelectPortrait = function(_event){
@@ -216,7 +246,10 @@ var f = function(){
     };
     /**
      * 页码变化触发事件
-     * @param  {Object} 页码信息
+     *
+     * @protected
+     * @method module:ui/portrait/portrait._$$Portrait#__onChangePage
+     * @param  {Object} arg0 - 页码信息
      * @return {Void}
      */
     _pro.__onChangePage = function(_event){
@@ -239,38 +272,12 @@ var f = function(){
             _arr.push('.#<uispace> .zlst .z60-'+(i*5+j)+'{background-position:-'+(j*60)+'px -'+(i*60)+'px;}');
         }
     }
-    _seed_css = _e._$pushCSSText('\
-        .#<uispace>{width:310px;padding:5px;background:#e5e5e1;border:1px solid #888;}\
-        .#<uispace> .zlst{position:relative;height:190px;}\
-        .#<uispace> .zlst .zitm{display:block;float:left;margin:-1px 0 0 -1px;text-indent:200px;overflow:hidden;border:1px solid #e5e5e1;cursor:pointer;background:no-repeat;}\
-        .#<uispace> .zlst .zitm:hover{position:relative;border-color:#000;zoom:1;}\
-        .#<uispace> .zlst .z30{width:30px;height:30px;line-height:30px;}\
-        .#<uispace> .zlst .z60{width:61px;height:60px;line-height:60px;}\
-        '+_arr.join('')+'\
-        .#<uispace> .zpbx{padding:5px 0 1px;text-align:right;}\
-        .#<uispace> .zpager .zbtn,.#<uispace> .zpager .zpgi{border:0;margin:0;}\
-        .#<uispace> .zpager .zpgi{display:none;}\
-        .#<uispace> .zpager .js-disabled{color:#777;}\
-        .#<uispace> .js-prev{position:absolute;top:0;left:0;background:#fff no-repeat center center;border:1px solid #888;}\
-        .#<uispace> .js-prev-30{width:60px;height:60px;}\
-        .#<uispace> .js-prev-30 img{display:none;}\
-    ');
-    _seed_html = _e._$addNodeTemplate('\
-        <div class="'+_seed_css+'">\
-          <div class="zlst j-flag"></div>\
-          <div class="zpbx j-flag"></div>\
-        </div>\
-    ');
-    _seed_ilist = _e._$addHtmlTemplate('\
-        {list beg..end as y}\
-          {var x=xlist[y]}\
-          <a href="#" hidefocus="true" class="zitm z${size} z${size}-${y%(row*col)}" title="${x.text}"\
-             data-id="${x.id}" data-align="{if y%col<col/2}right{else}left{/if} top">${x.text}</a>\
-        {/list}\
-    ');
-};
-NEJ.define('{lib}ui/portrait/portrait.js',
-          ['{lib}base/config.js'
-          ,'{lib}base/constant.js'
-          ,'{lib}ui/pager/pager.simple.js'
-          ,'{lib}util/list/module.pager.js'],f);
+    // ui style
+    _seed_css = _e._$pushCSSText(_css,{arrbg:_arr.join('')});
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui'),_p);
+    }
+
+    return _p;
+});

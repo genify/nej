@@ -5,39 +5,45 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _t = _('nej.ut'),
-        _p = _('nej.ut.cmd'),
-        _proSimpleCommand;
-    if (!!_p._$$SimpleCommand) return;
+/** util/editor/command/simple */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'util/editor/command'
+],function(NEJ,_k,_t0,_p,_o,_f,_r){
+    var _pro;
     /**
      * 简易命令封装
-     * @class   {nej.ut.cmd._$$SimpleCommand} 简易命令封装
-     * @extends {nej.ut._$$EditorCommand}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
-     *                           
+     *
+     * @class   module:util/editor/command/simple._$$SimpleCommand
+     * @extends module:util/editor/command._$$EditorCommand
+     * @param   {Object} options - 可选配置参数
+     *
      */
-    _p._$$SimpleCommand = NEJ.C();
-      _proSimpleCommand = _p._$$SimpleCommand._$extend(_t._$$EditorCommand);
+    _p._$$SimpleCommand = _k._$klass();
+      _pro = _p._$$SimpleCommand._$extend(_t0._$$EditorCommand);
     /**
      * 执行命令
-     * @method {_$execute}
-     * @param  {Object} 执行参数
-     * @return {nej.ut.cmd._$$SimpleCommand}
+     *
+     * @method module:util/editor/command/simple._$$SimpleCommand#_$execute
+     * @return {Void}
      */
-    _proSimpleCommand._$execute = function(){
+    _pro._$execute = function(){
         this.__editor._$execCommand(this.__name);
-        return this;
     };
     /**
      * 查询命令是否已经执行
-     * @method {_$queryState}
+     *
+     * @method module:util/editor/command/simple._$$SimpleCommand#_$queryState
      * @return {Boolean} 是否已经被执行，返回null表示不做处理
      */
-    _proSimpleCommand._$queryState = function(){
+    _pro._$queryState = function(){
         return this.__editor._$queryCommand(this.__name,'State');
     };
-};
-NEJ.define('{lib}util/editor/command/simple.js',
-      ['{lib}util/editor/command.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut.cmd'),_p);
+    }
+
+    return _p;
+});

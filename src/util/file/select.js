@@ -5,56 +5,64 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _f = NEJ.F,
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _x = _('nej.x'),
-        _cache = {},  // {id:{lab:'label',pid:'parent'}}
+/** @module util/file/select */
+NEJ.define([
+    'base/global',
+    'base/element',
+    'base/event',
+    'base/util',
+    '{platform}select.js',
+    'base/chain'
+],function(NEJ,_e,_v,_u,_h,_x,_p,_o,_f,_r){
+    var _cache = {},// {id:{lab:'label',pid:'parent'}}
         _class = _e._$pushCSSText('.#<class>{position:absolute;top:0;left:0;width:0;height:0;overflow:hidden;}');
     /**
      * 文件选择按钮封装
-     * 
+     *
      * 结构举例
-     * [code type="html"]
-     *   <p><label id="abc">选择文件</label></p>
-     * [/code]
-     * 
+     * ```html
+     * <p>
+     *   <!-- 必须为LABEL标签 -->
+     *   <label id="abc">选择文件</label>
+     * </p>
+     * ```
+     *
      * 脚本举例
-     * [code]
-     *   // 统一定义名字空间简写
-     *   var _  = NEJ.P,
-     *       _e = _('nej.e');
-     *   // 绑定文件选择按钮
-     *   _e._$file('abc',{
-     *       multiple:true,
-     *       onchange:function(_event){
-     *           // _event.form
-     *           // _event.id
-     *           // 如果要删除某个文件选择节点必须使用以下接口
-     *           _e._$remove(_event.id);
-     *       }
-     *   });
-     * [/code]
-     * 
-     * @api    {nej.e._$file}
-     * @param  {String|Node} 绑定选择文件的节点，必须为label节点，且未设置for属性
-     * @param  {Object}      配置参数
-     * @config {String|Node} form     文件选择控件所在的表单，默认全新生成一个
-     * @config {String}      name     单个文件选择支持指定提交时文件名称
-     * @config {String}      clazz    表单样式名称，可用于控制表单位置
-     * @config {Boolean}     multiple 是否允许多选，默认单选
-     * @config {String}      accept   文件类型过滤，如image/*或者.png，多个类型用逗号分隔
-     * @config {Object}      param    参数集合，以input.hidden的形式放置在form中提交
-     * @config {Function}    onchange 文件选择变化触发回调，{form:form,id:'xxx'}
-     *                                - form 文件选择控件封装表单对象
-     *                                - id   当前变化的文件选择控件的ID
+     * ```javascript
+     * NEJ.define([
+     *     'util/file/select'
+     * ],function(_e){
+     *     // 绑定文件选择按钮
+     *     var _id = _e._$bind('abc',{
+     *         multiple:true,
+     *         onchange:function(_event){
+     *             // _event.form
+     *             // _event.id
+     *             // 如果要删除某个文件选择节点必须使用以下接口
+     *             _e._$remove(_event.id);
+     *         }
+     *     });
+     * });
+     * ```
+     *
+     * @method   module:util/file/select._$bind
+     * @param    {String|Node} arg0     - 绑定选择文件的节点，必须为label节点，且未设置for属性
+     * @param    {Object}      arg1     - 配置参数
+     * @property {String|Node} form     - 文件选择控件所在的表单，默认全新生成一个
+     * @property {String}      name     - 单个文件选择支持指定提交时文件名称
+     * @property {String}      clazz    - 表单样式名称，可用于控制表单位置
+     * @property {Boolean}     multiple - 是否允许多选，默认单选
+     * @property {String}      accept   - 文件类型过滤，如image/*或者.png，多个类型用逗号分隔
+     * @property {Object}      param    - 参数集合，以input.hidden的形式放置在form中提交
+     * @property {Function}    onchange - 文件选择变化触发回调，{form:form,id:'xxx'}，
+     *                                    form - 文件选择控件封装表单对象，
+     *                                    id   - 当前变化的文件选择控件的ID
      */
-    _e._$file = 
-    _x._$file = (function(){
+    /**
+     * @method CHAINABLE._$bind
+     * @see module:util/file/select._$bind
+     */
+    _p._$bind = (function(){
         // init cache
         var _doInitCache = function(_id){
             var _cch = _cache[_id];
@@ -117,7 +125,7 @@ var f = function(){
                 _cch = _cache[_arr[0]];
             if (!_element.value) return;
             if (_cch.multiple){
-                _e._$get(_cch.lab).htmlFor = 
+                _e._$get(_cch.lab).htmlFor =
                     _doAppendFile(_arr[0],_cch);
             }else if(!!_cch.name){
                 _element.name = _cch.name;
@@ -148,21 +156,31 @@ var f = function(){
             _cch.accept = _options.accept||'';
             _cch.multiple = !!_options.multiple;
             _cch.onchange = _options.onchange||_f;
-            _element.htmlFor = 
+            _element.htmlFor =
                 _doAppendFile(_id,_cch);
-            _e.__handleFileLabelClick(_element);
+            _h.__handleFileLabelClick(_element);
             return _id;
         };
     })();
     /**
      * 根据ID取选中文件的form表单
-     * @api    {nej.e._$getFileForm}
-     * @see    {nej.e._$file}
-     * @param  {String} 标识
-     * @return {Node}   表单节点
+     *
+     * 脚本举例
+     * ```javascript
+     * NEJ.define([
+     *     'util/file/select'
+     * ],function(_e){
+     *     // 取文件绑定的表单节点
+     *     var _form = _e._$get(_id);
+     * });
+     * ```
+     *
+     * @method module:util/file/select._$get
+     * @see    module:util/file/select._$file
+     * @param  {String} arg0 - 标识
+     * @return {Node}          表单节点
      */
-    _e._$getFileForm = 
-    _x._$getFileForm = function(_id){
+    _p._$get = function(_id){
         var _conf = _cache[_id];
         if (!_conf) return;
         var _form = _e._$get(_conf.pid);
@@ -174,25 +192,38 @@ var f = function(){
     };
     /**
      * 根据ID删除选中文件的form表单
-     * @api    {nej.e._$removeFileForm}
-     * @see    {nej.e._$file}
-     * @param  {String} 标识
+     *
+     * 脚本举例
+     * ```javascript
+     * NEJ.define([
+     *     'util/file/select'
+     * ],function(_e){
+     *     // 解绑文件选择按钮
+     *     _e._$unbind(_id);
+     * });
+     * ```
+     *
+     * @method module:util/file/select._$unbind
+     * @see    module:util/file/select._$file
+     * @param  {String} arg0 - 标识
      * @return {Void}
      */
-    _e._$removeFileForm = 
-    _x._$removeFileForm = function(_id){
+    _p._$unbind = function(_id){
         var _conf = _cache[_id];
         if (!!_conf){
             _e._$remove(_conf.pid);
             delete _cache[_id];
         }
     };
-    _x.isChange = !0;
-};
-NEJ.define(
-    '{lib}util/file/select.js',[
-    '{lib}base/element.js',
-    '{lib}base/event.js',
-    '{lib}base/util.js',
-    '{platform}select.js'
-],f);
+    // for chainable method
+    _x._$merge({_$bind:_p._$bind});
+
+    if (CMPT){
+        var _x = NEJ.P('nej.e');
+        _x._$file = _p._$bind;
+        _x._$getFileForm = _p._$get;
+        _x._$removeFileForm = _p._$unbind;
+    }
+
+    return _p;
+});

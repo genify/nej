@@ -5,19 +5,23 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
+/** @module util/helper/select */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'base/element',
+    'base/event',
+    'util/event'
+],function(NEJ,_k,_e,_v,_t,_p,_o,_f,_r){
     // variable declaration
-    var _  = NEJ.P,
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _p = _('nej.ut'),
-        _pro;
-    if (!!_p._$$SelectHelper) return;
+    var _pro;
     /**
-     * 选择助手控件<br />
-     * 结构举例：
-     * [code type="html"]
-     *  <div id="xxx">
+     * 选择助手控件
+     * 
+     * 结构举例
+     * ```html
+     *  <!-- 搜索祖先节点，找到设置了tabindex大于1000的节点来响应键盘上下事件，找不到为document -->
+     *  <div id="xxx" tabindex="1005">
      *    <p>aaaaaaaaaaaaaa</p>
      *    <p>bbbbbbbbbbbbbb</p>
      *    <p>cccccccccccccc</p>
@@ -26,61 +30,69 @@ var f = function(){
      *    <p>ffffffffffffff</p>
      *    <p>gggggggggggggg</p>
      *  </div>
-     * [/code]
+     * ```
+     * 
      * 脚本举例
-     * [code]
-     *    nej.ut._$$SelectHelper._$allocate({
-     *        parent:'xxx',
-     *        loopable:!0,
-     *        onchange:function(_event){
-     *            // _event.last
-     *            // _event.target
-     *            console.log('selection change -> '+_event.target.innerText);
-     *        },
-     *        onselect:function(_event){
-     *            // _event.target
-     *            console.log('select -> '+_event.target.innerText);
-     *        }
-     *    });
-     * [/code]
-     * @class   {nej.ut._$$SelectHelper} 音频播放控件
-     * @extends {nej.ut._$$Event}
-     * @param   {Object} 可选配置参数，已处理参数列表如下所示
-     * @config  {String|Node} parent   容器节点，从该容器开始往上遍历找到设置了tabindex大于1000的节点来响应键盘上下事件，找不到为document
-     * @config  {String}      clazz    用于标识可选择的节点，不传则为body下的子节点
-     * @config  {String}      selected 选中节点样式标识，默认为js-selected
-     * @config  {String}      hover    鼠标移入样式标识，默认同selected，如果hover样式和selected不一样，确保selected样式优先级高于hover
-     * @config  {Boolean}     loopable 是否允许循环选择
-     * 
-     * [hr]
-     * 选择项变化触发事件
-     * @event   {onchange}
-     * @param   {Object} 选择信息
-     * @config  {Node} target  当前选中项
-     * @config  {Node} last    上次选中项
-     * 
-     * [hr]
-     * 选中某项触发事件，用户敲回车或者鼠标单击选项时触发此事件
-     * @event   {onselect}
-     * @param   {Object} 选择信息
-     * @config  {Node} target  当前选中项
+     * ```javascript
+     * NEJ.define([
+     *     'util/helper/select'
+     * ],function(_t){
+     *     var _helper = _t._$$SelectHelper._$allocate({
+     *          parent:'xxx',
+     *          loopable:!0,
+     *          onchange:function(_event){
+     *              // _event.last
+     *              // _event.target
+     *              console.log('selection change -> '+_event.target.innerText);
+     *          },
+     *          onselect:function(_event){
+     *              // _event.target
+     *              console.log('select -> '+_event.target.innerText);
+     *          }
+     *     });
+     * });
+     * ```
+     * @class    module:util/helper/select._$$SelectHelper
+     * @extends  module:util/event._$$EventTarget
+     * @param    {Object}      config   - 可选配置参数
+     * @property {String|Node} parent   - 容器节点，从该容器开始往上遍历找到设置了tabindex大于1000的节点来响应键盘上下事件，找不到为document
+     * @property {String}      clazz    - 用于标识可选择的节点，不传则为body下的子节点
+     * @property {String}      selected - 选中节点样式标识，默认为js-selected
+     * @property {String}      hover    - 鼠标移入样式标识，默认同selected，如果hover样式和selected不一样，确保selected样式优先级高于hover
+     * @property {Boolean}     loopable - 是否允许循环选择
      */
-    _p._$$SelectHelper = NEJ.C();
-    _pro = _p._$$SelectHelper._$extend(_p._$$Event);
+    /**
+     * 选择项变化触发事件
+     * @event    module:util/helper/select._$$SelectHelper#onchange
+     * @param    {Object} event  - 选择信息
+     * @property {Node}   target - 当前选中项
+     * @property {Node}   last   - 上次选中项
+     */
+    /**
+     * 选中某项触发事件，用户敲回车或者鼠标单击选项时触发此事件
+     * @event    module:util/helper/select._$$SelectHelper#onselect
+     * @param    {Object} event  - 选择信息
+     * @property {Node}   target - 当前选中项
+     */
+    _p._$$SelectHelper = _k._$klass();
+    _pro = _p._$$SelectHelper._$extend(_t._$$EventTarget);
     /**
      * 控件重置
-     * @param  {Object} 配置信息
+     *
+     * @protected
+     * @method module:util/helper/select._$$SelectHelper#__reset
+     * @param  {Object} arg0 - 配置信息
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         this.__loop = !!_options.loopable;
         this.__parent = _e._$get(_options.parent);
         this.__selected = _options.selected||'js-selected';
         this.__hovered = _options.hover||this.__selected;
         this.__nopt = {};
         if (!!_options.clazz){
-            this.__nopt.filter = 
+            this.__nopt.filter =
                 _e._$hasClassName.
                     _$bind2(_e,_options.clazz);
             this.__clazz = _options.clazz;
@@ -108,10 +120,13 @@ var f = function(){
     };
     /**
      * 控件销毁
+     *
+     * @protected
+     * @method module:util/helper/select._$$SelectHelper#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         delete this.__selected;
         delete this.__hovered;
         delete this.__parent;
@@ -122,8 +137,11 @@ var f = function(){
     };
     /**
      * 判断节点是否选项节点
-     * @param  {Node}    节点
-     * @return {Boolean} 是否选项
+     *
+     * @protected
+     * @method module:util/helper/select._$$SelectHelper#__isItemElement
+     * @param  {Node} ar0 - 节点
+     * @return {Boolean}    是否选项
      */
     _pro.__isItemElement = function(_element){
         if (!!this.__clazz){
@@ -135,6 +153,9 @@ var f = function(){
     };
     /**
      * 取键盘检测节点
+     *
+     * @protected
+     * @method module:util/helper/select._$$SelectHelper#__getKeyBoardParent
      * @return {Node} 节点
      */
     _pro.__getKeyBoardParent = (function(){
@@ -148,6 +169,9 @@ var f = function(){
     })();
     /**
      * 根据样式取项节点
+     *
+     * @protected
+     * @method module:util/helper/select._$$SelectHelper#__getItemElement
      * @return {Node} 节点
      */
     _pro.__getItemElement = function(_class){
@@ -158,6 +182,9 @@ var f = function(){
     };
     /**
      * 同步选中状态
+     *
+     * @protected
+     * @method module:util/helper/select._$$SelectHelper#__doSyncSelection
      * @return {Void}
      */
     _pro.__doSyncSelection = function(_event,_class){
@@ -175,6 +202,9 @@ var f = function(){
     };
     /**
      * 节点滚动至可视区域
+     *
+     * @protected
+     * @method module:util/helper/select._$$SelectHelper#__doScrollToView
      * @return {Void}
      */
     _pro.__doScrollToView = function(_element){
@@ -194,6 +224,9 @@ var f = function(){
     };
     /**
      * 解析选择状态
+     *
+     * @protected
+     * @method module:util/helper/select._$$SelectHelper#__doParseSelection
      * @return {Object} 状态信息
      */
     _pro.__doParseSelection = function(_event,_class){
@@ -207,7 +240,10 @@ var f = function(){
     };
     /**
      * 触发键盘选择实践
-     * @param  {Event} 事件对象
+     *
+     * @protected
+     * @method module:util/helper/select._$$SelectHelper#__doCheckKBAction
+     * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
     _pro.__doCheckKBAction = function(_event){
@@ -245,6 +281,9 @@ var f = function(){
     };
     /**
      * 回车事件
+     *
+     * @protected
+     * @method module:util/helper/select._$$SelectHelper#__doCheckKBEnter
      * @return {Void}
      */
     _pro.__doCheckKBEnter = function(_event){
@@ -254,6 +293,9 @@ var f = function(){
     };
     /**
      * 点击事件
+     *
+     * @protected
+     * @method module:util/helper/select._$$SelectHelper#__onCheckClick
      * @return {Void}
      */
     _pro.__onCheckClick = function(_event){
@@ -270,6 +312,9 @@ var f = function(){
     };
     /**
      * 鼠标移入事件
+     *
+     * @protected
+     * @method module:util/helper/select._$$SelectHelper#__onCheckHover
      * @return {Void}
      */
     _pro.__onCheckHover = function(_event){
@@ -280,10 +325,15 @@ var f = function(){
         this.__doSyncSelection(
             _eopt,this.__hovered
         );
-        this.__kbody.focus();
+        if (!!this.__kbody.focus){
+            this.__kbody.focus();
+        }
     };
     /**
      * 鼠标移出事件
+     *
+     * @protected
+     * @method module:util/helper/select._$$SelectHelper#__onCheckLeave
      * @return {Void}
      */
     _pro.__onCheckLeave = function(_event){
@@ -297,13 +347,17 @@ var f = function(){
     };
     /**
      * 取当前选中的节点
+     *
+     * @method module:util/helper/select._$$SelectHelper#_$getSelectedNode
      * @return {Node} 当前选中节点
      */
     _pro._$getSelectedNode = function(){
         return this.__getItemElement(this.__selected);
     };
-};
-NEJ.define(
-    '{lib}util/helper/select.js',[
-    '{lib}util/event/event.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});

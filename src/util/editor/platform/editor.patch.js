@@ -1,19 +1,39 @@
-var f = function(){
+NEJ.define([
+    'base/platform',
+	'base/element',
+	'base/util',
+	'./editor.js'
+],function(_m,_e,_u,_h,_p,_o,_f,_r){
+	// webkit editor patch
+	NEJ.patch('WV',function(){
+	    var __reg_nwrd = /<\/?[\w]+:[\w]+.*?>/gi;
+	    /**
+	     * 验证webkit下内容是否来自Word
+	     * @param  {String} _html 内容
+	     * @return {Boolean}      FF下内容是否来自Word
+	     */
+	    var __isFromWord = function(_html){
+	        return (_html||'').search('</?[\\w]+:[\\w]+.*?>')>=0;
+	    };
+
+	    /**
+	     * webkit清除word过来的冗余内容
+	     * @param  {String} _html 内容
+	     * @return {String} 过滤后的内容
+	     */
+	    _h.__filterWordContent = function(_html){
+	        if(!__isFromWord(_html))
+	            return _html;
+	        return _html.replace(__reg_nwrd,'');
+	    };
+	});
 
 	// gecko editor patch
 	NEJ.patch('GV',function(){
-	    var _  = NEJ.P,
-	        _p = _('nej.p'),
-	        _e = _('nej.e'),
-	        _h = _('nej.h');
 	    /**
 	     * 基本内容过滤
 	     */
-	    var __empty = /(?:<(p|div)>(?:\&nbsp\;|<br\/?>)<\/\1>|<br\/?>|\&nbsp\;|\s)+$/gi; // empty content
-	    /**
-	     * word内容过滤
-	     */
-	    var // below for clear format
+	    var __empty    = /(?:<(p|div)>(?:\&nbsp\;|<br\/?>)<\/\1>|<br\/?>|\&nbsp\;|\s)+$/gi,
 	        __reg_flnh = /\f/g,//换页符
 	        __reg_flns = /\n|\r/g,//换行符或回车符
 	        __reg_fzag = /<(style|script).*?>.*?<\/\1>/gi,//style和script标签
@@ -22,8 +42,8 @@ var f = function(){
 
 	    /**
 	     * 验证gecko下内容是否来自Word
-	     * @param  {String} _html 内容
-	     * @return {Boolean}      gecko下内容是否来自Word
+	     * @param  {String}  _html 内容
+	     * @return {Boolean} gecko下内容是否来自Word
 	     */
 	    var __isFromWord = function(_html){
 	        return (_html||'').indexOf('<w:WordDocument>')>=0;
@@ -57,12 +77,8 @@ var f = function(){
 
 	// ie6-9 editor patch
 	NEJ.patch('PV',function(){
-	    // variable declaration
-	    var _  = NEJ.P,
-	        _p = _('nej.p'),
-	        _h = _('nej.h');
 	    var __reg_nwrd = /<\/?[\w]+:[\w]+.*?>/gi,
-	        __opspc = '';
+	        __opspc    = '';
 	    /**
 	     * 执行编辑命令
 	     * @param  {Node}   _document 文档对象
@@ -106,13 +122,48 @@ var f = function(){
 	    };
 	});
 
+	// ie editor patch
+	NEJ.patch('TR',function(){
+	     var __reg_nwrd = /<\/?[\w]+:[\w]+.*?>/gi,
+	         __reg_cxml = /<\?xml[^>]*>/gi;
+	    /**
+	     * 验证trident下内容是否来自Word
+	     * @param  {String} _html 内容
+	     * @return {Boolean}      trident下内容是否来自Word
+	     */
+	    var __isFromWord = function(_html){
+	        return (_html||'').search('</?[\\w]+:[\\w]+.*?>')>=0;
+	    };
+
+	    /**
+	     * trident清除word过来的冗余内容
+	     * @param  {String} _html 内容
+	     * @return {String} 过滤后的内容
+	     */
+	    _h.__filterWordContent = function(_html){
+	        if(!__isFromWord(_html))
+	            return _html;
+	        return _html.replace(__reg_nwrd,'').replace(__reg_cxml,'');
+	    };
+	});
+
+	// ie6-8
+	NEJ.patch('TR<=4.0',function(){
+        _h.__getSelectText = function(_document){
+            var _range = _h.__getRange(_document);
+            if (!_range) return '';
+            return _range.text;
+        };
+        _h.__getSelectHtml = function(_document){
+            var _range = _h.__getRange(_document);
+	        if (!_range) return '';
+	        var _html = _range.htmlText;
+            return _html||'';
+        };
+    });
+
 	// ie6-9 editor patch
-	NEJ.patch('2.0<=TR<=5.0',['./editor.td.js'],function(){
-	    var _  = NEJ.P,
-	        _p = _('nej.p'),
-	        _h = _('nej.h');
-	    var __reg_nwrd = /<\/?[\w]+:[\w]+.*?>/gi,
-	        __reg_cxml = /<\?xml[^>]*>/gi;
+	NEJ.patch('2.0<=TR<=5.0',function(){
 	    /**
 	     * 移动光标至节点的指定位置
 	     * @param  {Node}   _node     节点
@@ -136,6 +187,7 @@ var f = function(){
 	                   }
 	               });
 	    })();
+<<<<<<< HEAD
 
 	    /**
 	     * 验证trident下内容是否来自Word
@@ -156,8 +208,11 @@ var f = function(){
 	            return _html;
 	        return _html.replace(__reg_nwrd,'').replace(__reg_cxml,'');
 	    };
+=======
+>>>>>>> refs/heads/sandbox
 	});
 
+<<<<<<< HEAD
 	// ie10+ editor patch
 	NEJ.patch('TR>=6.0',['./editor.td.js'],function(){
 	    var _  = NEJ.P,
@@ -185,13 +240,22 @@ var f = function(){
 	        return _html.replace(__reg_nwrd,'');
 	    };
 	});
+=======
+	 // ie7-10
+	NEJ.patch('3.0<=TR<=6.0',['./editor.td.js']);
+>>>>>>> refs/heads/sandbox
 
+<<<<<<< HEAD
 	// ie11+ editor patch
 	NEJ.patch('TR>=7.0',['./editor.td.js'],function(){
 		var _  = NEJ.P,
 	        _u = _('nej.u'),
 	        _e = _('nej.e'),
 	        _h = _('nej.h');
+=======
+	// ie11+
+	NEJ.patch('TR>=7.0',function(){
+>>>>>>> refs/heads/sandbox
 	    /**
 	     * 保存当前选择状态
 	     * @param  {Node} _node 节点
@@ -216,16 +280,17 @@ var f = function(){
 	     * @param {Object} _document 文档对象
 	     * @param {Object} _html
 	     */
+<<<<<<< HEAD
 	    _h.__insertHtml =
 	    _h.__insertHtml._$aop(function(_event){
+=======
+	    _h.__insertHtml = function(_doc,_html){
+>>>>>>> refs/heads/sandbox
 	        // inserthtml for ie11
-            _event.stopped = !0;
-            var _args = _event.args,
-                _doc = _args[0],
-                _win = _h.__getWindow(_doc),
+            var _win = _h.__getWindow(_doc),
                 _range = _h.__getRange(_win);
             var _node = _doc.createElement('div');
-            _node.innerHTML = _args[1];
+            _node.innerHTML = _html;
             // insert content
             _range.deleteContents();
             _u._$reverseEach(
@@ -238,9 +303,10 @@ var f = function(){
             var _selection = _h.__getSelection(_win);
             _selection.collapseToEnd();
             _win.focus();
-	    });
+	    }
 	});
 
+<<<<<<< HEAD
 	// ie8-
 	NEJ.patch('TR<=4.0',function(){
         var _  = NEJ.P,
@@ -288,3 +354,7 @@ var f = function(){
 	});
 };
 define(['./editor.js'],f);
+=======
+    return _h;
+});
+>>>>>>> refs/heads/sandbox

@@ -5,92 +5,98 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var o = NEJ.O,
-        f = NEJ.F,
-        e = NEJ.P('nej.e'),
-        v = NEJ.P('nej.v'),
-        p = NEJ.P('nej.ut'),
-        __proRange,
-        __supRange;
-    if (!!p._$$Range) return;
+/** @module util/range/range */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'base/element',
+    'base/event',
+    'util/event'
+],function(NEJ,_k,_e,_v,_t,_p,_o,_f,_r){
+    var _pro;
     /**
-     * 区域大小选择功能封装<br />
-     * 页面结构举例
-     * [code type="html"]
-     *   <div id="box2"></div>
-     * [/code]
+     * 区域大小选择功能封装
+     * 
+     * 结构举例
+     * ```html
+     * <div id="box2"></div>
+     * ```
+     * 
      * 脚本举例
-     * [code]
-     *   var _box2  = e._$get('box2');
-     *   var _rg = p._$$Range._$allocate({
-     *       body:_box2,
-     *       parent:document.body,
-     *       onchange:function(_event){
-     *           // 鼠标移动过程，区域选择过程
-     *       },
-     *       onbeforechange:function(_event){
-     *           // 鼠标按下，区域选择开始
-     *       },
-     *       onafterchange:function(_event){
-     *           // 鼠标放开，区域选择结束
-     *       }
-     *   });
-     * [/code]
-     * @class   {nej.ut._$$Range} 区域大小选择功能封装
-     * @extends {nej.ut._$$Event}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
-     * @config  {Node|String} body   用于改变范围的节点或者ID
-     * @config  {Node|String} parent 可选择区域节点或者ID
+     * ```javascript
+     * NEJ.define([
+     *     'util/range/range'
+     * ],function(_t){
+     *     var _range = _t._$$Range._$allocate({
+     *         body:'box2',
+     *         parent:document.body,
+     *         onchange:function(_event){
+     *             // 鼠标移动过程，区域选择过程
+     *         },
+     *         onbeforechange:function(_event){
+     *             // 鼠标按下，区域选择开始
+     *         },
+     *         onafterchange:function(_event){
+     *             // 鼠标放开，区域选择结束
+     *         }
+     *     });
+     * });
+     * ```
      * 
-     * [hr]
-     * 
-     * @event  {onchange} 区域选择变化触发事件
-     * @param  {Object}   范围信息
-     * @config {Number} top    上距离
-     * @config {Number} left   左距离
-     * @config {Number} width  宽
-     * @config {Number} height 高
-     * @config {Event}  event  事件
-     * 
-     * [hr]
-     * 
-     * @event  {onbeforechange} 区域变化之前触发事件
-     * @param  {Event} 事件
-     * 
-     * [hr]
-     * 
-     * @event  {onafterchange} 区域变化之后触发事件
-     * 
+     * @class    module:util/range/range._$$Range
+     * @extends  module:util/event._$$EventTarget
+     * @param    {Object}      config - 可选配置参数
+     * @property {Node|String} body   - 用于改变范围的节点或者ID
+     * @property {Node|String} parent - 可选择区域节点或者ID
      */
-    p._$$Range = NEJ.C();
-    __proRange = p._$$Range._$extend(p._$$Event);
-    __supRange = p._$$Range._$supro;
+    /**
+     * 区域选择变化触发事件
+     * @event    module:util/range/range._$$Range#onchange 
+     * @param    {Object} event  - 范围信息
+     * @property {Number} top    - 上距离
+     * @property {Number} left   - 左距离
+     * @property {Number} width  - 宽
+     * @property {Number} height - 高
+     * @property {Event}  event  - 事件
+     */
+    /**
+     * 区域变化之前触发事件
+     * @event  module:util/range/range._$$Range#onbeforechange
+     * @param  {Event} event - 事件
+     */
+    /**
+     * 区域变化之后触发事件
+     * @event  module:util/range/range._$$Range#onafterchange
+     */
+    _p._$$Range = _k._$klass();
+    _pro = _p._$$Range._$extend(_t._$$EventTarget);
     /**
      * 控件初始化
+     * 
      * @protected
-     * @method {__init}
+     * @method module:util/range/range._$$Range#__init
      * @return {Void}
      */
-    __proRange.__init = function(){
-        this.__supInit();
+    _pro.__init = function(){
+        this.__super();
         this.__eopt = {
-            end:this.__onRangEnd._$bind(this)
-           ,range:this.__onRanging._$bind(this)
-           ,start:this.__onRangeStart._$bind(this)
+            end:this.__onRangEnd._$bind(this),
+            range:this.__onRanging._$bind(this),
+            start:this.__onRangeStart._$bind(this)
         };
     };
     /**
      * 控件重置
+     * 
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
+     * @method module:util/range/range._$$Range#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
-    __proRange.__reset = function(_options){
-        this.__supReset(_options);
-        this.__body = e._$get(_options.body);
-        this.__parent = e._$get(_options.parent)
+    _pro.__reset = function(_options){
+        this.__super(_options);
+        this.__body = _e._$get(_options.body);
+        this.__parent = _e._$get(_options.parent)
                                 ||document.body;
         this.__doInitDomEvent([
             [document,'mouseup',this.__eopt.end],
@@ -100,24 +106,26 @@ var f = function(){
     };
     /**
      * 控件销毁
+     * 
      * @protected
-     * @method {__destroy}
+     * @method module:util/range/range._$$Range#__destroy
      * @return {Void}
      */
-    __proRange.__destroy = function(){
-        this.__supDestroy();
+    _pro.__destroy = function(){
+        this.__super();
         delete this.__body;
         delete this.__parent;
         delete this.__offset;
     };
     /**
      * 改变范围
+     * 
      * @protected
-     * @method {__doChangeRange}
-     * @param  {Object} 范围信息
+     * @method module:util/range/range._$$Range#__doChangeRange
+     * @param  {Object} arg0 - 范围信息
      * @return {Void}
      */
-    __proRange.__doChangeRange = function(_event){
+    _pro.__doChangeRange = function(_event){
         var _style = this.__body.style;
         for(var x in _event)
             _style[x] = _event[x]+'px';
@@ -125,12 +133,13 @@ var f = function(){
     };
     /**
      * 开始范围选择
+     * 
      * @protected
-     * @method {__onRangeStart}
-     * @param  {Event} 事件
+     * @method module:util/range/range._$$Range#__onRangeStart
+     * @param  {Event} arg0 - 事件
      * @return {Void}
      */
-    __proRange.__onRangeStart = function(_event){
+    _pro.__onRangeStart = function(_event){
         if (!!this.__offset) return;
         try{
             _event.stopped = !1;
@@ -138,8 +147,8 @@ var f = function(){
             if (_event.stopped) return;
         }catch(e){}
         this.__offset = {
-            x:v._$pageX(_event)
-           ,y:v._$pageY(_event)
+            x:_v._$pageX(_event)
+           ,y:_v._$pageY(_event)
         };
         this.__parent.appendChild(this.__body);
         this.__doChangeRange({
@@ -151,16 +160,17 @@ var f = function(){
     };
     /**
      * 范围选择过程
+     * 
      * @protected
-     * @method {__onRanging}
-     * @param  {Event} 事件
+     * @method module:util/range/range._$$Range#__onRanging
+     * @param  {Event} arg0 - 事件
      * @return {Void}
      */
-    __proRange.__onRanging = function(_event){
+    _pro.__onRanging = function(_event){
         if (!this.__offset) return;
         var _offset = {
-                x:v._$pageX(_event)
-               ,y:v._$pageY(_event)
+                x:_v._$pageX(_event)
+               ,y:_v._$pageY(_event)
             },
             _delta = {
                 x:_offset.x-this.__offset.x
@@ -176,17 +186,22 @@ var f = function(){
     };
     /**
      * 结束范围选择
+     * 
      * @protected
-     * @method {__onRangEnd}
-     * @param  {Event} 事件
+     * @method module:util/range/range._$$Range#__onRangEnd
+     * @param  {Event} arg0 - 事件
      * @return {Void}
      */
-    __proRange.__onRangEnd = function(_event){
+    _pro.__onRangEnd = function(_event){
         if (!this.__offset) return;
-        e._$removeByEC(this.__body);
+        _e._$removeByEC(this.__body);
         delete this.__offset;
         this._$dispatchEvent('onafterchange');
     };
-};
-NEJ.define('{lib}util/range/range.js',
-      ['{lib}util/event.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});

@@ -6,7 +6,7 @@ var f = function(){
 		t = NEJ.P('nej.ut'),
 		e = NEJ.P('nej.e');
     //开始单元测试
-    
+
     test('实例化一个翻页器，并测试放回的页码是否一致', function() {
         var _parent = document.getElementById('pagerCnt');
         var _setIndex = 1;
@@ -27,7 +27,7 @@ var f = function(){
         }
         start();
     });
-	
+
     test('关联一个翻页器',function(){
         stop();
         var _parent = document.getElementById('pagerCnt2');
@@ -72,10 +72,10 @@ var f = function(){
         }
         start();
     });
-	
+
 	test('util page.simple',function(){
 		var _page = e._$get('page');
-		var _ps = t._$$SimplePage._$allocate({
+		var _ps = t._$$PageSimple._$allocate({
 			list:e._$getByClassName(_page,'zpgi'),
 			event:'click',
 			pbtn:e._$getByClassName(_page,'zprv')[0],
@@ -89,7 +89,7 @@ var f = function(){
 			}
 		});
 	});
-	
+
 	test('util page',function(){
 		stop();
 		var _box = e._$get('pagebox');
@@ -106,13 +106,12 @@ var f = function(){
 		_pg._$setTotal(20);
 		_pg._$updatePage(5,10);
     });
-	
+
 }
 module('依赖模块');
 test('define',function(){expect(0);
     define('{pro}pager.test.js',
-    ['{lib}ui/pager/pager.js',
-     '{lib}util/page/page.simple.js',
-     '{lib}util/page/page.js'],f);
+    ['ui/pager/pager',
+     'util/page/page.simple',
+     'util/page/page'],f);
 });
-  

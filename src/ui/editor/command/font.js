@@ -5,38 +5,43 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _i = _('nej.ui'),
-        _p = _('nej.ui.cmd'),
-        _pro,
-        _seed_css,
-        _seed_fnt;
-    if (!!_p._$$FontCard) return;
+/** @module ui/editor/command/font */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'base/element',
+    'base/event',
+    'base/util',
+    'ui/layer/card.wrapper',
+    'util/template/jst',
+    'text!./font.css',
+    'text!./font.html'
+],function(NEJ,_k,_e,_v,_u,_i,_t0,_css,_html,_p,_o,_f,_r){
+    var _pro,
+        _seed_css = _e._$pushCSSText(_css),
+        _seed_fnt = _t0._$add(_html);
     /**
      * 字体字号选择卡片基类
-     * @class   {nej.ui.cmd._$$FontCard} 字体字号选择卡片基类
-     * @extends {nej.ui._$$CardWrapper}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
-     * 
-     * [hr]
-     * 
-     * @event  {onchange} 字号/字体选中回调函数
-     * @param  {String}   字号/字体
-     * 
+     *
+     * @class   module:ui/editor/command/font._$$FontCard
+     * @extends module:ui/layer/wrapper/card._$$CardWrapper
+     * @param   {Object} arg0 - 可选配置参数
      */
-    _p._$$FontCard = NEJ.C();
+    /**
+     * 字号/字体选中回调函数
+     *
+     * @event  module:ui/editor/command/font._$$FontCard#onchange
+     * @param  {String} font - 字号/字体
+     *
+     */
+    _p._$$FontCard = _k._$klass();
     _pro = _p._$$FontCard._$extend(_i._$$CardWrapper);
     /**
      * 控件重置
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         if (_options.width!=null){
             _e._$setStyle(
                 this.__body,'width',
@@ -45,32 +50,21 @@ var f = function(){
         }
     };
     /**
-     * 取字体字号提示文字
-     * @static
-     * @method {_$getText}
-     * @return {String} 字体/字号
-     */
-    _p._$$FontCard._$getText = function(_value){
-        var _index = _u._$indexOf(this.list,
-            function(_data){
-                return (_data.value||_data.name)==_value;
-            });
-        return (this.list[_index]||_o).name;
-    };
-    /**
      * 控件销毁
+     *
      * @protected
-     * @method {__destroy}
+     * @method module:ui/editor/command/font._$$FontCard#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         delete this.__flist;
     };
     /**
      * 初始化外观信息
+     *
      * @protected
-     * @method {__initXGui}
+     * @method module:ui/editor/command/font._$$FontCard#__initXGui
      * @return {Void}
      */
     _pro.__initXGui = function(){
@@ -78,12 +72,13 @@ var f = function(){
     };
     /**
      * 初始化节点
+     *
      * @protected
-     * @method {__initNode}
+     * @method module:ui/editor/command/font._$$FontCard#__initNode
      * @return {Void}
      */
     _pro.__initNode = function(){
-        this.__supInitNode();
+        this.__super();
         _v._$addEvent(
             this.__body,'click',
             this.__onFontSelect._$bind(this)
@@ -91,19 +86,21 @@ var f = function(){
     };
     /**
      * 构建字体大小选择列表
+     *
      * @protected
-     * @method {__doGenFontListXhtml}
-     * @param  {Object} 字体大小列表信息
+     * @method module:ui/editor/command/font._$$FontCard#__doGenFontListXhtml
+     * @param  {Object} arg0 - 字体大小列表信息
      * @return {Void}
      */
     _pro.__doGenFontListXhtml = function(_data){
-        return _e._$getHtmlTemplate(_seed_fnt,_data);
+        return _t0._$get(_seed_fnt,_data);
     };
     /**
      * 字体大小选择事件
+     *
      * @protected
-     * @method {__onFontSelect}
-     * @param  {Event} 事件对象
+     * @method module:ui/editor/command/font._$$FontCard#__onFontSelect
+     * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
     _pro.__onFontSelect = (function(){
@@ -120,24 +117,24 @@ var f = function(){
             this._$hide();
         };
     })();
-    // ui css text
-    _seed_css = _e._$pushCSSText('\
-        .#<uispace>{border:1px solid #9FAC87;font-size:12px;text-align:left;}\
-        .#<uispace> .zitm{display:block;position:relative;margin:1px;outline:none;padding:2px 0 2px 8px;border:1px solid #ddd;color:#000;background-color:#fff;text-decoration:none;}\
-        .#<uispace> .zitm:hover{background-color:#e5e5e1;text-decoration:none;}\
-        .#<uispace> .zitm .ztip{position:absolute;top:2px;right:5px;font-size:10px;}\
-    ');
-    // ui font size list
-    _seed_fnt = _e._$addHtmlTemplate('\
-        {list xlist as x}\
-        <a class="zitm" hidefocus="true" style="${style}:${x.style|default:x.name};" data-index="${x_index}">\
-          ${x.name}\
-          {if !!x.tip}<span class="ztip">${x.tip}</span>{/if}\
-        </a>\
-        {/list}\
-    ');
-};
-NEJ.define(
-    '{lib}ui/editor/command/font.js',[
-    '{lib}ui/layer/card.wrapper.js'
-],f);
+    /**
+     * 取字体字号提示文字
+     *
+     * @method module:ui/editor/command/font._$$FontCard._$getText
+     * @param  {String} value - 字体/字号
+     * @return {String} 字体/字号
+     */
+    _p._$$FontCard._$getText = function(_value){
+        var _index = _u._$indexOf(this.list,
+            function(_data){
+                return (_data.value||_data.name)==_value;
+            });
+        return (this.list[_index]||_o).name;
+    };
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui.cmd'),_p);
+    }
+
+    return _p;
+});

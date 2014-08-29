@@ -5,69 +5,76 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _f = NEJ.F,
-        _c = _('nej.c'),
-        _g = _('nej.g'),
-        _e = _('nej.e'),
-        _u = _('nej.u'),
-        _j = _('nej.j'),
-        _t = _('nej.ut'),
-        _p = _('nej.ut.j'),
-        _pro;
-    if (!!_p._$$Proxy) return;
+/** @module  util/ajax/proxy/proxy */
+NEJ.define([
+    'base/klass',
+    'base/util',
+    'base/element',
+    'base/config',
+    'base/constant',
+    'util/event',
+    'util/cache/cookie',
+    'util/encode/json'
+],function(_k,_u,_e,_c,_g,_t,_j,JSON,_p,_o,_f,_r){
+    var _pro;
     /**
      * Ajax代理对象
      * 
-     * @class   {nej.ut.j._$$Proxy}
-     * @extends {nej.ut._$$Event}
+     * @class   module:util/ajax/proxy/proxy._$$ProxyAbstract
+     * @extends module:util/event._$$EventTarget
      * 
-     * @param   {Object}  构造配置参数
-     * @config  {String}  url     请求地址
-     * @config  {Boolean} sync    是否同步请求
-     * @config  {String}  type    返回数据格式,text/json/xml
-     * @config  {String}  method  请求方式,GET/POST
-     * @config  {Number}  timeout 超时时间,0表示禁止超时监测
-     * @config  {Object}  headers 头信息
-     * 
-     * [hr]
+     * @param    {Object}  config  - 构造配置参数
+     * @property {String}  url     - 请求地址
+     * @property {Boolean} sync    - 是否同步请求
+     * @property {String}  type    - 返回数据格式,text/json/xml
+     * @property {String}  method  - 请求方式,GET/POST
+     * @property {Number}  timeout - 超时时间,0表示禁止超时监测
+     * @property {Object}  headers - 头信息
+     */
+    /** 
      * 载入回调
-     * @event {onload}
-     * @param {Object} 数据信息
      * 
-     * [hr]
+     * @event module:util/ajax/proxy/proxy._$$ProxyAbstract#onload
+     * @param {Object} event - 服务器返回数据信息
+     */
+    /** 
      * 异常回调
-     * @event {onerror}
-     * @param {Object}  数据信息
      * 
+     * @event    module:util/ajax/proxy/proxy._$$ProxyAbstract#onerror
+     * @param    {Object}   event   - 错误信息
+     * @property {Number}   code    - 错误代码
+     * @property {String}   message - 错误描述
+     * @property {Variable} data    - 出错时携带数据
+     */
+    /** 
      * [hr]
      * 请求之前对数据处理回调
-     * @event {onbeforerequest}
-     * @param {Object}  数据信息
-     * 
+     * @event    module:util/ajax/proxy/proxy._$$ProxyAbstract#onbeforerequest
+     * @param    {Object} event   - 请求信息
+     * @property {Object} request - 请求参数，数据信息 url/sync/cookie/type/method/timeout
+     * @property {Object} headers - 请求头信息
      */
-    _p._$$Proxy = NEJ.C();
-    _pro = _p._$$Proxy._$extend(_t._$$Event);
+    _p._$$ProxyAbstract = _k._$klass();
+    _pro = _p._$$ProxyAbstract._$extend(_t._$$EventTarget);
     /**
      * 控件重置
+     * 
      * @protected
-     * @method {__reset}
-     * @param  {Object} 配置参数
+     * @method module:util/ajax/proxy/proxy._$$ProxyAbstract#__reset
+     * @param  {Object} arg0 - 配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         // reset request information
-        this.__request = {
+        this.__request = _u._$fetch({
             url:'',
             sync:!1,
             cookie:!1,
             type:'text',
             method:'GET',
             timeout:60000
-        };
-        NEJ.EX(this.__request,_options);
+        },_options);
         // for csrf attack
         var _csrf = _c._$get('csrf');
         if (!!_csrf.cookie&&!!_csrf.param){
@@ -79,30 +86,32 @@ var f = function(){
         // reset headers
         this.__headers = _options.headers||{};
         var _content = this.__headers[_g._$HEAD_CT];
-        if (_content==null)
-            this.__headers[_g._$HEAD_CT] = 
-                           _g._$HEAD_CT_FORM;
+        if (_content==null){
+            this.__headers[_g._$HEAD_CT] = _g._$HEAD_CT_FORM;
+        }
     };
     /**
      * 回收控件
+     * 
      * @protected
-     * @method {__destroy}
+     * @method module:util/ajax/proxy/proxy._$$ProxyAbstract#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         delete this.__rkey;
         delete this.__request;
         delete this.__headers;
     };
     /**
      * 请求载入回调
+     * 
      * @protected
-     * @method {__onLoadRequest}
-     * @param  {Object} 数据信息
-     * @config {Number} status 请求状态
-     * @config {String} result 请求结果，纯文本形式
-     * @return {Void}
+     * @method   module:util/ajax/proxy/proxy._$$ProxyAbstract#__onLoadRequest
+     * @param    {Object} arg0   - 数据信息
+     * @property {Number} status - 请求状态
+     * @property {String} result - 请求结果，纯文本形式
+     * @return   {Void}
      */
     _pro.__onLoadRequest = function(_event){
         var _status = _event.status;
@@ -124,23 +133,37 @@ var f = function(){
             return;
         }
         // onload
-        this._$dispatchEvent('onload',
-             _e._$text2type(_event.result,
-                      this.__request.type));
+        this._$dispatchEvent(
+             'onload',_e._$text2type(
+                 _event.result,
+                 this.__request.type
+             )
+        );
     };
     /**
      * 往服务器发送请求，子类实现具体业务逻辑
-     * @protected
-     * @method {__doSendRequest}
-     * @param  {Object} 请求信息
+     * 
+     * @abstract
+     * @method module:util/ajax/proxy/proxy._$$ProxyAbstract#__doSendRequest
+     * @param  {Object} arg0 - 请求信息
      * @return {Void}
      */
     _pro.__doSendRequest = _f;
     /**
+     * 取头信息，子类实现具体业务逻辑
+     * 
+     * @abstract
+     * @method module:util/ajax/proxy/proxy._$$ProxyAbstract#__getResponseHeader
+     * @param  {String} arg0 - 要取的头信息名称
+     * @return {String}        头信息结果或集合
+     */
+    _pro.__getResponseHeader = _f;
+    /**
      * 发送请求
-     * @method {_$send}
-     * @param  {Variable} 要发送的数据
-     * @return {nej.ut.j._$$Proxy}
+     * 
+     * @method module:util/ajax/proxy/proxy._$$ProxyAbstract#_$send
+     * @param  {Variable} arg0 - 要发送的数据
+     * @return {Void}
      */
     _pro._$send = function(_data){
         var _url = this.__request.url;
@@ -149,14 +172,14 @@ var f = function(){
                 code:_g._$CODE_NOTASGN,
                 message:'没有输入请求地址！'
             });
-            return this;
+            return;
         }
         try{
             this.__request.data = _data==null?null:_data;
             var _event = {
-                    request:this.__request,
-                    headers:this.__headers
-                };
+                request:this.__request,
+                headers:this.__headers
+            };
             // adjust param before request
             try{
                 this._$dispatchEvent('onbeforerequest',_event);
@@ -172,27 +195,21 @@ var f = function(){
                 message:'请求['+_url+']失败:'+e.message+'！'
             });
         }
-        return this;
     };
     /**
      * 中断请求，子类实现具体业务逻辑
-     * @method {_$abort}
+     *
+     * @abstract
+     * @method module:util/ajax/proxy/proxy._$$ProxyAbstract#_$abort
      * @return {Void}
      */
     _pro._$abort = _f;
     /**
-     * 取头信息，子类实现具体业务逻辑
-     * @protected
-     * @method {__getResponseHeader}
-     * @param  {String}  要取的头信息名称
-     * @return {String} 头信息结果或集合
-     */
-    _pro.__getResponseHeader = _f;
-    /**
      * 取头信息
-     * @method {_$header}
-     * @param  {String|Array}  要取的头信息名称
-     * @return {String|Object} 头信息结果或集合
+     * 
+     * @method module:util/ajax/proxy/proxy._$$ProxyAbstract#_$header
+     * @param  {String|Array}  arg0 - 要取的头信息名称
+     * @return {String|Object}        头信息结果或集合
      */
     _pro._$header = function(_key){
         if (!_u._$isArray(_key)){
@@ -206,14 +223,6 @@ var f = function(){
         );
         return _result;
     };
-};
-NEJ.define(
-    '{lib}util/ajax/proxy/proxy.js',[
-    '{lib}base/config.js',
-    '{lib}base/util.js',
-    '{lib}base/event.js',
-    '{lib}base/constant.js',
-    '{lib}base/element.js',
-    '{lib}util/event.js',
-    '{lib}util/cache/cookie.js'
-],f);
+    
+    return _p;
+});

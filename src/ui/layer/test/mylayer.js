@@ -17,14 +17,15 @@ var f = function(){
     var _seed_css = _e._$pushCSSText('.#<uispace>{position:absolute;background:#fff;}');
     /**
      * 卡片控件
-     * @param   {Object} 可选配置参数，已处理参数列表如下
-     * @config  {String} top  卡片垂直位置
-     * @config  {String} left 卡片水平位置
+     * @param   {Object} 可选配置参数
+     * @property  {String} top  卡片垂直位置
+     * @property  {String} left 卡片水平位置
      */
     _p._$$MyLayer = NEJ.C();
     _proMyLayer = _p._$$MyLayer._$extend(_p._$$Layer);
     /**
      * 控件重置
+     *
      * @protected
      * @method {__reset}
      * @param  {Object} 可选配置参数
@@ -35,6 +36,7 @@ var f = function(){
     };
     /**
      * 控件销毁
+     *
      * @protected
      * @method {__destroy}
      * @return {Void}
@@ -44,6 +46,7 @@ var f = function(){
     };
     /**
      * 初始化外观信息
+     *
      * @protected
      * @method {__initXGui}
      * @return {Void}
@@ -53,6 +56,7 @@ var f = function(){
     };
     /**
      * 初始化节点
+     *
      * @protected
      * @method {__initNode}
      * @return {Void}
@@ -63,4 +67,4 @@ var f = function(){
     };
 };
 define('{pro}mylayer.js',
-      ['{lib}ui/layer/layer.js'],f);
+      ['ui/layer/layer'],f);

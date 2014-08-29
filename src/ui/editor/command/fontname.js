@@ -5,33 +5,38 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _e = _('nej.e'),
-        _p = _('nej.ui.cmd'),
-        _pro,_sup,_seed_html;
-    if (!!_p._$$FontNameCard) return;
+/** @module ui/editor/command/fontname */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'base/element',
+    'ui/editor/command/font',
+    'util/template/tpl'
+],function(NEJ,_k,_e,_i0,_t0,_p,_o,_f,_r){
+    var _pro,
+        _seed_html;
     /**
      * 字体选择控件
-     * @class   {nej.ui.cmd._$$FontNameCard} 字体选择控件
-     * @extends {nej.ui.cmd._$$FontCard}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
-     * 
-     * [hr]
-     * 
-     * @event {onselect} 字体选中回调函数
-     * @param {String}   字体
-     * 
+     *
+     * @class   module:ui/editor/command/fontname._$$FontNameCard
+     * @extends module:ui/editor/command/font._$$FontCard
+     * @param   {Object} arg0 - 可选配置参数
      */
-    _p._$$FontNameCard = NEJ.C();
-    _pro = _p._$$FontNameCard._$extend(_p._$$FontCard);
-    _sup = _p._$$FontNameCard._$supro;
+    /**
+     * 字体选中回调函数
+     *
+     * @event module:ui/editor/command/fontname._$$FontNameCard#onselect
+     * @param {String} arg0 - 字体
+     *
+     */
+    _p._$$FontNameCard = _k._$klass();
+    _pro = _p._$$FontNameCard._$extend(_i0._$$FontCard);
     /**
      * 字体选项列表
-     * @type Array
+     *
+     * @const {Array} module:ui/editor/command/fontname._$$FontNameCard.list
      */
-    _p._$$FontNameCard.list = 
+    _p._$$FontNameCard.list =
       [{name:'宋体'}
       ,{name:'微软雅黑'}
       ,{name:'黑体'}
@@ -48,22 +53,24 @@ var f = function(){
       ,{name:'Times New Roman'}];
     /**
      * 初始化外观信息
+     *
      * @protected
-     * @method {__initXGui}
+     * @method module:ui/editor/command/fontname._$$FontNameCard#__initXGui
      * @return {Void}
      */
     _pro.__initXGui = function(){
-        _sup.__initXGui.apply(this,arguments);
+        this.__super();
         this.__seed_html = _seed_html;
     };
     /**
      * 动态构建控件节点模板
+     *
      * @protected
-     * @method {__initNodeTemplate}
+     * @method module:ui/editor/command/fontname._$$FontNameCard#__initNodeTemplate
      * @return {Void}
      */
     _pro.__initNodeTemplate = function(){
-        _seed_html = _e._$addNodeTemplate(
+        _seed_html = _t0._$addNodeTemplate(
                      '<div class="'+this.__seed_css+'">'
                      +this.__doGenFontListXhtml({
                          style:'font-family'
@@ -72,8 +79,10 @@ var f = function(){
                      '</div>');
         this.__seed_html = _seed_html;
     };
-};
-NEJ.define(
-    '{lib}ui/editor/command/fontname.js',[
-    '{lib}ui/editor/command/font.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui.cmd'),_p);
+    }
+
+    return _p;
+});

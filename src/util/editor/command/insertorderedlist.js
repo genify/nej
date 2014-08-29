@@ -5,24 +5,33 @@
  * @author   cheng-lin(cheng-lin@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _p = NEJ.P('nej.ut.cmd');
-    if (!!_p._$$InsertOrderedList) return;
+/** util/editor/command/insertorderedlist */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'util/editor/command/simple'
+],function(NEJ,_k,_t0,_p,_o,_f,_r){
     /**
      * 有序列表执行命令封装
-     * @class   {nej.ut.cmd._$$InsertOrderedList} 有序列表执行命令封装
-     * @extends {nej.ut.cmd._$$SimpleCommand}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     *
+     * @class   module:util/editor/command/insertorderedlist._$$InsertOrderedList
+     * @extends module:util/editor/command/simple._$$SimpleCommand
+     * @param   {Object} options - 可选配置参数
      */
-    _p._$$InsertOrderedList = NEJ.C();
-    _p._$$InsertOrderedList._$extend(_p._$$SimpleCommand);
+    _p._$$InsertOrderedList = _k._$klass();
+    _p._$$InsertOrderedList._$extend(_t0._$$SimpleCommand);
     /**
      * 命令名称
-     * @type String
+     *
+     * @const {String} module:util/editor/command/insertorderedlist._$$InsertOrderedList.command
      */
     _p._$$InsertOrderedList.command = 'insertorderedlist';
     // regist command implemention
     _p._$$InsertOrderedList._$regist();
-};
-NEJ.define('{lib}util/editor/command/insertorderedlist.js',
-      ['{lib}util/editor/command/simple.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut.cmd'),_p);
+    }
+
+    return _p;
+});

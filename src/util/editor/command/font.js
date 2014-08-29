@@ -5,55 +5,64 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _f = NEJ.F,
-        _e = _('nej.e'),
-        _p = _('nej.ut.cmd'),
-        _proFont;
-    if (!!_p._$$Font) return;
+/** util/editor/command/font */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'base/element',
+    'util/editor/command/card',
+    'util/template/jst'
+],function(NEJ,_k,_e,_t0,_t1,_p,_o,_f,_r){
+    var _pro;
     /**
      * 字体/字号执行命令封装
-     * @class   {nej.ut.cmd._$$Font} 字体/字号执行命令封装
-     * @extends {nej.ui.cmd._$$CardCommand}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
+     *
+     * @class   module:util/editor/command/font._$$Font
+     * @extends module:util/editor/command/card._$$CardCommand
+     * @param   {Object} arg0 - 可选配置参数
      */
-    _p._$$Font = NEJ.C();
-      _proFont = _p._$$Font._$extend(_p._$$CardCommand);
+    _p._$$Font = _k._$klass();
+    _pro = _p._$$Font._$extend(_t0._$$CardCommand);
     /**
      * 取提示信息
-     * @protected
-     * @method {__getFontText}
+     *
+     * @abstract
+     * @method module:util/editor/command/font._$$Font#__getFontText
      * @param  {String} 实际值
      * @return {String} 提示信息
      */
-    _proFont.__getFontText = _f;
+    _pro.__getFontText = _f;
     /**
      * 字体字号选择回调
+     *
      * @protected
-     * @method {__onChange}
-     * @param  {Object} 大小信息
+     * @method module:util/editor/command/font._$$Font#__onChange
+     * @param  {Object} data - 大小信息
      * @return {Void}
      */
-    _proFont.__onChange = function(_data){
+    _pro.__onChange = function(_data){
         this.__editor._$execCommand(
             this.__name,_data.value||_data.name);
     };
     /**
      * 查询命令值
-     * @method {_$queryValue}
-     * @param  {Node} 命令按钮节点
-     * @return {nej.ut.cmd._$$Font}
+     *
+     * @method module:util/editor/command/font._$$Font#_$queryValue
+     * @param  {Node} node - 命令按钮节点
+     * @return {Void}
      */
-    _proFont._$queryValue = function(_node){
+    _pro._$queryValue = function(_node){
         var _element = _e._$getByClassName(_node,
-                       'js-t-'+_e._$getHtmlTemplateSeed())[0],
+                       'js-t-'+_t1._$seed())[0],
             _value = this.__getFontText(this
                          .__editor._$queryCommand(this.__name,'Value'));
-        if (!_element||!_value) return this;
+        if (!_element||!_value) return;
         _element.innerText = _value;
-        return this;
     };
-};
-NEJ.define('{lib}util/editor/command/font.js',
-      ['{lib}util/editor/command/card.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut.cmd'),_p);
+    }
+
+    return _p;
+});

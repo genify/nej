@@ -15,7 +15,7 @@ var f = function(){
 	// 		}
 	// 	});
 	// });
-	
+
 	test('colorpick',function(){
 		stop();
 		expect(0);
@@ -34,5 +34,5 @@ var f = function(){
 }
 module('依赖模块');
 test('define',function(){expect(0);
-	define('{pro}colorpanel.test.js',['{lib}ui/colorpick/colorpick.js'],f);
+	define('{pro}colorpanel.test.js',['ui/colorpick/colorpick'],f);
 });

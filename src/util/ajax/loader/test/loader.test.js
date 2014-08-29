@@ -8,7 +8,7 @@ var f = function(){
     
     test('load HTML资源',function(){
         stop();
-        var _htmlLoad = _p._$$HtmlLoader._$allocate({timeout:30000,
+        var _htmlLoad = _p._$$LoaderHtml._$allocate({timeout:30000,
               onloaded:function(){
                 ok(true,'载入HTML资源成功');
                 start();
@@ -27,7 +27,7 @@ var f = function(){
     
     test('load script资源',function(){
         stop();
-        var _scriptLoad = _p._$$ScriptLoader._$allocate({
+        var _scriptLoad = _p._$$LoaderScript._$allocate({
               onloaded:function(){
                 ok(true,'载入script资源成功');
                 start();
@@ -46,7 +46,7 @@ var f = function(){
 	
     test('load style资源',function(){
         stop();
-        var _styleLoad = _p._$$StyleLoader._$allocate({
+        var _styleLoad = _p._$$LoaderStyle._$allocate({
               onloaded:function(){
                 ok(true,'载入style资源成功');
                 start();
@@ -66,7 +66,7 @@ var f = function(){
 	test('载入队列资源',function(){
 		stop();
 		var _list = ['../../../html/util/formTest.html','../../../html/util/cacheTest.html']
-        var _styleLoad = _p._$$HtmlLoader._$allocate({
+        var _styleLoad = _p._$$LoaderHtml._$allocate({
               onloaded:function(){
                 ok(true,'载入html资源队列成功');
                 start();

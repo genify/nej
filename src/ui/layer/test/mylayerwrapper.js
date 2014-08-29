@@ -15,15 +15,17 @@ var f = function(){
         _proMyCardWrapper;
     if (!!_p._$$MyCardWrapper) return;
     /**
-     * @class   {nej.ui._$$MyCardWrapper} 弹出卡片封装基类对象
+     *
+     * @class   module:nej.ui._$$MyCardWrapper 弹出卡片封装基类对象
      * @extends {nej.ui._$$LayerWrapper}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
-     *                            
+     * @param   {Object} 可选配置参数
+     *
      */
     _p._$$MyCardWrapper = NEJ.C();
     _proMyCardWrapper = _p._$$MyCardWrapper._$extend(_p._$$LayerWrapper);
     /**
      * 构建弹层控件实例，子类实现具体业务逻辑
+     *
      * @protected
      * @method {__getLayerInstance}
      * @return {nej.ui._$$Layer} 弹层控件实例
@@ -33,6 +35,7 @@ var f = function(){
     };
     /**
      * 初始化弹层控件可选配置参数
+     *
      * @protected
      * @method {__doInitLayerOptions}
      * @return {Void}
@@ -45,5 +48,5 @@ var f = function(){
     };
 };
 define('{pro}mylayerwrapper.js',
-      ['{lib}ui/layer/layer.wrapper.js'
+      ['ui/layer/layer.wrapper'
       ,'{pro}mylayer.js'],f);

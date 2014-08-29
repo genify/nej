@@ -5,94 +5,107 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _e = NEJ.P('nej.e'),
-        _v = NEJ.P('nej.v'),
-        _u = NEJ.P('nej.u'),
-        _t = NEJ.P('nej.ut'),
-        _p = NEJ.P('nej.ui'),
-        _seed_css,
-        _seed_html,
-        _pro,_sup;
-    if (!!_p._$$Window) return;
+/** @module ui/layer/window */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'base/element',
+    'base/event',
+    'base/util',
+    'ui/layer/layer',
+    'ui/mask/mask',
+    'util/dragger/dragger',
+    'util/template/tpl',
+    'text!./window.css',
+    'text!./window.html'
+],function(NEJ,_k,_e,_v,_u,_i0,_i1,_t0,_t1,_css,_html,_p,_o,_f,_r){
+    var _seed_css = _e._$pushCSSText(_css),
+        _seed_html = _t1._$addNodeTemplate(_html),
+        _pro;
     /**
-     * 窗体控件<br />
+     * 窗体控件
+     *
      * 脚本举例
-     * [code]
-     *   var _window = _p._$$Window._$allocate({
-     *       parent:document.body,
-     *       title:'弹出框标题',
-     *       align:'left middle',
-     *       draggable:true,
-     *       onclose:function(){
-     *         // 窗口关闭前的回调方法
-     *       }
-     *   });
-     *   // 显示窗口，默认实例化后会显示，如果_$hide()后需要手动调用
-     *   _window._$show();
-     * [/code]
-     * @class   {nej.ui._$$Window} 窗体控件
-     * @extends {nej.ui._$$Layer}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
-     * @config  {String}                         title       窗口标题
-     * @config  {String}                         align       相对于视窗位置定义，横向+空格+纵向，默认为center middle
-     * [ntb]
-     *   横向 | left/center/right/auto
-     *   纵向 | top/middle/bottom/auto
-     * [/ntb]
-     * @config  {Boolean}                        draggable 是否可拖拽
-     * @config  {nej.ui._$$Mask|Boolean|String}  mask      盖层信息
-     * [ntb]
-     *   如果是nej.ui._$$Mask的子类 | 则为盖层构造
-     *   如果是布尔值               | 则使用默认盖层
-     *   如果是字符串               | 则为盖层样式
-     * [/ntb]
-     * 
-     * [hr]
-     * 
-     * @event  {onclose} 关闭窗体触发事件
-     * 
+     * ```javascript
+     * NEJ.define([
+     *     'ui/layer/window'
+     * ],function(_i0,_p,_o,_f,_r){
+     *     var _window = _i0._$$Window._$allocate({
+     *         parent:document.body,
+     *         title:'弹出框标题',
+     *         align:'left middle',
+     *         draggable:true,
+     *         onclose:function(){
+     *           // 窗口关闭前的回调方法
+     *         }
+     *     });
+     *     // 显示窗口，默认实例化后会显示，如果_$hide()后需要手动调用
+     *     _window._$show();
+     * });
+     * ```
+     *
+     * @class     module:ui/layer/window._$$Window 窗体控件
+     * @extends   module:ui/layer/layer._$$Layer
+     * @param     {Object} arg0       - 可选配置参数
+     * @property  {String} title      -  窗口标题
+     * @property  {String} align      -   相对于视窗位置定义，横向+空格+纵向，默认为center middle
+     * |        横向             |             纵向           |
+     * |        :---             |             :---           |
+     * | left/center/right/auto  |    top/middle/bottom/auto  |
+     * @property  {Boolean} draggable - 是否可拖拽
+     * @property  {nej.ui._$$Mask|Boolean|String} mask  -     盖层信息
+     * |        mask参数             |             含义   |
+     * |        :---                 |             :---   |
+     * | 如果是nej.ui._$$Mask的子类  |    则为盖层构造    |
+     * | 如果是布尔值                |    则使用默认盖层  |
+     * | 如果是字符串                |    则为盖层样式    |
      */
-    _p._$$Window = NEJ.C();
-    _pro = _p._$$Window._$extend(_p._$$Layer);
-    _sup = _p._$$Window._$supro;
+    /**
+     * 关闭窗体触发事件
+     *
+     * @event  module:ui/layer/window._$$Window#onclose
+     *
+     */
+    _p._$$Window = _k._$klass();
+    _pro = _p._$$Window._$extend(_i0._$$Layer);
     /**
      * 控件初始化
+     *
      * @protected
-     * @method {__init}
+     * @method module:ui/layer/window._$$Window#__init
      * @return {Void}
      */
     _pro.__init = function(){
         this.__mopt = {};
         this.__dopt = {onchange:this.__onDragging._$bind(this)};
-        this.__supInit();
+        this.__super();
     };
     /**
      * 控件重置
+     *
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
+     * @method module:ui/layer/window._$$Window#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         this.__setMask(_options.mask);
         this._$setAlign(_options.align);
         this._$setTitle(_options.title);
         if (!_options.draggable) return;
-        this.__dragger = _t._$$Dragger.
+        this.__dragger = _t0._$$Dragger.
                          _$allocate(this.__dopt);
     };
     /**
      * 控件销毁
+     *
      * @protected
-     * @method {__destroy}
+     * @method module:ui/layer/window._$$Window#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         delete this.__align;
         delete this.__mclz;
         if (!!this.__imask){
@@ -106,8 +119,9 @@ var f = function(){
     };
     /**
      * 初始化外观信息
+     *
      * @protected
-     * @method {__initXGui}
+     * @method module:ui/layer/window._$$Window#__initXGui
      * @return {Void}
      */
     _pro.__initXGui = function(){
@@ -116,12 +130,13 @@ var f = function(){
     };
     /**
      * 初始化节点
+     *
      * @protected
-     * @method {__initNode}
+     * @method module:ui/layer/window._$$Window#__initNode
      * @return {Void}
      */
     _pro.__initNode = function(){
-        this.__supInitNode();
+        this.__super();
         // 0 - move bar
         // 1 - content box
         // 2 - close btn
@@ -137,9 +152,10 @@ var f = function(){
     };
     /**
      * 关闭窗口
+     *
      * @protected
-     * @method {__onClose}
-     * @param  {Event} 事件对象
+     * @method module:ui/layer/window._$$Window#__onClose
+     * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
     _pro.__onClose = function(_event){
@@ -149,9 +165,10 @@ var f = function(){
     };
     /**
      * 窗口开始拖动过程
+     *
      * @protected
-     * @method {__onDragStart}
-     * @param  {Event} 事件信息
+     * @method module:ui/layer/window._$$Window#__onDragStart
+     * @param  {Event} arg0 - 事件信息
      * @return {Void}
      */
     _pro.__onDragStart = function(_event){
@@ -159,9 +176,10 @@ var f = function(){
     };
     /**
      * 窗口拖动过程
+     *
      * @protected
-     * @method {__onDragging}
-     * @param  {Object} 窗口位置信息
+     * @method module:ui/layer/window._$$Window#__onDragging
+     * @param  {Object} arg0 - 窗口位置信息
      * @return {Void}
      */
     _pro.__onDragging = function(_event){
@@ -173,8 +191,9 @@ var f = function(){
     };
     /**
      * 窗口位置调整
+     *
      * @protected
-     * @method {__doPositionAlign}
+     * @method module:ui/layer/window._$$Window#__doPositionAlign
      * @return {Void}
      */
     _pro.__doPositionAlign = (function(){
@@ -204,8 +223,9 @@ var f = function(){
     })();
     /**
      * 显示盖层
+     *
      * @protected
-     * @method {__doShowMask}
+     * @method module:ui/layer/window._$$Window#__doShowMask
      * @return {Void}
      */
     _pro.__doShowMask = function(){
@@ -219,25 +239,27 @@ var f = function(){
     };
     /**
      * 隐藏窗体
+     *
      * @protected
-     * @method {__doHide}
+     * @method module:ui/layer/window._$$Window#__doHide
      * @return {Void}
      */
     _pro.__doHide = function(){
         if (!!this.__imask)
             this.__imask._$hide();
-        _sup.__doHide.apply(this,arguments);
+        this.__super();
     };
     /**
      * 设置盖层构造
+     *
      * @protected
-     * @method {__setMask}
-     * @param  {nej.ui._$$Mask|Boolean} 盖层构造
+     * @method module:ui/layer/window._$$Window#__setMask
+     * @param  {nej.ui._$$Mask|Boolean} arg0 - 盖层构造
      * @return {Void}
      */
     _pro.__setMask = function(_mask){
         if (!!_mask){
-            if (_mask instanceof _p._$$Mask){
+            if (_mask instanceof _i1._$$Mask){
                 this.__imask = _mask;
                 return;
             }
@@ -253,13 +275,15 @@ var f = function(){
         this.__mclz = null;
     };
     /**
-     * 设置标题<br />
+     * 设置标题
+     *
      * 脚本举例
-     * [code]
-     *   _window._$setTitle('设置浮层标题');
-     * [/code]
-     * @method {_$setTitle}
-     * @param  {String} 标题
+     * ```javascript
+     * _window._$setTitle('设置浮层标题');
+     * ```
+     *
+     * @method module:ui/layer/window._$$Window#_$setTitle
+     * @param  {String} arg0 - 标题
      * @return {nej.ui._$$Window}
      */
     _pro._$setTitle = function(_title,_html){
@@ -270,14 +294,16 @@ var f = function(){
         return this;
     };
     /**
-     * 设置窗体对齐方式<br />
+     * 设置窗体对齐方式
+     *
      * 脚本举例
-     * [code]
-     *   // 设置对齐方式，默认是center,middle
-     *   _window._$setAlign();
-     * [/code]
-     * @method {_$setAlign}
-     * @param  {String} 对齐方式
+     * ```javascript
+     * // 设置对齐方式，默认是center,middle
+     * _window._$setAlign();
+     * ```
+     *
+     * @method module:ui/layer/window._$$Window#_$setAlign
+     * @param  {String} arg0 - 对齐方式
      * @return {nej.ui._$$Window}
      */
     _pro._$setAlign = (function(){
@@ -296,39 +322,25 @@ var f = function(){
         };
     })();
     /**
-     * 显示窗体<br />
+     * 显示窗体
+     *
      * 脚本举例
-     * [code]
-     *   _window._$show();
-     * [/code]
-     * @method {_$show}
+     * ```javascript
+     * _window._$show();
+     * ```
+     *
+     * @method module:ui/layer/window._$$Window#_$show
      * @return {nej.ui._$$Window}
      */
     _pro._$show = function(){
-        _sup._$show.apply(this,arguments);
+        this.__super();
         this.__doShowMask();
         return this;
     };
-    // ui css text
-    _seed_css = _e._$pushCSSText('\
-        .#<uispace>{position:absolute;z-index:1000;border:1px solid #aaa;background:#fff;}\
-        .#<uispace> .zbar{line-height:30px;background:#8098E7;border-bottom:1px solid #aaa;}\
-        .#<uispace> .zcnt{padding:10px 5px;}\
-        .#<uispace> .zttl{margin-right:20px;text-align:left;}\
-        .#<uispace> .zcls{position:absolute;top:5px;right:0;width:20px;height:20px;line-height:20px;cursor:pointer;}\
-    ');
-    // ui html code
-    _seed_html = _e._$addNodeTemplate('\
-        <div class="'+_seed_css+'">\
-          <div class="zbar"><div class="zttl">标题</div></div>\
-          <div class="zcnt"></div>\
-          <span class="zcls" title="关闭窗体">×</span>\
-        </div>\
-    ');
-};
-NEJ.define(
-    '{lib}ui/layer/window.js',[
-    '{lib}ui/layer/layer.js',
-    '{lib}ui/mask/mask.js',
-    '{lib}util/dragger/dragger.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui'),_p);
+    }
+
+    return _p;
+});

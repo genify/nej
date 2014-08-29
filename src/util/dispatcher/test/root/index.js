@@ -17,7 +17,7 @@ function(){
      * 专辑详情模块对象
      * @class   {nm.m.y._$$MAlbumComment}
      * @extends {nm.m._$$Module}
-     * @config  {String}
+     * @property  {String}
      */
     _pp._$$Root = NEJ.C();
     _pro = _pp._$$Root._$extend(_pm._$$AbstractModule);

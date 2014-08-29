@@ -5,29 +5,53 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _e = _('nej.e'),
-        _g = _('nej.g'),
-        _t = _('nej.ut'),
-        _p = _('nej.ui'),
-        _pro;
-    if (!!_p._$$Resizer) return;
-    var _seed_css,_seed_html,_seed_point;
+/** @module ui/resizer/resizer */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'base/constant',
+    'base/element',
+    'base/util',
+    'ui/base',
+    'util/resize/resize',
+    'util/template/tpl',
+    'util/template/jst',
+    'text!./resizer.css',
+    'text!./resizer.html'
+],function(NEJ,_k,_g,_e,_u,_i,_t0,_t1,_t2,_css,_html,_p,_o,_f,_r){
+    var _pro,
+        _seed_css   = _e._$pushCSSText(_css,{blankimage:_g._$BLANK_IMAGE}),
+        _seed_point = _t2._$add(_html),
+        _seed_html;
+    /**
+     * 初始大小
+     * @typedef  {Object} module:ui/resizer/resizer._$$Resizer~Size
+     * @property {Number} width  - 宽
+     * @property {Number} height - 高
+     * @property {Number} ratio  - 比例
+     */
+    /**
+     * 最大宽高限制
+     * @typedef  {Object} module:ui/resizer/resizer._$$Resizer~Max
+     * @property {Number} width  - 宽
+     * @property {Number} height - 高
+     */
     /**
      * 范围裁剪控件封装
-     * 
-     * @class   {nej.ui._$$Range}
-     * @extends {nej.ui._$$Abstract}
-     * @param   {Object}  可选配置参数，其他参数见nej.ut._$$Resize控件所示
-     * @config  {Object}  size 初始大小，输入任意两个值，其中ratio为width/height，{width:100,height:200,ratio:0.5}
-     * @config  {Object}  max  最大款高限制，{width:300,height:400}
+     *
+     * @class     module:ui/resizer/resizer._$$Resizer
+     * @extends   module:ui/base._$$Abstract
+     * @param     {Object} arg0 - 可选配置参数，其他参数见module:util/resize/resize._$$ResizerResize控件所示
+     * @property  {module:ui/resizer/resizer._$$Resizer~Size} size - 初始大小，输入任意两个值，其中ratio为width/height
+     * @property  {module:ui/resizer/resizer._$$Resizer~Max}  max  - 最大宽高限制
      */
-    _p._$$Resizer = NEJ.C();
-      _pro = _p._$$Resizer._$extend(_p._$$Abstract);
+    _p._$$Resizer = _k._$klass();
+    _pro = _p._$$Resizer._$extend(_i._$$Abstract);
     /**
      * 控件初始化
+     *
+     * @protected
+     * @method module:ui/resizer/resizer._$$Resizer#__init
      * @return {Void}
      */
     _pro.__init = function(){
@@ -38,13 +62,14 @@ var f = function(){
             onresize:this._$dispatchEvent._$bind(this,'onresize'),
             onmove:this._$dispatchEvent._$bind(this,'onmove')
         };
-        this.__supInit();
+        this.__super();
     };
     /**
      * 控件重置
+     *
      * @protected
-     * @method {__reset}
-     * @param  {Object} 配置参数
+     * @method module:ui/resizer/resizer._$$Resizer#__reset
+     * @param  {Object} arg0 - 配置参数
      * @return {Void}
      */
     _pro.__reset = (function(){
@@ -92,8 +117,8 @@ var f = function(){
             return _result;
         };
         return function(_options){
-            this.__supReset(_options);
-            var _opt = NEJ.X(NEJ.EX({
+            this.__super(_options);
+            var _opt = _u._$merge(_u._$fetch({
                 lock:!1,
                 min:null
             },_options),this.__ropt);
@@ -103,24 +128,26 @@ var f = function(){
                 this.__nsize,
                 _doParseSize(_options.size,_options.max)
             );
-            this.__resize = _t._$$Resize._$allocate(_opt);
+            this.__resize = _t0._$$Resize._$allocate(_opt);
         };
     })();
     /**
      * 控件销毁
+     *
      * @protected
-     * @method {__destroy}
+     * @method module:ui/resizer/resizer._$$Resizer#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
         if (!!this.__resize)
             this.__resize = this.__resize._$recycle();
-        this.__supDestroy();
+        this.__super();
     };
     /**
      * 初始化外观信息
+     *
      * @protected
-     * @method {__initXGui}
+     * @method module:ui/resizer/resizer._$$Resizer#__initXGui
      * @return {Void}
      */
     _pro.__initXGui = function(){
@@ -129,31 +156,36 @@ var f = function(){
     };
     /**
      * 动态构建控件节点模板
+     *
      * @protected
-     * @method {__initNodeTemplate}
+     * @method module:ui/resizer/resizer._$$Resizer#__initNodeTemplate
      * @return {Void}
      */
     _pro.__initNodeTemplate = (function(){
         var _clazz = ['znt','znr','znb','znl','zpc zntl','zpc zntr','zpc znbr','zpc znbl'];
         return function(){
-            _seed_html = _e._$addNodeTemplate(
-                '<div class="'+_seed_css+'"><div class="zln">'+
-                   _e._$getHtmlTemplate(_seed_point,{clazz:_clazz})+
-                '</div></div>'
+            _seed_html = _t1._$addNodeTemplate(
+                _t2._$get(_seed_point,{clazz:_clazz})
             );
             this.__seed_html = _seed_html;
         };
     })();
     /**
      * 初始化节点
+     *
+     * @protected
+     * @method module:ui/resizer/resizer._$$Resizer#__initNode
      * @return {Void}
      */
     _pro.__initNode = function(){
-        this.__supInitNode();
+        this.__super();
         this.__nsize = _e._$getChildren(this.__body)[0];
     };
     /**
      * 大小变化之前触发事件
+     *
+     * @protected
+     * @method module:ui/resizer/resizer._$$Resizer#__onBeforeResize
      * @return {Void}
      */
     _pro.__onBeforeResize = function(_event){
@@ -173,42 +205,26 @@ var f = function(){
         this._$dispatchEvent('onresize',_event);
     };
     /**
+     * 裁剪信息
+     *
+     * @typedef  {Object} module:ui/resizer/resizer._$$Resizer~ResizeBox
+     * @property {Number} top    - 距离上
+     * @property {Number} left   - 距离左
+     * @property {Number} width  - 宽
+     * @property {Number} height - 高
+     */
+    /**
      * 取裁剪信息
-     * @return {Object} 信息
-     * @cofnig {Number} top    距离上
-     * @cofnig {Number} left   距离左
-     * @cofnig {Number} width  宽
-     * @cofnig {Number} height 高
+     *
+     * @return {module:ui/resizer/resizer._$$Resizer~ResizeBox} 信息
      */
     _pro._$getResizeBox = function(){
         return this.__resize._$getResizeBox();
     };
-    // ui css text
-    _seed_css = _e._$pushCSSText('\
-        .#<uispace>-parent{position:relative;}\
-        .#<uispace>{position:absolute;top:0;left:0;border:1px solid #aaa;cursor:move;$<user-select>:none;z-index:1000;}\
-        .#<uispace> .zln{width:48px;height:48px;border:1px solid #fff;background:url('+_g._$BLANK_IMAGE+');}\
-        .#<uispace> .zpc{border:1px solid #aaa;}\
-        .#<uispace> .zpt{position:absolute;width:5px;height:5px;font-size:1px;overflow:hidden;}\
-        .#<uispace> .znt{top:-1px;left:-1px;width:100%;cursor:n-resize;}\
-        .#<uispace> .znr{top:-1px;right:-1px;height:100%;cursor:e-resize;}\
-        .#<uispace> .znb{bottom:-1px;left:-1px;width:100%;cursor:s-resize;}\
-        .#<uispace> .znl{top:-1px;left:-1px;height:100%;cursor:w-resize;}\
-        .#<uispace> .zntl{top:-1px;left:-1px;cursor:nw-resize;}\
-        .#<uispace> .zntr{top:-1px;right:-1px;cursor:ne-resize;}\
-        .#<uispace> .znbr{bottom:-1px;right:-1px;cursor:se-resize;}\
-        .#<uispace> .znbl{bottom:-1px;left:-1px;cursor:sw-resize;}\
-    ');
-    // html code
-    _seed_point = _e._$addHtmlTemplate('\
-        {list 1..8 as x}\
-        <div class="zpt ${clazz[x-1]} js-rs-${x}">&nbsp;</div>\
-        {/list}\
-    ');
-};
-NEJ.define(
-    '{lib}ui/resizer/resizer.js',[
-    '{lib}ui/base.js',
-    '{lib}base/constant.js',
-    '{lib}util/resize/resize.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ui'),_p);
+    }
+
+    return _p;
+});

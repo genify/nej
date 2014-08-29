@@ -84,7 +84,6 @@ var f = function(){
     </album>\
 </albums>\
 </netease>';
-        equal(_util._$xml2object(_xml2).netease.albums.album.auth,'2','XML转对象');
         var _obj2 = {123:"123",abc:"abc"};
         equal(_util._$string2object('abc=abc,123=123',',').abc,_obj2.abc,'key-value字符串转对象');
         equal(_util._$object2string(_obj2),'123=123,abc=abc','key-value对象转成key=value对后用分隔符join');
@@ -119,47 +118,45 @@ var f = function(){
         })
         _f2();
         equal(_obj.a,3,'AOP增强操作');
-        stop();
         var _list = [0,1,2];
         _util._$forEach(_list,function(_item,_index,_list){
             equal(_index == _item,true,'foreach回调方法');
-            start();
         });
-        stop();
         var _obj = {a:'1',b:'2',c:'3'};
         var _value = _util._$forIn(_obj,function(_item,_index,_list){
             if(_item == '2')
                 return true;
         });
         equal(_value,'b','遍历列表或对象');
-        start();
-        stop();
         var _list = [0,1,2,3];
         var _value = _util._$reverseEach(_list,function(_item,_index,_list){
             _list[_index] = _item+1;
             return false;
         });
         equal(_list[0],1,'逆序遍历列表或对象');
-        start();
         var _obj = [1,2,3];
         var _value = _util._$forIn(_obj,function(_item,_index,_list){
             if(_item == 2)
                 return true;
         });
         equal(_value,1,'forIn找到符合条件的项的索引或标识');
-        start();
-        stop();
         var _list = [1,2,3];
         var _index = _util._$indexOf(_list,function(_value){return _value==2});
         equal(_index , 1,'线性查找指定项');
-        start();
+    });
+
+    test('安全删除对象属性',function(){
         var _obj = {"a":"a","b":"b"};
         _util._$safeDelete(_obj,["a","b"]);
         equal(_obj.a,undefined,"安全删除对象属性");
+    })
+
+    test('安全删除对象属性',function() {
         _obj = {"a":1,"b":2};
         _util._$safeDelete(_obj,"b");
         equal(_obj.b,undefined,"安全删除对象属性");
     });
+
 }
 module('依赖模块');
 test('define',function(){expect(0);

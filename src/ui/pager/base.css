@@ -1,0 +1,4 @@
+.#<uispace>{font-size:12px;line-height:160%;}
+.#<uispace> a{margin:0 2px;padding:2px 8px;color:#333;border:1px solid #aaa;text-decoration:none;}
+.#<uispace> .js-disabled{cursor:default;}
+.#<uispace> .js-selected{cursor:default;background:#bbb;}

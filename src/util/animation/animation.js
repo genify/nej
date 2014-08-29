@@ -5,29 +5,35 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
+/** @module util/animation/animation */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'util/event',
+    'util/timer/animation'
+],function(NEJ,_k,_t,_t0,_p,_o,_f,_r){
     // variable declaration
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _f = NEJ.F,
-        _p = _('nej.ut'),
-        _pro;
-    if (!!_p._$$Animation) return;
+    var _pro;
     /**
      * 动画基类
-     * @class   {nej.ut._$$Animation} 动画基类
-     * @extends {nej.ut._$$Event}
      * 
-     * @param   {Object} 可选配置参数，已处理参数列表如下
-     * @config  {Object} to    动画结束信息
-     * @config  {Object} from  动画初始信息
-     * @config  {Number} delay 延时时间，单位毫秒，默认0
-     * 
-     * [hr]
+     * @class   module:util/animation/animation._$$Animation
+     * @extends module:util/event._$$EventTarget
+     *
+     * @param    {Object} config - 可选配置参数
+     * @property {Object} to     - 动画结束信息
+     * @property {Object} from   - 动画初始信息
+     * @property {Number} delay  - 延时时间，单位毫秒，默认0
+     */
+    /**
      * 动画结束回调事件
-     * [code]
-     *   // 监测onstop事件
-     *   var options = {
+     * 
+     * 脚本举例
+     * ```javascript
+     * NEJ.define([
+     *     'util/animation/bounce'
+     * ],function(_t){
+     *     var _bounce = _t._$$AnimBounce._$allocate({
      *         from: {
      *             offset: 100,
      *             velocity: 100
@@ -37,49 +43,55 @@ var f = function(){
      *             // 动画停止后回收控件
      *             _bounce = nej.ut._$$AnimBounce._$recycle(_bounce);
      *         }
-     *     }
-     *  var _bounce = nej.ut._$$AnimBounce._$allocate(options);
-     * [/code]
-     * @event  {onstop} 动画停止的回调
+     *     });
+     * });
+     * ```
      * 
-     * [hr]
+     * @event module:util/animation/animation._$$Animation#onstop
+     */
+    /**
      * 动画过程回调事件
-     * [code]
-     *   // 监测onupdate事件
-     *   var options = {
+     *
+     * 脚本举例
+     * ```javascript
+     * NEJ.define([
+     *     'util/animation/bounce'
+     * ],function(_t){
+     *     var _bounce = _t._$$AnimBounce._$allocate({
      *         from: {
      *             offset: 100,
      *             velocity: 100
      *         },
      *         acceleration:100,
-     *         onupdate: function(offset){
+     *         onupdate: function(_event){
      *             // 坐标
-     *             console.log(offset.offset + 'px');
+     *             console.log(_event.offset + 'px');
      *             // 初速度
-     *             console.log(offset.velocity);
+     *             console.log(_event.velocity);
      *         }
-     *     }
-     *  var _bounce = nej.ut._$$AnimBounce._$allocate(options);
-     * [/code]
-     * @event  {onupdate}        一帧动画结束的回调
-     * @param  {Object}          可选配置参数
-     * @config {Number} offset   偏移量
-     * @config {Number} velocity 初速度(px/s)
+     *     });
+     * });
+     * ```
      * 
+     * @event    module:util/animation/animation._$$Animation#onupdate
+     * @param    {Object} event    - 可选配置参数
+     * @property {Number} offset   - 偏移量
+     * @property {Number} velocity - 初速度(px/s)
      */
-    _p._$$Animation = NEJ.C();
-    _pro = _p._$$Animation._$extend(_p._$$Event);
+    _p._$$Animation = _k._$klass();
+    _pro = _p._$$Animation._$extend(_t._$$EventTarget);
     /**
      * 控件重置
+     * 
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
-     * @config {Number} to       结束坐标
-     * @config {Number} from      起始坐标
-     * @return {Void}
+     * @method   module:util/animation/animation._$$Animation#__reset
+     * @param    {Object} arg0 - 可选配置参数
+     * @property {Number} to   - 结束坐标
+     * @property {Number} from - 起始坐标
+     * @return   {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         this.__end = _options.to||_o;
         this.__begin = _options.from||{};
         this.__delay = Math.max(
@@ -88,12 +100,13 @@ var f = function(){
     };
     /**
      * 控件销毁
+     * 
      * @protected
-     * @method {__destroy}
+     * @method module:util/animation/animation._$$Animation#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         this._$stop();
         if (!!this.__dtime){
             window.clearTimeout(this.__dtime);
@@ -104,56 +117,68 @@ var f = function(){
     };
     /**
      * 动画帧逻辑
+     * 
      * @protected
-     * @method {__onAnimationFrame}
-     * @param  {Number} 时间值
+     * @method module:util/animation/animation._$$Animation#__onAnimationFrame
+     * @param  {Number} arg0 - 时间值
      * @return {Void}
      */
     _pro.__onAnimationFrame = function(_time){
         if (!this.__begin) return;
-        if ((''+_time).indexOf('.')>=0)
+        if ((''+_time).indexOf('.')>=0){
             _time = +new Date;
+        }
         if (this.__doAnimationFrame(_time)){
             this._$stop();
             return;
         }
-        this.__timer = requestAnimationFrame(
-                       this.__onAnimationFrame._$bind(this));
+        this.__timer = _t0.requestAnimationFrame(
+            this.__onAnimationFrame._$bind(this)
+        );
     };
     /**
      * 动画帧回调，子类实现具体算法
-     * @protected
-     * @method {__doAnimationFrame}
-     * @param  {Number} _time 时间值
-     * @return {Boolean}      是否停止动画
+     * 
+     * @abstract
+     * @method module:util/animation/animation._$$Animation#__doAnimationFrame
+     * @param  {Number}  arg0 - 时间值
+     * @return {Boolean}        是否停止动画
      */
     _pro.__doAnimationFrame = _f;
     /**
-     * 注册动画监听事件<br/>
+     * 注册动画监听事件
+     * 
      * 脚本举例
-     * [code]
-     *   var options = {
+     * ```javascript
+     * NEJ.define([
+     *     'util/animation/bounce'
+     * ],function(_t){
+     *     var _bounce = _t._$$AnimBounce._$allocate({
      *         from: {
      *             offset: 100,
      *             velocity: 100
      *         },
      *         acceleration:100,
-     *         onstop: function(){
-     *             _bounce = nej.ut._$$AnimBounce._$recycle(_bounce);
+     *         onupdate: function(_event){
+     *             // 坐标
+     *             console.log(_event.offset + 'px');
+     *             // 初速度
+     *             console.log(_event.velocity);
      *         }
-     *     }
-     *  var _bounce = nej.ut._$$AnimBounce._$allocate(options);
-     *  // 进行弹性动画
-     *  _bounce._$play();
-     * [/code]
-     * @method {_$play}
-     * @return {nej.ut._$$Animation}
+     *     });
+     *     // 进行弹性动画
+     *     _bounce._$play();
+     * });
+     * ```
+     * 
+     * @method module:util/animation/animation._$$Animation#_$play
+     * @return {Void}
      */
     _pro._$play = (function(){
         var _doPlayAnim = function(){
             this.__dtime = window.clearTimeout(this.__dtime);
             this.__begin.time = +new Date;
-            this.__timer = requestAnimationFrame(
+            this.__timer = _t0.requestAnimationFrame(
                 this.__onAnimationFrame._$bind(this)
             );
         };
@@ -162,41 +187,47 @@ var f = function(){
                 _doPlayAnim._$bind(this),
                 this.__delay
             );
-            return this;
         };
     })();
     /**
-     * 取消动画监听事件<br/>
+     * 取消动画监听事件
+     * 
      * 脚本举例
-     * [code]
-     *   var options = {
+     * ```javascript
+     * NEJ.define([
+     *     'util/animation/bounce'
+     * ],function(_t){
+     *     var _bounce = _t._$$AnimBounce._$allocate({
      *         from: {
      *             offset: 100,
      *             velocity: 100
      *         },
      *         acceleration:100,
-     *         onstop: function(){
-     *             _bounce = nej.ut._$$AnimBounce._$recycle(_bounce);
+     *         onupdate: function(_event){
+     *             // 坐标
+     *             console.log(_event.offset + 'px');
+     *             // 初速度
+     *             console.log(_event.velocity);
      *         }
-     *     }
-     *  var _bounce = nej.ut._$$AnimBounce._$allocate(options);
-     *  // 进行动画
-     *  _bounce._$play();
-     *  // 停止动画,触发onstop
-     *  _bounce._$stop();
-     * [/code]
-     * 
-     * @method {_$stop}
-     * @return {nej.ut._$$Animation}
+     *     });
+     *     // 进行动画
+     *     _bounce._$play();
+     *     // 停止动画,触发onstop
+     *     _bounce._$stop();
+     * });
+     * ```
+     *
+     * @method module:util/animation/animation._$$Animation#_$stop
+     * @return {Void}
      */
     _pro._$stop = function(){
-        this.__timer = cancelRequestAnimationFrame(this.__timer);
-        this._$dispatchEvent('onstop',arguments);
-        return this;
+        this.__timer = _t0.cancelAnimationFrame(this.__timer);
+        this._$dispatchEvent('onstop');
     };
-};
-NEJ.define(
-    '{lib}util/animation/animation.js',[
-    '{lib}util/event.js',
-    '{lib}util/timer/animation.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});

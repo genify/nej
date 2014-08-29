@@ -1,127 +1,53 @@
-/**
+/*
  * ------------------------------------------
- * 需要平台适配的接口实现文件
+ * 平台适配接口实现文件
  * @version  1.0
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    // variable declaration
-    var _  = NEJ.P,
-        _r = NEJ.R,
-        _p = _('nej.p'),
-        _e = _('nej.e'),
-        _v = _('nej.v'),
-        _u = _('nej.u'),
-        _h = _('nej.h');
-    var _prefix = _p._$KERNEL.prefix,
-        _suport = _p._$SUPPORT,
-        _2dmap  = {scale:'scale({x|1},{y|1})'
-                  ,rotate:'rotate({a})'
-//                ,matrix:'matrix({m11},{m12},{m21},{m22},{m41},{m42})'
-                  ,translate:'translate({x},{y})'},
-        _3dmap  = {scale:'scale3d({x|1},{y|1},{z|1})'
-                  ,rotate:'rotate3d({x},{y},{z},{a})'
-//                ,matrix:'matrix3d({m11},{m12},{m13},{m14},{m21},{m22},{m23},{m24},{m31},{m32},{m33|1},{m34},{m41},{m42},{m43},{m44|1})'
-                  ,translate:'translate3d({x},{y},{z})'},
-        _cssmap = {'transition':!0,'transform':!0,'animation':!0,'keyframes':!0
-                  ,'box':!0,'box-pack':!0,'box-flex':!0,'marquee':!0,'border-radius':!0,'user-select':!0};
-    /*
-     * 初始化文件
-     * @return {Void}
-     */
-    var _doInit = function(){
-        var _matrix = _h.__getCSSMatrix();
-        _suport.css3d = !!_matrix&&_matrix.m41!=null;
-        var _reg = /-([a-z])/g;
-        for(var x in _cssmap){
-            _cssmap[_doFormatStyleName(x)] = _cssmap[x];
-        }
-    };
-    /*
-     * 解析样式属性名称
-     * border-width -> borderWidth
-     * @param  {String} 样式样式名
-     * @return {String} 格式化后样式名
-     */
-    var _doFormatStyleName = (function(){
-        var _reg = /-([a-z])/g;
-        return function(_name){
-            _name = _name||'';
-            return _name.replace(_reg,
-                   function($1,$2){
-                        return $2.toUpperCase();
-                   });
-        };
-    })();
-    /*
-     * 取变换值模板
-     * @param  {String} _name 变换名称
-     * @return {String}       变换模板
-     */
-    var _getTransformTemplate = function(_name){
-        return (!_suport.css3d?_2dmap:_3dmap)[_name];
-    };
-    /*
-     * 取待验证的样式列表
-     * @param  {String} _class 样式，多个以空格分隔
-     * @return {Array}         样式列表
-     */
-    var _getClassList = (function(){
-        var _reg = /\s+/;
-        return function(_class){
-            _class = (_class||'').trim();
-            return !!_class?_class.split(_reg):null;
-        };
-    })();
-    /*
-     * 处理样式类
-     * @param  {String|Node} _element 要操作的节点ID或者节点对象
-     * @param  {String}      _type    处理方式
-     * @param  {String}      _class   要处理的样式类名称
-     * @return {Void}
-     */
-    var _doClassName = function(_element,_type,_class){
-        _element = _e._$get(_element);
-        if (!_element) return;
-        _u._$forEach(
-           _getClassList(_class),
-           function(_clazz){
-               _element.classList[_type](_clazz);
-           });
-    };
-    // ---------- begin dom core patch api ---------
+NEJ.define([
+    'base/util',
+    'base/platform'
+],function(_u,_m,_p,_o,_f,_r){
     /**
-     * 集合转数组
-     * @param  {Object} _list 集合
-     * @return {Array}        数组
+     * 从DocumentFragment中取指定ID的节点
+     * @param  {Document} 文档对象
+     * @param  {String}   节点标识
+     * @return {Node}     指定标识的节点
      */
-    _h.__col2array = function(_list){
-        return _r.slice.call(_list,0);
+    _p.__getElementById = function(_fragment,_id){
+        if (!!_fragment.getElementById){
+            return _fragment.getElementById(''+_id);
+        }
+        try{
+            return _fragment.querySelector('#'+_id);
+        }catch(e){
+            return null;
+        }
     };
     /**
      * 取节点的子节点列表
-     * @param  {Node} _element 节点ID或者对象
-     * @return {Array}         子节点列表
+     * @param  {Node}  节点ID或者对象
+     * @return {Array} 子节点列表
      */
-    _h.__getChildren = function(_element){
-        return _h.__col2array(_element.children);
+    _p.__getChildren = function(_element){
+        return _u._$object2array(_element.children);
     };
     /**
      * 根据类名取节点列表
-     * @param  {Node}   _element 节点ID或者对象
-     * @param  {String} _class   类名
-     * @return {Array}           节点列表
+     * @param  {Node}   节点ID或者对象
+     * @param  {String} 类名
+     * @return {Array}  节点列表
      */
-    _h.__getElementsByClassName = function(_element,_class){
-        return _h.__col2array(_element.getElementsByClassName(_class));
+    _p.__getElementsByClassName = function(_element,_class){
+        return _u._$object2array(_element.getElementsByClassName(_class));
     };
     /**
      * 取下一个兄弟节点
      * @param  {Node}  节点对象
      * @return {Node}  节点
      */
-    _h.__nextSibling = function(_element){
+    _p.__nextSibling = function(_element){
         return _element.nextElementSibling;
     };
     /**
@@ -129,221 +55,160 @@ var f = function(){
      * @param  {Node}  节点对象
      * @return {Node}  节点
      */
-    _h.__previousSibling = function(_element){
+    _p.__previousSibling = function(_element){
         return _element.previousElementSibling;
     };
-    /*
-     * 根据选择器取节点列表
-     * @param  {Node}   _element  相对节点，默认为document
-     * @param  {String} _selector 选择器
-     * @return {Array}            匹配到的节点列表
-    _h.__querySelectorAll = function(_element,_selector){
-        return _h.__col2array(_element.querySelectorAll(_selector));
-    };
-     */
     /**
-     * 新增样式类，多个样式用空格分开
-     * @param  {String|Node} _element 要操作的节点ID或者节点对象
-     * @param  {String}      _add     要新增的样式类名称
-     * @return {Void}
+     * 设置、获取数据
+     * @param {Node}     节点
+     * @param {String}   标识
+     * @param {Variable} 值
      */
-    _h.__addClassName = function(_element,_add){
-        _doClassName(_element,'add',_add);
+    _p.__dataset = function(_element,_name,_value){
+        _element.dataset = _element.dataset||{};
+        if (_value!==undefined){
+            _element.dataset[_name] = _value;
+        }
+        return _element.dataset[_name];
     };
     /**
-     * 删除样式类，多个样式用空格分开
-     * @param  {String|Node} _element 要操作的节点ID或者节点对象
-     * @param  {String}      _del     要删除的样式类名称
-     * @return {Void}
+     * 取节点属性值
+     * @param  {Node}   节点
+     * @param  {String} 属性名
+     * @return {String} 属性值
      */
-    _h.__delClassName = function(_element,_del){
-        _doClassName(_element,'remove',_del);
+    _p.__getAttribute = function(_element,_name){
+        return _element.getAttribute(_name);
     };
-    /**
-     * 替换节点的样式类名称，多个样式用空格分隔
-     * @param  {String|Node} _element 要操作的节点ID或者节点对象
-     * @param  {String}      _del     要删除的样式类名称
-     * @param  {String}      _add     要新增的样式类名称
-     * @return {Void}
-     */
-    _h.__replaceClassName = function(_element,_del,_add){
-        _doClassName(_element,'remove',_del);
-        _doClassName(_element,'add',_add);
-    };
-    /**
-     * 检测节点是否包含指定样式，多个样式用空格分隔，检测时包含其中之一即表示包含
-     * @param  {String|Node} _element 节点ID或者对象
-     * @param  {String}      _class   样式串
-     * @return {Boolean}              是否含指定样式
-     */
-    _h.__hasClassName = function(_element,_class){
-        _element = _e._$get(_element);
-        if (!_element) return !1;
-        var _list = _element.classList;
-        if (!_list||!_list.length) return !1;
-        return _u._$indexOf(
-                  _getClassList(_class),
-                  function(_clazz){
-                      return _list.contains(_clazz);
-                  })>=0;
-    };
-    /**
-     * 节点hover行为，高版本浏览器用样式处理
-     * @param  {String|Node} _element 节点
-     * @param  {String}      _clazz   样式
-     * @return {Void}
-     */
-    _h.__hoverElement = function(_element,_clazz){
-        // do nothing
-    };
-    /**
-     * 节点fixed定位，高版本浏览器用样式处理
-     * @param  {Node} 节点
-     * @return {Void}
-     */
-    _h.__fixedElement = function(_element){
-        // do nothing
-    };
-    /**
-     * 设置光标位置
-     * @return {Void}
-     */
-    _h.__setCursorPosition = function(_textarea,_position){
-        _textarea.selectionEnd = _position.end||0;
-        _textarea.selectionStart = _position.start||0;
-        _textarea.focus();
-    };
-    /**
-     * 取光标位置
-     * @return {Void}
-     */
-    _h.__getCursorPosition = function(_textarea){
-        return {
-            end:_textarea.selectionEnd,
-            start:_textarea.selectionStart
-        };
-    };
-    /**
-     * 节点focus行为
-     * @param  {String|Node} 节点
-     * @param  {Number}      模式
-     * @param  {String}      样式
-     * @return {Void}
-     */
-    _h.__focusElement = (function(){
-        // do blur check
-        var _onBlur = function(_clazz,_event){
-            var _element = _v._$getElement(_event);
-            if (!_element.value)
-                _e._$delClassName(_element,_clazz);
-        };
-        // do focus
-        var _onFocus = function(_clazz,_event){
-            _e._$addClassName(
-                _v._$getElement(_event),_clazz);
-        };
-        return function(_element,_mode,_clazz){
-            if (_mode==1){
-                _v._$addEvent(_element,'blur',
-                   _onBlur._$bind(null,_clazz));
-            }
-            if (_mode==1||_mode==-1){
-                _v._$addEvent(_element,'focus',
-                   _onFocus._$bind(null,_clazz));
-            }
-            // other do nothing, use css :focus
-        };
-    })();
     /**
      * 将dom节点转为xml串
-     * @param  {Node} _dom 节点
-     * @return {String}    xml串
+     * @param  {Node}   节点
+     * @return {String} XML代码
      */
-    _h.__serializeDOM2XML = function(_dom){
-        return new XMLSerializer()
-                  .serializeToString(_dom)||'';
+    _p.__serializeDOM2XML = function(_dom){
+        return new XMLSerializer().serializeToString(_dom)||'';
     };
     /**
      * 将xml转为dom节点
-     * @param  {String} _xml xml文本
-     * @return {Node}        节点
+     * @param  {String} XML代码
+     * @return {Node}   节点
      */
-    _h.__parseDOMFromXML = function(_xml){
+    _p.__parseDOMFromXML = function(_xml){
         var _root = new DOMParser()
                        .parseFromString(_xml,'text/xml')
                        .documentElement;
         return _root.nodeName=='parsererror'?null:_root;
     };
     /**
-     * 节点占全屏
-     * @param  {Node} _element 节点
+     * 设置光标位置
+     * @param  {String|Node} TEXTAREA节点
+     * @param  {Object}      光标的位置信息
      * @return {Void}
      */
-    _h.__fullScreen = function(_element){
+    _p.__setCursorPosition = function(_textarea,_position){
+        _textarea.selectionEnd = _position.end||0;
+        _textarea.selectionStart = _position.start||0;
+        _textarea.focus();
+    };
+    /**
+     * 取光标位置
+     * @param  {String|Node} TEXTAREA节点
+     * @return {Void}
+     */
+    _p.__getCursorPosition = function(_textarea){
+        _textarea.focus();
+        return {
+            end:_textarea.selectionEnd,
+            start:_textarea.selectionStart
+        };
+    };
+    /**
+     * 节点占全屏
+     * @param  {Node}   节点
+     * @param  {Object} 视窗模型
+     * @return {Void}
+     */
+    _p.__fullScreen = function(){
         // use css fixed position
     };
     /**
      * 为节点增加用于盖select/flash等控件的层
-     * @param  {Node} _element 节点
-     * @return {Void}         
+     * @param  {Node} 节点
+     * @return {Void}
      */
-    _h.__mask = function(_element){
+    _p.__mask = function(){
         // do nothing
-        return null;
     };
     /**
      * 去除用于盖select/flash等控件的层
-     * @param  {Object} _element 节点
+     * @param  {Node} 节点
      * @return {Void}
      */
-    _h.__unmask = function(_element){
+    _p.__unmask = function(){
         // do nothing
-        return null;
     };
-    // ---------- begin css patch api ---------
+    // variables
+    var _ospt = _m._$SUPPORT,
+        _opfx = _m._$KERNEL.prefix;
     /**
-     * 取样式变换矩阵对象
-     * @param  {String} _matrix 变化信息
-     * @return {CSSMatrix}      变换矩阵对象
+     * 指定名称是否在配置表中
+     * @param  {String}  名称
+     * @param  {Object}  配置表
+     * @return {Boolean} 是否命中
      */
-    _h.__getCSSMatrix = (function(){
-        var _reg0 = /\((.*?)\)/,
-            _reg1 = /\s*,\s*/,
-            _list = ['m11','m12','m21','m22','m41','m42'];
-        var _parse = function(_matrix){
-            var _obj = {};
-            if (_reg0.test(_matrix||'')){
-                _u._$forEach(RegExp.$1.split(_reg1),
-                function(_value,_index){
-                    _obj[_list[_index]] = _value||'';
-                });
-            } 
-            return _obj;
-        };
-        return function(_matrix){
-            if (!!window.CSSMatrix)
-                return new CSSMatrix(_matrix);
-            var _name = _prefix.clz+'CSSMatrix';
-            if (!!window[_name])
-                return new window[_name](_matrix||'');
-            return _parse(_matrix);
+    _p.__isMatchedName = (function(){
+        var _reg = /^([a-z]+?)[A-Z]/;
+        return function(_name,_map){
+            return !!(_map[_name]||(_reg.test(_name)&&_map[RegExp.$1]));
         };
     })();
     /**
-     * 取3D变换值，对于不支持3D的系统自动切换为2D变换
-     * @param  {String} _name    变换类型，matrix/translate/scale/rotate
-     * @param  {Object} _map     变换值，{x:1,y:2,z:3,a:'30deg'}
-     * @return {String}          返回变换值串
+     * 样式名称做前缀增强
+     * @param  {String}  名称
+     * @return {Boolean} 是否需要前缀增强
      */
-    _h.__getTransformValue = (function(){
-        var _reg = /\{(.*?)\}/g;
-        return function(_name,_map){
-            _map = _map||o;
-            var _tpl = _getTransformTemplate(_name);
-            return !_tpl?'':_tpl.replace(_reg,function($1,$2){
-                       var _arr = $2.split('|');
-                       return _map[_arr[0]]||_arr[1]||'0';
-                   });
+    _p.__isNeedPrefixed = (function(){
+        var _pmap = _u._$array2object([
+            'animation','transform','transition',
+            'appearance','userSelect','box','flex','column'
+        ]);
+        return function(_name){
+            return _p.__isMatchedName(_name,_pmap);
+        };
+    })();
+    /**
+     * 格式化样式属性名称
+     * border-width -> borderWidth
+     * @param  {String} 样式样式名
+     * @return {String} 格式化后样式名
+     */
+    _p.__fmtStyleName = (function(){
+        var _reg = /-([a-z])/g;
+        return function(_name){
+            _name = _name||'';
+            return _name.replace(_reg,function($1,$2){
+                return $2.toUpperCase();
+            });
+        };
+    })();
+    /**
+     * 针对样式名称做格式化及前缀增强
+     * @param  {String} 样式名
+     * @return {String} 增强后的样式名
+     */
+    _p.__getStyleName = (function(){
+        var _reg = /^[a-z]/,
+            _prefix = _opfx.css||'';
+        return function(_name){
+            _name = _p.__fmtStyleName(_name);
+            if (!_p.__isNeedPrefixed(_name)){
+                return _name;
+            }
+            // add prefix
+            // userSelect -> webkitUserSelect
+            return _prefix+_name.replace(_reg,function($1){
+                return $1.toUpperCase();
+            });
         };
     })();
     /**
@@ -352,128 +217,192 @@ var f = function(){
      * @param  {String}      样式名称
      * @return {Variable}    样式值
      */
-    _h.__getStyleValue = function(_element,_name){
+    _p.__getStyleValue = function(_element,_name){
         var _current = window.getComputedStyle(_element,null);
-        return _current[_h.__getStyleName(_name)]||'';
+        return _current[_p.__getStyleName(_name)]||'';
     };
-    /**
-     * 针对样式名称做前缀增强
-     * @param  {String} _name 样式名
-     * @return {String}       增强后的样式名
-     */
-    _h.__getStyleName = (function(){
-        var _reg = /^[a-z]/,
-            _pfx = _prefix.css;
-        var _addPrefix = function(_name){
-            return _name.replace(_reg,function($1){
-                return _pfx+$1.toUpperCase();
-            });
-        };
-        return function(_name){
-            _name = _doFormatStyleName(_name);
-            var _pfxed = _h.__checkStyleName(_name,_cssmap);
-            return _pfxed?_addPrefix(_name):_name;
-        };
-    })();
     /**
      * 设置样式
-     * @param  {String|Node} _element 节点
-     * @param  {String}      _name    样式名称
-     * @param  {String}      _value   样式值
+     * @param  {String|Node} 节点
+     * @param  {String}      样式名称
+     * @param  {String}      样式值
      * @return {Void}
      */
-    _h.__applyStyle = function(_element,_name,_value){
-        _element.style[_h.__getStyleName(_name)] = _value;
+    _p.__setStyleValue = function(_element,_name,_value){
+        _element.style[_p.__getStyleName(_name)] = _value;
     };
     /**
-     * 检查样式名称是否需要前缀增强
-     * @param  {String} _name 名称
-     * @param  {Object} _map  验证信息
-     * @return {Boolean}      是否需要前缀增强
+     * 取样式变换矩阵对象
+     * @param  {String}    变换信息
+     * @return {CSSMatrix} 变换矩阵对象
      */
-    _h.__checkStyleName = (function(){
-        var _reg = /^([a-z]+?)[A-Z]/;
-        return function(_name,_map){
-            if (!_map[_name]){
-                if (_reg.test(_name))
-                    _name = RegExp.$1;
+    _p.__getCSSMatrix = (function(){
+        var _reg0 = /\((.*?)\)/,
+            _reg1 = /\s*,\s*/,
+            _klss = ['CSSMatrix',_opfx.clz+'CSSMatrix'],
+            _list = ['m11','m12','m21','m22','m41','m42'];
+        // matrix(1,2,3,4,5,6)
+        // -> {m11:1,m12:2,m21:3,m22:4,m41:5,m42:6}
+        var _doParse = function(_matrix){
+            var _obj = {};
+            if (_reg0.test(_matrix||'')){
+                // 11,12,21,22,41,42
+                _u._$forEach(
+                    RegExp.$1.split(_reg1),
+                    function(_value,_index){
+                        _obj[_list[_index]] = _value;
+                    }
+                );
             }
-            return !!_map[_name];
+            return _obj;
+        };
+        return function(_matrix){
+            var _mtrx;
+            _u._$forIn(_klss,function(_name){
+                if (!!this[_name]){
+                    _mtrx = new this[_name](_matrix||'');
+                    return !0;
+                }
+            });
+            return !_mtrx?_doParse(_matrix):_mtrx;
         };
     })();
     /**
-     * 对样式进行预处理
-     * @param  {String} _css 待处理样式内容
-     * @return {String}      处理后样式内容
+     * 注入样式
+     * @param  {Node}   样式节点
+     * @param  {String} 样式内容
+     * @return {Void}
      */
-    _h.__filterCSSText = (function(){
-        var _reg = /\$<(.*?)>/gi,
-            _pfx = '-'+_prefix.css.toLowerCase()+'-';
+    _p.__injectCSSText = function(_style,_css){
+        _style.textContent = _css;
+    };
+    /**
+     * 对样式进行预处理
+     * @param  {String} 待处理样式内容
+     * @return {String} 处理后样式内容
+     */
+    _p.__processCSSText = (function(){
+        var _reg0 = /\$<(.*?)>/gi,
+            _reg1 = /\{(.*?)\}/g,
+            _pfx = '-'+_opfx.css.toLowerCase()+'-',
+            _2dmap = {
+                scale:'scale({x|1},{y|1})',
+                rotate:'rotate({a})',
+                translate:'translate({x},{y})',
+                matrix:'matrix({m11},{m12},{m21},{m22},{m41},{m42})'
+            },
+            _3dmap  = {
+                scale:'scale3d({x|1},{y|1},{z|1})',
+                rotate:'rotate3d({x},{y},{z},{a})',
+                translate:'translate3d({x},{y},{z})',
+                matrix:'matrix3d({m11},{m12},{m13},{m14},{m21},{m22},{m23},{m24},{m31},{m32},{m33|1},{m34},{m41},{m42},{m43},{m44|1})'
+            };
+        // merge template and data
+        var _getTransformValue = function(_tpl,_map){
+            _map = _map||_o;
+            return _tpl.replace(_reg1,function($1,$2){
+                var _arr = $2.split('|');
+                return _map[_arr[0]]||_arr[1]||'0';
+            });
+        };
+        // process transform value
+        _p.__processTransformValue = function(_name,_data){
+            var _tpl = (!_ospt.css3d?_2dmap:_3dmap)[_name.trim()];
+            if (!!_tpl){
+                return _getTransformValue(_tpl,_data);
+            }
+            return '';
+        };
         return function(_css){
-            return _css.replace(_reg,function($1,$2){
-                var _val = $2,
-                    _arr = _val.split('|'),
-                    _tpl = _getTransformTemplate(_arr[0]);
-                if (!!_tpl){
-                    return _h.__getTransformValue(
-                             _arr[0],_u._$query2object(_arr[1]));
+            if (!_css.replace){
+                return _css;
+            }
+            return _css.replace(_reg0,function($1,$2){
+                // prefix for css3
+                if ($2==='vendor'){
+                    return _pfx;
                 }
-                return !_h.__checkCSSText(_val,_cssmap)?_val:(_pfx+_val);
+                // parse 3D value
+                var _arr = ($2||'').split('|');
+                return _p.__processTransformValue(
+                    _arr[0],_u._$query2object(_arr[1])
+                )||$1;
             });
         };
     })();
-    /**
-     * 检查样式名称或者属性名是否需要前缀增强
-     * @param  {String} _name 样式属性名称
-     * @param  {Object} _map  默认匹配表
-     * @return {Boolean}      是否需要前缀增强
-     */
-    _h.__checkCSSText = function(_name,_map){
-        return !!_map[_name];
-    };
-    /**
-     * 应用样式
-     * @param  {Node}   _style 样式节点
-     * @param  {String} _css   样式串
-     * @return {Void}
-     */
-    _h.__applyCSSText = function(_style,_css){
-        _style.textContent = _css;
-    };
     /**
      * 追加CSS规则
      * @param  {Node}    样式节点
      * @param  {String}  单条样式规则
      * @return {CSSRule} 样式规则对象
      */
-    _h.__appendCSSText = function(_style,_css){
-        var _sheet = _style.sheet,
+    _p.__appendCSSText = function(_element,_css){
+        var _sheet = _element.sheet,
             _length = _sheet.cssRules.length;
         _sheet.insertRule(_css,_length);
         return _sheet.cssRules[_length];
     };
     /**
-     * 应用CSS特效
-     * @param  {Node}   _element 节点
-     * @param  {Object} _options 配置参数
+     * 取待验证的样式列表
+     * @param  {String} 样式，多个以空格分隔
+     * @return {Array}  样式列表
+     */
+    _p.__getClassList = (function(){
+        var _reg = /\s+/;
+        return function(_class){
+            _class = (_class||'').trim();
+            return !!_class?_class.split(_reg):null;
+        };
+    })();
+    /**
+     * 操作样式
+     * @param  {Node}   节点
+     * @param  {String} 操作
+     * @param  {String} 样式
      * @return {Void}
      */
-    _h.__applyEffect = function(_element,_options){
-        
+    _p.__processClassName = function(_element,_type,_class){
+        if (_type=='replace'){
+            _p.__processClassName(
+                _element,'remove',_class
+            );
+            _p.__processClassName(
+                _element,'add',arguments[3]
+            );
+            return;
+        }
+        _u._$forEach(
+            _p.__getClassList(_class),
+            function(_clazz){
+                _element.classList[_type](_clazz);
+            }
+        );
     };
     /**
-     * 取节点属性值
-     * @param  {Node}   节点
-     * @param  {String} 属性名
-     * @return {String} 属性值
+     * 检测节点是否包含指定样式，多个样式用空格分隔，检测时包含其中之一即表示包含
+     * @param  {Node}    节点ID或者对象
+     * @param  {String}  样式串
+     * @return {Boolean} 是否含指定样式
      */
-    _h.__getAttribute = function(_element,_name){
-        if (!!_element.getAttribute)
-            return _element.getAttribute(_name);
-        return '';
+    _p.__hasClassName = function(_element,_class){
+        var _list = _element.classList;
+        if (!_list||!_list.length){
+            return !1;
+        }
+        return _u._$indexOf(
+            _p.__getClassList(_class),
+            function(_clazz){
+                return _list.contains(_clazz);
+            }
+        )>=0;
     };
-    // init
-    _doInit();
-};
-NEJ.define('{lib}base/platform/element.js',
-          ['{lib}base/platform.js'],f);
+    // for init
+    (function(){
+        if (!_ospt.css3d){
+            var _matrix = _p.__getCSSMatrix();
+            _ospt.css3d = !!_matrix&&_matrix.m41!=null;
+        }
+    })();
+
+    return _p;
+});

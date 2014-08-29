@@ -5,35 +5,38 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    var _  = NEJ.P,
-        _f = NEJ.F,
-        _h = _('nej.h'),
-        _g = _('nej.g'),
-        _u = _('nej.u'),
-        _p = _('nej.ut.j'),
-        _pro;
-    if (!!_p._$$XHRProxy) return;
+/** @module  util/ajax/proxy/xhr */
+NEJ.define([
+    './proxy.js',
+    'base/util',
+    'base/klass',
+    'base/constant',
+    '{platform}xhr.js'
+],function(_t,_u,_k,_g,_h,_p,_o,_f,_r){
+    var _pro;
     /**
      * Ajax代理对象
      * 
-     * @class   {nej.ut.j._$$XHRProxy}
-     * @extends {nej.ut.j._$$Proxy}
+     * @class   module:util/ajax/proxy/xhr._$$ProxyXHR
+     * @extends module:util/ajax/proxy/proxy._$$ProxyAbstract
      * 
-     * @param   {Object}  构造配置参数
+     * @param   {Object} config - 构造配置参数
      */
-    _p._$$XHRProxy = NEJ.C();
-    _pro = _p._$$XHRProxy._$extend(_p._$$Proxy);
+    _p._$$ProxyXHR = _k._$klass();
+    _pro = _p._$$ProxyXHR._$extend(_t._$$ProxyAbstract);
     /**
      * 控件销毁
+     * 
      * @protected
-     * @method {__destroy}
+     * @method module:util/ajax/proxy/xhr._$$ProxyXHR#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
+        // clear timeout
         window.clearTimeout(this.__timer);
         delete this.__timer;
+        // clear request
         try{
             this.__xhr.onreadystatechange = _f;
             this.__xhr.abort();
@@ -44,15 +47,18 @@ var f = function(){
     };
     /**
      * 往服务器发送请求
+     * 
      * @protected
-     * @method {__doSendRequest}
-     * @param  {Object} 请求信息
+     * @method module:util/ajax/proxy/xhr._$$ProxyXHR#__doSendRequest
+     * @param  {Object} arg0 - 请求信息
      * @return {Void}
      */
     _pro.__doSendRequest = (function(){
+        // set header
         var _doSetHeader = function(_value,_key){
             this.__xhr.setRequestHeader(_key,_value);
         };
+        // split input.file for multiple files
         var _doSplitMultFiles = function(_form){
             var _result = [];
             _u._$reverseEach(
@@ -91,29 +97,33 @@ var f = function(){
             this.__xhr.onreadystatechange = 
                 this.__onStateChange._$bind(this,2);
             // timeout
-            if (_request.timeout!=0){
+            if (_request.timeout!==0){
                 this.__timer = window.setTimeout(
                     this.__onStateChange._$bind(this,3),
                     _request.timeout
                 );
             }
             // prepare and send request
-            this.__xhr.open(_request.method,
-                            _request.url,
-                           !_request.sync);
+            this.__xhr.open(
+                _request.method,
+                _request.url,
+               !_request.sync
+            );
             _u._$forIn(_headers,_doSetHeader,this);
             // support credential
             if (!!this.__request.cookie&&
-               ('withCredentials' in this.__xhr))
+               ('withCredentials' in this.__xhr)){
                 this.__xhr.withCredentials = !0;
+            }
             this.__xhr.send(_request.data);
         };
     })();
     /**
      * 请求状态变化事件
+     * 
      * @protected
-     * @method {__onStateChange}
-     * @param  {Number} 状态变化类型
+     * @method module:util/ajax/proxy/xhr._$$ProxyXHR#__onStateChange
+     * @param  {Number} arg0 - 状态变化类型
      * @return {Void}
      */
     _pro.__onStateChange = function(_type){
@@ -124,11 +134,12 @@ var f = function(){
             break;
             // state change
             case 2 :
-                if (this.__xhr.readyState==4)
+                if (this.__xhr.readyState==4){
                     this.__onLoadRequest({
                         status:this.__xhr.status,
                         result:this.__xhr.responseText||''
                     });
+                }
             break;
             // timeout
             case 3:
@@ -137,26 +148,25 @@ var f = function(){
         }
     };
     /**
-     * 取头信息，子类实现具体业务逻辑
+     * 取头信息
+     * 
      * @protected
-     * @method {__getResponseHeader}
-     * @param  {String}  要取的头信息名称
-     * @return {String} 头信息结果或集合
+     * @method module:util/ajax/proxy/xhr._$$ProxyXHR#__getResponseHeader
+     * @param  {String} arg0 - 要取的头信息名称
+     * @return {String}        头信息结果或集合
      */
     _pro.__getResponseHeader = function(_key){
         return !this.__xhr?'':this.__xhr.getResponseHeader(_key);
     };
     /**
      * 中断请求
-     * @method {_$abort}
-     * @return {nej.ut.j._$$XHRProxy}
+     * 
+     * @method module:util/ajax/proxy/xhr._$$ProxyXHR#_$abort
+     * @return {Void}
      */
     _pro._$abort = function(){
         this.__onLoadRequest({status:0});
-        return this;
     };
-};
-NEJ.define(
-    '{lib}util/ajax/proxy/xhr.js',[
-    '{lib}util/ajax/proxy/proxy.js'
-],f);
+    
+    return _p;
+});

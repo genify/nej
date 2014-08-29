@@ -1,0 +1,6 @@
+基础库依赖关系
+
+global    <-    klass
+          <-    platform
+          <-    config      <-    constant
+          <-    util        <-    element    <->    event

@@ -5,61 +5,73 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
+/** @module util/animation/linear */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'base/util',
+    './bezier.js'
+],function(NEJ,_k,_u,_t0,_p,_o,_f,_r){
     // variable declaration
-    var _p = NEJ.P('nej.ut'),
-        _proAnimLinear;
-    if (!!_p._$$AnimLinear) return;
+    var _pro;
     /**
-     * 线性动画<br/>
-     * 页面结构举例
-     * [code type="html"]
-     *   <div id='id-bounce1'></div>
-     * [/code]
+     * 线性动画
+     * 
+     * 结构举例
+     * ```html
+     * <div id='id-bounce1'></div>
+     * ```
+     * 
      * 脚本举例
-     * [code]
-     *   var _box = document.getElementById('id-bounce1'),_linear;
-     *   var options = {
-     *       from:{
-     *           offset: 100,
-     *           velocity: 10
-     *       },
-     *       to:{
-     *           offset:200
-     *       },
-     *       duration:1000,
-     *       onupdate: function(offset){
-     *           _box.style.left = offset.offset + 'px';
-     *       },
-     *       onstop: function(){
-     *           _linear = nej.ut._$$AnimLinear._$recycle(_linear);
-     *       }
-     *   }
-     *   // 创建减速动画实例
-     *   _linear  = nej.ut._$$AnimLinear._$allocate(options);
-     *   // 开始动画
-     *   _linear._$play();
-     * [/code]
-     * @class   {nej.ut._$$AnimLinear} 线性动画
-     * @extends {nej.ut._$$AnimBezier}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
-     * @config  {String} timing   时间函数，linear
+     * ```javascript
+     * NEJ.define([
+     *     'util/animation/linear'
+     * ],function(_t){
+     *     // 创建动画实例
+     *     var _linear  = _t._$$AnimLinear._$allocate({
+     *         from:{
+     *             offset:100
+     *         },
+     *         to:{
+     *             offset:200
+     *         },
+     *         duration:1000,
+     *         onupdate:function(_event){
+     *             _box.style.left = _event.offset + 'px';
+     *         },
+     *         onstop:function(){
+     *             this._$recycle();
+     *         }
+     *     });
+     *     // 开始动画
+     *     _linear._$play();
+     * });
+     * ```
+     * 
+     * @class   module:util/animation/linear._$$AnimLinear
+     * @extends module:util/animation/bezier._$$AnimBezier
+     * 
+     * @param   {Object} config - 可选配置参数
      */
-    _p._$$AnimLinear = NEJ.C();
-      _proAnimLinear = _p._$$AnimLinear._$extend(_p._$$AnimBezier);
+    _p._$$AnimLinear = _k._$klass();
+    _pro = _p._$$AnimLinear._$extend(_t0._$$AnimBezier);
     /**
      * 控件重置
+     * 
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
-     * @config {String} timing   时间函数，linear
+     * @method module:util/animation/linear._$$AnimLinear#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
-    _proAnimLinear.__reset = function(_options){
-        _options = NEJ.X({},_options);
+    _pro.__reset = function(_options){
+        _options = _u._$merge({},_options);
         _options.timing = 'linear';
-        this.__supReset(_options);
+        this.__super(_options);
     };
-};
-NEJ.define('{lib}util/animation/linear.js',
-          ['{lib}util/animation/bezier.js'],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});

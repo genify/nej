@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NEJ实例 - 建议提示</title>
+    <meta charset="utf-8" />
+    
+    <style>
+        .box{position:relative;text-align:left;}
+        .txt{width:300px;height:26px;line-height:26px;}
+        .crd{position:absolute;top:30px;left:0;width:300px;background:#aaa;border:1px solid #eee;}
+        .itm{height:20px;line-height:20px;}
+         .crd .js-selected{background:#ddd;}
+    </style>
+    
+  </head>
+  <body>
+    
+    <div class="box">
+      <input type="text" class="txt" id="abc"/>
+      <div class="crd" id="efg"></div>
+    </div>
+    
+    <script src="../../../define.js"></script>
+    <script>
+        NEJ.define([
+            'util/suggest/suggest'
+        ],function(_t){
+            _t._$$Suggest._$allocate({
+                input:'abc',
+                body:'efg',
+                onchange:function(_value){
+                    var _arr = [];
+                    for(var i=0,v;i<10;i++){
+                        v = _value+i;
+                        _arr.push('<div data-value="'+v+'">'+v+'</div>');
+                    }
+                    this._$update(_arr.join(''));
+                },
+                onselect:function(_value){
+                    console.log(_value);
+                }
+            });
+        });
+    </script>
+  </body>
+</html>

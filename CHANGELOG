@@ -1,0 +1,94 @@
+0.0.1   (2014-09-01)
+--------------------------------------------------------
+- 重构类模型，__super作为所有接口调用父类同名接口的方式
+- 独立类模型实现文件至{lib}base/klass.js
+- 支持AMD形式的路径，如base/klass，pro/extend/api
+- 支持纯文本资源的依赖载入
+- 增加依赖注入，保留兼容模式下名字空间形式
+- 独立平台适配，删除patched目录，独立到各API、控件
+- 清理没用控件或者后期重新开发控件及API
+  * 删除native
+  * 删除util/xmpp
+  * 删除util/gesture
+  * 删除util/ajax/connect.js
+  * 删除util/cache/config.js
+  * 删除util/dispatch/v1
+  * 删除util/module
+  * 删除util/tb.resizer
+  * 删除util/oauth
+  * 删除util/sorter
+  * 删除ui/arrows
+  * 删除ui/loading
+  * 删除ui/loadmore
+  * 删除ui/pullrefresh
+  * 删除ui/sorter
+  * util/cache/storage.manager.js 更名为 util/cache/manager.js
+
+define.js
+- NEJ.config接口名称改为NEJ.deps
+- 删除define.cmp.js兼容支持
+
+base/util.js
+- 删除_$mergeList
+- 迁移_$dom2object、_$xml2object至{lib}base/element.js
+- 增加接口_$query、_$merge、_$fetch替代原NEJ.Q、NEJ.X、NEJ.EX
+
+base/element.js
+- 交换_$getMaxBox接口输入参数顺序
+- 修改_$dom2object第二个参数为非必传参数
+- 独立_$highlight接口至util/highlight/highlight
+- 独立_$hover接口至util/hover/hover
+- 独立_$focus接口至util/focus/focus
+- 独立_$toggle接口至util/toggle/toggle
+
+base/platform.js
+- 删除_$NOT_PATCH
+- 增加_$support/_$is接口
+
+base/event.js
+- 删除接口_$stopClick
+
+util/event.js
+- 更改_$$Event类名为_$$EventTarget，兼容_$$Event
+- _$addEvent接口功能使用_$pushEvent代替原来的_$setEvent
+- 删除_$api接口
+
+util/ajax/dwr.js
+- 删除_$setProxy接口
+
+util/ajax/tag.js
+- 修改onloaded载入回调函数名称为onload
+
+util/cache/storage.js
+- 删除_$cloneDataInStorage接口
+
+util/dispatcher
+- 合并module.2.js和module.base.js
+util/dispatcher.2.js
+- 删除_$apply接口，使用_$redirect代替
+
+util/page/page.js
+- 删除_e._$page接口
+
+util/template/tpl.js
+- 删除_e._$setup接口
+
+util/template/jst.js
+- 修改接口名称
+  _$addHtmlTemplate     -> _$add
+  _$getHtmlTemplate     -> _$get
+  _$getHtmlTemplateSeed -> _$seed
+  _$renderHtmlTemplate  -> _$render
+  _$registJSTExt        -> _$extend
+
+util/tab/tab.js
+- onchange事件阻止属性nostop改为stopped
+- 删除nej.e._$tab接口
+
+util/cache/share.js
+- localCache._$addEvent代替原nej.v._$addEvent方式添加事件监听
+
+
+
+
+

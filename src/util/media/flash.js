@@ -5,49 +5,61 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    // variable declaration
-    var _  = NEJ.P,
-        _c = _('nej.c'),
-        _e = _('nej.e'),
-        _p = _('nej.ut'),
-        _pro;
-    if (!!_p._$$MediaFlash) return;
+/** @module util/media/flash */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'base/config',
+    'util/flash/flash',
+    './media.js'
+],function(NEJ,_k,_c,_e,_t,_p,_o,_f,_r){
+    var _pro;
     /**
-     * 音频播放控件<br />
+     * 音频播放控件
+     * 
      * 脚本举例
-     * [code]
-     *   // 首先生成播放对象,只负责逻辑部分，要配合UI来使用
-     *   // preload：是否预加载
-     *   // url：音频地址
-     *   var _mda = _p._$$MediaFlash._$allocate({
-     *       preload:false,
-     *       url:'http://127.0.0.1:8000/nej-baseline/res/test.mp3',
-     *       onstatechange:function(_event){
-     *           // 状态改变的回调
-     *           // 0 | 当前停止状态
-     *           // 1 | 当前缓冲状态
-     *           // 2 | 当前播放状态
-     *           // 3 | 当前暂停状态
-     *           // 4 | 播放结束状态
-     *       }
-     *   });
-     *   // 开始播放
-     *   _mda._$play();
-     *   // 暂停播放
-     *   _mda._$pause();
-     *   // 停止播放
-     *   _mda._$stop();
-     * [/code]
-     * @class   {nej.ut._$$MediaFlash} 音频播放控件
-     * @extends {nej.ut._$$Media}
-     * @param   {Object} 可选配置参数，已处理参数列表如下所示
-     * @config  {String} url 音频地址
+     * ```javascript
+     * NEJ.define([
+     *     'util/media/flash'
+     * ],function(_t){
+     *     // 首先生成播放对象,只负责逻辑部分，要配合UI来使用
+     *     // preload：是否预加载
+     *     // url：音频地址
+     *     var _media = _t._$$MediaFlash._$allocate({
+     *         preload:false,
+     *         url:'http://127.0.0.1:8000/nej-baseline/res/test.mp3',
+     *         onstatechange:function(_event){
+     *             // 状态改变的回调
+     *             // 0 | 当前停止状态
+     *             // 1 | 当前缓冲状态
+     *             // 2 | 当前播放状态
+     *             // 3 | 当前暂停状态
+     *             // 4 | 播放结束状态
+     *         }
+     *     });
+     *     
+     *     // 开始播放
+     *     _media._$play();
+     *     // 暂停播放
+     *     _media._$pause();
+     *     // 停止播放
+     *     _media._$stop();
+     * });
+     * ```
+     * 
+     * @class    module:util/media/flash._$$MediaFlash
+     * @extends  module:util/media/media._$$Media
+     * 
+     * @param    {Object} config - 可选配置参数
+     * @property {String} url    - 音频地址
      */
-    _p._$$MediaFlash = NEJ.C();
-    _pro = _p._$$MediaFlash._$extend(_p._$$Media);
+    _p._$$MediaFlash = _k._$klass();
+    _pro = _p._$$MediaFlash._$extend(_t._$$Media);
     /**
      * 控件初始化
+     *
+     * @protected
+     * @method module:util/media/flash._$$MediaFlash#__init
      * @return {Void}
      */
     _pro.__init = (function(){
@@ -59,7 +71,7 @@ var f = function(){
             }
         };
         return function(){
-            this.__supInit();
+            this.__super();
             _e._$flash({
                 hidden:!0,
                 src:_c._$get('audio.swf'),
@@ -76,16 +88,21 @@ var f = function(){
     })();
     /**
      * 控件销毁
+     *
+     * @protected
+     * @method module:util/media/flash._$$MediaFlash#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         delete this.__action;
     };
     /**
      * 执行播放操作
+     *
+     * 
      * @protected
-     * @method {__doPlay}
+     * @method module:util/media/flash._$$MediaFlash#__doPlay
      * @return {Void}
      */
     _pro.__doPlay = function(){
@@ -101,8 +118,9 @@ var f = function(){
     };
     /**
      * 执行暂停操作
+     * 
      * @protected
-     * @method {__doPause}
+     * @method module:util/media/flash._$$MediaFlash#__doPause
      * @return {Void}
      */
     _pro.__doPause = function(){
@@ -114,8 +132,9 @@ var f = function(){
     };
     /**
      * 执行停止操作
+     * 
      * @protected
-     * @method {__doStop}
+     * @method module:util/media/flash._$$MediaFlash#__doStop
      * @return {Void}
      */
     _pro.__doStop = function(){
@@ -128,8 +147,9 @@ var f = function(){
     };
     /**
      * 文件载入触发事件
+     * 
      * @protected
-     * @method {__onLoading}
+     * @method module:util/media/flash._$$MediaFlash#__onLoading
      * @return {Void}
      */
     _pro.__onLoading = function(){
@@ -137,8 +157,9 @@ var f = function(){
     };
     /**
      * 暂停触发事件
+     * 
      * @protected
-     * @method {__onPause}
+     * @method module:util/media/flash._$$MediaFlash#__onPause
      * @return {Void}
      */
     _pro.__onPause = function(){
@@ -146,8 +167,9 @@ var f = function(){
     };
     /**
      * 播放过程触发事件
+     * 
      * @protected
-     * @method {__onPlaying}
+     * @method module:util/media/flash._$$MediaFlash#__onPlaying
      * @return {Void}
      */
     _pro.__onPlaying = function(_event){
@@ -167,6 +189,9 @@ var f = function(){
     };
     /**
      * 播放错误事件
+     *
+     * @protected
+     * @method module:util/media/flash._$$MediaFlash#__onError
      * @param  {Event} 事件信息
      * @return {Void}
      */
@@ -178,8 +203,9 @@ var f = function(){
     };
     /**
      * 设置播放时间
+     * 
      * @protected
-     * @method {__setCurrentTime}
+     * @method module:util/media/flash._$$MediaFlash#__setCurrentTime
      * @return {Void}
      */
     _pro.__setCurrentTime = function(_time){
@@ -188,8 +214,9 @@ var f = function(){
     };
     /**
      * 获取播放时间
+     * 
      * @protected
-     * @method {__getCurrentTime}
+     * @method module:util/media/flash._$$MediaFlash#__getCurrentTime
      * @return {Number} 当前时间
      */
     _pro.__getCurrentTime = function(){
@@ -197,8 +224,9 @@ var f = function(){
     };
     /**
      * 设置音量
+     * 
      * @protected
-     * @method {__setVolume}
+     * @method module:util/media/flash._$$MediaFlash#__setVolume
      * @return {Void}
      */
     _pro.__setVolume = function(_volume){
@@ -214,8 +242,9 @@ var f = function(){
     };
     /**
      * 获取音量
+     * 
      * @protected
-     * @method {__getVolume}
+     * @method module:util/media/flash._$$MediaFlash#__getVolume
      * @return {Number} 音量值
      */
     _pro.__getVolume = function(){
@@ -224,17 +253,17 @@ var f = function(){
     };
     /**
      * 取媒体总时长
-     * @method {_$duration}
+     * 
+     * @method module:util/media/flash._$$MediaFlash#_$duration
      * @return {Number} 媒体总时长
      */
     _pro._$duration = function(){
         return !this.__audio?0:this.__audio.nej_flash_get_duration();
     };
-};
-NEJ.define(
-    '{lib}util/media/flash.js',[
-    '{lib}base/config.js',
-    '{lib}base/event.js',
-    '{lib}util/media/media.js',
-    '{lib}util/flash/flash.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});

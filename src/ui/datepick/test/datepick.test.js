@@ -5,8 +5,8 @@ var f = function(){
         _e = _('nej.e'),
         _p = _('nej.ui'),
         _ut= _('nej.ut');
-        
-        
+
+
     //开始单元测试
     test('datepick-ui',function(){
         stop();
@@ -20,14 +20,14 @@ var f = function(){
 		_dp._$setDate('2012-12-21');
 		_dp._$getDate();
     });
-    
+
     test('datepick-util',function(){
         expect(0);
         var pDate = new Date(1997,7,9)
         var nDate = new Date(2013,7,9);
         var _days = _e._$get('days');
-        _html = _e._$addHtmlTemplate('{list 1..2 as x}<div>{list 1..6 as y}<p class="z-day"></p>{/list}</div>{/list}');
-        _days.innerHTML = _e._$getHtmlTemplate(_html);
+        _html = _e._$add('{list 1..2 as x}<div>{list 1..6 as y}<p class="z-day"></p>{/list}</div>{/list}');
+        _days.innerHTML = _e._$get(_html);
         var _dp = _ut._$$Calendar._$allocate({
             parent:_e._$get('datepick-box2'),
             offset:1,
@@ -55,5 +55,5 @@ var f = function(){
 }
 module('依赖模块');
 test('define',function(){expect(0);
-    define('{pro}datepick.test.js',['{lib}ui/datepick/datepick.js'],f);
+    define('{pro}datepick.test.js',['ui/datepick/datepick'],f);
 });

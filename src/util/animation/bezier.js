@@ -8,40 +8,73 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
+/** @module util/animation/bezier */
+NEJ.define([
+    'base/global',
+    'base/klass',
+    'base/util',
+    './animation.js'
+],function(NEJ,_k,_u,_t0,_p,_o,_f,_r){
     // variable declaration
-    var _  = NEJ.P,
-        _o = NEJ.O,
-        _u = _('nej.u'),
-        _p = _('nej.ut'),
-        _pro,_sup;
-    if (!!_p._$$AnimBezier) return;
+    var _pro;
     /**
      * 贝塞尔曲线算法
-     * [ntb]
-     *   初始信息包括 | offset  [Number] | 偏移量
-     *   结束信息包括 | offset  [Number] | 偏移量
-     * [/ntb]
-     * @class   {nej.ut._$$AnimBezier} 贝塞尔曲线算法
-     * @extends {nej.ut._$$Animation}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
-     * @config  {Number} duration 持续时间，单位毫秒，默认为200ms
-     * @config  {String} timing   时间函数，默认为ease，ease/easein/easeout/easeinout/linear/cubic-bezier(x1,y1,x2,y2)
+     * 
+     * 初始信息包括
+     * 
+     * * offset  [Number]  偏移量 
+     *
+     * 结束信息包括
+     * 
+     * * offset  [Number]  偏移量 
+     *
+     * 脚本举例
+     * ```javascript
+     * NEJ.define([
+     *     'util/animation/bezier'
+     * ],function(_t){
+     *     var _easein = nej.ut._$$AnimBezier._$allocate({
+     *         from: {
+     *             offset: 100
+     *         },
+     *         to:{
+     *             offset: 0
+     *         },
+     *         timing:'easein',
+     *         onupdate:function(_event){
+     *             // 坐标
+     *             console.log(_event.offset + 'px');
+     *             // 更新节点位置
+     *         },
+     *         onstop:function(){
+     *             // 动画停止后回收控件
+     *             this._$recycle();
+     *         }
+     *     });
+     *     // 进行弹性动画
+     *     _easein._$play();
+     * });
+     * ```
+     * 
+     * @class    module:util/animation/bezier._$$AnimBezier
+     * @extends  module:util/animation/animation._$$Animation
+     * 
+     * @param    {Object} config   - 可选配置参数
+     * @property {Number} duration - 持续时间，单位毫秒，默认为200ms
+     * @property {String} timing   - 时间函数，默认为ease，ease/easein/easeout/easeinout/linear/cubic-bezier(x1,y1,x2,y2)
      */
-    _p._$$AnimBezier = NEJ.C();
-    _pro = _p._$$AnimBezier._$extend(_p._$$Animation);
-    _sup = _p._$$AnimBezier._$supro;
+    _p._$$AnimBezier = _k._$klass();
+    _pro = _p._$$AnimBezier._$extend(_t0._$$Animation);
     /**
      * 控件重置
+     * 
      * @protected
-     * @method {__reset}
-     * @param  {Object} 可选配置参数
-     * @config {Number} duration 持续时间
-     * @config {String} timing   时间函数，默认为ease，ease/easein/easeout/easeinout/linear/cubic-bezier(x1,y1,x2,y2)
+     * @method module:util/animation/bezier._$$AnimBezier#__reset
+     * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         this.__duration = _options.duration||200;
         this.__epsilon  = 1/(200*this.__duration);
         this.__doParseTiming(_options.timing);
@@ -49,20 +82,22 @@ var f = function(){
     };
     /**
      * 控件销毁
+     * 
      * @protected
-     * @method {__destroy}
+     * @method module:util/animation/bezier._$$AnimBezier#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
         delete this.__pointer;
         delete this.__coefficient;
     };
     /**
      * 解析时间动画为坐标信息
+     * 
      * @protected
-     * @method {__doParseTiming}
-     * @param  {String} 时间动画
+     * @method module:util/animation/bezier._$$AnimBezier#__doParseTiming
+     * @param  {String} arg0 - 时间动画
      * @return {Void}
      */
     _pro.__doParseTiming = (function(){
@@ -91,8 +126,9 @@ var f = function(){
     })();
     /**
      * 计算贝塞尔曲线多项式系数
+     * 
      * @protected
-     * @method {__doCalPolynomialCoefficients}
+     * @method module:util/animation/bezier._$$AnimBezier#__doCalPolynomialCoefficients
      * @return {Void}
      */
     _pro.__doCalPolynomialCoefficients = function(){
@@ -111,10 +147,11 @@ var f = function(){
     };
     /**
      * 计算目标接近率
+     * 
      * @protected
-     * @method {__doCalCubicBezierAtTime}
-     * @param  {Number} 当前时间
-     * @return {Float}  终点接近率
+     * @method module:util/animation/bezier._$$AnimBezier#__doCalCubicBezierAtTime
+     * @param  {Number} arg0 - 当前时间
+     * @return {Float}         终点接近率
      */
     _pro.__doCalCubicBezierAtTime = (function(){
         var _doSampleCurveX = function(_time,_coef){
@@ -163,10 +200,11 @@ var f = function(){
     })();
     /**
      * 动画帧回调
+     * 
      * @protected
-     * @method {__doAnimationFrame}
-     * @param  {Number} 时间值
-     * @return {Boolean} 是否停止
+     * @method module:util/animation/bezier._$$AnimBezier#__doAnimationFrame
+     * @param  {Number} arg0 - 时间值
+     * @return {Boolean}       是否停止
      */
     _pro.__doAnimationFrame = function(_time){
         var _delta   = _time-this.__begin.time,
@@ -179,39 +217,51 @@ var f = function(){
             _offset = this.__end.offset;
             _stop = !0;
         }
-        this._$dispatchEvent('onupdate',{offset:1*_offset});
+        this._$dispatchEvent('onupdate',{
+            offset:1*_offset
+        });
         return _stop;
     };
     /**
-     * 取消动画监听事件<br/>
+     * 取消动画监听事件
+     * 
      * 脚本举例
-     * [code]
-     *   var options = {
+     * ```javascript
+     * NEJ.define([
+     *     'util/animation/bezier'
+     * ],function(_t){
+     *     var _easein = nej.ut._$$AnimBezier._$allocate({
      *         from: {
-     *             offset: 100,
-     *             velocity: 100
+     *             offset: 100
      *         },
-     *         acceleration:100,
-     *         onstop: function(){
-     *             _bounce = nej.ut._$$AnimEaseIn._$recycle(_bounce);
+     *         to:{
+     *             offset: 0
+     *         },
+     *         timing:'easein',
+     *         onupdate: function(_event){
+     *             // 坐标
+     *             console.log(_event.offset + 'px');
      *         }
-     *     }
-     *   var _bounce = nej.ut._$$AnimEaseIn._$allocate(options);
-     *   // 进行动画
-     *   _bounce._$play();
-     *   // 停止动画,触发onstop
-     *   _bounce._$stop();
-     * [/code]
-     * @method {_$stop}
-     * @return {nej.ut._$$AnimBezier}
+     *     });
+     *     // 进行弹性动画
+     *     _easein._$play();
+     *     // 结束动画
+     *     _easein._$stop();
+     * });
+     * ```
+     * @method module:util/animation/bezier._$$AnimBezier#_$stop
+     * @return {Void}
      */
     _pro._$stop = function(){
-        this._$dispatchEvent('onupdate',{offset:this.__end.offset});
-        _sup._$stop.apply(this,arguments);
-        return this;
+        this._$dispatchEvent('onupdate',{
+            offset:this.__end.offset
+        });
+        this.__super();
     };
-};
-NEJ.define(
-    '{lib}util/animation/bezier.js',[
-    '{lib}util/animation/animation.js'
-],f);
+
+    if (CMPT){
+        NEJ.copy(NEJ.P('nej.ut'),_p);
+    }
+
+    return _p;
+});
