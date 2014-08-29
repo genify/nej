@@ -17,7 +17,8 @@ var f = function(){
             clazz:'mycustom'
         });
         this._v._$addEvent(_getcnt,'click',function(){
-            alert(_custom.__editor.__copt.area._$getSelectText());
+            _getcnt.innerHTML = _custom.__editor.__copt.area._$getContent(true);
+            // alert(_custom.__editor.__copt.area._$getSelectText());
         }._$bind(this));
     });
 }
