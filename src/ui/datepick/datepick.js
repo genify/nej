@@ -161,7 +161,7 @@ NEJ.define([
         _seed_html = _t1._$addNodeTemplate(
             '<div class="'+_seed_css+' zcard">'+
                _t1._$getTextTemplate(_seed_action)+
-               _t2._$getHtmlTemplate(_seed_date)+
+               _t2._$get(_seed_date)+
             '</div>'
         );
         this.__seed_html = _seed_html;

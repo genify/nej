@@ -26,8 +26,8 @@ var f = function(){
         var pDate = new Date(1997,7,9)
         var nDate = new Date(2013,7,9);
         var _days = _e._$get('days');
-        _html = _e._$addHtmlTemplate('{list 1..2 as x}<div>{list 1..6 as y}<p class="z-day"></p>{/list}</div>{/list}');
-        _days.innerHTML = _e._$getHtmlTemplate(_html);
+        _html = _e._$add('{list 1..2 as x}<div>{list 1..6 as y}<p class="z-day"></p>{/list}</div>{/list}');
+        _days.innerHTML = _e._$get(_html);
         var _dp = _ut._$$Calendar._$allocate({
             parent:_e._$get('datepick-box2'),
             offset:1,

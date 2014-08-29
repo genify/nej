@@ -8,7 +8,7 @@ var f = function(){
     
     test('jst',function(){
         _e._$parseTemplate('jst-box');
-		var _content = _e._$getHtmlTemplate('jst-box',{name:'jack'}).trim();
+		var _content = _e._$get('jst-box',{name:'jack'}).trim();
 		equal(_content,'<div>jack</div>','解析结果与预期相同');
     });
 	

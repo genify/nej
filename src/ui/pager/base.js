@@ -19,7 +19,7 @@ NEJ.define([
     // variable declaration
     var _pro,
         _seed_css = _e._$pushCSSText(_css),
-        _seed_page = _t0._$addHtmlTemplate(_html);
+        _seed_page = _t0._$add(_html);
     /**
      * 分页器控件基类封装
      *
@@ -154,10 +154,10 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__doResetNumber = function(_data){
-        _t0._$renderHtmlTemplate(
+        _t0._$render(
             this.__body,_seed_page,_data
         );
-        var _seed = _t0._$getHtmlTemplateSeed();
+        var _seed = _t0._$seed();
         this.__popt.list = _e._$getByClassName(
                 this.__body,
                 'js-i-'+_seed
@@ -194,7 +194,7 @@ NEJ.define([
      * @return {String} 页码列表html代码
      */
     _pro.__doGenPageListXhtml = function(_data){
-        return _t0._$getHtmlTemplate(_seed_page,_data);
+        return _t0._$get(_seed_page,_data);
     };
     /**
      * 页面变化触发事件

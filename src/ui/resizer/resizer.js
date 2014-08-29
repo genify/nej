@@ -21,7 +21,7 @@ NEJ.define([
 ],function(NEJ,_k,_g,_e,_u,_i,_t0,_t1,_t2,_css,_html,_p,_o,_f,_r){
     var _pro,
         _seed_css   = _e._$pushCSSText(_css,{blankimage:_g._$BLANK_IMAGE}),
-        _seed_point = _t2._$addHtmlTemplate(_html),
+        _seed_point = _t2._$add(_html),
         _seed_html;
     /**
      * 初始大小
@@ -165,7 +165,7 @@ NEJ.define([
         var _clazz = ['znt','znr','znb','znl','zpc zntl','zpc zntr','zpc znbr','zpc znbl'];
         return function(){
             _seed_html = _t1._$addNodeTemplate(
-                _t2._$getHtmlTemplate(_seed_point,{clazz:_clazz})
+                _t2._$get(_seed_point,{clazz:_clazz})
             );
             this.__seed_html = _seed_html;
         };

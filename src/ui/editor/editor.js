@@ -112,7 +112,7 @@ NEJ.define([
         var _list = _e._$getChildren(this.__body);
         this.__aopt.parent = _list[1];
         this.__topt.list = _e._$getByClassName(_list[0],
-                           'js-'+_t1._$getHtmlTemplateSeed());
+                           'js-'+_t1._$seed());
     };
     /**
      * 获取按钮html代码
@@ -123,7 +123,7 @@ NEJ.define([
      * @return {String} html代码
      */
     _pro.__doGenCmdXhtml = function(_data){
-        return _t1._$getHtmlTemplate(_seed_icmd,_data);
+        return _t1._$get(_seed_icmd,_data);
     };
     /**
      * 获取字号选择html代码
@@ -133,7 +133,7 @@ NEJ.define([
      * @return {String} html代码
      */
     _pro.__doGenFontSizeXhtml = function(){
-        return _t1._$getHtmlTemplate(_seed_ifnt,
+        return _t1._$get(_seed_ifnt,
                {cmd:'fontSize',txt:'标准',icn:'zfs'});
     };
     /**
@@ -144,7 +144,7 @@ NEJ.define([
      * @return {String} html代码
      */
     _pro.__doGenFontNameXhtml = function(){
-        return _t1._$getHtmlTemplate(_seed_ifnt,
+        return _t1._$get(_seed_ifnt,
                {cmd:'fontName',txt:'Arial',icn:'zfm'});
     };
     /**
@@ -156,7 +156,7 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__doGenEditorXhtml = function(_data){
-        return _t1._$getHtmlTemplate(_seed_iedt,_data);
+        return _t1._$get(_seed_iedt,_data);
     };
     /**
      * 取编辑内容

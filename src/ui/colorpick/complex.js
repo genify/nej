@@ -15,7 +15,7 @@ NEJ.define([
     'text!./complex.html'
 ],function(NEJ,_k,_u,_i0,_t0,_html,_p,_o,_f,_r){
     var _pro,
-        _seed_color = _t0._$addHtmlTemplate(_html);
+        _seed_color = _t0._$add(_html);
     /**
      * 颜色选择控件
      *
@@ -102,7 +102,7 @@ NEJ.define([
                     }
                 }
             );
-            _e._$renderHtmlTemplate(
+            _e._$render(
                 this.__nbox,_seed_color,{
                     xlist:_arr
                 }
