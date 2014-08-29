@@ -10,8 +10,9 @@ NEJ.define([
     './proxy.js',
     'base/util',
     'base/klass',
+    'base/constant',
     '{platform}xhr.js'
-],function(_t,_u,_k,_h,_p,_o,_f,_r){
+],function(_t,_u,_k,_g,_h,_p,_o,_f,_r){
     var _pro;
     /**
      * Ajax代理对象
