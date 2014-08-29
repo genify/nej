@@ -866,7 +866,8 @@ ${null|default:"default value"}
 ITEM控件提供了结构+逻辑的缓存功能，适合于列表项带复杂逻辑的模版，一般使用ntp模版来封装结构，列表类的ITEM基类抽象在ui/item/list模块中实现，因为ITEM控件也是UI控件，所以遵循[UI控件](./WIDGET.md)的规则
 
 
-  
+
+
 
 
 
