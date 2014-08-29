@@ -149,7 +149,7 @@ doSomething = doSomething._$aop(
 
 ### 实现举例
 
-[NEJ框架](https://github.com/NetEaseWD/NEJ)借鉴AOP思想提供了配置式的平台适配系统，对于这部分的详细信息可参阅NEJ的《[依赖管理系统](https://github.com/genify/nej/blob/sandbox/doc/DEPENDENCY.md)》和《[平台适配系统](https://github.com/genify/nej/blob/sandbox/doc/PLATFORM.md)》了解更为详细的信息，以下选取其中相关原理部分进行举例说明
+[NEJ框架](https://github.com/NetEaseWD/NEJ)借鉴AOP思想提供了配置式的平台适配系统，对于这部分的详细信息可参阅NEJ的《[依赖管理系统](../DEPENDENCY.md)》和《[平台适配系统](../PLATFORM.md)》了解更为详细的信息，以下选取其中相关原理部分进行举例说明
 
 #### platform
 
