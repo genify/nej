@@ -1,7 +1,8 @@
 var f = function(){
     //定义测试模块
     module("constant");
-    var _p =    NEJ.P('nej.g');
+    var _p = NEJ.P('nej.g'),
+        _g = NEJ.P('nej.p');
 
     //开始单元测试
     test('测试静态变量', function() {
@@ -16,7 +17,12 @@ var f = function(){
         equal(_p._$HEAD_CT_PLAN,'text/plain','文本请求头content-type值');
         equal(_p._$HEAD_CT_FILE,'multipart/form-data','文件请求头content-type值');
         equal(_p._$HEAD_CT_FORM,'application/x-www-form-urlencoded','表单请求头content-type值');
-        equal(_p._$BLANK_IMAGE,'data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==','空图片BASE64编码地址');
+        if (_g._$KERNEL.browser == 'ie' && _g._$KERNEL.release<=3.0){
+            equal(_p._$BLANK_IMAGE,'data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==','空图片BASE64编码地址');
+        }else{
+            equal(_p._$BLANK_IMAGE,'data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==','空图片BASE64编码地址');
+        }
+
     });
 }
 module('依赖模块');

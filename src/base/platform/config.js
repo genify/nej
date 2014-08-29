@@ -74,7 +74,7 @@ NEJ.define([
         return function(_config){
             // check path config
             _p.__set('root',_config.root||'/res/');
-            var _root = _p._$get('root');
+            var _root = _p.__get('root');
             _u._$forIn(_conf,function(v,k,m){
                 _p.__set(k,_config[v.name]||(_root+v.dft));
             });
@@ -98,6 +98,6 @@ NEJ.define([
         };
     })();
     _doInit(this.NEJ_CONF||_o);
-    
+
     return _p;
 });

@@ -10,6 +10,32 @@ NEJ.define([
     'base/platform',
     'base/util'
 ],function(_h,_m,_u,_p,_o,_f,_r){
+    // for ie
+    NEJ.patch('TR',function(){
+        /**
+         * 取节点的子节点列表
+         * @param  {Node} _element 节点ID或者对象
+         * @return {Array}         子节点列表
+         */
+        _h.__getChildren = _h.__getChildren._$aop(
+            function(_event){
+                var _element = _event.args[0];
+                if (!!_element.children) return;
+                // hack children
+                _event.stopped = !0;
+                var _result = [];
+                _u._$forEach(
+                    _element.childNodes,
+                    function(_node){
+                        if (_node.nodeType==1){
+                            _result.push(_node);
+                        }
+                    }
+                );
+                _event.value = _result;
+            }
+        );
+    });
     // for ie10-
     NEJ.patch('TR<=6.0',function(){
         /**
@@ -341,23 +367,6 @@ NEJ.define([
     });
     // for ie6-
     NEJ.patch('TR<=2.0',function(){
-        /**
-         * 取节点的子节点列表
-         * @param  {Node} _element 节点ID或者对象
-         * @return {Array}         子节点列表
-         */
-        _h.__getChildren = function(_element){
-            var _result = [];
-            _u._$forEach(
-                _element.childNodes,
-                function(_node){
-                    if (_node.nodeType==1){
-                        _result.push(_node);
-                    }
-                }
-            );
-            return _result;
-        };
         /**
          * 节点占全屏
          * @param  {Node}   节点
