@@ -16,7 +16,7 @@ NEJ.define([
     '{platform}flash.js',
     'text!./flash.html'
 ],function(NEJ,_e,_v,_u,_t0,_t1,_h,_html,_p,_o,_f,_r){
-    var _seed_html = _t0._$addHtmlTemplate(_html);
+    var _seed_html = _t0._$add(_html);
     /**
      * 页面嵌入flash，NEJ嵌入Flash如果需要同JS交互的遵循以下规则
      *
@@ -110,7 +110,7 @@ NEJ.define([
         // append flash element
         var _doInitDOM = function(_options){
             var _parent = _e._$get(_options.parent)||document.body,
-                _html = _t0._$getHtmlTemplate(_seed_html,_options);
+                _html = _t0._$get(_seed_html,_options);
             _parent.insertAdjacentHTML(
                !_options.hidden?'beforeEnd':'afterBegin',_html
             );

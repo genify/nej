@@ -19,7 +19,7 @@ NEJ.define([
 ],function(NEJ,_k,_e,_v,_u,_i,_t0,_css,_html,_p,_o,_f,_r){
     var _pro,
         _seed_css = _e._$pushCSSText(_css),
-        _seed_fnt = _t0._$addHtmlTemplate(_html);
+        _seed_fnt = _t0._$add(_html);
     /**
      * 字体字号选择卡片基类
      *
@@ -93,7 +93,7 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__doGenFontListXhtml = function(_data){
-        return _t0._$getHtmlTemplate(_seed_fnt,_data);
+        return _t0._$get(_seed_fnt,_data);
     };
     /**
      * 字体大小选择事件

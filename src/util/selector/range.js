@@ -33,11 +33,11 @@ NEJ.define([
      *     'util/selector/range',
      *     'util/range/range'
      * ],function(_e,_v,_t0,_t1,_p,_o,_f,_r){
-     *     var _html_seed = _e._$addHtmlTemplate('{list 1..31 as x}\
+     *     var _html_seed = _e._$add('{list 1..31 as x}\
      *         <div class="item">${x}</div>\
      *     {/list}');
      *     var _box  = _e._$get('box');
-     *     _box.innerHTML = _e._$getHtmlTemplate(_html_seed);
+     *     _box.innerHTML = _e._$get(_html_seed);
      *     var _box2 = _e._$get('box2');
      *     // 先实例化一个范围选择器
      *     var _range = _t1._$$Range._$allocate({

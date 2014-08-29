@@ -47,8 +47,8 @@ NEJ.define([
      * ],function(_t){
      *     // 构建日期列表
      *     var _days = _e._$get('days');
-     *     _html = _e._$addHtmlTemplate('{list 1..2 as x}<div>{list 1..6 as y}<p class="z-day"></p>{/list}</div>{/list}');
-     *     _days.innerHTML = _e._$getHtmlTemplate(_html);
+     *     _html = _e._$add('{list 1..2 as x}<div>{list 1..6 as y}<p class="z-day"></p>{/list}</div>{/list}');
+     *     _days.innerHTML = _e._$get(_html);
      *     // 分配日历功能
      *     var _calendar = _t._$$Calendar._$allocate({
      *         parent:'datepick-box',

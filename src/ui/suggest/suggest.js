@@ -18,7 +18,7 @@ NEJ.define([
     'text!./suggest.html'
 ],function(NEJ,_k,_e,_u,_i,_t0,_t1,_css,_html,_p,_o,_f,_r){
     var _seed_css = _e._$pushCSSText(_css),
-        _seed_item = _t1._$addHtmlTemplate(_html),
+        _seed_item = _t1._$add(_html),
         _pro;
     /**
      * 提示建议控件
@@ -176,7 +176,7 @@ NEJ.define([
      */
     _pro._$setList = function(_html,_clazz){
         if (_u._$isArray(_html))
-            _html = _t1._$getHtmlTemplate(
+            _html = _t1._$get(
                     _seed_item,{xlist:_html});
         this.__body.innerHTML = _html||'';
         this.__suggest._$setList(!_clazz
