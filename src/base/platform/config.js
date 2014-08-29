@@ -7,7 +7,7 @@
  */
 NEJ.define([
     'base/global',
-    'base/util',
+    'base/util'
 ],function(NEJ,_u,_p,_o,_f,_r){
     var _cache = {};
     /*
