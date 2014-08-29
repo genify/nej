@@ -19,7 +19,7 @@ NEJ框架提供了基于常规面向对象的思想构建的控件系统，主�
 
 ### 类定义
 
-控件提供使用统一的类定义接口 _$klass 来定义一个类，通过此接口定义的类才具备以下的继承、初始化等特性
+控件提供使用统一的类定义接口 \_$klass 来定义一个类，通过此接口定义的类才具备以下的继承、初始化等特性
 
 ```javascript
 NEJ.define([
@@ -240,7 +240,7 @@ NEJ.define([
 
 ### 事件支持
 
-控件支持自定义事件的触发，在控件的业务逻辑中可根据实际需求通过 _$dispatchEvent 接口触发自定义事件来与外界进行交互
+控件支持自定义事件的触发，在控件的业务逻辑中可根据实际需求通过 \_$dispatchEvent 接口触发自定义事件来与外界进行交互
 
 ```javascript
 NEJ.define([
@@ -500,7 +500,7 @@ NEJ.define([
 
 ### UI控件
 
-UI控件基于控件模型扩展而来，其抽象实现在 ui/base 模块中的 _$$Abstract 类，UI控件的主要元素包括：
+UI控件基于控件模型扩展而来，其抽象实现在 ui/base 模块中的 \_$$Abstract 类，UI控件的主要元素包括：
 
 * 样式：控件展示效果样式，独立在控件对应的css文件中
 * 结构：控件组成结构，独立在控件对应的html文件中
@@ -588,7 +588,7 @@ UI控件基于控件模型扩展而来，其抽象实现在 ui/base 模块中的
 
 ##### 注入样式
 
-根据[依赖系统](./DEPENDENCY.md)规则，UI控件使用 text! 注入样式，注入的样式通过 base/element 模块中的 _$pushCSSText 接口做预处理，并返回自动生成的控件样式标识
+根据[依赖系统](./DEPENDENCY.md)规则，UI控件使用 text! 注入样式，注入的样式通过 base/element 模块中的 \_$pushCSSText 接口做预处理，并返回自动生成的控件样式标识
 
 ```javascript
 NEJ.define([
@@ -678,7 +678,7 @@ NEJ.define([
 
 ##### 逻辑实现
 
-UI控件的逻辑实现主要扩展自 ui/base 模块中的 _$$Abstract 类，需要实现外观的设置和结构的初始化
+UI控件的逻辑实现主要扩展自 ui/base 模块中的 \_$$Abstract 类，需要实现外观的设置和结构的初始化
 
 1. 初始化外观
 
@@ -1070,7 +1070,7 @@ NEJ.define([
 
 控件命名遵循以下规则便于识别
 
-* 类名首字母大写，驼峰形式，如_$$MyClassName等
+* 类名首字母大写，驼峰形式，如\_$$MyClassName等
 * 属性、方法名首字母小写，驼峰形式，如 \_myMethod、\_\_myProtectedMethod、\_$doSomething等
 * 事件名称全小写，采用名称+动词形式，如 onchange、onlistload等
 

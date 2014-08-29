@@ -390,7 +390,7 @@ NEJ模板说明
 
 #### 逻辑
 
-依赖util/dispatcher/module模块，从_$$ModuleAbstract扩展一个项目的模块基类，完成项目中模块特有属性、行为的抽象
+依赖util/dispatcher/module模块，从\_$$ModuleAbstract扩展一个项目的模块基类，完成项目中模块特有属性、行为的抽象
 
 ```javascript
 /*
@@ -720,7 +720,7 @@ NEJ.define([
 
 #### 模块组合
 
-模块通过__export属性开放组合模块的容器，__export中的parent为子模块的容器节点，顶层模块（如 “/m”）可以通过重写__doParseParent来明确指定应用所在容器
+模块通过\_\_export属性开放组合模块的容器，\_\_export中的parent为子模块的容器节点，顶层模块（如 “/m”）可以通过重写\_\_doParseParent来明确指定应用所在容器
 
 ```javascript
 _pro.__doBuild = function(){
