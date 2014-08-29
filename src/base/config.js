@@ -9,7 +9,7 @@
 NEJ.define([
     './global.js',
     '{platform}config.js'
-],function(NEJ,_u,_h,_p,_o,_f,_r){
+],function(NEJ,_h,_p,_o,_f,_r){
     /**
      * 取Frame跨域Ajax代理文件，通过NEJ_CONF的p_frame配置给定域名的代理文件地址
      *
