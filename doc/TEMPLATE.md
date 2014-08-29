@@ -821,7 +821,7 @@ ${expr|escape}
 ${"<div>1234<a href="#">163</a></div>"|escape}
 ```
 
-输出：&lt;div&gt;1234&lt;a href="#"&gt;163&lt;/a&gt;&lt;/div&gt;
+输出：&amp;lt;div&amp;gt;1234&amp;lt;a href="#"&amp;gt;163&amp;lt;/a&amp;gt;&amp;lt;/div&amp;gt;
 
 #### format
 
@@ -863,7 +863,7 @@ ${null|default:"default value"}
 
 ## ITEM控件
 
-
+ITEM控件提供了结构+逻辑的缓存功能，适合于列表项带复杂逻辑的模版，一般使用ntp模版来封装结构，列表类的ITEM基类抽象在ui/item/list模块中实现，因为ITEM控件也是UI控件，所以遵循[UI控件](./WIDGET.md)的规则
 
 
 
