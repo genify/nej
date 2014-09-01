@@ -15,7 +15,7 @@ WEB交互式系统的主要应用包括：
 
 * 桌面端/移动端网站类系统（如 [网易云课堂](http://study.163.com/)、[Lofter移动WEB版](http://www.lofter.com/)等）
 * 移动混合应用（如 [网易云相册IPad版](http://photo.163.com/cloudphotos/)、[Lofter](http://www.lofter.com/app)等）
-* 桌面混合应用（如 [网易云音乐PC版](http://music.163.com/#/download)、[网易闪电邮](http://flashmail.163.com/)等）
+* 桌面混合应用（如 [网易云音乐PC版](http://music.163.com/#/download)、[网易邮箱助手](http://mailease.163.com/)等）
 
 ## 模块的可伸缩性
 
