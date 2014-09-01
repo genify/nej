@@ -1767,7 +1767,7 @@ NEJ.define([
      *       'base/element'
      *   ],function(_e){
      *       // 设置样式.item{width:300px;}到缓存中
-     *       _e._$appendCSSText('.item{width:300px;}');
+     *       _e._$appendCSSText('node-id','.item{width:300px;}');
      *   });
      * ```
      *
