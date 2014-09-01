@@ -15,7 +15,7 @@ NEJ.define([
     'base/chain'
 ],function(NEJ,_e,_v,_u,_h,_x,_p,_o,_f,_r){
     var _cache = {},// {id:{lab:'label',pid:'parent'}}
-        _class = _e._$pushCSSText('.#<class>{position:absolute;top:0;left:0;width:0;height:0;overflow:hidden;}');
+        _class = _e._$pushCSSText('.#<uispace>{position:absolute;top:0;left:0;width:0;height:0;overflow:hidden;}');
     /**
      * 文件选择按钮封装
      *

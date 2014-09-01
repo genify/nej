@@ -63,7 +63,7 @@ NEJ.define([
             for(var i=0;i<2;i++){
                 _arr.push('.#<uispace> .js-page-'+(i+1)+' .zitm{background-image:url('+_prefix+i+'.png);}');
             }
-            _seed_css = _e._$pushCSSText('#<arrbg>',{arrbg:_arr.join(' ')});
+            _seed_css = _e._$pushCSSText(_arr.join(' '));
             // format data
             var _root = _c._$get('portrait')+'face/preview/';
             _u._$forEach(

@@ -1693,7 +1693,7 @@ NEJ.define([
      *       'base/element'
      *   ],function(_e){
      *       // 设置样式到缓存中，自动生成样式名，返回自动生成的类名#<class>
-     *       var _class = _e._$pushCSSText('.#<class>{width:300px;}');
+     *       var _class = _e._$pushCSSText('.#<uispace>{width:300px;}');
      *
      *       // 把缓存中的样式内联到页面
      *       _e._$dumpCSSText();
