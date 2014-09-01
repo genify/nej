@@ -40,6 +40,18 @@
           // TODO
       });
     </script>
+    <script>
+      // 习惯链式的同学也可以这样使用
+      NEJ.define([
+        'util/chain/chainable',
+        'util/counter/counter'
+      ],function($){
+          $('#txt-0')._$counter();
+          $('#input-id-0')._$counter();
+          
+          // TODO
+      });
+    </script>
   </body>
 </html>
 ```
