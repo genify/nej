@@ -25,44 +25,6 @@ NEJ.define([
         _seed_html = _t2._$addNodeTemplate(_html);
     /**
      * 图片上传控件
-<<<<<<< HEAD
-     * @class   {nej.ui.cmd._$$UploadImageCard} 图片上传控件
-     * @uses    {nej.ut._$$Tab}
-     * @extends {nej.ui.cmd._$$WindowWrapper}
-     * @param   {Object} 可选配置参数，已处理参数列表如下
-     * @config  {String|Node} parent            父容器
-     * @config  {Boolean}     draggable        是否可拖拽
-     * @config  {Boolean}     destroyable      关闭是否销毁
-     * @config  {String}      title               卡片标题
-     * @config  {String}      fDesc             自定义错误提示1
-     * @config  {String}      oDesc            自定义错误提示2
-     * @config  {String}      swfUrl           Flash文件路径
-     * @config  {String}      baseUrl          Flash文件路径的前缀
-     * @config  {Number}      flashWidth       Flash宽度
-     * @config  {Number}      flashHeight      Flash高度
-     * @config  {String}      userdefinesize 图片尺寸，默认750x750x0x90;350x350x0x85
-     * @config  {String}      saveorigin     是否保存源文件,默认false
-     * @config  {String}      responsetype   响应格式,默认xml
-     * @config  {String}      rotatedegree   旋转角度，默认0
-     * @config  {String}      stamptype      水印类型，默认无
-     * @config  {String}      stampstring    水印内容，默认无
-     * @config  {String}      sitefrom         产品名称
-     *
-     * [hr]
-     *
-     * @event  {oninitflash} Flash开始初始化
-     *
-     * [hr]
-     *
-     * @event  {onflashinited} Flash初始化完成
-     *
-     * [hr]
-     *
-     * @event  {onchange} 图片上传完成
-     * @param  {String}   命令名称
-     * @param  {Object}   Flash返回的图片对象
-     *
-=======
      *
      * @class     module:ui/editor/command/uploadimage._$$UploadImageCard
      * @uses      module:util/tab/tab._$$Tab
@@ -85,12 +47,7 @@ NEJ.define([
      * @property  {String}      stamptype      -  水印类型，默认无
      * @property  {String}      stampstring    -  水印内容，默认无
      * @property  {String}      sitefrom       -  产品名称
->>>>>>> refs/heads/sandbox
      */
-<<<<<<< HEAD
-    _p._$$UploadImageCard = NEJ.C();
-    _pro = _p._$$UploadImageCard._$extend(_u._$$WindowWrapper);
-=======
     /**
      * Flash开始初始化
      *
@@ -111,7 +68,6 @@ NEJ.define([
      */
     _p._$$UploadImageCard = _k._$klass();
     _pro = _p._$$UploadImageCard._$extend(_i0._$$WindowWrapper);
->>>>>>> refs/heads/sandbox
 
     /**
      * 重置卡片
@@ -222,13 +178,8 @@ NEJ.define([
      * 注册flash回调方法
      *
      * @protected
-<<<<<<< HEAD
-     * @method {__doRegiestFlashEvent}
-     * @param  {String} Flash回调方法的命名空间
-=======
      * @method module:ui/editor/command/uploadimage._$$UploadImageCard#__doRegiestFlashEvent
      * @param  {String} arg0 - Flash回调方法的命名空间
->>>>>>> refs/heads/sandbox
      * @return {Void}
      */
     _pro.__doRegiestFlashEvent = function(_space){

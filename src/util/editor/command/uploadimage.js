@@ -30,19 +30,6 @@ NEJ.define([
      */
     _p._$$UploadImage.command = 'uploadImage';
 
-<<<<<<< HEAD
-    /**
-     * 初始化方法
-     * @protected
-     * @method {__init}
-     * @return {Void}
-     */
-    _proUploadImage.__init = function(){
-        this.__supInit();
-    };
-
-=======
->>>>>>> refs/heads/sandbox
     /**
      * 显示卡片，一般子类重写
      *
@@ -78,13 +65,8 @@ NEJ.define([
      * @param  {Object} arg1 - 图片对象
      * @return {Void}
      */
-<<<<<<< HEAD
-    _proUploadImage.__onChange = function(_commend,_photoObj){
-        this.__editor._$focus(2);
-=======
     _pro.__onChange = function(_commend,_photoObj){
-        this.__editor._$focus();
->>>>>>> refs/heads/sandbox
+        this.__editor._$focus(2);
         var _id = 0,_url;
         if(!!_photoObj.ourl && _photoObj.ourl.indexOf('.gif') > 0){
             //gif图片
