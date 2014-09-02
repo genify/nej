@@ -404,8 +404,11 @@ NEJ.define([
         if (!!_element){
             _u._$forEach(
                 _getTypeList(_type),function(_name){
+                    var _result = _h.__checkEvent(
+                        _element,_name
+                    );
                     _h.__dispatchEvent(
-                        _element,_name,_options
+                        _element,_result.type,_options
                     );
                 }
             );

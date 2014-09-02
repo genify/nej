@@ -52,6 +52,10 @@ NEJ.define([
             var _vmap = {};
             var _fmap = {
                 input:function(_element,_type,_handler){
+                    // for check type only
+                    if (!_handler){
+                        return {type:_type};
+                    }
                     // fix input backspace/delete/ctrl+x bug
                     return {
                         type:_type,
@@ -101,9 +105,11 @@ NEJ.define([
             var _lmap = {};
             var _fmap = {
                 input:function(_element,_type,_handler){
-                    return {
-                        type:'propertychange',
-                        handler:function(_event){
+                    var _result = {
+                        type:'propertychange'
+                    };
+                    if (!!_handler){
+                        _result.handler = function(_event){
                             // for input.value or textarea.value
                             if (('value' in _element)&&
                                 _event.propertyName=='value'){
@@ -116,19 +122,23 @@ NEJ.define([
                                 _handler.call(_element,_event);
                                 delete _lmap[_id];
                             }
-                        }
-                    };
+                        };
+                    }
+                    return _result;
                 },
                 load:function(_element,_type,_handler){
-                    return {
-                        type:'readystatechange',
-                        handler:function(_event){
+                    var _result = {
+                        type:'readystatechange'
+                    };
+                    if (!!_handler){
+                        _result.handler = function(_event){
                             if (_element.readyState=='loaded'||
                                 _element.readyState=='complete'){
                                 _handler.call(_element,_event);
                             }
-                        }
-                    };
+                        };
+                    }
+                    return _result;
                 }
             };
             return _h.__checkEvent._$aop(function(_event){
@@ -201,16 +211,19 @@ NEJ.define([
             var _nreg = /^(?:transitionend|animationend|animationstart|animationiteration)$/i;
             var _fmap = {
                 mousewheel:function(_element,_type,_handler){
-                    return {
-                        type:'MozMousePixelScroll',
-                        handler:function(_event){
+                    var _result = {
+                        type:'MozMousePixelScroll'
+                    };
+                    if (!!_handler){
+                        _result.handler = function(_event){
                             var _delta = _event.detail;
                             _event.wheelDelta = -_delta;
                             _event.wheelDeltaY = -_delta;
                             _event.wheelDeltaX = 0;
                             _handler.call(_element,_event);
-                        }
-                    };
+                        };
+                    }
+                    return _result;
                 }
             };
             return _h.__checkEvent._$aop(function(_event){

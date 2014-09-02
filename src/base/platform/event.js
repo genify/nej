@@ -33,14 +33,17 @@ NEJ.define([
             };
         var _fmap = {
             enter:function(_element,_type,_handler){
-                return {
-                    type:'keypress',
-                    handler:function(_event){
+                var _result = {
+                    type:'keypress'
+                };
+                if (!!_handler){
+                    _result.handler = function(_event){
                         if (_event.keyCode===13){
                             _handler.call(_element,_event);
                         }
-                    }
-                };
+                    };
+                }
+                return _result;
             }
         };
         var _doPrefix = function(_name){
