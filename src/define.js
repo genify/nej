@@ -625,7 +625,7 @@
         _script.charset = _doParseCharset(_uri);
         _doAddListener(_script);
         _script.src = _uri;
-        d.body.appendChild(_script);
+        (d.getElementsByTagName('head')[0]||document.body).appendChild(_script);
     };
     /*
      * 脚本载入完成回调
