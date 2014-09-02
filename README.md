@@ -16,6 +16,8 @@
 
 ## 使用
 
+[API手册](http://nej.netease.com/help/index.html)
+
 页面引入define.js，可以下载到本地也可以使用NEJ服务器上的define.js（ http://nej.netease.com/nej/src/define.js ），通过切换define.js的路径切换使用的NEJ库
 
 ```html
