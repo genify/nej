@@ -444,7 +444,7 @@ NEJ.define([
 
 ### _$upload
 
-\_#upload接口在util/ajax/xdr模块中实现
+\_$upload接口在util/ajax/xdr模块中实现
 
 |      | 类型 | 描述 |
 | :--  | :--  | :-- |
