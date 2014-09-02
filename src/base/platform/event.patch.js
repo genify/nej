@@ -186,17 +186,22 @@ NEJ.define([
          * @param  {String}      鼠标事件类型
          * @return {Void}
          */
-        _h.__dispatchEvent = function(_element,_type,_options){
-            var _event = document.createEventObject();
-            try{
-                _u._$merge(_event,_options);
-                _element.fireEvent('on'+_type,_event);
-            }catch(ex){
-                // ignore unrecognized event name
-                console.error(ex.message);
-                console.error(ex.stack);
-            }
-        };
+        _h.__dispatchEvent = (function(){
+            var _omap = {
+                propertychange:{propertyName:'value'}
+            };
+            return function(_element,_type,_options){
+                var _event = document.createEventObject();
+                try{
+                    _u._$merge(_event,_omap[_type],_options);
+                    _element.fireEvent('on'+_type,_event);
+                }catch(ex){
+                    // ignore unrecognized event name
+                    console.error(ex.message);
+                    console.error(ex.stack);
+                }
+            };
+        })();
     });
     // for firefox
     NEJ.patch('GR',function(){
