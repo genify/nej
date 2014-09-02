@@ -119,7 +119,7 @@ var f = function(){
 		v._$dispatchEvent(_input,'input');
 	});
 
-	test('input event',function(){
+	test('textarea event',function(){
 		stop();
 		var _textarea = e._$get('js-textarea');
 		v._$addEvent(_textarea,'input',function(_event){
@@ -149,7 +149,8 @@ var f = function(){
 		e._$css3d(_node,'rotate',{x:2,y:1,z:0,a:'-75deg'});
 	});
 
-	asyncTest("检测事件触发点", function(){
+	module('user helper test');
+	test("检测事件触发点", function(){
 		stop();
 		var _pageX,_pageY;
 		var _f2 = function(_e){
@@ -163,6 +164,7 @@ var f = function(){
 		};
 		var _node = e._$get('js-node');
 		v._$addEvent(_node,'click',_f2);
+		v._$dispatchEvent(_node,'click');
 	});
 }
 module('依赖模块');

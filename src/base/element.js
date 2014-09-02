@@ -85,7 +85,7 @@ NEJ.define([
      */
     _p._$get = function(_element){
         // for document/window
-        var _node = _empol[_element];
+        var _node = _empol[''+_element];
         if (!!_node){
             return _node;
         }
