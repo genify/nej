@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>element demo</title>
+    <meta charset="utf-8" />
+    <script>
+      function log(m){
+          var p = document.createElement('p');
+          p.innerHTML = m;
+          document.body.appendChild(p);
+      }
+    </script>
+  </head>
+  <body>
+    
+    <script src="../../define.js"></script>
+    <script>
+      NEJ.define([
+          'base/element'
+      ],function(_e){
+          // create element and get by id
+          var _div = _e._$create('div');
+          _div.innerHTML = '<p id="a">aaaa</p>';
+          log(_e._$get('a'));
+      });
+    </script>
+  </body>
+</html>

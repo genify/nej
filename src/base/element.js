@@ -738,7 +738,7 @@ NEJ.define([
         return null;
     };
     /**
-     * 创建节点
+     * 创建节点，使用该接口创建的结构后续可通过_$get接口根据ID取到节点
      *
      * 结构举例
      * ```javascript
@@ -756,6 +756,12 @@ NEJ.define([
      *       // 创建一个节点挂到id是abc的节点上
      *       // 结果：<div id="abc">1<p class="m-list"></p></div>
      *       _e._$create("p","m-list","abc");
+     * 
+     *       // 创建一个节点放在内存中
+     *       var _node = _e._$create('div');
+     *       _node.innerHTML = '<p id="a">aaaaaa</p><p id="b">bbbbbb</p>';
+     *       // 后续可以通过id取id为a的节点
+     *       var _pa = _e._$get('a');
      *   });
      * ```
      *
@@ -778,7 +784,12 @@ NEJ.define([
             _u._$merge(_element,_map[_tag.toLowerCase()]);
             if (!!_class) _element.className = _class;
             _parent = _p._$get(_parent);
-            if (!!_parent) _parent.appendChild(_element);
+            if (!!_parent){
+                _parent.appendChild(_element);
+            }else{
+                // append to documentfragment for get by id
+                _fragment.appendChild(_element);
+            }
             return _element;
         };
     })();
@@ -1256,7 +1267,7 @@ NEJ.define([
             if (_reg.test(_html)){
                 _tag = _tmap[RegExp.$1]||'';
             }
-            var _div = document.createElement(_tag||'div');
+            var _div = _p._$create(_tag||'div');
             _div.innerHTML = _html;
             var _list = _p._$getChildren(_div);
             return _list.length>1?_div:_list[0];
