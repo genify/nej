@@ -842,7 +842,7 @@
         var _doComplete = function(_list,_base){
             if (!_list||!_list.length) return;
             for(var i=0,l=_list.length,_it;i<l;i++){
-                _it = _list[i];
+                _it = _list[i]||'';
                 if(_it.indexOf('.')!=0) continue;
                 _list[i] = _doFormatURI(_it,_base);
             }
