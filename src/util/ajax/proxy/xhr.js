@@ -61,7 +61,11 @@ var f = function(){
                     if (_input.type!='file'){
                         return;
                     }
+                    var _name = _input.name;
                     _u._$forEach(_input.files,function(_file){
+                        if (!!_name){
+                            _file.name = _name;
+                        }
                         _result.push(_file);
                     });
                     _input.parentNode.removeChild(_input);
