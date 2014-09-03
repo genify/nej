@@ -1123,3 +1123,6 @@ modules:{
 
 将退化的模块从系统中删除只需要将模块对应的UMI配置从模块配置中删除即可，而无需修改具体业务逻辑
 
+## 总结
+
+随着WEB技术的快速发展，单页面系统（[SPA](http://en.wikipedia.org/wiki/Single-page_application)）的应用变得越来越广泛；随着此类系统复杂度的增加，其对平台及模块的伸缩性方面需求变得越来越重要，而对于这两方面业界也有不少解决方案业，本文我们主要探讨了网易[NEJ框架](https://github.com/NetEaseWD/NEJ)在这些方面给出的解决方案；网易在单页面系统方面也做了多年的实践和技术积累，如 近几年的[网易云音乐PC版](http://music.163.com/#/download)、[易信WebIM](https://web.yixin.im/)、[网易邮箱助手](http://mailease.163.com/)等，早些年的 [网易相册](http://photo.163.com/)、[网易邮箱](http://mail.163.com)等，移动端的[网易云相册IPad版](http://photo.163.com/cloudphotos/)、[Lofter Android版](http://www.lofter.com/app)等产品均是此类单页面系统的应用实践，如实践过程中对这方面有兴趣的同学可进一步做交流
