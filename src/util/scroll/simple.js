@@ -15,7 +15,7 @@ NEJ.define([
     'util/event',
     'util/dragger/dragger',
     'util/animation/easeinout'
-],function(NEJ,_e,_v,_u,_t,_t0,_t1,_p,_o,_f,_r){
+],function(NEJ,_k,_e,_v,_u,_t,_t0,_t1,_p,_o,_f,_r){
     // variable declaration
     var _pro;
     /**
@@ -171,7 +171,7 @@ NEJ.define([
             _options.body = _body;
             _options.view = this.__parent;
             this.__dragger[_name] =
-                _p._$$Dragger._$allocate(_options);
+                _t0._$$Dragger._$allocate(_options);
         };
         return function(_options){
             this.__super(_options);
