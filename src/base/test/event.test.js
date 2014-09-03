@@ -4,8 +4,8 @@ var f = function(){
 	var p = NEJ.P('nej.p');
 	var e = NEJ.P('nej.e');
 	var v = NEJ.P('nej.v');
-	var func = function(_eventType){
-		var _node = e._$get('js-node');
+	var func = function(_eventType,_node){
+		_node = _node || e._$get('js-node');
 		var _num = 0,_ele,_ele2,_pageX,_pageY;
 		var _dispatch = function(_node){
 			v._$dispatchEvent(_node,_eventType);
@@ -83,7 +83,9 @@ var f = function(){
 		_dispatch(_node.children[0]);
 		equal(_num,10,'阻止掉事件捕获');
 	};
-	//开始单元测试
+	// 开始单元测试
+
+
 	test('event mouseover',function(){
 		var _eventType = 'mouseover';
 		func(_eventType);
@@ -94,10 +96,10 @@ var f = function(){
 		func(_eventType);
 	});
 
-	// test('event change',function(){
-	// 	var _eventType = 'change';
-	// 	func(_eventType);
-	// });
+	test('event change',function(){
+		var _eventType = 'change';
+		func(_eventType,e._$get('js-input'));
+	});
 
 	module('event常规测试');
 
@@ -139,15 +141,18 @@ var f = function(){
 		_iframe.src = 'http://www.baidu.com';
 	});
 
-	test('transitionend event',function(){
-		stop();
-		var _node = e._$get('js-node');
-		v._$addEvent(_node,'transitionend',function(_event){
-			ok(true,'transitionend 事件成功触发');
-			start();
+	if (p._$support('css3d')){
+		test('transitionend event',function(){
+			stop();
+			var _node = e._$get('js-node');
+			e._$setStyle(_node,'transition-duration','1s');
+			v._$addEvent(_node,'transitionend',function(_event){
+				ok(true,'transitionend 事件成功触发');
+				start();
+			});
+			e._$css3d(_node,'rotate',{x:2,y:1,z:0,a:'105deg'});
 		});
-		e._$css3d(_node,'rotate',{x:2,y:1,z:0,a:'-75deg'});
-	});
+	}
 
 	module('user helper test');
 	test("检测事件触发点", function(){

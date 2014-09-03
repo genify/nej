@@ -243,7 +243,7 @@ NEJ.define([
     };
 
     if (CMPT){
-        NEJ.copy('nej.ut',_p);
+        NEJ.copy(NEJ.P('nej.ut'),_p);
     }
 
     return _p;
