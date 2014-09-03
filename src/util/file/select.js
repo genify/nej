@@ -49,6 +49,7 @@ NEJ.define([
      * @param    {String|Node} arg0     - 绑定选择文件的节点，必须为label节点，且未设置for属性
      * @param    {Object}      arg1     - 配置参数
      * @property {String|Node} form     - 文件选择控件所在的表单，默认全新生成一个
+     * @property {String|Node} parent   - 如果新生成form表单则可以指定表单容器节点，默认为document.body
      * @property {String}      name     - 单个文件选择支持指定提交时文件名称
      * @property {String}      clazz    - 表单样式名称，可用于控制表单位置
      * @property {Boolean}     multiple - 是否允许多选，默认单选
@@ -82,7 +83,7 @@ NEJ.define([
             _form.insertAdjacentHTML('afterBegin',_arr.join(''));
         };
         // build parent
-        var _doBuildParent = function(_id,_form,_clazz,_param){
+        var _doBuildParent = function(_id,_form,_clazz,_param,_fbox){
             var _parent,
                 _cch = _cache[_id],
                 _cls = _class+' '+(_clazz||'');
@@ -96,7 +97,7 @@ NEJ.define([
                 _parent = _e._$create('form',_cls);
                 _e._$dataset(_parent,'id',_id);
                 _doInitParam(_parent,_param);
-                document.body.appendChild(_parent);
+                (_fbox||document.body).appendChild(_parent);
             }
             _cch.pid = _e._$id(_parent);
         };
@@ -148,7 +149,8 @@ NEJ.define([
                 _id,
                 _options.form,
                 _options.clazz,
-                _options.param
+                _options.param,
+                _e._$get(_options.parent)
             );
             _cch.nmb = 0;
             _cch.name = _options.name;
