@@ -98,7 +98,6 @@ NEJ.define([
      */
     _pro._$show = function(){
         _e._$fullScreen(this.__body);
-        debugger;
         this.__super();
     };
 
