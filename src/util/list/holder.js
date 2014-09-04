@@ -64,7 +64,7 @@ NEJ.define([
                 top:_e._$create('div'),
                 bottom:_e._$create('div')
             };
-            _u._$forIn(this.__holders,_doInitHolder);
+            _u._$loop(this.__holders,_doInitHolder);
             this.__super();
         };
     })();
@@ -100,7 +100,7 @@ NEJ.define([
                     top:document.createDocumentFragment(),
                     bottom:document.createDocumentFragment()
                 };
-                _u._$forIn(this.__holders,_doResetHolder);
+                _u._$loop(this.__holders,_doResetHolder);
                 this.__hbody.appendChild(this.__holders.bottom);
                 this.__hbody.insertAdjacentElement('afterBegin',this.__holders.top);
             }
@@ -212,7 +212,7 @@ NEJ.define([
      * @return {Void}
      */
     _pro._$clearHolder = function(){
-        _u._$forIn(
+        _u._$loop(
             this.__holders,
             _e._$removeByEC
         );

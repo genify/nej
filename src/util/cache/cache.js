@@ -166,7 +166,7 @@ NEJ.define([
             delete this.__cache[_key];
             return;
         }
-        _u._$forIn(
+        _u._$loop(
             this.__cache,function(_item,_key){
                 if (_key!=(_ckey+'-l')){
                     this.__delDataInCache(_key);
@@ -273,7 +273,7 @@ NEJ.define([
             _j._$delDataInStorage(_key);
             return;
         }
-        _u._$forIn(
+        _u._$loop(
             this.__cache,function(_item,_key){
                 if (_key!=(_ckey+'-l')){
                     this.__delDataLocal(_key);

@@ -341,7 +341,7 @@ NEJ.define([
                     );
                 }else{
                     // clear all event
-                    _u._$forIn(
+                    _u._$loop(
                         _cch_id,function(_value,_name){
                             _p._$clearEvent(_element,_name);
                         }

@@ -665,12 +665,12 @@ NEJ.define([
         };
         return function(_options){
             this.__treg = NEJ.X({},_rmap);
-            _u._$forIn(
+            _u._$loop(
                 _options.type,
                 _doMerge._$bind(null,this.__treg)
             );
             this.__vfun = NEJ.X({},_vfun);
-            _u._$forIn(
+            _u._$loop(
                 _options.attr,
                 _doMerge._$bind(null,this.__vfun)
             );
@@ -798,7 +798,7 @@ NEJ.define([
             var _holder = _getHolder.call(this,_node,_type,_message);
             if (!!_holder&&!!_message) _holder.innerHTML = _message;
             // show message node
-            _u._$forIn(this.__wopt,
+            _u._$loop(this.__wopt,
                 function(_value,_key){
                     _e._$setStyle(
                         _getHolderNode.call(this,_node,_key),

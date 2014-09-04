@@ -171,7 +171,7 @@ NEJ.define([
             this.__tbname,
             _options.mode||'readwrite'
         );
-        _u._$forIn(
+        _u._$loop(
             _options,function(_func,_key){
                 if (_u._$isFunction(_func)){
                     _tx[_key] = _func;
@@ -213,7 +213,7 @@ NEJ.define([
                 _event.preventDefault();
             }
         });
-        _u._$forIn(_hash,function(_item){
+        _u._$loop(_hash,function(_item){
             if (_item!=null){
                 //console.log('do '+_action+' -> '+_item);
                 _tx[_action](_item);
@@ -268,7 +268,7 @@ NEJ.define([
     _pro._$get = (function(){
         var _doLoadBatchData = function(_store,_map,_onload){
             var _count = 0;
-            _u._$forIn(
+            _u._$loop(
                 _map,function(_value,_key){
                     _count++;
                     _doLoadData(

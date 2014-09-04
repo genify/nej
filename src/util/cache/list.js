@@ -293,7 +293,7 @@ NEJ.define([
         this.__timer = window.clearTimeout(this.__timer);
         // dump id map for used items
         var _map = {};
-        _u._$forIn(
+        _u._$loop(
             this.__lspl,function(_list,_key){
                 if (_key=='hash') return;
                 if (!_u._$isArray(_list)) return;
@@ -304,7 +304,7 @@ NEJ.define([
             },this
         );
         // check used in hash
-        _u._$forIn(
+        _u._$loop(
             this.__getHash(),
             function(_item,_id,_hash){
                 if (!_map[_id]){
@@ -755,7 +755,7 @@ NEJ.define([
                 }
             }else{
                 // clear all list
-                _u._$forIn(
+                _u._$loop(
                     this.__lspl,function(_list,_key){
                         if (_key=='hash'||
                            !_u._$isArray(_list)) return;

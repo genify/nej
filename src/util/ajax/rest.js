@@ -155,7 +155,7 @@ NEJ.define([
             });
             // parse remain param
             var _data = _options.data||{};
-            _u._$forIn(
+            _u._$loop(
                 _param,function(_value,_key){
                     if (!_exist[_key]){
                         _data[_key] = _value;

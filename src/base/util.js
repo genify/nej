@@ -199,6 +199,41 @@ NEJ.define([
         };
     })();
     /**
+     * 遍历对象
+     * 
+     * ```javascript
+     * NEJ.define([
+     *     'base/util'
+     * ],function(_u){
+     *       var obj = {a:{id:1,name:'a'},b:{id:2,name:'b'},...};
+     * 
+     *       // 遍历对象    
+     *       _u._$loop(obj,function(_item,_key){
+     *           // TODO
+     *       });
+     * 
+     *       // 从对象里查找id为2的元素，如果有返回KEY，没有返回null
+     *       var key = _u._$loop(obj,function(_item){
+     *           return _item.id==2;
+     *       });
+     * });
+     * ```
+     * 
+     * @method module:base/util._$loop
+     * @see    module:base/util._$forIn
+     * @param  {Object}   arg0 - 对象
+     * @param  {Function} arg1 - 回调，如果返回true，则中断遍历
+     * @param  {Object}   arg2 - 回调函数调用时this对象
+     * @return {String}          返回中断时的标识，没有中断则统一返回null
+     */
+    _p._$loop = function(_obj,_callback,_this){
+        if (_p._$isObject(_obj)&&
+            _p._$isFunction(_callback)){
+            return _h.__forIn.apply(_h,arguments);
+        }
+        return null;
+    };
+    /**
      * 线性查找指定项
      *
      * ```javascript
@@ -409,7 +444,7 @@ NEJ.define([
             }
         }else if (_p._$isObject(_list)){
             // list is object
-            return _h.__forIn(_list,_callback,_this);
+            return _p._$loop(_list,_callback,_this);
         }
         return null;
     };
@@ -814,7 +849,7 @@ NEJ.define([
     _p._$object2string = function(_object,_split,_encode){
         if (!_object) return '';
         var _arr = [];
-        _p._$forIn(
+        _p._$loop(
             _object,function(_value,_key){
                 if (_p._$isFunction(_value)){
                     return;
@@ -1205,7 +1240,7 @@ NEJ.define([
         var _result = arguments[0]||{};
         // merge
         for(var i=1;i<=_last;i++){
-            _p._$forIn(arguments[i],function(v,k){
+            _p._$loop(arguments[i],function(v,k){
                 if (!_filter(v,k)){
                     _result[k] = v;
                 }
@@ -1236,7 +1271,7 @@ NEJ.define([
      */
     _p._$fetch = function(_object,_config){
         if (!!_config){
-            _p._$forIn(_object,function(v,k,m){
+            _p._$loop(_object,function(v,k,m){
                 var _value = _config[k];
                 if (_value!=null){
                     m[k] = _value;
@@ -1285,7 +1320,7 @@ NEJ.define([
         }
         // for object
         var _length = 0;
-        _p._$forIn(_obj,function(){
+        _p._$loop(_obj,function(){
             _length++;
             return _length>0;
         });
