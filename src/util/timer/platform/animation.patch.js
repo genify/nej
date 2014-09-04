@@ -11,7 +11,7 @@ NEJ.define([
 ],function(_h,_m){
     // for ie9-
     NEJ.patch('TR<=5.0',function(){
-        var _fps = _m._$IS.desktop?80:(_m._$IS.ios?50:30);
+        var _fps = _m._$is('desktop')?80:(_m._$is('ios')?50:30);
         /**
          * 请求动画
          * @param  {Function} 动画回调

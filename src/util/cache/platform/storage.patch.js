@@ -6,8 +6,9 @@
  * ------------------------------------------
  */
 NEJ.define([
+    'base/event',
     './storage.js'
-],function(_h,_p,_o,_f,_r){
+],function(_v,_h,_p,_o,_f,_r){
     // for ie7-
     NEJ.patch('TR<=3.0',[
         'base/config',
@@ -30,10 +31,11 @@ NEJ.define([
                 onready:function(_flash){
                     if (!_flash){
                         console.log('flash for localStorage unavailable');
+                    }else{
+                        _localStorage = _flash;
+                        _localStorage.initStorage('nej-storage');
                     }
-                    _localStorage = _flash;
-                    _localStorage.initStorage('nej-storage');
-                    (document.onstorageready||_f)();
+                    _v._$dispatchEvent(document,'storageready');
                 }
             });
         };

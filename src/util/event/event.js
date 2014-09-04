@@ -326,6 +326,10 @@ NEJ.define([
             _v._$delEvent = _v._$delEvent._$aop(_doDelEvent._$bind(this));
             _v._$clearEvent = _v._$clearEvent._$aop(_doClearEvent._$bind(this));
             _v._$dispatchEvent = _v._$dispatchEvent._$aop(_doDispatchEvent._$bind(this));
+            
+            if (CMPT){
+                NEJ.copy(NEJ.P('nej.v'),_v);
+            }
         };
     })();
     

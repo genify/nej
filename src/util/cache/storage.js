@@ -182,7 +182,7 @@ NEJ.define([
         event:'storageready',
         oneventadd:function(){
             if (_h.__isStorageReady()){
-                document.onstorageready();
+                _v._$dispatchEvent(document,'storageready');
             }
         }
     });

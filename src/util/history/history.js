@@ -116,7 +116,7 @@ NEJ.define([
         // check location
         var _doCheckLocation = function(){
             if (_url!=_ctxt.location.href) _onLocationChange();
-            _timer = _t0.requestAnimationFrame(_doCheckLocation);
+            _timer = _t1.requestAnimationFrame(_doCheckLocation);
         };
         // check use hashchange event on window
         var _useHashChange = function(){
@@ -140,7 +140,8 @@ NEJ.define([
                 );
                 _onLocationChange();
             }else if(!_timer){
-                _timer = requestAnimationFrame(_doCheckLocation);
+                _timer = _t1.requestAnimationFrame(_doCheckLocation);
+                _doCheckLocation();
             }
         };
     })();
