@@ -26,12 +26,11 @@ NEJ.define(['util/audio/audio'],function(){
              preload:true,
              url:'http://www.zhlongyin.com/UploadFiles/xrxz/2011/5/201105051307513619.mp3',
              onstatechange:function(_event){
-                   ok('回调成功' + 'state ' +_event.state +　'data ' + _event.data);
+                   // ok('回调成功' + 'state ' +_event.state +　'data ' + _event.data);
                    //  debugger;
                    //  _audio._$pause();
                    //  // 停止
                    //  _audio._$stop();
-                   // start()
              }
          });
          // 播放

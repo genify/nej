@@ -5,17 +5,15 @@ var f = function(){
         _e = _('nej.e'),
         _p = _('nej.ut'),
 		_j = _('nej.j'),
-        _proCacheCustom,
-        _supCacheCustom;
+        _proCacheCustom;
 	_p._$$CacheCustom = NEJ.C();
     _proCacheCustom = _p._$$CacheCustom._$extend(_p._$$CacheAbstract);
-	_supCacheCustom = _proCacheCustom._$supro;
-	
+
 	_proCacheCustom.__reset = function(_options){
 		this.__supReset(_options);
 		this.__getCache(_options._id);
 	};
-	
+
 	_proCacheCustom.__getCache = function(_id){
 		var _cache = {};
 		if (!!_id){
@@ -27,7 +25,7 @@ var f = function(){
         }
 		this.__myCache = _cache;
 	};
-	
+
 	/**
 	 * 从cache中获取数据
 	 * @param {Object} _id
@@ -36,7 +34,7 @@ var f = function(){
 		// 这里去缓存中拿
 		return this.__myCache[_rkey];
 	}
-	
+
 	/**
 	 * 对外保留的获取数据接口
 	 */
@@ -58,12 +56,12 @@ var f = function(){
             return this;
         };
 	})();
-	
+
 	_proCacheCustom.__doSaveToCache = function(_rkey,_data){
 		if(!this.__myCache[_rkey])
 		  this.__myCache[_rkey] = _data;
 	}
-	
+
 	/**
 	 * 请求返回数据后处理
 	 * @param {Object} _ropt

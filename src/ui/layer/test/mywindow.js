@@ -4,8 +4,7 @@ var f = function(){
         _u = _('nej.u'),
         _e = _('nej.e'),
         _p = _('nej.ui'),
-        _proMyWindow,
-        _supMyWindow;
+        _proMyWindow;
     var _seed_html = _e._$addNodeTemplate('<div>您要展示的内容部分</div>');
     /**
      * 弹出层封装基类对象，主要实现层里面内容部分的业务逻辑
@@ -16,7 +15,6 @@ var f = function(){
      */
     _p._$$MyWindow = NEJ.C();
       _proMyWindow = _p._$$MyWindow._$extend(_p._$$WindowWrapper);
-      _supMyWindow = _p._$$MyWindow._$supro;
 
     _proMyWindow.__initXGui = function(){
         this.__seed_html = _seed_html;

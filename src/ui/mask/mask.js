@@ -98,7 +98,8 @@ NEJ.define([
      */
     _pro._$show = function(){
         _e._$fullScreen(this.__body);
-        _supMask._$show.apply(this,arguments);
+        debugger;
+        this.__super();
     };
 
     if (CMPT){
