@@ -1101,6 +1101,15 @@ NEJ.define([
         return this.__pager;
     };
     /**
+     * 取ITEM列表
+     *
+     * @method module:util/list/module._$$ListModule#_$items
+     * @return {Array} ITEM列表
+     */
+    _pro._$items = function(){
+        return this.__items;
+    };
+    /**
      * 取列表项节点
      *
      * @method module:util/list/module._$$ListModule#_$getItemBody
