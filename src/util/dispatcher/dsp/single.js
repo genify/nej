@@ -168,11 +168,21 @@ NEJ.define([
         }
     };
     /**
-     * 隐藏指定UMI的模块，不做任何处理
-     * @param  {String} 模块UMI
+     * 隐藏当前分组
+     * 
+     * @method module:util/dispatcher/dsp/single._$$GroupManagerSingle#_$hide
      * @return {Void}
      */
-    _pro._$hideUMI = _f;
+    _pro._$hide = function(){
+        if (!this.__source){
+            return;
+        }
+        this._$hideUMI(
+            this.__source._$getPath()
+        );
+        delete this.__cmroot;
+        delete this.__source;
+    };
     
     return _p;
 });
