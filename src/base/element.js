@@ -1496,7 +1496,7 @@ NEJ.define([
     _y._$style = function(_element,_map){
         _element = _p._$get(_element);
         if (!!_element){
-            _u._$forIn(_map,function(_value,_name){
+            _u._$loop(_map,function(_value,_name){
                 _p._$setStyle(_element,_name,_value);
             });
         }

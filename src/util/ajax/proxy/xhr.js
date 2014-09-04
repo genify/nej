@@ -112,7 +112,7 @@ NEJ.define([
                 _request.url,
                !_request.sync
             );
-            _u._$forIn(_headers,_doSetHeader,this);
+            _u._$loop(_headers,_doSetHeader,this);
             // support credential
             if (!!this.__request.cookie&&
                ('withCredentials' in this.__xhr)){

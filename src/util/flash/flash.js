@@ -161,7 +161,7 @@ NEJ.define([
             }
             _params.flashvars = _vars;
             // check event callback
-            _u._$forIn(_options,function(_value,_key){
+            _u._$loop(_options,function(_value,_key){
                 if (_u._$isFunction(_value)&&_key!='onready'){
                     _cache[_id+'-'+_key] = _value;
                 }

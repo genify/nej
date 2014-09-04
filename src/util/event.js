@@ -431,7 +431,7 @@ NEJ.define([
             _v._$delEvent.apply(_v,_args);
         };
         return function(){
-            _u._$forIn(this.__events_dom,_doRemoveEvent);
+            _u._$loop(this.__events_dom,_doRemoveEvent);
         };
     })();
     /**
@@ -455,7 +455,7 @@ NEJ.define([
      */
     _pro.__doClearComponent = function(_filter){
         _filter = _filter||_f;
-        _u._$forIn(this,function(_inst,_key,_map){
+        _u._$loop(this,function(_inst,_key,_map){
             if (!!_inst&&!!_inst._$recycle&&!_filter(_inst)){
                 delete _map[_key];
                 _inst._$recycle();
@@ -593,7 +593,7 @@ NEJ.define([
             this._$setEvent(_type,_event);
         };
         return function(_events){
-            _u._$forIn(_events,_doSetEvent,this);
+            _u._$loop(_events,_doSetEvent,this);
         };
     })();
     /**
@@ -625,7 +625,7 @@ NEJ.define([
             if (!!_type){
                 delete this.__events[_type];
             }else{
-                _u._$forIn(this.__events,_doClearEvent,this);
+                _u._$loop(this.__events,_doClearEvent,this);
             }
         };
     })();

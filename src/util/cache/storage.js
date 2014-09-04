@@ -146,7 +146,7 @@ NEJ.define([
             delete _map[_key];
         };
         return function(){
-            _u._$forIn(_cache,_doRemove);
+            _u._$loop(_cache,_doRemove);
             _h.__clearStorage();
         };
     })();
@@ -195,7 +195,7 @@ NEJ.define([
             delete _map[_key];
         };
         return function(){
-            _u._$forIn(_cache,_doFlush);
+            _u._$loop(_cache,_doFlush);
         };
     })();
     _v._$addEvent(

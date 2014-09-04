@@ -77,7 +77,7 @@ NEJ.define([
         var _doInitParam = function(_form,_param){
             if (!_param) return;
             var _arr = [];
-            _u._$forIn(_param,function(_value,_key){
+            _u._$loop(_param,function(_value,_key){
                 _arr.push('<input type="hidden" name="'+_key+'" value="'+_value+'">');
             });
             _form.insertAdjacentHTML('afterBegin',_arr.join(''));

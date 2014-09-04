@@ -134,7 +134,7 @@ NEJ.define([
      */
     _pro.__doFilterOptions = function(_options){
         var _result = {};
-        _u._$forIn(_options,
+        _u._$loop(_options,
             function(_item,_key){
                 this.__lopt.hasOwnProperty(_key)
                 ? this.__lopt[_key] = _item

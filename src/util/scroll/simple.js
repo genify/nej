@@ -251,11 +251,11 @@ NEJ.define([
             delete this.__parent;
             delete this.__dragging;
             this.__doStopBarOpacity();
-            _u._$forIn(
+            _u._$loop(
                 this.__dragger,
                 _doClearDragger._$bind(this)
             );
-            _u._$forIn(
+            _u._$loop(
                 this.__bar,
                 _doClearBarStyle._$bind(this)
             );

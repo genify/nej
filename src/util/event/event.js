@@ -120,7 +120,7 @@ NEJ.define([
         return function(){
             this.__super();
             // clear cache
-            _u._$forIn(
+            _u._$loop(
                 this.__cache,_doClear,this
             );
             delete this.__element;
@@ -298,7 +298,7 @@ NEJ.define([
                     this.__doEventDelete(_type);
                     return;
                 }
-                _u._$forIn(
+                _u._$loop(
                     this.__cache,function(_value,_key){
                         if (_u._$isArray(_value)){
                             this.__doEventDelete(_key);

@@ -276,7 +276,7 @@ NEJ.define([
             height:'100%'
         };
         var _doAppendUnit = function(_map){
-            _u._$forIn(_map,function(_value,_key,_xmap){
+            _u._$loop(_map,function(_value,_key,_xmap){
                 _xmap[_key] = _value+'px';
             });
         };

@@ -247,7 +247,7 @@ NEJ.define([
         return function(){
             delete this.__config;
             this.__root = this.__root._$recycle();
-            _u._$forIn(this.__groups,_doRecycle);
+            _u._$loop(this.__groups,_doRecycle);
             this.__super();
         };
     })();
@@ -699,7 +699,7 @@ NEJ.define([
         // rule parse function map
         var _fmap = {
             title:function(_config){
-                _u._$forIn(_config,
+                _u._$loop(_config,
                    _doRegistTitle,this);
             },
             rewrite:function(_config){
@@ -713,13 +713,13 @@ NEJ.define([
                 }
             },
             alias:function(_config){
-                _u._$forIn(
+                _u._$loop(
                     _config,
                     _doRegistAlias,this
                 );
             },
             action:function(_config){
-                _u._$forIn(
+                _u._$loop(
                     _config,
                     _doRegistAction,this
                 );

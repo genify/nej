@@ -305,12 +305,12 @@ NEJ.define([
             // do apply
             var _query = _u._$object2query(_options.param)||'';
             if (_type=='onrefresh'){
-                _u._$forIn(
+                _u._$loop(
                     this.__composites,
                     _doRedirect._$bind(this,_query,_options)
                 );
             }
-            _u._$forIn(
+            _u._$loop(
                 _composite,_doRedirect.
                 _$bind(this,_query,_options)
             );
@@ -330,9 +330,9 @@ NEJ.define([
             }
         };
         return function(){
-            _u._$forIn(this.__composites,_doHide,this);
-            _u._$forIn(this.__composites.onshow,_doHide,this);
-            _u._$forIn(this.__composites.onrefresh,_doHide,this);
+            _u._$loop(this.__composites,_doHide,this);
+            _u._$loop(this.__composites.onshow,_doHide,this);
+            _u._$loop(this.__composites.onrefresh,_doHide,this);
         };
     })();
     /**
@@ -361,7 +361,7 @@ NEJ.define([
         // dump modules for dispatcher startup
         _p._$dumpModules = function(){
             if (!_modules) return;
-            _u._$forIn(_modules,function(_module,_umi){
+            _u._$loop(_modules,function(_module,_umi){
                 dispatcher._$loaded(_umi,_module);
             });
             _modules = null;

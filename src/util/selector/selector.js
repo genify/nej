@@ -177,7 +177,7 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__doItemClear = function(_id){
-        _u._$forIn(
+        _u._$loop(
             this.__selection,
             function(_node,_key){
                 if (_key==_id||

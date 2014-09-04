@@ -75,7 +75,7 @@ NEJ.define([
             // check path config
             _p.__set('root',_config.root||'/res/');
             var _root = _p.__get('root');
-            _u._$forIn(_conf,function(v,k,m){
+            _u._$loop(_conf,function(v,k,m){
                 _p.__set(k,_config[v.name]||(_root+v.dft));
             });
             // csrf config
