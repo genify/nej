@@ -19,7 +19,7 @@ NEJ.define([
     './dsp/node.js',
     './dsp/group.js',
     './dsp/single.js',
-    './module.base.js'
+    './module.js'
 ],function(NEJ,_k,_e,_v,_u,_t0,_t1,_t2,_t3,_t4,_t5,_t6,_t7,_p,_o,_f,_r){
     var _pro;
     /**

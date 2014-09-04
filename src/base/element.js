@@ -780,15 +780,18 @@ NEJ.define([
             script:{defer:!0,type:'text/javascript'}
         };
         return function(_tag,_class,_parent){
-            var _element = document.createElement(_tag);
-            _u._$merge(_element,_map[_tag.toLowerCase()]);
+            var _element = document.createElement(_tag),
+                _config = _map[_tag.toLowerCase()];
+            _u._$merge(_element,_config);
             if (!!_class) _element.className = _class;
             _parent = _p._$get(_parent);
             if (!!_parent){
                 _parent.appendChild(_element);
             }else{
                 // append to documentfragment for get by id
-                _fragment.appendChild(_element);
+                if (!_config){
+                    _fragment.appendChild(_element);
+                }
             }
             return _element;
         };
