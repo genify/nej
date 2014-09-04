@@ -127,6 +127,7 @@ NEJ.define([
         if ((''+_status).indexOf('2')!=0){
             this._$dispatchEvent('onerror',{
                 data:_status,
+                result:_event.result,
                 code:_g._$CODE_ERRSERV,
                 message:'服务器返回异常状态['+_status+']!'
             });
