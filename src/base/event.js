@@ -105,9 +105,39 @@ NEJ.define([
      *   });
      * ```
      *
+     * 带自定义事件的类构造
+     * ```javascript
+     * NEJ.define([
+     *     'base/klass',
+     *     'base/event',
+     *     'util/event',
+     *     'util/event/event'
+     * ],function(_k,_v,_t0,_t1,_p){
+     *     // 定义类
+     *     _p._$$Klass = _k._$klass();
+     *     var _pro = _p._$$Klass._$extend(_t0._$$EventTarget);
+     *     
+     *     // TODO
+     *     
+     *     // 添加自定义事件支持
+     *     // 对节点的事件同样支持此自定义事件
+     *     _t1._$$CustomEvent._$allocate({
+     *         element:_p._$$Klass,
+     *         event:['ok','fail']
+     *     });
+     * 
+     *     // 使用事件接口添加/删除/调度事件
+     *     var _handler = function(_event){
+     *         // TODO
+     *     };
+     *     _v._$addEvent(_p._$$Klass,'ok',_handler);
+     *     _v._$delEvent(_p._$$Klass,'ok',_handler);
+     * });
+     * ```
+     * 
      * @method module:base/event._$addEvent
      * @see    module:base/event._$delEvent
-     * @param  {String|Node} arg0 - 节点ID或者对象
+     * @param  {String|Node|Function} arg0 - 节点或者类构造
      * @param  {String}      arg1 - 事件类型，不带on前缀，不区分大小写，多个事件用空格分隔
      * @param  {Function}    arg2 - 事件处理函数
      * @param  {Boolean}     arg3 - 是否捕获阶段事件，IE低版本浏览器忽略此参数
