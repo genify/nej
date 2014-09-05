@@ -1044,6 +1044,5 @@ var f = function(){
 };
 NEJ.define(
     '{lib}base/util.js',[
-    '{lib}base/global.js',
-    '{lib}base/element.js'
+    '{lib}base/global.js'
 ],f);
