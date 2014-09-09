@@ -105,7 +105,7 @@ NEJ.define([
      *   });
      * ```
      *
-     * 带自定义事件的类构造
+     * 带自定义事件的类构造或者对象
      * ```javascript
      * NEJ.define([
      *     'base/klass',
@@ -137,7 +137,7 @@ NEJ.define([
      * 
      * @method module:base/event._$addEvent
      * @see    module:base/event._$delEvent
-     * @param  {String|Node|Function} arg0 - 节点或者类构造
+     * @param  {String|Node|Object} arg0 - 节点或者类构造或者对象
      * @param  {String}      arg1 - 事件类型，不带on前缀，不区分大小写，多个事件用空格分隔
      * @param  {Function}    arg2 - 事件处理函数
      * @param  {Boolean}     arg3 - 是否捕获阶段事件，IE低版本浏览器忽略此参数

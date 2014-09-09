@@ -24,11 +24,13 @@ NEJ框架提供了基于常规面向对象的思想构建的控件系统，主�
 ```javascript
 NEJ.define([
     'base/klass'
-],function(_k){
+],function(_k,_p){
     // 定义一个类
-    var Klass = _k._$klass();
+    _p._$$Klass = _k._$klass();
 
     // TODO
+    
+    return _p;
 });
 ```
 
@@ -39,13 +41,15 @@ NEJ.define([
 ```javascript
 NEJ.define([
     'base/klass'
-],function(_k){
+],function(_k,_p){
     // 定义一个类
-    var Klass = _k._$klass();
+    _p._$$Klass = _k._$klass();
     // 继承其他类
-    var pro = Klass._$extend(Super);
+    var pro = _p._$$Klass._$extend(Super);
 
     // TODO
+    
+    return _p;
 });
 ```
 
@@ -56,18 +60,21 @@ NEJ.define([
 ```javascript
 NEJ.define([
     'base/klass'
-],function(_k){
+],function(_k,_p){
     // 定义一个类
-    var Klass = _k._$klass();
+    _p._$$Klass = _k._$klass();
     // 继承其他类
-    var pro = Klass._$extend(Super);
+    var pro = _p._$$Klass._$extend(Super);
     // 初始化
     pro.__init = function(){
         // 调用父类的__init
         this.__super();
         // TODO something
     };
+    
     // TODO
+    
+    return _p;
 });
 ```
 
@@ -78,11 +85,11 @@ NEJ.define([
 ```javascript
 NEJ.define([
     'base/klass'
-],function(_k){
+],function(_k,_p){
     // 定义一个类
-    var Klass = _k._$klass();
+    _p._$$Klass = _k._$klass();
     // 继承其他类
-    var pro = Klass._$extend(Super);
+    var pro = _p._$$Klass._$extend(Super);
     // 初始化
     pro.__init = function(){
         // 调用父类的__init
@@ -104,6 +111,8 @@ NEJ.define([
     };
 
     // TODO
+    
+    return _p;
 });
 ```
 
