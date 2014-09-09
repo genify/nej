@@ -97,7 +97,8 @@ NEJ.define([
     _pro.__reset = function(_options){
         this.__super(_options);
         this.__default = _options.defaultColor||'#fff';
-        this.__popt.color = _options.color||this.__default;
+        this.__popt.color = _options.color;
+        this.__popt.defaultColor = this.__default;
         this.__panel = _i0._$$ColorPanel._$allocate(this.__popt);
     };
     /**

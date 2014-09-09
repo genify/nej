@@ -212,8 +212,8 @@ NEJ.define([
     _pro._$setPosition = function(_rate){
         _rate = _rate||_o;
         this.__dragger._$setPosition({
-            top:this.__range.y[1]*(_rate.y||0)
-           ,left:this.__range.x[1]*(_rate.x||0)
+            top:this.__range.y[1]*(_rate.y||0),
+            left:this.__range.x[1]*(_rate.x||0)
         });
     };
 

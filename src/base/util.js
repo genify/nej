@@ -682,7 +682,7 @@ NEJ.define([
      * @return {Number}        浮点数
      */
     _p._$fixed = function(_float,_fraction){
-        return new Number(_float).toFixed(_fraction);
+        return parseFloat(new Number(_float).toFixed(_fraction));
     };
     /**
      * 相对路径转绝对路径

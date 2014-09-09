@@ -80,8 +80,12 @@ NEJ.define([
             _delta = _max-_min,
             _total = _max+_min,
             _lightness = _total/2;
-        if (!_delta)
-            return {h:0,s:0,l:_lightness};
+        if (!_delta){
+            return {
+                h:0,s:0,
+                l:_lightness
+            };
+        }
         var _saturation = _lightness<0.5
                         ? _delta/_total
                         : _delta/(2-_total),
@@ -97,7 +101,12 @@ NEJ.define([
             _hue = (2/3)+_deltag-_deltar;
         }
         _hue += _hue<0?1:(_hue>1?-1:0);
-        return {h:_hue,s:_saturation,l:_lightness};
+        console.log(_hue+':'+_lightness+':'+_saturation);
+        return {
+            h:_hue,
+            l:_lightness,
+            s:_saturation
+        };
     };
     /**
      * HSL色值转RGB色串
