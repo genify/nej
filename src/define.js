@@ -852,7 +852,8 @@
             var _args = _doFormatARG.apply(
                 p,arguments
             );
-            _uri = _args[0]||(''+(_seed++));
+            _uri = _args[0]||
+                   _doFormatURI('./'+(_seed++)+'.js');
             _deps = _args[1];
             _callback = _args[2];
             // check module defined in file

@@ -49,6 +49,7 @@ NEJ.define([
      * @uses     module:util/slider/xy._$$SliderXY
      * @uses     module:util/slider/y._$$SliderY
      * @extends  module:ui/event._$$Abstract
+     * 
      * @param    {Object} arg0 - 可选配置参数
      * @property {String} color - RGB颜色值，默认为#fff
      */

@@ -19,9 +19,7 @@ NEJ.define([
     'text!./colorpick.css',
     'text!./colorpick.html'
 ],function(NEJ,_k,_c,_e,_v,_t0,_i,_i0,_i1,_css,_html,_p,_o,_f,_r){
-    var _pro,
-        _seed_css = _e._$pushCSSText(_css,{root:_c._$get('root')}),
-        _seed_html= _t0._$addNodeTemplate(_html);
+    var _pro;
     /**
      * 颜色选择控件
      *
@@ -83,7 +81,9 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__init = function(){
-        this.__popt = {onchange:this.__onColorChange._$bind(this)};
+        this.__popt = {
+            onchange:this.__onColorChange._$bind(this)
+        };
         this.__super();
     };
     /**
@@ -108,9 +108,9 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__super();
         this.__panel._$recycle();
         delete this.__panel;
+        this.__super();
     };
     /**
      * 初始化外观信息
@@ -119,10 +119,16 @@ NEJ.define([
      * @method module:ui/colorpick/colorpick._$$ColorPick#__initXGui
      * @return {Void}
      */
-    _pro.__initXGui = function(){
-        this.__seed_css  = _seed_css;
-        this.__seed_html = _seed_html;
-    };
+    _pro.__initXGui = (function(){
+        var _seed_css = _e._$pushCSSText(_css,{
+                root:_c._$get('root')
+            }),
+            _seed_html= _t0._$addNodeTemplate(_html);
+        return function(){
+            this.__seed_css  = _seed_css;
+            this.__seed_html = _seed_html;
+        };
+    })();
     /**
      * 初始化节点
      *
@@ -136,12 +142,18 @@ NEJ.define([
         this.__ninput = _list[2];
         this.__npreview = _list[1];
         this.__popt.parent = this.__body;
-        _v._$addEvent(_list[0],'click'
-                     ,this.__onColorClear._$bind(this));
-        _v._$addEvent(_list[2],'keypress'
-                     ,this.__onEnterCheck._$bind(this));
-        _v._$addEvent(_list[3],'click'
-                     ,this.__onColorSelect._$bind(this));
+        _v._$addEvent(
+            _list[0],'click',
+            this.__onColorClear._$bind(this)
+        );
+        _v._$addEvent(
+            _list[2],'enter',
+            this.__onColorSelect._$bind(this)
+        );
+        _v._$addEvent(
+            _list[3],'click',
+            this.__onColorSelect._$bind(this)
+        );
     };
     /**
      * 清除颜色
@@ -175,24 +187,12 @@ NEJ.define([
      */
     _pro.__onColorSelect = function(){
         var _color = '#'+this.__ninput.value.trim();
-        if (!_i1._$isColor(_color))
+        if (!_i1._$isColor(_color)){
             return;
+        }
         this.__panel._$setColor(_color);
         _color = '#'+this.__ninput.value.trim();
         this._$dispatchEvent('onselect',{color:_color});
-    };
-    /**
-     * 回车事件侦测
-     *
-     * @protected
-     * @method module:ui/colorpick/colorpick._$$ColorPick#__onEnterCheck
-     * @param  {Event} arg0 - 事件对象
-     * @return {Void}
-     */
-    _pro.__onEnterCheck = function(_event){
-        if (_event.keyCode!=13)
-            return;
-        this.__onColorSelect();
     };
     /**
      * 设置颜色
