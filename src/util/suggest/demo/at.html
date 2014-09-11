@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NEJ实例 - AT提示</title>
+    <meta charset="utf-8" />
+    <style>
+      textarea{width:300px;height:200px;margin:0;padding:0;}
+      .txt{width:300px;height:30px;line-height:30px;}
+      .tbox{position:relative;zoom:1;outline:none;}
+      .tip{position:absolute;background:#fff;border:1px solid #aaa;}
+      .tip .it{height:20px;line-height:20px;}
+      .tip .it.js-selected{background:#1257F9;}
+    </style>
+  </head>
+  <body>
+    <div class="tbox" tabindex="10005">
+      <input class="txt" type="text" id="abc"/>
+      <div class="tip" id="def"></div>
+    </div>
+    <p>aaaaaaaaaaaaa</p>
+    <p>aaaaaaaaaaaaa</p>
+    <p>aaaaaaaaaaaaa</p>
+    <p>aaaaaaaaaaaaa</p>
+    <p>aaaaaaaaaaaaa</p>
+    <p>aaaaaaaaaaaaa</p>
+    <p>aaaaaaaaaaaaa</p>
+    <p>aaaaaaaaaaaaa</p>
+    <p>aaaaaaaaaaaaa</p>
+    <p>aaaaaaaaaaaaa</p>
+    <div class="tbox" tabindex="10006">
+      <textarea id="efg"></textarea>
+      <div class="tip" id="hij"></div>
+    </div>
+    
+    <script src="../../../define.js"></script>
+    <script>
+        NEJ.define([
+            'base/element',
+            'util/suggest/at'
+        ],function(_e,_t){
+            var _onchange = function(_event){
+                var _arr = [];
+                for(var i=9,v;i>=0;i--){
+                    v = _event.value+'-'+i;
+                    _arr.push('<div class="it" data-value="'+v+'">'+v+'</div>');
+                }
+                this._$update(_arr.join(''));
+            };
+            _t._$$At._$allocate({
+                input:'abc',
+                tip:'def',
+                onatchange:_onchange
+            });
+            _t._$$At._$allocate({
+                input:'efg',
+                tip:'hij',
+                onatchange:_onchange
+            });
+        });
+    </script>
+  </body>
+</html>

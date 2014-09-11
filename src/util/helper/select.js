@@ -12,9 +12,7 @@ NEJ.define([
     'base/element',
     'base/event',
     'util/event'
-],function(NEJ,_k,_e,_v,_t,_p,_o,_f,_r){
-    // variable declaration
-    var _pro;
+],function(NEJ,_k,_e,_v,_t,_p,_o,_f,_r,_pro){
     /**
      * 选择助手控件
      * 
@@ -103,7 +101,7 @@ NEJ.define([
         );
         this.__doInitDomEvent([[
             this.__kbody,'keydown',
-            this.__doCheckKBAction._$bind(this)
+            this.__doCheckKBAction._$bind(this),!0
         ],[
             this.__kbody,'enter',
             this.__doCheckKBEnter._$bind(this)
@@ -250,6 +248,7 @@ NEJ.define([
         var _code = _event.keyCode;
         // only for up and down
         if (_code!=38&&_code!=40) return;
+        _v._$stop(_event);
         var _eopt = {
             last:this._$getSelectedNode()
         };
@@ -287,6 +286,7 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__doCheckKBEnter = function(_event){
+        _v._$stop(_event);
         this._$dispatchEvent('onselect',{
             target:this._$getSelectedNode()
         });
