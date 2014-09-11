@@ -870,7 +870,7 @@ NEJ.define([
         if (_event.stopped) return;
         var _id = _event.data[this.__iopt.pkey];
         if (!!this.__items){
-            var _item = _e._$getItemById(
+            var _item = _t2._$getItemById(
                 this.__getItemId(_id)
             );
             if (!!_item) _item._$refresh(_event.data);
