@@ -621,60 +621,6 @@ NEJ.define([
         };
     })();
     /**
-     * 设置/获取光标位置在TEXTAREA中的位置
-     *
-     * 脚本举例
-     * ```javascript
-     *   NEJ.define([
-     *       'base/element'
-     *   ],function(_e){
-     *       // 设置光标选中内容
-     *       _e._$cursor('xxx',{start:5,end:10});
-     *       // 设置光标位置
-     *       _e._$cursor('xxx',8);
-     *
-     *       // 获取光标位置
-     *       // _position.start 光标起始位置
-     *       // _position.end   光标结束位置
-     *       var _position = _e._$cursor('xxx');
-     *   });
-     * ```
-     *
-     * @method   module:base/element._$cursor
-     * @param    {String|Node}   arg0  - TEXTAREA或者INPUT节点
-     * @param    {Number|Object} arg1  - 待设置光标的位置，如果起始位置和结束位置一致则输入数值即可
-     * @property {Number}        start - 起始位置
-     * @property {Number}        end   - 结束位置，没有end则表示与start相同
-     * @return   {Object}                光标位置，{start:0,end:10}
-     */
-    /**
-     * @method CHAINABLE._$cursor
-     * @see module:base/element._$cursor
-     */
-    _p._$cursor =
-    _y._$cursor = function(_textarea,_options){
-        _textarea = _p._$get(_textarea);
-        if (!_textarea){
-            return {start:0,end:0};
-        }
-        // position
-        if (_u._$isNumber(_options)){
-            _options = {
-                start:_options,
-                end:_options
-            };
-        }
-        if (_options!=null){
-            if (_options.end==null){
-                _options.end = _options.start||0;
-            }
-            _h.__setCursorPosition(_textarea,_options);
-        }else{
-            _options = _h.__getCursorPosition(_textarea);
-        }
-        return _options;
-    };
-    /**
      * 节点占全屏
      *
      * @method module:base/element._$fullScreen

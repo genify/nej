@@ -249,41 +249,6 @@ NEJ.define([
             };
         })();
         /**
-         * 设置光标位置
-         * @param  {String|Node} TEXTAREA节点
-         * @param  {Object}      光标的位置信息
-         * @return {Void}
-         */
-        _h.__setCursorPosition = function(_textarea,_position){
-            var _range = _textarea.createTextRange();
-            _range.collapse(!0);
-            _range.moveStart('character',_position.start);
-            _range.moveEnd('character',_position.end-_position.start);
-            _range.select();
-            _textarea.focus();
-        };
-        /**
-         * 取光标位置
-         * @param  {String|Node} TEXTAREA节点
-         * @return {Void}
-         */
-        _h.__getCursorPosition = function(_textarea){
-            var _range0 = document.selection.createRange();
-            // create in textarea object and match to document.selection
-            var _range1 = _textarea.createTextRange();
-            _range1.moveToBookmark(_range0.getBookmark());
-            // create textrange object for left amount of textarea & align them
-            var _range2 = _textarea.createTextRange();
-            _range2.collapse(!0);
-            _range2.setEndPoint("EndToStart",_range1);
-            // dump start and end
-            var _start = _range2.text.length;
-            return {
-                start:_start,
-                end:_start+_range0.text.length
-            };
-        };
-        /**
          * 取样式值
          * @param  {String|Node} 节点
          * @param  {String}      样式名称

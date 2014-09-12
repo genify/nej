@@ -12,8 +12,8 @@ NEJ.define([
     'base/event',
     'util/event',
     'util/helper/select',
-    '{platform}at.js'
-],function(_k,_e,_v,_t,_t0,_h,_p,_o,_f,_r,_pro){
+    'util/cursor/cursor'
+],function(_k,_e,_v,_t,_t0,_t1,_p,_o,_f,_r,_pro){
     /**
      * AT提示控件
      * 
@@ -128,8 +128,7 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__doUpdateTipPosition = function(){
-        var _pos = _h.__getCursorPXPosition(this.__input);
-        console.log(_pos);
+        var _pos = _t1._$coordinate(this.__input);
         _e._$style(
             this.__sopt.parent,{
                 top:_pos.top+_pos.height+'px',
@@ -148,7 +147,7 @@ NEJ.define([
     _pro.__onInput = (function(){
         var _reg0 = /[\s\b]/;
         return function(_event){
-            var _pos = _e._$cursor(this.__input),
+            var _pos = _t1._$cursor(this.__input),
                 _value = this.__input.value,
                 _arr = [];
             for(var i=_pos.start,c;i>=0;i--){
@@ -187,7 +186,7 @@ NEJ.define([
         var _value = _e._$dataset(_event.target,'value');
         if (!!_value){
             _value += ' ';
-            var _pos = _e._$cursor(this.__input),
+            var _pos = _t1._$cursor(this.__input),
                 _str = this.__input.value,
                 _start = _pos.start;
             for(;_start>=0;_start--){
@@ -197,7 +196,7 @@ NEJ.define([
             }
             this.__input.value = _str.substr(0,_start+1)+
                                  _value+_str.substr(_pos.end);
-            _e._$cursor(this.__input,{
+            _t1._$cursor(this.__input,{
                 start:_start+_value.length+1
             });
         }

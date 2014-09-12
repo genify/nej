@@ -100,29 +100,6 @@ NEJ.define([
         return _root.nodeName=='parsererror'?null:_root;
     };
     /**
-     * 设置光标位置
-     * @param  {String|Node} TEXTAREA节点
-     * @param  {Object}      光标的位置信息
-     * @return {Void}
-     */
-    _p.__setCursorPosition = function(_textarea,_position){
-        _textarea.selectionEnd = _position.end||0;
-        _textarea.selectionStart = _position.start||0;
-        _textarea.focus();
-    };
-    /**
-     * 取光标位置
-     * @param  {String|Node} TEXTAREA节点
-     * @return {Void}
-     */
-    _p.__getCursorPosition = function(_textarea){
-        _textarea.focus();
-        return {
-            end:_textarea.selectionEnd,
-            start:_textarea.selectionStart
-        };
-    };
-    /**
      * 节点占全屏
      * @param  {Node}   节点
      * @param  {Object} 视窗模型
