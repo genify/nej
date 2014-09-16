@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>demo for cascade</title>
+    <meta charset="utf-8" />
+    <script>
+      function log(m){
+          var p = document.createElement('p');
+          p.innerHTML = m;
+          document.body.appendChild(p);
+      }
+    </script>
+  </head>
+  <body>
+    <select id="level-1" name="a" data-value="1"></select>
+    <select id="level-2" name="b" data-value="2"></select>
+    <select id="level-3" name="c" data-value="22"></select>
+    <script src="../../../define.js"></script>
+    <script>
+      NEJ.define([
+          '../cascade.js'
+      ],function(_t){
+          _t._$$CascadeSelector._$allocate({
+              select:['level-1','level-2','level-3'],
+              data:[
+                  {
+                      id:1,
+                      name:'l1-1',
+                      list:[
+                          {
+                              id:1,
+                              name:'l21-1',
+                              list:[
+                                  {
+                                      id:11,
+                                      name:'l31-1'
+                                  },{
+                                      id:12,
+                                      name:'l31-2'
+                                  },{
+                                      id:13,
+                                      name:'l31-3'
+                                  }
+                              ]
+                          },{
+                              id:2,
+                              name:'l22-1',
+                              list:[
+                                  {
+                                      id:21,
+                                      name:'l32-1'
+                                  },{
+                                      id:22,
+                                      name:'l32-2'
+                                  },{
+                                      id:23,
+                                      name:'l32-3'
+                                  }
+                              ]
+                          }
+                      ]
+                  }
+              ],
+              onchange:function(_event){
+                  log(_event.a+' - '+_event.b+' - '+_event.c);
+              }
+          });
+      });
+    </script>
+  </body>
+</html>
