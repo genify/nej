@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>demo for colorpick</title>
+    <meta charset="utf-8" />
+    <script>
+      function log(m){
+          var p = document.createElement('p');
+          p.innerHTML = m;
+          document.body.appendChild(p);
+      }
+    </script>
+  </head>
+  <body>
+    <script src="../../../define.js"></script>
+    <script>
+      NEJ.define([
+          '../datepick.js'
+      ],function(_i){
+          _i._$$DatePick._$allocate({
+              parent:document.body,
+              onchange:function(_date){
+                  log('select date -> '+_date);
+              }
+          });
+      });
+    </script>
+  </body>
+</html>

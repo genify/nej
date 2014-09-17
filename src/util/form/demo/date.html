@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NEJ实例 - Form表单控件</title>
+    <meta charset="utf-8" />
+    <style>
+      
+    </style>
+  </head>
+  <body>
+    <form id="test-form">
+      <input type="text" data-type="date" data-format="yyyy-MM-dd"/>
+    </form>
+    
+    <script src="../../../define.js"></script>
+    <script>
+        NEJ.define([
+            '../form.js'
+        ],function(_t){
+            _t._$$WebForm._$allocate({
+                form:'test-form'
+            });
+        });
+    </script>
+  </body>
+</html>
