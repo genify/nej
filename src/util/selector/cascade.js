@@ -29,7 +29,7 @@ NEJ.define([
      * NEJ.define([
      *     'util/selector/cascade'
      * ],function(_t){
-     *     _t._$$CascadeSelector._$allocate({
+     *     var _selector = _t._$$CascadeSelector._$allocate({
      *         select:['level-1','level-2','level-3'],
      *         data:[
      *             {
@@ -115,14 +115,14 @@ NEJ.define([
                 {},_conf,_options.keys
             );
             this.__nselect = [];
-            this.__default = [];
-            var _arr = [];
+            var _arr = [],
+                _default = [];
             _u._$forEach(
                 _options.select,function(_id,_index){
                     this.__nselect.push(
                         _e._$get(_id)
                     );
-                    this.__default.push(
+                    _default.push(
                         _e._$dataset(_id,'value')
                     );
                     _arr.push([
@@ -133,7 +133,7 @@ NEJ.define([
             );
             this.__doInitDomEvent(_arr);
             this.__doFormatData(_options.data||_r);
-            this.__onChange(-1);
+            this._$update(_default);
         };
     })();
     /**
@@ -281,6 +281,23 @@ NEJ.define([
         }
         this.__doEmitChangeEvent();
     };
-    
+    /**
+     * 更新选中值
+     *
+     * 脚本举例
+     * ```javascript
+     * _selector._$update([1,2,22]);
+     * ```
+     * 
+     * @method module:util/selector/cascade._$$CascadeSelector#_$update
+     * @param  {Array} arg0 - 根据层级依次设置的值
+     * @return {Void}
+     */
+    _pro._$update = function(_value){
+        this.__default = _value||[];
+        this.__onChange(-1);
+    };
+
+
     return _p;
 });
