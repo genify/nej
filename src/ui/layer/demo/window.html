@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>test window</title>
+    <meta charset="utf-8" />
+    <script>
+      function log(m){
+          var p = document.createElement('p');
+          p.innerHTML = m;
+          document.body.appendChild(p);
+      }
+    </script>
+  </head>
+  <body>
+    <textarea name="ntp" id="tpl-win">
+      <form>
+         <input type="text" name="time" data-type="date" data-required="true" data-message="必须设置日期"/>
+         <input type="button" name="btn" value="ok"/>
+      </form>
+    </textarea>
+    <script src="../../../define.js"></script>
+    <script>
+        NEJ.define([
+            'base/klass',
+            'base/event',
+            'util/template/tpl',
+            'util/form/form',
+            '../wrapper/window.js'
+        ],function(_k,_v,_e,_t,_i,_p,_o,_f,_r,_pro){
+            
+            _e._$parseTemplate('tpl-win');
+            
+            _p._$$Window = _k._$klass();
+            _pro = _p._$$Window._$extend(_i._$$WindowWrapper);
+            
+            _pro.__initXGui = function(){
+                this.__seed_html = 'tpl-win';
+            };
+            
+            _pro.__initNode = function(){
+                this.__super();
+                _v._$addEvent(
+                    this.__body.btn,'click',
+                    this.__onSubmit._$bind(this)
+                );
+                this.__form = _t._$$WebForm._$allocate({
+                    form:this.__body
+                });
+            };
+            
+            _pro.__onSubmit = function(){
+                if (this.__form._$checkValidity()){
+                    this._$hide();
+                    log('submit form to server');
+                }
+            };
+            
+            // init
+            _p._$$Window._$allocate({
+                parent:document.body
+            });
+        });
+    </script>
+  </body>
+</html>

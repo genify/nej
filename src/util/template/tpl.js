@@ -379,7 +379,10 @@ NEJ.define([
             _value = _e._$html2node(_value);
             _p._$addTextTemplate(_key,_value);
         }
-        return _value.cloneNode(!0);
+        // clone node and push to memory
+        var _node = _value.cloneNode(!0);
+        _e._$removeByEC(_node);
+        return _node;
     };
     /**
      * 取ITEM模板列表
@@ -529,7 +532,10 @@ NEJ.define([
         };
     })();
     // for chainable method
-    _x._$merge({_$parseTemplate:_p._$parseTemplate,_$addNodeTemplate:_p._$addNodeTemplate});
+    _x._$merge({
+        _$parseTemplate:_p._$parseTemplate,
+        _$addNodeTemplate:_p._$addNodeTemplate
+    });
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.e'),_p);
