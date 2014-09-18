@@ -727,9 +727,16 @@ NEJ.define([
     _pro.__doCheckValidity = function(_node){
         // check node validate
         _node = this._$get(_node)||_node;
+        if (!_node){
+            return !0;
+        }
+        // check validate information
         var _info = this.__vinfo[_e._$id(_node)];
-        if (!_node||!_info||
-            !this.__isValidElement(_node)){
+        if (!_info&&this.__isValidElement(_node)){
+            this.__doPrepareElement(_node);
+            _info = this.__vinfo[_e._$id(_node)];
+        }
+        if (!_info){
             return !0;
         }
         var _result;

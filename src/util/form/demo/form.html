@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NEJ实例 - Form表单控件</title>
+    <meta charset="utf-8" />
+    <style>
+      .js-invalid{border:1px solid #f00;}
+    </style>
+    <script>
+      function log(m){
+          var p = document.createElement('p');
+          p.innerHTML = m;
+          document.body.appendChild(p);
+      }
+    </script>
+  </head>
+  <body>
+    <textarea name="ntp" id="abc">
+        <form>
+          <input type="text" name="cc" data-type="date" data-format="yyyy-MM-dd" data-required="true"/>
+          <input type="button" name="btn" value="ok"/>
+        </form>
+    </textarea>
+    
+    <script src="../../../define.js"></script>
+    <script>
+        NEJ.define([
+            'base/event',
+            'util/template/tpl',
+            '../form.js'
+        ],function(_v,_e,_t){
+            _e._$parseTemplate('abc');
+            var _webform;
+            var _form = _e._$getNodeTemplate('abc');
+            _v._$addEvent(_form.btn,'click',function(){
+                if (_webform._$checkValidity()){
+                    log('submit form to server');
+                }
+            });
+            _webform = _t._$$WebForm._$allocate({
+                form:_form
+            });
+            document.body.appendChild(_form);
+        });
+    </script>
+  </body>
+</html>
