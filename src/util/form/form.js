@@ -16,8 +16,7 @@ NEJ.define([
     'util/focus/focus',
     'util/counter/counter',
     'util/placeholder/placeholder'
-],function(NEJ,_k,_e,_v,_u,_t,_t2,_t0,_t1,_p,_o,_f,_r){
-    var _pro;
+],function(NEJ,_k,_e,_v,_u,_t,_t2,_t0,_t1,_p,_o,_f,_r,_pro){
     /**
      * WEB表单验证封装对象，HTML代码中支持以下属性配置：
      * 
@@ -138,6 +137,8 @@ NEJ.define([
      *             if (_event.target.name=='password'){
      *                 // 通过_event.value返回验证结果
      *                 // 验证结果必须大于0的值（保留所有小于0的返回值）
+     *                 // 也可以返回对象，_event.value = {a:'aaaa',b:'bbbb'}; 
+     *                 // 这里的a，b可以在oninvalid时输入的_event中取到
      *                 _event.value = doCheckPassword(_event.target.value); // 100
      *             }
      *             // TODO other check
@@ -727,8 +728,10 @@ NEJ.define([
         // check node validate
         _node = this._$get(_node)||_node;
         var _info = this.__vinfo[_e._$id(_node)];
-        if (!_node||!_info||!this.__isValidElement(_node))
+        if (!_node||!_info||
+            !this.__isValidElement(_node)){
             return !0;
+        }
         var _result;
         // check condition
         _u._$forIn(_info.func,
@@ -745,7 +748,12 @@ NEJ.define([
         // dispatch validate event
         var _event = {target:_node,form:this.__form};
         if (_result!=null){
-            _event.code = _result;
+            // merge oncheck result
+            if (_u._$isObject(_result)){
+                _u._$merge(_event,_result);
+            }else{
+                _event.code = _result;
+            }
             this._$dispatchEvent('oninvalid',_event);
             if (!_event.stopped){
                 this._$showMsgError(
