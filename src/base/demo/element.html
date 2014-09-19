@@ -22,6 +22,10 @@
           var _div = _e._$create('div');
           _div.innerHTML = '<p id="a">aaaa</p>';
           log(_e._$get('a'));
+          // get element after set element id in memory
+          var _div = document.createElement('div');
+          var _id = _e._$id(_div);
+          log(_e._$get(_id));
       });
     </script>
   </body>

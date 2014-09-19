@@ -18,6 +18,7 @@ NEJ.define([
     var _y = {},     // chainable methods
         _cspol,      // css text pool
         _empol = {}, // elements without id property, eg. document,window
+        _dirty = {}, // temporary element with id
         _fragment = document.createDocumentFragment(); // node in memory
     // init
     if (!document.head){
@@ -59,6 +60,10 @@ NEJ.define([
             _empol[_id] = _element;
         }
         _element.id = _id;
+        // check if element can be getted
+        if (!_p._$get(_id)){
+            _dirty[_id] = _element;
+        }
         return _id;
     };
     /**
@@ -94,13 +99,17 @@ NEJ.define([
             !_u._$isNumber(_element)){
             return _element;
         }
-        // node in memory
-        var _node = _h.__getElementById(_fragment,_element);
-        if (!!_node){
-            return _node;
-        }
         // element is id
-        return document.getElementById(_element);
+        // check node in memory first
+        var _node = _h.__getElementById(_fragment,_element);
+        if (!_node){
+            _node = document.getElementById(_element);
+        }
+        // remove dirty element
+        if (!!_node){
+            delete _dirty[_element];
+        }
+        return _node||_dirty[_element];
     };
     /**
      * 取节点的子节点列表
