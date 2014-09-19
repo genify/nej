@@ -267,7 +267,7 @@ NEJ.define([
                 this.__mclz = _mask;
                 return;
             }
-            this.__mclz = _p._$$Mask;
+            this.__mclz = _i1._$$Mask;
             if (_u._$isString(_mask))
                 this.__mopt.clazz = _mask;
             return;

@@ -15,9 +15,12 @@
     </script>
   </head>
   <body>
+    <input type="button" value="test" id="xyz"/>
     <textarea name="ntp" id="abc">
         <form>
-          <input type="text" name="cc" data-type="date" data-format="yyyy-MM-dd" data-required="true"/>
+          <div>
+              <input type="text" name="cc" data-type="date" data-format="yyyy-MM-dd" data-required="true"/>
+          </div>
           <input type="button" name="btn" value="ok"/>
         </form>
     </textarea>
@@ -26,12 +29,14 @@
     <script>
         NEJ.define([
             'base/event',
+            'base/element',
             'util/template/tpl',
             '../form.js'
-        ],function(_v,_e,_t){
+        ],function(_v,_ex,_e,_t){
             _e._$parseTemplate('abc');
             var _webform;
             var _form = _e._$getNodeTemplate('abc');
+            var _fbox = _form.getElementsByTagName('DIV')[0];
             _v._$addEvent(_form.btn,'click',function(){
                 if (_webform._$checkValidity()){
                     log('submit form to server');
@@ -41,6 +46,12 @@
                 form:_form
             });
             document.body.appendChild(_form);
+            
+            _v._$addEvent(
+                'xyz','click',function(_event){
+                    _fbox.innerHTML = '<input type="text" name="jjj" data-required="true"/>';
+                }
+            );
         });
     </script>
   </body>
