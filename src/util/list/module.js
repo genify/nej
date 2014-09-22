@@ -211,6 +211,7 @@ NEJ.define([
         delete this.__lbox;
         delete this.__ikls;
         delete this.__iopt;
+        delete this.__iext;
         delete this.__ropt;
     };
     /**
@@ -291,6 +292,12 @@ NEJ.define([
         }
         // if item is jst with options
         _u._$merge(this.__iopt,_item);
+        // filter jst extend function
+        this.__iext = _u._$merge(
+            {},_item,function(_it){
+                return !_u._$isFunction(_it);
+            }
+        );
         var _klass = this.__iopt.klass;
         delete this.__iopt.klass;
         if (_u._$isString(_klass)){
@@ -529,7 +536,9 @@ NEJ.define([
             this.__iopt.end = Math.min(_list.length,_offset+_limit)-1;
             this.__iopt.act = 'list';
             var _html = _t1._$get(
-                this.__ikey,this.__iopt
+                this.__ikey,
+                this.__iopt,
+                this.__iext
             );
             this.__doShowListByJST(_html);
         }else{
@@ -663,7 +672,9 @@ NEJ.define([
                 this.__iopt.act = 'add';
                 this.__doShowListByJST(
                     _t1._$get(
-                        this.__ikey,this.__iopt
+                        this.__ikey,
+                        this.__iopt,
+                        this.__iext
                     ),_pos
                 );
             }else{
@@ -885,7 +896,9 @@ NEJ.define([
             this.__iopt.end  = _index;
             this.__iopt.act  = 'update';
             var _html = _t1._$get(
-                this.__ikey,this.__iopt
+                this.__ikey,
+                this.__iopt,
+                this.__iext
             );
             _node.insertAdjacentHTML('afterEnd',_html);
             _e._$remove(_node);
