@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>test clipper</title>
+    <meta charset="utf-8"/>
+    <style>
+      *{border:0;padding:0;margin:0;}
+      html,body{width:100%;height:100%;}
+      .test{padding:20px;overflow:hidden;}
+      .box{border:1px solid #aaa;}
+      .mbox{position:relative;float:left;width:500px;height:500px;margin-right:-500px;}
+      .prev{margin-left:500px;padding-left:20px;}
+      .pbox{position:relative;margin-bottom:10px;overflow:hidden;}
+      .pbox-0{width:80px;height:80px;}
+      .pbox-1{width:120px;height:120px;}
+      .pbox-2{width:200px;height:200px;}
+    </style>
+  </head>
+  <body>
+    <div class="test">
+      <div class="box mbox" id="clip-main"></div>
+      <div class="prev">
+        <div class="box pbox pbox-0" id="clip-preview-0"></div>
+        <div class="box pbox pbox-1" id="clip-preview-1"></div>
+        <div class="box pbox pbox-2" id="clip-preview-2"></div>
+      </div>
+    </div>
+    <p><input type="button" value="查看裁剪信息" id="abc"/></p>
+    <div id="result"></div>
+    <script src="../../../../src/define.js"></script>
+    <script>
+      define([
+          'base/element',
+          'base/event',
+          'base/util',
+          'util/clipper/clipper'
+      ],function(_e,_v,_u,_t){
+          
+          var _clipper = _t._$$Clipper._$allocate({
+              url:'http://f.hiphotos.baidu.com/image/w%3D310/sign=0fa6d7e6a60f4bfb8cd09855334e788f/29381f30e924b89924a5c1416c061d950a7bf62a.jpg',
+              mbox:'clip-main',
+              pbox:[
+                  'clip-preview-0',
+                  'clip-preview-1',
+                  'clip-preview-2'
+              ],
+              lock:!0,
+              size:{
+                  ratio:1,
+                  width:80
+              }
+          });
+          
+          _v._$addEvent(
+              'abc','click',function(){
+                  var _result = [];
+                  _u._$forIn(
+                      _clipper._$getClipResult(),
+                      function(_inf,_id){
+                          _result.push('<p>'+_id+':'+JSON.stringify(_inf)+'</p>');
+                      }
+                  );
+                  _e._$get('result').innerHTML = _result.join('');
+              }
+          );
+          
+          
+      });
+    </script>
+  </body>
+</html>
