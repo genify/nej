@@ -150,6 +150,9 @@
         var _pmap = {
             text:function(_uri){
                 _doLoadText(_uri);
+            },
+            regular:function(_uri){
+                _doLoadText(_uri);
             }
         };
         return function(_uri){
