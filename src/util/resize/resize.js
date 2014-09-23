@@ -130,7 +130,8 @@ NEJ.define([
      * 
      * @param    {Object}      conifg - 可选配置参数
      * @property {Node}        view   - 视窗节点，默认为documentElement或body节点
-     * @property {String|Node} body   - 大小变化区域节点
+     * @property {String|Node} body   - 位置变化节点
+     * @property {String|Node} sbody  - 大小变化节点，默认为位置变化节点
      * @property {Object}      flag   - 各方向节点样式标识
      * @property {Boolean}     lock   - 是否锁定宽高比
      * @property {Object}      min    - 最小保留值，{width:50,height:50}
@@ -173,6 +174,7 @@ NEJ.define([
         this.__super(_options);
         var _min = _options.min||_o;
         this.__body = _e._$get(_options.body);
+        this.__sbody = _e._$get(_options.sbody)||this.__body;
         this.__minx = parseInt(_min.width)||20;
         this.__miny = parseInt(_min.height)||20;
         this.__view = _e._$get(_options.view)||
@@ -202,13 +204,13 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__super();
         if (!!this.__dragger){
             this.__dragger._$recycle();
             delete this.__dragger;
         }
         delete this.__body;
         delete this.__view;
+        this.__super();
     };
     /**
      * 初始化节点
@@ -221,8 +223,9 @@ NEJ.define([
     _pro.__doInitNode = function(_class){
         var _arr = [];
         for(var i=1,_list,_node;i<9;i++){
-            _list = _e._$getByClassName(this.
-                   __body,_class[i]||('js-rs-'+i));
+            _list = _e._$getByClassName(
+                this.__body,_class[i]||('js-rs-'+i)
+            );
             _node = (_list||_o)[0];
             if (!!_node){
                 _arr.push([

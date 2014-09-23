@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NEJ实例 - 范围选择器</title>
+    <meta charset="utf-8" />
+    <style>
+     #box{width:500px;height:500px;border:solid 1px #ccc;position:relative;}
+     #box span{position:absolute;}
+     .lefttop{top:0;left:0;width:5px;height:5px;line-height:5px;background:transparent;z-index:99;cursor:nw-resize;overflow:hidden}
+     .top{top:0;width:100%;height:5px;line-height:5px;background:transparent;z-index:98;cursor:n-resize;overflow:hidden}
+     .righttop{top:0;right:0;width:5px;height:5px;line-height:5px;background:transparent;z-index:99;cursor:ne-resize;overflow:hidden}
+     .right{right:0;width:5px;height:100%;background:transparent;z-index:98;cursor:_e-resize;overflow:hidden}
+     .rightbottom{bottom:0;right:0;width:5px;height:5px;line-height:5px;background:transparent;z-index:99;cursor:se-resize;overflow:hidden}
+     .bottom{bottom:0;width:100%;height:5px;line-height:5px;background:transparent;z-index:98;cursor:s-resize;overflow:hidden}
+     .leftbottom{bottom:0;left:0;width:5px;height:5px;line-height:5px;background:transparent;z-index:99;cursor:sw-resize;overflow:hidden}
+     .left{left:0;width:5px;height:100%;background:transparent;z-index:98;cursor:w-resize;overflow:hidden}
+    </style>
+  </head>
+  <body>
+     <div id="box">
+         <span class="lefttop">&nbsp;</span>
+         <span class="top">&nbsp;</span>
+         <span class="righttop">&nbsp;</span>
+         <span class="right">&nbsp;</span>
+         <span class="rightbottom">&nbsp;</span>
+         <span class="bottom">&nbsp;</span>
+         <span class="leftbottom">&nbsp;</span>
+         <span class="left">&nbsp;</span>
+     </div>
+    
+    <script src="../../../define.js"></script>
+    <script>
+         NEJ.define([
+             'util/resize/resize'
+         ],function(_t){
+             _t._$$Resize._$allocate({
+                 body:'box',
+                 // 自己传样式
+                 flag:{
+                     1:'top',
+                     2:'right',
+                     3:'bottom',
+                     4:'left',
+                     5:'lefttop',
+                     6:'righttop',
+                     7:'rightbottom',
+                     8:'leftbottom'
+                 },
+                 onresizestart:function(_event){
+                     // TODO
+                     // _event.top
+                     // _event.left
+                     // _event.width
+                     // _event.height
+                 },
+                 onresize: function(_event){
+                     // TODO
+                     // _event.top
+                     // _event.left
+                     // _event.width
+                     // _event.height
+                 },
+                 onresizeend:function(_event){
+                     // TODO
+                     // _event.top
+                     // _event.left
+                     // _event.width
+                     // _event.height
+                 },
+                 onmove:function(_event){
+                     // TODO
+                     // _event.top
+                     // _event.left
+                     // _event.width
+                     // _event.height
+                 }
+             });
+         });
+    </script>
+  </body>
+</html>

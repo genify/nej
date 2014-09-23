@@ -160,14 +160,6 @@ NEJ.define([
             );
             return _obj;
         };
-        var _doDump = function(_pbody,_sbody){
-            return {
-                top:parseInt(_e._$getStyle(_pbody,'top')),
-                left:parseInt(_e._$getStyle(_pbody,'left')),
-                width:parseInt(_e._$getStyle(_sbody,'width')),
-                height:parseInt(_e._$getStyle(_sbody,'height'))
-            };
-        };
         return function(_event){
             // adjust box
             _event.top -= this.__delta.y;
@@ -210,9 +202,7 @@ NEJ.define([
             _e._$style(this.__pbody,_doUnit(_xpos));
             _e._$style(this.__sbody,_doUnit(_size));
             this._$dispatchEvent(
-                'onchange',_doDump(
-                    this.__pbody,this.__sbody
-                )
+                'onchange',this._$getRangeBox()
             );
         };
     })();
@@ -290,7 +280,21 @@ NEJ.define([
             this._$dispatchEvent('onafterchange');
         }
     };
-
+    /**
+     * 取选择范围信息
+     * 
+     * @method module:util/range/range._$$Range#_$getRangeBox
+     * @return {Object} 选择范围信息
+     */
+    _pro._$getRangeBox = function(){
+        return {
+            top:parseInt(_e._$getStyle(this.__pbody,'top')),
+            left:parseInt(_e._$getStyle(this.__pbody,'left')),
+            width:parseInt(_e._$getStyle(this.__sbody,'width')),
+            height:parseInt(_e._$getStyle(this.__sbody,'height'))
+        };
+    };
+    
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ut'),_p);
     }
