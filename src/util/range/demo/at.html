@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NEJ实例 - 范围选择器</title>
+    <meta charset="utf-8" />
+    <style>
+      body{cursor:default;}
+      .pbox{position:relative;width:500px;height:400px;margin:50px;border:1px solid #aaa;}
+      .rngx{position:absolute;top:0;left:0;border:1px solid #aaa;}
+      .rngy{width:0;height:0;overflow:hidden;border:1px solid #fff;}
+    </style>
+  </head>
+  <body>
+    
+    <div class="rngx" id="x">
+      <div class="rngy" id="y">&nbsp;</div>
+    </div>
+    
+    <div class="pbox" id="abc"></div>
+    
+    <script src="../../../define.js"></script>
+    <script>
+        NEJ.define([
+            'base/element',
+            '../range.js'
+        ],function(_e,_t){
+            _t._$$Range._$allocate({
+                sbody:'y',
+                pbody:'x',
+                parent:'abc',
+                onbeforechange:function(_event){
+                    _e._$get('abc').appendChild(_e._$get('x'));
+                },
+                onafterchange:function(_event){
+                    _e._$removeByEC('x');
+                },
+                onchange:function(_event){
+                    console.log('top:'+_event.top+' / left:'+_event.left+' / width:'+_event.width+' / height:'+_event.height);
+                }
+            });
+        });
+    </script>
+  </body>
+</html>
