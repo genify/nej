@@ -91,7 +91,7 @@ NEJ.define([
      * @return {Void}
      */
     _pro._$refresh = function(_data){
-        this.__super();
+        this.__super(_data);
         var _id = this.__data[this.__pkey];
         this.__id = (this.__prefix+_id)||this.__genId();
     };

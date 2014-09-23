@@ -13,8 +13,7 @@ NEJ.define([
     'base/element',
     'util/event',
     'util/dragger/dragger'
-],function(NEJ,_k,_v,_e,_t0,_t1,_p,_o,_f,_r){
-    var _pro;
+],function(NEJ,_k,_v,_e,_t0,_t1,_p,_o,_f,_r,_pro){
     /**
      * 容器大小位置信息对象
      * @typedef  {Object} module:util/resize/resize._$$Resize~SizeModel
@@ -394,10 +393,12 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__onResizeStart = (function(){
-        var _cursor = {1:'n-resize',2:'e-resize',
-                       3:'s-resize',4:'w-resize',
-                       5:'nw-resize',6:'ne-resize',
-                       7:'se-resize',8:'sw-resize'};
+        var _cursor = {
+            1:'n-resize',2:'e-resize',
+            3:'s-resize',4:'w-resize',
+            5:'nw-resize',6:'ne-resize',
+            7:'se-resize',8:'sw-resize'
+        };
         return function(_event,_flag){
             _v._$stop(_event);
             this.__flag = _flag;
@@ -410,20 +411,7 @@ NEJ.define([
                 x:_v._$pageX(_event),
                 y:_v._$pageY(_event)
             };
-            this.__box = {
-                w:Math.max(
-                  this.__view.clientWidth,
-                  this.__view.scrollWidth),
-                h:Math.max(
-                  this.__view.clientHeight,
-                  this.__view.scrollHeight)
-            };
-            this.__delta = {
-                x:this.__body.offsetWidth-
-                  this.__body.clientWidth,
-                y:this.__body.offsetHeight-
-                  this.__body.clientHeight
-            };
+            this.__doRefreshBox();
             document.body.style.cursor = _cursor[this.__flag];
             this._$dispatchEvent('onresizestart',this._$getResizeBox());
         };
@@ -456,16 +444,7 @@ NEJ.define([
             _tmp = parseInt(_e._$getStyle(this.__body,x))||0;
             if (!!_tmp) _event[x] = _tmp;
         }
-        _event = !this.__ratio
-               ? this.__doCalBoxWithoutLock(_event,_delta)
-               : this.__doCalBoxWithLock(this.__flag,_event,_delta);
-        // active style
-        this._$dispatchEvent('onbeforeresize',_event);
-        if (!!_event.stopped) return;
-        _tmp = this.__body.style;
-        for(var x in _event)
-            _tmp[x] = _event[x]+'px';
-        this._$dispatchEvent('onresize',_event);
+        this.__doUpdateSize(_event,_delta);
     };
     /**
      * 结束调整大小触发事件
@@ -495,6 +474,53 @@ NEJ.define([
         this._$dispatchEvent('onmove',this._$getResizeBox());
     };
     /**
+     * 刷新容器信息
+     * 
+     * @protected
+     * @method module:util/resize/resize._$$Resize#__doRefreshBox
+     * @return {Void}
+     */
+    _pro.__doRefreshBox = function(){
+        this.__box = {
+            w:Math.max(
+                this.__view.clientWidth,
+                this.__view.scrollWidth
+            ),
+            h:Math.max(
+                this.__view.clientHeight,
+                this.__view.scrollHeight
+            )
+        };
+        this.__delta = {
+            x:this.__body.offsetWidth-
+              this.__body.clientWidth,
+            y:this.__body.offsetHeight-
+              this.__body.clientHeight
+        };
+    };
+    /**
+     * 更新位置信息
+     * 
+     * @protected
+     * @method module:util/resize/resize._$$Resize#__doUpdateSize
+     * @param  {Object} arg0 - 位置信息
+     * @param  {Object} arg2 - 偏移信息
+     * @return {Void}
+     */
+    _pro.__doUpdateSize = function(_event,_delta){
+        _event = !this.__ratio
+               ? this.__doCalBoxWithoutLock(_event,_delta)
+               : this.__doCalBoxWithLock(this.__flag,_event,_delta);
+        // active style
+        this._$dispatchEvent('onbeforeresize',_event);
+        if (!!_event.stopped) return;
+        _tmp = this.__body.style;
+        for(var x in _event){
+            _tmp[x] = _event[x]+'px';
+        }
+        this._$dispatchEvent('onresize',_event);
+    };
+    /**
      * 取区域节点位置大小信息
      *
      * @method module:util/resize/resize._$$Resize#_$getResizeBox
@@ -508,6 +534,17 @@ NEJ.define([
             width:this.__body.offsetWidth,
             height:this.__body.offsetHeight
         };
+    };
+    /**
+     * 更新位置信息
+     * 
+     * @method module:util/resize/resize._$$Resize#_$update
+     * @param {module:util/resize/resize._$$Resize~SizeModel} arg0 - 位置信息
+     */
+    _pro._$update = function(_box){
+        this.__flag = 7;
+        this.__doRefreshBox();
+        this.__doUpdateSize(_box,{x:0,y:0});
     };
 
     if (CMPT){

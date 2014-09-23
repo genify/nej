@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>define demo</title>
+    <meta charset="utf-8" />
+    <script>
+      function log(m){
+          var p = document.createElement('p');
+          p.innerHTML = m;
+          document.body.appendChild(p);
+      }
+    </script>
+  </head>
+  <body>
+    
+    <script src="../../../define.js"></script>
+    <script>
+      define(['./a.js']);
+    </script>
+  </body>
+</html>

@@ -480,6 +480,18 @@ NEJ.define([
         );
         return _result;
     };
+    /**
+     * 更新裁剪区域
+     * 
+     * @method module:util/clipper/clipper._$$Clipper#_$update
+     * @param  {Object} arg0 - 裁剪信息
+     * @return {Void}
+     */
+    _pro._$update = function(_info){
+        if (!!this.__resizer){
+            this.__resizer._$update(_info);
+        }
+    };
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ut'),_p);

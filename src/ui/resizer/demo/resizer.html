@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>resizer demo</title>
+    <meta charset="utf-8" />
+    <script>
+      function log(m){
+          var p = document.createElement('p');
+          p.innerHTML = m;
+          document.body.appendChild(p);
+      }
+    </script>
+  </head>
+  <body>
+    
+    <script src="../../../define.js"></script>
+    <script>
+      NEJ.define([
+          '../resizer.js'
+      ],function(_i){
+          _i._$$Resizer._$allocate({
+              parent:document.body
+          });
+      });
+    </script>
+  </body>
+</html>
