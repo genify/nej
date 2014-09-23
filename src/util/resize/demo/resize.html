@@ -4,8 +4,11 @@
     <title>NEJ实例 - 范围选择器</title>
     <meta charset="utf-8" />
     <style>
-     #box{width:500px;height:500px;border:solid 1px #ccc;position:relative;}
-     #box span{position:absolute;}
+      body{background:#FFDDCC;}
+      .parent{position:relative;width:500px;height:300px;margin:50px;border:1px solid #aaa;}
+     .out{position:absolute;border:1px solid #000;}
+     .inr{width:50px;height:50px;border:1px solid #fff;}
+     .inr span{position:absolute;}
      .lefttop{top:0;left:0;width:5px;height:5px;line-height:5px;background:transparent;z-index:99;cursor:nw-resize;overflow:hidden}
      .top{top:0;width:100%;height:5px;line-height:5px;background:transparent;z-index:98;cursor:n-resize;overflow:hidden}
      .righttop{top:0;right:0;width:5px;height:5px;line-height:5px;background:transparent;z-index:99;cursor:ne-resize;overflow:hidden}
@@ -14,19 +17,26 @@
      .bottom{bottom:0;width:100%;height:5px;line-height:5px;background:transparent;z-index:98;cursor:s-resize;overflow:hidden}
      .leftbottom{bottom:0;left:0;width:5px;height:5px;line-height:5px;background:transparent;z-index:99;cursor:sw-resize;overflow:hidden}
      .left{left:0;width:5px;height:100%;background:transparent;z-index:98;cursor:w-resize;overflow:hidden}
+     .lefttop,.righttop,.rightbottom,.leftbottom{border:1px solid #aaa;}
     </style>
   </head>
   <body>
-     <div id="box">
-         <span class="lefttop">&nbsp;</span>
-         <span class="top">&nbsp;</span>
-         <span class="righttop">&nbsp;</span>
-         <span class="right">&nbsp;</span>
-         <span class="rightbottom">&nbsp;</span>
-         <span class="bottom">&nbsp;</span>
-         <span class="leftbottom">&nbsp;</span>
-         <span class="left">&nbsp;</span>
-     </div>
+      
+      <div class="parent" id="parent">
+         <div class="out" id="obox">
+           <div class="inr" id="ibox">
+             <span class="lefttop">&nbsp;</span>
+             <span class="top">&nbsp;</span>
+             <span class="righttop">&nbsp;</span>
+             <span class="right">&nbsp;</span>
+             <span class="rightbottom">&nbsp;</span>
+             <span class="bottom">&nbsp;</span>
+             <span class="leftbottom">&nbsp;</span>
+             <span class="left">&nbsp;</span>
+           </div>
+         </div>
+      </div>
+      
     
     <script src="../../../define.js"></script>
     <script>
@@ -34,7 +44,9 @@
              'util/resize/resize'
          ],function(_t){
              _t._$$Resize._$allocate({
-                 body:'box',
+                 view:'parent',
+                 body:'obox',
+                 sbody:'ibox',
                  // 自己传样式
                  flag:{
                      1:'top',

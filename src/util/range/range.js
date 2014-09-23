@@ -288,10 +288,10 @@ NEJ.define([
      */
     _pro._$getRangeBox = function(){
         return {
+            width:this.__pbody.offsetWidth,
+            height:this.__pbody.offsetHeight,
             top:parseInt(_e._$getStyle(this.__pbody,'top')),
-            left:parseInt(_e._$getStyle(this.__pbody,'left')),
-            width:parseInt(_e._$getStyle(this.__sbody,'width')),
-            height:parseInt(_e._$getStyle(this.__sbody,'height'))
+            left:parseInt(_e._$getStyle(this.__pbody,'left'))
         };
     };
     

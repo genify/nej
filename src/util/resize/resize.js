@@ -11,9 +11,10 @@ NEJ.define([
     'base/klass',
     'base/event',
     'base/element',
+    'base/util',
     'util/event',
     'util/dragger/dragger'
-],function(NEJ,_k,_v,_e,_t0,_t1,_p,_o,_f,_r,_pro){
+],function(NEJ,_k,_v,_e,_u,_t0,_t1,_p,_o,_f,_r,_pro){
     /**
      * 容器大小位置信息对象
      * @typedef  {Object} module:util/resize/resize._$$Resize~SizeModel
@@ -210,6 +211,7 @@ NEJ.define([
         }
         delete this.__body;
         delete this.__view;
+        delete this.__sbody;
         this.__super();
     };
     /**
@@ -429,24 +431,22 @@ NEJ.define([
      */
     _pro.__onResizing = function(_event){
         if (!this.__flag) return;
-        var _offset = {x:_v._$pageX(_event),
-                       y:_v._$pageY(_event)};
+        var _offset = {
+            x:_v._$pageX(_event),
+            y:_v._$pageY(_event)
+        };
         var _tmp,
             _delta = {
                 x:_offset.x-this.__offset.x,
                 y:_offset.y-this.__offset.y
             },
             _event = {
-                top:0,left:0,
-                width:this.__body.offsetWidth,
-                height:this.__body.offsetHeight
+                top:parseInt(_e._$getStyle(this.__body,'top'))||0,
+                left:parseInt(_e._$getStyle(this.__body,'left'))||0,
+                width:parseInt(_e._$getStyle(this.__sbody,'width'))||0,
+                height:parseInt(_e._$getStyle(this.__sbody,'height'))||0
             };
         this.__offset = _offset;
-        // get source value
-        for(var x in _event){
-            _tmp = parseInt(_e._$getStyle(this.__body,x))||0;
-            if (!!_tmp) _event[x] = _tmp;
-        }
         this.__doUpdateSize(_event,_delta);
     };
     /**
@@ -496,9 +496,9 @@ NEJ.define([
         };
         this.__delta = {
             x:this.__body.offsetWidth-
-              this.__body.clientWidth,
+              this.__sbody.clientWidth,
             y:this.__body.offsetHeight-
-              this.__body.clientHeight
+              this.__sbody.clientHeight
         };
     };
     /**
@@ -510,19 +510,35 @@ NEJ.define([
      * @param  {Object} arg2 - 偏移信息
      * @return {Void}
      */
-    _pro.__doUpdateSize = function(_event,_delta){
-        _event = !this.__ratio
-               ? this.__doCalBoxWithoutLock(_event,_delta)
-               : this.__doCalBoxWithLock(this.__flag,_event,_delta);
-        // active style
-        this._$dispatchEvent('onbeforeresize',_event);
-        if (!!_event.stopped) return;
-        _tmp = this.__body.style;
-        for(var x in _event){
-            _tmp[x] = _event[x]+'px';
-        }
-        this._$dispatchEvent('onresize',_event);
-    };
+    _pro.__doUpdateSize = (function(){
+        var _doUpdate = function(_node,_map,_names){
+            _u._$forEach(
+                _names,function(_name){
+                    var _value = _map[_name];
+                    if (_value!=null){
+                        _e._$setStyle(_node,_name,_value+'px');
+                    }
+                }
+            );
+        };
+        return function(_event,_delta){
+            _event = !this.__ratio
+                   ? this.__doCalBoxWithoutLock(_event,_delta)
+                   : this.__doCalBoxWithLock(this.__flag,_event,_delta);
+            // active style
+            this._$dispatchEvent('onbeforeresize',_event);
+            if (!!_event.stopped) return;
+            _doUpdate(
+                this.__body,
+                _event,['top','left']
+            );
+            _doUpdate(
+                this.__sbody,
+                _event,['width','height']
+            );
+            this._$dispatchEvent('onresize',_event);
+        };
+    })();
     /**
      * 取区域节点位置大小信息
      *
