@@ -212,6 +212,7 @@ NEJ.define([
                     _pro.__supOnShow    = _pro.__super;
                     _pro.__supOnHide    = _pro.__super;
                     _pro.__supOnRefresh = _pro.__super;
+                    this._$supro = _super.prototype;
                 }
 
                 return this.prototype;

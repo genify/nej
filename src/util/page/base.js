@@ -114,6 +114,7 @@ NEJ.define([
      * @property {Number}      index    - 当前页码
      * @property {Number}      total    - 总页码数
      * @property {Number}      limit    - 总页数限制
+     * @property {Boolean}     parented - 选中样式是否在父节点
      * @property {String}      selected - 选中样式，默认为js-selected
      * @property {String}      disabled - 禁用样式，默认为js-disabled
      */
@@ -143,6 +144,7 @@ NEJ.define([
         this.__sbtn  = _options.sbtn;
         this.__ebtn  = _options.ebtn;
         this.__name  = _options.event||'click';
+        this.__parented = !!_options.parented;
         this.__selected = _options.selected||'js-selected';
         this.__disabled = _options.disabled||'js-disabled';
         this.__doPageListCheck(_options.list);
@@ -173,6 +175,17 @@ NEJ.define([
         delete this.__extdata;
         delete this.__selected;
         delete this.__disabled;
+    };
+    /**
+     * 取选中样式所在节点
+     * 
+     * @protected
+     * @method module:util/page/base._$$PageAbstract#__getSelectNode
+     * @param  {Node} arg0 - 页码节点
+     * @return {Node}        选中样式作用节点
+     */
+    _pro.__getSelectNode = function(_node){
+        return !this.__parented?_node:_node.parentNode;
     };
     /**
      * 检查页码列表节点
@@ -218,16 +231,17 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__doSetNodeIndex = function(_node,_index){
+        var _parent = this.__getSelectNode(_node);
         if (_index==null){
             _node.innerText = '';
             _e._$setStyle(_node,'display','none');
-            _e._$delClassName(_node,this.__selected);
+            _e._$delClassName(_parent,this.__selected);
         }else{
             _node.innerText = _index;
             _e._$setStyle(_node,'display','');
             _index==this.__index
-            ? _e._$addClassName(_node,this.__selected)
-            : _e._$delClassName(_node,this.__selected);
+            ? _e._$addClassName(_parent,this.__selected)
+            : _e._$delClassName(_parent,this.__selected);
         }
     };
     /**
@@ -329,11 +343,16 @@ NEJ.define([
      */
     _pro.__onClick = function(_event,_flag){
         _v._$stopDefault(_event);
-        var _element = _v._$getElement(_event);
-        if (!_element||
-             _e._$hasClassName(_element,this.__selected)||
-             _e._$hasClassName(_element,this.__disabled))
+        // check state
+        var _element = _v._$getElement(_event),
+            _selected = _e._$hasClassName(
+                this.__getSelectNode(_element
+            ),this.__selected),
+            _disabled = _e._$hasClassName(_element,this.__disabled);
+        if (!_element||_selected||_disabled){
             return;
+        }
+        // update index
         var _index = _element.innerText;
         switch(_flag){
             // previous or next
@@ -383,8 +402,9 @@ NEJ.define([
     _pro._$setIndex = function(_index){
         var _oidx = this.__index;
         this.__doSaveIndex(_index);
-        if (_oidx!=this.__index)
+        if (_oidx!=this.__index){
             this.__doChangeIndex();
+        }
     };
      /**
      * 返回页码总数
