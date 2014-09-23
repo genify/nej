@@ -215,6 +215,7 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__onRangeStart = function(_event){
+        // left button only
         if (!!this.__offset) return;
         try{
             _event.stopped = !1;

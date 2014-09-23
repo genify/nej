@@ -128,12 +128,8 @@ NEJ.define([
      */
     _pro.__getMaxRange = function(){
         return {
-            x:Math.max(this.__view.clientWidth,
-                       this.__view.scrollWidth)-
-                       this.__body.offsetWidth,
-            y:Math.max(this.__view.clientHeight,
-                       this.__view.scrollHeight)-
-                       this.__body.offsetHeight
+            x:this.__view.clientWidth-this.__body.offsetWidth,
+            y:this.__view.clientHeight-this.__body.offsetHeight
         };
     };
     /**
