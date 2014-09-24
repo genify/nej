@@ -3,6 +3,7 @@
 - 增加控件支持
   * util/selector/cascade
   * util/suggest/at
+  * util/sort/*
 
 
 0.1.0   (2014-09-01)

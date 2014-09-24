@@ -17,10 +17,6 @@ NEJ.define([
     /**
      * 排序功能封装
      * 
-     * 脚本举例
-     * ```javascript
-     * 
-     * ```
      * @class   module:util/sort/sortable._$$Sortable
      * @extends module:util/event._$$EventTarget
      * 

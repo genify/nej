@@ -14,9 +14,42 @@ NEJ.define([
     /**
      * 水平排序功能封装
      * 
+     * 样式举例
+     * ```css
+     *  .box{position:relative;width:560px;margin:50px;padding:5px;overflow:hidden;background:#FFFF00;}
+     *  .box .it{float:left;width:100px;height:100px;line-height:100px;margin:5px;background:#fdc;border:1px solid #aaa;text-align:center;cursor:move;}
+     *  .box .j-selected{background:#00BB00;}
+     *  .box .holder{position:absolute;top:0;left:0;width:12px;background:#0000FF;overflow:hidden;}
+     * ```
+     * 
+     * 结构举例
+     * ```html
+     *  <div class="box" id="abc">
+     *    <div class="it" data-value="1">1</div>
+     *    <div class="it" data-value="2">2</div>
+     *    <div class="it" data-value="3">3</div>
+     *    <div class="it" data-value="4">4</div>
+     *    <div class="it" data-value="5">5</div>
+     *    <div class="it" data-value="6">6</div>
+     *    <div class="it" data-value="7">7</div>
+     *    <div class="it" data-value="8">8</div>
+     *    <div class="it" data-value="9">9</div>
+     *    <div class="it" data-value="a">a</div>
+     *    <div class="holder" id="def">&nbsp;</div>
+     *  </div>
+     * ```
+     * 
      * 脚本举例
      * ```javascript
-     * 
+     *  NEJ.define([
+     *      '../horizontal.js'
+     *  ],function(_t){
+     *      _t._$$HSortable._$allocate({
+     *          clazz:'it',
+     *          parent:'abc',
+     *          placeholder:'def'
+     *      });
+     *  });
      * ```
      * 
      * @class   module:util/sort/horizontal._$$HSortable

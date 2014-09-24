@@ -1,6 +1,6 @@
 /*
  * ------------------------------------------
- * 水平排序功能封装实现文件
+ * 垂直排序功能封装实现文件
  * @version  1.0
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
@@ -12,11 +12,44 @@ NEJ.define([
     './sortable.js'
 ],function(NEJ,_k,_t,_p,_o,_f,_r,_pro){
     /**
-     * 水平排序功能封装
+     * 垂直排序功能封装
+     * 
+     * 样式举例
+     * ```css
+     *  .box{position:relative;width:500px;margin:50px;padding:5px;overflow:hidden;background:#FFFF00;}
+     *  .box .it{height:50px;line-height:50px;margin:10px 0;background:#fdc;border:1px solid #aaa;text-align:center;cursor:move;}
+     *  .box .j-selected{background:#00BB00;}
+     *  .box .holder{position:absolute;top:0;left:0;height:12px;background:#0000FF;overflow:hidden;}
+     * ```
+     * 
+     * 结构举例
+     * ```html
+     *  <div class="box" id="abc">
+     *    <div class="it" data-value="1">1</div>
+     *    <div class="it" data-value="2">2</div>
+     *    <div class="it" data-value="3">3</div>
+     *    <div class="it" data-value="4">4</div>
+     *    <div class="it" data-value="5">5</div>
+     *    <div class="it" data-value="6">6</div>
+     *    <div class="it" data-value="7">7</div>
+     *    <div class="it" data-value="8">8</div>
+     *    <div class="it" data-value="9">9</div>
+     *    <div class="it" data-value="a">a</div>
+     *    <div class="holder" id="def">&nbsp;</div>
+     *  </div>
+     * ```
      * 
      * 脚本举例
      * ```javascript
-     * 
+     *  NEJ.define([
+     *      '../vertical.js'
+     *  ],function(_t){
+     *      var _sorter = _t._$$VSortable._$allocate({
+     *          clazz:'it',
+     *          parent:'abc',
+     *          placeholder:'def'
+     *      });
+     *  });
      * ```
      * 
      * @class   module:util/sort/vertical._$$VSortable
