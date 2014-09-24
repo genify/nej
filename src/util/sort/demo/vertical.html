@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NEJ实例 - 水平排序控件</title>
+    <meta charset="utf-8" />
+    <style>
+      .box{position:relative;width:500px;margin:50px;padding:5px;overflow:hidden;background:#FFFF00;}
+      .box .it{height:50px;line-height:50px;margin:10px 0;background:#fdc;border:1px solid #aaa;text-align:center;cursor:move;}
+      .box .j-selected{background:#00BB00;}
+      .box .holder{position:absolute;top:0;left:0;height:12px;background:#0000FF;overflow:hidden;}
+    </style>
+    <script>
+        function log(m){
+            var p = document.createElement('p');
+            p.innerHTML = m;
+            document.body.appendChild(p);
+        }
+    </script>
+  </head>
+  <body>
+      
+      <div class="box" id="abc">
+        <div class="it" data-value="1">1</div>
+        <div class="it" data-value="2">2</div>
+        <div class="it" data-value="3">3</div>
+        <div class="it" data-value="4">4</div>
+        <div class="it" data-value="5">5</div>
+        <div class="it" data-value="6">6</div>
+        <div class="it" data-value="7">7</div>
+        <div class="it" data-value="8">8</div>
+        <div class="it" data-value="9">9</div>
+        <div class="it" data-value="a">a</div>
+        <div class="holder" id="def">&nbsp;</div>
+      </div>
+      <p><input type="button" value="result" id="a"/></p>
+    
+    <script src="../../../define.js"></script>
+    <script>
+      NEJ.define([
+          'base/event',
+          '../vertical.js'
+      ],function(_v,_t){
+          var _sorter = _t._$$VSortable._$allocate({
+              clazz:'it',
+              parent:'abc',
+              placeholder:'def'
+          });
+          
+          _v._$addEvent(
+              'a','click',function(){
+                  log(_sorter._$getSortList().join(','));
+              }
+          );
+      });
+    </script>
+  </body>
+</html>
