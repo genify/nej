@@ -238,7 +238,7 @@ NEJ.define([
         };
     };
     // alias for draggable
-    _p._$$Dragger = _$$Draggable;
+    _p._$$Dragger = _p._$$Draggable;
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ut'),_p);
