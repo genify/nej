@@ -12,8 +12,7 @@ NEJ.define([
     'base/element',
     'base/event',
     'util/event'
-],function(NEJ,_k,_e,_v,_t,_p,_o,_f,_r){
-    var _pro;
+],function(NEJ,_k,_e,_v,_t,_p,_o,_f,_r,_pro){
     /**
      * 区域移动功能封装
      * 
@@ -27,7 +26,7 @@ NEJ.define([
      * NEJ.define([
      *     'util/dragger/dragger'
      * ],function(_t){
-     *     var _dragger = _t._$$Dragger._$allocate({
+     *     var _dragger = _t._$$Draggable._$allocate({
      *         body:'box',
      *         overflow:false,
      *         direction:0,
@@ -43,7 +42,7 @@ NEJ.define([
      * });
      * ```
      * 
-     * @class    module:util/dragger/dragger._$$Dragger
+     * @class    module:util/dragger/dragger._$$Draggable
      * @extends  module:util/event._$$EventTarget
      * 
      * @param    {Object}      config    - 可选配置参数
@@ -56,7 +55,7 @@ NEJ.define([
     /**
      * 位置变化之前触发事件
      * 
-     * @event    module:util/dragger/dragger._$$Dragger#onbeforechange
+     * @event    module:util/dragger/dragger._$$Draggable#onbeforechange
      * @param    {Object} event - 位置信息
      * @property {Number} top   - 离父节点顶部距离
      * @property {Number} left  - 离父节点左边距离
@@ -64,7 +63,7 @@ NEJ.define([
     /**
      * 位置变化触发事件
      * 
-     * @event    module:util/dragger/dragger._$$Dragger#onchange
+     * @event    module:util/dragger/dragger._$$Draggable#onchange
      * @param    {Object} event - 位置信息
      * @property {Number} top   - 离父节点顶部距离
      * @property {Number} left  - 离父节点左边距离
@@ -72,18 +71,18 @@ NEJ.define([
     /**
      * 拖拽结束触发事件
      * 
-     * @event    module:util/dragger/dragger._$$Dragger#ondragend
+     * @event    module:util/dragger/dragger._$$Draggable#ondragend
      * @param    {Object} event - 位置信息
      * @property {Number} top   - 离父节点顶部距离
      * @property {Number} left  - 离父节点左边距离
      */
-    _p._$$Dragger = _k._$klass();
-    _pro = _p._$$Dragger._$extend(_t._$$EventTarget);
+    _p._$$Draggable = _k._$klass();
+    _pro = _p._$$Draggable._$extend(_t._$$EventTarget);
     /**
      * 控件重置
      * 
      * @protected
-     * @method module:util/dragger/dragger._$$Dragger#__reset
+     * @method module:util/dragger/dragger._$$Draggable#__reset
      * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
@@ -91,9 +90,8 @@ NEJ.define([
         this.__super(_options);
         this.__overflow = !!_options.overflow;
         this.__body = _e._$get(_options.body);
-        this.__view = _e._$get(_options.view)||
-                      _e._$getScrollViewPort(this.__body);
         this.__mbar = _e._$get(_options.mbar)||this.__body;
+        this.__view = _e._$get(_options.view)||_e._$getPageBox();
         this.__direction = parseInt(_options.direction)||0;
         this.__doInitDomEvent([[
             document,'mouseup',
@@ -110,7 +108,7 @@ NEJ.define([
      * 控件销毁
      * 
      * @protected
-     * @method module:util/dragger/dragger._$$Dragger#__destroy
+     * @method module:util/dragger/dragger._$$Draggable#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -123,7 +121,7 @@ NEJ.define([
      * 取移动的最大范围
      * 
      * @protected
-     * @method module:util/dragger/dragger._$$Dragger#__getMaxRange
+     * @method module:util/dragger/dragger._$$Draggable#__getMaxRange
      * @return {Object} 范围值
      */
     _pro.__getMaxRange = function(){
@@ -136,7 +134,7 @@ NEJ.define([
      * 开始移动
      * 
      * @protected
-     * @method module:util/dragger/dragger._$$Dragger#__onDragStart
+     * @method module:util/dragger/dragger._$$Draggable#__onDragStart
      * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
@@ -153,7 +151,7 @@ NEJ.define([
      * 移动过程
      * 
      * @protected
-     * @method module:util/dragger/dragger._$$Dragger#__onDragging
+     * @method module:util/dragger/dragger._$$Draggable#__onDragging
      * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
@@ -178,7 +176,7 @@ NEJ.define([
      * 结束移动
      * 
      * @protected
-     * @method module:util/dragger/dragger._$$Dragger#__onDragEnd
+     * @method module:util/dragger/dragger._$$Draggable#__onDragEnd
      * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
@@ -197,7 +195,7 @@ NEJ.define([
      * _dragger._$setPosition({top:100,left:100});
      * ```
      * 
-     * @method   module:util/dragger/dragger._$$Dragger#_$setPosition
+     * @method   module:util/dragger/dragger._$$Draggable#_$setPosition
      * @param    {Object} arg0 - 位置信息
      * @property {Number} top  - 垂直位置
      * @property {Number} left - 水平位置
@@ -230,7 +228,7 @@ NEJ.define([
      * _dragger._$getPosition();
      * ```
      * 
-     * @method module:util/dragger/dragger._$$Dragger#_$getPosition
+     * @method module:util/dragger/dragger._$$Draggable#_$getPosition
      * @return {Object} 当前位置，{top:100,left:100}
      */
     _pro._$getPosition = function(){
@@ -239,6 +237,8 @@ NEJ.define([
             top:parseInt(_e._$getStyle(this.__body,'top'))||0
         };
     };
+    // alias for draggable
+    _p._$$Dragger = _$$Draggable;
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ut'),_p);

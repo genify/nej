@@ -372,7 +372,7 @@ NEJ.define([
     _pro.__doParseDate = function(_value){
         if ((_value||'').toLowerCase()=='now')
             return +new Date;
-        return _u._$var2date(_value);
+        return +_u._$var2date(_value);
     };
     /**
      * 回车操作检测

@@ -17,7 +17,7 @@ NEJ.define([
 ],function(NEJ,_k,_v,_e,_u,_t0,_t1,_p,_o,_f,_r,_pro){
     /**
      * 容器大小位置信息对象
-     * @typedef  {Object} module:util/resize/resize._$$Resize~SizeModel
+     * @typedef  {Object} module:util/resize/resize._$$Resizable~SizeModel
      * @property {Number} top    距离上
      * @property {Number} left   距离左
      * @property {Number} width  宽
@@ -82,7 +82,7 @@ NEJ.define([
      * NEJ.define([
      *     'util/resize/resize'
      * ],function(_t){
-     *     _t._$$Resize._$allocate({
+     *     _t._$$Resizable._$allocate({
      *         body:'box',
      *         // 自己传样式
      *         flag:{
@@ -126,7 +126,7 @@ NEJ.define([
      *     });
      * });
      * ```
-     * @class   module:util/resize/resize._$$Resize
+     * @class   module:util/resize/resize._$$Resizable
      * @extends module:util/event._$$EventTarget
      * 
      * @param    {Object}      conifg - 可选配置参数
@@ -140,34 +140,34 @@ NEJ.define([
     /** 
      * 大小变化开始触发事件
      * 
-     * @event  module:util/resize/resize._$$Resize#onresizestart
-     * @param {module:util/resize/resize._$$Resize~SizeModel} event - 事件信息
+     * @event  module:util/resize/resize._$$Resizable#onresizestart
+     * @param {module:util/resize/resize._$$Resizable~SizeModel} event - 事件信息
      */
     /** 
      * 大小变化触发事件
      * 
-     * @event  module:util/resize/resize._$$Resize#onresize
-     * @param {module:util/resize/resize._$$Resize~SizeModel} event - 事件信息
+     * @event  module:util/resize/resize._$$Resizable#onresize
+     * @param {module:util/resize/resize._$$Resizable~SizeModel} event - 事件信息
      */
     /** 
      * 大小变化结束触发事件
      * 
-     * @event  module:util/resize/resize._$$Resize#onresizeend
-     * @param {module:util/resize/resize._$$Resize~SizeModel} event - 事件信息
+     * @event  module:util/resize/resize._$$Resizable#onresizeend
+     * @param {module:util/resize/resize._$$Resizable~SizeModel} event - 事件信息
      */
     /**
      * 区域移动触发事件
      * 
-     * @event  module:util/resize/resize._$$Resize#onmove
-     * @param {module:util/resize/resize._$$Resize~SizeModel} event - 事件信息
+     * @event  module:util/resize/resize._$$Resizable#onmove
+     * @param {module:util/resize/resize._$$Resizable~SizeModel} event - 事件信息
      */
-    _p._$$Resize = _k._$klass();
-    _pro = _p._$$Resize._$extend(_t0._$$EventTarget);
+    _p._$$Resizable = _k._$klass();
+    _pro = _p._$$Resizable._$extend(_t0._$$EventTarget);
     /**
      * 控件重置
      * 
      * @protected
-     * @method module:util/resize/resize._$$Resize#__reset
+     * @method module:util/resize/resize._$$Resizable#__reset
      * @param  {Object} arg0 - 可选配置参数
      * @return {Void}
      */
@@ -201,7 +201,7 @@ NEJ.define([
      * 控件销毁
      * 
      * @protected
-     * @method module:util/resize/resize._$$Resize#__destroy
+     * @method module:util/resize/resize._$$Resizable#__destroy
      * @return {Void}
      */
     _pro.__destroy = function(){
@@ -218,7 +218,7 @@ NEJ.define([
      * 初始化节点
      * 
      * @protected
-     * @method module:util/resize/resize._$$Resize#__doInitNode
+     * @method module:util/resize/resize._$$Resizable#__doInitNode
      * @param  {Object} arg0 - 样式映射表
      * @return {Void}
      */
@@ -250,7 +250,7 @@ NEJ.define([
      * 锁定比例计算位置大小信息
      *
      * @protected
-     * @method module:util/resize/resize._$$Resize#__doCalBoxWithLock
+     * @method module:util/resize/resize._$$Resizable#__doCalBoxWithLock
      * @return {Object} 位置大小信息
      */
     _pro.__doCalBoxWithLock = function(_flag,_event,_delta){
@@ -346,7 +346,7 @@ NEJ.define([
      * 不锁定比例计算位置大小信息
      *
      * @protected
-     * @method module:util/resize/resize._$$Resize#__doCalBoxWithoutLock
+     * @method module:util/resize/resize._$$Resizable#__doCalBoxWithoutLock
      * @return {Object} 位置大小信息
      */
     _pro.__doCalBoxWithoutLock = function(_event,_delta){
@@ -393,7 +393,7 @@ NEJ.define([
      * 开始调整大小触发事件
      * 
      * @protected
-     * @method module:util/resize/resize._$$Resize#__onResizeStart
+     * @method module:util/resize/resize._$$Resizable#__onResizeStart
      * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
@@ -425,7 +425,7 @@ NEJ.define([
      * 大小调整过程触发事件
      * 
      * @protected
-     * @method module:util/resize/resize._$$Resize#__onResizing
+     * @method module:util/resize/resize._$$Resizable#__onResizing
      * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
@@ -453,7 +453,7 @@ NEJ.define([
      * 结束调整大小触发事件
      * 
      * @protected
-     * @method module:util/resize/resize._$$Resize#__onResizEnd
+     * @method module:util/resize/resize._$$Resizable#__onResizEnd
      * @param  {Event} arg0 - 事件对象
      * @return {Void}
      */
@@ -470,7 +470,7 @@ NEJ.define([
      * 大小区域移动触发事件
      *
      * @protected
-     * @method module:util/resize/resize._$$Resize#__onResizeMove
+     * @method module:util/resize/resize._$$Resizable#__onResizeMove
      * @return  {Void}
      */
     _pro.__onResizeMove = function(_event){
@@ -480,7 +480,7 @@ NEJ.define([
      * 刷新容器信息
      * 
      * @protected
-     * @method module:util/resize/resize._$$Resize#__doRefreshBox
+     * @method module:util/resize/resize._$$Resizable#__doRefreshBox
      * @return {Void}
      */
     _pro.__doRefreshBox = function(){
@@ -505,7 +505,7 @@ NEJ.define([
      * 更新位置信息
      * 
      * @protected
-     * @method module:util/resize/resize._$$Resize#__doUpdateSize
+     * @method module:util/resize/resize._$$Resizable#__doUpdateSize
      * @param  {Object} arg0 - 位置信息
      * @param  {Object} arg2 - 偏移信息
      * @return {Void}
@@ -542,8 +542,8 @@ NEJ.define([
     /**
      * 取区域节点位置大小信息
      *
-     * @method module:util/resize/resize._$$Resize#_$getResizeBox
-     * @return {module:util/resize/resize._$$Resize~SizeModel} 信息
+     * @method module:util/resize/resize._$$Resizable#_$getResizeBox
+     * @return {module:util/resize/resize._$$Resizable~SizeModel} 信息
      */
     _pro._$getResizeBox = function(){
         var _style = this.__body.style;
@@ -557,15 +557,17 @@ NEJ.define([
     /**
      * 更新位置信息
      * 
-     * @method module:util/resize/resize._$$Resize#_$update
-     * @param {module:util/resize/resize._$$Resize~SizeModel} arg0 - 位置信息
+     * @method module:util/resize/resize._$$Resizable#_$update
+     * @param {module:util/resize/resize._$$Resizable~SizeModel} arg0 - 位置信息
      */
     _pro._$update = function(_box){
         this.__flag = 7;
         this.__doRefreshBox();
         this.__doUpdateSize(_box,{x:0,y:0});
     };
-
+    // alias for resizable
+    _p._$$Resize = _p._$$Resizable;
+    
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ut'),_p);
     }
