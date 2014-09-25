@@ -134,7 +134,7 @@ NEJ.define([
     _pro.__doParseWrapBox = function(_html){
         if (!_html) return null;
         var _node = e._$create('div','z-box');
-        _node.id = 'box-' + _u._$randNumberString();
+        _node.id = 'box-' + _u._$uniqueID();
         _node.innerHTML = _html;
         return _node;
     };

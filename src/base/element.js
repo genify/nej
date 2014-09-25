@@ -100,10 +100,10 @@ NEJ.define([
             return _element;
         }
         // element is id
-        // check node in memory first
-        var _node = _h.__getElementById(_fragment,_element);
+        // check node in page first
+        var _node = document.getElementById(_element);
         if (!_node){
-            _node = document.getElementById(_element);
+            _node = _h.__getElementById(_fragment,_element);
         }
         // remove dirty element
         if (!!_node){
@@ -942,7 +942,12 @@ NEJ.define([
     _y._$removeByEC = function(_element){
         _element = _p._$get(_element);
         if (!!_element){
-            _fragment.appendChild(_element);
+            try{
+                _fragment.appendChild(_element);
+            }catch(ex){
+                // ignore
+                console.error(ex);
+            }
         }
     };
     /**

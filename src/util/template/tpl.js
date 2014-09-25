@@ -343,10 +343,12 @@ NEJ.define([
      * @see module:util/template/tpl._$addNodeTemplate
      */
     _p._$addNodeTemplate = function(_element,_key){
-        _key = _key||_u._$randNumberString();
+        _key = _key||_u._$uniqueID();
         _element = _e._$get(_element)||_element;
         _p._$addTextTemplate(_skey+_key,_element);
-        _e._$removeByEC(_element);
+        if (!_u._$isString(_element)){
+            _e._$removeByEC(_element);
+        }
         return _key;
     };
     /**

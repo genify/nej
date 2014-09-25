@@ -62,7 +62,7 @@ NEJ.define([
             _data = _data||{};
             _data.inline = _doInline;
             _extend = _u._$merge({},_ext,_extend);
-            _extend.rand = _u._$randNumberString;
+            _extend.rand = _u._$uniqueID;
             _extend.format = _u._$format;
             _extend.escape = _u._$escape;
             _extend.inline = _doInline;
