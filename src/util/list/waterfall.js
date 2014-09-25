@@ -12,8 +12,9 @@ NEJ.define([
     'base/event',
     'base/element',
     'base/util',
+    'util/template/tpl',
     './module.js'
-],function(NEJ,_k,_v,_e,_u,_t,_p,_o,_f,_r){
+],function(NEJ,_k,_v,_e,_u,_l,_t,_p,_o,_f,_r){
     var _pro;
     /**
      * 瀑布式列表模块
@@ -406,7 +407,7 @@ NEJ.define([
         // without pager
         var _id = _event.data[this.__iopt.pkey];
         if (!!this.__items){
-            var _item = _e._$getItemById(
+            var _item = _l._$getItemById(
                     this.__getItemId(_id)
                 ),
                 _index = _u._$indexOf(this.__items,_item);
