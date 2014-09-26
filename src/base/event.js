@@ -35,6 +35,28 @@ NEJ.define([
         };
     })();
     /*
+     * 取鼠标相对于页面的偏移
+     * @param  {Event}  事件对象
+     * @param  {String} 类型，X/Y
+     * @param  {String} 滚动偏移名称，Left/Top
+     * @return {Void}
+     */
+    var _getPageOffset = function(_event,_type,_name){
+        var _key1 = 'page'+_type,
+            _key2 = 'client'+_type,
+            _key3 = 'scroll'+_name;
+        var _ret = _event[_key1]!=null?_event[_key1]:
+                   (_event[_key2]+_e._$getPageBox()[_key3]),
+            _node = _p._$getElement(_event);
+        while(!!_node&&
+                _node!=document.body&&
+                _node!=document.documentElement){
+            _ret += _node[_key3]||0;
+            _node = _node.parentNode;
+        }
+        return _ret;
+    };
+    /*
      * 格式化添加删除事件接口参数
      * @param  {String|Node} 节点ID或者对象
      * @param  {String}      事件类型，不带on前缀，不区分大小写，多个事件用空格分隔
@@ -755,8 +777,7 @@ NEJ.define([
      * @return {Number}        水平位置
      */
     _p._$pageX = function(_event){
-        return _event.pageX!=null?_event.pageX:
-               (_event.clientX+_e._$getPageBox().scrollLeft);
+        return _getPageOffset(_event,'X','Left');
     };
     /**
      * 取事件相对于页面顶部的位置
@@ -787,8 +808,7 @@ NEJ.define([
      * @return {Number}        垂直位置
      */
     _p._$pageY = function(_event){
-        return _event.pageY!=null?_event.pageY:
-               (_event.clientY+_e._$getPageBox().scrollTop);
+        return _getPageOffset(_event,'Y','Top');
     };
     // for chainable method
     _x._$merge(_y);
