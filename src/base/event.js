@@ -35,6 +35,20 @@ NEJ.define([
         };
     })();
     /*
+     * 取鼠标相对于BODY的偏移
+     * @param  {Event}  事件对象
+     * @param  {String} 类型，X/Y
+     * @param  {String} 滚动偏移名称，Left/Top
+     * @return {Void}
+     */
+    var _getClientOffset = function(_event,_type,_name){
+        var _key1 = 'page'+_type;
+        return _event[_key1]!=null?_event[_key1]:(
+            _event['client'+_type]+
+            _e._$getPageBox()['scroll'+_name]
+        );
+    };
+    /*
      * 取鼠标相对于页面的偏移
      * @param  {Event}  事件对象
      * @param  {String} 类型，X/Y
@@ -42,19 +56,16 @@ NEJ.define([
      * @return {Void}
      */
     var _getPageOffset = function(_event,_type,_name){
-        var _key1 = 'page'+_type,
-            _key2 = 'client'+_type,
-            _key3 = 'scroll'+_name;
-        var _ret = _event[_key1]!=null?_event[_key1]:
-                   (_event[_key2]+_e._$getPageBox()[_key3]),
-            _node = _p._$getElement(_event);
+        var _key3 = 'scroll'+_name;
+            _node = _p._$getElement(_event),
+            _xret = _getClientOffset(_event,_type,_name);
         while(!!_node&&
                 _node!=document.body&&
                 _node!=document.documentElement){
-            _ret += _node[_key3]||0;
+            _xret += _node[_key3]||0;
             _node = _node.parentNode;
         }
-        return _ret;
+        return _xret;
     };
     /*
      * 格式化添加删除事件接口参数
@@ -749,7 +760,7 @@ NEJ.define([
         };
     };
     /**
-     * 取事件相对于页面左侧的位置
+     * 取事件相对于页面左侧的位置，累加所有内部滚动高度
      *
      * 结构举例
      * ```html
@@ -772,7 +783,7 @@ NEJ.define([
      * ```
      *
      * @method module:base/event._$pageX
-     * @see    module:base/event._$pageY
+     * @see    module:base/event._$clientX
      * @param  {Event}  arg0 - 事件对象
      * @return {Number}        水平位置
      */
@@ -780,7 +791,7 @@ NEJ.define([
         return _getPageOffset(_event,'X','Left');
     };
     /**
-     * 取事件相对于页面顶部的位置
+     * 取事件相对于页面顶部的位置，累加所有内部滚动高度
      *
      * 结构举例
      * ```html
@@ -803,13 +814,76 @@ NEJ.define([
      * ```
      *
      * @method module:base/event._$pageY
-     * @see    module:base/event._$pageX
+     * @see    module:base/event._$clientY
      * @param  {Event}  arg0 - 事件对象
      * @return {Number}        垂直位置
      */
     _p._$pageY = function(_event){
         return _getPageOffset(_event,'Y','Top');
     };
+    /**
+     * 取事件相对于页面左侧的位置，仅累加页面滚动高度
+     *
+     * 结构举例
+     * ```html
+     *   <div id="abc" style="width:100%;height:100%;">123</div>
+     * ```
+     *
+     * 脚本举例
+     * ```javascript
+     *   NEJ.define([
+     *       'base/event'
+     *   ],function(_v){
+     *       // 回调中取鼠标位置
+     *       _p._$addEvent(
+     *           'abc','click',function(_event){
+     *               // 获取鼠标事件触发的水平位置
+     *               var _x = _v._$clientX(_event);
+     *           }
+     *       );
+     *   });
+     * ```
+     *
+     * @method module:base/event._$clientX
+     * @see    module:base/event._$pageX
+     * @param  {Event}  arg0 - 事件对象
+     * @return {Number}        水平位置
+     */
+    _p._$clientX = function(_event){
+        return _getClientOffset(_event,'X','Left');
+    };
+    /**
+     * 取事件相对于页面顶部的位置，仅累加页面滚动高度
+     *
+     * 结构举例
+     * ```html
+     *   <div id="abc" style="width:100%;height:100%;">123</div>
+     * ```
+     *
+     * 脚本举例
+     * ```javascript
+     *   NEJ.define([
+     *       'base/event'
+     *   ],function(_v){
+     *       // 回调中取鼠标位置
+     *       _v._$addEvent(
+     *           'abc','click',function(_event){
+     *               // 获取鼠标事件触发的垂直位置
+     *               var _y = _v._$pageY(_event);
+     *           }
+     *       );
+     *   });
+     * ```
+     *
+     * @method module:base/event._$clientY
+     * @see    module:base/event._$pageY
+     * @param  {Event}  arg0 - 事件对象
+     * @return {Number}        垂直位置
+     */
+    _p._$clientY = function(_event){
+        return _getClientOffset(_event,'Y','Top');
+    };
+    
     // for chainable method
     _x._$merge(_y);
     
