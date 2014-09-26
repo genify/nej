@@ -145,11 +145,13 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__doAddParentClass = function(){
-        if (!this.__seed_css) return;
-        _e._$addClassName(
-            this.__parent,
-            this.__seed_css+'-parent'
-        );
+        if (!!this.__seed_css){
+            var _arr = this.__seed_css.split(/\s+/);
+            _e._$addClassName(
+                this.__parent,
+                _arr.pop()+'-parent'
+            );
+        }
     };
     /**
      * 父节点删除辅助样式
@@ -159,11 +161,13 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__doDelParentClass = function(){
-        if (!this.__seed_css) return;
-        _e._$delClassName(
-            this.__parent,
-            this.__seed_css+'-parent'
-        );
+        if (!!this.__seed_css){
+            var _arr = this.__seed_css.split(/\s+/);
+            _e._$delClassName(
+                this.__parent,
+                _arr.pop()+'-parent'
+            );
+        }
     };
     /**
      * 取当前控件节点
