@@ -16,6 +16,9 @@
     <script src="../../../define.js"></script>
     <script>
       define(['./a.js']);
+      define(['json!./a.json'],function(_json){
+          log(_json);
+      });
     </script>
   </body>
 </html>

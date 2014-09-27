@@ -151,6 +151,9 @@
             text:function(_uri){
                 _doLoadText(_uri);
             },
+            json:function(_uri){
+                _doLoadJSON(_uri);
+            },
             regular:function(_uri){
                 _doLoadText(_uri);
             }
@@ -593,7 +596,7 @@
                 }
             }
         };
-        return function(_uri){
+        return function(_uri,_callback){
             if (!_uri) return;
             var _state = __scache[_uri];
             if (_state!=null) return;
@@ -602,8 +605,12 @@
             var _xhr = _getXHR();
             _xhr.onreadystatechange = function(){
                 if (_xhr.readyState==4){
+                    var _text = _xhr.responseText||'';
                     __scache[_uri] = 2;
-                    __rcache[_uri] = _xhr.responseText||'';
+                    __rcache[_uri] = _text;
+                    if (!!_callback){
+                        _callback(_text);
+                    }
                     _doCheckLoading();
                 }
             };
@@ -611,6 +618,26 @@
             _xhr.send(null);
         };
     })();
+    /*
+     * 载入依赖JSON
+     * @param  {String} _uri JSON地址
+     * @return {Void}
+     */
+    var _doLoadJSON = function(_uri){
+        _doLoadText(_uri,function(_text){
+            var _data;
+            try{
+                if (!!p.JSON&&!!JSON.parse){
+                    _data = JSON.parse(_text);
+                }else{
+                    _data = eval('('+_text+')');
+                }
+            }catch(ex){
+                _data = null;
+            }
+            __rcache[_uri] = _data;
+        });
+    };
     /*
      * 载入依赖脚本
      * @param  {String} _uri 脚本地址
@@ -935,6 +962,7 @@
      *  * 直接使用非{}标识配置参数，此时不能加.js后缀，系统自动加.js后缀，如 root/file
      *  * NEJ库文件可以省略lib标识，如base/element，等价于 lib/base/element，等价于 {lib}base/element.js
      *  * 其他文本资源采用text!前缀标识，如text!/path/to/file.css，注意开发时如果资源是跨域的请设置好浏览器XHR的跨域支持
+     *  * JSON资源采用json!前缀标识，如json!/path/to/data.json，注意开发时如果资源是跨域的请设置好浏览器XHR的跨域支持
      *  * Regular模板资源采用regular!前缀标识，如regular!/path/to/file.html，注意开发时如果资源是跨域的请设置好浏览器XHR的跨域支持
      *  * 路径以 ./ 或者 ../ 开始的相对路径则相对于当前脚本文件的路径，如 ./util.js
      *
