@@ -55,15 +55,15 @@ NEJ.define([
     _p._$$SliderY = _k._$klass();
     _pro = _p._$$SliderY._$extend(_t._$$Slider);
     /**
-     * 控件初始化
+     * 控件重置
      * 
      * @protected
-     * @method module:util/slider/y._$$SliderY#__init
+     * @method module:util/slider/y._$$SliderY#__reset
      * @return {Void}
      */
-    _pro.__init = function(){
-        this.__super();
-        this.__dopt.direction = 2;
+    _pro.__reset = function(_options){
+        _options.direction = 2;
+        this.__super(_options);
     };
 
     if (CMPT){

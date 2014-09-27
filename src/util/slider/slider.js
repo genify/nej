@@ -96,10 +96,10 @@ NEJ.define([
         this.__dopt.mbar = this.__dopt.view;
         this.__dopt.direction = parseInt(_options.direction)||0;
         this._$setRange(_options.range);
-        this.__doInitDomEvent([
-            [this.__dopt.view,'mousedown',
-             this.__onSlideToPosition._$bind(this)]
-        ]);
+        this.__doInitDomEvent([[
+            this.__dopt.view,'mousedown',
+            this.__onSlideToPosition._$bind(this)
+        ]]);
         this.__dragger = _t0._$$Dragger._$allocate(this.__dopt);
     };
     /**
