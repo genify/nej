@@ -159,7 +159,7 @@ NEJ.define([
     _pro.__getKeyBoardParent = (function(){
         var _max = 1000;
         return function(_element){
-            while(_element.tabIndex<=_max){
+            while(!!_element&&(parseInt(_element.tabIndex)||0)<=_max){
                 _element = _element.parentNode;
             }
             return _element||document;
