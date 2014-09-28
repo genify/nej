@@ -27,9 +27,9 @@ NEJ.define([
      * 
      * 结构举例
      * ```html
-     * <div class="box">
+     * <div class="box" tabindex="10005">
      *   <input id="suggest-input" type="text" />
-     *   <div id="card0"></div>
+     *   <div id="suggest-list"></div>
      * </div>
      * ```
      * 
@@ -40,7 +40,7 @@ NEJ.define([
      * ],function(_t){
      *     var _suggest = _t._$$Suggest._$allocate({
      *         input:'suggest-input',
-     *         body:'card0',
+     *         body:'suggest-list',
      *         selected:'xuanzhong',
      *         onchange:function(_value){
      *             var _arr = [];
