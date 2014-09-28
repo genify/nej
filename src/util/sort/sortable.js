@@ -22,7 +22,8 @@ NEJ.define([
      * 
      * @param    {Object} conifg      - 可选配置参数
      * @property {Node}   parent      - 容器节点
-     * @property {String} clazz       - 可排序节点类标识，默认为j-sortable
+     * @property {String} clazz       - 可排序节点的类标识，默认为j-sortable
+     * @property {String} trigger     - 触发排序节点的类标识，默认为clazz标识的节点
      * @property {Node}   placeholder - 占位符，用于标识插入位置
      * @property {String} selected    - 排序节点选中样式，默认为j-selected
      */
@@ -52,6 +53,7 @@ NEJ.define([
     _pro.__reset = function(_options){
         this.__super(_options);
         this.__clazz  = _options.clazz||'j-sortable';
+        this.__trigger = _options.trigger||this.__clazz;
         this.__selected = _options.selected||'j-selected';
         this.__parent = _e._$get(_options.parent);
         this.__holder = _e._$get(_options.placeholder);
@@ -121,25 +123,37 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__onSortStart = function(_event){
-        // check sortable element
+        // check sortable trigger element
         var _element = _v._$getElement(
-            _event,'c:'+this.__clazz
+            _event,'c:'+this.__trigger
         );
         if (!_element) return;
         _v._$stop(_event);
+        // dump sort element
         this.__lsort = _element;
+        if (!_e._$hasClassName(
+               _element,this.__clazz
+           )){
+            this.__lsort = _v._$getElement(
+                _event,'c:'+this.__clazz
+            );
+        }
+        // update selected
         _e._$addClassName(
             this.__lsort,
             this.__selected
         );
         // check before sort for multi-selection
         try{
-            var _eobj = {};
+            var _eobj = {
+                target:this.__lsort
+            };
             this._$dispatchEvent(
                 'onbeforesort',_eobj
             );
             if (!!_eobj.value){
-                this.__lsort = _eobj.value;
+                this.__lsort = 
+                    _eobj.value||this.__lsort;
             }
         }catch(ex){
             // ignore
@@ -168,9 +182,9 @@ NEJ.define([
             var _element = _v._$getElement(
                 _event,'c:'+this.__clazz
             );
+            if (!_element) return;
             // single selection
-            if (!_element||
-                 _element==this.__lsort){
+            if (_element==this.__lsort){
                 delete this.__place;
                 _e._$removeByEC(this.__holder);
                 return;

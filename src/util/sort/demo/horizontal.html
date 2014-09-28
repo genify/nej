@@ -29,7 +29,6 @@
         <div class="it" data-value="8">8</div>
         <div class="it" data-value="9">9</div>
         <div class="it" data-value="a">a</div>
-        <div class="holder" id="def">&nbsp;</div>
       </div>
       <p><input type="button" value="result" id="a"/></p>
     
@@ -37,12 +36,13 @@
     <script>
       NEJ.define([
           'base/event',
+          'base/element',
           '../horizontal.js'
-      ],function(_v,_t){
+      ],function(_v,_e,_t){
           var _sorter = _t._$$HSortable._$allocate({
               clazz:'it',
               parent:'abc',
-              placeholder:'def'
+              placeholder:_e._$create('div','holder')
           });
           
           _v._$addEvent(

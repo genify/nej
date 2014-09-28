@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NEJ实例 - 水平排序控件</title>
+    <meta charset="utf-8" />
+    <style>
+      .box{position:relative;width:560px;margin:50px;padding:5px;overflow:hidden;background:#FFFF00;}
+      .box .it{position:relative;float:left;width:100px;height:100px;line-height:100px;margin:5px;background:#fdc;border:1px solid #aaa;text-align:center;}
+      .box .it .trg{position:absolute;top:0;left:0;width:100%;height:20px;line-height:20px;background:#008000;cursor:move;}
+      .box .j-selected{background:#00BB00;}
+      .box .holder{position:absolute;top:0;left:0;width:12px;background:#0000FF;overflow:hidden;}
+    </style>
+    <script>
+        function log(m){
+            var p = document.createElement('p');
+            p.innerHTML = m;
+            document.body.appendChild(p);
+        }
+    </script>
+  </head>
+  <body>
+      <div class="box" id="abc">
+        <div class="it" data-value="1"><span class="trg j-it">&nbsp;</span>1</div>
+        <div class="it" data-value="2"><span class="trg j-it">&nbsp;</span>2</div>
+        <div class="it" data-value="3"><span class="trg j-it">&nbsp;</span>3</div>
+        <div class="it" data-value="4"><span class="trg j-it">&nbsp;</span>4</div>
+        <div class="it" data-value="5"><span class="trg j-it">&nbsp;</span>5</div>
+        <div class="it" data-value="6"><span class="trg j-it">&nbsp;</span>6</div>
+        <div class="it" data-value="7"><span class="trg j-it">&nbsp;</span>7</div>
+        <div class="it" data-value="8"><span class="trg j-it">&nbsp;</span>8</div>
+        <div class="it" data-value="9"><span class="trg j-it">&nbsp;</span>9</div>
+        <div class="it" data-value="10"><span class="trg j-it">&nbsp;</span>10</div>
+        <div class="it" data-value="11"><span class="trg j-it">&nbsp;</span>11</div>
+        <div class="it" data-value="12"><span class="trg j-it">&nbsp;</span>12</div>
+      </div>
+      <p><input type="button" value="result" id="a"/></p>
+    
+    <script src="../../../define.js"></script>
+    <script>
+      NEJ.define([
+          'base/event',
+          'base/element',
+          '../horizontal.js'
+      ],function(_v,_e,_t){
+          var _sorter = _t._$$HSortable._$allocate({
+              parent:'abc',
+              clazz:'it',
+              trigger:'j-it',
+              placeholder:_e._$create('div','holder')
+          });
+          
+          _v._$addEvent(
+              'a','click',function(){
+                  log(_sorter._$getSortList().join(','));
+              }
+          );
+      });
+    </script>
+  </body>
+</html>

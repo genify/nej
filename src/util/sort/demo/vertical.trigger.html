@@ -5,7 +5,8 @@
     <meta charset="utf-8" />
     <style>
       .box{position:relative;width:500px;margin:50px;padding:5px;overflow:hidden;background:#FFFF00;}
-      .box .it{height:50px;line-height:50px;margin:10px 0;background:#fdc;border:1px solid #aaa;text-align:center;cursor:move;}
+      .box .it{position:relative;height:50px;line-height:50px;margin:10px 0;background:#fdc;border:1px solid #aaa;text-align:center;}
+      .box .mv{position:absolute;top:0;right:0;width:30px;height:50px;background:#008000;cursor:move;}
       .box .j-selected{background:#00BB00;}
       .box .holder{position:absolute;top:0;left:0;height:12px;background:#0000FF;overflow:hidden;}
     </style>
@@ -20,16 +21,16 @@
   <body>
       
       <div class="box" id="abc">
-        <div class="it" data-value="1">1</div>
-        <div class="it" data-value="2">2</div>
-        <div class="it" data-value="3">3</div>
-        <div class="it" data-value="4">4</div>
-        <div class="it" data-value="5">5</div>
-        <div class="it" data-value="6">6</div>
-        <div class="it" data-value="7">7</div>
-        <div class="it" data-value="8">8</div>
-        <div class="it" data-value="9">9</div>
-        <div class="it" data-value="a">a</div>
+        <div class="it" data-value="1"><span class="mv">&nbsp;</span>1</div>
+        <div class="it" data-value="2"><span class="mv">&nbsp;</span>2</div>
+        <div class="it" data-value="3"><span class="mv">&nbsp;</span>3</div>
+        <div class="it" data-value="4"><span class="mv">&nbsp;</span>4</div>
+        <div class="it" data-value="5"><span class="mv">&nbsp;</span>5</div>
+        <div class="it" data-value="6"><span class="mv">&nbsp;</span>6</div>
+        <div class="it" data-value="7"><span class="mv">&nbsp;</span>7</div>
+        <div class="it" data-value="8"><span class="mv">&nbsp;</span>8</div>
+        <div class="it" data-value="9"><span class="mv">&nbsp;</span>9</div>
+        <div class="it" data-value="a"><span class="mv">&nbsp;</span>a</div>
       </div>
       <p><input type="button" value="result" id="a"/></p>
     
@@ -43,6 +44,7 @@
           var _sorter = _t._$$VSortable._$allocate({
               clazz:'it',
               parent:'abc',
+              trigger:'mv',
               placeholder:_e._$create('div','holder')
           });
           
