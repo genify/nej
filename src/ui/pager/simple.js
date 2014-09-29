@@ -8,9 +8,10 @@
 /** @module ui/pager/simple */
 NEJ.define([
     'base/global',
-    'ui/pager/pager.base',
-    'util/page/page.simple'
-],function(NEJ,_i0,_t0,_p,_o,_f,_r){
+    'base/klass',
+    'ui/pager/base',
+    'util/page/simple'
+],function(NEJ,_k,_i0,_t0,_p,_o,_f,_r){
     // variable declaration
     var _pro;
     /**

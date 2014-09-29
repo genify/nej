@@ -16,17 +16,17 @@ NEJ.define([
     'ui/portrait/portrait',
     'util/template/tpl',
     'util/tab/tab',
-    'util/page/page.simple',
+    'util/page/simple',
     'util/data/portrait/portrait',
+    'util/template/jst',
     'text!./complex.css',
     'text!./complex.html'
-],function(NEJ,_k,_c,_e,_u,_i,_i0,_t0,_t2,_t3,_t4,_css,_html,_p,_o,_f,_r){
+],function(NEJ,_k,_c,_e,_u,_i,_i0,_t0,_t2,_t3,_t4,_t5,_css,_html,_p,_o,_f,_r){
     // variable declaration
     var _pro,
-        _seed_css  = _e._$pushCSSText(_css,{portrait:_c._$get('portrait')}),
-        _seed_ui   = _t0._$parseUITemplate(_html),
-        _seed_html = _seed_ui['seedHtml'],
-        _seed_ilist= _seed_ui['seedIlist'];
+        _seed_css  = _e._$pushCSSText(
+            _css,{portrait:_c._$get('portrait')}
+        );
     /**
      * 复杂表情控件
      *
@@ -102,8 +102,8 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__destroy = function(){
-        this.__super();
         this.__doClearComponent();
+        this.__super();
     };
     /**
      * 初始化外观
@@ -112,10 +112,14 @@ NEJ.define([
      * @method module:ui/portrait/complex._$$ComplexPortrait#__initXGui
      * @return {Void}
      */
-    _pro.__initXGui = function(){
-        this.__seed_css = _seed_css;
-        this.__seed_html = _seed_html;
-    };
+    _pro.__initXGui = (function(){
+        var _seed = _t0._$parseUITemplate(_html);
+        return function(){
+            this.__seed_css = _seed_css;
+            this.__seed_html = _seed.mid;
+            this.__seed_list = _seed.lid;
+        };
+    })();
     /**
      * 初始化控件节点
      *
@@ -169,8 +173,8 @@ NEJ.define([
             var _list = this.__cache.
                 _$getListInCache(_options.key);
             _doInit(_list);
-            _e._$render(
-                this.__tbox,_seed_tlist,{
+            _t5._$render(
+                this.__tbox,this.__seed_list,{
                     xlist:_list
                 }
             );

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>test complex portrait</title>
+    <meta charset="utf-8" />
+    <script>
+      function log(m){
+          var p = document.createElement('p');
+          p.innerHTML = m;
+          document.body.appendChild(p);
+      }
+    </script>
+  </head>
+  <body>
+    <script>
+        window.NEJ_CONF = {
+            portrait:'http://nej.netease.com/images/portrait/'
+        };
+    </script>
+    <script src="../../../define.js"></script>
+    <script>
+        NEJ.define([
+            '../complex.js'
+        ],function(_i){
+            
+            _i._$$ComplexPortrait._$allocate({
+                parent:document.body
+            });
+            
+        });
+    </script>
+  </body>
+</html>

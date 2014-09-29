@@ -1,13 +1,12 @@
-<textarea name='ntp' id='#<seedHtml>'>
+<textarea name='ntp' id='#<mid>'>
 <div>
 	<div class="zlst j-flag"></div>
 	<div class="zpbx j-flag"></div>
 </div>
 </textarea>
-<textarea name='jst' id='#<seedIlist>'>
+<textarea name='jst' id='#<lid>'>
 {list beg..end as y}
   {var x=xlist[y]}
-  <a href="#" hidefocus="true" class="zitm z${size} z${size}-${y%(row*col)}" title="${x.text}"
-     data-id="${x.id}" data-align="{if y%col<col/2}right{else}left{/if} top">${x.text}</a>
+  <a href="#" hidefocus="true" class="zitm z${size} z${size}-${y%(row*col)}" title="${x.text}" data-id="${x.id}" data-align="{if y%col<col/2}right{else}left{/if} top">${x.text}</a>
 {/list}
 </textarea>

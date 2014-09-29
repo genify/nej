@@ -9,7 +9,7 @@
 NEJ.define([
     'base/global',
     'base/klass',
-    'base/constant',
+    'base/config',
     'base/element',
     'base/util',
     'ui/base',

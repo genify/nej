@@ -22,9 +22,7 @@ NEJ.define([
 ],function(NEJ,_k,_g,_e,_v,_u,_i,_i0,_t0,_t1,_css,_html,_p,_o,_f,_r){
     // variable declaration
     var _pro,
-        _seed_ui    = _t1._$parseUITemplate(_html),
-        _seed_html  = _seed_ui['seedHtml'],
-        _seed_ilist = _seed_ui['seedIlist'];
+        _seed_css = 'auto-'+_u._$uniqueID();
     /**
      * 表情控件
      *
@@ -52,9 +50,7 @@ NEJ.define([
      */
     _pro.__init = function(){
         this.__mopt = {
-            item:{
-                klass:_seed_ilist
-            },
+            item:{},
             pager:{
                 fixed:!0,
                 clazz:'zpager',
@@ -122,10 +118,14 @@ NEJ.define([
      * @method module:ui/portrait/portrait._$$Portrait#__initXGui
      * @return {Void}
      */
-    _pro.__initXGui = function(){
-        this.__seed_css = _seed_css;
-        this.__seed_html = _seed_html;
-    };
+    _pro.__initXGui = (function(){
+        var _seed = _t1._$parseUITemplate(_html);
+        return function(){
+            this.__seed_css = _seed_css;
+            this.__seed_html = _seed.mid;
+            this.__mopt.item.klass = _seed.lid;
+        };
+    })();
     /**
      * 初始化控件节点
      *
@@ -264,16 +264,19 @@ NEJ.define([
     var _arr = [];
     for(var i=0;i<6;i++){
         for(var j=0;j<10;j++){
-            _arr.push('.#<uispace> .zlst .z30-'+(i*10+j)+'{background-position:-'+(j*30)+'px -'+(i*30)+'px;}');
+            _arr.push('.'+_seed_css+' .zlst .z30-'+(i*10+j)+'{background-position:-'+(j*30)+'px -'+(i*30)+'px;}');
         }
     }
     for(var i=0;i<3;i++){
         for(var j=0;j<5;j++){
-            _arr.push('.#<uispace> .zlst .z60-'+(i*5+j)+'{background-position:-'+(j*60)+'px -'+(i*60)+'px;}');
+            _arr.push('.'+_seed_css+' .zlst .z60-'+(i*5+j)+'{background-position:-'+(j*60)+'px -'+(i*60)+'px;}');
         }
     }
     // ui style
-    _seed_css = _e._$pushCSSText(_css,{arrbg:_arr.join('')});
+    _e._$pushCSSText(_css,{
+        uispace:_seed_css,
+        arrbg:_arr.join(' ')
+    });
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ui'),_p);
