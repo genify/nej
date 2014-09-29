@@ -1120,17 +1120,27 @@ NEJ.define([
      *       // <div id="abc" data-img="http://a.b.com/a.png">123</div>
      *       // 返回value值: http://a.b.com/a.png
      *       var _src = _e._$dataset('abc','img','http://a.b.com/a.png');
-     *
      *       // 取值操作
      *       var _src = _e._$dataset('abc','img');
+     * 
+     *       // 批量设置
+     *       var _map = _e._$dataset('abc',{
+     *           a:'aaaaa',
+     *           b:'bbbbbbbb',
+     *           c:'ccccccccc'
+     *       });
+     * 
+     *       // 批量取值
+     *       // 返回：{a:'aaaaa',b:'bbbbbbbb',c:'ccccccccc'}
+     *       var _map = _e._$dataset('abc',['a','b','c']);
      *   });
      * ```
      *
      * @method module:base/element._$dataset
      * @see    module:base/element._$attr
-     * @param  {String} arg0 - 数据标识
-     * @param  {String} arg1 - 数据值
-     * @return {String}        数据值
+     * @param  {String}              arg0 - 数据标识
+     * @param  {String|Object|Array} arg1 - 属性名
+     * @return {String|Object}              数据值
      */
     /**
      * @method CHAINABLE._$dataset
@@ -1138,12 +1148,37 @@ NEJ.define([
      */
     _p._$dataset =
     _y._$dataset = function(_element,_key,_value){
+        // check element
         var _id = _p._$id(_element);
-        return !_id ? null :
-                _h.__dataset(
-                    _p._$get(_element),
-                    _key,_value
-                );
+        if (!_id){
+            return null;
+        }
+        // check single key-value
+        if (_u._$isString(_key)){
+            return _h.__dataset(
+                _p._$get(_element),
+                _key,_value
+            );
+        }
+        // check map set
+        // ignore argument _value
+        if (_u._$isObject(_key)){
+            var _ret = {};
+            _u._$forIn(_key,function(_v,_k){
+                _ret[_k] = _p._$dataset(_id,_k,_v);
+            });
+            return _ret;
+        }
+        // check array get
+        // ignore argument _value
+        if (_u._$isArray(_key)){
+            var _ret = {};
+            _u._$forEach(_key,function(_k){
+                _ret[_k] = _p._$dataset(_id,_k);
+            });
+            return _ret;
+        }
+        return null;
     };
     /**
      * 取某个节点的属性值
