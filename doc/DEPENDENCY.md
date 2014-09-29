@@ -234,6 +234,8 @@ NEJ.define([
 * 直接使用非{}标识配置参数，此时不能加.js后缀，系统自动加.js后缀，如 root/file
 * NEJ库文件可以省略lib标识，如base/element，等价于 lib/base/element，等价于 {lib}base/element.js
 * 其他文本资源采用text!前缀标识，如text!/path/to/file.css，注意开发时如果资源是跨域的请设置好浏览器XHR的跨域支持
+* JSON资源采用json!前缀标识，如json!/path/to/data.json，注意开发时如果资源是跨域的请设置好浏览器XHR的跨域支持
+* Regular模板资源采用regular!前缀标识，如regular!/path/to/file.html，注意开发时如果资源是跨域的请设置好浏览器XHR的跨域支持
 * 路径以 ./ 或者 ../ 开始的相对路径则相对于当前脚本文件的路径，如 ./util.js
 
 执行函数注入参数说明
