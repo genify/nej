@@ -104,9 +104,10 @@ NEJ.define([
      */
     _p._$toggle = (function(){
         // click event
-        var _doClick = function(_id,_clazz,_ontoggle){
+        var _doClick = function(_id,_clazz,_ontoggle,_ev){
             var _element = _e._$get(_id),
                 _event = {
+                    event:_ev,
                     clazz:_clazz,
                     target:_element
                 };
