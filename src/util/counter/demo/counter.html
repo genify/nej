@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NEJ实例 - 计数器</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <p><input type="text" id="a"/></p>
+    <p><textarea id="b"></textarea></p>
+    
+    <script src="../../../define.js"></script>
+    <script>
+        NEJ.define([
+            '../counter.js'
+        ],function(_e){
+            _e._$counter('a');
+            _e._$counter('b');
+        });
+    </script>
+  </body>
+</html>

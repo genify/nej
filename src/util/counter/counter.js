@@ -11,8 +11,9 @@ NEJ.define([
     'base/element',
     'base/event',
     'base/util',
-    'base/chain'
-],function(NEJ,_e,_v,_u,_x,_p,_o,_f,_r){
+    'base/chain',
+    '{platform}counter.js'
+],function(NEJ,_e,_v,_u,_x,_h,_p,_o,_f,_r){
     /**
      * 输入框计数器，使用属性设置输入的总长度限制，
      * 以下两个属性只能同时设置一个，maxlength优先级高于data-max-length
