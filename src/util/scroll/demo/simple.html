@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NEJ实例 - 简易自定义滚动条</title>
+    <meta charset="utf-8"/>
+    <style>
+      .xbc{position:relative;width:300px;margin:10px auto;border:1px solid #aaa;}
+      .abc{height:600px;overflow:hidden;}
+      .abc p{height:80px;line-height:80px;}
+      .ty{top:0;bottom:0;right:0;width:10px;height:100%;}
+      .bar{position:absolute;background:#f00;overflow:hidden;cursor:default;}
+      .x{left:0;bottom:0;height:10px;width:50px;}
+      .y{top:0;right:0;width:10px;height:50px;}
+      .trk{position:absolute;background:#aaa;}
+      .trk:hover,.j-hover{width:20px;}
+      .trk:hover .y,.j-hover .y{right:5px;}
+      p{background:#fdc;}
+    </style>
+  </head>
+  <body>
+    <div class="xbc" id="bbox">
+      <div class="bar x" id="xbar">&nbsp;</div>
+      <div class="trk ty"><div class="bar y" id="ybar">&nbsp;</div></div>
+      <div class="abc" id="box">
+      <script>
+          var a = [];
+          for(var i=0;i<100;i++)
+              a.push('<p>'+i+'</p>');
+          document.write(a.join(''));
+      </script>
+      </div>
+    </div>
+    <script src="../../../define.js?pro=./"></script>
+    <script>
+        define([
+            'util/scroll/simple'
+        ],function(_t){
+            
+            _t._$$SimpleScroll._$allocate({
+                xbar:{body:'xbar'},
+                ybar:{body:'ybar',track:':parent',hover:'j-hover'},
+                parent:'box',
+                trigger:'bbox'
+            });
+            
+        });
+    </script>
+  </body>
+</html>

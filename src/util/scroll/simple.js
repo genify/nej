@@ -370,7 +370,7 @@ NEJ.define([
         this.__aopt.from.offset = _e._$getStyle(
             _body,'opacity'
         );
-        this.__anim = _p._$$AnimEaseInOut.
+        this.__anim = _t1._$$AnimEaseInOut.
                       _$allocate(this.__aopt);
         this.__anim._$play();
     };
