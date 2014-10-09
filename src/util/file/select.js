@@ -128,8 +128,10 @@ NEJ.define([
             if (_cch.multiple){
                 _e._$get(_cch.lab).htmlFor =
                     _doAppendFile(_arr[0],_cch);
-            }else if(!!_cch.name){
-                _element.name = _cch.name;
+            }
+            if (!_element.name){
+                var _sufix = !_cch.multiple?'':('-'+(_cch.nmb-2));
+                _element.name = _cch.name+_sufix;
             }
             _cch.onchange({
                 id:_id,
@@ -153,7 +155,7 @@ NEJ.define([
                 _e._$get(_options.parent)
             );
             _cch.nmb = 0;
-            _cch.name = _options.name;
+            _cch.name = _options.name||'file';
             _cch.lab = _e._$id(_element);
             _cch.accept = _options.accept||'';
             _cch.multiple = !!_options.multiple;
