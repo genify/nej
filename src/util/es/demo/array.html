@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NEJ实例 - ES-Array兼容接口</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    
+    
+    <script src="../../../define.js"></script>
+    <script>
+        NEJ.define([
+            'util/es/array'
+        ],function(){
+            var sum = [1,2,3,4].reduce(function(value,item,index,array){
+                return value+item;
+            });
+            alert(sum);
+        });
+    </script>
+  </body>
+</html>
