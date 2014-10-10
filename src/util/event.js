@@ -720,7 +720,7 @@ NEJ.define([
     };
     
     if (CMPT){
-        _p._$$EventTarget = _p._$$EventTarget;
+        _p._$$Event = _p._$$EventTarget;
         NEJ.copy(NEJ.P('nej.ut'),_p);
     }
     
