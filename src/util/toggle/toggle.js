@@ -38,7 +38,7 @@ NEJ.define([
      * 脚本举例
      * ```javascript
      *   NEJ.define([
-     *       'base/element'
+     *       'util/toggle/toggle'
      *   ],function(_e){
      *       // 点击click-bar，交替显示shw节点
      *       _e._$toggle('click-bar');

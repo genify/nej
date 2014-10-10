@@ -10,7 +10,7 @@ NEJ.define([
     'base/global',
     'base/klass',
     'base/element',
-    'ui/pager/pager.base',
+    'ui/pager/base',
     'util/page/page'
 ],function(NEJ,_k,_e,_i0,_t0,_p,_o,_f,_r){
     // variable declaration

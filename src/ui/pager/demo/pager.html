@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>demo for pager</title>
+    <meta charset="utf-8" />
+    <style>
+        body{padding:50px;}
+    </style>
+    <script>
+      function log(m){
+          var p = document.createElement('p');
+          p.innerHTML = m;
+          document.body.appendChild(p);
+      }
+    </script>
+  </head>
+  <body>
+    <script src="../../../define.js"></script>
+    <script>
+      NEJ.define([
+          '../pager.js'
+      ],function(_i){
+          var _colorpick = _i._$$Pager._$allocate({
+              index:3,
+              total:100,
+              parent:document.body,
+              onchange:function(_event){
+                  log('change page from '+_event.last+' to '+_event.index);
+              }
+          });
+      });
+    </script>
+  </body>
+</html>
