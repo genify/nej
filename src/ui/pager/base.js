@@ -18,7 +18,6 @@ NEJ.define([
 ],function(NEJ,_k,_e,_u,_i,_t0,_css,_html,_p,_o,_f,_r){
     // variable declaration
     var _pro,
-        _seed_css = _e._$pushCSSText(_css),
         _seed_page = _t0._$add(_html);
     /**
      * 分页器控件基类封装
@@ -143,9 +142,12 @@ NEJ.define([
      * @method module:ui/pager/base._$$AbstractPager#__initXGui
      * @return {Void}
      */
-    _pro.__initXGui = function(){
-        this.__seed_css  = _seed_css;
-    };
+    _pro.__initXGui = (function(){
+        var _seed_css = _e._$pushCSSText(_css);
+        return function(){
+            this.__seed_css  = _seed_css;
+        };
+    })();
     /**
      * 重置页码数
      *
@@ -159,31 +161,18 @@ NEJ.define([
         );
         var _seed = _t0._$seed();
         this.__popt.list = _e._$getByClassName(
-                this.__body,
-                'js-i-'+_seed
+            this.__body,'js-i-'+_seed
         );
         this.__popt.pbtn = (
             _e._$getByClassName(
-                this.__body,
-                'js-p-'+_seed
+                this.__body,'js-p-'+_seed
             )||_r
         )[0];
         this.__popt.nbtn = (
             _e._$getByClassName(
-                this.__body,
-                'js-n-'+_seed
+                this.__body,'js-n-'+_seed
             )||_r
         )[0];
-    };
-    /**
-     * 初始化节点
-     *
-     * @protected
-     * @method module:ui/pager/base._$$AbstractPager#__initNode
-     * @return {Void}
-     */
-    _pro.__initNode = function(){
-        this.__super();
     };
     /**
      * 生成页码列表html代码

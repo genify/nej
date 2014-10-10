@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>element demo</title>
+    <meta charset="utf-8" />
+    <script>
+      function log(m){
+          var p = document.createElement('p');
+          p.innerHTML = m;
+          document.body.appendChild(p);
+      }
+    </script>
+  </head>
+  <body>
+    <div>
+        <p id="abc">aaaaaaaaaaaaa</p>
+    </div>
+    <script src="../../define.js"></script>
+    <script>
+      NEJ.define([
+          'base/event'
+      ],function(_v){
+          _v._$addEvent(
+              document,'click',function(event){
+                  log('document '+(this==document));
+              }
+          );
+          _v._$addEvent(
+              document.body,'click',function(event){
+                  log('body '+(this==document.body));
+              }
+          );
+          _v._$addEvent(
+              'abc','click',function(event){
+                  log('abc '+(this.id=='abc'));
+              }
+          );
+      });
+    </script>
+  </body>
+</html>

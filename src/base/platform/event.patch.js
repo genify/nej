@@ -149,6 +149,10 @@ NEJ.define([
                     _event.stopped = !0;
                     _event.value = _func.apply(null,_args);
                 }
+                // use element for this in handler
+                if (!!_args[2]){
+                    _args[2] = _args[2]._$bind(_args[0]);
+                }
             });
         })();
         /**
