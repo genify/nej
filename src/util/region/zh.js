@@ -29,13 +29,15 @@ NEJ.define([
      * 脚本举例
      * ```javascript
      * NEJ.define([
-     *     'util/region/zh'
-     * ],function(_t){
+     *     'util/region/zh',
+     *     'util/data/region/zh'
+     * ],function(_t,_d){
      *     var _region = _t._$$RegionSelector._$allocate({
      *         province:'a',
      *         city:'b',
      *         area:'c',
      *         data:{province:'浙江省',city:'杭州市',area:'滨江区'},
+     *         cache:_d._$$CacheRegionZH._$allocate(),
      *         onchange:function(_type){
      *             // 触发3次type，从area到province，搜索条件可能用到
      *         }
@@ -52,6 +54,7 @@ NEJ.define([
      * @property {String|Node} area     - 地区选择控件
      * @property {module:util/cache/list._$$CacheList} cache - 数据缓存实例
      * @property {Object}      data     - 初始地区信息，如{province:'浙江省',city:'杭州市',area:'滨江区'}
+     * @property {module:util/cache/abstract._$$CacheListAbstract} cache - 省市区数据缓存实例，默认可使用util/data/region/zh下的数据
      */
     /** 
      * 区域变化触发事件
@@ -71,10 +74,12 @@ NEJ.define([
      */
     _pro.__reset = function(_options){
         this.__super(_options);
+        this.__cache = _options.cache;
+        if (!this.__cache) return;
         var _nmap = {
-            province:_e._$get(_options.province)
-           ,city:_e._$get(_options.city)
-           ,area:_e._$get(_options.area)
+            province:_e._$get(_options.province),
+            city:_e._$get(_options.city),
+            area:_e._$get(_options.area)
         };
         this.__selectors = _nmap;
         this.__offset = _nmap.province.options.length||0;
@@ -83,8 +88,6 @@ NEJ.define([
            ,[_nmap.city,'change',this.__onChange._$bind(this,'city')]
            ,[_nmap.province,'change',this.__onChange._$bind(this,'province')]
         ]);
-        this.__cache = _options.cache||
-            _p._$$CacheRegionZH._$allocate();
         this.__cache._$setEvent(
             'onlistload',
             this.__onListLoad._$bind(this)

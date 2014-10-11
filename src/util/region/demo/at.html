@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NEJ实例 - 三级联动省市区选择</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div>
+      <select id="a"></select>
+      <select id="b"></select>
+      <select id="c"></select>
+    </div>
+    
+    <script src="../../../define.js"></script>
+    <script>
+     NEJ.define([
+         'util/region/zh',
+         'util/data/region/zh'
+     ],function(_t,_d){
+         var _region = _t._$$RegionSelector._$allocate({
+             province:'a',
+             city:'b',
+             area:'c',
+             data:{province:'浙江省',city:'杭州市',area:'滨江区'},
+             cache:_d._$$CacheRegionZH._$allocate(),
+             onchange:function(_type){
+                 // TODO
+             }
+         });
+     });
+    </script>
+  </body>
+</html>

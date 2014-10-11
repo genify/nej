@@ -247,8 +247,8 @@ NEJ.define([
         this.__form = document.forms[_options.form]||
                      _e._$get(_options.form);
         this.__doInitDomEvent([[
-            this.__form,'keypress',
-            this.__onCheckEnter._$bind(this)
+            this.__form,'enter',
+            this._$dispatchEvent._$bind(this,'onenter')
         ]]);
         this.__message = _options.message||{};
         this.__message.pass = this.__message.pass||'&nbsp;';
@@ -373,18 +373,6 @@ NEJ.define([
         if ((_value||'').toLowerCase()=='now')
             return +new Date;
         return +_u._$var2date(_value);
-    };
-    /**
-     * 回车操作检测
-     * 
-     * @protected
-     * @method module:util/form/form._$$WebForm#__onCheckEnter
-     * @param  {Event} arg0 - 事件对象
-     * @return {Void}
-     */
-    _pro.__onCheckEnter = function(_event){
-        if (_event.keyCode!=13) return;
-        this._$dispatchEvent('onenter',_event);
     };
     /**
      * 解析字符类型规则属性
