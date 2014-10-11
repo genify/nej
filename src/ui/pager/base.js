@@ -13,12 +13,10 @@ NEJ.define([
     'base/util',
     'ui/base',
     'util/template/jst',
-    'text!./base.css',
-    'text!./base.html'
-],function(NEJ,_k,_e,_u,_i,_t0,_css,_html,_p,_o,_f,_r){
+    'text!./base.css'
+],function(NEJ,_k,_e,_u,_i,_t0,_css,_p,_o,_f,_r){
     // variable declaration
-    var _pro,
-        _seed_page = _t0._$add(_html);
+    var _pro;
     /**
      * 分页器控件基类封装
      *
@@ -156,34 +154,29 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__doResetNumber = function(_data){
-        _t0._$render(
-            this.__body,_seed_page,_data
-        );
-        var _seed = _t0._$seed();
-        this.__popt.list = _e._$getByClassName(
-            this.__body,'js-i-'+_seed
-        );
-        this.__popt.pbtn = (
-            _e._$getByClassName(
-                this.__body,'js-p-'+_seed
-            )||_r
-        )[0];
-        this.__popt.nbtn = (
-            _e._$getByClassName(
-                this.__body,'js-n-'+_seed
-            )||_r
-        )[0];
-    };
-    /**
-     * 生成页码列表html代码
-     *
-     * @protected
-     * @method module:ui/pager/base._$$AbstractPager#__doGenPageListXhtml
-     * @param  {Object} arg0 - 页码列表信息
-     * @return {String} 页码列表html代码
-     */
-    _pro.__doGenPageListXhtml = function(_data){
-        return _t0._$get(_seed_page,_data);
+        var _label = _data.label;
+        // previous button
+        if (!_data.noprv){
+            this.__popt.pbtn = _e._$create(
+                'a','zbtn zprv',this.__body
+            );
+            this.__popt.pbtn.innerHTML = _label.prev||'上一页';
+        }
+        // page show
+        var _arr = [];
+        for(var i=1,l=_data.number;i<l;i++){
+            _arr.push(_e._$create(
+                'a','zpgi zpg'+i,this.__body
+            ));
+        }
+        this.__popt.list = _arr;
+        // next button
+        if (!_data.nonxt){
+            this.__popt.nbtn = _e._$create(
+                'a','zbtn znxt',this.__body
+            );
+            this.__popt.nbtn.innerHTML = _label.next||'下一页';
+        }
     };
     /**
      * 页面变化触发事件
