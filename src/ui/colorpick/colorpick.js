@@ -13,12 +13,12 @@ NEJ.define([
     'base/element',
     'base/event',
     'util/template/tpl',
+    'util/color/color',
     'ui/base',
     'ui/colorpick/colorpanel',
-    'ui/colorpick/util',
     'text!./colorpick.css',
     'text!./colorpick.html'
-],function(NEJ,_k,_c,_e,_v,_t0,_i,_i0,_i1,_css,_html,_p,_o,_f,_r){
+],function(NEJ,_k,_c,_e,_v,_t0,_t1,_i,_i0,_css,_html,_p,_o,_f,_r){
     var _pro;
     /**
      * 颜色选择控件
@@ -188,7 +188,7 @@ NEJ.define([
      */
     _pro.__onColorSelect = function(){
         var _color = '#'+this.__ninput.value.trim();
-        if (!_i1._$isColor(_color)){
+        if (!_t1._$isColor(_color)){
             return;
         }
         this.__panel._$setColor(_color);

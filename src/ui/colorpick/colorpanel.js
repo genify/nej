@@ -15,11 +15,11 @@ NEJ.define([
     'util/template/tpl',
     'util/slider/slider.y',
     'util/slider/slider.xy',
+    'util/color/color',
     'ui/base',
-    'ui/colorpick/util',
     'text!./colorpanel.css',
     'text!./colorpanel.html'
-],function(NEJ,_k,_c,_e,_v,_t0,_t1,_t2,_i,_i0,_css,_html,_p,_o,_f,_r){
+],function(NEJ,_k,_c,_e,_v,_t0,_t1,_t2,_i0,_i,_css,_html,_p,_o,_f,_r){
     var _pro;
     /**
      * 颜色选择面板控件

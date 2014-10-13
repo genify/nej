@@ -85,6 +85,13 @@ NEJ.define([
      *               // _event.toggled 是否增加了切换样式
      *
      *               // TODO
+     *           },
+     *           onbeforetoggle:function(_event){
+     *               // _event.clazz   切换的样式名称
+     *               // _event.target  触发切换事件的节点
+     *               // _event.stopped 是否阻止切换操作
+     *
+     *               // TODO
      *           }
      *       });
      *   });
@@ -96,6 +103,7 @@ NEJ.define([
      * @property {String}        clazz    - 样式名称，默认为js-toggle
      * @property {String|Node}   element  - 切换样式的节点，默认为父节点
      * @property {Function}      ontoggle - 节点样式切换触发事件，输入信息{clazz,target,toggled}
+     * @property {Function}      onbeforetoggle - 节点样式切换之前触发事件，输入信息{clazz,target,stopped}
      * @return   {Void}
      */
     /**
@@ -104,13 +112,16 @@ NEJ.define([
      */
     _p._$toggle = (function(){
         // click event
-        var _doClick = function(_id,_clazz,_ontoggle,_ev){
+        var _doClick = function(_id,_clazz,_ontoggle,_onbefore,_ev){
             var _element = _e._$get(_id),
                 _event = {
                     event:_ev,
                     clazz:_clazz,
                     target:_element
                 };
+            _onbefore.call(null,_event);
+            if (!!_event.stopped) return;
+            // toggle element
             if (_e._$hasClassName(_element,_clazz)){
                 _event.toggled = !1;
                 _e._$delClassName(_element,_clazz);
@@ -125,6 +136,7 @@ NEJ.define([
             if (!!_element){
                 var _obj = {
                     ontoggle:_f,
+                    onbeforetoggle:_f,
                     clazz:'js-toggle',
                     element:_element.parentNode
                 };
@@ -142,7 +154,8 @@ NEJ.define([
                     _doClick._$bind(
                          null,_id,
                         _obj.clazz,
-                        _obj.ontoggle||_f
+                        _obj.ontoggle||_f,
+                        _obj.onbeforetoggle||_f
                     )
                 );
             }
