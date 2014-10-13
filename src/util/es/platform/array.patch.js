@@ -43,7 +43,7 @@ NEJ.define([
          * @return {Number}   符合条件的元素索引，没有找到返回-1
          */
         _pro.indexOf = function(_match,_beg){
-            var _index = parseInit(_beg)||0;
+            var _index = parseInt(_beg)||0;
             if (_index<0){
                 _index = Math.max(0,this.length+_index);
             }
