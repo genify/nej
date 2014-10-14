@@ -614,17 +614,18 @@ NEJ.define([
                 return null;
             }
             _to = _p._$get(_to)||null;
-            var _result = {x:0,y:0},
+            var _node = _from,
+                _result = {x:0,y:0},
                 _isroot,_delta,_border;
-            while(!!_from&&_from!=_to){
-                _isroot = _isRoot(_from);
-                _delta = _isroot?0:_from.scrollLeft;
-                _border = parseInt(_p._$getStyle(_from,'borderLeftWidth'))||0;
-                _result.x += _from.offsetLeft+_border-_delta;
-                _delta = _isroot?0:_from.scrollTop;
-                _border = parseInt(_p._$getStyle(_from,'borderTopWidth'))||0;
-                _result.y += _from.offsetTop+_border-_delta;
-                _from = _from.offsetParent;
+            while(!!_node&&_node!=_to){
+                _isroot = _isRoot(_node)||_node==_from;
+                _delta = _isroot?0:_node.scrollLeft;
+                _border = parseInt(_p._$getStyle(_node,'borderLeftWidth'))||0;
+                _result.x += _node.offsetLeft+_border-_delta;
+                _delta = _isroot?0:_node.scrollTop;
+                _border = parseInt(_p._$getStyle(_node,'borderTopWidth'))||0;
+                _result.y += _node.offsetTop+_border-_delta;
+                _node = _node.offsetParent;
             }
             return _result;
         };
