@@ -47,6 +47,7 @@ NEJ.define([
      * 
      * @param    {Object} config    - 可选配置参数
      * @property {Node}   viewport  - 滚动容器，默认为根结点
+     * @property {Number} step      - 滚动步进，默认50
      * @property {Array}  range     - 自动滚动临界范围定义，[lower,upper]，鼠标位置均相对于viewport，如
      *                                [10,200]  - 表示小于10时向上滚，大于200时向下滚
      *                                [10,-10]  - 值为负数，表示小于10时向上滚，大于viewport可视区高度减10时向下滚
@@ -63,6 +64,7 @@ NEJ.define([
         this.__super(_options);
         var _port = _e._$get(_options.viewport);
         this.__viewport = _port||_e._$getScrollViewPort();
+        this.__step = parseInt(_options.step)||50;
         this.__doUpdateRange(_options.range);
         this.__doUpdateLimit(_options.limit);
         // init event
@@ -94,7 +96,7 @@ NEJ.define([
         _limit = _limit||_r;
         this.__limit = [
             _limit[0]||0,
-            _height-(_limit[1]||0)
+            _limit[1]||0
         ];
     };
     /**
@@ -146,8 +148,10 @@ NEJ.define([
      */
     _pro.__doAutoScrollStep = function(){
         this.__count = (this.__count||0)+1;
-        var _top = this.__viewport.scrollTop,
-            _value = _top+this.__flag*Math.min(80,this.__count);
+        var _value = this.__viewport.scrollTop
+                   + this.__flag*Math.min(
+                         this.__step,this.__count
+                     );
         if (this.__flag<0){
             // up with min
             this.__viewport.scrollTop = Math.max(
@@ -156,7 +160,7 @@ NEJ.define([
         }else{
             // down with max
             this.__viewport.scrollTop = Math.min(
-                this.__limit[1],_value
+                this.__viewport.scrollHeight-this.__limit[1],_value
             );
         }
     };
@@ -165,8 +169,8 @@ NEJ.define([
      * @param {Object} _event
      */
     _pro.__doStopScroll = function(){
-        this.__count = 0;
         delete this.__flag;
+        delete this.__count;
         this.__timer = window.clearInterval(this.__timer);
     };
     /**
@@ -183,7 +187,7 @@ NEJ.define([
             return;
         }
         var _range = this.__range,
-            _delta = _v._$pageY(_evt)
+            _delta = _v._$clientY(_evt)
                    - _e._$offset(this.__viewport).y;
         this.__doAutoScroll(
             _delta<=_range[0]?-1:(

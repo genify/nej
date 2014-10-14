@@ -12,8 +12,9 @@ NEJ.define([
     'base/event',
     'base/element',
     'base/util',
-    'util/event'
-],function(NEJ,_k,_v,_e,_u,_t,_p,_o,_f,_r,_pro){
+    'util/event',
+    'util/auto/scroll'
+],function(NEJ,_k,_v,_e,_u,_t,_x,_p,_o,_f,_r,_pro){
     /**
      * 排序功能封装
      * 
@@ -113,6 +114,10 @@ NEJ.define([
         return function(){
             _e._$removeByEC(this.__holder);
             _unSelect(this.__lsort,this.__selected);
+            if (!!this.__auto){
+                this.__auto._$recycle();
+                delete this.__auto;
+            }
             delete this.__lsort;
             delete this.__place;
             delete this.__offset;
@@ -171,16 +176,14 @@ NEJ.define([
         }catch(ex){
             // ignore
         }
-        // auto scroll info
-        var _parent = this.__getScrollParent(),
-            _height = _parent.clientHeight;
-        this.__auto = {
-            parent:_parent,
-            offset:_e._$offset(_parent).y,
-            range:[_height*0.2,_height*0.8]
-        };
         // holder info
         this.__offset = _e._$offset(this.__parent);
+        var _node = _u._$isArray(this.__lsort)
+                  ? this.__lsort[0]:this.__lsort;
+        this.__auto = _x._$$SmartScroll._$allocate({
+            viewport:this.__getScrollParent(),
+            step:_node.offsetHeight/5
+        });
     };
     /**
      * 排序过程
