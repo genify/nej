@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>test smart scroll</title>
+    <meta charset="utf-8"/>
+    <style>
+      p{margin:200px 0;}
+    </style>
+  </head>
+  <body>
+    <p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+    <p>bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</p>
+    <p>ccccccccccccccccccccccccccccccccccc</p>
+    <p>dddddddddddddddddddddddddddddddddddd</p>
+    <p>eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee</p>
+    <p>fffffffffffffffffffffffffffffffffff</p>
+    <p>ggggggggggggggggggggggggggggggggggggg</p>
+    <p>111111111111111111111111111111</p>
+    <p>222222222222222222222222222</p>
+    <p>33333333333333333333333333333</p>
+    <script src="../../../../src/define.js"></script>
+    <script>
+      define([
+          '../scroll.js'
+      ],function(_t){
+          _t._$$SmartScroll._$allocate();
+      });
+    </script>
+  </body>
+</html>

@@ -22,6 +22,7 @@ NEJ.define([
      * 
      * @param    {Object} conifg      - 可选配置参数
      * @property {Node}   parent      - 容器节点
+     * @property {Node}   viewport    - 滚动条所在容器，拖拽超出此容器自动滚动
      * @property {String} clazz       - 可排序节点的类标识，默认为j-sortable
      * @property {String} trigger     - 触发排序节点的类标识，默认为clazz标识的节点
      * @property {Node}   placeholder - 占位符，用于标识插入位置
@@ -55,6 +56,7 @@ NEJ.define([
         this.__clazz  = _options.clazz||'j-sortable';
         this.__trigger = _options.trigger||this.__clazz;
         this.__selected = _options.selected||'j-selected';
+        this.__viewport = _e._$get(_options.viewport);
         this.__parent = _e._$get(_options.parent);
         this.__holder = _e._$get(_options.placeholder);
         _e._$removeByEC(this.__holder);
@@ -82,6 +84,17 @@ NEJ.define([
     _pro.__destroy = function(){
         this.__doClearSort();
         this.__super();
+    };
+    /**
+     * 取滚动条所在容器
+     * @return {Void}
+     */
+    _pro.__getScrollParent = function(){
+        var _parent = this.__parent;
+        if (_parent.scrollHeight>_parent.offsetHeight){
+            return _parent;
+        }
+        return _e._$getScrollViewPort(_parent);
     };
     /**
      * 清除排序信息
@@ -158,6 +171,15 @@ NEJ.define([
         }catch(ex){
             // ignore
         }
+        // auto scroll info
+        var _parent = this.__getScrollParent(),
+            _height = _parent.clientHeight;
+        this.__auto = {
+            parent:_parent,
+            offset:_e._$offset(_parent).y,
+            range:[_height*0.2,_height*0.8]
+        };
+        // holder info
         this.__offset = _e._$offset(this.__parent);
     };
     /**
