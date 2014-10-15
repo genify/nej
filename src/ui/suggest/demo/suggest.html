@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>test suggest</title>
+    <meta charset="utf-8"/>
+    <style>
+      p{margin:200px 0;}
+    </style>
+  </head>
+  <body>
+    <input type="text" id="abc"/>
+    <script src="../../../../src/define.js"></script>
+    <script>
+      define([
+          '../suggest.js'
+      ],function(_i){
+          _i._$$Suggest._$allocate({
+              input:'abc',
+              onchange:function(_event){
+                  this._$setList(['1','2','3','4']);
+              }
+          });
+      });
+    </script>
+  </body>
+</html>

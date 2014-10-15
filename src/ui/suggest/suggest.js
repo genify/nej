@@ -13,7 +13,7 @@ NEJ.define([
     'base/util',
     'ui/base',
     'util/suggest/suggest',
-    'util/template/tpl',
+    'util/template/jst',
     'text!./suggest.css',
     'text!./suggest.html'
 ],function(NEJ,_k,_e,_u,_i,_t0,_t1,_css,_html,_p,_o,_f,_r){
