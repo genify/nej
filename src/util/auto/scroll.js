@@ -65,7 +65,7 @@ NEJ.define([
         var _port = _e._$get(_options.viewport);
         this.__viewport = _port||_e._$getScrollViewPort();
         this.__step = parseInt(_options.step)||50;
-        this.__doUpdateRange(_options.range);
+        this.__rtmp = _options.range;
         this.__doUpdateLimit(_options.limit);
         // init event
         this.__doInitDomEvent([[
@@ -83,6 +83,7 @@ NEJ.define([
     _pro.__destroy = function(){
         this.__super();
         this.__doStopScroll();
+        delete this.__rtmp;
         delete this.__range;
         delete this.__limit;
         delete this.__viewport;
@@ -115,7 +116,7 @@ NEJ.define([
             return _value;
         };
         return function(_range){
-            var _xrng = _range||_r,
+            var _xrng = this.__rtmp||_r,
                 _height = this.__viewport.clientHeight,
                 _lower = _doFormat(_xrng[0],_height,0.2),
                 _upper = _doFormat(_xrng[1],_height,0.8);
@@ -123,6 +124,7 @@ NEJ.define([
                 Math.min(_lower,_upper),
                 Math.max(_lower,_upper)
             ];
+            delete this.__rtmp;
         };
     })();
     /**
@@ -185,6 +187,9 @@ NEJ.define([
         if (!!_event.stopped){
             this.__doStopScroll();
             return;
+        }
+        if (!this.__range){
+            this.__doUpdateRange();
         }
         var _range = this.__range,
             _delta = _v._$clientY(_evt)
