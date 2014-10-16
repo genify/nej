@@ -18,6 +18,9 @@
               input:'abc',
               onchange:function(_event){
                   this._$setList(['1','2','3','4']);
+              },
+              onselect:function(v){
+                  console.log(v);
               }
           });
       });
