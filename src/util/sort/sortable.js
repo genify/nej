@@ -215,7 +215,7 @@ NEJ.define([
                     left:_pointer.x-_obox.left-this.__offset.x
                 }
             );
-            this.__place.ref = _element;
+            this.__place.ref = _element; 
             this.__place.source = this.__lsort;
             this.__place.target = this.__holder;
             // check placeholder update
