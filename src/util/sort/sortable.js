@@ -47,6 +47,7 @@ NEJ.define([
      * 排序缩略图更新事件
      * 
      * @event    module:util/sort/sortable._$$Sortable#onthumbupdate
+<<<<<<< HEAD
      * @param    {Object}     event   - 事件信息
      * @property {Varable}    state   - 状态值，1-开始排序，2-排序中，3-排序结束
      * @property {Number}     top     - 鼠标距页面顶部位置
@@ -69,6 +70,26 @@ NEJ.define([
      * @property {Node|Array} source   - 排序节点或者节点列表
      * @property {Node}       ref      - 插入点参考节点
      * @property {Boolean}    stopped  - 是否阻止后续逻辑
+=======
+     * @param    {Object}  event   - 事件信息
+     * @property {Varable} state   - 状态值，1-开始排序，2-排序中，3-排序结束
+     * @property {Number}  top     - 鼠标距页面顶部位置
+     * @property {Number}  left    - 鼠标距页面左侧位置
+     * @property {Node}    target  - 缩略图节点
+     * @property {Boolean} stopped - 是否阻止后续逻辑
+     */
+    /** 
+     * 排序占位符更新事件
+     * 
+     * @event    module:util/sort/sortable._$$Sortable#onholderupdate
+     * @param    {Object}  event    - 事件信息
+     * @property {Number}  top      - 鼠标相对于容器顶部偏移量
+     * @property {Number}  left     - 鼠标相对于容器左侧偏移量
+     * @property {Number}  width    - 排序节点宽度
+     * @property {Number}  height   - 排序节点高度
+     * @property {String}  position - 占位符插入位置，beforeBegin/afterEnd
+     * @property {Boolean} stopped  - 是否阻止后续逻辑
+>>>>>>> branch 'master' of https://github.com/NetEaseWD/NEJ.git
      */
     _p._$$Sortable = _k._$klass();
     _pro = _p._$$Sortable._$extend(_t._$$EventTarget);
@@ -215,7 +236,7 @@ NEJ.define([
                     left:_pointer.x-_obox.left-this.__offset.x
                 }
             );
-            this.__place.ref = _element;
+            this.__place.ref = _element; 
             this.__place.source = this.__lsort;
             this.__place.target = this.__holder;
             // check placeholder update
