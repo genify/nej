@@ -326,17 +326,17 @@ NEJ.define([
             _event,'c:'+this.__clazz
         );
         if (!_element) return;
+        // update thumbnail
+        this.__doUpdateThumb(2,{
+            x:_v._$clientX(_event),
+            y:_v._$clientY(_event)
+        });
         // single selection
         if (_element==this.__lsort){
             delete this.__place;
             _e._$removeByEC(this.__holder);
             return;
         }
-        // update thumbnail
-        this.__doUpdateThumb(2,{
-            x:_v._$clientX(_event),
-            y:_v._$clientY(_event)
-        });
         // update placeholder
         this.__doUpdateHolder(
             _element,{
