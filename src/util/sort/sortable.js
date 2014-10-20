@@ -44,7 +44,7 @@ NEJ.define([
      * @param {Object} event - 事件信息
      */
     /** 
-     * 排序缩略图更新事件
+     * 排序缩略图更新事件 
      * 
      * @event    module:util/sort/sortable._$$Sortable#onthumbupdate
      * @param    {Object}     event   - 事件信息
