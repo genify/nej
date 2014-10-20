@@ -326,15 +326,15 @@ NEJ.define([
      */
     _pro.__onSorting = function(_event){
         if (!this.__lsort) return;
-        var _element = _v._$getElement(
-            _event,'c:'+this.__clazz
-        );
-        if (!_element) return;
         // update thumbnail
         this.__doUpdateThumb(2,{
             x:_v._$clientX(_event),
             y:_v._$clientY(_event)
         });
+        var _element = _v._$getElement(
+            _event,'c:'+this.__clazz
+        );
+        if (!_element) return;
         // single selection
         if (_element==this.__lsort){
             delete this.__place;
