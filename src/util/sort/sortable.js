@@ -170,6 +170,9 @@ NEJ.define([
             target:this.__thumb,
             source:this.__lsort
         };
+        if (_flag!=3){
+            document.body.appendChild(this.__thumb);
+        }
         this._$dispatchEvent(
             'onthumbupdate',_event
         );
@@ -179,7 +182,6 @@ NEJ.define([
             return;
         }
         // user updated
-        document.body.appendChild(this.__thumb);
         if (!!_event.stopped){
             return;
         }
@@ -301,10 +303,12 @@ NEJ.define([
         }
         // holder info
         this.__offset = _e._$offset(this.__parent);
-        this.__doUpdateThumb(1,{
+        var _opt = {
             x:_v._$clientX(_event),
             y:_v._$clientY(_event)
-        });
+        };
+        this.__doUpdateThumb(1,_opt);
+        this.__doUpdateThumb(2,_opt);
         // for auto scroll
         var _node = _u._$isArray(this.__lsort)
                   ? this.__lsort[0]:this.__lsort;
@@ -326,17 +330,17 @@ NEJ.define([
             _event,'c:'+this.__clazz
         );
         if (!_element) return;
+        // update thumbnail
+        this.__doUpdateThumb(2,{
+            x:_v._$clientX(_event),
+            y:_v._$clientY(_event)
+        });
         // single selection
         if (_element==this.__lsort){
             delete this.__place;
             _e._$removeByEC(this.__holder);
             return;
         }
-        // update thumbnail
-        this.__doUpdateThumb(2,{
-            x:_v._$clientX(_event),
-            y:_v._$clientY(_event)
-        });
         // update placeholder
         this.__doUpdateHolder(
             _element,{
