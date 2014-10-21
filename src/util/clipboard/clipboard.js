@@ -38,6 +38,7 @@ NEJ.define([
             src:_c._$get('clipboard.swf'),
             params:{wmode:'transparent',flashvars:_vars}
         },_options));
+        return _box;
     };
     /**
      * 绑定复制操作，服务器放置剪切板操作Flash nej_clipboard.swf，
@@ -85,7 +86,7 @@ NEJ.define([
         _element = _e._$get(_element);
         if (!_element) return;
         // bind flash
-        _doCoverClipboard(_element,'op=0',{
+        return _doCoverClipboard(_element,'op=0',{
             onbeforecopy:function(){
                 return _u._$isFunction(_content)?_content():(_content||'');
             }
@@ -130,7 +131,7 @@ NEJ.define([
     _p._$clear =  function(_element){
         _element = _e._$get(_element);
         if (!_element) return;
-        _doCoverClipboard(_element,'op=2');
+        return _doCoverClipboard(_element,'op=2');
     };
     // for chainable method
     _x._$merge(_p);
