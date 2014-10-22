@@ -361,7 +361,9 @@ NEJ.define([
                 this.__timeout||_timeout
             );
         }
-        this.__doRequest(_request);
+        if (!!_request){
+            this.__doRequest(_request);
+        }
         this._$dispatchEvent('onloading');
     };
     /**
