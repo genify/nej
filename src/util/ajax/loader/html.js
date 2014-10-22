@@ -46,9 +46,14 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__doRequest = function(_request){
-        // append first for history bug
-        document.body.appendChild(_request);
-        _request.src = this.__url;
+        try{
+            // append first for history bug
+            document.body.appendChild(_request);
+            _request.src = this.__url;
+        }catch(ex){
+            console.log(_request);
+            console.error(ex);
+        }
     };
     /**
      * 资源载入异常事件
