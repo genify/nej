@@ -5,7 +5,7 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-/** @module util/auto/scroll */
+/** @module util/scroll/smart */
 NEJ.define([
     'base/klass',
     'base/event',
@@ -31,7 +31,7 @@ NEJ.define([
      * 脚本举例
      * ```javascript
      * NEJ.define([
-     *     'util/auto/scroll'
+     *     'util/scroll/smart'
      * ],function(_t){
      *     var _scroll = _t._$$SmartScroll._$allocate({
      *         viewport:'box',
@@ -42,7 +42,7 @@ NEJ.define([
      * });
      * ```
      * 
-     * @class    module:util/auto/scroll._$$SmartScroll
+     * @class    module:util/scroll/smart._$$SmartScroll
      * @extends  module:util/event._$$EventTarget
      * 
      * @param    {Object} config    - 可选配置参数

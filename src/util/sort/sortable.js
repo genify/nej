@@ -13,7 +13,7 @@ NEJ.define([
     'base/element',
     'base/util',
     'util/event',
-    'util/auto/scroll'
+    'util/scroll/smart'
 ],function(NEJ,_k,_v,_e,_u,_t,_x,_p,_o,_f,_r,_pro){
     /**
      * 排序功能封装
