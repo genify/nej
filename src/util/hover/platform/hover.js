@@ -15,6 +15,14 @@ NEJ.define(function(_p,_o,_f,_r){
     _p.__hoverElement = function(){
         // use css :hover
     };
+    /**
+     * 移除节点hover行为
+     * @param  {String} 节点ID
+     * @return {Void}
+     */
+    _h.__unhoverElement = function(_id){
+        // use css :hover
+    };
     
     return _p;
 });
