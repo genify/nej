@@ -20,7 +20,7 @@ NEJ.define(function(_p,_o,_f,_r){
      * @param  {String} 节点ID
      * @return {Void}
      */
-    _h.__unhoverElement = function(_id){
+    _p.__unhoverElement = function(_id){
         // use css :hover
     };
     
