@@ -93,6 +93,6 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__doAppendResource = function(_node,_conf){
-        _node.src = _conf.src;
+        _node.src = _conf.src||this.__holder;
     };
 });
