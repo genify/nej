@@ -203,7 +203,7 @@ NEJ.define([
          * @param  {Node}  节点对象
          * @return {Node}  节点
          */
-        _h.__previousSibling = function(_event){
+        _h.__previousSibling = function(_element){
             while(_element=_element.previousSibling){
                 if (_element.nodeType==1){
                     return _element;
