@@ -776,7 +776,7 @@
             var _ret = __rcache[_uri],
                 _iso = {}.toString.call(_result)=='[object Object]';
             if (!!_result){
-                if (!_iso){
+                if (!_ret||!_iso){
                     // for other type of return
                     _ret = _result;
                 }else{
