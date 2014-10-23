@@ -67,7 +67,7 @@ NEJ.define([
             this.__parent||window,'scroll',
             this.__doCheckScrollPosition._$bind(this)
         ]]);
-        this.__doCheckScrollPosition();
+        this._$refresh();
     };
     /**
      * 控件销毁
@@ -200,4 +200,13 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__doAppendResource = _f;
+    /**
+     * 强制刷新检测资源
+     * 
+     * @method module:util/lazy/loading._$$LazyLoading#_$refresh
+     * @return {Void}
+     */
+    _pro._$refresh = function(){
+        this.__doCheckScrollPosition();
+    };
 });
