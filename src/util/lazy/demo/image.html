@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NEJ实例 - 图片延时载入</title>
+    <meta charset="utf-8" />
+    <style>
+      .box{height:500px;overflow:auto;border:1px solid #aaa;}
+      .box p{margin:20px 0;}
+      .box img{height:200px;}
+    </style>
+  </head>
+  <body>
+    
+    <div class="box" id="abc">
+      <p><img data-src="http://h.hiphotos.baidu.com/image/pic/item/aec379310a55b319cca6657441a98226cffc1757.jpg"/></p>
+      <p><img data-src="http://a.hiphotos.baidu.com/image/pic/item/b64543a98226cffc96cffcadbb014a90f703eacc.jpg"/></p>
+      <p><img data-src="http://h.hiphotos.baidu.com/image/pic/item/241f95cad1c8a786ce85ce076509c93d70cf500f.jpg"/></p>
+      <p><img data-src="http://f.hiphotos.baidu.com/image/pic/item/5882b2b7d0a20cf4cccab9d774094b36acaf9964.jpg"/></p>
+      <p><img data-src="http://a.hiphotos.baidu.com/image/pic/item/dc54564e9258d109e35ecfbad358ccbf6c814d7c.jpg"/></p>
+      <p><img data-src="http://a.hiphotos.baidu.com/image/pic/item/32fa828ba61ea8d315e38903950a304e241f58f0.jpg"/></p>
+      <p><img data-src="http://c.hiphotos.baidu.com/image/pic/item/6a600c338744ebf838f97637dbf9d72a6059a729.jpg"/></p>
+      <p><img data-src="http://e.hiphotos.baidu.com/image/pic/item/a9d3fd1f4134970a543a6a3197cad1c8a7865d66.jpg"/></p>
+      <p><img data-src="http://d.hiphotos.baidu.com/image/pic/item/0df3d7ca7bcb0a461988e8316963f6246b60af14.jpg"/></p>
+      <p><img data-src="http://h.hiphotos.baidu.com/image/pic/item/3ac79f3df8dcd10075e23f28708b4710b9122fb9.jpg"/></p>
+    </div>
+    
+    <script src="../../../define.js"></script>
+    <script>
+        NEJ.define([
+            '../image.js'
+        ],function(_t){
+            _t._$$LazyImage._$allocate({
+                parent:'abc',
+                attr:'src'
+            });
+        });
+    </script>
+  </body>
+</html>
