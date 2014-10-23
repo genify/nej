@@ -29,7 +29,8 @@ NEJ.define([
                 transitionend:'TransitionEnd',
                 animationend:'AnimationEnd',
                 animationstart:'AnimationStart',
-                animationiteration:'AnimationIteration'
+                animationiteration:'AnimationIteration',
+                visibilitychange:'visibilitychange'
             };
         var _fmap = {
             enter:function(_element,_type,_handler){

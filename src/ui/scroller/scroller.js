@@ -102,7 +102,7 @@ NEJ.define([
      * @abstract
      * @return {Object} 滚动配置信息
      */
-    _pro.__getConfig = f;
+    _pro.__getConfig = _f;
     /**
      * 控件重置
      *

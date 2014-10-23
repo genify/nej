@@ -83,7 +83,7 @@ NEJ.define([
     /**
      * 取滚动视图
      * 
-     * @protected
+     * @protected 
      * @method module:util/lazy/loading._$$LazyLoading#__getScrollViewPort
      * @return {Object} 滚动视图信息
      */
