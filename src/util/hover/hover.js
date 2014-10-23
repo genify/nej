@@ -10,8 +10,9 @@ NEJ.define([
     'base/global',
     'base/element',
     'base/chain',
+    'base/util',
     '{platform}hover.js'
-],function(NEJ,_e,_x,_h,_p,_o,_f,_r){
+],function(NEJ,_e,_x,_u,_h,_p,_o,_f,_r){
     /**
      * 节点hover行为，高版本浏览器用:hover样式处理
      *
