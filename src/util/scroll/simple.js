@@ -416,11 +416,20 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__onMouseWheel = function(_event){
+        var _dt = this.__parent.scrollTop,
+            _dl = this.__parent.scrollLeft;
+        // update scroll bar
         this.__doUpdateScrollBar(
             _event.wheelDeltaX||0,
             _event.wheelDeltaY||
             _event.wheelDelta||0
         );
+        // check end
+        _dt = this.__parent.scrollTop!=_dt;
+        _dl = this.__parent.scrollLeft!=_dl;
+        if (_dt||_dl){
+            _v._$stop(_event);
+        }
     };
     /**
      * 鼠标移入事件
