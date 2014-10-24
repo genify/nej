@@ -189,10 +189,16 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__onSelectionChange = function(_event){
+        // log onchang for input value setting
+        if (!!this.__xxx){
+            return;
+        }
+        this.__xxx = !0;
         var _value = _e._$dataset(_event.target,'value')||'';
         if (!!_value){
             this.__input.value = _value;
         }
+        this.__xxx = !1;
     };
     /**
      * 设置列表，用于切换列表选择卡片是否可见，不建议使用
