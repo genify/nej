@@ -100,7 +100,7 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
         this.__name = _options.event||'click';
         this.__selected = _options.selected||'js-selected';
         this.__disabled = _options.disabled||'js-disabled';
@@ -120,7 +120,7 @@ NEJ.define([
             this.__doTabItemSelect(_node,!1);
         };
         return function(){
-            this.__supDestroy();
+            this.__super();
             _u._$forEach(
                 this.__list,
                 _doResetSelect,this

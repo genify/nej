@@ -24,7 +24,7 @@ var f = function(){
 		_options = _options || {};
         _options.draggable = !!_options.draggable ? true : false;
         _options.destroyable = !!_options.destroyable ? true : false;
-		this.__supReset(_options);
+		this.__super(_options);
 	};
 };
 define('{pro}mywindow.js',

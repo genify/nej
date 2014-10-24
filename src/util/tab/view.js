@@ -79,7 +79,7 @@ NEJ.define([
         return function(_options){
             _options.oncheck = 
                 _options.oncheck||_doMatchEq;
-            this.__supReset(_options);
+            this.__super(_options);
             this.__list = _options.list;
             this.__name = _options.dataset||'id';
             this.__selected = _options.selected||'js-selected';

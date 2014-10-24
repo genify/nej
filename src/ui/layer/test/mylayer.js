@@ -32,7 +32,7 @@ var f = function(){
      * @return {Void}
      */
     _proMyLayer.__reset = function(_options){
-        this.__supReset(_options);
+        this.__super(_options);
     };
     /**
      * 控件销毁
@@ -42,7 +42,7 @@ var f = function(){
      * @return {Void}
      */
     _proMyLayer.__destroy = function(){
-        this.__supDestroy();
+        this.__super();
     };
     /**
      * 初始化外观信息
@@ -62,7 +62,7 @@ var f = function(){
      * @return {Void}
      */
     _proMyLayer.__initNode = function(){
-        this.__supInitNode();
+        this.__super();
         this.__ncnt = this.__body;
     };
 };

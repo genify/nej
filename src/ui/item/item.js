@@ -37,7 +37,7 @@ NEJ.define([
      *     _proMyItem = _p._$$MyItem._$extend(_i0._$$Item);
      *     _proMyItem.__reset = function(_options){
      *         this.__data = _options.data;
-     *         this.__supReset(_options);
+     *         this.__super(_options);
      *     }
      *
      *     _proMyItem.__doRefresh = function(){
