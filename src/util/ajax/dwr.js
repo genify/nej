@@ -411,8 +411,8 @@ NEJ.define([
         _u._$forIn(
             _data,function(v,k){
                 _arr.push(
-                    !_and ? (p+'='+_data[p]) :
-                    (encodeURIComponent(p)+'='+encodeURIComponent(_data[p]))
+                    !_and ? (k+'='+v) :
+                    (encodeURIComponent(k)+'='+encodeURIComponent(v))
                 );
             }
         );
