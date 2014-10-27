@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NEJ实例 - Toggle</title>
+    <meta charset="utf-8" />
+    
+    <style>
+        .abc{background:#fdc;}
+        .js-toggle{background:#0000FF;}
+    </style>
+    
+  </head>
+  <body>
+    
+    <div class="abc" id="abc">123456</div>
+    
+    <script src="../../../define.js"></script>
+    <script>
+        NEJ.define([
+            'util/toggle/toggle'
+        ],function(_t){
+            _t._$toggle(
+                'abc',{
+                    element:'abc'
+                }
+            );
+        });
+    </script>
+  </body>
+</html>

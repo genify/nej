@@ -112,14 +112,16 @@ NEJ.define([
      */
     _p._$toggle = (function(){
         // click event
-        var _doClick = function(_id,_clazz,_ontoggle,_onbefore,_ev){
-            var _element = _e._$get(_id),
+        var _doClick = function(_options,_ev){
+            var _element = _e._$get(_options.element),
+                _clazz = _options.clazz,
                 _event = {
                     event:_ev,
                     clazz:_clazz,
-                    target:_element
+                    target:_element,
+                    source:_e._$get(_options.source)
                 };
-            _onbefore.call(null,_event);
+            _options.onbeforetoggle.call(null,_event);
             if (!!_event.stopped) return;
             // toggle element
             if (_e._$hasClassName(_element,_clazz)){
@@ -129,7 +131,7 @@ NEJ.define([
                 _event.toggled = !0;
                 _e._$addClassName(_element,_clazz);
             }
-            _ontoggle.call(null,_event);
+            _options.ontoggle.call(null,_event);
         };
         return function(_element,_options){
             _element = _e._$get(_element);
@@ -138,6 +140,7 @@ NEJ.define([
                     ontoggle:_f,
                     onbeforetoggle:_f,
                     clazz:'js-toggle',
+                    source:_e._$id(_element),
                     element:_element.parentNode
                 };
                 if (_u._$isString(_options)){
@@ -148,15 +151,10 @@ NEJ.define([
                     _u._$fetch(_obj,_options);
                     _obj.element = _e._$get(_obj.element);
                 }
-                var _id = _e._$id(_obj.element);
+                _obj.element = _e._$id(_obj.element);
                 _v._$addEvent(
                     _element,'click',
-                    _doClick._$bind(
-                         null,_id,
-                        _obj.clazz,
-                        _obj.ontoggle||_f,
-                        _obj.onbeforetoggle||_f
-                    )
+                    _doClick._$bind(null,_obj)
                 );
             }
         };
