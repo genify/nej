@@ -136,6 +136,7 @@ NEJ.define([
             this.__helper._$recycle();
             delete this.__helper;
         }
+        delete this.__xxx;
         delete this.__input;
         delete this.__sopt.parent;
     };
@@ -159,9 +160,28 @@ NEJ.define([
         var _value = this.__input.value.trim();
         if (!_value){
             this._$visibile(!1);
-        }else{
+        }else if(!this.__xxx){
             this._$dispatchEvent('onchange',_value);
         }
+    };
+    /**
+     * 更新输入框内容
+     *
+     * @protected
+     * @method module:util/suggest/suggest._$$Suggest#__doUpdateValue
+     * @param  {Object} arg0 - 值信息
+     * @return {Void} 
+     */
+    _pro.__doUpdateValue = function(_value){
+        // lock onchange for input value setting
+        if (!!this.__xxx){
+            return;
+        }
+        this.__xxx = !0;
+        if (!!_value&&_value!=this.__input.value){
+            this.__input.value = _value;
+        }
+        this.__xxx = !1;
     };
     /**
      * 建议项选中事件
@@ -173,9 +193,7 @@ NEJ.define([
      */
     _pro.__onSelect = function(_event){
         var _value = _e._$dataset(_event.target,'value')||'';
-        if (!!_value){
-            this.__input.value = _value;
-        }
+        this.__doUpdateValue(_value);
         _value = _value||this.__input.value;
         this._$update('');
         this._$dispatchEvent('onselect',_value);
@@ -189,16 +207,9 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__onSelectionChange = function(_event){
-        // log onchang for input value setting
-        if (!!this.__xxx){
-            return;
-        }
-        this.__xxx = !0;
-        var _value = _e._$dataset(_event.target,'value')||'';
-        if (!!_value){
-            this.__input.value = _value;
-        }
-        this.__xxx = !1;
+        this.__doUpdateValue(
+            _e._$dataset(_event.target,'value')||''
+        );
     };
     /**
      * 设置列表，用于切换列表选择卡片是否可见，不建议使用
