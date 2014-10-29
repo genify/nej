@@ -107,7 +107,7 @@ NEJ.define([
      * @param    {Object}      config - 可选配置参数
      * @property {String|Node} more   - 添加更多列表项按钮节点
      * @property {String|Node} sbody  - 滚动条所在容器，支持onscroll事件
-     * @property {Number}      delta  - 触发自动加载更多时距离滚动容器底部的便宜量，单位px，默认30
+     * @property {Number}      delta  - 触发自动加载更多时距离滚动容器底部的偏移量，单位px，默认30
      * @property {Number}      count  - 指定加载多少次后出现分页器
      * @property {Number}      number - 初始加载次数，小于等于count数有效
      */

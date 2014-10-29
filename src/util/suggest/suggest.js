@@ -63,6 +63,7 @@ NEJ.define([
      * @param    {Object}      config   - 可选配置参数
      * @property {Node|String} input    - 输入框
      * @property {Node|String} body     - 提示卡片节点
+     * @property {Boolean}     autofill - 选择时是否自动填充
      * @property {String}      clazz    - 可选节点样式标识，默认为所有子节点
      * @property {String}      selected - 提示项选中样式，默认为js-selected
      */
@@ -104,6 +105,7 @@ NEJ.define([
     _pro.__reset = function(_options){
         this.__super(_options);
         // init node
+        this.__auto  = !!_options.autofill;
         this.__input = _e._$get(_options.input);
         this.__sopt.clazz = _options.clazz;
         this.__sopt.parent = _e._$get(_options.body);
@@ -207,9 +209,11 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__onSelectionChange = function(_event){
-        this.__doUpdateValue(
-            _e._$dataset(_event.target,'value')||''
-        );
+        if (this.__auto){
+            this.__doUpdateValue(
+                _e._$dataset(_event.target,'value')||''
+            );
+        }
     };
     /**
      * 设置列表，用于切换列表选择卡片是否可见，不建议使用

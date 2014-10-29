@@ -56,8 +56,9 @@ NEJ.define([
      * @class     module:ui/suggest/suggest._$$Suggest
      * @uses      module:util/suggest/suggest._$$Suggest
      * @extends   module:ui/base._$$Abstract
-     * @param     {Object}      arg0   - 可选配置参数
-     * @property  {Node|String} input - 输入框节点或者ID
+     * @param     {Object}      arg0     - 可选配置参数
+     * @property  {Node|String} input    - 输入框节点或者ID
+     * @property  {Boolean}     autofill - 是否自动填充，默认自动填充
      */
     /**
      * 选中触发事件
@@ -83,8 +84,8 @@ NEJ.define([
      */
     _pro.__init = function(){
         this.__sopt = {
-            onchange:this.__onChange._$bind(this)
-           ,onselect:this.__onSelect._$bind(this)
+            onchange:this.__onChange._$bind(this),
+            onselect:this.__onSelect._$bind(this)
         };
         this.__super();
     };
@@ -98,6 +99,7 @@ NEJ.define([
      */
     _pro.__reset = function(_options){
         this.__super(_options);
+        this.__sopt.autofill = _options.autofill!=!1;
         this.__sopt.input = _e._$get(_options.input);
         this.__sopt.input.insertAdjacentElement('afterEnd',this.__body);
         this.__suggest = _t0._$$Suggest._$allocate(this.__sopt);
