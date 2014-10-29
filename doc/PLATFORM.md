@@ -297,7 +297,7 @@ NEJ.define([
 
 ![platform](http://img2.ph.126.net/ygcxx2DAXf5YbpQ8No7SWg==/6608689405538619068.png)
 
-这里的api.js文件为需平他适配API的标准实现逻辑，而api.patch.js文件则利用NEJ.patch接口对各平台做按需适配逻辑，同时打包时也根据NEJ.patch接口中对平台的条件识别做按需输出，由于api.patch.js文件最终会按需输出，因此在此文件中除了使用NEJ.patch做平台适配逻辑外不允许保护其它业务逻辑
+这里的api.js文件为需平台适配API的标准实现逻辑，而api.patch.js文件则利用NEJ.patch接口对各平台做按需适配逻辑，同时打包时也根据NEJ.patch接口中对平台的条件识别做按需输出，由于api.patch.js文件最终会按需输出，因此在此文件中除了使用NEJ.patch做平台适配逻辑外不允许包括其它业务逻辑
 
 #### NEJ.patch
 
