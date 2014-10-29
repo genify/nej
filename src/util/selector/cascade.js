@@ -115,16 +115,15 @@ NEJ.define([
                 {},_conf,_options.keys
             );
             this.__nselect = [];
+            this.__noffset = [];
             var _arr = [],
                 _default = [];
             _u._$forEach(
                 _options.select,function(_id,_index){
-                    this.__nselect.push(
-                        _e._$get(_id)
-                    );
-                    _default.push(
-                        _e._$dataset(_id,'value')
-                    );
+                    var _node = _e._$get(_id);
+                    this.__nselect.push(_node);
+                    this.__noffset.push(_node.options.length);
+                    _default.push(_e._$dataset(_id,'value'));
                     _arr.push([
                         _id,'change',
                         this.__onChange._$bind(this,_index)
@@ -188,8 +187,14 @@ NEJ.define([
      */
     _pro.__doClearList = function(_node){
         if (!_node) return;
+        var _offset = this.__noffset[
+            _u._$indexOf(this.__nselect,_node)
+        ];
         _u._$reverseEach(
             _node.options,function(_item,_index){
+                if (_index<_offset){
+                    return !0;
+                }
                 _node.remove(_index);
             }
         );
@@ -262,10 +267,13 @@ NEJ.define([
         // check list
         if (!_list||!_list.length){
             // set sub select un-visible
-            for(var i=_next,l=this.__nselect.length,_it;i<l;i++){
+            for(var i=_next,l=this.__nselect.length,_it,_dt;i<l;i++){
                 _it = this.__nselect[i];
                 this.__doClearList(_it);
-                _e._$setStyle(_it,'visibility','hidden');
+                _dt = this.__noffset[i];
+                if (!_dt){
+                    _e._$setStyle(_it,'visibility','hidden');
+                }
             }
         }else{
             // refresh sub select list

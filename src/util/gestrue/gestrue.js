@@ -8,8 +8,9 @@
 /** @module util/gestrue/gestrue */
 NEJ.define([
     'base/klass',
+    'base/event',
     'util/event'
-],function(_k,_t,_p,_o,_f,_r,_pro){
+],function(_k,_v,_t,_p,_o,_f,_r,_pro){
     /**
      * 
      * 
@@ -33,6 +34,7 @@ NEJ.define([
      */
     _pro.__reset = function(_options){
         this.__super(_options);
+        this.__touches = {};
         this.__doInitDomEvent([[
             document,'touchstart',
             this.__onTouchStart._$bind(this)
@@ -80,6 +82,19 @@ NEJ.define([
     _pro.__onTouchEnd = function(_event){
         
     };
+    /**
+     * 触发手势事件
+     * 
+     * @method module:util/gestrue/gestrue._$$Gestrue#_$fire
+     * @param  {String}   arg0 - 事件类型
+     * @param  {Variable} arg1 - 详细参数
+     * @return {Void}
+     */
+    _pro._$fire = function(_type,_detail){
+        
+    };
     
     
+    
+    return _p._$$Gestrue._$allocate();
 });
