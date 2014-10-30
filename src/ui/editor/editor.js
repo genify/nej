@@ -71,7 +71,7 @@ NEJ.define([
         });
         this.__aopt.style = _options.style;
         this.__aopt.content = _options.content;
-        this.__aopt.focus = _options.focus||1;
+        this.__aopt.focus = _options.focus!==!1;
         this.__editor = _t0._$$Editor._$allocate({
             area:_t2._$$EditorArea._$allocate(this.__aopt)
            ,toolbar:_t3._$$EditorToolbar._$allocate(this.__topt)
