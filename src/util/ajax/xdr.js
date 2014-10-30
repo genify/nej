@@ -252,6 +252,7 @@ NEJ.define([
                 }
             }catch(ex){
                 // ignore
+                if (DEBUG) throw ex;
                 console.error(ex.message);
                 console.error(ex);
             }

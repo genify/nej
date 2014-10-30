@@ -466,6 +466,7 @@ NEJ.define([
             (_handler.e||f)(_error);
         }catch(ex){
             // ignore
+            if (DEBUG) throw ex;
             console.error(ex.message);
             console.error(ex);
         }

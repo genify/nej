@@ -97,6 +97,7 @@ NEJ.define([
                 (_callback||_f).apply(null,_args);
             }catch(ex){
                 // ignore
+                if (DEBUG) throw ex;
                 console.error(ex.message);
                 console.error(ex);
             }

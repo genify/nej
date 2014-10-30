@@ -185,6 +185,7 @@ NEJ.define([
                     _instance._$dispatchEvent(_name,arguments[1]);
                 }catch(ex){
                     // ignore
+                    if (DEBUG) throw ex;
                     console.error(ex.message);
                     console.error(ex.stack);
                 }
@@ -326,6 +327,7 @@ NEJ.define([
                 this._$dispatchEvent('onload');
             }catch(ex){
                 // ignore
+                if (DEBUG) throw ex;
                 console.error(ex.message);
                 console.error(ex.stack);
             }

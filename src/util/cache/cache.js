@@ -315,6 +315,7 @@ NEJ.define([
                     _callback.apply(this,_args);
                 }catch(ex){
                     // ignore
+                    if (DEBUG) throw ex;
                     console.error(ex.message);
                     console.error(ex.stack);
                 }
