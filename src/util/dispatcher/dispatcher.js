@@ -208,7 +208,7 @@ NEJ.define([
         // config map
         // - m   config for module, umi:{title:'xxx' ... }
         // - mg  umi to group id map, umi:gid
-        // - r   config for rewrite, [{umi:regexp or string}]
+        // - r   config for rewrite, [{umi:regexp or string or function or array}]
         // - rr  build-in rewrite
         // - al  alias map
         // - am  actions map, {click:[],dblclick:[]}
@@ -350,6 +350,16 @@ NEJ.define([
                                     // ignore
                                 }
                                 if (!!_ret){
+                                    _result = _key;
+                                    return !0;
+                                }
+                            }
+                            // array
+                            if (_u._$isArray(_value)){
+                                var _index = _u._$indexOf(_value,function(v){
+                                    return v===_umi||v===_href;
+                                });
+                                if (_index>=0){
                                     _result = _key;
                                     return !0;
                                 }
