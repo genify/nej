@@ -130,7 +130,7 @@ NEJ.define([
                     _doAppendFile(_arr[0],_cch);
             }
             if (!_element.name){
-                var _sufix = !_cch.multiple?'':('-'+(_cch.nmb-2));
+                var _sufix = '';//!_cch.multiple?'':('-'+(_cch.nmb-2));
                 _element.name = _cch.name+_sufix;
             }
             _cch.onchange({
