@@ -70,7 +70,7 @@ NEJ.define([
                     // for multiple file per-input
                     if (_input.files.length>1){
                         _u._$forEach(_input.files,function(_file){
-                            _result.push(_file);
+                            _result.push({name:_input.name,file:_file});
                         });
                         _input.parentNode.removeChild(_input);
                     }
@@ -91,8 +91,12 @@ NEJ.define([
                 if (_request.data.tagName==='FORM'){
                     var _files = _doSplitMultFiles(_request.data);
                     _request.data = new FormData(_request.data);
-                    _u._$forEach(_files,function(_file){
-                        _request.data.append(_file.name||'',_file);
+                    _u._$forEach(_files,function(_ret){
+                        var _file = _ret.file;
+                        _request.data.append(
+                            _ret.name||_file.name||
+                            ('file-'+_u._$uniqueID()),_file
+                        );
                     });
                 }
             }
