@@ -338,6 +338,23 @@ NEJ.define([
                 function(_config){
                     _u._$forIn(_config,
                         function(_value,_key){
+                            // function
+                            if (_u._$isFunction(_value)){
+                                var _ret = !1;
+                                try{
+                                    _ret = _value.call(null,{
+                                        umi:_umi,
+                                        href:_href
+                                    });
+                                }catch(ex){
+                                    // ignore
+                                }
+                                if (!!_ret){
+                                    _result = _key;
+                                    return !0;
+                                }
+                            }
+                            // regexp
                             if (!!_value.test&&(
                                   _value.test(_umi)||
                                   _value.test(_href))){
@@ -346,6 +363,7 @@ NEJ.define([
                                 _result = _reg.test(_key)?_umi.replace(_value,_key):_key;
                                 return !0;
                             }
+                            // string
                             if (_value===_umi||
                                 _value===_href){
                                 _result = _key;
