@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>test editor</title>
+    <meta charset="utf-8"/>
+  </head>
+  <body>
+    <script>window.NEJ_CONF={root:'../../../../res/'};</script>
+    <script src="../../../../src/define.js"></script>
+    <script>
+      define([
+          '../custom.js'
+      ],function(_i){
+          _i._$$CustomEditor._$allocate({
+              parent:document.body
+          });
+      });
+    </script>
+  </body>
+</html>
