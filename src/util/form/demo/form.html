@@ -20,6 +20,7 @@
         <form>
           <div>
               <input type="text" name="cc" data-type="date" data-format="yyyy-MM-dd" data-required="true"/>
+              <input type="text" name="xyz" data-abc="true" />
           </div>
           <input type="button" name="btn" value="ok"/>
         </form>
@@ -43,7 +44,12 @@
                 }
             });
             _webform = _t._$$WebForm._$allocate({
-                form:_form
+                form:_form,
+                attr:{
+                    abc:function(_node,_options){
+                        console.log('xxx');
+                    }
+                }
             });
             document.body.appendChild(_form);
             

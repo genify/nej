@@ -167,7 +167,7 @@ NEJ.define([
      * @property {String}      pass    - 提示信息效果样式名称，默认为js-pass
      * @property {String}      error   - 提示信息效果样式名称，默认为js-error
      * @property {Object}      type    - 类型验证扩展，主要扩展data-type值的验证规则，{type:regexp,type:function}
-     * @property {Object}      attr    - 验证属性扩展，主要扩展自定义data-xxx的验证规则，{attr:function}
+     * @property {Object}      attr    - 验证属性扩展，主要扩展自定义data-xxx的验证规则，{xxx:function}
      * @property {Object}      message - 提示信息内容，{key:value}，
      *                                   错误信息key规则：节点名称+错误代码，
      *                                   如 'username-1':'必须输入用户名！'
@@ -288,6 +288,7 @@ NEJ.define([
         delete this.__message;
         delete this.__fnode;
         delete this.__vinfo;
+        delete this.__xattr;
         delete this.__form;
         delete this.__treg;
         delete this.__vfun;
@@ -481,6 +482,25 @@ NEJ.define([
         this.__doCheckNumber(_id,_name,_value);
     };
     /**
+     * 验证扩展属性
+     * 
+     * @protected
+     * @method module:util/form/form._$$WebForm#__doCheckCustomAttr
+     * @param  {String} arg0 - 规则标识
+     * @return {Void}
+     */
+    _pro.__doCheckCustomAttr = function(_id){
+        _u._$loop(
+            this.__xattr,function(v,_name){
+                var _value = _e._$dataset(_id,_name);
+                if (_value!=null){
+                    this.__doSaveValidInfo(_id,_name,_value);
+                    this.__doPushValidRule(_id,this.__vfun[_name]);
+                }
+            },this
+        );
+    };
+    /**
      * 准备表单元素验证信息
      * 
      * @protected
@@ -534,6 +554,7 @@ NEJ.define([
             this.__doCheckDSNumber(_id,'minLength');
             this.__doCheckTPNumber(_id,'min');
             this.__doCheckTPNumber(_id,'max');
+            this.__doCheckCustomAttr(_id);
             // save message content
             var _name = _node.name;
             this.__message[_name+'-tip'] = this.__dataset(_node,'tip');
@@ -659,8 +680,9 @@ NEJ.define([
                 _doMerge._$bind(null,this.__treg)
             );
             this.__vfun = NEJ.X({},_vfun);
+            this.__xattr = _options.attr;
             _u._$loop(
-                _options.attr,
+                this.__xattr,
                 _doMerge._$bind(null,this.__vfun)
             );
         };
