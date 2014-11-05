@@ -5,7 +5,7 @@
   "license": "MIT",
   
   "keywords": ["nej","javascript","cross platform","framework"],
-  "author": "genify",
+  "author": "genify <caijf@corp.netease.com>",
   
   "main": "./src/define.js",
   
