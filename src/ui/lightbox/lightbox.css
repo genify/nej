@@ -1,0 +1,11 @@
+.#<uispace>-mask{position:fixed;_position:absolute;z-index:5000;top:0;bottom:0;left:0;right:0;width:100%;height:100%;background:#aaa;}
+.#<uispace>{position:fixed;_position:absolute;z-index:5001;background:#fff;text-align:center;$<vendor>transition-duration:300ms;}
+.#<uispace> .zbtn{position:absolute;cursor:pointer;width:24px;height:24px;line-height:24px;border:2px solid #fff;background:#333;color:#fff;$<vendor>border-radius:50%;font-weight:bold;}
+.#<uispace> .zcls{top:-12px;right:-12px;}
+.#<uispace> .zbtn{opacity:0;*filter:alpha(opacity=0);$<vendor>transition-duration:300ms;$<vendor>transition-property:opacity;}
+.#<uispace> .zprv{left:5px;}
+.#<uispace> .znxt{right:5px;}
+.#<uispace> .ztrp{position:absolute;left:0;right:0;bottom:0;width:100%;}
+.#<uispace> .zshw{display:block;width:100%;height:100%;}
+.#<uispace>:hover .zbtn{opacity:1;*filter:alpha(opacity=100);}
+.#<uispace> .js-disabled,.#<uispace>.js-loading .zbpt{visibility:hidden;}

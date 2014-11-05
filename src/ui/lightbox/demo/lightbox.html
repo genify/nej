@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NEJ实例 - LightBox</title>
+    <meta charset="utf-8" />
+    <style>
+        *{margin:0;padding:0;border:0;}
+        html,body{width:100%;height:100%;}
+    </style>
+  </head>
+  <body>
+    
+    <script>window.NEJ_CONF={root:'../../../../res/'};</script>
+    <script src="../../../define.js"></script>
+    <script>
+        NEJ.define([
+            '../lightbox.js'
+        ],function(_i){
+            _i._$$LightBox._$allocate({
+                parent:document.body,
+                list:[
+                    {title:'汽车1',src:'http://www0.autoimg.cn/newspic/2014/11/5/620x0_0_2014110510432141064.jpg'},
+                    {title:'汽车2',src:'http://car0.autoimg.cn/carnews/2014/11/5/d_20141105071745705345010.jpg'},
+                    {title:'汽车3',src:'http://car1.autoimg.cn/carnews/2014/11/5/d_20141105071823084345010.jpg'},
+                    {title:'汽车4',src:'http://car0.autoimg.cn/carnews/2014/11/5/d_20141105071820932345010.jpg'},
+                    {title:'汽车5',src:'http://car0.autoimg.cn/carnews/2014/11/5/d_20141105071756548345010.jpg'},
+                    {title:'汽车6',src:'http://car1.autoimg.cn/carnews/2014/11/5/d_20141105092940897345011.jpg'},
+                    {title:'汽车7',src:'http://car1.autoimg.cn/carnews/2014/11/5/d_20141105071754832345010.jpg'},
+                    {title:'汽车8',src:'http://car0.autoimg.cn/carnews/2014/11/5/d_20141105071818090345011.jpg'}
+                ]
+            });
+        });
+    </script>
+  </body>
+</html>
