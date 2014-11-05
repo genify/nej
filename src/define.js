@@ -918,6 +918,9 @@
                     var _kmap = {};
                     for(var k=0,j=_list.length,_itt,_itm,_arr,_type;k<j;k++){
                         _itt = _list[k];
+                        if (!_itt){
+                            console.warn('empty dep uri for '+_uri);
+                        }
                         // 0 - url
                         // 1 - load function
                         // 2 - resource type
