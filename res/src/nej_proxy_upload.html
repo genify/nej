@@ -4,10 +4,7 @@
     window.result = '{"url":"http://192.168.146.84:1122/xhr/3.jpg"}';
 </script>
 <script>
-    var _result = 'NEJ-UPLOAD-RESULT:{\
-            "key":"'+window.name+'",\
-            "result":"'+encodeURIComponent(result)+'"\
-        }';
+    var _result = 'NEJ-UPLOAD-RESULT:{"key":"'+window.name+'","result":"'+encodeURIComponent(result)+'"}';
     if (window.postMessage){
         parent.postMessage(_result,'*');
     }else{

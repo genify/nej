@@ -2,6 +2,7 @@
 --------------------------------------------------------
 - 修正define对实例返回结果的注入
 - 增加json!类型的插件注入
+- 增加regularjs!类型的插件注入
 - 增加API/控件支持
   * util/selector/cascade
   * util/suggest/at
