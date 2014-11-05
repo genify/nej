@@ -1,6 +1,0 @@
-{
-    "name": "nej",
-    "version": "0.1.0",
-    "main": "./src/define.js",
-    "keywords": ["nej","javascript","cross platform","framework"]
-}
