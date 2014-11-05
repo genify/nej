@@ -6,5 +6,6 @@
   "description": "JavaScript Cross-Platform Framework",
   "main": "./src/define.js",
   "keywords": ["nej","javascript","cross platform","framework"],
+  "ignore": [".*"]
   "license": "MIT"
 }
