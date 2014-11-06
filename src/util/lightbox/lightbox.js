@@ -71,6 +71,14 @@ NEJ.define([
      * @property {String}       loading  - 图片加载中样式名称，默认为js-loading
      * @property {String}       disabled - 按钮禁用样式名称，默认为js-disabled
      */
+    /**
+     * 请求播放幻灯片
+     * 
+     * @event    module:util/lightbox/lightbox._$$LightBox#onlightbox
+     * @param    {Object} event  - 事件信息
+     * @property {Number} index  - 当前图片索引值
+     * @property {Array}  list   - 用于幻灯片播放的图片列表
+     */
     _p._$$LightBox = _k._$klass();
     _pro = _p._$$LightBox._$extend(_t._$$EventTarget);
     /**
@@ -195,6 +203,37 @@ NEJ.define([
         this.__lopt.list = _event.list;
         this.__lopt.index = _event.index;
         _i._$$LightBox._$allocate(this.__lopt);
+    };
+    /**
+     * 幻灯片播放API
+     * 
+     * 结构举例
+     * ```html
+     * <div id="def">
+     *   <p><img src="./a.jpg" data-group="a" data-src="./a.jpg" alt="汽车1"/></p>
+     *   <p><img src="./b.jpg" data-group="a" data-src="./b.jpg" alt="汽车2"/></p>
+     *   <p><img src="./c.jpg" data-group="a" data-src="./c.jpg" alt="汽车3"/></p>
+     * </div>
+     * ```
+     * 
+     * 脚本举例
+     * ```javascript
+     *  NEJ.define([
+     *      'util/lightbox/lightbox'
+     *  ],function(_t){
+     *      // 分组图片显示
+     *      var _inst = _t._$lightbox({
+     *          parent:'def'
+     *      });
+     *  });
+     * ```
+     * 
+     * @method module:util/lightbox/lightbox._$lightbox
+     * @param  {Object} arg0 - 配置信息，同幻灯片控件的构造参数
+     * @return {module:util/lightbox/lightbox._$$LightBox} 幻灯片实例
+     */
+    _p._$lightbox = function(_options){
+        return _p._$$LightBox._$allocate(_options);
     };
     
     if (CMPT){
