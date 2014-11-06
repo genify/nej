@@ -130,7 +130,7 @@ NEJ.define([
         this.__mask = _e._$create(
             'div',this.__seed_css+'-mask'
         );
-        _e._$setStyle(this.__mask,'opacity',0.5);
+        _e._$setStyle(this.__mask,'opacity',0.7);
         // 0 - previous button
         // 1 - next button
         // 2 - image show
@@ -215,11 +215,14 @@ NEJ.define([
         }
         // dump image info
         var _url = this.__test.src,
-            _sbox = {
-                width:Math.max(100,this.__test.naturalWidth||this.__test.width),
-                height:Math.max(100,this.__test.naturalHeight||this.__test.height)
-            },
-            _pbox = _e._$getPageBox();
+            _pbox = _e._$getPageBox(),
+            _sbox = _e._$getMaxBox({
+                width:this.__test.naturalWidth||this.__test.width,
+                height:this.__test.naturalHeight||this.__test.height
+            },{
+                width:_pbox.clientWidth*0.85,
+                height:_pbox.clientHeight*0.85
+            }),
             _mbox = _e._$align({
                 width:_pbox.clientWidth,
                 height:_pbox.clientHeight

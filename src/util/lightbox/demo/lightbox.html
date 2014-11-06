@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NEJ实例 - LightBox</title>
+    <meta charset="utf-8" />
+    <style>
+        p img{height:100px;cursor:pointer;}
+    </style>
+  </head>
+  <body>
+    
+    <div id="abc">
+      <p><img src="http://www0.autoimg.cn/newspic/2014/11/5/620x0_0_2014110509182432121.jpg" data-src="http://www0.autoimg.cn/newspic/2014/11/5/620x0_0_2014110509182432121.jpg" alt="汽车1"/></p>
+      <p><img src="http://car0.autoimg.cn/carnews/2014/11/5/d_20141105222115648413111.jpg" data-src="http://car0.autoimg.cn/carnews/2014/11/5/d_20141105222115648413111.jpg" alt="汽车2"/></p>
+      <p><img src="http://car0.autoimg.cn/carnews/2014/11/5/d_20141105225127858413110.jpg" data-src="http://car0.autoimg.cn/carnews/2014/11/5/d_20141105225127858413110.jpg" alt="汽车3"/></p>
+      <p><img src="http://car0.autoimg.cn/carnews/2014/11/5/d_20141105222113075413110.jpg" data-src="http://car0.autoimg.cn/carnews/2014/11/5/d_20141105222113075413110.jpg" alt="汽车4"/></p>
+      <p><img src="http://car0.autoimg.cn/carnews/2014/11/5/d_20141105222104682413110.jpg" data-src="http://car0.autoimg.cn/carnews/2014/11/5/d_20141105222104682413110.jpg" alt="汽车5"/></p>
+    </div>
+    <hr/>
+    <div id="efg">
+      <p><img data-group="a" src="http://www0.autoimg.cn/newspic/2014/11/5/620x0_0_2014110509182432121.jpg" data-src="http://www0.autoimg.cn/newspic/2014/11/5/620x0_0_2014110509182432121.jpg" alt="汽车1"/></p>
+      <p><img data-group="a" src="http://car0.autoimg.cn/carnews/2014/11/5/d_20141105222115648413111.jpg" data-src="http://car0.autoimg.cn/carnews/2014/11/5/d_20141105222115648413111.jpg" alt="汽车2"/></p>
+      <p><img data-group="a" src="http://car0.autoimg.cn/carnews/2014/11/5/d_20141105225127858413110.jpg" data-src="http://car0.autoimg.cn/carnews/2014/11/5/d_20141105225127858413110.jpg" alt="汽车3"/></p>
+      <p><img data-group="a" src="http://car0.autoimg.cn/carnews/2014/11/5/d_20141105222113075413110.jpg" data-src="http://car0.autoimg.cn/carnews/2014/11/5/d_20141105222113075413110.jpg" alt="汽车4"/></p>
+      <p><img data-group="a" src="http://car0.autoimg.cn/carnews/2014/11/5/d_20141105222104682413110.jpg" data-src="http://car0.autoimg.cn/carnews/2014/11/5/d_20141105222104682413110.jpg" alt="汽车5"/></p>
+    </div>
+    <script src="../../../define.js"></script>
+    <script>
+        NEJ.define([
+            'util/lightbox/lightbox'
+        ],function(_t){
+            _t._$$LightBox._$allocate({
+                parent:'abc'
+            });
+            
+            _t._$$LightBox._$allocate({
+                parent:'efg'
+            });
+        });
+    </script>
+  </body>
+</html>
