@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>util demo</title>
+    <meta charset="utf-8" />
+    <script>
+      function log(m){
+          var p = document.createElement('p');
+          p.innerHTML = m;
+          document.body.appendChild(p);
+      }
+    </script>
+  </head>
+  <body>
+    <form id="abc">
+        <input type="text" name="a"/>
+        <select name="b"><option>aaa</option></select>
+    </form>
+    <script src="../../define.js"></script>
+    <script>
+      NEJ.define([
+          'base/element',
+          'base/util'
+      ],function(_e,_u){
+          _u._$forEach(
+              _e._$get('abc').elements,function(e){
+                  log(e.name);
+              }
+          );
+      });
+    </script>
+  </body>
+</html>

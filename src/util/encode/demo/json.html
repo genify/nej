@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NEJ实例 - JSON接口</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <script src="../../../define.js"></script>
+    <script>
+        NEJ.define([
+            'util/encode/json'
+        ],function(){
+            console.log(JSON.parse('{"a":20}'));
+        });
+    </script>
+  </body>
+</html>

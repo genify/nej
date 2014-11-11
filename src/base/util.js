@@ -435,7 +435,7 @@ NEJ.define([
         if (!_list||!_p._$isFunction(_callback)){
             return null;
         }
-        if (_list.length!=null&&_list.length>0){
+        if (_p._$isNumber(_list.length)){
             // list see as array
             for(var i=0,l=_list.length;i<l;i++){
                 if (!!_callback.call(_this,_list[i],i,_list)){

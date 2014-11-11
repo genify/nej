@@ -60,7 +60,13 @@ NEJ.define([
         var _ch = _parent.clientHeight,
             _top = _e._$offset(_target,_parent).y-_parent.scrollTop,
             _bottom = _top+_target.offsetHeight,
-            _holded = !_target.src||_target.src.indexOf(this.__holder)>=0;
+            _config = this.__getSettingInfo(_target),
+            // not src
+            // src is blank image
+            // src not equal to data-src
+            _holded = !_target.src||
+                       _target.src.indexOf(this.__holder)>=0||
+                       _target.src.indexOf(_config.src)<0;
         // check resource append
         if (_holded&&0<=_bottom&&_top<=_ch){
             return 1;
