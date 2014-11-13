@@ -19,7 +19,7 @@
     <textarea name="ntp" id="abc">
         <form>
           <div>
-              <input type="text" name="cc" data-type="date" data-format="yyyy-MM-dd" data-required="true"/>
+              <input type="text" name="cc" data-type="date" data-format="yyyy-MM-dd" data-time="14:25:30.300" data-required="true"/>
               <input type="text" name="xyz" data-abc="true" />
           </div>
           <input type="button" name="btn" value="ok"/>
@@ -34,13 +34,14 @@
             'util/template/tpl',
             '../form.js'
         ],function(_v,_ex,_e,_t){
-            "use strict";
             _e._$parseTemplate('abc');
             var _webform;
             var _form = _e._$getNodeTemplate('abc');
             var _fbox = _form.getElementsByTagName('DIV')[0];
             _v._$addEvent(_form.btn,'click',function(){
                 if (_webform._$checkValidity()){
+                    var _data = _webform._$data();
+                    log(new Date(_data.cc));
                     log('submit form to server');
                 }
             });

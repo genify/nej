@@ -31,6 +31,7 @@ NEJ.define([
      * | data-tip        | String                | 默认提示信息，正常输入状态时的提示信息 |
      * | data-required   | true/false            | 必填项，对于checkbox/radio的required表示必须选中 |
      * | data-type       | url/email/date/number | 输入内容预订类型格式匹配 |
+     * | data-time       | String                | 格式：HH:mm:ss.ms，对于data-type为date类型的字段，取出日期值时设定时间为此值|
      * | data-pattern    | RegExp                | 正则匹配表达式，字符串格式 |
      * | data-min        | String/Number         | 输入值必须大于此设置，适用于number/date型 |
      * | data-max        | String/Number         | 输入值必须小于此设置，适用于number/date型 |
@@ -305,7 +306,7 @@ NEJ.define([
     _pro.__dataset = function(_node,_attr,_type){
         var _value = _e._$dataset(_node,_attr);
         switch(_type){
-            case 1: return parseInt(_value);
+            case 1: return parseInt(_value,10);
             case 2: return (_value||'').toLowerCase()=='true';
             case 3: return this.__doParseDate(_value);
         }
@@ -320,10 +321,11 @@ NEJ.define([
      * @param  {String} arg1 - 类型
      * @return {Number}        数值
      */
-    _pro.__number = function(_value,_type){
-        if (_type=='date')
-            return this.__doParseDate(_value);
-        return parseInt(_value);
+    _pro.__number = function(_value,_type,_time){
+        if (_type=='date'){
+            return this.__doParseDate(_value,_time);
+        }
+        return parseInt(_value,10);
     };
     /**
      * 判断节点是否需要验证
@@ -370,11 +372,25 @@ NEJ.define([
      * @param  {String} arg0 - 日期字符串
      * @return {Number}        日期毫秒数
      */
-    _pro.__doParseDate = function(_value){
-        if ((_value||'').toLowerCase()=='now')
-            return +new Date;
-        return +_u._$var2date(_value);
-    };
+    _pro.__doParseDate = (function(){
+        var _reg0 = /[:\.]/;
+        return function(_value,_time){
+            if ((_value||'').toLowerCase()=='now')
+                return +new Date;
+            var _date = _u._$var2date(_value);
+            if (!!_date&&!!_time){
+                // HH:mm:ss.ms
+                var _arr = _time.split(_reg0);
+                _date.setHours(
+                    parseInt(_arr[0],10)||0,
+                    parseInt(_arr[1],10)||0,
+                    parseInt(_arr[2],10)||0,
+                    parseInt(_arr[3],10)||0
+                );
+            }
+            return +_date;
+        };
+    })();
     /**
      * 解析字符类型规则属性
      * 
@@ -437,7 +453,7 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__doCheckNumber = function(_id,_name,_value){
-        _value = parseInt(_value);
+        _value = parseInt(_value,10);
         if (isNaN(_value)) return;
         this.__doSaveValidInfo(_id,_name,_value);
         this.__doPushValidRule(_id,this.__vfun[_name]);
@@ -509,7 +525,8 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__doPrepareElement = (function(){
-        var _reg0 = /^input|textarea$/i;
+        var _reg0 = /^input|textarea$/i,
+            _reg1 = /[:\.]/;
         // onfocus
         var _onFocus = function(_event){
             this._$showTip(_v._$getElement(_event));
@@ -555,6 +572,11 @@ NEJ.define([
             this.__doCheckTPNumber(_id,'min');
             this.__doCheckTPNumber(_id,'max');
             this.__doCheckCustomAttr(_id);
+            // check date time
+            var _time = _e._$dataset(_id,'time');
+            if (!!_time){
+                this.__doSaveValidInfo(_id,'time',_time);
+            }
             // save message content
             var _name = _node.name;
             this.__message[_name+'-tip'] = this.__dataset(_node,'tip');
@@ -649,7 +671,10 @@ NEJ.define([
             // min value check
             min:function(_node,_options){
                 var _number = this.__number(
-                    _node.value,_options.type);
+                    _node.value,
+                    _options.type,
+                    _options.time
+                );
                 if (isNaN(_number)||
                    _number<_options.min)
                     return -6;
@@ -657,7 +682,10 @@ NEJ.define([
             // max value check
             max:function(_node,_options){
                 var _number = this.__number(
-                    _node.value,_options.type);
+                    _node.value,
+                    _options.type,
+                    _options.time
+                );
                 if (isNaN(_number)||
                    _number>_options.max)
                     return -7;
@@ -946,8 +974,12 @@ NEJ.define([
                 _info = _map[_name],
                 _type = this.__dataset(_node,'type');
             // parse value
-            if (_reg1.test(_type))
-                _value = this.__number(_value,_type);
+            if (_reg1.test(_type)){
+                _value = this.__number(
+                    _value,_type,
+                    _e._$dataset(_node,'time')
+                );
+            }
             // checkbox and radio
             if (_reg0.test(_node.type)&&!_node.checked){
                 _value = this.__dataset(_node,'value');
