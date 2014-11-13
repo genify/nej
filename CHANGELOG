@@ -3,6 +3,7 @@
 - 增加API/控件支持
   * ui/lightbox/lightbox
   * util/lightbox/lightbox
+- webform组件对date类型的表单元素增加data-time支持
 
 0.2.0   (2014-11-05)
 --------------------------------------------------------
