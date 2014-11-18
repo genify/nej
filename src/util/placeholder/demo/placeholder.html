@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NEJ实例 - Place Holder</title>
+    <meta charset="utf-8" />
+    
+    <style>
+        .abc{background:#fdc;}
+        .js-holder{background:#0000FF;}
+    </style>
+    
+  </head>
+  <body>
+    
+    <p><input type="text" id="abc" placeholder="abc"/></p>
+    <p><textarea id="def" placeholder="def"></textarea></p>
+    
+    <script src="../../../define.js"></script>
+    <script>
+        NEJ.define([
+            '../placeholder.js'
+        ],function(_t){
+            _t._$placeholder('abc','js-holder');
+            _t._$placeholder('def','js-holder');
+        });
+    </script>
+  </body>
+</html>
