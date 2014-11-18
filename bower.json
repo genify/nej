@@ -1,6 +1,6 @@
 {
   "name": "nej",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "homepage": "https://github.com/genify/nej",
   "authors": ["genify <caijf@corp.netease.com>"],
   "description": "JavaScript Cross-Platform Framework",
