@@ -194,12 +194,11 @@ NEJ.define([
            !this.__lbox.clientHeight) return;
         if (!_element.scrollHeight)
             _element = _e._$getPageBox();
-        var _offset = _e._$offset(this.__lbox),
+        var _offset = _e._$offset(this.__lbox,this.__sbody),
             _delta = _offset.y+this.__lbox.offsetHeight-
                      _element.scrollTop-_element.clientHeight,
             _noscroll = _element.scrollHeight<=_element.clientHeight;
-        if (_delta<=this.__delta||
-           (_noscroll&&!this.__endskr)){
+        if (_delta<=this.__delta||(_noscroll&&!this.__endskr)){
             this._$next();
         }
     };
