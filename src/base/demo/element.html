@@ -26,6 +26,8 @@
           var _div = document.createElement('div');
           var _id = _e._$id(_div);
           log(_e._$get(_id));
+          // parse element
+          log(_e._$html2node('<TR><td>col1</td><td>col2</td></TR>'));
       });
     </script>
   </body>

@@ -468,7 +468,8 @@ NEJ.define([
      * @return {String}        编码后的字串
      */
     _p._$encode = function(_map,_content){
-        if (!_map||!_content||!_content.replace){
+        _content = ''+_content;
+        if (!_map||!_content){
             return _content||'';
         }
         return _content.replace(_map.r,function($1){

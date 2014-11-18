@@ -1260,11 +1260,11 @@ NEJ.define([
      */
     _p._$html2node = (function(){
         var _reg = /<(.*?)(?=\s|>)/i, // first tag name
-            _tmap = {li:'ul',tr:'table',td:'tr',th:'tr',option:'select'};
+            _tmap = {li:'ul',tr:'tbody',td:'tr',th:'tr',option:'select'};
         return function(_html){
             var _tag;
             if (_reg.test(_html)){
-                _tag = _tmap[RegExp.$1]||'';
+                _tag = _tmap[(RegExp.$1||'').toLowerCase()]||'';
             }
             var _div = _p._$create(_tag||'div');
             _div.innerHTML = _html;
