@@ -286,6 +286,7 @@ NEJ.define([
      */
     _pro.__destroy = function(){
         this.__super();
+        this._$reset();
         delete this.__message;
         delete this.__fnode;
         delete this.__vinfo;
