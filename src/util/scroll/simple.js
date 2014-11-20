@@ -113,36 +113,12 @@ NEJ.define([
     _pro.__reset = (function(){
         var _bcnf = {
             x:{
-                min:0,
-                speed:1,
-                step:50,
-                interval:50,
-                left:0,
-                right:0,
-                hover:'js-hover',
-                sb:'scrollWidth',
-                cb:'clientWidth',
-                ob:'offsetWidth',
-                sr:'scrollLeft',
-                ss:'width',
-                sp:'left',
-                dr:'right'
+                min:0,speed:1,step:50,interval:50,left:0,right:0,
+                hover:'js-hover',sb:'scrollWidth',cb:'clientWidth',ob:'offsetWidth',sr:'scrollLeft',ss:'width',sp:'left',dr:'right'
             },
             y:{
-                min:0,
-                speed:1,
-                interval:50,
-                step:50,
-                top:0,
-                bottom:0,
-                hover:'js-hover',
-                sb:'scrollHeight',
-                cb:'clientHeight',
-                ob:'offsetHeight',
-                sr:'scrollTop',
-                ss:'height',
-                sp:'top',
-                dr:'bottom'
+                min:0,speed:1,interval:50,step:50,top:0,bottom:0,
+                hover:'js-hover',sb:'scrollHeight',cb:'clientHeight',ob:'offsetHeight',sr:'scrollTop',ss:'height',sp:'top',dr:'bottom'
             }
         };
         // init scrollbar
@@ -187,6 +163,9 @@ NEJ.define([
             ],[
                 this.__parent,'scroll',
                 this.__doSyncScrollBar._$bind(this)
+            ],[
+                this.__parent,'mouseover',
+                this.__doFixScrollBar._$bind(this)
             ],[
                 this.__bar.x.track,'mousedown',
                 this.__onTrackDown._$bind(this,'x')
@@ -565,6 +544,13 @@ NEJ.define([
         _e._$delClassName(
             _conf.track,_conf.hover
         );
+    };
+    /**
+     * 修正滚动条状态
+     */
+    _pro.__doFixScrollBar = function(_event){
+        console.log('fix scrollbar');
+        this._$resize();
     };
     /**
      * 容器大小变化执行逻辑

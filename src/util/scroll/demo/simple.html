@@ -4,6 +4,7 @@
     <title>NEJ实例 - 简易自定义滚动条</title>
     <meta charset="utf-8"/>
     <style>
+      body{-webkit-user-select:none;-moz-user-select:none;user-select:none;}
       .xbc{position:relative;width:300px;margin:10px auto;border:1px solid #aaa;}
       .abc{height:600px;overflow:hidden;}
       .abc p{height:80px;line-height:80px;}
@@ -22,22 +23,23 @@
     <div class="xbc" id="bbox">
       <div class="bar x" id="xbar">&nbsp;</div>
       <div class="trk ty"><div class="bar y" id="ybar">&nbsp;</div></div>
-      <div class="abc" id="box">
-      <script>
-          var a = [];
-          for(var i=0;i<100;i++)
-              a.push('<p>'+i+'</p>');
-          document.write(a.join(''));
-      </script>
+      <div class="abc" id="box" onclick="this.innerHTML='&nbsp;'" ondblclick="fill();">
       </div>
     </div>
     <div style="height:500px;">&nbsp;</div>
     <script src="../../../define.js?pro=./"></script>
     <script>
+        function fill(e){
+            var a = [];
+            for(var i=0;i<100;i++){
+                a.push('<p>'+i+'</p>');
+            }
+            document.getElementById('box').innerHTML = a.join('');
+        }
         define([
             'util/scroll/simple'
         ],function(_t){
-            
+            fill();
             _t._$$SimpleScroll._$allocate({
                 xbar:{body:'xbar'},
                 ybar:{body:'ybar',track:':parent',hover:'j-hover'},
