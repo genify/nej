@@ -193,7 +193,7 @@ NEJ.define([
      * @return {Number}        字符串长度
      */
     _p._$length = (function(){
-        var _reg = /[^\x00-\xfff]/g;
+        var _reg = /[^\x00-\xff]/g;
         return function(_content){
             return (''+(_content||'')).replace(_reg,'**').length;
         };
