@@ -500,7 +500,7 @@ NEJ.define([
      *   ],function(_v){
      *       // 取事件触发节点
      *       _v._$addEvent(
-     *           'b','click',fucntion(_event){
+     *           'b','click',function(_event){
      *               // id为b的节点
      *               var _node = _v._$getElement(_event);
      *               // TODO something
@@ -509,7 +509,7 @@ NEJ.define([
      *
      *       // 事件触发，取id是a的节点
      *       _v._$addEvent(
-     *           'b','click',fucntion(_event){
+     *           'b','click',function(_event){
      *               // id为a的节点
      *               var _node = _v._$getElement(
      *                   _event,function(_element){

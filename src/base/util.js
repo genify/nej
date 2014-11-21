@@ -36,7 +36,7 @@ NEJ.define([
      *     // 返回false
      *     var is = _u._$isFunction(123);
      *     // 返回true
-     *     var is = _u._$isFunction(fucntion(){});
+     *     var is = _u._$isFunction(function(){});
      * });
      * ```
      *
