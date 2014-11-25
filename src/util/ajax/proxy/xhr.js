@@ -67,6 +67,11 @@ NEJ.define([
                     if (_input.type!='file'){
                         return;
                     }
+                    // remove file without name
+                    if (!_input.name){
+                        _input.parentNode.removeChild(_input);
+                        return;
+                    }
                     // for multiple file per-input
                     if (_input.files.length>1){
                         _u._$forEach(_input.files,function(_file){

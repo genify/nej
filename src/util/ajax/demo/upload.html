@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>test file upload</title>
+    <meta charset="utf-8"/>
+  </head>
+  <body>
+    
+    <script src="../../../../src/define.js"></script>
+    <script>
+      define([
+          '../tag.js'
+      ],function(_j){
+          
+          _j._$loadHtml('./a.html',{
+              onload:function(result){
+                  console.log(result);
+              }
+          });
+          
+      });
+    </script>
+  </body>
+</html>
