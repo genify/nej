@@ -31,7 +31,7 @@ NEJ.define([
      * | data-tip        | String                | 默认提示信息，正常输入状态时的提示信息 |
      * | data-required   | true/false            | 必填项，对于checkbox/radio的required表示必须选中 |
      * | data-type       | url/email/date/number | 输入内容预订类型格式匹配 |
-     * | data-time       | String                | 格式：HH:mm:ss.ms，对于data-type为date类型的字段，取出日期值时设定时间为此值|
+     * | data-time       | String                | 格式：HH:mm:ss.ms，对于data-type为date类型的字段，取出日期值时设定时间为此值 |
      * | data-pattern    | RegExp                | 正则匹配表达式，字符串格式 |
      * | data-min        | String/Number         | 输入值必须大于此设置，适用于number/date型 |
      * | data-max        | String/Number         | 输入值必须小于此设置，适用于number/date型 |
@@ -379,9 +379,9 @@ NEJ.define([
             if ((_value||'').toLowerCase()=='now')
                 return +new Date;
             var _date = _u._$var2date(_value);
-            if (!!_date&&!!_time){
+            if (!!_date){
                 // HH:mm:ss.ms
-                var _arr = _time.split(_reg0);
+                var _arr = (_time||'').split(_reg0);
                 _date.setHours(
                     parseInt(_arr[0],10)||0,
                     parseInt(_arr[1],10)||0,
