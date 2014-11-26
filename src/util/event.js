@@ -708,13 +708,16 @@ NEJ.define([
         // event list
         _u._$forEach(
             _event,function(_handler){
-                try{
+                if (DEBUG){
                     _handler.apply(this,_args);
-                }catch(ex){
-                    // ignore
-                    if (DEBUG) throw ex;
-                    console.error(ex.message);
-                    console.error(ex.stack);
+                }else{
+                    try{
+                        _handler.apply(this,_args);
+                    }catch(ex){
+                        // ignore
+                        console.error(ex.message);
+                        console.error(ex.stack);
+                    }
                 }
             },this
         );

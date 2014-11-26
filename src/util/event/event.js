@@ -251,12 +251,16 @@ NEJ.define([
         if (!!_event.stopped) return;
         _u._$forEach(
             this.__cache[_type],function(_handler){
-                try{
+                if (DEBUG){
                     _handler(_event);
-                }catch(ex){
-                    // ignore
-                    console.error(ex.message);
-                    console.error(ex.stack);
+                }else{
+                    try{
+                        _handler(_event);
+                    }catch(ex){
+                        // ignore
+                        console.error(ex.message);
+                        console.error(ex.stack);
+                    }
                 }
             }
         );
