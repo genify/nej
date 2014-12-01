@@ -916,11 +916,33 @@ NEJ.define([
         var _getValue = function(_value){
             return _value==null?'':_value;
         };
+        // set select value
+        var _doSetSelect = function(_value,_node){
+            // for multiple select
+            if (!!_node.multiple){
+                var _map;
+                if (!_u._$isArray(_value)){
+                    _map[_value] = _value;
+                }else{
+                    _map = _u._$array2object(_value);
+                }
+                _u._$forEach(
+                    _node.options,function(_option){
+                        _option.selected = _map[_option.value]!=null;
+                    }
+                );
+            }else{
+                _node.value = _getValue(_value);
+            }
+        };
         // set node value
         var _doSetValue = function(_value,_node){
             if (_reg0.test(_node.type||'')){
                 // radio/checkbox
                 _node.checked = _value==_node.value;
+            }else if(_node.tagName=='SELECT'){
+                // for select node
+                _doSetSelect(_value,_node);
             }else{
                 // other
                 _node.value = _getValue(_value);
@@ -929,7 +951,7 @@ NEJ.define([
         return function(_name,_value){
             var _node = this._$get(_name);
             if (!_node) return;
-            if (_node.tagName=='SELECT'||!_node.length){
+            if(_node.tagName=='SELECT'||!_node.length){
                 // for node
                 _doSetValue(_value,_node);
             }else{
@@ -969,17 +991,41 @@ NEJ.define([
     _pro._$data = (function(){
         var _reg0 = /^radio|checkbox$/i,
             _reg1 = /^number|date$/;
+        var _doDumpValue = function(_node){
+            if (_node.tagName=='SELECT'&&!!_node.multiple){
+                var _ret = [];
+                _u._$forEach(
+                    _node.options,function(_option){
+                        if (_option.selected){
+                            _ret.push(_option.value);
+                        }
+                    }
+                );
+                return _ret.length>0?_ret:'';
+            }
+            return _node.value;
+        };
         var _doParseValue = function(_map,_node){
             var _name = _node.name,
-                _value = _node.value,
+                _value = _doDumpValue(_node),
                 _info = _map[_name],
-                _type = this.__dataset(_node,'type');
+                _type = this.__dataset(_node,'type'),
+                _time = _e._$dataset(_node,'time');
             // parse value
             if (_reg1.test(_type)){
-                _value = this.__number(
-                    _value,_type,
-                    _e._$dataset(_node,'time')
-                );
+                if (_u._$isArray(_value)){
+                    _u._$forEach(
+                        _value,function(v,i,l){
+                            l[i] = this.__number(
+                                v,_type,_time
+                            );
+                        },this
+                    );
+                }else{
+                    _value = this.__number(
+                        _value,_type,_time
+                    );
+                }
             }
             // checkbox and radio
             if (_reg0.test(_node.type)&&!_node.checked){

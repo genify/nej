@@ -19,8 +19,19 @@
     <textarea name="ntp" id="abc">
         <form>
           <div>
-              <input type="text" name="cc" data-type="date" data-format="yyyy-MM-dd" data-time="14:25:30.300" data-required="true"/>
               <input type="text" name="xyz" data-abc="true" />
+              <select name="abc" data-type="number">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+              </select>
+              <select name="def" multiple="true" data-type="number">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+              </select>
           </div>
           <input type="button" name="btn" value="ok"/>
         </form>
@@ -41,7 +52,7 @@
             _v._$addEvent(_form.btn,'click',function(){
                 if (_webform._$checkValidity()){
                     var _data = _webform._$data();
-                    log(new Date(_data.cc));
+                    console.log(_data);
                     log('submit form to server');
                 }
             });
@@ -54,6 +65,8 @@
                 }
             });
             document.body.appendChild(_form);
+            
+            _webform._$setValue('def',[2,3]);
             
             _v._$addEvent(
                 'xyz','click',function(_event){
