@@ -92,6 +92,45 @@ NEJ.define([
             });
         })();
     });
+    // for ie9+
+    NEJ.patch('TR>=5.0',function(){
+        // must use attach/detach for event
+        var _attached = {
+            'propertychange':1
+        };
+        /**
+         * 添加事件
+         * @param  {Node}     节点
+         * @param  {String}   事件
+         * @param  {Function} 处理函数
+         * @param  {Boolean}  是否捕捉阶段
+         * @return {Void}
+         */
+        _h.__addEvent = 
+        _h.__addEvent._$aop(function(_event){
+            var _args = _event.args;
+            if (_attached[_args[1]]!=null){
+                _event.stopped = !0;
+                _args[0].attachEvent('on'+_args[1],_args[2]);
+            }
+        });
+        /**
+         * 删除事件
+         * @param  {Node}     节点
+         * @param  {String}   事件
+         * @param  {Function} 处理函数
+         * @param  {Boolean}  是否捕捉阶段
+         * @return {Void}
+         */
+        _h.__delEvent = 
+        _h.__delEvent._$aop(function(_event){
+            var _args = _event.args;
+            if (_attached[_args[1]]!=null){
+                _event.stopped = !0;
+                _args[0].detachEvent('on'+_args[1],_args[2]);
+            }
+        });
+    });
     // for ie8-
     NEJ.patch('TR<=4.0',function(){
         /**

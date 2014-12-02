@@ -226,6 +226,9 @@ NEJ.define([
         this.__doInitDomEvent([[
             location,'urlchange',
             this.__onURLChange._$bind(this)
+        ],[
+            document,'propertychange',
+            this.__onDocTitleFix._$bind(this)
         ]]);
         this.__super(_options);
         // init config
@@ -475,6 +478,28 @@ NEJ.define([
             var _title = this.__getModuleConf(_source,'title');
             if (!!_title) document.title = _title;
             this.__groups[_gid]._$dispatchUMI(_umi);
+        };
+    })();
+    /**
+     * 修正标题被页面flash改为hash值
+     * 
+     * @protected
+     * @method module:util/dispatcher/dispatcher._$$Dispatcher#__onDocTitleFix
+     * @param  {Event} arg0 - 事件对象
+     * @return {Void}
+     */
+    _pro.__onDocTitleFix = (function(){
+        // bugfix: remove hash from title for ie with flash
+        var _reg = /#[\w\/\?#]*$/i;
+        return function(_event){
+            if (_event.propertyName!='title'){
+                return;
+            }
+            var _title = document.title,
+                _nwttl = _title.replace(_reg,'');
+            if (_title!=_nwttl&&!!_nwttl){
+                document.title = _nwttl;
+            }
         };
     })();
     /**
