@@ -109,7 +109,8 @@ NEJ.define([
         _h.__addEvent = 
         _h.__addEvent._$aop(function(_event){
             var _args = _event.args;
-            if (_attached[_args[1]]!=null){
+            if (_attached[_args[1]]!=null
+                &&!!_args[0].attachEvent){
                 _event.stopped = !0;
                 _args[0].attachEvent('on'+_args[1],_args[2]);
             }
@@ -125,7 +126,8 @@ NEJ.define([
         _h.__delEvent = 
         _h.__delEvent._$aop(function(_event){
             var _args = _event.args;
-            if (_attached[_args[1]]!=null){
+            if (_attached[_args[1]]!=null
+                &&!!_args[0].detachEvent){
                 _event.stopped = !0;
                 _args[0].detachEvent('on'+_args[1],_args[2]);
             }
