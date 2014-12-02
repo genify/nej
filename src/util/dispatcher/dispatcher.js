@@ -490,7 +490,7 @@ NEJ.define([
      */
     _pro.__onDocTitleFix = (function(){
         // bugfix: remove hash from title for ie with flash
-        var _reg = /#[\w\/\?#]*$/i;
+        var _reg = /#.*?$/i;
         return function(_event){
             if (_event.propertyName!='title'){
                 return;
