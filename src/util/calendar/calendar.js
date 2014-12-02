@@ -290,7 +290,7 @@ NEJ.define([
             // end -> length
             var _length = this.__list.length;
             if (_end<_length-1){
-                _date.setMonth(_month==12?0:_month);
+                _date.setMonth(_month);
                 _year  = _date.getFullYear();
                 _month = _date.getMonth()+1;
                 for(var i=_end,k=1;i<_length;i++){
