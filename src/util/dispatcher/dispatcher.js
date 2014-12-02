@@ -222,6 +222,8 @@ NEJ.define([
                 root:this.__root,
                 dispatcher:this
             });
+        // bugfix hash title for ie with flash
+        this.__fxttl = document.title;
         // add listeners
         this.__doInitDomEvent([[
             location,'urlchange',
@@ -497,8 +499,9 @@ NEJ.define([
             }
             var _title = document.title,
                 _nwttl = _title.replace(_reg,'');
-            if (_title!=_nwttl&&!!_nwttl){
-                document.title = _nwttl;
+            if (_title!=_nwttl){
+                this.__fxttl = _nwttl||this.__fxttl;
+                document.title = this.__fxttl;
             }
         };
     })();
