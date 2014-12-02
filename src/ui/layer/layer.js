@@ -157,7 +157,7 @@ NEJ.define([
     _pro.__doHide = function(){
         _e._$removeByEC(this.__body);
         if (!!this.__mask){
-            this.__mask = _e._$unmask(this.__body);
+            _e._$unmask(this.__body);
             delete this.__mask;
         }
     };

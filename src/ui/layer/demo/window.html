@@ -3,6 +3,9 @@
   <head>
     <title>test window</title>
     <meta charset="utf-8" />
+    <style>
+        body,html{width:100%;height:100%;}
+    </style>
     <script>
       function log(m){
           var p = document.createElement('p');
@@ -12,6 +15,7 @@
     </script>
   </head>
   <body>
+      <select><option>1</option><option>2</option></select>
     <textarea name="ntp" id="tpl-win">
       <form>
          <input type="text" name="time" data-type="date" data-required="true" data-message="必须设置日期"/>
@@ -57,8 +61,10 @@
             
             // init
             _p._$$Window._$allocate({
-                parent:document.body
-            });
+                parent:document.body,
+                draggable:true,
+                align:'left top'
+            })._$show();
         });
     </script>
   </body>

@@ -356,7 +356,7 @@ NEJ.define([
                     _mask = _cache[_id];
                 if (!!_mask){
                     delete _cache[_id];
-                    _mask.parentNode.remove(_mask);
+                    _mask.parentNode.removeChild(_mask);
                 }
             };
             // append mask
@@ -377,6 +377,7 @@ NEJ.define([
                 _style1.width = _element.offsetWidth+'px';
                 _style1.height = _element.offsetHeight+'px';
                 _element.insertAdjacentElement('beforeBegin',_mask);
+                return _mask;
             };
         })();
     });
