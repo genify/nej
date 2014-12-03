@@ -126,10 +126,6 @@ NEJ.define([
         };
         // check flash init state
         var _doCheckFlashInit = function(_flash){
-            if (!!_flash&&!!_title){
-                document.title = _title;
-                _title = null;
-            }
             return !!_flash&&!!_flash.inited&&!!_flash.inited();
         };
         var _doCheckFlash = function(_id){
@@ -140,6 +136,10 @@ NEJ.define([
                 _ctkey = _id+'-count';
             _cache[_ctkey]++;
             if (!!_flash||_cache[_ctkey]>100){
+                if (!!_title){
+                    document.title = _title;
+                    _title = null;
+                }
                 _cache[_id](_flash);
                 delete _cache[_id];
                 delete _cache[_ctkey];
