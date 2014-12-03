@@ -19,8 +19,9 @@ NEJ.define([
     './dsp/node.js',
     './dsp/group.js',
     './dsp/single.js',
-    './module.js'
-],function(NEJ,_k,_e,_v,_u,_t0,_t1,_t2,_t3,_t4,_t5,_t6,_t7,_p,_o,_f,_r){
+    './module.js',
+    '{platform}dispatcher.js'
+],function(NEJ,_k,_e,_v,_u,_t0,_t1,_t2,_t3,_t4,_t5,_t6,_t7,_h,_p,_o,_f,_r){
     var _pro;
     /**
      * 调度器对象，项目仅允许实例化一个调度器
@@ -223,7 +224,7 @@ NEJ.define([
                 dispatcher:this
             });
         // bugfix hash title for ie with flash
-        //_h.__doFixHashTitle(document.title);
+        _h.__doFixHashTitle(document.title);
         // add listeners
         this.__doInitDomEvent([[
             location,'urlchange',
