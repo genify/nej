@@ -19,8 +19,9 @@ NEJ.define([
     './dsp/node.js',
     './dsp/group.js',
     './dsp/single.js',
-    './module.js'
-],function(NEJ,_k,_e,_v,_u,_t0,_t1,_t2,_t3,_t4,_t5,_t6,_t7,_p,_o,_f,_r){
+    './module.js',
+    '{platform}dispatcher.js'
+],function(NEJ,_k,_e,_v,_u,_t0,_t1,_t2,_t3,_t4,_t5,_t6,_t7,_h,_p,_o,_f,_r){
     var _pro;
     /**
      * 调度器对象，项目仅允许实例化一个调度器
@@ -223,14 +224,11 @@ NEJ.define([
                 dispatcher:this
             });
         // bugfix hash title for ie with flash
-        this.__fxttl = document.title;
+        _h.__doFixHashTitle(document.title);
         // add listeners
         this.__doInitDomEvent([[
             location,'urlchange',
             this.__onURLChange._$bind(this)
-        ],[
-            document,'propertychange',
-            this.__onDocTitleFix._$bind(this)
         ]]);
         this.__super(_options);
         // init config
@@ -480,29 +478,6 @@ NEJ.define([
             var _title = this.__getModuleConf(_source,'title');
             if (!!_title) document.title = _title;
             this.__groups[_gid]._$dispatchUMI(_umi);
-        };
-    })();
-    /**
-     * 修正标题被页面flash改为hash值
-     * 
-     * @protected
-     * @method module:util/dispatcher/dispatcher._$$Dispatcher#__onDocTitleFix
-     * @param  {Event} arg0 - 事件对象
-     * @return {Void}
-     */
-    _pro.__onDocTitleFix = (function(){
-        // bugfix: remove hash from title for ie with flash
-        var _reg = /#.*?$/i;
-        return function(_event){
-            if (_event.propertyName!='title'){
-                return;
-            }
-            var _title = document.title,
-                _nwttl = _title.replace(_reg,'');
-            if (_title!=_nwttl){
-                this.__fxttl = _nwttl||this.__fxttl;
-                document.title = this.__fxttl;
-            }
         };
     })();
     /**

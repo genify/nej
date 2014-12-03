@@ -15,6 +15,7 @@
     <div>
         <p id="abc">aaaaaaaaaaaaa</p>
     </div>
+    <input type="button" value="aaaa" onclick="document.title=+new Date;"/>
     <script src="../../define.js"></script>
     <script>
       NEJ.define([
@@ -33,6 +34,11 @@
           _v._$addEvent(
               'abc','click',function(event){
                   log('abc '+(this.id=='abc'));
+              }
+          );
+          _v._$addEvent(
+              document,'propertychange',function(event){
+                  console.log(event.propertyName+'->'+document.title);
               }
           );
       });
