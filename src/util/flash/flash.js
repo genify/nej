@@ -109,11 +109,14 @@ NEJ.define([
         };
         // append flash element
         var _doInitDOM = function(_options){
+            // bugfix for ie title with flash
+            var _title = document.title;
             var _parent = _e._$get(_options.parent)||document.body,
                 _html = _t0._$get(_seed_html,_options);
             _parent.insertAdjacentHTML(
                !_options.hidden?'beforeEnd':'afterBegin',_html
             );
+            document.title = _title;
         };
         // listen flash mouse event
         var _doMouseEventBubble = function(_id,_event){
