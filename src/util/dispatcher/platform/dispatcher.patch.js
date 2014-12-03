@@ -45,7 +45,7 @@ NEJ.define([
     });
     // for ie10-
     NEJ.patch('TR<7.0',['base/event'],function(_v){
-        /**
+        /** 
          * 修正标题被Hash污染问题
          * @param  {String} 原始标题
          * @return {Void}
