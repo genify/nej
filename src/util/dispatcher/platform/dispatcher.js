@@ -18,7 +18,7 @@ NEJ.define([
         return function(_title){
             var _odttl = document.title,
                 _nwttl = _odttl.replace(_reg,'');
-            if (_odttl!=_nwttl){
+            if ((!_odttl&&!!_title)||_odttl!=_nwttl){
                 _title = _nwttl||_title;
                 document.title = _title;
             }
