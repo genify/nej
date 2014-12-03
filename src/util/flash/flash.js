@@ -82,7 +82,7 @@ NEJ.define([
      * @return   {Void}
      */
     _p._$flash = (function(){
-        var _cache = {},
+        var _cache = {},_title,
             _reg0 = /^(?:mouse.*|(?:dbl)?click)$/i;
         // flash event
         window.onflashevent = function(_event){
@@ -110,13 +110,12 @@ NEJ.define([
         // append flash element
         var _doInitDOM = function(_options){
             // bugfix for ie title with flash
-            var _title = document.title;
+            _title = document.title;
             var _parent = _e._$get(_options.parent)||document.body,
                 _html = _t0._$get(_seed_html,_options);
             _parent.insertAdjacentHTML(
                !_options.hidden?'beforeEnd':'afterBegin',_html
             );
-            document.title = _title;
         };
         // listen flash mouse event
         var _doMouseEventBubble = function(_id,_event){
@@ -127,6 +126,10 @@ NEJ.define([
         };
         // check flash init state
         var _doCheckFlashInit = function(_flash){
+            if (!!_flash&&!!_title){
+                document.title = _title;
+                _title = null;
+            }
             return !!_flash&&!!_flash.inited&&!!_flash.inited();
         };
         var _doCheckFlash = function(_id){
