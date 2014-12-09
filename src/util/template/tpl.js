@@ -377,12 +377,22 @@ NEJ.define([
         _key = _skey+_key;
         var _value = _p._$getTextTemplate(_key);
         if (!_value) return null;
+        var _node;
         if (_u._$isString(_value)){
             _value = _e._$html2node(_value);
-            _p._$addTextTemplate(_key,_value);
+            // bugfix: https://connect.microsoft.com/IE/feedback/details/811408
+            var _list = _value.getElementsByTagName('textarea');
+            if (_value.tagName!='TEXTAREA'&&
+               (!_list||!_list.length)){
+                _p._$addTextTemplate(_key,_value);
+            }else{
+                _node = _value;
+            }
         }
         // clone node and push to memory
-        var _node = _value.cloneNode(!0);
+        if (!_node){
+            _node = _value.cloneNode(!0);
+        }
         _e._$removeByEC(_node);
         return _node;
     };
