@@ -579,7 +579,7 @@ NEJ.define([
      * @return {String}         十六进制串
      */
     _p._$str2hex = function(_data,_big){
-        return __bin2hex(__str2bin(_data,!_big),!0);
+        return __bin2hex(__str2bin(_data,!_big),!_big);
     };
 
     if (CMPT){
