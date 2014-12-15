@@ -574,8 +574,9 @@ NEJ.define([
      * ```
      * 
      * @method module:util/encode/md5._$str2hex
-     * @param  {String} arg0 - 字符串
-     * @return {String}        十六进制串
+     * @param  {String}  arg0 - 字符串
+     * @param  {Boolean} arg1 - 是否大端序
+     * @return {String}         十六进制串
      */
     _p._$str2hex = function(_data,_big){
         return __bin2hex(__str2bin(_data,!_big),!0);
