@@ -231,43 +231,53 @@ var f = function(){
                 _month = this.__month,
                 _date  = new Date(_year,_month-1,1),
                 _beg = ((7+_date.getDay())-this.__offset)%7,
-                _end = Math.min(this.__list.length,
-                      _beg+_getMonthDay(_year,_month));
+                _end = Math.min(
+                    this.__list.length,
+                    _beg+_getMonthDay(_year,_month)
+                );
             // sync year and month
-            if (!!this.__nyear)
+            if (!!this.__nyear){
                 this.__nyear.innerText = this.__year;
-            if (!!this.__nmonth)
+            }
+            if (!!this.__nmonth){
                 this.__nmonth.innerText = this.__month;
+            }
             // offset with limit
+            // current month
             for(var i=_beg,_node;i<_end;i++){
                 _node = this.__list[i];
                 this.__doSaveDateInfo(
-                      _node,_year,_month,i-_beg+1);
+                    _node,_year,_month,i-_beg+1
+                );
                 _e._$delClassName(_node,this.__extended);
             }
             // 0 -> begin
+            // last month
             if (_beg>0){
-                _date.setMonth(_month-2||0);
-                _year  = _date.getFullYear();
+                var _date = new Date(_year,_month-2||0,1);
+                var _yearTemp  = _date.getFullYear();
                 var _monthTemp = _date.getMonth()+1;
-                var _limit = _getMonthDay(_year,_monthTemp);
+                var _limit = _getMonthDay(_yearTemp,_monthTemp);
                 for(var i=_beg-1,_node;i>=0;i--){
                     _node = this.__list[i];
                     this.__doSaveDateInfo(
-                          _node,_year,_monthTemp,_limit--);
+                        _node,_yearTemp,_monthTemp,_limit--
+                    );
                     _e._$addClassName(_node,this.__extended);
                 }
             }
             // end -> length
+            // next moth
             var _length = this.__list.length;
             if (_end<_length-1){
-                _date.setMonth(_month==12?0:_month);
-                _year  = _date.getFullYear();
-                _month = _date.getMonth()+1;
+                var _date = new Date(_year,_month,1);
+                var _yearTemp  = _date.getFullYear();
+                var _monthTemp = _date.getMonth()+1;
                 for(var i=_end,k=1;i<_length;i++){
                     _node = this.__list[i];
                     this.__doSaveDateInfo(
-                          _node,_year,_month,k++);
+                        _node,_yearTemp,_monthTemp,k++
+                    );
                     _e._$addClassName(_node,this.__extended);
                 }
             }
