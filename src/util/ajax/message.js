@@ -94,6 +94,7 @@ NEJ.define([
             }
             // check data
             var _data = _u._$fetch({
+                data:null,
                 origin:'*',
                 source:_self
             },_options);
