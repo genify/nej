@@ -261,9 +261,7 @@ NEJ.define([
     /**
      * 取编辑内容
      *
-     * @param  {Boolean|Number} arg0 - 是否只保留background-color,font-size,color样式
-     * @param  {Boolean|Number|Object}  默认过滤所有style，如果是对象，keepStyle表示不过滤style，noId表示过滤id
-     * @method module:util/editor/area._$$EditorArea#_$getContent
+     * @param  {Boolean|Number|Object}  默认过滤所有style(只保留background-color,font-size,color样式)，如果是对象，keepStyle表示不过滤style，noId表示过滤id
      * @return {String} 内容
      */
     _pro._$getContent = function(_options){
