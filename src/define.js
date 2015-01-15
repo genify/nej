@@ -381,6 +381,7 @@
             _reg3= /[^\/]*$/,
             _reg4= /\.js$/i,
             _reg5= /^[{\/\.]/,
+            _reg6= /(file:\/\/)([^\/])/i,
             _anchor = d.createElement('a');
         var _absolute = function(_uri){
             return _uri.indexOf('://')>0;
@@ -401,8 +402,11 @@
             _append();
             _anchor.href = _uri;
             _uri = _anchor.href;
-            return _absolute(_uri)&&_uri.indexOf('./')<0 ?
-                   _uri : _anchor.getAttribute('href',4); // ie6/7
+            var _ret = 
+                _absolute(_uri)&&_uri.indexOf('./')<0 ?
+                _uri : _anchor.getAttribute('href',4); // ie6/7
+            // fix mac file:// error
+            return _uri.replace(_reg6,'$1/$2');
         };
         var _amdpath = function(_uri,_type){
             // start with {xx} or /xx/xx or ./ or ../
