@@ -11,9 +11,10 @@ NEJ.define([
     'base/klass',
     'base/element',
     'base/event',
+    'base/util',
     '{platform}editor.js',
     'util/event'
-],function(NEJ,_k,_e,_v,_h,_t,_p,_o,_f,_r){
+],function(NEJ,_k,_e,_v,_u,_h,_t,_p,_o,_f,_r){
     var _pro;
     /**
      * 富媒体编辑器输入区封装
@@ -200,7 +201,7 @@ NEJ.define([
      * 过滤所有style和class标签
      *
      * @protected
-     * @method module:util/editor/area._$$EditorArea#__doCompareContent
+     * @method module:util/editor/area._$$EditorArea#__doRemoveStyle
      * @param  {String} arg0 - 原始富文本内容
      * @return {String}        过滤后的富文本内容
      */
@@ -213,6 +214,22 @@ NEJ.define([
             _reg5 = /class=[^>\s]*/gi;
         return function(_html){
             return _html.replace(_reg0,'').replace(_reg1,'').replace(_reg2,'').replace(_reg3,'').replace(_reg4,'').replace(_reg5,'');
+        };
+    })();
+    /**
+     * 过滤所有style和class标签
+     *
+     * @protected
+     * @method module:util/editor/area._$$EditorArea#__doRemoveId
+     * @param  {String} arg0 - 原始富文本内容
+     * @return {String}        过滤后的富文本内容
+     */
+    _pro.__doRemoveId = (function(){
+        var _reg0 = /id="[^"]*"/gi,
+            _reg1 = /id='[^']*'/gi,
+            _reg2 = /id=[^>\s]*/gi;
+        return function(_html){
+            return _html.replace(_reg0,'').replace(_reg1,'').replace(_reg2,'');
         };
     })();
     /**
@@ -244,16 +261,22 @@ NEJ.define([
     /**
      * 取编辑内容
      *
-     * @param  {Boolean|Number} arg0 - 是否只保留background-color,font-size,color样式
-     * @param  {Boolean|Number} arg0 - 是否删除所有style
-     * @method module:util/editor/area._$$EditorArea#_$getContent
+     * @param  {Boolean|Number|Object}  默认过滤所有style(只保留background-color,font-size,color样式)，如果是对象，keepStyle表示不过滤style，noId表示过滤id
      * @return {String} 内容
      */
-    _pro._$getContent = function(_filter){
-        var _document = this._$getDocument();
+    _pro._$getContent = function(_options){
+        var _document = this._$getDocument(),
+            _noId,_keepStyle;
         _html = _h.__filterContent(!_document?'':_document.body.innerHTML);
-        if (!_filter){
+        if (_u._$isObject(_options)){
+            _keepStyle = _options.keepStyle||false;
+            _noId   = _options.noId;
+        }
+        if (!_keepStyle){
             _html = _h.__filterContentStyle(_html);
+        }
+        if (!!_noId){
+            _html = this.__doRemoveId(_html);
         }
         return !_h.__filterWordContent?_html:_h.__filterWordContent(_html);
     };

@@ -161,11 +161,12 @@ NEJ.define([
     /**
      * 取编辑内容
      *
+     * @param  {Boolean|Number|Object}  默认过滤所有style(只保留background-color,font-size,color样式)，如果是对象，keepStyle表示不过滤style，noId表示过滤id
      * @method module:ui/editor/editor._$$Editor#_$getContent
      * @return {String} 内容
      */
-    _pro._$getContent = function(){
-        return this.__editor._$getContent();
+    _pro._$getContent = function(_options){
+        return this.__editor._$getContent(_options);
     };
     /**
      * 取编辑内容里的图片id和url列表
