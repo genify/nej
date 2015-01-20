@@ -551,8 +551,8 @@ NEJ.define([
         // has action delegate
         var _element = _v._$getElement(_event,'d:resAction');
         if (!_element) return;
-        var _action = _e._$dataset(_element,'resAction'),
-            _handler = _conf[_action];
+        var _action = _e._$dataset(_element,'resAction')||'',
+            _handler = _conf[_action.toLowerCase()];
         if (!_handler) return;
         // has action node
         var _options = {
