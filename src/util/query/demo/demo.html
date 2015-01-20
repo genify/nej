@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NEJ实例 - NES</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    
+    <div id="app"></div>
+    
+    <script src="../../../define.js"></script>
+    <script>
+        NEJ.define([
+            'util/query/query'
+        ],function(query){
+            var page = {
+                init: function(){
+                  query._$one("body #app").innerHTML = "NEJ is run";
+                }
+            };
+            
+            page.init();
+        });
+    </script>
+  </body>
+</html>
