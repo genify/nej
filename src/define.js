@@ -72,7 +72,12 @@
         var _arr = _uri.split(/[?#]/),
             _brr = _arr[0].split('/');
         _brr.pop(); // splice define.js
-        __config.root.lib = _brr.join('/')+'/';
+        var _lib = _brr.join('/')+'/';
+        if (_lib.indexOf('://')<0){
+            // absolute lib path
+            _lib = _doAbsoluteURI(_lib);
+        }
+        __config.root.lib = _lib;
         var _obj = _doStr2Obj(_arr[1]);
         __config.charset = _obj.c||'utf-8';
         __config.global = _obj.g=='true';
@@ -93,6 +98,7 @@
         if (!!_deps){
             document.write('<script src="'+_deps+'"></scr'+'ipt>');
         }
+        //console.log(__config.root.lib);
     };
     /*
      * 解析列表依赖关系
@@ -370,41 +376,51 @@
         return _result;
     };
     /*
-     * 格式化地址,取绝对路径
-     * @param  {String} _uri 待格式化地址
-     * @return {String}      格式化后地址
+     * 相对路径转绝对路径
+     * @param  {String} 相对路径
+     * @return {String} 绝对路径
      */
-    var _doFormatURI = (function(){
+    var _doAbsoluteURI = (function(){
         var _xxx = !1,
-            _reg = /{(.*?)}/gi,
-            _reg1= /([^:])\/+/g,
-            _reg3= /[^\/]*$/,
-            _reg4= /\.js$/i,
-            _reg5= /^[{\/\.]/,
-            _reg6= /(file:\/\/)([^\/])/i,
             _anchor = d.createElement('a');
-        var _absolute = function(_uri){
-            return _uri.indexOf('://')>0;
-        };
-        var _slash = function(_uri){
-            return _uri.replace(_reg1,'$1/');
-        };
         var _append = function(){
             if (_xxx) return;
             _xxx = !0;
             _anchor.style.display = 'none';
             document.body.appendChild(_anchor);
         };
+        return function(_uri){
+            _append();
+            _anchor.href = _uri;
+            _uri = _anchor.href;
+            return _uri.indexOf('://')>0&&_uri.indexOf('./')<0 ?
+                   _uri : _anchor.getAttribute('href',4); // ie6/7
+        };
+    })();
+    /*
+     * 格式化地址,取绝对路径
+     * @param  {String} _uri 待格式化地址
+     * @return {String}      格式化后地址
+     */
+    var _doFormatURI = (function(){
+        var _reg = /{(.*?)}/gi,
+            _reg1= /([^:])\/+/g,
+            _reg3= /[^\/]*$/,
+            _reg4= /\.js$/i,
+            _reg5= /^[{\/\.]/,
+            _reg6= /(file:\/\/)([^\/])/i;
+        var _absolute = function(_uri){
+            return _uri.indexOf('://')>0;
+        };
+        var _slash = function(_uri){
+            return _uri.replace(_reg1,'$1/');
+        };
+        
         var _root = function(_uri) {
             return _uri.replace(_reg3,'');
         };
         var _format = function(_uri){
-            _append();
-            _anchor.href = _uri;
-            _uri = _anchor.href;
-            var _ret = 
-                _absolute(_uri)&&_uri.indexOf('./')<0 ?
-                _uri : _anchor.getAttribute('href',4); // ie6/7
+            var _uri = _doAbsoluteURI(_uri);
             // fix mac file:// error
             return _uri.replace(_reg6,'$1/$2');
         };
@@ -444,7 +460,9 @@
                 return _format(_uri);
             }
             if (_base&&_uri.indexOf('.')==0){
+                //console.log('before root uri '+_uri);
                 _uri = _root(_base)+_uri;
+                //console.log('after root uri '+_uri);
             }
             _uri = _slash(_amdpath(_uri,_type));
             var _uri = _uri.replace(
@@ -504,17 +522,27 @@
      * 页面已存在的script节点添加事件检测
      * @return {Void}
      */
-    var _doAddAllListener = function(){
-        var _list = document.getElementsByTagName('script');
-        for(var i=_list.length-1,_script;i>=0;i--){
-            _script = _list[i];
-            if (!_script.xxx){
-                _script.xxx = !0;
-                !_script.src ? _doClearStack()
-                             : _doAddListener(_list[i]);
+    var _doAddAllListener = (function(){
+        var _reg = /(?:NEJ\.)define/;
+        var _isNEJInline = function(_script){
+            var _code = _script.innerHTML;
+            return _code.search(_reg)>=0;
+        };
+        return function(){
+            var _list = document.getElementsByTagName('script');
+            for(var i=_list.length-1,_script;i>=0;i--){
+                _script = _list[i];
+                if (!_script.xxx){
+                    _script.xxx = !0;
+                    if (!_script.src&&_isNEJInline(_script)){
+                        _doClearStack();
+                    }else{
+                        _doAddListener(_list[i]);
+                    }
+                }
             }
-        }
-    };
+        };
+    })();
     /*
      * 清理脚本节点
      * @param  {Node} _script 脚本节点
@@ -856,11 +884,13 @@
      * @return {Node} 当前执行脚本
      */
     var _doFindScriptRunning = function(){
+        // for ie8+
         var _list = document.getElementsByTagName('script');
         for(var i=_list.length-1,_script;i>=0;i--){
             _script = _list[i];
-            if (_script.readyState=='interactive')
+            if (_script.readyState=='interactive'){
                 return _script;
+            }
         }
     };
     /*
