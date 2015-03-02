@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>test cookie</title>
+    <meta charset="utf-8"/>
+    <script>
+        function log(m){
+            var p = document.createElement('p');
+            p.innerHTML = m;
+            document.body.appendChild(p);
+        }
+    </script>
+  </head>
+  <body>
+    <input type="button" value="test" onclick="test();"/>
+    <script src="../../../../src/define.js"></script>
+    <script>
+      NEJ.define([
+          '../cookie.js',
+      ],function(_j){
+          
+          log('---> '+_j._$cookie('abc'));
+          
+          window.test = function(){
+              _j._$cookie('abc',{
+                  value:'aaaaaaaaaa',
+                  expires:1,
+                  path:'/'
+              });
+          };
+      });
+    </script>
+  </body>
+</html>

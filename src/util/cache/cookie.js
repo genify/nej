@@ -81,6 +81,7 @@ NEJ.define([
                 _data.expires = _date.toGMTString();
             }
             _cookie += _u._$object2string(_data,';');
+            //console.log(_cookie);
             document.cookie = _cookie;
         };
     })();
