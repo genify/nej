@@ -381,6 +381,7 @@ NEJ.define([
     
     if (CMPT){
         NEJ.P('nej.e')._$regist = _p._$regist;
+        NEJ.P('nej.ut')._$$Module = _p._$$ModuleAbstract;
         NEJ.P('nej.ut')._$$AbstractModule = _p._$$ModuleAbstract;
     }
     
