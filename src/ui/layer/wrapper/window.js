@@ -29,7 +29,7 @@ NEJ.define([
      *     _p._$$MyWindow = _k._$klass();
      *     _pro = _p._$$MyWindow._$extend(_l._$$WindowWrapper);
      *     // 生成窗体的展示内容
-     *     _proMyWindow.__initXGui = (function(){
+     *     _pro.__initXGui = (function(){
      *         var _seed_html = _t._$addNodeTemplate(_html);
      *         return function(){
      *             this.__seed_html = _seed_html;
