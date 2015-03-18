@@ -373,7 +373,7 @@ NEJ.define([
     };
     
     if (CMPT){
-        NEJ.copy(NEJ.P('nej.ut'),_p);
+        NEJ.P('nej.ut')._$$Cache = _p._$$CacheAbstract;
     }
     
     return _p;

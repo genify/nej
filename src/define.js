@@ -523,7 +523,7 @@
      * @return {Void}
      */
     var _doAddAllListener = (function(){
-        var _reg = /(?:NEJ\.)define/;
+        var _reg = /(?:NEJ\.)?define\s*\(/;
         var _isNEJInline = function(_script){
             var _code = _script.innerHTML;
             return _code.search(_reg)>=0;
