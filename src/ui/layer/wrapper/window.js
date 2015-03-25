@@ -20,19 +20,22 @@ NEJ.define([
      * ```javascript
      * NEJ.define([
      *     'base/klass',
-     *     'base/element',
-     *     'ui/layer/wrapper/window'
-     * ],function(_i0,_p,_o,_f,_r){
+     *     'util/template/tpl',
+     *     'ui/layer/wrapper/window',
+     *     'text!./mywindow.html'
+     * ],function(_k,_t,_l,_html,_p,_o,_f,_r){
+     *     var _pro;
      *     // 第一步：继承此类，生成一个新类
-     *     _p = NEJ.P('nej.ui');
      *     _p._$$MyWindow = _k._$klass();
-     *     var _seed_html = _e._$addNodeTemplate('<div>您要展示的内容部分</div>');
-     *     _proMyWindow = _p._$$MyWindow._$extend(_i0._$$WindowWrapper);
+     *     _pro = _p._$$MyWindow._$extend(_l._$$WindowWrapper);
      *     // 生成窗体的展示内容
-     *     _proMyWindow.__initXGui = function(){
-     *         this.__seed_html = _seed_html;
-     *     };
-     * });
+     *     _pro.__initXGui = (function(){
+     *         var _seed_html = _t._$addNodeTemplate(_html);
+     *         return function(){
+     *             this.__seed_html = _seed_html;
+     *         };
+     *     }
+     * })();
      *
      * NEJ.define([
      *     '/path/custom/to/mywindow.js'

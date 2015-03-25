@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>klass demo</title>
+    <meta charset="utf-8" />
+    <script>
+      function log(m){
+          var p = document.createElement('p');
+          p.innerHTML = m;
+          document.body.appendChild(p);
+      }
+    </script>
+  </head>
+  <body>
+    <script src="../../define.js"></script>
+    <script>
+      NEJ.define([
+          'base/klass',
+          'util/event'
+      ],function(_k,_t){
+          var Klass = _k._$klass();
+          var _pro = Klass._$extend(_t._$$EventTarget);
+          log(Klass);
+          return Klass;
+      });
+    </script>
+  </body>
+</html>
