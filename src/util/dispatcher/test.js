@@ -5,14 +5,16 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-var f = function(){
-    // variable declaration
-    var _  = NEJ.P,
-        _e = _('nej.e'),
-        _v = _('nej.v');
+NEJ.define([
+	'base/event',
+	'util/template/tpl',
+	'util/history/history',
+	'./module.js'
+],function(_v,_t,_h,_m,_p,_o,_f,_r){
+	
     // aop regist api
-    _e._$regist = 
-    _e._$regist._$aop(function(_event){
+    _m._$regist = 
+    _m._$regist._$aop(function(_event){
         _event.stopped = !0;
         var _klass = _event.args[1],
             _inst = _klass._$allocate();
@@ -34,11 +36,9 @@ var f = function(){
      * @param  {String} 模版ID
      * @return {Void}
      */
-    _e._$testByTemplate = function(_tid){
-        _e._$parseTemplate(_tid||'template-box');
+    _p._$testByTemplate = function(_tid){
+        _t._$parseTemplate(_tid||'template-box');
     };
-};
-NEJ.define('{lib}util/dispatcher/test.js',
-          ['{lib}util/dispatcher/module.2.js'
-          ,'{lib}util/history/history.js'
-          ,'{lib}util/template/tpl.js'],f);
+	
+	return _p;
+});
