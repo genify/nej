@@ -1,0 +1,22 @@
+.#<uispace>{width:210px;border:1px solid #aaa;font-size:14px;text-align:center;}
+.#<uispace> .zact{line-height:30px;overflow:hidden;zoom:1;}
+.#<uispace> .zact .zfl{float:left;}
+.#<uispace> .zact .zfr{float:right;}
+.#<uispace> .zact .zbtn{padding:0 5px;cursor:pointer;}
+.#<uispace> .zact .ztxt{margin-left:10px;}
+.#<uispace> .zday{table-layout:fixed;border-collapse:collapse;width:100%;}
+.#<uispace> .zday th{font-weight:normal;}
+.#<uispace> .zday a{display:block;height:22px;line-height:22px;color:#333;text-decoration:none;}
+.#<uispace> .zday a:hover{background:#eee;}
+.#<uispace> .zday a.js-extended{color:#aaa;}
+.#<uispace> .zday a.js-selected,
+.#<uispace> .zday a.js-selected:hover{background:#DAE4E7;}
+.#<uispace> .zday a.js-disabled,
+.#<uispace> .zday a.js-disabled:hover{background:#fff;color:#eee;cursor:default;}
+.#<uispace> .ztime{padding-bottom:5px;padding-top:5px;font-size:0;}
+.#<uispace> .ztime .zper{width:30px;height:30px;*height:auto;line-height:30px;margin-left:10px;_margin-left:5px;border:1px solid #aaa;overflow:hidden;float:left;display:none;font-size:12px;font-size:11px\0;}
+.#<uispace> .ztime .zper option{padding:0;margin:0;text-align:center;font-size:10px;height:14px;line-height:14px;}
+.#<uispace> .ztime input{width:20px;height:24px;line-height:24px;text-align:center;font-size:14px;}
+.#<uispace> .ztime .sep{display:inline-block;*display:inline;*zoom:1;height:30px;line-height:30px;vertical-align:top;margin-left:8px;margin-right:8px;font-size:14px;}
+.#<uispace> .ztime .zbtn-list{display:inline-block;*display:inline;*zoom:1;vertical-align:top;margin-left:10px;}
+.#<uispace> .ztime .zbtn-list button{padding:0 5px;display:block;height:15px;font-size:10px;line-height:12px;}
