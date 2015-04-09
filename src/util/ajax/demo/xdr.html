@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>test xdr</title>
+    <meta charset="utf-8"/>
+  </head>
+  <body>
+    
+    <script src="../../../../src/define.js"></script>
+    <script>
+      define([
+          '../xdr.js'
+      ],function(_j){
+          
+          _j._$request('./b.json',{
+              onload:function(result){
+                  console.log(abc);
+              }
+          });
+          
+      });
+    </script>
+  </body>
+</html>

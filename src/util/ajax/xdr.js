@@ -241,20 +241,13 @@ NEJ.define([
                 _data = _doParseExtData(_cache,_data);
             }
             _doClear(_sn);
-            try{
-                var _event = {
-                    type:_type,
-                    result:_data
-                };
-                _doFilter(_event);
-                if (!_event.stopped){
-                   (_cache[_type]||_f)(_event.result);
-                }
-            }catch(ex){
-                // ignore
-                if (DEBUG) throw ex;
-                console.error(ex.message);
-                console.error(ex);
+            var _event = {
+                type:_type,
+                result:_data
+            };
+            _doFilter(_event);
+            if (!_event.stopped){
+               (_cache[_type]||_f)(_event.result);
             }
         };
         // onload callback
