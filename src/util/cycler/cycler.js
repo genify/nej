@@ -18,7 +18,7 @@ NEJ.define([
     var _pro;
     /**
      * 循环播放封装对象
-     * 
+     *
      * 结构举例
      * ```html
      * <div id="nbox"></div>
@@ -28,7 +28,7 @@ NEJ.define([
      *   <li>3</li>
      * </ul>
      * ```
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -50,10 +50,10 @@ NEJ.define([
      *     });
      * });
      * ```
-     * 
+     *
      * @class    module:util/cycler/cycler._$$Cycler
      * @extends  module:util/event._$$EventTarget
-     * 
+     *
      * @param    {Object}      config   - 可选配置参数
      * @property {Array}       list     - 图片地址列表
      * @property {String|Node} nbox     - 图片容器节点
@@ -71,7 +71,7 @@ NEJ.define([
     _pro = _p._$$Cycler._$extend(_t._$$EventTarget);
     /**
      * 控件初始化
-     * 
+     *
      * @protected
      * @method module:util/cycler/cycler._$$Cycler#__init
      * @return {Void}
@@ -85,7 +85,7 @@ NEJ.define([
     };
     /**
      * 控件重置
-     * 
+     *
      * @protected
      * @method module:util/cycler/cycler._$$Cycler#__reset
      * @param  {Object} arg0 - 可选配置参数
@@ -104,7 +104,7 @@ NEJ.define([
     };
     /**
      * 控件销毁
-     * 
+     *
      * @protected
      * @method module:util/cycler/cycler._$$Cycler#__destroy
      * @return {Void}
@@ -119,7 +119,7 @@ NEJ.define([
     };
     /**
      * 页面变化回调
-     * 
+     *
      * @protected
      * @method   module:util/cycler/cycler._$$Cycler#__onPageChange
      * @param    {Object} arg0  - 页码信息
@@ -136,7 +136,7 @@ NEJ.define([
     };
     /**
      * 去到下一页
-     * 
+     *
      * @protected
      * @method module:util/cycler/cycler._$$Cycler#__onNextPage
      * @return {Void}
@@ -148,7 +148,7 @@ NEJ.define([
     };
     /**
      * 图片载入完成触发事件
-     * 
+     *
      * @protected
      * @method module:util/cycler/cycler._$$Cycler#__onImageLoad
      * @param  {Boolean} arg0 - 是否载入成功
@@ -157,17 +157,17 @@ NEJ.define([
     _pro.__onImageLoad = function(_isok){
         this.__timer = window.setTimeout(
             this.__onNextPage._$bind(this),this.__interval);
-        _e._$setStyle(this.__image,'opacity',1);
+        _e._$setStyle(this.__imgbox,'opacity',1);
     };
     /**
      * 设置图片
-     * 
+     *
      * 脚本举例
      * ```javascript
      * // 在回调里突然想换另外一张图片来展示
      * _cycler._$setImage('http://abc.com/abc.jpg');
      * ```
-     * 
+     *
      * @method module:util/cycler/cycler._$$Cycler#_$setImage
      * @param  {String} arg0 - 图片地址
      * @return {Void}
@@ -180,14 +180,21 @@ NEJ.define([
             transitionTimingFunction:'ease-in-out'
         };
         var _doSetStyle = function(_value,_key){
-            _e._$setStyle(this.__image,_key,_value);
+            _e._$setStyle(this.__imgbox,_key,_value);
         };
         return function(_url){
             if (!!this.__image)
                 _e._$remove(this.__image);
+            if (!!this.__imgbox)
+                _e._$remove(this.__imgbox);
             this.__image = new Image();
+            this.__imgbox = _e._$create('div');
             _u._$forIn(_css,_doSetStyle,this);
-            this.__nbox.appendChild(this.__image);
+            if (_url.indexOf('.png') > -1){
+                _e._$setStyle(this.__image,'filter','progid:DXImageTransform.Microsoft.AlphaImageLoader (enabled=true)');
+            }
+            this.__imgbox.appendChild(this.__image);
+            this.__nbox.appendChild(this.__imgbox);
             _v._$addEvent(this.__image,'load',
                 this.__onImageLoad._$bind(this,!0));
             _v._$addEvent(this.__image,'error',
