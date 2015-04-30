@@ -418,11 +418,11 @@ NEJ.define([
      *     'util/effect/api'
      * ],function(_e,_t,_p,_o,_f,_r){
      *     var _node = _e._$get("box");
-     *     _t._$toggle(_box,'height',{value:100,timing:'ease-out',duration:'1.2'});
+     *     _t._$toggleEffect(_box,'height',{value:100,timing:'ease-out',duration:'1.2'});
      * });
      * ```
      *
-     * @method   module:util/effect/api._$toggle
+     * @method   module:util/effect/api._$toggleEffect
      * @param    {Node|String} arg0 - 节点或者节点ID
      *
      * @param    {String} arg1     - 需要改变的属性，height或width
@@ -478,7 +478,7 @@ NEJ.define([
                     }
                 );
             }else{
-                _node.style.height = _value;
+                _node.style.height = isNaN(_value) ? _value : _value+'px';
                 _node.effect = _t0._$$Effect._$allocate(
                     {
                         node:_node,
