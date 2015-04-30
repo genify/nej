@@ -422,7 +422,7 @@ NEJ.define([
      * });
      * ```
      *
-     * @method   module:util/effect/api._$toggle
+     * @method   module:util/effect/api._$toggleEffect
      * @param    {Node|String} arg0 - 节点或者节点ID
      *
      * @param    {String} arg1     - 需要改变的属性，height或width
