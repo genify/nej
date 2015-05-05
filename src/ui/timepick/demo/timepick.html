@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>demo for colorpick</title>
+    <meta charset="utf-8" />
+    <script>
+      function log(m){
+          var p = document.createElement('p');
+          p.innerHTML = m;
+          document.body.appendChild(p);
+      }
+    </script>
+  </head>
+  <body>
+    <script src="../../../define.js"></script>
+    <script>
+      NEJ.define([
+          '../timepick.js'
+      ],function(_i){
+          _i._$$TimePick._$allocate({
+              format:12,
+              parent:document.body,
+              destroyable:true,
+              onchange:function(_date){
+                  log('select date -> '+_date.date);
+                  log('select date -> '+JSON.stringify(_date.clock));
+              }
+          });
+      });
+    </script>
+  </body>
+</html>

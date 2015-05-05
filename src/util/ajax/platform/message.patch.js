@@ -98,7 +98,7 @@ NEJ.define([
                 });
             };
         })();
-        
+
         // init window onmessage event
         _t._$$CustomEvent._$allocate({
             element:window,
@@ -107,6 +107,6 @@ NEJ.define([
         setInterval(_doCheckNameQueue,100);
         setInterval(_doCheckWindowName,20);
     });
-    
+
     return _h;
 });

@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>datepick测试页</title>
+  		<link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.14.0.css" type="text/css" media="screen" />
+		<script type="text/javascript" src="http://code.jquery.com/qunit/qunit-1.14.0.js"></script>
+		<style type="text/css">
+			#datepick-box  .js-extended{background:green;}
+			#datepick-box  .js-selected{background:yellow;}
+            #datepick-box  .js-disabled{background:red;}
+            #datepick-box2 .js-extended{background:green;}
+            #datepick-box2 .js-selected{background:yellow;}
+            #datepick-box2 .js-disabled{background:red;}
+		</style>
+	</head>
+	<body>
+		<h1 id="qunit-header">Qunit datepick test</h1>
+		<h2 id="qunit-banner"></h2>
+		<div id="qunit-testrunner-toolbar"></div>
+		<h2 id="qunit-userAgent"></h2>
+		<ol id="qunit-tests"></ol>
+ 		<div id="qunit-fixture"></div>
+		<div id="datepick-box"></div>
+		<div id="datepick-box2">
+			<div id="days"></div>
+			<div id="year"></div>
+			<div id="month"></div>
+			<div id="yprv">前一年</div>
+			<div id="mprv">前一月</div>
+			<div id="ynxt">后一年</div>
+			<div id="mnxt">后一月</div>
+		</div>
+		<div id="datepick">jjjjjjjjjjjjj</div>
+		<script src="../../../define.js?pro=./"></script>
+		<script type="text/javascript" src="./datepick.test.js"></script>
+	</body>
+</html>
