@@ -24,7 +24,7 @@ NEJ.define([
      * #suggest-input{height:24px;line-height:24px;}
      * #card0{position:absolute;top:40px;left:0;width:100%;height:auto;background:#ccc;}
      * ```
-     * 
+     *
      * 结构举例
      * ```html
      * <div class="box" tabindex="10005">
@@ -32,7 +32,7 @@ NEJ.define([
      *   <div id="suggest-list"></div>
      * </div>
      * ```
-     * 
+     *
      * 脚本举例
      * ```javascript
      * NEJ.define([
@@ -67,12 +67,12 @@ NEJ.define([
      * @property {String}      clazz    - 可选节点样式标识，默认为所有子节点
      * @property {String}      selected - 提示项选中样式，默认为js-selected
      */
-    /** 
+    /**
      * 输入内容变化触发事件
      * @event  module:util/suggest/suggest._$$Suggest#onchange
      * @param  {String} event - 输入框去前后空格后的内容
      */
-    /** 
+    /**
      * 选中建议项触发事件
      * @event  module:util/suggest/suggest._$$Suggest#onselect
      * @param  {String} event - 节点的data-value值，没有则取节点的value
@@ -96,7 +96,7 @@ NEJ.define([
     };
     /**
      * 控件重置
-     * 
+     *
      * @protected
      * @method module:util/suggest/suggest._$$Suggest#__reset
      * @param  {Object} arg0 - 可选配置参数
@@ -127,7 +127,7 @@ NEJ.define([
     };
     /**
      * 控件销毁
-     * 
+     *
      * @protected
      * @method module:util/suggest/suggest._$$Suggest#__destroy
      * @return {Void}
@@ -153,7 +153,7 @@ NEJ.define([
     };
     /**
      * 输入内容变化触发事件
-     * 
+     *
      * @protected
      * @method module:util/suggest/suggest._$$Suggest#__onInput
      * @return {Void}
@@ -161,8 +161,10 @@ NEJ.define([
     _pro.__onInput = function(){
         var _value = this.__input.value.trim();
         if (!_value){
+            this.__xxxxx = !1;
             this._$visibile(!1);
         }else if(!this.__xxx){
+            this.__xxxxx = !0;
             this._$dispatchEvent('onchange',_value);
         }
     };
@@ -172,7 +174,7 @@ NEJ.define([
      * @protected
      * @method module:util/suggest/suggest._$$Suggest#__doUpdateValue
      * @param  {Object} arg0 - 值信息
-     * @return {Void} 
+     * @return {Void}
      */
     _pro.__doUpdateValue = function(_value){
         // lock onchange for input value setting
@@ -191,9 +193,12 @@ NEJ.define([
      * @protected
      * @method module:util/suggest/suggest._$$Suggest#__onSelect
      * @param  {Object} arg0 - 事件信息
-     * @return {Void} 
+     * @return {Void}
      */
     _pro.__onSelect = function(_event){
+        if (!this.__xxxxx){
+            return;
+        }
         var _value = _e._$dataset(_event.target,'value')||'';
         this.__doUpdateValue(_value);
         _value = _value||this.__input.value;
@@ -202,7 +207,7 @@ NEJ.define([
     };
     /**
      * 建议卡片选择变化事件
-     * 
+     *
      * @protected
      * @method module:util/suggest/suggest._$$Suggest#__onSelectionChange
      * @param  {Object} Object 事件信息
@@ -217,14 +222,14 @@ NEJ.define([
     };
     /**
      * 设置列表，用于切换列表选择卡片是否可见，不建议使用
-     * 
+     *
      * 脚本举例
      * ```javascript
      * // _list是节点列表
      * _suggest._$setList(_list);
      * ```
      *
-     * @deprecated 
+     * @deprecated
      * @method module:util/suggest/suggest._$$Suggest#_$setList
      * @see    module:util/suggest/suggest._$$Suggest#_$visibile
      * @param  {Array} arg0 - 建议项节点列表
@@ -235,7 +240,7 @@ NEJ.define([
     };
     /**
      * 更新建议列表的可见性
-     * 
+     *
      * 脚本举例
      * ```javascript
      * // 设置选择列表可见
@@ -254,7 +259,7 @@ NEJ.define([
     };
     /**
      * 更新可选列表
-     * 
+     *
      * 脚本举例
      * ```javascript
      * // 更新选择列表内容
@@ -264,7 +269,7 @@ NEJ.define([
      * }
      * _suggest._$update(_arr.join(''));
      * ```
-     * 
+     *
      * @method module:util/suggest/suggest._$$Suggest#_$update
      * @param  {String} arg0 - 列表HTML代码
      * @return {Void}
