@@ -271,6 +271,7 @@ NEJ.define([
             _event,'c:'+this.__trigger
         );
         if (!_element) return;
+        // void text selection
         _v._$stop(_event);
         // dump sort element
         this.__lsort = _element;
@@ -281,11 +282,6 @@ NEJ.define([
                 _event,'c:'+this.__clazz
             );
         }
-        // update selected
-        _e._$addClassName(
-            this.__lsort,
-            this.__selected
-        );
         // check before sort for multi-selection
         try{
             var _eobj = {
@@ -303,19 +299,6 @@ NEJ.define([
         }
         // holder info
         this.__offset = _e._$offset(this.__parent);
-        var _opt = {
-            x:_v._$clientX(_event),
-            y:_v._$clientY(_event)
-        };
-        this.__doUpdateThumb(1,_opt);
-        this.__doUpdateThumb(2,_opt);
-        // for auto scroll
-        var _node = _u._$isArray(this.__lsort)
-                  ? this.__lsort[0]:this.__lsort;
-        this.__auto = _x._$$SmartScroll._$allocate({
-            viewport:this.__getScrollParent(),
-            step:_node.offsetHeight/5
-        });
     };
     /**
      * 排序过程
@@ -326,11 +309,30 @@ NEJ.define([
      */
     _pro.__onSorting = function(_event){
         if (!this.__lsort) return;
-        // update thumbnail
-        this.__doUpdateThumb(2,{
+        var _position = {
             x:_v._$clientX(_event),
             y:_v._$clientY(_event)
-        });
+        };
+        // check drag start
+        if (!this.__auto){
+            // update selected
+            var _isarr = _u._$isArray(this.__lsort);
+            if (!_isarr){
+                _e._$addClassName(
+                    this.__lsort,
+                    this.__selected
+                );
+            }
+            this.__doUpdateThumb(1,_position);
+            // for auto scroll
+            var _node = _isarr?this.__lsort[0]:this.__lsort;
+            this.__auto = _x._$$SmartScroll._$allocate({
+                viewport:this.__getScrollParent(),
+                step:_node.offsetHeight/5
+            });
+        }
+        // update thumbnail
+        this.__doUpdateThumb(2,_position);
         var _element = _v._$getElement(
             _event,'c:'+this.__clazz
         );
