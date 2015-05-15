@@ -5,6 +5,7 @@
   * util/cache/cache兼容到nej.ut._$$Cache类名
   * util/dispatcher/module兼容到nej.ut._$$Module类名
   * 删除XDR请求回调中的try/catch，由应用逻辑自己保证批量请求的异常处理
+  * util/sortable/sortable在mousemove事件中开始拖拽
 
 0.2.4   (2015-01-20)
 --------------------------------------------------------
