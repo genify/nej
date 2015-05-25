@@ -266,12 +266,13 @@ NEJ.define([
      */
     _pro._$getContent = function(_options){
         var _document = this._$getDocument(),
-            _noId,_keepStyle;
-        _html = _h.__filterContent(!_document?'':_document.body.innerHTML);
+            _noId,_keepStyle,_keepClass;
         if (_u._$isObject(_options)){
+            _keepClass = _options.keepClass||false;
             _keepStyle = _options.keepStyle||false;
             _noId   = _options.noId;
         }
+        _html = _h.__filterContent(!_document?'':_document.body.innerHTML,_keepClass);
         if (!_keepStyle){
             _html = _h.__filterContentStyle(_html);
         }
