@@ -328,6 +328,8 @@ NEJ.define([
         this.__ropt.data = _copt.data||{};
         this.__ropt.clear = !!_copt.clear;
         this.__iopt.pkey = _copt.key||'id';
+        _copt.onerror = 
+            this._$dispatchEvent._$bind(this,'onerror');
         _copt.onlistload =
             this.__cbListLoad._$bind(this);
         _copt.onpullrefresh =
@@ -756,7 +758,9 @@ NEJ.define([
         var _event = {
             parent:this.__lbox
         };
-        this._$dispatchEvent(_name,_event);
+        if (!!_name){
+            this._$dispatchEvent(_name,_event);
+        }
         if (!_event.stopped){
             this.__doRenderMessage(
                 _event.value||_default,_pos
@@ -1153,6 +1157,17 @@ NEJ.define([
      */
     _pro._$isLoaded = function(){
         return this.__cache._$isLoaded(this.__ropt.key);
+    };
+    /**
+     * 显示信息
+     *
+     * @method module:util/list/module._$$ListModule#_$showMessage
+     * @param  {String|Node} arg0 - 消息内容
+     * @return {Void}
+     */
+    _pro._$showMessage = function(_html){
+        this.__doClearListBox();
+        this.__doShowMessage(null,_html);
     };
 
     if (CMPT){
