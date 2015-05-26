@@ -2,7 +2,7 @@
 .#<uispace> .zbg{background:url(#<root>nej_editor.png?20131028) no-repeat 100px 100px;}
 .#<uispace> .ztbar{height:30px;background-color:#eee;zoom:1;}
 .#<uispace> .ztbar:after{display:block;clear:both;visibility:hidden;height:0;content:".";}
-.#<uispace> .zitm{float:left;width:24px;height:24px;margin:3px 0;course:pointer;}
+.#<uispace> .zitm{float:left;width:24px;height:24px;margin:3px 0;cursor:pointer;}
 .#<uispace> .zitm:hover{background-position:0 0;}
 .#<uispace> .zitm.js-selected{background-position:-30px 0;}
 .#<uispace> .zitm .zicn{width:16px;height:16px;margin:4px auto 0;overflow:hidden;text-indent:100px;}

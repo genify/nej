@@ -183,10 +183,15 @@ NEJ.define([
      * 内容初步过滤
      * @param {Object} _html
      */
-    _p.__filterContent = function(_html){
-        var _html = (_html||'').replace(__empty,'').replace(__reg_cls0,'').replace(__reg_cls1,'').replace(__reg_cls2,'').replace(__reg_ccm,'');
-        _html = !_p.__filterContentPath?_html:_p.__filterContentPath(_html);
-        return _html;
+    _p.__filterContent = function(_html,_keepClass){
+        var _filterHTML;
+        if (_keepClass){
+            _filterHTML = (_html||'').replace(__empty,'').replace(__reg_ccm,'');
+        }else{
+            _filterHTML = (_html||'').replace(__empty,'').replace(__reg_cls0,'').replace(__reg_cls1,'').replace(__reg_cls2,'').replace(__reg_ccm,'');
+        }
+        _filterHTML = !_p.__filterContentPath?_filterHTML:_p.__filterContentPath(_filterHTML);
+        return _filterHTML;
     };
 
     /**
