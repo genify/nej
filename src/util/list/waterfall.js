@@ -199,7 +199,8 @@ NEJ.define([
                      _element.scrollTop-_element.clientHeight,
             _noscroll = _element.scrollHeight<=_element.clientHeight;
         if (_delta<=this.__delta||(_noscroll&&!this.__endskr)){
-            this._$next();
+            // render first
+            window.setTimeout(this._$next._$bind(this),0);
         }
     };
     /**
@@ -211,9 +212,11 @@ NEJ.define([
      */
     _pro.__onCheckScroll = function(_event){
         if (this.__endskr) return;
-        this.__doCheckScroll(
-            _v._$getElement(_event)
-        );
+        var _node = _v._$getElement(_event);
+        if (!_node){
+            _node = _e._$getPageBox();
+        }
+        this.__doCheckScroll(_node);
     };
     /**
      * 页码变化处理逻辑

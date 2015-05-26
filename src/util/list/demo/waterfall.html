@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NEJ实例 - Waterfall list</title>
+    <meta charset="utf-8" />
+    <style>
+        .lbox{min-height:100px;border:1px solid #aaa;}
+        .lbox .itm{text-align:left;margin:10px 0;}
+    </style>
+  </head>
+  <body>
+
+    <div id="module-box" class="lbox"></div>
+
+    <div id="template-box" style="display:none;">
+      <textarea name="jst" id="jst-list">
+        {list beg..end as y}
+          {var x = xlist[y]}
+          <div class="itm">${x.id} - ${x.name}</div>
+        {/list}
+      </textarea>
+    </div>
+
+    <script src="../../../define.js"></script>
+    <script>
+        define([
+            './data.js',
+            'util/template/tpl',
+            'util/list/waterfall'
+        ],function(_d,_e,_t){
+            _e._$parseTemplate('template-box');
+            var module = _t._$$ListModuleWF._$allocate({
+                limit:10,
+                parent:'module-box',
+                item:'jst-list',
+                cache:{lkey:'data-list',klass:_d._$$Cache},
+                sbody:window
+            });
+        });
+    </script>
+  </body>
+</html>
