@@ -695,6 +695,11 @@ NEJ.define([
         };
         return function(_options,_result){
             _options = _options||_o;
+            // clear lock if no result
+            if (!_result){
+                this.__doClearReqQueue();
+                return;
+            }
             // save list to cache
             var _key = _options.key,
                 _offset = _options.offset,

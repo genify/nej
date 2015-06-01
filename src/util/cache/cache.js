@@ -344,6 +344,17 @@ NEJ.define([
         return !0;
     };
     /**
+     * 清除锁定请求
+     *
+     * @protected
+     * @method module:util/cache/cache._$$CacheAbstract#__doClearReqQueue
+     * @param  {String}   arg0 - 请求标识
+     * @return {Void}
+     */
+    _pro.__doClearReqQueue = function(_key){
+        delete this.__cache[_ckey+'-l'][_key];
+    };
+    /**
      * 检测列表中是否已存在指定片段数据
      * 
      * @protected
