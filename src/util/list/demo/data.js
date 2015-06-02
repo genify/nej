@@ -30,9 +30,10 @@ define([
         //_options.onload({
         //    result:_ret
         //});
-        console.log('request from server');
-        _options.onload(null);
-        this._$dispatchEvent('onerror');
+        //console.log('request from server');
+        //_options.onload(null);
+        //this._$dispatchEvent('onerror');
+        _options.onload([]);
     };
 
     return _p;

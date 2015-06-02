@@ -518,7 +518,7 @@ NEJ.define([
             _$getListInCache(_options.key);
         if (!_list||!_list.length){
             // check load error
-            if (!this._$cache()._$isLoaded()){
+            if (!this._$cache()._$isLoaded(_options.key)){
                 this._$dispatchEvent('onlistloaderror');
             }else{
                 this.__doShowEmpty();
