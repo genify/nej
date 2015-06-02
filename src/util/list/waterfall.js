@@ -268,8 +268,9 @@ NEJ.define([
      */
     _pro.__cbListLoad = function(_options){
         delete this.__nexting;
-        this.__super(_options);
-        this._$resize();
+        if (!this.__super(_options)){
+            this._$resize();
+        }
     };
     /**
      * 列表变化回调（删除/添加）

@@ -517,8 +517,13 @@ NEJ.define([
         var _list = this.__cache.
             _$getListInCache(_options.key);
         if (!_list||!_list.length){
-            this.__doShowEmpty();
-            return;
+            // check load error
+            if (!this._$cache()._$isLoaded()){
+                this._$dispatchEvent('onlistloaderror');
+            }else{
+                this.__doShowEmpty();
+            }
+            return !0;
         }
         // render list
         var _limit = _options.limit,

@@ -20,16 +20,19 @@ define([
      * @return   {Void}
      */
     _pro.__doLoadList = function(_options){
-        var _ret = [];
-        for(var i= 0;i<_options.limit;i++){
-            _ret.push({
-                id:_options.offset+i,
-                name:'test-'+(+new Date)
-            });
-        }
-        _options.onload({
-            result:_ret
-        });
+        //var _ret = [];
+        //for(var i= 0;i<_options.limit;i++){
+        //    _ret.push({
+        //        id:_options.offset+i,
+        //        name:'test-'+(+new Date)
+        //    });
+        //}
+        //_options.onload({
+        //    result:_ret
+        //});
+        console.log('request from server');
+        _options.onload(null);
+        this._$dispatchEvent('onerror');
     };
 
     return _p;

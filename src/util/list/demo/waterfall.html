@@ -34,7 +34,12 @@
                 parent:'module-box',
                 item:'jst-list',
                 cache:{lkey:'data-list',klass:_d._$$Cache},
-                sbody:window
+                sbody:window,
+                onlistloaderror:function(){
+                    document.body.onclick = function(){
+                        module._$refresh();
+                    };
+                }
             });
         });
     </script>

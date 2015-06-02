@@ -697,7 +697,10 @@ NEJ.define([
             _options = _options||_o;
             // clear lock if no result
             if (!_result){
-                this.__doClearReqQueue();
+                // do callback
+                this.__doCallbackRequest(
+                    _options.rkey,'onlistload',_options
+                );
                 return;
             }
             // save list to cache
