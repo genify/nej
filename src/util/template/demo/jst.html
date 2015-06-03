@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>test template</title>
+      <meta charset="utf-8" />
+  </head>
+  <body>
+    <script src="../../../define.js"></script>
+    <script>
+        NEJ.define([
+            '../jst.js',
+            'text!./b.html'
+        ],function(l,html){
+            var sn = l._$add(html);
+            console.log(l._$get(sn,{src:'http://a.b.com/',type:'abc'}));
+        });
+    </script>
+  </body>
+</html>
