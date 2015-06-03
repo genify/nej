@@ -1,0 +1,8 @@
+{list beg..end as y}
+{var x=xlist[y]}
+<div class="itm" id="${x.id|seed}">
+    <a class="fr" href="#" data-id="${x.id}" data-action="delete">[删除]</a>
+    <a class="fr" href="#" data-id="${x.id}" data-action="update">[更新]</a>
+    <p>${beg+y_index}. ${x.name}：${x.loginTime|format:'yyyy-MM-dd HH:mm:ss'}</p>
+</div>
+{/list}
