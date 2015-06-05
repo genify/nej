@@ -59,17 +59,52 @@ NEJ.define([
             _arr = _options.key.split('-');
         switch(_arr.shift()){
             case 'province':
-                _list = _dmap.p;
+                _list = this.__getProvinceList();
             break;
             case 'city':
-                _list = _dmap.c[_arr.join('-')]||_r;
+                _list = this.__getCityList(_arr[0]);
             break;
             case 'area':
-                _list = _dmap.a[_arr.join('-')]||_r;
+                _list = this.__getAreaList(_arr[0],_arr[1]);
             break;
         }
-        this._$setTotal(_options.key,_list.length);
-        _options.onload(_list);
+        // callback
+        _options.onload({
+            list:_list,
+            total:_list.length
+        });
+    };
+    /**
+     * 取省份列表
+     * @protected
+     *
+     * @method   module:util/data/region/zh._$$CacheRegionZH#__getProvinceList
+     * @return {Array} 省份列表
+     */
+    _pro.__getProvinceList = function(){
+         return _dmap.p||[];
+    };
+    /**
+     * 取城市列表
+     * @protected
+     *
+     * @method   module:util/data/region/zh._$$CacheRegionZH#__getCityList
+     * @param  {String} arg0 - 省名称
+     * @return {Array}  城市列表
+     */
+    _pro.__getCityList = function(_province){
+        return _dmap.c[_province]||[];
+    };
+    /**
+     * 取区域列表
+     * @protected
+     *
+     * @method   module:util/data/region/zh._$$CacheRegionZH#__getAreaList
+     * @param  {String} arg0 - 省名称
+     * @return {Array}  城市列表
+     */
+    _pro.__getAreaList = function(_province,_city){
+        return _dmap.a[_province+'-'+_city]||[];
     };
     /**
      * 判断给定省份是否有三级目录
@@ -105,7 +140,7 @@ NEJ.define([
             '湖南省':['长沙市','株洲市','湘潭市','衡阳市','邵阳市','岳阳市','常德市','张家界市','益阳市','郴州市','永州市','怀化市','娄底市','湘西土家族苗族自治州'],
             '广东省':['广州市','韶关市','深圳市','珠海市','汕头市','佛山市','江门市','湛江市','茂名市','肇庆市','惠州市','梅州市','汕尾市','河源市','阳江市','清远市','东莞市','中山市','潮州市','揭阳市','云浮市'],
             '广西壮族自治区':['南宁市','柳州市','桂林市','梧州市','北海市','防城港市','钦州市','贵港市','玉林市','百色市','贺州市','河池市','来宾市','崇左市'],
-            '海南省':['海口市','三亚市','省直辖县级行政区划'],
+            '海南省':['海口市','三亚市','三沙市','省直辖县级行政区划'],
             '重庆市':['万州区','涪陵区','渝中区','大渡口区','江北区','沙坪坝区','九龙坡区','南岸区','北碚区','綦江区','大足区','渝北区','巴南区','黔江区','长寿区','江津区','合川区','永川区','南川区','潼南县','铜梁县','荣昌县','璧山县','梁平县','城口县','丰都县','垫江县','武隆县','忠县','开县','云阳县','奉节县','巫山县','巫溪县','石柱土家族自治县','秀山土家族苗族自治县','酉阳土家族苗族自治县','彭水苗族土家族自治县'],
             '四川省':['成都市','自贡市','攀枝花市','泸州市','德阳市','绵阳市','广元市','遂宁市','内江市','乐山市','南充市','眉山市','宜宾市','广安市','达州市','雅安市','巴中市','资阳市','阿坝藏族羌族自治州','甘孜藏族自治州','凉山彝族自治州'],
             '贵州省':['贵阳市','六盘水市','遵义市','安顺市','毕节市','铜仁市','黔西南布依族苗族自治州','黔东南苗族侗族自治州','黔南布依族苗族自治州'],
