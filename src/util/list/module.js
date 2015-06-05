@@ -519,7 +519,9 @@ NEJ.define([
         if (!_list||!_list.length){
             // check load error
             if (!this._$cache()._$isLoaded(_options.key)){
-                this._$dispatchEvent('onlistloaderror');
+                this._$dispatchEvent('onlistloaderror',{
+                    parent:this.__lbox
+                });
             }else{
                 this.__doShowEmpty();
             }
@@ -528,6 +530,12 @@ NEJ.define([
         // render list
         var _limit = _options.limit,
             _offset = _options.offset;
+        if (!this.__cache._$isFragmentFilled(_options.key,_offset,_limit)){
+            this._$dispatchEvent('onlistloaderror',{
+                parent:this.__lbox
+            });
+            return !0;
+        }
         if (this.__doBeforeListRender(
                   _list,_offset,_limit))
             return;

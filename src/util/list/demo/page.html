@@ -11,6 +11,7 @@
   <body>
 
     <div id="module-box" class="lbox"></div>
+    <div id="pager-box"></div>
 
     <div id="template-box" style="display:none;">
       <textarea name="jst" id="jst-list">
@@ -32,13 +33,16 @@
             var module = _t._$$ListModulePG._$allocate({
                 limit:10,
                 parent:'module-box',
+                pager:{parent:'pager-box'},
+                more:'btn-more',
                 item:'jst-list',
                 cache:{lkey:'data-list',klass:_d._$$Cache},
-                sbody:window,
                 onlistloaderror:function(event){
-                    document.body.onclick = function(){
-                        module._$refresh();
-                    };
+                    console.log('list error');
+                    event.parent.innerHTML = '<p>列表载入失败</p>';
+                },
+                onafterlistrender:function(){
+                    console.log('after list load')
                 }
             });
         });

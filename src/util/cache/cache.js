@@ -382,6 +382,21 @@ NEJ.define([
                 return !1;
         return !0;
     };
+    /**
+     * 判断列表指定片段是否填充满的
+     *
+     * @method module:util/cache/cache._$$CacheAbstract#_$isFragmentFilled
+     * @param  {Array}   arg0 - 列表标识
+     * @param  {Number}  arg1 - 偏移量
+     * @param  {Number}  arg2 - 数量，0表示全列表，默认为0
+     * @return {Boolean}        是否已经存在
+     */
+    _pro._$isFragmentFilled = function(_key,_offset,_limit){
+        return this.__hasFragment(
+            this._$getListInCache(_key),
+            _offset,_limit
+        );
+    };
     
     if (CMPT){
         NEJ.P('nej.ut')._$$Cache = _p._$$CacheAbstract;

@@ -19,21 +19,27 @@ define([
      * @property {Function} onload - 列表项载入回调
      * @return   {Void}
      */
+    var x = 0;
     _pro.__doLoadList = function(_options){
-        //var _ret = [];
-        //for(var i= 0;i<_options.limit;i++){
-        //    _ret.push({
-        //        id:_options.offset+i,
-        //        name:'test-'+(+new Date)
-        //    });
-        //}
-        //_options.onload({
-        //    result:_ret
-        //});
-        //console.log('request from server');
-        //_options.onload(null);
-        //this._$dispatchEvent('onerror');
-        _options.onload([]);
+        if (!x){
+            console.log('request from server');
+            x = 1;
+            var _ret = [];
+            for(var i= 0;i<_options.limit;i++){
+                _ret.push({
+                    id:_options.offset+i,
+                    name:'test-'+(+new Date)
+                });
+            }
+            _options.onload({
+                total:300,
+                result:_ret
+            });
+            return;
+        }
+        _options.onload(null);
+        this._$dispatchEvent('onerror');
+        //_options.onload([]);
     };
 
     return _p;
