@@ -350,9 +350,13 @@ NEJ.define([
      * @return {Variable} 查询结果
      */
     _pro._$queryCommand = function(_command,_type){
-        var _document = this._$getDocument();
-        return !_document ? null
-               :_document['queryCommand'+_type](_command);
+        try{
+            var _document = this._$getDocument();
+            return !_document ? null
+                :_document['queryCommand'+_type](_command);
+        }catch(ex){
+            return null;
+        }
     };
     /**
      * 获取选中内容的文本

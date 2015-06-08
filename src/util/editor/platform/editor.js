@@ -143,8 +143,7 @@ NEJ.define([
         return function(_node,_position){
             var _func = _fmap[_position];
             if (!_func) return;
-            _p.__getSelection(
-            _p.__getWindow(_node))
+            _p.__getSelection(_p.__getWindow(_node))
               .collapse(_node,_func(_node));
         };
     })();
