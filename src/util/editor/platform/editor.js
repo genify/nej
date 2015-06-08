@@ -139,7 +139,8 @@ NEJ.define([
      */
     _p.__moveCursorPosition = (function(){
         var _fmap = [function(_node){return _node.childNodes.length;}
-                    ,function(){return 0;}];
+                    ,function(){return 0;}
+                    ,function(){}];
         return function(_node,_position){
             var _func = _fmap[_position];
             if (!_func) return;
