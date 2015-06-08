@@ -139,11 +139,12 @@ NEJ.define([
      */
     _p.__moveCursorPosition = (function(){
         var _fmap = [function(_node){return _node.childNodes.length;}
-                    ,function(){return 0;}
-                    ,function(){}];
+                    ,function(){return 0;}];
         return function(_node,_position){
             var _func = _fmap[_position];
-            if (!_func) return;
+            if (_position > 3){
+                return;
+            }
             var _selection = _p.__getSelection(_p.__getWindow(_node));
             if (_position == 3){
                 // IE11 bugfix
