@@ -143,8 +143,15 @@ NEJ.define([
         return function(_node,_position){
             var _func = _fmap[_position];
             if (!_func) return;
-            _p.__getSelection(_p.__getWindow(_node))
-              .collapse(_node,_func(_node));
+            var _selection = _p.__getSelection(_p.__getWindow(_node));
+            if (_position == 2){
+                // IE11 bugfix
+                var _focusOffset = _selection.focusOffset;
+                _node = _selection.focusNode||_node;
+                _selection.collapse(_node,_focusOffset);
+            }else{
+                _selection.collapse(_node,_func(_node));
+            }
         };
     })();
     /**
