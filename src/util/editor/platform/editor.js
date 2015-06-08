@@ -145,7 +145,7 @@ NEJ.define([
             var _func = _fmap[_position];
             if (!_func) return;
             var _selection = _p.__getSelection(_p.__getWindow(_node));
-            if (_position == 2){
+            if (_position == 3){
                 // IE11 bugfix
                 var _focusOffset = _selection.focusOffset;
                 _node = _selection.focusNode||_node;

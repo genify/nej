@@ -236,7 +236,7 @@ NEJ.define([
      * 聚焦编辑器
      *
      * @method module:util/editor/area._$$EditorArea#_$focus
-     * @param  {Number} arg0 - 光标位置，默认为0，0-末尾、1-起始、2-不变
+     * @param  {Number} arg0 - 光标位置，默认为0，0-末尾、1-起始、2-不变、3-IE11-bug
      * @return {Void}
      */
     _pro._$focus = function(_cursor){
@@ -338,7 +338,7 @@ NEJ.define([
         // this._$focus(2);
         _h.__execCommand(_document,'styleWithCSS',false);
         _h.__execCommand(_document,_command,_value);
-        this._$focus(2);
+        this._$focus(3);
         this.__onInputCheck();
     };
     /**
