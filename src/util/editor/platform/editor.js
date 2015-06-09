@@ -59,8 +59,12 @@ NEJ.define([
         var _selection = _p.__getSelection(_window);
         if (!_selection)
             return null;
-        if (!!_selection.getRangeAt)
+        if (!!_selection.isCollapsed){
+            _selection.collapse();
+        }
+        if (!!_selection.getRangeAt){
             return _selection.getRangeAt(0);
+        }
         if (!!_selection.createRange)
             return _selection.createRange();
         return null;

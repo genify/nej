@@ -245,6 +245,7 @@ NEJ.define([
 	NEJ.patch('TR>=3.0',function(){
 
         var  _rcache = {};
+        window._rcache = _rcache
         /**
          * 执行编辑命令
          * @param  {Node}   _document 文档对象
@@ -299,6 +300,7 @@ NEJ.define([
                         _h.__getWindow(_doc)
                     );
                     _selection.addRange(_range);
+                    window.nowRange = _range;
                 }
                 delete _rcache[_id];
             }

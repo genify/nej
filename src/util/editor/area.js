@@ -13,9 +13,8 @@ NEJ.define([
     'base/event',
     'base/util',
     '{platform}editor.js',
-    'util/event',
-    'base/platform'
-],function(NEJ,_k,_e,_v,_u,_h,_t,_m,_p,_o,_f,_r){
+    'util/event'
+],function(NEJ,_k,_e,_v,_u,_h,_t,_p,_o,_f,_r){
     var _pro;
     /**
      * 富媒体编辑器输入区封装
@@ -336,13 +335,10 @@ NEJ.define([
     _pro._$execCommand = function(_command,_value,_css){
         var _document = this._$getDocument();
         if (!_document) return;
-        var _knl = _m._$KERNEL;
-            _ie9 = _knl.engine=='trident'&&_knl.release=='4.0';
+        // this._$focus(2);
         _h.__execCommand(_document,'styleWithCSS',false);
         _h.__execCommand(_document,_command,_value);
-        if (!_ie9){
-            this._$focus(3);
-        }
+        this._$focus(3);
         this.__onInputCheck();
     };
     /**
