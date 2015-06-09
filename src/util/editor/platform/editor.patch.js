@@ -203,7 +203,7 @@ NEJ.define([
 	                   var _args = _event.args,
 	                       _range = _h.__getRange(
 	                                _h.__getWindow(_args[0]));
-	                   if (!!_range.move){
+	                   if (!!_range && !!_range.move){
 	                       _event.stopped = !0;
 	                       var _func = _fmap[_args[1]];
 	                       if (!_func) return;
