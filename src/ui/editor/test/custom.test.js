@@ -13,6 +13,7 @@ var f = function(){
         var _getcnt = this._e._$get('getcnt');
         var _parent = this._e._$get('editor-parent');
         var _insert = this._e._$get('insert');
+        var _istiframe = this._e._$get('insertIframe');
         window._custom = this._ui._$$CustomEditor._$allocate({
             parent:_parent,
             clazz:'mycustom'
@@ -22,6 +23,9 @@ var f = function(){
         }._$bind(this));
         this._v._$addEvent(_insert,'click',function(){
             window._custom.__editor.__copt.area._$execCommand('inserthtml','<img style="max-width:520px;" src="https://www.baidu.com/img/baidu_jgylogo3.gif?v=33154426.gif" id="1" />')
+        }._$bind(this));
+        this._v._$addEvent(_istiframe,'click',function(){
+            window._custom.__editor.__copt.area._$execCommand('inserthtml','<iframe id="xxxx" width="320" height="160" src="http://www.baidu.com"></iframe>')
         }._$bind(this));
     });
 }
