@@ -327,7 +327,7 @@ NEJ.define([
 	});
 
 	// ie11+
-	NEJ.patch('TR>=7.0',function(){
+	NEJ.patch('TR>=5.0',function(){
 	    /**
 	     * 保存当前选择状态
 	     * @param  {Node} _node 节点

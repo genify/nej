@@ -22,10 +22,10 @@ var f = function(){
             alert(_custom.__editor.__copt.area._$getContent({noId:true}));
         }._$bind(this));
         this._v._$addEvent(_insert,'click',function(){
-            window._custom.__editor.__copt.area._$execCommand('inserthtml','<img style="max-width:520px;" src="https://www.baidu.com/img/baidu_jgylogo3.gif?v=33154426.gif" id=+' + new Date() +'+ />')
+            window._custom.__editor.__copt.area._$execCommand('inserthtml','<img style="max-width:520px;" src="https://www.baidu.com/img/baidu_jgylogo3.gif?v=33154426.gif" id=+' + new Date() +'+ />&nbsp;')
         }._$bind(this));
         this._v._$addEvent(_istiframe,'click',function(){
-            window._custom.__editor.__copt.area._$execCommand('inserthtml','<div>789</div>')
+            window._custom.__editor.__copt.area._$execCommand('inserthtml','<iframe width="400" height="300" class="videoPlayer" src="/res/videoplayer/assets/index.html?src=http%3A%2F%2Fnos-yx.netease.com%2Fyixinpublic%2Fpr_7puzwahrjwnicckqack1tg%3D%3D_1433388652_8618_translated.mp4&amp;type=mp4&amp;full=false" frameborder="0"></iframe>')
         }._$bind(this));
     });
 }

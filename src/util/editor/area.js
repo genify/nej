@@ -339,11 +339,7 @@ NEJ.define([
         // this._$focus(2);
         _h.__execCommand(_document,'styleWithCSS',false);
         _h.__execCommand(_document,_command,_value);
-        if (_m._$KERNEL.engine == 'trident' && _m._$KERNEL.release == '5.0'){
-            this._$focus(2);
-        }else{
-            this._$focus(3);
-        }
+        this._$focus(3);
         this.__onInputCheck();
     };
     /**
