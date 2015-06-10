@@ -88,7 +88,7 @@ NEJ.define([
                 },this);
             }
         }
-        var _html = '<img style="max-width:520px;" src=' + _url + ' id='+ _id +' />';
+        var _html = '<img style="max-width:520px;" src=' + _url + ' id='+ _id +' />&nbsp;';
         this.__editor._$execCommand(_commend,_html);
     };
 
