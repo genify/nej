@@ -60,10 +60,6 @@ NEJ.define([
         var _selection = _p.__getSelection(_window);
         if (!_selection)
             return null;
-        var _ken = _m._$KERNEL;
-        if (!!_selection.isCollapsed && _ken.engine=='trident' && _ken.release == '5.0'){
-            _selection.collapse();
-        }
         if (!!_selection.getRangeAt){
             return _selection.getRangeAt(0);
         }

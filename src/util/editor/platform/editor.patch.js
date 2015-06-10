@@ -188,7 +188,7 @@ NEJ.define([
     });
 
 	// ie6-9 editor patch
-	NEJ.patch('TR<=5.0',function(){
+	NEJ.patch('TR<=4.0',function(){
 	    /**
 	     * 移动光标至节点的指定位置
 	     * @param  {Node}   _node     节点
@@ -245,7 +245,6 @@ NEJ.define([
 	NEJ.patch('TR>=3.0',function(){
 
         var  _rcache = {};
-        window._rcache = _rcache
         /**
          * 执行编辑命令
          * @param  {Node}   _document 文档对象
@@ -300,7 +299,6 @@ NEJ.define([
                         _h.__getWindow(_doc)
                     );
                     _selection.addRange(_range);
-                    window.nowRange = _range;
                 }
                 delete _rcache[_id];
             }
