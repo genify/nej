@@ -60,8 +60,18 @@ NEJ.define([
         var _selection = _p.__getSelection(_window);
         if (!_selection)
             return null;
-        if (!!_selection.getRangeAt){
-            return _selection.getRangeAt(0);
+        // ie9
+        if (_m._$KERNEL.engine == 'trident' && _m._$KERNEL.release == '5.0'){
+            var x = _selection.isCollapsed && _selection.isCollapsed.toString();
+            if (x == 'true'){
+                return null;
+            }else{
+                return _selection.getRangeAt(0);
+            }
+        }else{
+            if (!!_selection.getRangeAt){
+                return _selection.getRangeAt(0);
+            }
         }
         if (!!_selection.createRange)
             return _selection.createRange();
