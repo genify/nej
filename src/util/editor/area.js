@@ -13,8 +13,9 @@ NEJ.define([
     'base/event',
     'base/util',
     '{platform}editor.js',
-    'util/event'
-],function(NEJ,_k,_e,_v,_u,_h,_t,_p,_o,_f,_r){
+    'util/event',
+    'base/platform'
+],function(NEJ,_k,_e,_v,_u,_h,_t,_m,_p,_o,_f,_r){
     var _pro;
     /**
      * 富媒体编辑器输入区封装
@@ -236,7 +237,7 @@ NEJ.define([
      * 聚焦编辑器
      *
      * @method module:util/editor/area._$$EditorArea#_$focus
-     * @param  {Number} arg0 - 光标位置，默认为0，0-末尾、1-起始、2-不变
+     * @param  {Number} arg0 - 光标位置，默认为0，0-末尾、1-起始、2-不变、3-IE11-bug
      * @return {Void}
      */
     _pro._$focus = function(_cursor){
@@ -335,10 +336,10 @@ NEJ.define([
     _pro._$execCommand = function(_command,_value,_css){
         var _document = this._$getDocument();
         if (!_document) return;
-        this._$focus(2);
+        // this._$focus(2);
         _h.__execCommand(_document,'styleWithCSS',false);
         _h.__execCommand(_document,_command,_value);
-        this._$focus(2);
+        this._$focus(3);
         this.__onInputCheck();
     };
     /**

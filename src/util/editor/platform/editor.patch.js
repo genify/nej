@@ -73,6 +73,31 @@ NEJ.define([
 	        _html = _html.replace(__reg_fimg,'');//过滤掉源数据是base64内容的图片
 	        return _html;
 	    };
+
+        /**
+         * 插入html命令处理
+         * @param {Object} _document 文档对象
+         * @param {Object} _html
+         */
+        _h.__insertHtml = function(_doc,_html){
+            // inserthtml for gecko
+            var _win = _h.__getWindow(_doc),
+                _range = _h.__getRange(_win);
+            var _node = _doc.createElement('div');
+            _node.innerHTML = _html;
+            // insert content
+            _range.deleteContents();
+            _u._$reverseEach(
+                _node.childNodes,
+                function(_elm){
+                    _range.insertNode(_elm);
+                }
+            );
+            // set focus
+            var _selection = _h.__getSelection(_win);
+            _selection.collapseToEnd();
+            _win.focus();
+        };
 	});
 
 	// ie6-9 editor patch
@@ -163,7 +188,7 @@ NEJ.define([
     });
 
 	// ie6-9 editor patch
-	NEJ.patch('TR<=5.0',function(){
+	NEJ.patch('TR<=4.0',function(){
 	    /**
 	     * 移动光标至节点的指定位置
 	     * @param  {Node}   _node     节点
@@ -178,7 +203,7 @@ NEJ.define([
 	                   var _args = _event.args,
 	                       _range = _h.__getRange(
 	                                _h.__getWindow(_args[0]));
-	                   if (!!_range.move){
+	                   if (!!_range && !!_range.move){
 	                       _event.stopped = !0;
 	                       var _func = _fmap[_args[1]];
 	                       if (!_func) return;
@@ -290,7 +315,7 @@ NEJ.define([
             );
             delete _rcache[_id];
         });
-    
+
         /**
          * 获取range cache
          * @return {Object} range cache对象
@@ -302,7 +327,7 @@ NEJ.define([
 	});
 
 	// ie11+
-	NEJ.patch('TR>=7.0',function(){
+	NEJ.patch('TR>=5.0',function(){
 	    /**
 	     * 保存当前选择状态
 	     * @param  {Node} _node 节点

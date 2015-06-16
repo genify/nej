@@ -6,8 +6,9 @@
  * ------------------------------------------
  */
 NEJ.define([
-    'base/element'
-],function(_e,_p,_o,_f,_r){
+    'base/element',
+    'base/platform'
+],function(_e,_m,_p,_o,_f,_r){
     var __empty    = /(?:<(p|div)>(?:\&nbsp\;|<br\/?>)<\/\1>|<br\/?>|\&nbsp\;|\s)+$/gi, // empty content
         __reg_cls0 = /(?:class|lang)="(mso)?[^"]*"/gi,
         __reg_cls1 = /(?:class|lang)='(mso)?[^']*'/gi,
@@ -59,8 +60,9 @@ NEJ.define([
         var _selection = _p.__getSelection(_window);
         if (!_selection)
             return null;
-        if (!!_selection.getRangeAt)
+        if (!!_selection.getRangeAt){
             return _selection.getRangeAt(0);
+        }
         if (!!_selection.createRange)
             return _selection.createRange();
         return null;
@@ -142,9 +144,18 @@ NEJ.define([
                     ,function(){return 0;}];
         return function(_node,_position){
             var _func = _fmap[_position];
-            if (!_func) return;
-            _p.__getSelection(_p.__getWindow(_node))
-              .collapse(_node,_func(_node));
+            if (_position == 2){
+                return;
+            }
+            var _selection = _p.__getSelection(_p.__getWindow(_node));
+            if (_position == 3){
+                // IE11 bugfix
+                var _focusOffset = _selection.focusOffset;
+                _node = _selection.focusNode||_node;
+                _selection.collapse(_node,_focusOffset);
+            }else{
+                _selection.collapse(_node,_func(_node));
+            }
         };
     })();
     /**
