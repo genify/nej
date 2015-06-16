@@ -6,23 +6,22 @@
   </head>
   <body>
     <label id="abc">select file</label>
-    <script src="../../../../src/define.js"></script>
+    <script src="../../../../define.js"></script>
     <script>
-      define([
-          '../select.js',
-          'util/ajax/xdr'
-      ],function(_f,_j){
+      NEJ.define([
+          '../select.js'
+      ],function(_x){
           
-          _f._$bind('abc',{
+          _x._$bind('abc',{
               name:'img',
               multiple:true,
               onchange:function(_event){
                   _event.form.action = './upload';
-                  _j._$upload(_event.form,{
-                      onload:function(){
-                          
-                      }
-                  });
+//                  _j._$upload(_event.form,{
+//                      onload:function(){
+//
+//                      }
+//                  });
               }
           });
       });
