@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>test clipboard</title>
+    <meta charset="utf-8"/>
+  </head>
+  <body title="123456789">
+
+    <input type="button" value="复制" id="xx"/>
+
+    <script src="../../../define.js"></script>
+    <script>
+      define([
+          '../clipboard.js'
+      ],function(_e){
+          _e._$copy('xx',function(node){
+              console.log('xxxx');
+              return node.title;
+          }._$bind(null,document.body));
+      });
+    </script>
+  </body>
+</html>
