@@ -60,6 +60,18 @@ NEJ.define([
     _p._$$VSortable = _k._$klass();
     _pro = _p._$$VSortable._$extend(_t._$$Sortable);
     /**
+     * 判断是否可以开始拖拽行为
+     *
+     * @abstract
+     * @method module:util/sort/sortable._$$VSortable#__canStartSort
+     * @param  {Object} arg0 - 初始鼠标位置
+     * @param  {Object} arg1 - 当前鼠标位置
+     * @return {Boolean}       是否可以开始拖拽
+     */
+    _pro.__canStartSort = function(_pos1,_pos2){
+        return Math.abs(_pos2.y-_pos1.y)>this.__delta;
+    };
+    /**
      * 计算占位符位置信息
      * 
      * @abstract

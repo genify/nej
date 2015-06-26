@@ -29,6 +29,7 @@ NEJ.define([
      * @property {Node}   placeholder - 占位符，用于标识插入位置
      * @property {Node}   thumbnail   - 移动缩略图，跟随鼠标移动
      * @property {String} selected    - 排序节点选中样式，默认为j-selected
+     * @property {Number} delta       - 开始拖拽识别偏移量
      */
     /** 
      * 排序之前触发事件
@@ -89,6 +90,7 @@ NEJ.define([
         this.__parent = _e._$get(_options.parent);
         this.__holder = _e._$get(_options.placeholder);
         this.__thumb  = _e._$get(_options.thumbnail);
+        this.__delta  = parseInt(_options.delta)||0;
         _e._$removeByEC(this.__thumb);
         _e._$removeByEC(this.__holder);
         this.__doInitDomEvent([[
@@ -152,6 +154,7 @@ NEJ.define([
             delete this.__lsort;
             delete this.__place;
             delete this.__offset;
+            delete this.__pointer;
         };
     })();
     /**
@@ -259,6 +262,16 @@ NEJ.define([
      */
     _pro.__doCalPlaceHolder = _f;
     /**
+     * 判断是否可以开始拖拽行为
+     *
+     * @abstract
+     * @method module:util/sort/sortable._$$Sortable#__canStartSort
+     * @param  {Object} arg0 - 初始鼠标位置
+     * @param  {Object} arg1 - 当前鼠标位置
+     * @return {Boolean}       是否可以开始拖拽
+     */
+    _pro.__canStartSort = _f;
+    /**
      * 开始排序
      * 
      * @protected
@@ -299,6 +312,10 @@ NEJ.define([
         }
         // holder info
         this.__offset = _e._$offset(this.__parent);
+        this.__pointer = {
+            x:_v._$clientX(_event),
+            y:_v._$clientY(_event)
+        };
     };
     /**
      * 排序过程
@@ -315,6 +332,11 @@ NEJ.define([
         };
         // check drag start
         if (!this.__auto){
+            if (!this.__canStartSort(
+                    this.__pointer,_position
+                )){
+                return;
+            }
             // update selected
             var _isarr = _u._$isArray(this.__lsort);
             if (!_isarr){
