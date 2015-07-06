@@ -189,6 +189,7 @@ NEJ.define([
     _pro.__initNode = function(){
         this.__super();
         this.__nsize = _e._$getChildren(this.__body)[0];
+        this.__ropt.sbody = this.__nsize;
     };
     /**
      * 大小变化之前触发事件

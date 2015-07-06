@@ -157,6 +157,7 @@ NEJ.define([
      */
     _pro.__onDragging = function(_event){
         if (!this.__offset) return;
+        _v._$stop(_event);
         var _offset = {
             x:_v._$pageX(_event),
             y:_v._$pageY(_event)

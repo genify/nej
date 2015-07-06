@@ -321,6 +321,7 @@ NEJ.define([
                     if (_index==0){
                         _e._$setStyle(_img,'opacity',0.3);
                     }
+                    _img.draggable = !1;
                 },this
             );
             var _event = {
