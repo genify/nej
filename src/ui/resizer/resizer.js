@@ -202,8 +202,8 @@ NEJ.define([
         _event.stopped = !0;
         _e._$style(
             this.__nsize,{
-                width:_event.width-2+'px',
-                height:_event.height-2+'px'
+                width:_event.width+'px',
+                height:_event.height+'px'
             }
         );
         _e._$style(
@@ -212,7 +212,7 @@ NEJ.define([
                 left:_event.left+'px'
             }
         );
-        this._$dispatchEvent('onresize',_event);
+        this._$dispatchEvent('onresize',this._$getResizeBox());
     };
     /**
      * 裁剪信息

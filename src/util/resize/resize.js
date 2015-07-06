@@ -244,6 +244,11 @@ NEJ.define([
             document,'mousemove',
             this.__onResizing._$bind(this)
         ]);
+        _arr.push([
+            this.__body,
+            'selectstart',
+            _v._$stop._$bind(_v)
+        ]);
         this.__doInitDomEvent(_arr);
     };
     /**
