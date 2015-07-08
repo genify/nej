@@ -258,6 +258,15 @@ NEJ.define([
         var _onError = function(_sn,_error){
             _doCallback(_sn,'onerror',_error);
         };
+        // check data for get method
+        var _doMergeURL = function(_url,_data){
+            var _sep = _url.indexOf('?')<0?'?':'&',
+                _data = _data||'';
+            if (_u._$isObject(_data))
+                _data = _u._$object2query(_data);
+            if (!!_data) _url += _sep+_data;
+            return _url;
+        };
         // function body
         return function(_url,_options){
             _options = _options||{};
@@ -273,11 +282,13 @@ NEJ.define([
             _options.onerror = _onError._$bind(null,_sn);
             // append request query
             if (!!_options.query){
-                var _sep = _url.indexOf('?')<0?'?':'&',
-                    _query = _options.query;
-                if (_u._$isObject(_query))
-                    _query = _u._$object2query(_query);
-                if (!!_query) _url += _sep+_query;
+                _url = _doMergeURL(_url,_options.query);
+            }
+            // append request data for get
+            var _method = _options.method||'';
+            if ((!_method||/get/i.test(_method))&&!!_options.data){
+                _url = _doMergeURL(_url,_options.data);
+                _options.data = null;
             }
             _options.url = _url;
             _cache.req = _getProxy(_options);
