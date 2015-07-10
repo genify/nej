@@ -93,6 +93,10 @@ NEJ.define([
      * @event    module:util/list/module._$$ListModule#onbeforelistrender
      * @param    {Object} event  - 事件信息
      * @property {Node}   parent - 容器节点
+     * @property {Number} offset - 当前绘制列表偏移量
+     * @property {Number} limit  - 当前绘制列表数量
+     * @property {Number} total  - 当前列表总数
+     * @property {Array}  list   - 当前列表
      */
     /**
      * 列表显示之后处理业务逻辑，此事件确保列表有数据
@@ -100,6 +104,10 @@ NEJ.define([
      * @event    module:util/list/module._$$ListModule#onafterlistrender
      * @param    {Object} event  - 事件信息
      * @property {Node}   parent - 容器节点
+     * @property {Number} offset - 当前绘制列表偏移量
+     * @property {Number} limit  - 当前绘制列表数量
+     * @property {Number} total  - 当前列表总数
+     * @property {Array}  list   - 当前列表
      */
     /**
      * 列表清除之前处理业务逻辑
@@ -541,8 +549,10 @@ NEJ.define([
             return;
         this._$dispatchEvent('onbeforelistrender',{
             list:_list,
+            limit:_limit,
             offset:_offset,
-            parent:this.__lbox
+            parent:this.__lbox,
+            total:this.__cache._$getTotal()
         });
         if (!!this.__ikey){
             // render by jst
@@ -566,8 +576,10 @@ NEJ.define([
         }
         this._$dispatchEvent('onafterlistrender',{
             list:_list,
+            limit:_limit,
             offset:_offset,
-            parent:this.__lbox
+            parent:this.__lbox,
+            total:this.__cache._$getTotal()
         });
     };
     /**
