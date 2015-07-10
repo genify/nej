@@ -552,7 +552,7 @@ NEJ.define([
             limit:_limit,
             offset:_offset,
             parent:this.__lbox,
-            total:this.__cache._$getTotal()
+            total:this.__cache._$getTotal(_options.key)
         });
         if (!!this.__ikey){
             // render by jst
@@ -579,7 +579,7 @@ NEJ.define([
             limit:_limit,
             offset:_offset,
             parent:this.__lbox,
-            total:this.__cache._$getTotal()
+            total:this.__cache._$getTotal(_options.key)
         });
     };
     /**
