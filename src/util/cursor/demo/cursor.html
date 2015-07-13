@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NEJ实例 - 计数器</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <textarea id="abc"></textarea>
+    <input type="button" value="show" onclick="a();"/>
+    
+    <script src="../../../define.js"></script>
+    <script>
+        NEJ.define([
+            '../cursor.js'
+        ],function(_e){
+            var xx;
+            var tx = document.getElementById('abc');
+            tx.onbeforedeactivate = function(){
+                xx = _e._$cursor(tx);
+            };
+            window.a = function(){
+                var p = xx||_e._$cursor(tx),
+                    v = tx.value,
+                    t = '[表情]';
+                tx.value = v.substr(0, p.start)+t+ v.substring(p.end);
+                _e._$cursor(tx,{start: p.start+ t.length});
+                xx = null;
+            }
+        });
+    </script>
+  </body>
+</html>
