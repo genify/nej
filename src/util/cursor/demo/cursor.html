@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
   </head>
   <body>
-    <textarea id="abc"></textarea>
+    <textarea id="abc" style="width:300px;height:200px"></textarea>
     <input type="button" value="show" onclick="a();"/>
     
     <script src="../../../define.js"></script>
@@ -23,7 +23,7 @@
                     v = tx.value,
                     t = '[表情]';
                 tx.value = v.substr(0, p.start)+t+ v.substring(p.end);
-                _e._$cursor(tx,{start: p.start+ t.length});
+                _e._$cursor(tx,p.start+ t.length);
                 xx = null;
             }
         });
