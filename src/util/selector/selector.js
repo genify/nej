@@ -256,8 +256,10 @@ NEJ.define([
                 },this
             );
         }
-        if (!_shift) this.__last = _id;
-        this._$dispatchEvent('onchange');
+        if (!_shift){
+            this.__last = _id;
+        }
+        this.__doSelectionChange();
     };
     /**
      * 检查元素选中情况
@@ -280,7 +282,7 @@ NEJ.define([
             !this.__isItemSelected(_id)){
             this.__doItemClear(_id);
             this.__doItemAddToSelection(_id,_element);
-            this._$dispatchEvent('onchange');
+            this.__doSelectionChange();
         }
     };
     /**
@@ -303,6 +305,21 @@ NEJ.define([
                 );
             },this
         );
+        this.__doSelectionChange();
+    };
+    /**
+     * 选项变化事件
+     *
+     * @protected
+     * @method module:util/selector/selector._$$MultiSelector#__doSelectionChange
+     * @return {Void}
+     */
+    _pro.__doSelectionChange = function(){
+        if (!!document.getSelection){
+            document.getSelection().collapse(!0);
+        }else if(!!document.selection){
+            document.selection.empty();
+        }
         this._$dispatchEvent('onchange');
     };
     /**
@@ -318,7 +335,7 @@ NEJ.define([
      */
     _pro._$clear = function(){
         this.__doItemClear();
-        this._$dispatchEvent('onchange');
+        this.__doSelectionChange();
     };
     /**
      * 取选项列表

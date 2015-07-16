@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>demo for cascade</title>
+    <meta charset="utf-8" />
+    <style>
+        .mbox{width:240px;padding:5px;border:1px solid #aaa;overflow:hidden;}
+        .mbox .itm{float:left;width:50px;height:50px;background:#fdc;margin:5px;cursor:default;}
+        .mbox .js-selected{background:#0C32F6;}
+    </style>
+    <script>
+      function log(m){
+          var p = document.createElement('p');
+          p.innerHTML = m;
+          document.body.appendChild(p);
+      }
+    </script>
+  </head>
+  <body>
+    <div class="mbox" id="list-box">
+        <div class="itm" data-id="1">1</div>
+        <div class="itm" data-id="2">2</div>
+        <div class="itm" data-id="3">3</div>
+        <div class="itm" data-id="4">4</div>
+        <div class="itm" data-id="5">5</div>
+        <div class="itm" data-id="6">6</div>
+        <div class="itm" data-id="7">7</div>
+        <div class="itm" data-id="8">8</div>
+        <div class="itm" data-id="9">9</div>
+        <div class="itm" data-id="a">a</div>
+    </div>
+    <script src="../../../define.js"></script>
+    <script>
+      NEJ.define([
+          '../selector.js'
+      ],function(_t){
+            _t._$$MultiSelector._$allocate({
+                parent:'list-box',
+                item:'itm',
+                onchange:function(){
+                    //log(JSON.stringify(this._$getSelection()));
+                }
+            });
+      });
+    </script>
+  </body>
+</html>
