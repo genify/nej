@@ -161,10 +161,8 @@ NEJ.define([
     _pro.__onInput = function(){
         var _value = this.__input.value.trim();
         if (!_value){
-            this.__xxxxx = !1;
             this._$visibile(!1);
         }else if(!this.__xxx){
-            this.__xxxxx = !0;
             this._$dispatchEvent('onchange',_value);
         }
     };
@@ -196,9 +194,6 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__onSelect = function(_event){
-        if (!this.__xxxxx){
-            return;
-        }
         var _value = _e._$dataset(_event.target,'value')||'';
         this.__doUpdateValue(_value);
         _value = _value||this.__input.value;
@@ -256,6 +251,9 @@ NEJ.define([
     _pro._$visibile = function(_visible){
         var _visible = !_visible?'hidden':'visible';
         this.__sopt.parent.style.visibility = _visible;
+        if (_visible==='hidden'){
+            this.__sopt.parent.innerHTML = '';
+        }
     };
     /**
      * 更新可选列表
