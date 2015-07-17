@@ -299,6 +299,7 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__onCheckClick = function(_event){
+        _v._$stop(_event);
         var _eopt = this.__doParseSelection(
             _event,this.__selected
         );

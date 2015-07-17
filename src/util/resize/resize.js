@@ -258,8 +258,8 @@ NEJ.define([
      * @method module:util/resize/resize._$$Resizable#__doCalBoxWithLock
      * @return {Object} 位置大小信息
      */
-    _pro.__doCalBoxWithLock = function(_flag,_event,_delta){
-        switch(_flag){
+    _pro.__doCalBoxWithLock = function(_event,_delta){
+        switch(this.__flag){
             // top
             case 1:
                 var _tmp  = _event.top+_event.height,
@@ -526,11 +526,17 @@ NEJ.define([
                 }
             );
         };
+        var _doRoundValue = function(_event){
+            _u._$loop(_event,function(_value,_key,_map){
+                _map[_key] = Math.round(_value);
+            });
+        };
         return function(_event,_delta){
             _event = !this.__ratio
                    ? this.__doCalBoxWithoutLock(_event,_delta)
-                   : this.__doCalBoxWithLock(this.__flag,_event,_delta);
+                   : this.__doCalBoxWithLock(_event,_delta);
             // active style
+            _doRoundValue(_event);
             this._$dispatchEvent('onbeforeresize',_event);
             if (!!_event.stopped) return;
             _doUpdate(

@@ -211,6 +211,8 @@ NEJ.define([
             _event.left = Math.min(_maxbox.x,
                           Math.max(0,_event.left));
         }
+        _event.top = Math.round(_event.top);
+        _event.left = Math.round(_event.left);
         this._$dispatchEvent('onbeforechange',_event);
         var _style  = this.__body.style;
         if (this.__direction==0||
@@ -234,8 +236,8 @@ NEJ.define([
      */
     _pro._$getPosition = function(){
         return {
-            left:parseInt(_e._$getStyle(this.__body,'left'))||0,
-            top:parseInt(_e._$getStyle(this.__body,'top'))||0
+            left:parseInt(_e._$getStyle(this.__body,'left'),10)||0,
+            top:parseInt(_e._$getStyle(this.__body,'top'),10)||0
         };
     };
     // alias for draggable
