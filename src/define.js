@@ -989,6 +989,14 @@
      * @namespace NEJ
      */
     p.NEJ = {};
+    // only for test
+    p.NEJ.dump = function(){
+        return {
+            state:__scache,
+            result:__rcache,
+            queue:__xqueue
+        };
+    };
     /**
      * 模块定义，单个文件只允许定义一个模块，即只允许执行一次NEJ.define，模块执行函数支持依赖列表注入和名字空间两种方式
      * 
