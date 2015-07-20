@@ -530,12 +530,12 @@ NEJ.define([
      * @return {Object} 模版id的map
      */
     _p._$parseUITemplate = (function(){
-        var _reg = /#<(.+?)>/;
+        var _reg = /#<(.+?)>/g;
         return function(_html,_map){ // {abc:'eeee'} // #<abc>
             console.debug('template source code -> '+_html.replace(/\n/g,' '));
             _map = _map||{};
             var _element = _e._$html2node(
-                (_html||'').replace(reg,function($1,$2){
+                (_html||'').replace(_reg,function($1,$2){
                     var _id = _map[$2];
                     if (!_id){
                         _id = 'tpl-'+_u._$uniqueID();
