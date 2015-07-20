@@ -18,7 +18,7 @@ NEJ.define([
     'base/chain'
 ],function(NEJ,_u,_v,_e,_y,_t,_j0,_j1,_x,_p,_o,_f,_r){
     var _cache = {}, // template cache
-        _skey  = (+new Date)+'-';
+        _skey  = 'ntp-'+(+new Date)+'-';
     /**
      * 解析模板集合
      *
@@ -291,6 +291,11 @@ NEJ.define([
      * @return {Void}
      */
     _p._$addTextTemplate = function(_key,_value){
+        if (_cache[_key]!=null){
+            console.warn('text template overwrited with key '+_key);
+            //console.log('old template content: '+_cache[_key]);
+            //console.log('new template content: '+_value);
+        }
         _cache[_key] = _value||'';
     };
     /**
