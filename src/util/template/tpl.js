@@ -19,6 +19,10 @@ NEJ.define([
 ],function(NEJ,_u,_v,_e,_y,_t,_j0,_j1,_x,_p,_o,_f,_r){
     var _cache = {}, // template cache
         _skey  = 'ntp-'+(+new Date)+'-';
+    // only for test
+    _p.dump = function(){
+        return _cache;
+    };
     /**
      * 解析模板集合
      *
