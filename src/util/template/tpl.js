@@ -532,18 +532,17 @@ NEJ.define([
     _p._$parseUITemplate = (function(){
         var _reg = /#<(.+?)>/g;
         return function(_html,_map){ // {abc:'eeee'} // #<abc>
+            _html = (_html||'').replace(_reg,function($1,$2){
+                var _id = _map[$2];
+                if (!_id){
+                    _id = 'tpl-'+_u._$uniqueID();
+                    _map[$2] = _id;
+                }
+                return _id;
+            });
             console.debug('template source code -> '+_html.replace(/\n/g,' '));
             _map = _map||{};
-            var _element = _e._$html2node(
-                (_html||'').replace(_reg,function($1,$2){
-                    var _id = _map[$2];
-                    if (!_id){
-                        _id = 'tpl-'+_u._$uniqueID();
-                        _map[$2] = _id;
-                    }
-                    return _id;
-                })
-            );
+            var _element = _e._$html2node(_html);
             /*
             _u._$forIn(
                 _element.getElementsByTagName('textarea'),
