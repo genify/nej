@@ -196,7 +196,7 @@ NEJ.define([
         };
         var _doAddTemplate = function(_node,_options){
             var _type = _node.name.toLowerCase();
-            console.debug(_type+' : '+_node.value.replace(/\n/g,' '));
+            console.debug(_type+'<'+_node.id+'> : '+_node.value.replace(/\n/g,' '));
             switch(_type){
                 case 'jst':
                     _y._$add(_node,!0);
@@ -534,7 +534,17 @@ NEJ.define([
         return function(_html,_map){ // {abc:'eeee'} // #<abc>
             console.debug('template source code -> '+_html.replace(/\n/g,' '));
             _map = _map||{};
-            var _element = _e._$html2node(_html);
+            var _element = _e._$html2node(
+                (_html||'').replace(reg,function($1,$2){
+                    var _id = _map[$2];
+                    if (!_id){
+                        _id = 'tpl-'+_u._$uniqueID();
+                        _map[$2] = _id;
+                    }
+                    return _id;
+                })
+            );
+            /*
             _u._$forIn(
                 _element.getElementsByTagName('textarea'),
                 function(_textarea){
@@ -550,6 +560,7 @@ NEJ.define([
                     );
                 }
             );
+            */
             _p._$parseTemplate(_element);
             return _map;
         };
