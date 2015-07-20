@@ -196,6 +196,7 @@ NEJ.define([
         };
         var _doAddTemplate = function(_node,_options){
             var _type = _node.name.toLowerCase();
+            console.debug(_type+' : '+_node.value.replace(/\n/g,' '));
             switch(_type){
                 case 'jst':
                     _y._$add(_node,!0);
@@ -297,8 +298,8 @@ NEJ.define([
     _p._$addTextTemplate = function(_key,_value){
         if (_cache[_key]!=null){
             console.warn('text template overwrited with key '+_key);
-            //console.log('old template content: '+_cache[_key]);
-            //console.log('new template content: '+_value);
+            console.log('old template content: '+_cache[_key]);
+            console.log('new template content: '+_value);
         }
         _cache[_key] = _value||'';
     };
@@ -531,6 +532,7 @@ NEJ.define([
     _p._$parseUITemplate = (function(){
         var _reg = /#<(.+?)>/;
         return function(_html,_map){ // {abc:'eeee'} // #<abc>
+            console.debug('template source code -> '+_html.replace(/\n/g,' '));
             _map = _map||{};
             var _element = _e._$html2node(_html);
             _u._$forIn(

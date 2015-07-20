@@ -45,7 +45,7 @@
      */
     var _doInit = function(){
         if (!p.console)
-            p.console = {log:_doLog,warn:_doLog};
+            p.console = {log:_doLog,warn:_doLog,debug:_doLog,error:_doLog};
         // do init add loaded script and remove node
         var _list = d.getElementsByTagName('script');
         if (!_list||!_list.length) return;
