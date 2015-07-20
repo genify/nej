@@ -532,6 +532,7 @@ NEJ.define([
     _p._$parseUITemplate = (function(){
         var _reg = /#<(.+?)>/g;
         return function(_html,_map){ // {abc:'eeee'} // #<abc>
+            _map = _map||{};
             _html = (_html||'').replace(_reg,function($1,$2){
                 var _id = _map[$2];
                 if (!_id){
@@ -541,8 +542,6 @@ NEJ.define([
                 return _id;
             });
             console.debug('template source code -> '+_html.replace(/\n/g,' '));
-            _map = _map||{};
-            var _element = _e._$html2node(_html);
             /*
             _u._$forIn(
                 _element.getElementsByTagName('textarea'),
@@ -560,7 +559,9 @@ NEJ.define([
                 }
             );
             */
-            _p._$parseTemplate(_element);
+            _p._$parseTemplate(
+                _e._$html2node(_html)
+            );
             return _map;
         };
     })();
