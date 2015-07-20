@@ -562,7 +562,12 @@
         var _xeed = +new Date;
         return function(_content,_sn){
             if (!_content) return '';
-            _sn = _sn||('ck_'+(_xeed++));
+            _sn = _sn||('ck-'+(_xeed++));
+            if (_tcache[_sn]!=null){
+                console.warn('template overwrited with key '+_sn);
+                //console.log('old template content: '+_tcache[_sn]);
+                //console.log('new template content: '+_content);
+            }
             _tcache[_sn] = _content;
             return _sn;
         };
