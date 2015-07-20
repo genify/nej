@@ -24,6 +24,14 @@ NEJ.define([
     if (!document.head){
          document.head = document.getElementsByTagName('head')[0]||document.body;
     }
+    // only for test
+    _p.dump = function(){
+        return {
+            pool:_empol,
+            dirty:_dirty,
+            fragment:_fragment
+        };
+    };
     /**
      * 为节点设置一个唯一的标识
      *

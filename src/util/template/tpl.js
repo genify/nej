@@ -20,7 +20,7 @@ NEJ.define([
     var _cache = {}, // template cache
         _skey  = 'ntp-'+(+new Date)+'-';
     // only for test
-    _p.dump = function(){
+    _p.tpl = function(){
         return _cache;
     };
     /**
