@@ -550,7 +550,7 @@ NEJ.define([
                 }
                 return _id;
             });
-            console.debug('template source code -> '+_html.replace(/\n/g,' '));
+            //console.debug('template source code -> '+_html.replace(/\n/g,' '));
             /*
             _u._$forIn(
                 _element.getElementsByTagName('textarea'),
