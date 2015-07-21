@@ -305,7 +305,7 @@ NEJ.define([
      * @return {Void}
      */
     _p._$addTextTemplate = function(_key,_value){
-        if (_cache[_key]!=null&&(typeof _cache[_key])===(typeof _value)){
+        if (_cache[_key]!=null&&((typeof _cache[_key])===(typeof _value))){
             console.warn('text template overwrited with key '+_key);
             console.debug('old template content: '+_cache[_key].replace(/\n/g,' '));
             console.debug('new template content: '+_value.replace(/\n/g,' '));
