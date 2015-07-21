@@ -565,8 +565,8 @@
             _sn = _sn||('ck-'+(_xeed++));
             if (_tcache[_sn]!=null){
                 console.warn('jst template overwrited with key '+_sn);
-                console.log('old template content: '+_tcache[_sn]);
-                console.log('new template content: '+_content);
+                console.debug('old template content: '+_tcache[_sn].replace(/\n/g,' '));
+                console.debug('new template content: '+_content.replace(/\n/g,' '));
             }
             _tcache[_sn] = _content;
             return _sn;

@@ -205,7 +205,7 @@ NEJ.define([
         };
         var _doAddTemplate = function(_node,_options){
             var _type = _node.name.toLowerCase();
-            console.debug(_type+'<'+_node.id+'> : '+_node.value.replace(/\n/g,' '));
+            //console.debug(_type+'<'+_node.id+'> : '+_node.value.replace(/\n/g,' '));
             switch(_type){
                 case 'jst':
                     _y._$addTemplate(_doDumpContent(_node),_node.id);
@@ -307,8 +307,8 @@ NEJ.define([
     _p._$addTextTemplate = function(_key,_value){
         if (_cache[_key]!=null){
             console.warn('text template overwrited with key '+_key);
-            console.log('old template content: '+_cache[_key]);
-            console.log('new template content: '+_value);
+            console.debug('old template content: '+_cache[_key].replace(/\n/g,' '));
+            console.debug('new template content: '+_value.replace(/\n/g,' '));
         }
         _cache[_key] = _value||'';
     };
