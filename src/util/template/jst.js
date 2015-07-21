@@ -99,6 +99,18 @@ NEJ.define([
         return TrimPath.parse(_content,_sn);
     };
     /**
+     * 添加JST模板内容
+     * 
+     * @method module:util/template/jst._$addTemplate
+     * @see    module:util/template/jst._$add
+     * @param  {String}  arg0 - JST模板内容
+     * @param  {String}  arg1 - 模板标识
+     * @return {String}         JST模板在缓存中的序列号
+     */
+    _p._$addTemplate = function(_content,_sn){
+        return TrimPath.parse(_content,_sn);
+    };
+    /**
      * 整合模板后输出至指定容器节点
      *
      * 结构举例

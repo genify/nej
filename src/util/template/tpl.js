@@ -11,12 +11,13 @@ NEJ.define([
     'base/util',
     'base/event',
     'base/element',
+    'base/platform',
     'util/template/jst',
     'util/event/event',
     'util/ajax/tag',
     'util/ajax/xdr',
     'base/chain'
-],function(NEJ,_u,_v,_e,_y,_t,_j0,_j1,_x,_p,_o,_f,_r){
+],function(NEJ,_u,_v,_e,_b,_y,_t,_j0,_j1,_x,_p,_o,_f,_r){
     var _cache = {}, // template cache
         _skey  = 'ntp-'+(+new Date)+'-';
     // only for test
@@ -114,6 +115,14 @@ NEJ.define([
             });
             return _src;
         };
+        var _doDumpContent = function(_node){
+            // bugfix textarea content not corrent for safari in mac 
+            if (_b._$is('mac')&&_b._$KERNEL.browser==='safari'){
+                return _u._$unescape(_node.innerHTML);
+            }else{
+                return _node.value||_node.innerText||'';
+            }
+        };
         var _doAddStyle = function(_textarea,_options){
             if (!_textarea) return;
             var _src = _doParseSrc(_textarea,_options);
@@ -199,13 +208,13 @@ NEJ.define([
             console.debug(_type+'<'+_node.id+'> : '+_node.value.replace(/\n/g,' '));
             switch(_type){
                 case 'jst':
-                    _y._$add(_node,!0);
+                    _y._$addTemplate(_doDumpContent(_node),_node.id);
                 return;
                 case 'txt':
-                    _p._$addTextTemplate(_node.id,_node.value||'');
+                    _p._$addTextTemplate(_node.id,_doDumpContent(_node));
                 return;
                 case 'ntp':
-                    _p._$addNodeTemplate(_node.value||'',_node.id);
+                    _p._$addNodeTemplate(_doDumpContent(_node),_node.id);
                 return;
                 case 'js':
                     _doAddScript(_node,_options);
