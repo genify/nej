@@ -198,7 +198,10 @@ NEJ.define([
         this.__doUpdateValue(_value);
         _value = _value||this.__input.value;
         this._$update('');
-        this._$dispatchEvent('onselect',_value);
+        this._$dispatchEvent('onselect',_value,{
+            enter:_event.enter,
+            value:_value
+        });
     };
     /**
      * 建议卡片选择变化事件

@@ -288,6 +288,7 @@ NEJ.define([
     _pro.__doCheckKBEnter = function(_event){
         _v._$stop(_event);
         this._$dispatchEvent('onselect',{
+            enter:!0,
             target:this._$getSelectedNode()
         });
     };
