@@ -300,6 +300,11 @@ NEJ.define([
         };
         if(this.__format == 12){
             _clock.p = this.__pnode.value;
+            if(_clock.p == 'A.M.' && _clock.h > 11) {
+                _clock.h -= 12;
+            } else if(_clock.p == 'P.M.' && _clock.h < 12) {
+                _clock.h += 12;
+            }
         }
         return _clock;
     };
