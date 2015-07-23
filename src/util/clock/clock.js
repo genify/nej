@@ -317,7 +317,7 @@ NEJ.define([
         }
         _u._$forIn(_clock,function(_v,_k){
             if (parseInt(_v,10)<10){
-                _clock[_k] = '0' + _v;
+                _clock[_k] = '0' + parseInt(_v,10);
             }
         })
         return _clock;
