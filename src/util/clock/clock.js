@@ -314,6 +314,11 @@ NEJ.define([
         });
         if(this.__format == 12){
             _clock.p = this.__pnode.value;
+            if(_clock.p == 'A.M.' && _clock.h > 11) {
+                _clock.h -= 12;
+            } else if(_clock.p == 'P.M.' && _clock.h < 12) {
+                _clock.h += 12;
+            }
         }
         _u._$forIn(_clock,function(_v,_k){
             if (parseInt(_v,10)<10){
