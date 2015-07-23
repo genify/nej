@@ -315,6 +315,11 @@ NEJ.define([
         if(this.__format == 12){
             _clock.p = this.__pnode.value;
         }
+        _u._$forIn(_clock,function(_v,_k){
+            if (parseInt(_v,10)<10){
+                _clock[_k] = '0' + _v;
+            }
+        })
         return _clock;
     };
     /**
