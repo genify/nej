@@ -379,7 +379,7 @@ NEJ.define([
             if ((_value||'').toLowerCase()=='now')
                 return +new Date;
             var _date = _u._$var2date(_value);
-            if (!!_date){
+            if (!!_date&&!_reg0.test(_value)){
                 // HH:mm:ss.ms
                 var _arr = (_time||'').split(_reg0);
                 _date.setHours(
