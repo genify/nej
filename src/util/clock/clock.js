@@ -223,6 +223,7 @@ NEJ.define([
                 _node.value = '' + (_per - 1);
             }
             this.__hour = _node.value;
+            this.__temp[0] = '';
         }else if(_node.id == 'z-minute' || _node.id == 'z-second'){
             if(_temp == 60){
                 _node.value = '00';
@@ -231,9 +232,11 @@ NEJ.define([
             }
             if(_node.id == 'z-minute'){
                 this.__minute = _node.value;
+                this.__temp[1] = '';
             }
             if(_node.id == 'z-second'){
                 this.__second = _node.value;
+                this.__temp[2] = '';
             }
         }
     };
@@ -298,9 +301,30 @@ NEJ.define([
             m:parseInt(this.__minute,10),
             s:parseInt(this.__second,10)
         };
+        _u._$forEach(this.__temp,function(_temp,_index){
+            if (!!_temp){
+                if (_index==0){
+                    _clock.h = _temp;
+                }else if(_index==1){
+                    _clock.m = _temp;
+                }else{
+                    _clock.s = _temp;
+                }
+            }
+        });
         if(this.__format == 12){
             _clock.p = this.__pnode.value;
+            if(_clock.p == 'A.M.' && _clock.h > 11) {
+                _clock.h -= 12;
+            } else if(_clock.p == 'P.M.' && _clock.h < 12) {
+                _clock.h += 12;
+            }
         }
+        _u._$forIn(_clock,function(_v,_k){
+            if (parseInt(_v,10)<10){
+                _clock[_k] = '0' + parseInt(_v,10);
+            }
+        })
         return _clock;
     };
     /**

@@ -11,6 +11,7 @@ NEJ.define([
     'base/klass',
     'base/element',
     'base/util',
+    'base/event',
     'ui/layer/card.wrapper',
     'util/clock/clock',
     'util/template/tpl',
@@ -18,7 +19,7 @@ NEJ.define([
     'util/calendar/calendar',
     'text!./timepick.css',
     'text!./timepick.html'
-],function(NEJ,_k,_e,_u,_i0,_t0,_t1,_t2,_t3,_css,_html,_p,_o,_f,_r){
+],function(NEJ,_k,_e,_u,_v,_i0,_t0,_t1,_t2,_t3,_css,_html,_p,_o,_f,_r){
     var _pro,
         _seed_html,
         _seed_css = _e._$pushCSSText(_css),
@@ -168,6 +169,9 @@ NEJ.define([
         this.__copt.second = _clds[3];
         this.__copt.cprv = _clds[4];
         this.__copt.cnxt = _clds[5];
+
+        this.__enter = _e._$getByClassName(this.__body, 'js-enter')[0];
+        _v._$addEvent(this.__enter, 'click', this.__onClickEnter._$bind(this));
     };
     /**
      * 动态构建控件节点模板
@@ -194,6 +198,22 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__onDateChange = function(){
+        // var _date = this._$getDate();
+        // try{
+        //     this._$dispatchEvent('onchange',_date);
+        // }catch(e){
+        //     // ignore
+        // }
+        // this._$hide();
+    };
+    /**
+     * 点击确认按钮
+     *
+     * @protected
+     * @method module:ui/timepick/timepick._$$TimePick#__onClickEnter
+     * @return {Void}
+     */
+    _pro.__onClickEnter = function(){
         var _date = this._$getDate();
         try{
             this._$dispatchEvent('onchange',_date);
