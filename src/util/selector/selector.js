@@ -316,10 +316,13 @@ NEJ.define([
      */
     _pro.__doSelectionChange = function(){
         try{
-            if (!!document.getSelection){
-                document.getSelection().collapse(document,0);
-            }else if(!!document.selection){
-                document.selection.empty();
+            // remove selection if multi-select
+            if (this.__selection.count>1){
+                if (!!document.getSelection){
+                    document.getSelection().collapse(document,0);
+                }else if(!!document.selection){
+                    document.selection.empty();
+                }
             }
         }catch(ex){
             // ignore
