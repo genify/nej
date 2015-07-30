@@ -9,9 +9,10 @@
 NEJ.define([
     'base/global',
     'base/klass',
+    'base/element',
     'ui/pager/base',
     'util/page/simple'
-],function(NEJ,_k,_i0,_t0,_p,_o,_f,_r){
+],function(NEJ,_k,_e,_i0,_t0,_p,_o,_f,_r){
     // variable declaration
     var _pro;
     /**
@@ -84,6 +85,32 @@ NEJ.define([
             _options.total = 10000;
         this.__super(_options);
         this.__page = _t0._$$PageSimple._$allocate(this.__popt);
+    };
+    /**
+     * 重置页码数
+     *
+     * @protected
+     * @method module:ui/pager/simple._$$SimplePager#__doResetNumber
+     * @return {Void}
+     */
+    _pro.__doResetNumber = function(_data){
+        var _label = _data.label||_o;
+        // begin page
+        if (!!_data.beg){
+            this.__popt.sbtn = _e._$create(
+                'a','zbtn zbeg',this.__body
+            );
+            this.__popt.sbtn.innerHTML = _label.beg||'首页';
+        }
+        // page list and prev and next
+        this.__super(_data);
+        // end page
+        if (!!_data.end){
+            this.__popt.ebtn = _e._$create(
+                'a','zbtn zend',this.__body
+            );
+            this.__popt.ebtn.innerHTML = _label.end||'尾页';
+        }
     };
 
     if (CMPT){
