@@ -199,6 +199,7 @@ NEJ.define([
         _value = _value||this.__input.value;
         this._$update('');
         this._$dispatchEvent('onselect',_value,{
+            target:_event.target,
             enter:_event.enter,
             value:_value
         });
