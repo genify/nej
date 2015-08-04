@@ -420,9 +420,10 @@
             return _uri.replace(_reg3,'');
         };
         var _format = function(_uri){
-            var _uri = _doAbsoluteURI(_uri);
             // fix mac file:// error
-            return _uri.replace(_reg6,'$1/$2');
+            return _doAbsoluteURI(
+                _uri.replace(_reg6,'$1/$2')
+            );
         };
         var _amdpath = function(_uri,_type){
             // start with {xx} or /xx/xx or ./ or ../
