@@ -339,7 +339,7 @@ NEJ.define([
         // this._$focus(2);
         _h.__execCommand(_document,'styleWithCSS',false);
         _h.__execCommand(_document,_command,_value);
-        this._$focus(3);
+        this._$focus(2);
         this.__onInputCheck();
     };
     /**
