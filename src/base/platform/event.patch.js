@@ -150,6 +150,12 @@ NEJ.define([
                     };
                     if (!!_handler){
                         var _id = _element.id;
+                        var _hack = function(_event){
+                            if (!!_element.value&&!_lmap['x-'+_id]){
+                                _lmap['x-'+_id] = !0;
+                                _handler.call(_element,_event);
+                            }
+                        };
                         _result.handler = function(_event){
                             // for input.value or textarea.value
                             if (('value' in _element)&&
@@ -163,8 +169,14 @@ NEJ.define([
                                 delete _lmap[_id];
                             }
                         };
+                        _result.link = [
+                            [_element,'keyup',_hack],
+                            [_element,'mouseup',_hack],
+                            [_element,'mousemove',_hack]
+                        ];
                         _result.destroy = function(){
                             delete _lmap[_id];
+                            delete _lmap['x-'+_id];
                         };
                     }
                     return _result;
