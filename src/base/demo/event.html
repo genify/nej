@@ -22,8 +22,9 @@
     <script src="../../define.js"></script>
     <script>
       NEJ.define([
-          'base/event'
-      ],function(_v){
+          'base/event',
+          'base/element'
+      ],function(_v,_e){
 //          _v._$addEvent(
 //              document,'click',function(event){
 //                  log('document '+(this==document));
@@ -44,15 +45,18 @@
 //                  console.log(event.propertyName+'->'+document.title);
 //              }
 //          );
-
+          var tx = _e._$get('abcd');
           var handler = function(){
-              console.log('input ->'+document.getElementById('abcd').value);
+              console.log('input ->'+tx.value);
           }
           _v._$addEvent('btn-add','click',function(){
-              _v._$addEvent('abcd','input',handler);
+              document.body.appendChild(tx);
+              _v._$addEvent(tx,'input',handler);
           });
           _v._$addEvent('btn-del','click',function(){
-              _v._$delEvent('abcd','input',handler);
+              _v._$delEvent(tx,'input',handler);
+              _e._$removeByEC(tx);
+              tx.value = '';
           });
       });
     </script>
