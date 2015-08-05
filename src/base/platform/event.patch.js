@@ -149,11 +149,11 @@ NEJ.define([
                         type:'propertychange'
                     };
                     if (!!_handler){
+                        var _id = _element.id;
                         _result.handler = function(_event){
                             // for input.value or textarea.value
                             if (('value' in _element)&&
                                 _event.propertyName=='value'){
-                                var _id = _element.id;
                                 // lock cycle trigger
                                 if (!!_lmap[_id]){
                                     return;
@@ -162,6 +162,9 @@ NEJ.define([
                                 _handler.call(_element,_event);
                                 delete _lmap[_id];
                             }
+                        };
+                        _result.destroy = function(){
+                            delete _lmap[_id];
                         };
                     }
                     return _result;
