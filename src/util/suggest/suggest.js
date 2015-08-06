@@ -64,6 +64,7 @@ NEJ.define([
      * @property {Node|String} input    - 输入框
      * @property {Node|String} body     - 提示卡片节点
      * @property {Boolean}     autofill - 选择时是否自动填充
+     * @property {Boolean}     noblur   - 禁用失去焦点时是否触发选中效果
      * @property {String}      clazz    - 可选节点样式标识，默认为所有子节点
      * @property {String}      selected - 提示项选中样式，默认为js-selected
      */
@@ -117,10 +118,13 @@ NEJ.define([
         ],[
             this.__input,'focus',
             this.__onInput._$bind(this)
-        ],[
-            this.__input,'blur',
-            this.__onBlur._$bind(this)
         ]]);
+        if (!_options.noblur){
+            this.__doInitDomEvent([[
+                this.__input,'blur',
+                this.__onBlur._$bind(this)
+            ]]);
+        }
         // init helper
         this._$visibile(!1);
         this.__helper = _t1._$$SelectHelper._$allocate(this.__sopt);
