@@ -16,31 +16,48 @@
         <p id="abc">aaaaaaaaaaaaa</p>
     </div>
     <input type="button" value="aaaa" onclick="document.title=+new Date;"/>
+    <textarea id="abcd"></textarea>
+    <input type="button" value="add" id="btn-add"/>
+    <input type="button" value="del" id="btn-del"/>
     <script src="../../define.js"></script>
     <script>
       NEJ.define([
-          'base/event'
-      ],function(_v){
-          _v._$addEvent(
-              document,'click',function(event){
-                  log('document '+(this==document));
-              }
-          );
-          _v._$addEvent(
-              document.body,'click',function(event){
-                  log('body '+(this==document.body));
-              }
-          );
-          _v._$addEvent(
-              'abc','click',function(event){
-                  log('abc '+(this.id=='abc'));
-              }
-          );
-          _v._$addEvent(
-              document,'propertychange',function(event){
-                  console.log(event.propertyName+'->'+document.title);
-              }
-          );
+          'base/event',
+          'base/element'
+      ],function(_v,_e){
+//          _v._$addEvent(
+//              document,'click',function(event){
+//                  log('document '+(this==document));
+//              }
+//          );
+//          _v._$addEvent(
+//              document.body,'click',function(event){
+//                  log('body '+(this==document.body));
+//              }
+//          );
+//          _v._$addEvent(
+//              'abc','click',function(event){
+//                  log('abc '+(this.id=='abc'));
+//              }
+//          );
+//          _v._$addEvent(
+//              document,'propertychange',function(event){
+//                  console.log(event.propertyName+'->'+document.title);
+//              }
+//          );
+          var tx = _e._$get('abcd');
+          var handler = function(){
+              console.log('input ->'+tx.value);
+          }
+          _v._$addEvent('btn-add','click',function(){
+              document.body.appendChild(tx);
+              _v._$addEvent(tx,'input',handler);
+          });
+          _v._$addEvent('btn-del','click',function(){
+              _v._$delEvent(tx,'input',handler);
+              _e._$removeByEC(tx);
+              tx.value = '';
+          });
       });
     </script>
   </body>

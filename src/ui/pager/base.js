@@ -110,10 +110,7 @@ NEJ.define([
         this.__popt.onchange =
             this.__onChange._$bind(this);
         this.__super(_options);
-        this.__doResetNumber({
-            number:_options.number,
-            label:_options.label||_o
-        });
+        this.__doResetNumber(_options);
     };
     /**
      * 控件销毁
@@ -154,7 +151,7 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__doResetNumber = function(_data){
-        var _label = _data.label;
+        var _label = _data.label||_o;
         // previous button
         if (!_data.noprv){
             this.__popt.pbtn = _e._$create(
@@ -164,7 +161,7 @@ NEJ.define([
         }
         // page show
         var _arr = [];
-        for(var i=1,l=_data.number;i<l;i++){
+        for(var i=1,l=_data.number;i<=l;i++){
             _arr.push(_e._$create(
                 'a','zpgi zpg'+i,this.__body
             ));

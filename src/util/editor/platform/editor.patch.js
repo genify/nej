@@ -187,7 +187,7 @@ NEJ.define([
         };
     });
 
-	// ie6-9 editor patch
+	// ie6-8 editor patch
 	NEJ.patch('TR<=4.0',function(){
 	    /**
 	     * 移动光标至节点的指定位置
@@ -200,10 +200,10 @@ NEJ.define([
 	                    ,function(){return 0;}];
 	        return _h.__moveCursorPosition._$aop(
 	               function(_event){
-	                   var _args = _event.args,
+	                    var _args = _event.args,
 	                       _range = _h.__getRange(
 	                                _h.__getWindow(_args[0]));
-	                   if (!!_range && !!_range.move){
+	                    if (!!_range && !!_range.move){
 	                       _event.stopped = !0;
 	                       var _func = _fmap[_args[1]];
 	                       if (!_func) return;
@@ -326,7 +326,7 @@ NEJ.define([
 
 	});
 
-	// ie11+
+	// ie9+
 	NEJ.patch('TR>=5.0',function(){
 	    /**
 	     * 保存当前选择状态
@@ -371,6 +371,33 @@ NEJ.define([
             _selection.collapseToEnd();
             _win.focus();
 	    };
+
+        /**
+         * 移动光标至节点的指定位置
+         * @param  {Node}   _node     节点
+         * @param  {Number} _position 位置，0-末尾、1-起始、2-当前位置
+         * @return {Void}
+         */
+        _h.__moveCursorPosition = (function(){
+            var _fmap = [function(_node){return _node.innerText.length;}
+                        ,function(){return 0;}];
+            return _h.__moveCursorPosition._$aop(
+                function(_event){
+                    var _args = _event.args,
+                        _node = _args[0],
+                        _position = _args[1],
+                        _func = _fmap[_position],
+                        _selection = _h.__getSelection(_h.__getWindow(_node));
+                    if (_position == 2){
+                        var _focusOffset = _selection.focusOffset;
+                        _node = _selection.focusNode||_node;
+                        _selection.collapse(_node,_focusOffset);
+                    }else{
+                        _selection.collapse(_node,_func(_node));
+                    }
+                    _event.stopped = !0;
+                });
+        })();
 	});
 
     return _h;

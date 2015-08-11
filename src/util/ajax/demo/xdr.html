@@ -6,17 +6,29 @@
   </head>
   <body>
     
-    <script src="../../../../src/define.js"></script>
+    <script src="../../../define.js"></script>
     <script>
       define([
-          '../xdr.js'
-      ],function(_j){
+          '../xdr.js',
+          '../rest.js'
+      ],function(_j,_r){
           
-          _j._$request('./b.json',{
+          _j._$request('./D.json',{
               query:{b:'bbb'},
               data:'a=aaaa',
               onload:function(result){
-                  console.log(abc);
+                  console.log(result);
+              }
+          });
+          
+          _r._$request('./D.json',{
+              query:{b:'bbb'},
+              data:'a=aaaa',
+              onload:function(result){
+                  console.log(result);
+              },
+              onerror:function(error){
+                  console.log(error);
               }
           });
           

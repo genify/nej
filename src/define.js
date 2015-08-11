@@ -408,7 +408,8 @@
             _reg3= /[^\/]*$/,
             _reg4= /\.js$/i,
             _reg5= /^[{\/\.]/,
-            _reg6= /(file:\/\/)([^\/])/i;
+            _reg6= /(file:\/\/)([^\/])/i,
+            _reg7= /([^:])\/\//g;
         var _absolute = function(_uri){
             return _uri.indexOf('://')>0;
         };
@@ -420,9 +421,10 @@
             return _uri.replace(_reg3,'');
         };
         var _format = function(_uri){
-            var _uri = _doAbsoluteURI(_uri);
-            // fix mac file:// error
-            return _uri.replace(_reg6,'$1/$2');
+            return _doAbsoluteURI(
+                _uri.replace(_reg7,'$1/')   // fix ie8 http://a.b.com:80/a//b//c/d.js error
+                    .replace(_reg6,'$1/$2') // fix mac file:// error
+            );
         };
         var _amdpath = function(_uri,_type){
             // start with {xx} or /xx/xx or ./ or ../

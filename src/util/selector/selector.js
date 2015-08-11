@@ -315,10 +315,17 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__doSelectionChange = function(){
-        if (!!document.getSelection){
-            document.getSelection().collapse(!0);
-        }else if(!!document.selection){
-            document.selection.empty();
+        try{
+            // remove selection if multi-select
+            if (this.__selection.count>1){
+                if (!!document.getSelection){
+                    document.getSelection().collapse(document,0);
+                }else if(!!document.selection){
+                    document.selection.empty();
+                }
+            }
+        }catch(ex){
+            // ignore
         }
         this._$dispatchEvent('onchange');
     };

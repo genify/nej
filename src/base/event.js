@@ -193,7 +193,8 @@ NEJ.define([
                 func:_real.handler||_source.handler,
                 sfun:_source.handler,
                 capt:_source.capture,
-                link:_real.link
+                link:_real.link,
+                destroy:_real.destroy
             });
             _cch_id[_type] = _cch_tp;
             _xcache[_id] = _cch_id;
@@ -300,7 +301,14 @@ NEJ.define([
                     _item.func,_conf.capture
                 ]];
                 if (!!_item.link){
+                    // complete element by id
+                    _u._$forEach(_item.link,function(v){
+                        v[0] = _e._$get(v[0]);
+                    });
                     _result.push.apply(_result,_item.link);
+                }
+                if (!!_item.destroy){
+                    _item.destroy();
                 }
                 // clear cache
                 if (!_cch_tp.length){

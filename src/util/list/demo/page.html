@@ -27,13 +27,14 @@
         define([
             './data.js',
             'util/template/tpl',
-            'util/list/page'
-        ],function(_d,_e,_t){
+            'util/list/page',
+            'ui/pager/simple'
+        ],function(_d,_e,_t,ui){
             _e._$parseTemplate('template-box');
             var module = _t._$$ListModulePG._$allocate({
                 limit:10,
                 parent:'module-box',
-                pager:{parent:'pager-box'},
+                pager:{parent:'pager-box',klass:ui._$$SimplePager,beg:true,end:true},
                 more:'btn-more',
                 item:'jst-list',
                 cache:{lkey:'data-list',klass:_d._$$Cache},
