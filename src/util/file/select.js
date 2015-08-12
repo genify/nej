@@ -219,6 +219,36 @@ NEJ.define([
             delete _cache[_id];
         }
     };
+    /**
+     * 判断系统是否支持文件选择功能
+     *
+     * 脚本举例
+     * ```javascript
+     * NEJ.define([
+     *     'util/file/select'
+     * ],function(file){
+     *     // 判断是否支持文件选择功能
+     *     if (file._$selectable()){
+     *         // TODO something
+     *     }
+     * });
+     * ```
+     *
+     * @method module:util/file/select._$selectable
+     * @return {Boolean} 是否支持文件选择功能
+     */
+    _p._$selectable = (function(){
+        var _enable;
+        return function(){
+            if (_enable==null){
+                var _input = document.createElement('input');
+                _input.type = 'file';
+                _enable = !_input.disabled;
+            }
+            return _enable;
+        };
+    })();
+
     // for chainable method
     _x._$merge({_$bind:_p._$bind});
 
