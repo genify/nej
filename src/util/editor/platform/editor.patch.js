@@ -375,7 +375,7 @@ NEJ.define([
         /**
          * 移动光标至节点的指定位置
          * @param  {Node}   _node     节点
-         * @param  {Number} _position 位置，0-末尾、1-起始、2-当前位置
+         * @param  {Number} _position 位置，0-末尾、1-起始、3-当前位置
          * @return {Void}
          */
         _h.__moveCursorPosition = (function(){
@@ -389,6 +389,9 @@ NEJ.define([
                         _func = _fmap[_position],
                         _selection = _h.__getSelection(_h.__getWindow(_node));
                     if (_position == 2){
+                        return;
+                    }
+                    if (_position == 3){
                         var _focusOffset = _selection.focusOffset;
                         _node = _selection.focusNode||_node;
                         _selection.collapse(_node,_focusOffset);
