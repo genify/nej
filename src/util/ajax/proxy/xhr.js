@@ -105,6 +105,9 @@ NEJ.define([
                     });
                 }
             }
+            if(_headers[_g._$HEAD_CT]===_g._$HEAD_CT_FORM){
+                _request.data = _u._$object2string(_request.data, '&');
+            }
             // state change
             this.__xhr.onreadystatechange = 
                 this.__onStateChange._$bind(this,2);
