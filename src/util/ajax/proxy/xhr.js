@@ -105,9 +105,6 @@ NEJ.define([
                     });
                 }
             }
-            if(_headers[_g._$HEAD_CT]===_g._$HEAD_CT_FORM){
-                _request.data = _u._$object2string(_request.data, '&');
-            }
             // state change
             this.__xhr.onreadystatechange = 
                 this.__onStateChange._$bind(this,2);
@@ -129,6 +126,11 @@ NEJ.define([
             if (!!this.__request.cookie&&
                ('withCredentials' in this.__xhr)){
                 this.__xhr.withCredentials = !0;
+            }
+            // format data for sending Object
+            if(_headers[_g._$HEAD_CT]===_g._$HEAD_CT_FORM&&
+              (!!window.FormData&&!(_request.data instanceof FormData))){
+                _request.data = _u._$object2string(_request.data, '&');
             }
             this.__xhr.send(_request.data);
         };
