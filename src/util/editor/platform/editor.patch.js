@@ -1,9 +1,10 @@
 NEJ.define([
     'base/platform',
 	'base/element',
+    'base/event',
 	'base/util',
 	'./editor.js'
-],function(_m,_e,_u,_h,_p,_o,_f,_r){
+],function(_m,_e,_v,_u,_h,_p,_o,_f,_r){
 	// webkit editor patch
 	NEJ.patch('WV',function(){
 	    var __reg_nwrd = /<\/?[\w]+:[\w]+.*?>/gi;
@@ -39,7 +40,6 @@ NEJ.define([
 	        __reg_fzag = /<(style|script).*?>.*?<\/\1>/gi,//style和script标签
 	        __reg_ftag = /<\/?(?:meta|link|!--\[.+?\]--|[\w]+:[\w]+).*?>/gi,
 	        __reg_fimg = /<img(\n|\r|\s|[^>])*?src="data:image\/png;base64[^>]*?>/gi;//FF需要干掉base64的图片数据
-
 	    /**
 	     * 验证gecko下内容是否来自Word
 	     * @param  {String}  _html 内容
@@ -98,6 +98,154 @@ NEJ.define([
             _selection.collapseToEnd();
             _win.focus();
         };
+
+        /**
+         * FF模拟selectionChange
+         * @param {Object} _document 文档对象
+         */
+        _h.__supportSelectionChange = (function(){
+            var MAC = /^Mac/.test(navigator.platform),
+                MAC_MOVE_KEYS = [65, 66, 69, 70, 78, 80],
+                SELECT_ALL_MODIFIER = MAC ? 'metaKey' : 'ctrlKey',
+                RANGE_PROPS = ['startContainer', 'startOffset', 'endContainer', 'endOffset'],
+                HAS_OWN_SELECTION = {INPUT: 1, TEXTAREA: 1},
+                _ranges;
+            /**
+             * 判断是否有WeakMap
+             */
+            var _newWeakMap = function(){
+                if (typeof WeakMap !== 'undefined') {
+                    return new WeakMap();
+                } else {
+                    return null;
+                }
+            };
+            /**
+             * 闭合光标
+             * @param {Object} _document 文档对象
+             */
+            var _getSelectionRange = function(_document){
+                var _selection = _h.__getSelection(_h.__getWindow(_document));
+                return _selection.rangeCount ? _selection.getRangeAt(0) : null;
+            };
+            /**
+             * input事件
+             * @param  {Event} _event 事件对象
+             */
+            var _onInput = function(_event){
+                if (!HAS_OWN_SELECTION[_event.target.tagName]) {
+                    _dispatchIfChanged(this, true);
+                }
+            };
+            /**
+             * keydown事件
+             * @param  {Event} _event 事件对象
+             */
+            var _onKeyDown = function(_event){
+                var _code = _event.keyCode;
+                if (_code === 65 && _event[SELECT_ALL_MODIFIER] && !_event.shiftKey && !_event.altKey || // Ctrl-A or Cmd-A
+                    _code >= 37 && _code <= 40 || // arrow key
+                    _event.ctrlKey && MAC && MAC_MOVE_KEYS.indexOf(_code) >= 0) {
+                  if (!HAS_OWN_SELECTION[_event.target.tagName]) {
+                    setTimeout(_dispatchIfChanged.bind(null, this), 0);
+                  }
+                }
+            };
+            /**
+             * mousedown事件
+             * @param  {Event} _event 事件对象
+             */
+            var _onMouseDown = function(_event){
+                if (_event.button === 0) {
+                    _v._$addEvent(this,'mousemove',_onMouseMove);
+                    setTimeout(_dispatchIfChanged.bind(null, this), 0);
+                }
+            };
+            /**
+             * mousemove事件
+             * @param  {Event} _event 事件对象
+             */
+            var _onMouseMove = function(_event){
+                if (_event.buttons & 1) {
+                    _dispatchIfChanged(this);
+                } else {
+                    _v._$delEvent(this, 'mousemove', _onMouseMove);
+                }
+            };
+            /**
+             * mouseup事件
+             * @param  {Event} _event 事件对象
+             */
+            var _onMouseUp = function(_event){
+                if (_event.button === 0) {
+                    setTimeout(_dispatchIfChanged.bind(null, this), 0);
+                } else {
+                    _v._$delEvent(this, 'mousemove', _onMouseMove);
+                }
+            };
+            /**
+             * focus事件
+             */
+            var _onFocus = function(){
+                setTimeout(_dispatchIfChanged.bind(null, this.document), 0);
+            };
+            /**
+             * 触发selectionchange
+             * @param {Object} _document 文档对象
+             * @param  {Event} _event 事件对象
+             */
+            var _dispatchIfChanged = function(_document,_force){
+                var _r = _getSelectionRange(_document);
+                if (_force || !_sameRange(_r, _ranges.get(_document))) {
+                    _ranges.set(_document, _r);
+                    setTimeout(function(){
+                        console.log('selectionchange')
+                        _v._$dispatchEvent(_document,'selectionchange');
+                    }, 0);
+                }
+            };
+            /**
+             * 判断光标是否相同
+             * @param  {Range} r1 光标对象
+             * @param  {Range} r2 光标对象
+             */
+            var _sameRange = function(_r1,_r2){
+                return _r1 === _r2 || _r1 && _r2 && RANGE_PROPS.every(function (_prop) {
+                    return _r1[_prop] === _r2[_prop];
+                });
+            }
+            /**
+             * 是否支持selectionchange
+             * @param {Object} _document 文档对象
+             */
+            var _hasNativeSupport = function(_document){
+                var _osc = _document.onselectionchange;
+                if (_osc !== undefined) {
+                    try {
+                        _document.onselectionchange = 0;
+                        return _document.onselectionchange === null;
+                    } catch (e) {
+                    } finally {
+                        _document.onselectionchange = _osc;
+                    }
+                }
+                return false;
+            };
+            return function(_document){
+                var _d = _document || document;
+                if (_ranges || !_hasNativeSupport(_d) && (_ranges = _newWeakMap())){
+                    if (!_ranges.has(_d)) {
+                        _ranges.set(_d, _getSelectionRange(_d));
+                        _v._$addEvent(_d,'input',_onInput);
+                        _v._$addEvent(_d,'keydown',_onKeyDown);
+                        _v._$addEvent(_d,'mousedown',_onMouseDown);
+                        _v._$addEvent(_d,'mousemove',_onMouseMove);
+                        _v._$addEvent(_d,'mouseup',_onMouseUp);
+                        _v._$addEvent(_d.defaultView,'focus',_onFocus);
+                    }
+                }
+            }
+        })();
 	});
 
 	// ie6-9 editor patch
