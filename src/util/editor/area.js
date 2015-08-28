@@ -110,6 +110,7 @@ NEJ.define([
         if (location.hostname!=document.domain)
             _document.domain = document.domain;
         _document.close(); // <- will trigger iframe onload
+        _h.__supportSelectionChange(_document.body);
         this.__doInitDomEvent([[
             _document,'click',
             this.__onDocumentClick._$bind(this)

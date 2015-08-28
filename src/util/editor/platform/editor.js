@@ -134,6 +134,14 @@ NEJ.define([
         // do nothing
     };
     /**
+     * FF支持selectionchange
+     * @param  {[type]} _document [description]
+     * @return {[type]}           [description]
+     */
+    _p.__supportSelectionChange = function(_document){
+        // do nothing
+    };
+    /**
      * 移动光标至节点的指定位置
      * @param  {Node}   _node     节点
      * @param  {Number} _position 位置，0-末尾、1-起始
