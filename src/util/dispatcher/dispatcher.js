@@ -341,6 +341,10 @@ NEJ.define([
                 function(_config){
                     _u._$forIn(_config,
                         function(_value,_key){
+                            // fix safari array bug #{404:'/'}
+                            if (_value==null){
+                                return;
+                            }
                             // function
                             if (_u._$isFunction(_value)){
                                 var _ret = !1;

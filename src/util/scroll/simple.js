@@ -549,7 +549,7 @@ NEJ.define([
      * 修正滚动条状态
      */
     _pro.__doFixScrollBar = function(_event){
-        console.log('fix scrollbar');
+        //console.log('fix scrollbar');
         this._$resize();
     };
     /**

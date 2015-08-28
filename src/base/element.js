@@ -1844,6 +1844,9 @@ NEJ.define([
      */
     _p._$addClassName =
     _y._$addClassName = function(_element,_class){
+        if (!_class){
+            return;
+        }
         _element = _p._$get(_element);
         if (!!_element){
             _h.__processClassName(
