@@ -9,8 +9,9 @@ NEJ.define([
     'base/element',
 	'base/event',
 	'base/util',
+	'base/platform',
 	'./holder.js'
-],function(_e,_v,_u,_h,_p,_o,_f,_r){
+],function(_e,_v,_u,_m,_h,_p,_o,_f,_r){
 	// for ie9-
 	NEJ.patch('TR<=5.0',function(){
 		/**
@@ -84,9 +85,13 @@ NEJ.define([
                 _v._$addEvent(_input,'blur',_onBlur._$bind(null,_id));
                 _v._$addEvent(_input,'focus',_onFocus._$bind(null,_id));
                 _v._$addEvent(_input,'input',_onInput._$bind(null,_id));
+                // IE9 set value hack
+                if (_m._$KERNEL.engine == 'trident' && _m._$KERNEL.release == '5.0'){
+                	_v._$addEvent(_input,'propertychange',_onInput._$bind(null,_id));
+                }
         	};
 		})();
     });
-    
+
 	return _h;
 });
