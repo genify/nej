@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>test cookie</title>
+    <meta charset="utf-8"/>
+    <script>
+        function log(m){
+            var p = document.createElement('p');
+            p.innerHTML = m;
+            document.body.appendChild(p);
+        }
+    </script>
+  </head>
+  <body>
+    <input type="button" value="set" onclick="test();"/>
+    <input type="button" value="get" onclick="test2();"/>
+    <script src="../../../define.js"></script>
+    <script>
+      NEJ.define([
+          '../storage.js'
+      ],function(_j){
+          window.test2 = function(){
+              log('---> '+_j._$getDataInStorage('abc'));
+          }
+
+          window.test = function(){
+              _j._$setDataInStorage('abc',{
+                  value:'aaaaaaaaaa',
+                  expires:1,
+                  path:'/'
+              });
+          };
+      });
+    </script>
+  </body>
+</html>

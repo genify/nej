@@ -11,9 +11,55 @@ NEJ.define([
     'base/util',
     'base/event',
     'util/event/event',
+    'util/encode/json',
     '{platform}storage.js'
-],function(NEJ,_u,_v,_t,_h,_p,_o,_f,_r){
+],function(NEJ,_u,_v,_t,_j,_h,_p,_o,_f,_r){
     var _cache = {}; // dirty flag
+    /**
+     * 初始化低版本浏览器本地缓存
+     * 脚本举例
+     * ```javascript
+     * NEJ.define([
+     *     'util/cache/storage'
+     * ],function(_j){
+     *     // 如果需要支持ie7-浏览器先执行一下初始行为
+     *     _j._$init();
+     *     // 设置一个hash值
+     *     _j._$setDataInStorage('name','jack');
+     *     // 返回jack
+     *     var _data = _j._$getDataInStorage('name');
+     * });
+     * ```
+     *
+     * @method module:util/cache/storage._$init
+     * @return {Void}
+     */
+    _p._$init = (function(){
+        var inited = !1;
+        return function(){
+            if (inited){
+                return;
+            }
+            inited = !0;
+            // listen storage ready
+            var __doFlushTempData = (function(){
+                var _doFlush = function(_value,_key,_map){
+                    _h.__setItemToStorage(
+                        _key,JSON.stringify(_value));
+                    delete _map[_key];
+                };
+                return function(){
+                    _u._$loop(_cache,_doFlush);
+                };
+            })();
+            _v._$addEvent(
+                document,'storageready',
+                __doFlushTempData
+            );
+            // init storage
+            _h.__initStorage();
+        };
+    })();
     /**
      * 存储数据
      *
@@ -36,6 +82,7 @@ NEJ.define([
      * @return {Void}
      */
     _p._$setDataInStorage = function(_key,_value){
+        _p._$init();
         var _sval = JSON.stringify(_value);
         try{
             _h.__setItemToStorage(_key,_sval);
@@ -69,6 +116,7 @@ NEJ.define([
      * @return {Variable}        存储数据
      */
     _p._$getDataInStorage = function(_key){
+        _p._$init();
         var _data = JSON.parse(
             _h.__getItemInStorage(_key)||'null'
         );
@@ -121,6 +169,7 @@ NEJ.define([
      * @return {Void}
      */
     _p._$delDataInStorage = function(_key){
+        _p._$init();
         delete _cache[_key];
         _h.__removeItemFromStorage(_key);
     };
@@ -146,6 +195,7 @@ NEJ.define([
             delete _map[_key];
         };
         return function(){
+            _p._$init();
             _u._$loop(_cache,_doRemove);
             _h.__clearStorage();
         };
@@ -186,25 +236,6 @@ NEJ.define([
             }
         }
     });
-
-    // listen storage ready
-    var __doFlushTempData = (function(){
-        var _doFlush = function(_value,_key,_map){
-            _h.__setItemToStorage(
-                _key,JSON.stringify(_value));
-            delete _map[_key];
-        };
-        return function(){
-            _u._$loop(_cache,_doFlush);
-        };
-    })();
-    _v._$addEvent(
-        document,'storageready',
-        __doFlushTempData
-    );
-
-    // init storage
-    _h.__initStorage();
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.j'),_p);
