@@ -1194,6 +1194,53 @@ NEJ.define([
         this.__doClearListBox();
         this.__doShowMessage(null,_html);
     };
+    /**
+     * 去到下一页列表
+     *
+     * @method module:util/list/module._$$ListModule#_$nextPage
+     * @return {Boolean} 是否还有下一页
+     */
+    _pro._$nextPage = function(){
+        if (!this.__pager){
+            return;
+        }
+        var _index = this.__pager._$getIndex()+1,
+            _total = this.__pager._$getTotal();
+        _index = Math.max(1,Math.min(_index,_total));
+        this._$pageTo(_index);
+        return _index<_total;
+    };
+    /**
+     * 去到上一页列表
+     *
+     * @method module:util/list/module._$$ListModule#_$nextPage
+     * @return {Boolean} 是否还有上一页
+     */
+    _pro._$prevPage = function(){
+        if (!this.__pager){
+            return;
+        }
+        var _index = this.__pager._$getIndex()-1,
+            _total = this.__pager._$getTotal();
+        _index = Math.max(1,Math.min(_index,_total));
+        this._$pageTo(_index);
+        return _index<=1;
+    };
+    /**
+     * 去到指定页码列表
+     *
+     * @method module:util/list/module._$$ListModule#_$pageTo
+     * @param  {Number} arg0 - 指定页码
+     * @return {Void}
+     */
+    _pro._$pageTo = function(_index){
+        if (!this.__pager){
+            return;
+        }
+        var _total = this.__pager._$getTotal();
+        _index = Math.max(1,Math.min(_index,_total));
+        this.__pager._$setIndex(_index);
+    };
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ut'),_p);

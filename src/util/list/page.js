@@ -305,7 +305,7 @@ NEJ.define([
             index:_info.index
         });
     };
-    
+
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ut'),_p);
     }

@@ -502,7 +502,7 @@ NEJ.define([
             this.__first:this.__limit;
         this.__doChangeOffset(_offset);
     };
-    
+
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ut'),_p);
     }

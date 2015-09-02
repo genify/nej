@@ -16,6 +16,8 @@
   <body>
     <div class="fl xx">
       <h1>JST模版</h1>
+      <input type="button" value="prev" id="btnprev"/>
+      <input type="button" value="next" id="btnnext"/>
       <div id="list-box-0"></div>
       <div id="more-btn-0"> load more </div>
       <div id="page-box-0"></div>
@@ -38,15 +40,15 @@
 
           var jstkey = _l._$add(_html);
           
-          _t._$$ListModuleWF._$allocate({
+          var mdl = _t._$$ListModuleWF._$allocate({
               limit:20,
               
-              //count:2,      // 加载多少次出现分页器
-              //delta:200,    // 滚动距离底部多少像素触发加载更多
-              //sbody:window, // 包含列表的滚动条所在容器节点或者ID
+              count:2,      // 加载多少次出现分页器
+              delta:200,    // 滚动距离底部多少像素触发加载更多
+              sbody:window, // 包含列表的滚动条所在容器节点或者ID
               
               parent:'list-box-0',
-              more:'more-btn-0',
+              //more:'more-btn-0',
               item:jstkey,
               pager:{parent:'page-box-0'},
               cache:{klass:_d._$$CustomCache,lkey:'test-list'},
@@ -66,6 +68,18 @@
                   console.log('go page -> '+_event.index);
               }
           });
+
+            _v._$addEvent(
+                'btnprev','click',function(){
+                        mdl._$prevPage();
+                }
+            );
+            _v._$addEvent(
+                'btnnext','click',function(){
+                    mdl._$nextPage();
+                }
+            );
+
 
           _t._$$ListModuleWF._$allocate({
               limit:20,
