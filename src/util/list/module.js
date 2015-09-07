@@ -693,9 +693,17 @@ NEJ.define([
             var _xlist = [_data];
             if (!!this.__ikey){
                 // render by jst
+                var _xlist = this.__cache._$getListInCache(
+                        this.__ropt.key
+                    ),
+                    _index = _u._$indexOf(_xlist,_data);
+                if (_index<0){
+                    _index = 0;
+                    _xlist = [_data];
+                }
                 this.__iopt.xlist = _xlist;
-                this.__iopt.beg = 0;
-                this.__iopt.end = 0;
+                this.__iopt.beg = _index;
+                this.__iopt.end = _index;
                 this.__iopt.act = 'add';
                 this.__doShowListByJST(
                     _t1._$get(
