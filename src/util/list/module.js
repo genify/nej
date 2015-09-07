@@ -723,6 +723,7 @@ NEJ.define([
                 this.__iopt.parent = this.__lbox;
                 this.__doShowListByItem(_items);
             }
+            this._$dispatchEvent('onafterinsert');
         };
     })();
     /**
