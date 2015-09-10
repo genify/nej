@@ -78,6 +78,9 @@ NEJ.define([
      * @return {String} 属性值
      */
     _p.__getAttribute = function(_element,_name){
+        if (!_element.getAttribute){
+            return;
+        }
         return _element.getAttribute(_name);
     };
     /**
