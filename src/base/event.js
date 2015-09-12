@@ -550,53 +550,13 @@ NEJ.define([
      * @param  {Function} arg1 - 过滤接口
      * @return {Node}            符合条件的节点
      */
-    _p._$getElement = (function(){
-        // element filter
-        var _exmap;
-        var _doFilter = function(_name,_element){
-            var _arr = _name.split(':');
-            if (_arr.length>1){
-                if (!_exmap){
-                    _exmap = {
-                        a:_e._$attr,
-                        d:_e._$dataset,
-                        c:_e._$hasClassName,
-                        t:function(n,v){return (n.tagName||'').toLowerCase()===v;}
-                    };
-                }
-                var _check = _exmap[_arr[0]];
-                if (!!_check){
-                    return !!_check(_element,_arr[1]);
-                }
-                _name = _arr[1];
-            }
-            return !!_e._$attr(_element,_name)||
-                   !!_e._$dataset(_element,_name)||
-                     _e._$hasClassName(_element,_name);
-        };
-        return function(_event){
-            if (!_event) return null;
-            var _element = _event.target||
-                           _event.srcElement,
-                _filter = arguments[1];
-            if (!_filter){
-                return _element;
-            }
-            if (_u._$isString(_filter)){
-                _filter = _doFilter._$bind(null,_filter);
-            }
-            if (_u._$isFunction(_filter)){
-                while(_element){
-                    if (!!_filter(_element)){
-                        return _element;
-                    }
-                    _element = _element.parentNode;
-                }
-                return null;
-            }
-            return _element;
-        };
-    })();
+    _p._$getElement = function(_event){
+        if (!_event) return null;
+        var _element = _event.target||
+                _event.srcElement,
+            _filter = arguments[1];
+        return _e._$getParent(_element,_filter);
+    };
     /**
      * 阻止事件，包括默认事件和传递事件
      *

@@ -170,6 +170,97 @@ NEJ.define([
         return _list;
     };
     /**
+     * 根据过滤条件取第一个满足条件的父节点
+     *
+     * 结构举例
+     * ```html
+     *   <div data-a="aaa">
+     *       <p>1</p>
+     *       <div a="aaaaaa">
+     *           <p class="a">
+     *               <span id="abc">2</span>
+     *           </p>
+     *       </div>
+     *       <p>3</p>
+     *   </div>
+     * ```
+     *
+     * 脚本举例
+     * ```javascript
+     *   NEJ.define([
+     *       'base/element'
+     *   ],function(_e){
+     *       // 返回包含样式a的节点 <p class="a">
+     *       var node = _e._$getParent('abc','c:a');
+     *
+     *       // 返回包含属性a的节点 <div a="aaaaaa">
+     *       var node = _e._$getParent('abc','a:a')
+     *
+     *       // 返回包含data属性a的节点 <div data-a="aaa">
+     *       var node = _e._$getParent('abc','d:a');
+     *
+     *       // 返回标签为p的节点 <p class="a">
+     *       var node = _e._$getParent('abc','t:p');
+     *
+     *       // 返回符合过滤条件的父节点
+     *       var node = _e._$getParent('abc',function(_element){
+     *           return _element.scrollHeight>_element.clientHeight;
+     *       });
+     *   });
+     * ```
+     *
+     * @method module:base/element._$getChildren
+     * @param  {String|Node}      arg0 - 节点标识或者对象
+     * @param  {String|Function}  arg1 - 过滤规则
+     * @return {Node}             父节点
+     */
+    _p._$getParent = (function(){
+        var _exmap;
+        var _doFilter = function(_name,_element){
+            var _arr = _name.split(':');
+            if (_arr.length>1){
+                if (!_exmap){
+                    _exmap = {
+                        a:_p._$attr,
+                        d:_p._$dataset,
+                        c:_p._$hasClassName,
+                        t:function(n,v){return (n.tagName||'').toLowerCase()===v;}
+                    };
+                }
+                var _check = _exmap[_arr[0]];
+                if (!!_check){
+                    return !!_check(_element,_arr[1]);
+                }
+                _name = _arr[1];
+            }
+            return !!_p._$attr(_element,_name)||
+                   !!_p._$dataset(_element,_name)||
+                     _p._$hasClassName(_element,_name);
+        };
+        return function(_element,_filter){
+            _element = _p._$get(_element);
+            if (!_element){
+                return;
+            }
+            if (!_filter){
+                return _element;
+            }
+            if (_u._$isString(_filter)){
+                _filter = _doFilter._$bind(null,_filter);
+            }
+            if (_u._$isFunction(_filter)){
+                while(_element){
+                    if (!!_filter(_element)){
+                        return _element;
+                    }
+                    _element = _element.parentNode;
+                }
+                return null;
+            }
+            return _element;
+        };
+    })();
+    /**
      * 根据类名取节点列表
      *
      * 结构举例
