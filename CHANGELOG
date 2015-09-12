@@ -1,7 +1,8 @@
 0.2.7
 --------------------------------------------------------
 - 功能增加
-  * base/element增加_$getParent接口
+  * base/element 增加 _$getParent 接口
+  * util/list/module 增加 _$nextPage,_$prevPage,_$pageTo 接口
 
 0.2.6   (2015-09-07)
 0.2.5
