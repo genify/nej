@@ -369,17 +369,20 @@ NEJ.define([
         _offset = parseInt(_offset)||0;
         _limit  = parseInt(_limit)||0;
         if (!_limit){
-            if (!_list.loaded)
+            if (!_list.loaded){
                 return !1;
+            }
             _limit = _list.length;
         }
         // length is list total number
-        if (!!_list.loaded)
-            _limit = Math.min(_limit,
-                     _list.length-_offset);
-        for(var i=0;i<_limit;i++)
-            if (!_list[_offset+i])
+        if (!!_list.loaded){
+            _limit = Math.min(_limit,_list.length-_offset);
+        }
+        for(var i=0;i<_limit;i++){
+            if (_list[_offset+i]===undefined){
                 return !1;
+            }
+        }
         return !0;
     };
     /**
