@@ -1235,6 +1235,10 @@ NEJ.define([
      * @return   {module:util/dispatcher/dispatcher._$$Dispatcher} 调度器实例
      */
     _p._$startup = function(_options){
+        if (!!window.dispatcher){
+            console.error('dispatcher is already startup');
+            return;
+        }
         window.dispatcher =
             _p._$$Dispatcher.
             _$getInstance(_options);
