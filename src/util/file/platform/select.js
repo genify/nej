@@ -5,14 +5,14 @@
  * @author   genify(caijf@corp.netease.com)
  * ------------------------------------------
  */
-NEJ.define(function(NEJ,_e,_p,_o,_f,_r){
+NEJ.define(function(p){
 	/**
 	 * 关联file的label点击事件
 	 * @return {Void}
 	 */
-	_p.__handleFileLabelClick = function(){
+	p.__handleFileLabelClick = function(){
 		//do nothing
 	};
 
-	return _p;
+	return p;
 });
