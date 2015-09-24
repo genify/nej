@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NEJ实例 - 文本编辑器</title>
+    <meta charset="utf-8" />
+    <style>
+        #abc{width:500px;height:300px;border:1px solid #aaa;}
+        #abc iframe{width:100%;height:100%;}
+    </style>
+</head>
+<body>
+
+<div id="abc"></div>
+
+<script src="../../../define.js"></script>
+<script>
+    NEJ.define([
+        '../text.js'
+    ],function(x){
+        x._$$Editor._$allocate({
+            parent:'abc'
+        });
+    });
+</script>
+</body>
+</html>

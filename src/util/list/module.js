@@ -527,9 +527,10 @@ NEJ.define([
         if (!_list||!_list.length){
             // check load error
             if (!this._$cache()._$isLoaded(_options.key)){
-                this._$dispatchEvent('onlistloaderror',{
-                    parent:this.__lbox
-                });
+                this.__doShowMessage('onlistloaderror','列表加载失败');
+                //this._$dispatchEvent('onlistloaderror',{
+                //    parent:this.__lbox
+                //});
             }else{
                 this.__doShowEmpty();
             }
@@ -539,9 +540,10 @@ NEJ.define([
         var _limit = _options.limit,
             _offset = _options.offset;
         if (!this.__cache._$isFragmentFilled(_options.key,_offset,_limit)){
-            this._$dispatchEvent('onlistloaderror',{
-                parent:this.__lbox
-            });
+            this.__doShowMessage('onlistloaderror','列表加载失败');
+            //this._$dispatchEvent('onlistloaderror',{
+            //    parent:this.__lbox
+            //});
             return !0;
         }
         if (this.__doBeforeListRender(

@@ -10,17 +10,17 @@ NEJ.define([
     'base/event',
 	'./paste.js'
 ],function(u,v,h){
-    // for firefox
-    NEJ.patch('GV',function(){
+    // for gecko
+    NEJ.patch('GR',function(){
         /**
-         * 导出文本信息
+         * 导出拷贝信息
          * @param event
          * @private
          */
         h.__doDumpContent = function(ret,event){
             var accept = ret.accept||'',
                 board = event.clipboardData||{},
-                type = (board.types||[])[0];
+                type = (board.types||[])[0]||'';
             // check string type
             if (!accept||type.indexOf(accept)==0){
                 v._$stop(event);
@@ -32,16 +32,28 @@ NEJ.define([
                     return;
                 }
             }
+            // check image data
+            h.__doDumpImage(ret);
             // check file type
             u._$forEach(board.files,function(it){
                 if (!accept||it.type.indexOf(accept)==0){
                     v._$stop(event);
-                    h.__doDumpFile(it,{type:'file'},ret);
+                    h.__doDumpFile(it,ret);
                     return !0;
                 }
             });
         };
     });
-
+    // for trident
+    NEJ.patch('TR',function(){
+        /**
+         * 导出拷贝信息
+         * @param event
+         * @private
+         */
+        h.__doDumpContent = function(ret,event){
+            console.log(event)
+        };
+    });
 	return h;
 });

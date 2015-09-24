@@ -12,10 +12,10 @@
     </script>
 </head>
 <body>
-
 <p><input type="text" id="abc"/></p>
 <p><textarea id="def"></textarea></p>
-<p><input type="button" value="unbind" id="ghi"/></p>
+<p><input type="button" value="bind" id="ggg"/>
+    <input type="button" value="unbind" id="ghi"/></p>
 <script src="../../../define.js"></script>
 <script>
     NEJ.define([
@@ -23,19 +23,21 @@
         'base/element',
         '../paste.js'
     ],function(v,e,t){
-        t._$bind('abc',{
-            accept:'image',
-            dataurl:true,
-            onpaste:function(event){
-                log(event.type+':'+event.dataurl);
-                log(event.url);
-            }
-        });
-        t._$bind('def',{
-            accept:'text',
-            onpaste:function(event){
-                log(event.type+':'+event.content);
-            }
+        v._$addEvent('ggg','click',function(){
+            t._$bind('abc',{
+                accept:'image',
+                dataurl:true,
+                onpaste:function(event){
+                    log(event.type+':'+event.dataurl);
+                    log(event.url);
+                }
+            });
+            t._$bind('def',{
+                accept:'text',
+                onpaste:function(event){
+                    log(event.type+':'+event.content);
+                }
+            });
         });
         v._$addEvent('ghi','click',function(){
             t._$unbind('abc');

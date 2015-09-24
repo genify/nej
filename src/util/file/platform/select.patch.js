@@ -10,7 +10,7 @@ NEJ.define([
 	'./select.js'
 ],function(_v,_h,_p,_o,_f,_r){
     // fro gecko
-	NEJ.patch('GV',function(){
+	NEJ.patch('GR',function(){
 		/**
 		 * 关联file的label点击事件
 		 * @return {Void}
