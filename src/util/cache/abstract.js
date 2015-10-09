@@ -9,9 +9,31 @@
 NEJ.define([
     'base/global',
     'base/klass',
+    'base/util',
+    'base/event',
+    'util/ajax/xdr',
+    'util/ajax/rest',
     './list.js'
-],function(NEJ,_k,_t,_p,_o,_f,_r){
-    var _pro;
+],function(NEJ,_k,_u,_v,_j,_jj,_t,_p,_o,_f,_r,_pro){
+    // request config cache
+    var config = {},
+        seed = _u._$uniqueID();
+    /**
+     * 调度事件
+     * @param name
+     * @param event
+     */
+    var dispatch = function(name,event){
+        event = event||{};
+        _u._$forEach(
+            config[name+'-'+seed],function(func){
+                func.call(this,event);
+                if (event.stopped){
+                    return !0;
+                }
+            },this
+        );
+    };
     /**
      * 列表缓存管理基类
      * 
@@ -165,6 +187,92 @@ NEJ.define([
     _p._$$CacheListAbstract = _k._$klass();
     _pro = _p._$$CacheListAbstract._$extend(_t._$$CacheList);
     /**
+     * 发送请求
+     *
+     * @protected
+     * @method module:util/cache/abstract._$$CacheListAbstract#__doSendRequest
+     * @param  {String} key - 请求配置标识
+     * @param  {Object} options - 请求信息
+     * @return {Void}
+     */
+    _pro.__doSendRequest = function(key,options){
+        // check config
+        var conf = config[key];
+        if (!conf){
+            console.error('not found request config for '+key);
+            return;
+        }
+        // onerror event
+        var onerror = function(error){
+            var event = {
+                req:options,
+                error:error||{}
+            };
+            // check global error handler
+            dispatch.call(this,'error',event);
+            if (event.stopped){
+                return;
+            }
+            // dispatch error config event
+            var onerror = options.onerror||conf.onerror||'onerror';
+            if (_u._$isFunction(onerror)){
+                onerror.call(this,event);
+            }else if(_u._$isString(onerror)){
+                this._$dispatchEvent(onerror,event);
+            }
+        };
+        // onload event
+        var onload = function(result){
+            var event = {
+                req:options,
+                res:result
+            };
+            // check global post handler
+            dispatch.call(this,'post',event);
+            if (!!result&&_u._$isFunction(conf.post)){
+                conf.post.call(this,result);
+            }
+            if (!!event.error){
+                onerror.call(this,event.error);
+                return;
+            }
+            // check global format handler
+            dispatch.call(this,'format',event);
+            if (_u._$isFunction(conf.format)){
+                conf.format.call(this,event);
+            }
+            // callback
+            var callback = options.onload||conf.onload,
+                result = event.result||result;
+            if (_u._$isFunction(callback)){
+                callback.call(this,result);
+            }else if(_u._$isString(callback)){
+                this._$dispatchEvent(callback,result);
+            }
+            // finally action
+            if (_u._$isFunction(conf.finaly)){
+                conf.finaly.call(this,event);
+            }
+        };
+        // before request
+        var event = {
+            url:conf.url,
+            req:options
+        };
+        dispatch.call(this,'filter',event);
+        if (_u._$isFunction(conf.filter)){
+            conf.filter.call(this,event);
+        }
+        // send request
+        var opt = _u._$merge({},options,{
+            type:'json',
+            method:conf.method||'POST',
+            onload:onload._$bind(this),
+            onerror:onerror._$bind(this)
+        });
+        (!conf.rest?_j:_jj)._$request(event.url,opt);
+    };
+    /**
      * 控件初始化
      * 
      * @protected
@@ -260,7 +368,137 @@ NEJ.define([
      * @return   {Void}
      */
     _pro.__doUpdateItem = _f;
-    
+    /**
+     * 全局预处理事件配置
+     *
+     * @param  {Object}   map - 事件配置信息
+     * @param  {function} map.filter - 请求发送之前统一预处理事件，输入为{req:options,url:'url'}
+     * @param  {function} map.post   - 请求返回之后统一预处理事件，输入为{req:options,res:result}
+     * @param  {function} map.format - 请求返回数据统一格式化事件, 输入为{req:options,res:result}
+     * @param  {function} map.error  - 请求返回异常统一预处理事件, 输入为{req:options,err:error}
+     * @return {Void}
+     */
+    _p._$on = (function(){
+        var _doAdd = function(name,func){
+            if (!_u._$isFunction(func)){
+                return;
+            }
+            var key = name+'-'+seed,
+                list = config[key]||[];
+            list.push(func);
+            config[key] = list;
+        };
+        return function(map){
+            // for name and func
+            if (_u._$isString(map)){
+                _doAdd.apply(null,arguments);
+                return;
+            }
+            // for batch add
+            _u._$loop(map,function(func,key){
+                _doAdd(key,func);
+            });
+        };
+    })();
+    /**
+     * 执行缓存的同步方法，执行完毕后立即回收缓存
+     *
+     * ```javascript
+     * NEJ.define([
+     *     'base/klass',
+     *     'util/cache/abstract'
+     * ],function(k,t,p,pro){
+     *     // 定义自己的缓存类
+     *     p._$$Cache = k._$klass();
+     *     pro = p._$$Cache._$extend(t._$$CacheListAbstract);
+     *
+     *     // 对外接口
+     *     pro._$getDataForCheck = function(){
+     *         // TODO something
+     *         return 'result';
+     *     }
+     *
+     *     // 重写_$do方法，绑定缓存构造器
+     *     p._$do = t._$do._$bind(
+     *         null,p._$$Cache
+     *     );
+     * });
+     * ```
+     *
+     * ```javascript
+     * NEJ.define([
+     *     'path/to/cache'
+     * ],function(t){
+     *
+     *     // 使用缓存
+     *     var ret = t._$do(function(cache){
+     *         return cache._$getDataForCheck();
+     *     });
+     *
+     *     // TODO something
+     * }
+     * ```
+     *
+     * @method module:util/cache/abstract._$do
+     * @param  {Function} Klass - 缓存构造器
+     * @param  {function} func  - 执行回调
+     * @return {Variable} 回调返回结果
+     */
+    _p._$do = function(Klass,func){
+        if (!_u._$isFunction(func)){
+            return;
+        }
+        var cache = Klass._$allocate(),
+            ret = func.call(null,cache);
+        cache._$recycle();
+        return ret;
+    };
+    /**
+     * 请求配置信息，项目中可以统一配置请求信息，可配置项如下表所示
+     *
+     * | 名称    | 类型     | 描述  |
+     * | :----:  | :----:   | :---- |
+     * | url     | String   | 请求地址 |
+     * | method  | String   | 请求方式，GET/POST/PUT等，默认为POST |
+     * | rest    | Boolean  | 是否REST接口 |
+     * | filter  | Function | 请求发送之前配置信息过滤接口 |
+     * | post    | Function | 请求返回之后结果检查接口 |
+     * | format  | Function | 请求返回结果格式化接口 |
+     * | finaly  | Function | 回调结束后执行业务逻辑接口 |
+     * | onerror | Function | 异常处理接口 |
+     * | onload  | Function | 回调处理接口 |
+     *
+     * @method module:util/cache/abstract._$config
+     * @see    module:util/cache/abstract._$on
+     * @param  {Object} map - 配置映射关系，如{'key1':{url:'url'},'key2':'url'}
+     * @return {Void}
+     */
+    _p._$config = function(map){
+        _u._$forIn(map,function(value,key){
+            if (typeof value==='string'){
+                value = {url:value};
+            }
+            config[key] = value;
+        });
+    };
+    /**
+     * 合并请求配置信息
+     *
+     * @method module:util/cache/abstract._$merge
+     * @see    module:util/cache/abstract._$config
+     * @param  {String} key - 配置标识
+     * @param  {Object} map - 配置信息
+     * @return {Void}
+     */
+    _p._$merge = function(key,map){
+        var conf = config[key];
+        if (!conf){
+            config[key] = map;
+        }else{
+            config[key] = _u._$merge(conf,map);
+        }
+    };
+
     if (CMPT){
         NEJ.P('nej.ut')._$$AbstractListCache = _p._$$CacheListAbstract;
     }
