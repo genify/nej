@@ -227,11 +227,11 @@ NEJ.define([
                 req:options,
                 res:result
             };
-            // check global post handler
-            dispatch.call(this,'post',event);
-            if (!!result&&_u._$isFunction(conf.post)){
-                conf.post.call(this,result);
+            // check post handler
+            if (_u._$isFunction(conf.post)){
+                conf.post.call(this,event);
             }
+            dispatch.call(this,'post',event);
             if (!!event.error){
                 onerror.call(this,event.error);
                 return;
@@ -375,7 +375,7 @@ NEJ.define([
      * @param  {function} map.filter - 请求发送之前统一预处理事件，输入为{req:options,url:'url'}
      * @param  {function} map.post   - 请求返回之后统一预处理事件，输入为{req:options,res:result}
      * @param  {function} map.format - 请求返回数据统一格式化事件, 输入为{req:options,res:result}
-     * @param  {function} map.error  - 请求返回异常统一预处理事件, 输入为{req:options,err:error}
+     * @param  {function} map.error  - 请求返回异常统一预处理事件, 输入为{req:options,error:error}
      * @return {Void}
      */
     _p._$on = (function(){
