@@ -237,10 +237,10 @@ NEJ.define([
                 return;
             }
             // check global format handler
-            dispatch.call(this,'format',event);
             if (_u._$isFunction(conf.format)){
                 conf.format.call(this,event);
             }
+            dispatch.call(this,'format',event);
             // callback
             var callback = options.onload||conf.onload,
                 result = event.result||result;
