@@ -30,7 +30,8 @@ NEJ.define([
                 animationend:'AnimationEnd',
                 animationstart:'AnimationStart',
                 animationiteration:'AnimationIteration',
-                visibilitychange:'visibilitychange'
+                visibilitychange:'visibilitychange',
+                fullscreenchange:'fullscreenchange'
             };
         var _fmap = {
             enter:function(_element,_type,_handler){
