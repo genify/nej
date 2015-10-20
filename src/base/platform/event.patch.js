@@ -16,14 +16,15 @@ NEJ.define([
          * @param  {Node}     节点
          * @param  {String}   事件类型
          * @param  {Function} 处理函数
-         * @return {Object}   验证后事件信息 type/handler
+         * @return {Object}   验证后事件信�? type/handler
          */
         _h.__checkEvent = (function(){
             var _emap = {
                 touchcancel:'MSPointerCancel',
                 touchstart:'MSPointerDown',
                 touchmove:'MSPointerMove',
-                touchend:'MSPointerUp'
+                touchend:'MSPointerUp',
+                fullscreenchange:'MSFullscreenChange'
             };
             return _h.__checkEvent._$aop(function(_event){
                 var _args = _event.args;
@@ -46,7 +47,7 @@ NEJ.define([
          * @param  {Node}     节点
          * @param  {String}   事件类型
          * @param  {Function} 处理函数
-         * @return {Object}   验证后事件信息 type/handler
+         * @return {Object}   验证后事件信�? type/handler
          */
         _h.__checkEvent = (function(){
             var _vmap = {};
@@ -139,7 +140,7 @@ NEJ.define([
          * @param  {Node}     节点
          * @param  {String}   事件类型
          * @param  {Function} 处理函数
-         * @return {Object}   验证后事件信息 type/handler
+         * @return {Object}   验证后事件信�? type/handler
          */
         _h.__checkEvent = (function(){
             var _lmap = {};
@@ -240,8 +241,8 @@ NEJ.define([
             _args[0].detachEvent('on'+_args[1],_args[2]);
         };
         /**
-         * 触发对象的某个事件
-         * @param  {String|Node} 节点ID或者对象
+         * 触发对象的某个事�?
+         * @param  {String|Node} 节点ID或�?�对�?
          * @param  {String}      鼠标事件类型
          * @return {Void}
          */
@@ -269,7 +270,7 @@ NEJ.define([
          * @param  {Node}     节点
          * @param  {String}   事件类型
          * @param  {Function} 处理函数
-         * @return {Object}   验证后事件信息 type/handler
+         * @return {Object}   验证后事件信�? type/handler
          */
         _h.__checkEvent = (function(){
             var _nreg = /^(?:transitionend|animationend|animationstart|animationiteration)$/i;

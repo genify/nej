@@ -170,7 +170,6 @@ NEJ.define([
      * @return {Void}
      */
     pro.__onContentPaste = function(event){
-        event.clipboardData.setData('text','aaaaaaaaaaaaaaa\nbbbbbbbbbbbbbbb');
         // TODO dump image
         console.log(event);
         // remove tags
