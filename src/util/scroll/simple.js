@@ -242,6 +242,22 @@ NEJ.define([
         };
     })();
     /**
+     * 导出容器信息
+     * @private
+     */
+    _pro.__doDumpBoxSize = function(_conf){
+        var ret = {
+            scroll:this.__parent[_conf.sb],
+            client:this.__parent[_conf.cb]
+        };
+        if (this.__parent.tagName=='BODY'){
+            var root = this.__parent.ownerDocument.documentElement;
+            ret.scroll = Math.max(ret.scroll,root[_conf.sb]);
+            ret.client = Math.min(ret.client,root[_conf.cb]);
+        }
+        return ret;
+    };
+    /**
      * 根据配置信息重置滚动条
      *
      * @protected
@@ -250,8 +266,9 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__doResetBarSize = function(_conf){
-        var _sbox = this.__parent[_conf.sb],
-            _cbox = this.__parent[_conf.cb],
+        var _bret = this.__doDumpBoxSize(_conf),
+            _sbox = _bret.scroll,
+            _cbox = _bret.client,
             _sdlt = _sbox-_cbox,
             _cbox = _cbox-_conf[_conf.sp]
                     -_conf[_conf.dr],
