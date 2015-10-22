@@ -14,8 +14,9 @@ NEJ.define([
     'base/util',
     'util/event',
     'util/dragger/dragger',
-    'util/animation/easeinout'
-],function(NEJ,_k,_e,_v,_u,_t,_t0,_t1,_p,_o,_f,_r){
+    'util/animation/easeinout',
+    '{platform}simple.js'
+],function(NEJ,_k,_e,_v,_u,_t,_t0,_t1,_h,_p,_o,_f,_r){
     // variable declaration
     var _pro;
     /**
@@ -242,20 +243,11 @@ NEJ.define([
         };
     })();
     /**
-     * 导出容器信息
+     * 取滚动条容器节点
      * @private
      */
-    _pro.__doDumpBoxSize = function(_conf){
-        var ret = {
-            scroll:this.__parent[_conf.sb],
-            client:this.__parent[_conf.cb]
-        };
-        if (this.__parent.tagName=='BODY'){
-            var root = this.__parent.ownerDocument.documentElement;
-            ret.scroll = Math.max(ret.scroll,root[_conf.sb]);
-            ret.client = Math.min(ret.client,root[_conf.cb]);
-        }
-        return ret;
+    _pro.__getOverflowParent = function(){
+        return _h.__getOverflowParent(this.__parent);
     };
     /**
      * 根据配置信息重置滚动条
@@ -266,9 +258,9 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__doResetBarSize = function(_conf){
-        var _bret = this.__doDumpBoxSize(_conf),
-            _sbox = _bret.scroll,
-            _cbox = _bret.client,
+        var _parent = this.__getOverflowParent(),
+            _sbox = _parent[_conf.sb],
+            _cbox = _parent[_conf.cb],
             _sdlt = _sbox-_cbox,
             _cbox = _cbox-_conf[_conf.sp]
                     -_conf[_conf.dr],
@@ -311,11 +303,12 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__doResetBarPosition = function(_conf,_delta){
+        var _parent = this.__getOverflowParent();
         if (_delta!=0){
-            this.__parent[_conf.sr] -= _delta*_conf.speed;
+            _parent[_conf.sr] -= _delta*_conf.speed;
         }
         if (!!_conf.body){
-            var _value = this.__parent[_conf.sr],
+            var _value = _parent[_conf.sr],
                 _offset = Math.ceil(_value*_conf.ratio)-
                          _conf.delta+_conf[_conf.sp];
             _e._$setStyle(_conf.body,_conf.sp,_offset+'px');
@@ -412,8 +405,9 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__onMouseWheel = function(_event){
-        var _dt = this.__parent.scrollTop,
-            _dl = this.__parent.scrollLeft;
+        var _parent = this.__getOverflowParent(),
+            _dt = _parent.scrollTop,
+            _dl = _parent.scrollLeft;
         // update scroll bar
         this.__doUpdateScrollBar(
             _event.wheelDeltaX||0,
@@ -421,8 +415,8 @@ NEJ.define([
             _event.wheelDelta||0
         );
         // check end
-        _dt = this.__parent.scrollTop!=_dt;
-        _dl = this.__parent.scrollLeft!=_dl;
+        _dt = _parent.scrollTop!=_dt;
+        _dl = _parent.scrollLeft!=_dl;
         if (_dt||_dl){
             _v._$stop(_event);
         }
@@ -529,7 +523,8 @@ NEJ.define([
      */
     _pro.__onBeforeUpdateBar = function(_name,_event){
         this.__dragging = !0;
-        var _conf = this.__bar[_name],
+        var _parent = this.__getOverflowParent(),
+            _conf = this.__bar[_name],
             _delta = _conf[_conf.sp],
             _offset = Math.max(
                 _delta,Math.min(
@@ -537,7 +532,7 @@ NEJ.define([
                     _event[_conf.sp]
                 )
             );
-        this.__parent[_conf.sr] = Math.ceil(
+        _parent[_conf.sr] = Math.ceil(
             (_offset-_delta)/_conf.ratio
         );
         _event[_conf.sp] = _offset;
