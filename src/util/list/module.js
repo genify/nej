@@ -472,6 +472,7 @@ NEJ.define([
      */
     _pro.__doChangeOffset = function(_offset){
         this.__ropt.offset = _offset;
+        this.__doBeforeListLoad();
         this.__doLoadList();
     };
     /**
@@ -493,7 +494,6 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__doLoadList = function(){
-        this.__doBeforeListLoad();
         // load data from cache
         var _data = this.__ropt.data;
         _data.offset = this.__ropt.offset;
@@ -1112,6 +1112,19 @@ NEJ.define([
     _pro._$refreshWithClear = function(){
         this.__cache._$clearListInCache(this.__ropt.key);
         this._$refresh();
+    };
+    /**
+     * 重新加载列表
+     *
+     * @method module:util/list/module._$$ListModule#_$reload
+     * @param  {Boolean} arg0 - 是否清除缓存数据
+     * @return {Void}
+     */
+    _pro._$reload = function(noclear){
+        if (!noclear){
+            this.__cache._$clearListInCache(this.__ropt.key);
+        }
+        this.__doLoadList();
     };
     /**
      * 前向刷新列表
