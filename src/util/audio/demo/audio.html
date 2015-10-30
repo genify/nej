@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>audio play</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,user-scalable=no">
+</head>
+<body>
+
+<p>AAC</p>
+<input type="button" value="play" id="play-aac"/>
+<input type="button" value="stop" id="stop-aac"/>
+<hr/>
+<p>AMR</p>
+<input type="button" value="play" id="play-amr"/>
+<input type="button" value="stop" id="stop-amr"/>
+
+<script src="../../../../define.js"></script>
+<script>
+    NEJ.define([
+        'base/event',
+        '../audio.js'
+    ],function(v,a){
+        v._$addEvent('play-aac','click',function(){
+            a._$play('./a.aac',{
+                onstatechange:function(event){
+                    console.log(event);
+                }
+            })
+        });
+        v._$addEvent('stop-aac','click',function(){
+            a._$stop();
+        });
+        v._$addEvent('play-amr','click',function(){
+            a._$play('./a.amr',{
+                onstatechange:function(event){
+                    console.log(event);
+                }
+            })
+        });
+        v._$addEvent('stop-amr','click',function(){
+            a._$stop();
+        });
+    });
+</script>
+</body>
+</html>

@@ -156,7 +156,11 @@ NEJ.define([
         this.__stopped = !1;
         this.__doStateChange(_state);
         if (_state==0){
-            this.__audio.removeAttribute('src');
+            try{
+                this.__audio.removeAttribute('src');
+            }catch(ex){
+                // ignore
+            }
         }
     };
     /**
