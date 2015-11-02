@@ -160,6 +160,16 @@ NEJ.define([
      */
     _pro.__getResponseHeader = _f;
     /**
+     * 请求终止事件
+     * @private
+     */
+    _pro.__onAbort = function(){
+        this._$dispatchEvent('onerror',{
+            code:_g._$CODE_ERRABRT,
+            message:'客户端终止请求'
+        });
+    };
+    /**
      * 发送请求
      * 
      * @method module:util/ajax/proxy/proxy._$$ProxyAbstract#_$send

@@ -108,6 +108,8 @@ NEJ.define([
             // state change
             this.__xhr.onreadystatechange = 
                 this.__onStateChange._$bind(this,2);
+            this.__xhr.onabort =
+                this.__onAbort._$bind(this);
             // timeout
             if (_request.timeout!==0){
                 this.__timer = window.setTimeout(

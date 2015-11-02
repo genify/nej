@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width,user-scalable=no">
 </head>
 <body>
-
+<p>Record</p>
+<input type="button" value="play" id="play-rcd"/>
+<input type="button" value="stop" id="stop-rcd"/>
+<hr/>
 <p>AAC</p>
 <input type="button" value="play" id="play-aac"/>
 <input type="button" value="stop" id="stop-aac"/>
@@ -21,6 +24,26 @@
         'base/event',
         '../audio.js'
     ],function(v,a){
+        var rec;
+        v._$addEvent('play-rcd','click',function(){
+            rec = new webkitSpeechRecognition();
+            rec.continuous = true;
+            [
+                'onaudiostart','onsoundstart','onspeechstart',
+                'onspeechend','onsoundend','onaudioend','onresult',
+                'onnomatch','onerror','onstart','onend'
+            ].forEach(function(n){
+                rec[n] = function(ev){
+                    console.log(ev.type);
+                    console.log(ev);
+                }
+            });
+            rec.start();
+        });
+        v._$addEvent('stop-rcd','click',function(){
+            rec.stop();
+        });
+
         v._$addEvent('play-aac','click',function(){
             a._$play('./a.aac',{
                 onstatechange:function(event){

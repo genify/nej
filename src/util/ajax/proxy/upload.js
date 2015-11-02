@@ -195,10 +195,7 @@ NEJ.define([
      * @return {Void}
      */
     _pro._$abort = function(){
-        this._$dispatchEvent('onerror',{
-            code:_g._$CODE_ERRABRT,
-            message:'客户端终止文件上传'
-        });
+        this.__onAbort();
     };
 
     return _p;
