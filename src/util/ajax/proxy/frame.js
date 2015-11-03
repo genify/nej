@@ -127,7 +127,7 @@ NEJ.define([
      */
     _pro._$abort = function(){
         delete _cache[this.__rkey];
-        this.__onLoadRequest({status:0});
+        this.__onAbort();
     };
     
     return _p;

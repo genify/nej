@@ -184,7 +184,12 @@ NEJ.define([
      * @return {Void}
      */
     _pro._$abort = function(){
-        this.__onLoadRequest({status:0});
+        if (!_h.__hasAbortEvent()){
+            this.__onAbort();
+        }else{
+            this.__xhr.onreadystatechange = _f;
+            this.__xhr.abort();
+        }
     };
     
     return _p;

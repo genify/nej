@@ -9,6 +9,16 @@ NEJ.define([
     './xhr.js',
     'base/util'
 ],function(_h,_u,_p,_o,_f,_r){
+    // for ie9-
+    NEJ.patch('TR<=5.0',function(){
+        /**
+         * 判断是否有Abort事件
+         * @return {Boolean}
+         */
+        _h.__hasAbortEvent = function(){
+            return !1;
+        };
+    });
     // for ie6-
     NEJ.patch('TR<=2.0',function(){
         /**

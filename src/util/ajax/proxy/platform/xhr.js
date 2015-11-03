@@ -13,6 +13,12 @@ NEJ.define(function(_p,_o,_f,_r){
     _p.__getXMLHttpRequest = function(){
         return new XMLHttpRequest();
     };
-    
+    /**
+     * 判断是否有Abort事件
+     * @return {Boolean}
+     */
+    _p.__hasAbortEvent = function(){
+        return !0;
+    };
     return _p;
 });
