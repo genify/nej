@@ -575,6 +575,24 @@ NEJ.define([
         this.__doResetBarSize(this.__bar.y);
         this.__doUpdateScrollBar(0,0);
     };
+    /**
+     * 尝试显示滚动条
+     *
+     * @method module:util/scroll/simple._$$SimpleScroll#_$show
+     * @private
+     */
+    _pro._$show = function(){
+        this.__onMouseEnter();
+    };
+    /**
+     * 尝试隐藏滚动条
+     *
+     * @method module:util/scroll/simple._$$SimpleScroll#_$hide
+     * @private
+     */
+    _pro._$hide = function(){
+        this.__onMouseLeave();
+    };
 
     if (CMPT){
         NEJ.copy(NEJ.P('nej.ut'),_p);
