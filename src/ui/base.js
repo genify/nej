@@ -40,9 +40,10 @@ NEJ.define([
      *
      * @class     module:ui/base._$$Abstract
      * @extends   module:util/event._$$EventTarget
-     * @param     {Object}               arg0   - 可选配置参数
-     * @property  {String}               clazz  - 控件样式
-     * @property  {String|Node|Function} parent -  控件所在容器节点或者追加控件节点执行函数
+     * @param     {Object}               arg0    - 可选配置参数
+     * @property  {String}               clazz   - 控件样式
+     * @property  {String|Node|Function} parent  - 控件所在容器节点或者追加控件节点执行函数
+     * @property  {Object}               dataset - 控件携带的数据集信息
      */
     _p._$$Abstract = _k._$klass();
     _pro = _p._$$Abstract._$extend(_t._$$EventTarget);
@@ -70,6 +71,7 @@ NEJ.define([
     _pro.__reset = function(_options){
         this.__super(_options);
         this.__doInitClass(_options.clazz);
+        this.__doInitDataset(_options.dataset);
         this._$appendTo(_options.parent);
     };
     /**
@@ -83,6 +85,7 @@ NEJ.define([
         this.__super();
         // clear parent
         this.__doDelParentClass();
+        this.__doDelParentDataset();
         delete this.__parent;
         // clear body
         _e._$removeByEC(this.__body);
@@ -136,6 +139,32 @@ NEJ.define([
     _pro.__doInitClass = function(_clazz){
         this.__class = _clazz||'';
         _e._$addClassName(this.__body,this.__class);
+    };
+    /**
+     * 添加携带数据
+     *
+     * @protected
+     * @method module:ui/base._$$Abstract#__doInitDataset
+     * @param _dataset
+     * @private
+     */
+    _pro.__doInitDataset = function(_dataset){
+        this.__datamap = _u._$merge({},_dataset);
+        _e._$dataset(this.__body,this.__datamap);
+    };
+    /**
+     * 删除携带数据
+     *
+     * @protected
+     * @method module:ui/base._$$Abstract#__doDelParentDataset
+     * @private
+     */
+    _pro.__doDelParentDataset = function(){
+        _u._$forIn(
+            this.__datamap,function(v,k){
+                _e._$dataset(this.__body,k,'');
+            },this
+        );
     };
     /**
      * 父节点增加辅助样式
