@@ -210,13 +210,18 @@ NEJ.define([
      * @method module:util/file/select._$unbind
      * @see    module:util/file/select._$file
      * @param  {String} arg0 - 标识
-     * @return {Void}
+     * @return {Object}        表单信息
      */
     _p._$unbind = function(_id){
         var _conf = _cache[_id];
         if (!!_conf){
-            _e._$remove(_conf.pid);
+            var _form = _p._$get(_id);
+            //_e._$remove(_conf.pid);
             delete _cache[_id];
+            return {
+                form:_form,
+                parent:_conf.pid
+            };
         }
     };
     /**

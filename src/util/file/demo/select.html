@@ -9,19 +9,20 @@
     <script src="../../../define.js"></script>
     <script>
       NEJ.define([
-          '../select.js'
-      ],function(_x){
+          '../select.js',
+          'util/ajax/xdr'
+      ],function(_x,_j){
           
           _x._$bind('abc',{
               name:'img',
               multiple:true,
               onchange:function(_event){
                   _event.form.action = './upload';
-//                  _j._$upload(_event.form,{
-//                      onload:function(){
-//
-//                      }
-//                  });
+                  _j._$upload(_event.form,{
+                      onload:function(){
+
+                      }
+                  });
               }
           });
       });
