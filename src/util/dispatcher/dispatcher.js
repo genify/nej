@@ -177,6 +177,32 @@ NEJ.define([
      * @property {String} href  - 完整路径，带查询参数
      * @property {Object} query - 查询参数解析出来的对象
      */
+    /**
+     * 模块无法匹配时触发事件
+     *
+     * 脚本举例
+     * ```javascript
+     * NEJ.define([
+     *     'util/dispatcher/dispatcher'
+     * ],function(_p){
+     *     // startup dispatcher
+     *     _p._$startup({
+     *         // ...
+     *         onnotfound:function(_event){
+     *             // _event -> {path:'/m/a',href:'http://a.b.com/m/a'}
+     *             _event.stopped = !0;
+     *             location.href = '/404';
+     *         }
+     *     });
+     * });
+     * ```
+     *
+     * @event    module:util/dispatcher/dispatcher._$$Dispatcher#onnotfound
+     * @param    {Object}  event - 地址信息
+     * @property {String}  path  - 路径信息，不带查询参数
+     * @property {String}  href  - 完整路径，带查询参数
+     * @property {Boolean} stopped - 是否阻止进一步调度器逻辑
+     */
     _p._$$Dispatcher = _k._$klass();
     _pro = _p._$$Dispatcher._$extend(_t2._$$EventTarget);
     /**
@@ -445,6 +471,16 @@ NEJ.define([
             }
             // public umi not registed
             if (!_gid&&!_t3._$isUMIPrivate(_umi)){
+                // check 404 callback
+                var event = {
+                    path:_umi,
+                    href:_location.href
+                };
+                this._$dispatchEvent('onnotfound',event);
+                if (event.stopped){
+                    return;
+                }
+                // go 404 config
                 _umi = this.__config.rr['404'];
                 _gid = this.__config.mg[_umi];
             }
