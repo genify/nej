@@ -520,7 +520,7 @@ NEJ.define([
             };
             this._$dispatchEvent('ontitlechange',event);
             if (!!event.title){
-                document.title = _title;
+                document.title = event.title;
             }
             this.__groups[_gid]._$dispatchUMI(_umi);
         };
