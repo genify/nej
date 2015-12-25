@@ -515,8 +515,13 @@ NEJ.define([
                 pos:_reg0.test(_location.href)?RegExp.$1:''
             };
             // dispatch module
-            var _title = this.__getModuleConf(_source,'title');
-            if (!!_title) document.title = _title;
+            var event = {
+                title:this.__getModuleConf(_source,'title')
+            };
+            this._$dispatchEvent('ontitlechange',event);
+            if (!!event.title){
+                document.title = _title;
+            }
             this.__groups[_gid]._$dispatchUMI(_umi);
         };
     })();
@@ -1231,6 +1236,14 @@ NEJ.define([
                 },this
             );
         }
+    };
+    /**
+     * 获取对应UMI配置的标题信息
+     * @param umi
+     * @private
+     */
+    _pro._$getTitle = function(umi){
+        return this.__getModuleConf(umi,'title');
     };
     /**
      * 启动调度系统
