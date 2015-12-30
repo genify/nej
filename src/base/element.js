@@ -98,7 +98,13 @@ NEJ.define([
      */
     _p._$get = function(_element){
         // for document/window
-        var _node = _empol[''+_element];
+        // fix dirty window object in mac safari
+        try{
+            var _node = _empol[''+_element];
+        }catch(ex){
+            // ignore
+        }
+
         if (!!_node){
             return _node;
         }
