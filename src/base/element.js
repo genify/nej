@@ -104,7 +104,6 @@ NEJ.define([
         }catch(ex){
             // ignore
         }
-
         if (!!_node){
             return _node;
         }
