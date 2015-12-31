@@ -10,10 +10,11 @@ NEJ.define([
     'base/global',
     'base/klass',
     'base/util',
-    'ui/colorpick/colorpick.simple',
+    'base/element',
+    'ui/colorpick/simple',
     'util/template/jst',
     'text!./complex.html'
-],function(NEJ,_k,_u,_i0,_t0,_html,_p,_o,_f,_r){
+],function(NEJ,_k,_u,_e,_i0,_t0,_html,_p,_o,_f,_r){
     var _pro,
         _seed_color = _t0._$add(_html);
     /**
@@ -102,7 +103,7 @@ NEJ.define([
                     }
                 }
             );
-            _e._$render(
+            _t0._$render(
                 this.__nbox,_seed_color,{
                     xlist:_arr
                 }

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>demo for colorpick</title>
+    <meta charset="utf-8" />
+    <script>
+        function log(m){
+            var p = document.createElement('p');
+            p.innerHTML = m;
+            document.body.appendChild(p);
+        }
+    </script>
+</head>
+<body>
+<script>
+    window.NEJ_CONF = {
+        root:'../../../../res/'
+    };
+</script>
+<script src="../../../define.js"></script>
+<script>
+    NEJ.define([
+        '../complex.js'
+    ],function(_i){
+        var _colorpick = _i._$$ComplexColorPick._$allocate({
+            parent:document.body,
+            color:'#f00',
+            defaultColor:'#fdc',
+            onchange:function(_event){
+                log('change color -> '+_event.color);
+            },
+            onselect:function(_event){
+                log('select color -> '+_event.color);
+            }
+        });
+    });
+</script>
+</body>
+</html>
