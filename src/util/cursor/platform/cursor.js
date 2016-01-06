@@ -26,7 +26,16 @@ NEJ.define([
      * @return {Void}
      */
     _p.__getCursorPosition = function(_textarea){
-        _textarea.focus();
+        // check focus
+        var act = null,
+            doc = _textarea.ownerDocument;
+        if (!!doc){
+            act = doc.activeElement;
+        }
+        if (act!=_textarea){
+            _textarea.focus();
+        }
+        // get position
         return {
             end:_textarea.selectionEnd,
             start:_textarea.selectionStart
