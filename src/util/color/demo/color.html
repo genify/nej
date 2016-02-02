@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NEJ实例 - 颜色转换</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <p><input type="text" id="a"/></p>
+    <p><textarea id="b"></textarea></p>
+    
+    <script src="../../../define.js"></script>
+    <script>
+        NEJ.define([
+            '../color.js'
+        ],function(x){
+//            var color = '#fdc';
+//            var rgb = x._$color2rgb(color);
+//            console.log('color -> rgb');
+//            console.log(rgb);
+//            console.log('rgb -> color');
+//            console.log(x._$rgb2color(rgb));
+//            var hsl = x._$rgb2hsl(rgb);
+//            console.log('rgb -> hsl');
+//            console.log(hsl);
+//            console.log('hsl -> color');
+//            console.log(x._$hsl2color(hsl));
+//            console.log('color -> hsl');
+//            console.log(x._$color2hsl(color));
+
+            var rgb = {r:1,g:161,b:237};
+            var hsl = x._$rgb2hsl(rgb);
+            console.log('rgb:'+JSON.stringify(rgb));
+            console.log('hsl:'+JSON.stringify(hsl));
+            console.log('hsl->rgb:'+JSON.stringify(x._$hsl2rgb(hsl)));
+
+            console.log('rgb->color:'+x._$rgb2color(rgb));
+            console.log('rgb->hsl->color:'+x._$hsl2color(x._$rgb2hsl(rgb)));
+        });
+    </script>
+  </body>
+</html>

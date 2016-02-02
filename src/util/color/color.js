@@ -71,9 +71,18 @@ NEJ.define([
      * @param  {Object} arg0 - RGB信息，如{r:23,g:24,b:35}
      * @return {String}        颜色字符串，如#fdcdfc
      */
-    _p._$rgb2color = function(_rgb){
-        return _p._$hsl2color(_p._$rgb2hsl(_rgb));
-    };
+    _p._$rgb2color = (function(){
+        var char = '0123456789abcdef';
+        function toHex(n) {
+            n = parseInt(n,10);
+            if (isNaN(n)) return '00';
+            n = Math.max(0,Math.min(n,255));
+            return char.charAt((n-n%16)/16)+char.charAt(n%16);
+        }
+        return function(rgb){
+            return '#'+toHex(rgb.r)+toHex(rgb.g)+toHex(rgb.b);
+        };
+    })();
     /**
      * RGB色值转HLS色值
      *
@@ -81,43 +90,68 @@ NEJ.define([
      * @param  {Object} arg0 - RGB信息，如{r:23,g:24,b:35}
      * @return {Object}        HSL信息，如{h:0.7,l:0.6,s:0.9}
      */
-    _p._$rgb2hsl = function(_rgb){
-        var _red   = _rgb.r/255,
-            _green = _rgb.g/255,
-            _blue  = _rgb.b/255,
-            _min = Math.min(_red,_green,_blue),
-            _max = Math.max(_red,_green,_blue),
-            _delta = _max-_min,
-            _total = _max+_min,
-            _lightness = _total/2;
-        if (!_delta){
-            return {
-                h:0,s:0,
-                l:_lightness
-            };
-        }
-        var _saturation = _lightness<0.5
-                        ? _delta/_total
-                        : _delta/(2-_total),
-            _deltar = (((_max-_red)/6)+(_delta/2))/_delta,
-            _deltag = (((_max-_green)/6)+(_delta/2))/_delta,
-            _deltab = (((_max-_blue)/6)+(_delta/2))/_delta;
-        var _hue;
-        if (_red==_max){
-            _hue = _deltab-_deltag;
-        }else if(_green==_max){
-            _hue = (1/3)+_deltar-_deltab;
+    _p._$rgb2hsl = function(rgb){
+        var r = rgb.r,
+            g = rgb.g,
+            b = rgb.b;
+        r /= 255, g /= 255, b /= 255;
+        var max = Math.max(r, g, b),
+            min = Math.min(r, g, b);
+        var h,s,
+            d = max-min,
+            l = (max+min)/2;
+        if(d==0){
+            // achromatic
+            h = s = 0;
         }else{
-            _hue = (2/3)+_deltag-_deltar;
+            var d = max-min;
+            s = l>0.5 ? d/(2-max-min) : d/(max+min);
+            switch(max){
+                case r: h = (g-b)/d+(g<b?6:0); break;
+                case g: h = (b-r)/d+2; break;
+                case b: h = (r-g)/d+4; break;
+            }
+            h /= 6;
         }
-        _hue += _hue<0?1:(_hue>1?-1:0);
-        console.log(_hue+':'+_lightness+':'+_saturation);
-        return {
-            h:_hue,
-            l:_lightness,
-            s:_saturation
-        };
+        return { h:h,s:s,l:l };
     };
+    /**
+     * HSL色值转RGB色值
+     *
+     * @param  {Object} arg0 - HSL信息，{h:0.7,l:0.6,s:0.9}
+     * @return {Object}        RGB信息，如{r:23,g:24,b:35}
+     */
+    _p._$hsl2rgb = (function(){
+        var hue2rgb = function(p, q, t){
+            if(t<0) t += 1;
+            if(t>1) t -= 1;
+            if(t<1/6) return p+(q-p)*6*t;
+            if(t<1/2) return q;
+            if(t<2/3) return p+(q-p)*(2/3-t)*6;
+            return p;
+        };
+        return function(hsl){
+            var red, green, blue;
+            if(hsl.s==0){
+                // achromatic
+                red = green = blue = hsl.l;
+            }else{
+                var l = hsl.l,
+                    s = hsl.s,
+                    h = hsl.h;
+                var q = l<0.5?(l*(1+s)):(l+s-l*s),
+                    p = 2*l-q;
+                red = hue2rgb(p, q, h + 1/3);
+                green = hue2rgb(p, q, h);
+                blue = hue2rgb(p, q, h - 1/3);
+            }
+            return {
+                r:Math.round(red*255),
+                g:Math.round(green*255),
+                b:Math.round(blue*255)
+            };
+        };
+    })();
     /**
      * HSL色值转颜色字符串
      *
@@ -125,45 +159,9 @@ NEJ.define([
      * @param  {Object} arg0 - HSL信息，{h:0.7,l:0.6,s:0.9}
      * @return {String}        颜色字符串，如#dddfdc
      */
-    _p._$hsl2color = (function(){
-        var _dec2hex = function(_dec){
-            var _value = parseInt(_dec);
-            if (isNaN(_value))
-                return '00';
-            var _hex = _value.toString(16),
-                _pfx = _hex.length<2?'0':'';
-            return (_pfx+_hex).toLowerCase();
-        };
-        var _hue2rgb = function(_v1,_v2,_hue){
-            _hue += _hue<0?1:(_hue>1?-1:0);
-            if ((6*_hue)<1)
-                return _v1+(_v2-_v1)*6*_hue;
-            if ((2*_hue)<1)
-                return _v2;
-            if ((3*_hue)<2)
-                return _v1+(_v2-_v1)*((2/3)-_hue)*6;
-            return _v1;
-        };
-        return function(_hsl){
-            var _red,_green,_blue;
-            if (!_hsl.s){
-                _red =
-                _blue =
-                _green = _hsl.l*255;
-            }else{
-                var _v2 = (_hsl.l<0.5)
-                        ? (_hsl.l*(1+_hsl.s))
-                        : ((_hsl.l+_hsl.s)-(_hsl.s*_hsl.l)),
-                    _v1 = 2*_hsl.l-_v2;
-                _red = 255*_hue2rgb(_v1,_v2,_hsl.h+(1/3));
-                _blue = 255*_hue2rgb(_v1,_v2,_hsl.h-(1/3));
-                _green = 255*_hue2rgb(_v1,_v2,_hsl.h);
-            }
-            return '#'+_dec2hex(_red)
-                      +_dec2hex(_green)
-                      +_dec2hex(_blue);
-        };
-    })();
+    _p._$hsl2color = function(hsl){
+        return _p._$rgb2color(_p._$hsl2rgb(hsl));
+    };
     /**
      * RGB颜色串转HSL色值
      *
