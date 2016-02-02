@@ -4,17 +4,21 @@
     <title>demo for colorpick</title>
     <meta charset="utf-8" />
     <style>
-        body{padding-top:500px;}
+        body{padding-top:10px;}
     </style>
     <script>
       function log(m){
           var p = document.createElement('p');
           p.innerHTML = m;
-          document.body.appendChild(p);
+          document.getElementById('lbox')
+                  .insertAdjacentElement('afterBegin',p);
       }
     </script>
   </head>
   <body>
+    <div id="cbox"></div>
+    <div id="lbox"></div>
+
     <script>
       window.NEJ_CONF = {
           root:'../../../../res/'
@@ -23,13 +27,15 @@
     <script src="../../../define.js"></script>
     <script>
       NEJ.define([
-          '../colorpanel.js'
-      ],function(_i){
+          '../colorpanel.js',
+          'util/color/color'
+      ],function(_i,x){
           var _colorpick = _i._$$ColorPanel._$allocate({
-              parent:document.body,
-              defaultColor:'#fdc',
+              parent:'cbox',
+              defaultColor:'#ffddcc',
               onchange:function(_color){
                   log('change color -> '+_color);
+                  log('color to rgb -> '+ JSON.stringify(x._$color2rgb(_color)));
               }
           });
       });

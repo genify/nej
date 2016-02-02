@@ -113,6 +113,7 @@ NEJ.define([
      */
     _pro.__destroy = function(){
         this.__super();
+        this.__onDragEnd();
         delete this.__body;
         delete this.__mbar;
         delete this.__view;
@@ -185,7 +186,29 @@ NEJ.define([
         if (!this.__offset) return;
         delete this.__maxbox;
         delete this.__offset;
-        this._$dispatchEvent('ondragend',this._$getPosition());
+        this._$dispatchEvent(
+            'ondragend',
+            this._$getPosition()
+        );
+    };
+    /**
+     * 修正位置信息
+     * @param event
+     * @private
+     */
+    _pro.__doFixPosition = function(event){
+        if (!this.__overflow){
+            var maxbox = this.__maxbox||
+                         this.__getMaxRange();
+            event.top  = Math.min(
+                maxbox.y,
+                Math.max(0,event.top)
+            );
+            event.left = Math.min(
+                maxbox.x,
+                Math.max(0,event.left)
+            );
+        }
     };
     /**
      * 设置位置
@@ -203,17 +226,15 @@ NEJ.define([
      * @return   {Void}
      */
     _pro._$setPosition = function(_event){
-        if (!this.__overflow){
-            var _maxbox = this.__maxbox||
-                          this.__getMaxRange();
-            _event.top  = Math.min(_maxbox.y,
-                          Math.max(0,_event.top));
-            _event.left = Math.min(_maxbox.x,
-                          Math.max(0,_event.left));
-        }
         _event.top = Math.round(_event.top);
         _event.left = Math.round(_event.left);
-        this._$dispatchEvent('onbeforechange',_event);
+        // fix position
+        this.__doFixPosition(_event);
+        this._$dispatchEvent(
+            'onbeforechange',_event
+        );
+        this.__doFixPosition(_event);
+        // update position
         var _style  = this.__body.style;
         if (this.__direction==0||
             this.__direction==2)

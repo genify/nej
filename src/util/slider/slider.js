@@ -12,7 +12,7 @@ NEJ.define([
     'base/element',
     'base/event',
     'util/event',
-    'util/dragger/dragger'
+    'util/dragger/simple'
 ],function(NEJ,_k,_e,_v,_t,_t0,_p,_o,_f,_r){
     var _pro;
     /**
@@ -150,14 +150,10 @@ NEJ.define([
             _pointer = {
                 x:_v._$pageX(_event),
                 y:_v._$pageY(_event)
-            },
-            _delta = {
-                x:Math.floor(this.__dopt.body.offsetWidth/2),
-                y:Math.floor(this.__dopt.body.offsetHeight/2)
             };
         this.__dragger._$setPosition({
-            top:_pointer.y-_offset.y-_delta.y,
-            left:_pointer.x-_offset.x-_delta.x
+            top:_pointer.y-_offset.y,
+            left:_pointer.x-_offset.x
         });
     };
     /**
