@@ -785,9 +785,7 @@
      */
     var _doExecFunction = (function(){
         // dependency inject param
-        var _o = {},
-            _r = [],
-            _f = function(){return !1;};
+        var _f = function(){return !1;};
         // merge inject param
         var _doMergeDI = function(_dep,_map){
             var _arr = [];
@@ -803,7 +801,7 @@
                     _arr.push(__rcache[_it]||__rcache[_map[_it]]||{});
                 }
             }
-            _arr.push({},_o,_f,_r);
+            _arr.push({},{},_f,[]); // p,o,f,r
             return _arr;
         };
         var _doMergeResult = function(_uri,_result){
