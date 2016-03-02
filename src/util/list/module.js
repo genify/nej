@@ -928,7 +928,7 @@ NEJ.define([
         }else{
             var _node = this._$getItemBody(_id);
             if (!_node) return;
-            var _list = this.__cache._$getListInCache(_event.key),
+            var _list = this.__cache._$getListInCache(this.__ropt.key),
                 _index = _u._$indexOf(_list,_event.data);
             if (_index<0) return;
             this.__iopt.xlist = _list;
