@@ -994,7 +994,10 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__cbListChange = function(_event){
-        if (_event.key!=this.__ropt.key) return;
+        if (!!_event.key&&
+            _event.key!=this.__ropt.key){
+            return;
+        }
         switch(_event.action){
             case 'add':
                 this.__cbItemAdd(_event);
