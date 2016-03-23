@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NEJ实例 - 简易滑块</title>
+    <meta charset="utf-8" />
+
+    <style>
+        .xxx{position:relative;height:100px;margin:200px 0;padding-top:100px;overflow: auto;}
+        .track{position:relative;height:300px;width:10px;background:#aaa;}
+        .thumb{position:absolute;top:0;left:0;width:10px;height:10px;background:#0b0;}
+    </style>
+
+</head>
+<body>
+
+<div class="xxx">
+    <div class="track" id="track">
+        <span class="thumb" id="thumb">&nbsp;</span>
+    </div>
+</div>
+
+
+<script src="../../../define.js"></script>
+<script>
+    NEJ.define([
+        'util/slider/y'
+    ],function(_t){
+        _t._$$SliderY._$allocate({
+            track:'track',
+            thumb:'thumb',
+            onchange:function(_event){
+                console.log(_event);
+            }
+        });
+    });
+</script>
+</body>
+</html>

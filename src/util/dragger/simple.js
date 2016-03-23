@@ -116,8 +116,8 @@ NEJ.define([
         }
         _v._$stop(_event);
         var _offset = {
-            x:_v._$pageX(_event),
-            y:_v._$pageY(_event)
+            x:_v._$clientX(_event),
+            y:_v._$clientY(_event)
         };
         this._$setPosition({
             top:_offset.y-this.__offset.y,

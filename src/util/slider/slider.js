@@ -148,8 +148,8 @@ NEJ.define([
     _pro.__onSlideToPosition = function(_event){
         var _offset = _e._$offset(this.__dopt.view),
             _pointer = {
-                x:_v._$pageX(_event),
-                y:_v._$pageY(_event)
+                x:_v._$clientX(_event),
+                y:_v._$clientY(_event)
             };
         this.__dragger._$setPosition({
             top:_pointer.y-_offset.y,
