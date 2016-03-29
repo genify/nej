@@ -1,10 +1,8 @@
-0.2.8   (2015-12-04)
+0.2.8   (2016-03-29)
+0.2.7
 --------------------------------------------------------
 - 增加regularjs模块的支持
   * util/dispatcher/regularModule.js
-
-0.2.7
---------------------------------------------------------
 - 功能增加
   * base/element 增加 _$getParent 接口
   * util/list/module 增加 _$nextPage,_$prevPage,_$pageTo 接口
