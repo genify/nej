@@ -21,6 +21,19 @@ NEJ.define([
     _p._$$RegularModule = _k._$klass();
     _pro = _p._$$RegularModule._$extend(_m._$$ModuleAbstract);
     /**
+     * 构建Regular组件
+     * 
+     * @protected
+     * @method module:util/dispatcher/regularModule._$$RegularModule#__build
+     * @return {Void}
+     */
+    _pro.__build = function(){
+        this._$innerModule = new this._$$InnerModule().$inject(this.__body);
+        this.__export.parent = this._$innerModule.$refs.view;
+
+        this._$innerModule.__doSendMessage = this.__doSendMessage._$bind(this);
+    }
+    /**
      * 控件初始化
      * 
      * @protected
@@ -31,8 +44,8 @@ NEJ.define([
         this.__super();
         this.__nodeKey = _t._$addNodeTemplate('<div></div>');
         this.__body = _t._$getNodeTemplate(this.__nodeKey);
-        this._$innerModule = new this._$$InnerModule().$inject(this.__body);
-        this.__export.parent = this._$innerModule.$refs.view;
+
+        this.__build();
     }
     /**
      * 显示模块触发事件，子类可重写具体逻辑
@@ -43,6 +56,10 @@ NEJ.define([
      * @return {Void}
      */
     _pro.__onShow = function(_options){
+        // 如果Regular组件被destroy了，就重新构建
+        if(this._$innerModule._watchers === null)
+            this.__build();
+
         this.__super(_options);
         if(this._$innerModule.__onShow){
             this._$innerModule.data.$param = _options.param;
@@ -127,7 +144,7 @@ NEJ.define([
     };
 
     /**
-     * 生成RegularModule
+     * 注册RegularModule
      * 
      * @public
      * @method module:util/dispatcher/regularModule._$build
@@ -135,7 +152,7 @@ NEJ.define([
      * @param  {Regular} arg1 - Regular组件模块
      * @return {_$$RegularModule} RegularModule模块
      */
-    _p._$build = function(_umiAlias, _$$InnerModule){
+    _p._$regist = function(_umiAlias, _$$InnerModule){
         /**
          * Regular模块对象
          *
