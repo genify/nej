@@ -173,7 +173,7 @@ NEJ.define([
      * @property {Variable} query   - 查询参数,字符串格式a=b&c=d,对象格式{a:'b',c:'d'}
      * @property {String}   method  - 请求方式,GET/POST
      * @property {Number}   timeout - 超时时间,0 禁止超时监测
-     * @property {Object}   headers - 头信息表
+     * @property {Object}   headers - 头信息表，标准HTTP头字段
      * @property {Boolean}  cookie  - 跨域请求是否带cookie，仅对CORS方式有效
      * @property {Number}   mode    - 请求模式,针对跨域请求采用的请求方式
      *
