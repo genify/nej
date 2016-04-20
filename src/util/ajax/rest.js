@@ -64,7 +64,7 @@ NEJ.define([
      * @property {Object}   param   - 请求参数,包括模板地址里使用的参数
      * @property {String}   method  - 请求方式,GET/POST/PUT/DELETE
      * @property {Number}   timeout - 超时时间,0 禁止超时监测
-     * @property {Object}   headers - 头信息
+     * @property {Object}   headers - 头信息，标准HTTP头字段
      * @property {Object}   result  - onload回调输入时需包含的额外信息
      *
      * @property {module:util/ajax/xdr.onload} onload   - 请求载入成功回调
