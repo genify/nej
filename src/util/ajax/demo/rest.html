@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>test rest</title>
+    <meta charset="utf-8"/>
+    <script>
+        function log(m){
+            var p = document.createElement('p');
+            p.innerHTML = m;
+            document.body.appendChild(p);
+        }
+    </script>
+</head>
+<body>
+
+<script src="../../../define.js"></script>
+<script>
+    define([
+        '../rest.js'
+    ],function(_j){
+        log('begin request');
+        _j._$request('./b.json',{
+            type:'json',
+            method:'GET',
+            data:'a=aaaa&b=bbbb',
+            onload:function(result){
+                log(JSON.stringify(result));
+            },
+            onerror:function(error){
+                log(JSON.stringify(error));
+            }
+        });
+    });
+</script>
+</body>
+</html>
