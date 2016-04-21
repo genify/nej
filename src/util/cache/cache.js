@@ -114,6 +114,17 @@ NEJ.define([
         }
     };
     /**
+     * 控件销毁
+     *
+     * @protected
+     * @method module:util/cache/cache._$$CacheAbstract#__destroy
+     * @return {Void}
+     */
+    _pro.__destroy = function(){
+        this.__doClearReqFromQueue();
+        this.__super();
+    };
+    /**
      * 从缓存中取数据
      * 
      * @protected
@@ -333,6 +344,15 @@ NEJ.define([
      * @return {Boolean}         是否已存在相同请求
      */
     _pro.__doQueueRequest = function(_key,_callback){
+        // cache to clear list
+        if (!this.__qtmp){
+            this.__qtmp = [];
+        }
+        this.__qtmp.push({
+            key:_key,
+            callback:_callback
+        });
+        // check request queue list
         _callback = _callback||_f;
         var _list = this.__cache[_ckey+'-l'][_key];
         if (!_list){
@@ -342,6 +362,26 @@ NEJ.define([
         }
         _list.push(_callback);
         return !0;
+    };
+    /**
+     * 从请求队列中移除回调
+     *
+     * @protected
+     * @method module:util/cache/cache._$$CacheAbstract#__doClearReqFromQueue
+     * @return {Void}
+     */
+    _pro.__doClearReqFromQueue = function(){
+        _u._$forEach(this.__qtmp,function(it){
+            _u._$reverseEach(
+                this.__cache[_ckey+'-l'][it.key],
+                function(item,index,list){
+                    if (item===it.callback){
+                        list.splice(index);
+                    }
+                }
+            );
+        },this);
+        delete this.__qtmp;
     };
     /**
      * 清除锁定请求
