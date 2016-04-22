@@ -372,14 +372,17 @@ NEJ.define([
      */
     _pro.__doClearReqFromQueue = function(){
         _u._$forEach(this.__qtmp,function(it){
+            var _xlist = this.__cache[_ckey+'-l'][it.key];
             _u._$reverseEach(
-                this.__cache[_ckey+'-l'][it.key],
-                function(item,index,list){
+                _xlist,function(item,index,list){
                     if (item===it.callback){
                         list.splice(index);
                     }
                 }
             );
+            if (!_xlist||!_xlist.length){
+                this.__doClearReqQueue(it.key);
+            }
         },this);
         delete this.__qtmp;
     };
