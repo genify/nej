@@ -148,6 +148,10 @@ NEJ.define([
      */
     _pro.__destroy = function(){
         this.__super();
+        if (this.__stimer){
+            window.clearTimeout(this.__stimer);
+            delete this.__stimer;
+        }
         delete this.__nmore;
         delete this.__sbody;
         delete this.__endskr;
@@ -183,6 +187,18 @@ NEJ.define([
         ]]);
     };
     /**
+     * 延时加载下一页数据
+     *
+     * @protected
+     * @method module:util/list/waterfall._$$ListModuleWF#__doLoadNextByTimer
+     * @return {Void}
+     */
+    _pro.__doLoadNextByTimer = function(){
+        if (!this.__endskr){
+            this._$next();
+        }
+    };
+    /**
      * 检查滚动条
      * 
      * @protected
@@ -200,7 +216,12 @@ NEJ.define([
             _noscroll = _element.scrollHeight<=_element.clientHeight;
         if (_delta<=this.__delta||(_noscroll&&!this.__endskr)){
             // render first
-            window.setTimeout(this._$next._$bind(this),0);
+            if (this.__stimer){
+                window.clearTimeout(this.__stimer);
+            }
+            this.__stimer = window.setTimeout(
+                this.__doLoadNextByTimer._$bind(this),0
+            );
         }
     };
     /**
