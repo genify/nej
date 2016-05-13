@@ -9,7 +9,7 @@ NEJ.define([
     'base/klass',
     'base/event',
     'util/template/tpl',
-    'util/dispatcher/module',
+    'util/dispatcher/module'
 ],function(_k,_v,_t,_m,_p){
     var _pro;
     /**
