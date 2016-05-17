@@ -3,6 +3,9 @@
   <head>
     <title>demo for colorpick</title>
     <meta charset="utf-8" />
+    <style>
+        #test-page a:active{color:#f00;background:#0C32F6;}
+    </style>
     <script>
       function log(m){
           var p = document.createElement('p');
@@ -11,19 +14,48 @@
       }
     </script>
   </head>
-  <body>
+  <body id="test-page">
+    <input type="button" value="show" id="abc"/>
     <script src="../../../define.js"></script>
     <script>
       NEJ.define([
+          'base/event',
           '../datepick.js'
-      ],function(_i){
-          _i._$$DatePick._$allocate({
-              parent:document.body,
-              range:[new Date(2015,10,16,0,0,0),new Date('2015-11-26')],
+      ],function(v,_i){
+          _i._$$DatePick._$attach('abc',{
+              date:new Date,
+              destroyable:true,
+              range:[new Date(2015,10,16,0,0,0),new Date('2016-11-26')],
               onchange:function(_date){
                   log('select date -> '+_date);
+              },
+              onbeforerecycle:function(){
+                  log('recycle');
               }
           });
+
+//
+//
+//          var x;
+//          v._$addEvent('abc','click',function(ev){
+//              v._$stop(ev);
+//              if (!x){
+//                  x = _i._$$DatePick._$allocate({
+//                      parent:document.body,
+//                      date:new Date,
+//                      range:[new Date(2015,10,16,0,0,0),new Date('2016-11-26')],
+//                      onchange:function(_date){
+//                          log('select date -> '+_date);
+//                      },
+//                      onbeforerecycle:function(){
+//                          x = null;
+//                      }
+//                  });
+//              }else{
+//                  x._$show();
+//              }
+//          });
+
       });
     </script>
   </body>

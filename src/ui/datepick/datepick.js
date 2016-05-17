@@ -180,7 +180,11 @@ NEJ.define([
         }catch(e){
             // ignore
         }
-        this._$hide();
+        // this._$hide();
+        // fix ie8-10 not clear active state for anchors
+        window.setTimeout(
+            this._$hide._$bind(this),0
+        );
     };
     /**
      * 设置日期
