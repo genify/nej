@@ -59,6 +59,7 @@
         }
         if (!__config.global&&!p.define){
             p.define = NEJ.define;
+            p.define.nej = !0;
         }
     };
     /*
@@ -1262,8 +1263,4 @@
     p.DEBUG = !0;
     // init
     _doInit();
-    // mark nej define
-    if (!!p.define){
-        p.define.nej = !0;
-    }
 })(document,window);
