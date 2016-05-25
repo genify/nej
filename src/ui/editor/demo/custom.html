@@ -3,10 +3,12 @@
   <head>
     <title>test editor</title>
     <meta charset="utf-8"/>
+      <style>
+          div.m-abc{width:800px;height:400px;}
+      </style>
+
   </head>
   <body>
-    <input type="button" value="insert image" id="xxx"/>
-
     <script>window.NEJ_CONF={root:'../../../../res/'};</script>
     <script src="../../../define.js"></script>
     <script>
@@ -16,17 +18,8 @@
       ],function(_v,_i){
           var editor = _i._$$CustomEditor._$allocate({
               parent:document.body,
-              style:'img{max-width:50px;}'
+              clazz:'m-abc'
           });
-          var c = 0;
-          _v._$addEvent(
-              'xxx','click',function(event){
-                      editor.__editor.__copt.area._$execCommand(
-                              'inserthtml','<p><img src="'+(c++)%3+'.jpg"/></p>'
-                      );
-                      //editor.__editor.__copt.area._$focus(0);
-              }
-          );
       });
     </script>
   </body>
