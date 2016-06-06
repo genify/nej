@@ -185,9 +185,11 @@ NEJ.define([
                     }else{
                         var _parent = _phash[_name].prototype;
                         // switch caller name
-                        if (_method!=_parent[_name]){
+                        if (!_parent.hasOwnProperty(_name)||
+                            _method!=_parent[_name]){
                             _name = _doUpdateCache(_method,this.constructor);
                         }else{
+                            // other method in current parent
                             _phash[_name] = _phash[_name]._$super;
                         }
                     }

@@ -17,11 +17,50 @@
       NEJ.define([
           'base/klass',
           'util/event'
-      ],function(_k,_t){
-          var Klass = _k._$klass();
-          var _pro = Klass._$extend(_t._$$EventTarget);
-          log(Klass);
-          return Klass;
+      ],function(_k,_t,p){
+          p.A = _k._$klass();
+          var pro = p.A._$extend(_t._$$EventTarget);
+          pro.a = function(){
+              log('a in A');
+              this.b();
+          };
+          pro.b = function(){
+              log('b in A');
+          };
+
+          p.B = _k._$klass();
+          var pro = p.B._$extend(p.A);
+          pro.a = function(){
+              this.__super();
+              log('a in B');
+          };
+          pro.b = function(){
+              this.__super();
+              this.c();
+              log('b in B');
+          };
+          pro.c = function(){
+              log('c in B');
+          };
+
+          p.C = _k._$klass();
+          var pro = p.C._$extend(p.B);
+          pro.a = function(){
+              this.__super();
+              log('a in C');
+          };
+          pro.b = function(){
+              this.__super();
+              log('b in C');
+          };
+          pro.c = function(){
+              log('c in C');
+              this.__super();
+          };
+
+
+          var c = p.C._$allocate();
+          c.a();
       });
     </script>
   </body>
