@@ -6,15 +6,15 @@
   </head>
   <body>
     
-    <script src="../../../../src/define.js"></script>
+    <script src="../../../../define.js"></script>
     <script>
       define([
           '../tag.js'
       ],function(_j){
           
-          _j._$loadHtml('./a.html',{
+          _j._$loadHtml('./b.html',{
               onload:function(result){
-                  console.log(result);
+                  console.log(result.getElementsByTagName('script')[0]);
               }
           });
           
