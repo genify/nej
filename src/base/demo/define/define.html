@@ -13,11 +13,12 @@
   </head>
   <body>
     
-    <script src="../../../define.js"></script>
+    <script src="../../../define.js?pro=/src/&abc=/base/demo/"></script>
     <script>
-      define(['./a.js']);
-      define(['json!./a.json'],function(_json){
-          log(_json);
+      define([
+          'json!abc/define/a'
+      ],function(json){
+          log('a:'+json.a);
       });
     </script>
   </body>

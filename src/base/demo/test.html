@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>klass demo</title>
+    <meta charset="utf-8" />
+    <script>
+        function log(m){
+            var p = document.createElement('p');
+            p.innerHTML = m;
+            document.body.appendChild(p);
+        }
+    </script>
+</head>
+<body>
+<script src="../../define.js"></script>
+<script>
+    NEJ.define([
+        'base/klass',
+        'util/event'
+    ],function(_k,_t,p){
+        var t = +new Date;
+        p.A0 = _k._$klass();
+        pro = p.A0.prototype;
+        for(var i=0;i<1000;i++){
+            pro['a'+i] = function(){
+                console.log('aaaaaaa');
+            };
+        }
+        console.log(+new Date-t);
+        var t = +new Date;
+        for(var i=0;i<100;i++){
+            var name = 'A'+(i+1);
+            p[name] = _k._$klass();
+            var pro = p[name]._$extend(p['A'+i]);
+            for(var j=0;j<1000;j++){
+                pro['a'+j] = (function(last){
+                    return function(){
+                        if (last>=0){
+                            this['a'+last]();
+                        }
+                        this.__super();
+                        console.log('a');
+                    };
+                })(j-1);
+            }
+        }
+        console.log(+new Date-t);
+        console.log(p);
+
+        var t = +new Date;
+        var a = new p.A100();
+        a.a999();
+        console.log(+new Date-t);
+    });
+</script>
+</body>
+</html>

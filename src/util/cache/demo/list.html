@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>test cookie</title>
+    <meta charset="utf-8"/>
+    <script>
+        function log(m){
+            var p = document.createElement('p');
+            p.innerHTML = m;
+            document.body.appendChild(p);
+        }
+    </script>
+</head>
+<body>
+<script src="../../../define.js"></script>
+<script>
+    NEJ.define([
+        './list.js',
+    ],function(c){
+        var inst = c._$$CustomCache._$allocate();
+        console.log(inst);
+        var list = inst._$getListInCache();
+        console.log(list);
+        inst._$clearListInCache();
+    });
+</script>
+</body>
+</html>

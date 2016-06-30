@@ -753,7 +753,7 @@ NEJ.define([
             _list.splice(_index,1);
         };
         return function(_key){
-            if (!!_key){
+            if (_u._$isString(_key)){
                 // clear one list
                 var _list = this._$getListInCache(_key);
                 _u._$reverseEach(_list,_doClear);
