@@ -1147,12 +1147,13 @@ NEJ.define([
      * ```
      *
      * @method   module:util/dispatcher/dispatcher._$$Dispatcher#_$redirect
-     * @param    {String}   arg0    - 模块UMI，可以带查询参数
-     * @param    {Object}   arg1    - 配置信息
-     * @property {Boolean}  replace - 是否替换当前历史
-     * @property {Boolean}  force   - 是否强制刷新
-     * @property {Variable} input   - 输入数据
-     * @property {Boolean}  ignored - 是否忽略地址变化前的验证
+     * @param    {String}   arg0     - 模块UMI，可以带查询参数
+     * @param    {Object}   arg1     - 配置信息
+     * @property {Variable} input    - 输入数据
+     * @property {Boolean}  replace  - 是否替换当前历史
+     * @property {Boolean}  force    - 是否强制刷新
+     * @property {Boolean}  ignored  - 是否忽略地址变化前的验证
+     * @property {Boolean}  exitable - 是否可强行退出前面的模块
      * @return   {Void}
      */
     _pro._$redirect = function(_url,_options){
@@ -1167,7 +1168,7 @@ NEJ.define([
             // dispatch public module
             var _group = this.__groups[this.__pbseed],
                 _event = {target:_location,umi:_umi};
-            if (!!_group._$exitable(_event)){
+            if (_options.exitable||!!_group._$exitable(_event)){
                 if (location.same(_url)&&!!_options.force){
                     this.__onURLChange(_location);
                 }else{
