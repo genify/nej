@@ -516,9 +516,13 @@
                 _doScriptLoaded(_element,!0);
         };
         return function(_script){
-            _script.onload = function(e){_doScriptLoaded(_getElement(e),!0);};
-            _script.onerror = function(e){_doScriptLoaded(_getElement(e),!1);};
-            _script.onreadystatechange = _statechange;
+            if (!_script.onload){
+                _script.onload = function(e){_doScriptLoaded(_getElement(e),!0);};
+                _script.onerror = function(e){_doScriptLoaded(_getElement(e),!1);};
+                _script.onreadystatechange = _statechange;
+            }else{
+                _script.xxx = !0;
+            }
         };
     })();
     /*
