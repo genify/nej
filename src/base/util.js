@@ -783,21 +783,30 @@ NEJ.define([
      *
      * @method module:base/util._$string2object
      * @see    module:base/util._$object2string
-     * @param  {String}        arg0 - 待处理数据
-     * @param  {String|RegExp} arg1 - 分隔符
-     * @return {Object}               转换后对象
+     * @param  {String}           arg0 - 待处理数据
+     * @param  {String|RegExp}    arg1 - 分隔符
+     * @param  {Boolean|Function} arg2 - 是否反编码
+     * @return {Object}           转换后对象
      */
-    _p._$string2object = function(_string,_split){
+    _p._$string2object = function(_string,_split,_decode){
         var _obj = {};
+        // decode function
+        var _func = _decode;
+        if (!_p._$isFunction(_func)){
+            _func = function(v){
+                return !_decode?v:decodeURIComponent(v);
+            };
+        }
+        // parse string
         _p._$forEach(
             (_string||'').split(_split),
             function(_name){
                 var _brr = _name.split('=');
                 if (!_brr||!_brr.length) return;
                 var _key = _brr.shift();
-                if (!_key) return;
-                _obj[decodeURIComponent(_key)] =
-                     decodeURIComponent(_brr.join('='));
+                if (!!_key){
+                    _obj[_func(_key)] = _func(_brr.join('='));
+                }
             }
         );
         return _obj;
@@ -844,12 +853,20 @@ NEJ.define([
      * @see    module:base/util._$string2object
      * @param  {Object}  arg0 - 对象
      * @param  {String}  arg1 - 分隔符，默认为逗号
-     * @param  {Boolean} arg2 - 是否编码
+     * @param  {Boolean|Function} arg2 - 是否编码
      * @return {String}         key-value串
      */
     _p._$object2string = function(_object,_split,_encode){
         if (!_object) return '';
         var _arr = [];
+        // encode function
+        var _func = _encode;
+        if (!_p._$isFunction(_func)){
+            _func = function(v){
+                return !_encode?v:encodeURIComponent(v);
+            };
+        }
+        // parse object
         _p._$loop(
             _object,function(_value,_key){
                 if (_p._$isFunction(_value)){
@@ -862,10 +879,7 @@ NEJ.define([
                 }else if(_p._$isObject(_value)){
                     _value = JSON.stringify(_value);
                 }
-                if (!!_encode){
-                    _value = encodeURIComponent(_value);
-                }
-                _arr.push(encodeURIComponent(_key)+'='+_value);
+                _arr.push(_func(_key)+'='+_func(_value));
             }
         );
         return _arr.join(_split||',');
@@ -889,7 +903,7 @@ NEJ.define([
      * @return {Object}        转换出来的对象
      */
     _p._$query2object = function(_query){
-        return _p._$string2object(_query,'&');
+        return _p._$string2object(_query,'&',!0);
     };
     /**
      * 对象转查询串

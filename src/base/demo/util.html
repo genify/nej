@@ -27,6 +27,9 @@
                   log(e.name);
               }
           );
+
+          log(_u._$string2object('a=aaa&b=bbbbb%gh','&'));
+          log(_u._$object2string({a:1111,b:2222,c:'%123455555'},'&'));
       });
     </script>
   </body>
