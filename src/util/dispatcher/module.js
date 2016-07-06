@@ -35,10 +35,10 @@ NEJ.define([
      * @method module:util/dispatcher/module._$$ModuleAbstract#__init
      * @return {Void}
      */
-    _pro.__init = function(){
-        this.__super();
+    _pro.__init = function(_options){
+        this.__super(_options);
         this.__export = {};
-        this.__doBuild();
+        this.__doBuild(_options);
     };
     /**
      * 控件重置
