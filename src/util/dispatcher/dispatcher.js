@@ -883,6 +883,7 @@ NEJ.define([
      * @property {String|module:util/dispatcher/module._$$ModuleAbstract}
      *                           module    - 指定模块对应的模板文件地址或者模块的构造函数
      * @property {Object}        composite - 组合模块容器对应关系,{pid:umi},其中pid为umi对应模块的容器
+     * @property {Object}        config    - 模块构建配置信息，在模块的init/reset/dobuild时可以获取到的配置信息
      * @return   {Void}
      */
     _pro._$regist = (function(){
@@ -941,6 +942,10 @@ NEJ.define([
                 // cache module composite
                 if (!!_config.composite){
                     _data.composite = _config.composite;
+                }
+                // cache module build config
+                if (!!_config.config){
+                    _data.config = _config.config;
                 }
             }
             // save module

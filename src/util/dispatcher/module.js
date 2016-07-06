@@ -38,7 +38,7 @@ NEJ.define([
     _pro.__init = function(_options){
         this.__super(_options);
         this.__export = {};
-        this.__doBuild(_options);
+        this.__doBuild(_options.config);
     };
     /**
      * 控件重置

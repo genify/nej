@@ -173,6 +173,7 @@ NEJ.define([
             if (this.__isStopped(_node)) return;
             var _options = {
                 umi:_node._$getPath(),
+                config:_data.config,
                 composite:_data.composite,
                 dispatcher:this.__dispatcher
             };
