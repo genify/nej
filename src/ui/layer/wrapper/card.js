@@ -12,7 +12,7 @@ NEJ.define([
     'base/element',
     'base/event',
     'base/util',
-    'ui/layer/layer.wrapper',
+    'ui/wrapper/layer',
     'ui/layer/card'
 ],function(NEJ,_k,_e,_v,_u,_i0,_i1,_p,_o,_f,_r){
     var _pro;
