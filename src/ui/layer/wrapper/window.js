@@ -9,7 +9,7 @@
 NEJ.define([
     'base/global',
     'base/klass',
-    'ui/wrapper/layer',
+    'ui/layer/wrapper/layer',
     'ui/layer/window'
 ],function(NEJ,_k,_i0,_i1,_p,_o,_f,_r){
     var _pro;
