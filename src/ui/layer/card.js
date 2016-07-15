@@ -222,7 +222,8 @@ NEJ.define([
         }
         if (!!this.__fbox)
             this._$setPosition(
-            this.__doCalPosition(this.__align));
+                this.__doCalPosition(this.__align)
+            );
     };
 
     /**
