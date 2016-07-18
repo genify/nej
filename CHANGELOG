@@ -1,3 +1,16 @@
+0.3.0   (2016-07-18)
+--------------------------------------------------------
+- BUG修复模块
+  * base/klass 清除无效条件判断
+  * base/util string2object/object2string接口处理不合法URL异常
+  * util/cache/list 清除请求队列异常
+  * util/module/list 瀑布流列表分页问题
+  * define.js 在head中引入的异常
+
+- 功能支持
+  * util/dispatcher/dispatcher 重定向时模块退出判断支持
+  * util/dispatcher/module 模块构建时支持UMI配置参数
+
 0.2.8   (2016-03-29)
 0.2.7
 --------------------------------------------------------
