@@ -15,12 +15,12 @@
             _css = {display:'none',position:'absolute',top:0,right:0,boder:'1px solid #aaa',overflow:'auto',height:'300px',width:'400px',zIndex:'1000',fontSize:'12px',color:'#fff',backgroundColor:'#000',lineHeight:'20px',textAlign:'left'};
         return function(_msg){
             if (!_div){
-                _div = document.createElement('div');
+                _div = d.createElement('div');
                 var _style = _div.style;
                 for(var x in _css)
                     _style[x] = _css[x];
-                document.body.appendChild(_div);
-                _div1 = document.createElement('div');
+                d.body.appendChild(_div);
+                _div1 = d.createElement('div');
                 _div1.title = '关闭控制台信息';
                 _div1.innerHTML = '×';
                 _style = _div1.style;
@@ -28,13 +28,13 @@
                     _style[x] = _css1[x];
                 _div.appendChild(_div1);
                 _div1.onclick = function(){_div.style.display='none';};
-                document.attachEvent('onkeypress',function(_event){
+                d.attachEvent('onkeypress',function(_event){
                     // press ~ to show console
                     if (_event.keyCode==96)
                         _div.style.display = 'block';
                 });
             }
-            var p = document.createElement('div');
+            var p = d.createElement('div');
             p.innerHTML = _msg;
             _div1.insertAdjacentElement('afterEnd',p);
         };
@@ -44,8 +44,9 @@
      * @return {Void}
      */
     var _doInit = function(){
-        if (!p.console)
+        if (!p.console&&d.body){
             p.console = {log:_doLog,warn:_doLog,debug:_doLog,error:_doLog};
+        }
         // do init add loaded script and remove node
         var _list = d.getElementsByTagName('script');
         if (!_list||!_list.length) return;
@@ -97,7 +98,7 @@
             _root.pro = '../javascript/';
         }
         if (!!_deps){
-            document.write('<script src="'+_deps+'"></scr'+'ipt>');
+            d.write('<script src="'+_deps+'"></scr'+'ipt>');
         }
         //console.log(__config.root.lib);
     };
@@ -388,7 +389,7 @@
             if (_xxx) return;
             _xxx = !0;
             _anchor.style.display = 'none';
-            document.body.appendChild(_anchor);
+            (d.body||d.getElementsByTagName('head')[0]).appendChild(_anchor);
         };
         return function(_uri){
             _append();
@@ -536,7 +537,7 @@
             return _code.search(_reg)>=0;
         };
         return function(){
-            var _list = document.getElementsByTagName('script');
+            var _list = d.getElementsByTagName('script');
             for(var i=_list.length-1,_script;i>=0;i--){
                 _script = _list[i];
                 if (!_script.xxx){
@@ -694,7 +695,7 @@
         _script.charset = _doParseCharset(_uri);
         _doAddListener(_script);
         _script.src = _uri;
-        (d.getElementsByTagName('head')[0]||document.body).appendChild(_script);
+        (d.getElementsByTagName('head')[0]||d.body).appendChild(_script);
     };
     /*
      * 脚本载入完成回调
@@ -890,7 +891,7 @@
      */
     var _doFindScriptRunning = function(){
         // for ie8+
-        var _list = document.getElementsByTagName('script');
+        var _list = d.getElementsByTagName('script');
         for(var i=_list.length-1,_script;i>=0;i--){
             _script = _list[i];
             if (_script.readyState=='interactive'){
@@ -1235,7 +1236,7 @@
             _arr.push('<script src="'+_it+'"></scr'+'ipt>');
             __scache[_it] = 2;
         }
-        document.writeln(_arr.join(''));
+        d.writeln(_arr.join(''));
     };
     /**
      * 是否兼容模式，兼容模式下支持用全局名字空间使用API和控件

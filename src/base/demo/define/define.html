@@ -10,14 +10,16 @@
           document.body.appendChild(p);
       }
     </script>
+      <script src="../../../define.js?pro=/base/demo/define/&abc=/base/demo/"></script>
   </head>
   <body>
-    
-    <script src="../../../define.js?pro=/src/&abc=/base/demo/"></script>
+
     <script>
       define([
-          'json!abc/define/a'
-      ],function(json){
+          'pro/a',
+          'base/element',
+          'json!abc/define/a.json'
+      ],function(a,e,json){
           log('a:'+json.a);
       });
     </script>
