@@ -382,10 +382,10 @@ NEJ模板说明
   </div>
 </textarea>
 
-<!-- @TEMPLATE -->
+
 <textarea name="js" data-src="./index.css"></textarea>
 <textarea name="js" data-src="./index.js"></textarea>
-<!-- /@TEMPLATE -->
+
 ```
 
 #### 逻辑
