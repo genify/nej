@@ -22,7 +22,7 @@ NEJ.define([
     _pro = _p._$$RegularModule._$extend(_m._$$ModuleAbstract);
     /**
      * 构建Regular组件
-     * 
+     *
      * @protected
      * @method module:util/dispatcher/regularModule._$$RegularModule#__build
      * @return {Void}
@@ -35,13 +35,13 @@ NEJ.define([
     }
     /**
      * 控件初始化
-     * 
+     *
      * @protected
      * @method module:util/dispatcher/regularModule._$$RegularModule#__init
      * @return {Void}
      */
-    _pro.__init = function(){
-        this.__super();
+    _pro.__init = function(_options){
+        this.__super(_options);
         this.__nodeKey = _t._$addNodeTemplate('<div></div>');
         this.__body = _t._$getNodeTemplate(this.__nodeKey);
 
@@ -49,7 +49,7 @@ NEJ.define([
     }
     /**
      * 显示模块触发事件，子类可重写具体逻辑
-     * 
+     *
      * @protected
      * @method module:util/dispatcher/regularModule._$$RegularModule#__onShow
      * @param  {Object} arg0 - 事件对象
@@ -70,7 +70,7 @@ NEJ.define([
     }
     /**
      * 显示模块触发事件，子类实现具体逻辑
-     * 
+     *
      * @protected
      * @method module:util/dispatcher/regularModule._$$RegularModule#__onRefresh
      * @param  {Object} arg0 - 事件对象
@@ -87,7 +87,7 @@ NEJ.define([
     }
     /**
      * 接受到消息触发事件，子类实现具体逻辑
-     * 
+     *
      * @abstract
      * @method module:util/dispatcher/regularModule._$$RegularModule#__onMessage
      * @param  {Object} arg0 - 事件对象
@@ -102,7 +102,7 @@ NEJ.define([
     }
     /**
      * 模块退出前触发事件，通过阻止输入的事件做退出验证，子类实现具体逻辑
-     * 
+     *
      * @abstract
      * @method module:util/dispatcher/regularModule._$$RegularModule#__onBeforeHide
      * @param  {Object} arg0 - 事件对象
@@ -117,7 +117,7 @@ NEJ.define([
     }
     /**
      * 隐藏模块触发事件，子类实现具体逻辑
-     * 
+     *
      * @protected
      * @method module:util/dispatcher/regularModule._$$RegularModule#__onHide
      * @return {Void}
@@ -131,7 +131,7 @@ NEJ.define([
     }
     /**
      * 控件销毁
-     * 
+     *
      * @protected
      * @method module:util/dispatcher/regularModule._$$RegularModule#__destroy
      * @return {Void}
@@ -145,7 +145,7 @@ NEJ.define([
 
     /**
      * 注册RegularModule
-     * 
+     *
      * @public
      * @method module:util/dispatcher/regularModule._$build
      * @param  {String}  arg0 - 模块UMI或者别名
