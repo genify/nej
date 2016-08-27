@@ -383,7 +383,7 @@ NEJ模板说明
 </textarea>
 
 
-<textarea name="js" data-src="./index.css"></textarea>
+<textarea name="css" data-src="./index.css"></textarea>
 <textarea name="js" data-src="./index.js"></textarea>
 
 ```
