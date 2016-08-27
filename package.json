@@ -1,7 +1,7 @@
 {
   "name": "nej-framework",
   "description": "JavaScript Cross-Platform Framework",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "license": "MIT",
   
   "keywords": ["nej","javascript","cross platform","framework"],
