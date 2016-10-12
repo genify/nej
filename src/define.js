@@ -164,6 +164,9 @@
             },
             regular:function(_uri){
                 _doLoadText(_uri);
+            },
+            css:function (_uri) {
+                _doLoadStyle(_uri);
             }
         };
         return function(_uri){
@@ -696,6 +699,25 @@
         _doAddListener(_script);
         _script.src = _uri;
         (d.getElementsByTagName('head')[0]||d.body).appendChild(_script);
+    };
+    /**
+     * 外联载入依赖样式
+     *
+     * @param  {String} _uri 样式地址
+     * @return {Void}
+     */
+    var _doLoadStyle = function (_uri) {
+        if (!_uri) return;
+        var _state = __scache[_uri];
+        if (_state!=null) return;
+        // load state as done
+        __scache[_uri] = 2;
+        __rcache[_uri] = ' ';
+        // load style link
+        var link = d.createElement('link');
+        link.rel = 'stylesheet';
+        (d.getElementsByTagName('head')[0]||d.body).appendChild(link);
+        link.href = _uri;
     };
     /*
      * 脚本载入完成回调
