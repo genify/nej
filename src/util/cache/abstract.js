@@ -242,8 +242,10 @@ NEJ.define([
             }
             dispatch.call(this,'format',event);
             // callback
-            var callback = options.onload||conf.onload,
-                result = event.result||result;
+            var callback = options.onload||conf.onload;
+            if (event.result!=null){
+                result = event.result;
+            }
             if (_u._$isFunction(callback)){
                 callback.call(this,result);
             }else if(_u._$isString(callback)){
