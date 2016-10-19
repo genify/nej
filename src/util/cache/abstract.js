@@ -499,6 +499,16 @@ NEJ.define([
         }
     };
 
+    /**
+     * 导出配置信息对象
+     *
+     * @method module:util/cache/abstract._$dump
+     * @returns {Object} 配置信息对象
+     */
+    _p._$dump = function(){
+        return config;
+    };
+
     if (CMPT){
         NEJ.P('nej.ut')._$$AbstractListCache = _p._$$CacheListAbstract;
     }
