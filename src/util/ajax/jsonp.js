@@ -30,9 +30,9 @@ NEJ.define([
      * ```
      *
      * @method   module:util/ajax/jsonp._$request
-     * @param    {String}   arg0    - 请求地址
-     * @param    {Object}   arg1    - 配置参数
-     * @property {Variable} query   - 查询参数,字符串格式a=b&c=d,对象格式{a:'b',c:'d'}
+     * @param    {String}   arg0 - 请求地址
+     * @param    {Object}   arg1 - 配置参数
+     * @property {Variable} data - 查询参数,字符串格式a=b&c=d,对象格式{a:'b',c:'d'}
      *
      * @property {module:util/ajax/xdr.onload}  onload  - 数据载入回调
      *
@@ -53,14 +53,22 @@ NEJ.define([
         return function (url, options) {
             var sn = u._$uniqueID(),
                 cb = 'cb_'+sn,
-                url = merge(url, options.query, cb);
+                url = merge(url, options.data, cb);
             if (!!options.onload){
                 window[cb] = function (result) {
                     options.onload(result);
                     u._$safeDelete(window,cb);
                 };
             }
-            j._$loadScript(url);
+            var opt = u._$merge({},options);
+            opt.onload = null;
+            opt.onerror = function (error) {
+                if (options.onerror){
+                    u._$safeDelete(window,cb);
+                    options.onerror(error);
+                }
+            };
+            j._$loadScript(url,opt);
             return sn;
         };
     })();

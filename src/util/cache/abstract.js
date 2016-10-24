@@ -13,8 +13,9 @@ NEJ.define([
     'base/event',
     'util/ajax/xdr',
     'util/ajax/rest',
+    'util/ajax/jsonp',
     './list.js'
-],function(NEJ,_k,_u,_v,_j,_jj,_t,_p,_o,_f,_r,_pro){
+],function(NEJ,_k,_u,_v,_j,_jj,_jjj,_t,_p,_o,_f,_r,_pro){
     // request config cache
     var config = {},
         seed = _u._$uniqueID();
@@ -272,7 +273,15 @@ NEJ.define([
             onload:onload._$bind(this),
             onerror:onerror._$bind(this)
         });
-        (!conf.rest?_j:_jj)._$request(event.url,opt);
+        // do request
+        var _req = _j;
+        if (conf.rest){
+            _req = _jj;
+        }
+        if (conf.jsonp){
+            _req = _jjj;
+        }
+        _req._$request(event.url,opt);
     };
     /**
      * 控件初始化
