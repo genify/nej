@@ -42,13 +42,13 @@ NEJ.define([
         var merge = function (url, data, callback) {
             url += (url.indexOf('?')<0?'?':'&')
                 +  'callback='+callback;
-            if (!data){
-                return url;
+            if (!!data){
+                if (u._$isObject(data)){
+                    data = u._$object2query(data);
+                }
+                url += '&'+data;
             }
-            if (u._$isObject(data)){
-                data = u._$object2query(data);
-            }
-            url += '&'+data;
+            return url;
         };
         return function (url, options) {
             var sn = u._$uniqueID(),
