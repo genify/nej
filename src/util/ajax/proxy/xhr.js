@@ -132,7 +132,9 @@ NEJ.define([
             // format data for sending Object
             if(_headers[_g._$HEAD_CT]===_g._$HEAD_CT_FORM&&
               (!window.FormData||!(_request.data instanceof window.FormData))){
-                _request.data = _u._$object2string(_request.data,'&',!0);
+                if (_u._$isObject(_request.data)){
+                    _request.data = _u._$object2string(_request.data,'&',!0);
+                }
             }
             this.__xhr.send(_request.data);
         };
