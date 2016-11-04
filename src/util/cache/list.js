@@ -134,8 +134,8 @@ NEJ.define([
      * 
      * @event    module:util/cache/list._$$CacheList#onitemadd
      * @param    {Object}   event - 可选配置参数
-     * @property {String}   id    - 项标识
      * @property {String}   key   - 列表标识
+     * @property {Object}   data  - 添加的数据对象
      * @property {Variable} ext   - 传入数据原样返回
      */
     /**
@@ -143,8 +143,8 @@ NEJ.define([
      * 
      * @event    module:util/cache/list._$$CacheList#onitemdelete
      * @param    {Object}   event - 可选配置参数
-     * @property {String}   id    - 项标识
      * @property {String}   key   - 列表标识
+     * @property {Object}   data  - 删除的数据对象
      * @property {Variable} ext   - 传入数据原样返回
      */
     /**
@@ -152,8 +152,8 @@ NEJ.define([
      * 
      * @event    module:util/cache/list._$$CacheList#onitemupdate
      * @param    {Object}   event - 可选配置参数
-     * @property {String}   id    - 项标识
      * @property {String}   key   - 列表标识
+     * @property {Object}   data  - 更新的数据对象
      * @property {Variable} ext   - 传入数据原样返回
      */
     /**
