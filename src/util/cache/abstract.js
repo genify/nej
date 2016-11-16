@@ -268,7 +268,7 @@ NEJ.define([
         }
         // send request
         var opt = _u._$merge({},options,{
-            type:'json',
+            type:conf.type||'json',
             method:conf.method||'POST',
             onload:onload._$bind(this),
             onerror:onerror._$bind(this)
