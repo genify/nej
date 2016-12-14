@@ -265,6 +265,11 @@ NEJ.define([
         dispatch.call(this,'filter',event);
         if (_u._$isFunction(conf.filter)){
             conf.filter.call(this,event);
+            // not request if filter has result
+            if (!!event.result){
+                onload.call(this,event.result);
+                return;
+            }
         }
         // send request
         var opt = _u._$merge({},options,{
