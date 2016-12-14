@@ -397,6 +397,19 @@ NEJ.define([
     _pro.__doClearReqQueue = function(_key){
         delete this.__cache[_ckey+'-l'][_key];
     };
+
+    /**
+     * 判断列表项是否未定义，子类可根据实际情况重写判断逻辑
+     *
+     * @protected
+     * @method module:util/cache/cache._$$CacheAbstract#__isItemUndefined
+     * @param  {Object}  arg0 - 列表项
+     * @return {Boolean} 是否未定义
+     */
+    _pro.__isItemUndefined = function (item) {
+        return item===undefined;
+    };
+
     /**
      * 检测列表中是否已存在指定片段数据
      * 
@@ -422,7 +435,7 @@ NEJ.define([
             _limit = Math.min(_limit,_list.length-_offset);
         }
         for(var i=0;i<_limit;i++){
-            if (_list[_offset+i]===undefined){
+            if (this.__isItemUndefined(_list[_offset+i])){
                 return !1;
             }
         }
