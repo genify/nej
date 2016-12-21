@@ -668,8 +668,11 @@ NEJ.define([
                 return;
             }
             // load from server
-            var _rkey = _doFormatKey(_ropt),
-                _callback = this._$dispatchEvent._$bind(this);
+            var _that = this,
+                _rkey = _doFormatKey(_ropt),
+                _callback = function (name, opt) {
+                    _that._$dispatchEvent(name, _ropt);
+                };
             if (!this.__doQueueRequest(_rkey,_callback)){
                 _ropt.rkey = _rkey;
                 _ropt.onload = this.__getList._$bind(this,_ropt);
@@ -855,8 +858,11 @@ NEJ.define([
                 return;
             }
             // load from server
-            var _rkey = _doFormatKey(_ropt),
-                _callback = this._$dispatchEvent._$bind(this);
+            var _that = this,
+                _rkey = _doFormatKey(_ropt),
+                _callback = function (name, opt) {
+                    _that._$dispatchEvent(name, _ropt);
+                };
             if (!this.__doQueueRequest(_rkey,_callback)){
                 _ropt.rkey = _rkey;
                 _ropt.onload = this.__getItem._$bind(this,_ropt);
