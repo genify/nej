@@ -626,6 +626,18 @@ NEJ.define([
         );
     };
     /**
+     * 取列表请求标识
+     *
+     * @private
+     * @method   module:util/cache/list._$$CacheList#__getListReqKey
+     * @param    {Object} options - 请求配置信息
+     * @returns  {String} 请求标识
+     */
+    _pro.__getListReqKey = function (options) {
+        return 'r-'+options.key+'-'+
+            options.offset+'-'+options.limit;
+    };
+    /**
      * 取列表
      *
      * 脚本举例
@@ -642,44 +654,36 @@ NEJ.define([
      * @property {Object} ext    - 回传数据
      * @return   {Void}
      */
-    _pro._$getList = (function(){
-        var _doFormatKey = function(_options){
-            return 'r-'+
-                   _options.key+'-'+
-                   _options.offset+'-'+
-                   _options.limit;
-        };
-        return function(_options){
-            _options = _options||_o;
-            var _ropt = {
-                    key:(''+_options.key)||'',
-                    ext:_options.ext||null,
-                    data:_options.data||null,
-                    offset:parseInt(_options.offset)||0,
-                    limit:parseInt(_options.limit)||0
-                },
-                _list = this._$getListInCache(_ropt.key),
-                _has = this.__hasFragment(
-                    _list,_ropt.offset,_ropt.limit
-                );
-            // hit in memory
-            if (_has){
-                this._$dispatchEvent('onlistload',_ropt);
-                return;
-            }
-            // load from server
-            var _that = this,
-                _rkey = _doFormatKey(_ropt),
-                _callback = function (name, opt) {
-                    _that._$dispatchEvent(name, _ropt);
-                };
-            if (!this.__doQueueRequest(_rkey,_callback)){
-                _ropt.rkey = _rkey;
-                _ropt.onload = this.__getList._$bind(this,_ropt);
-                this._$dispatchEvent('doloadlist',_ropt);
-            }
-        };
-    })();
+    _pro._$getList = function(_options){
+        _options = _options||_o;
+        var _ropt = {
+                key:(''+_options.key)||'',
+                ext:_options.ext||null,
+                data:_options.data||null,
+                offset:parseInt(_options.offset)||0,
+                limit:parseInt(_options.limit)||0
+            },
+            _list = this._$getListInCache(_ropt.key),
+            _has = this.__hasFragment(
+                _list,_ropt.offset,_ropt.limit
+            );
+        // hit in memory
+        if (_has){
+            this._$dispatchEvent('onlistload',_ropt);
+            return;
+        }
+        // load from server
+        var _that = this,
+            _rkey = this.__getListReqKey(_ropt),
+            _callback = function (name, opt) {
+                _that._$dispatchEvent(name, _ropt);
+            };
+        if (!this.__doQueueRequest(_rkey,_callback)){
+            _ropt.rkey = _rkey;
+            _ropt.onload = this.__getList._$bind(this,_ropt);
+            this._$dispatchEvent('doloadlist',_ropt);
+        }
+    };
     /**
      * 取列表回调
      * 
@@ -817,6 +821,17 @@ NEJ.define([
         if (!!_item) _item.__dirty__ = !0;
     };
     /**
+     * 获取加载单项的请求标识
+     *
+     * @private
+     * @method  module:util/cache/list._$$CacheList#__getItemReqKey
+     * @param   {Object} options - 请求配置
+     * @returns {String} 请求标识
+     */
+    _pro.__getItemReqKey = function (options) {
+        return 'r-'+options.key+'-'+options.id;
+    };
+    /**
      * 取列表项项
      *
      * 脚本举例
@@ -836,40 +851,35 @@ NEJ.define([
      * @property {Object} ext   - 需要回传的数据信息
      * @return   {Void}
      */
-    _pro._$getItem = (function(){
-        var _doFormatKey = function(_options){
-            return 'r-'+_options.key+'-'+_options.id;
-        };
-        return function(_options){
-            _options = _options||_o;
-            var _id = _options[this.__key],
-                _ropt = {
-                    id:_id,
-                    ext:_options.ext,
-                    data:_options.data||{},
-                    key:(''+_options.key)||''
-                };
-                _item = this._$getItemInCache(_id);
-            _ropt.data[this.__key] = _id;
-            // hit in memory
-            if (!!_item&&
-                this.__doCheckItemValidity(_item,_ropt.key)){
-                this._$dispatchEvent('onitemload',_ropt);
-                return;
-            }
-            // load from server
-            var _that = this,
-                _rkey = _doFormatKey(_ropt),
-                _callback = function (name, opt) {
-                    _that._$dispatchEvent(name, _ropt);
-                };
-            if (!this.__doQueueRequest(_rkey,_callback)){
-                _ropt.rkey = _rkey;
-                _ropt.onload = this.__getItem._$bind(this,_ropt);
-                this._$dispatchEvent('doloaditem',_ropt);
-            }
-        };
-    })();
+    _pro._$getItem = function(_options){
+        _options = _options||_o;
+        var _id = _options[this.__key],
+            _ropt = {
+                id:_id,
+                ext:_options.ext,
+                data:_options.data||{},
+                key:(''+_options.key)||''
+            };
+        _item = this._$getItemInCache(_id);
+        _ropt.data[this.__key] = _id;
+        // hit in memory
+        if (!!_item&&
+            this.__doCheckItemValidity(_item,_ropt.key)){
+            this._$dispatchEvent('onitemload',_ropt);
+            return;
+        }
+        // load from server
+        var _that = this,
+            _rkey = this.__getItemReqKey(_ropt),
+            _callback = function (name, opt) {
+                _that._$dispatchEvent(name, _ropt);
+            };
+        if (!this.__doQueueRequest(_rkey,_callback)){
+            _ropt.rkey = _rkey;
+            _ropt.onload = this.__getItem._$bind(this,_ropt);
+            this._$dispatchEvent('doloaditem',_ropt);
+        }
+    };
     /**
      * 取列表项回调
      * 
