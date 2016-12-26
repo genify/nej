@@ -711,8 +711,8 @@ NEJ.define([
             _reg2 = /[#\?]/,
             _base = location.href.split(/[?#]/)[0],
             _anchor = document.createElement('a');
-        var _isAbsolute = function(_uri){
-            return (_uri||'').indexOf('://')>0;
+        var _isAbsolute = function(_uri){            
+            return (_uri||'').indexOf('://')>0 || (_uri||'').match(/^\/\//);
         };
         var _doFormat = function(_uri){
             return (_uri||'').split(_reg2)[0]
