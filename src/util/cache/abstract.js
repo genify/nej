@@ -259,7 +259,7 @@ NEJ.define([
         };
         // before request
         var event = {
-            url:conf.url,
+            url:conf.url||options.url,
             req:options
         };
         dispatch.call(this,'filter',event);
