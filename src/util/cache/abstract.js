@@ -206,6 +206,7 @@ NEJ.define([
         // onerror event
         var onerror = function(error){
             var event = {
+                cnf:conf,
                 req:options,
                 error:error||{}
             };
@@ -226,7 +227,8 @@ NEJ.define([
         var onload = function(result){
             var event = {
                 req:options,
-                res:result
+                res:result,
+                cnf:conf
             };
             // check post handler
             if (_u._$isFunction(conf.post)){
@@ -260,7 +262,8 @@ NEJ.define([
         // before request
         var event = {
             url:conf.url||options.url,
-            req:options
+            req:options,
+            cnf:conf
         };
         dispatch.call(this,'filter',event);
         if (_u._$isFunction(conf.filter)){

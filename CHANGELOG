@@ -5,6 +5,7 @@
   * 支持缓存在 filter 阶段直接返回结果阻止发送请求
   * 增加 __getListReqKey/__getItemReqKey 取请求标识
   * 支持 __doSendRequest 时使用 options 配置请求地址
+  * __doSendRequest 过程的事件支持输入 cnf 配置信息对象
 
 - BUG修复模块
   * 修正 util/cache/list 下 getList/getItem 的 ext 参数回传异常
