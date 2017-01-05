@@ -1,23 +1,25 @@
 {
-  "name": "nej-framework",
-  "description": "JavaScript Cross-Platform Framework",
-  "version": "0.3.6",
-  "license": "MIT",
-  
-  "keywords": ["nej","javascript","cross platform","framework"],
-  "author": "genify <caijf@corp.netease.com>",
-  
-  "main": "./src/define.js",
-  
-  "homepage": "https://github.com/genify/nej",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/genify/nej.git"
-  },
-  "bugs": {
-    "url": "https://github.com/genify/nej/issues"
-  }
+    "name": "nej-framework",
+    "description": "JavaScript Cross-Platform Framework",
+    "version": "0.3.5",
+    "license": "MIT",
+    "keywords": [
+        "nej",
+        "javascript",
+        "cross platform",
+        "framework"
+    ],
+    "author": "genify <caijf@corp.netease.com>",
+    "main": "./src/define.js",
+    "homepage": "https://github.com/genify/nej",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/genify/nej.git"
+    },
+    "bugs": {
+        "url": "https://github.com/genify/nej/issues"
+    }
 }
