@@ -162,10 +162,10 @@ NEJ.define([
         var _$$OuterModule = _k._$klass();
         var _pro = _$$OuterModule._$extend(_p._$$RegularModule);
 
-        _pro.__init = function(){
+        _pro.__init = function(_options){
             this.__umiAlias = _umiAlias;
             this._$$InnerModule = _$$InnerModule;
-            this.__super();
+            this.__super(_options);
         }
 
         _v._$addEvent(document, 'templateready', function(){
