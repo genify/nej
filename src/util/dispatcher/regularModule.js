@@ -68,9 +68,6 @@ NEJ.define([
             this._$innerModule.data.$params = _options.href.split('?')[1];
             //将通过__export传递过来的parent赋值给当前组价，并将parent的child设置成当前组件
             this._$innerModule.$parentModule=_options.data.parentModule;
-            if(!!this._$innerModule.$parentModule){
-                this._$innerModule.$parentModule.$childModule=this._$innerModule;
-            }
             this._$innerModule.__onShow(_options);
             this._$innerModule.$update();
         }
@@ -146,7 +143,6 @@ NEJ.define([
     _pro.__destroy = function(){
         this.__body = _t._$getNodeTemplate(this.__nodeKey);
         this._$innerModule.$parentModule=undefined;
-        this._$innerModule.$childModule=undefined;
         this._$innerModule.destroy();
         delete this.__nodeKey;
         this.__super();
