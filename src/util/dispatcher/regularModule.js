@@ -25,9 +25,10 @@ NEJ.define([
      *
      * @protected
      * @method module:util/dispatcher/regularModule._$$RegularModule#__build
+     * @param  {Object} arg0 - 模块配置信息
      * @return {Void}
      */
-    _pro.__build = function(){
+    _pro.__build = function(config){
         this._$innerModule = new this._$$InnerModule().$inject(this.__body);
         this.__export.parent = this._$innerModule.$refs.view;
 
@@ -45,7 +46,7 @@ NEJ.define([
         this.__nodeKey = _t._$addNodeTemplate('<div></div>');
         this.__body = _t._$getNodeTemplate(this.__nodeKey);
 
-        this.__build();
+        this.__build((_options||{}).config);
     }
     /**
      * 显示模块触发事件，子类可重写具体逻辑
@@ -162,10 +163,10 @@ NEJ.define([
         var _$$OuterModule = _k._$klass();
         var _pro = _$$OuterModule._$extend(_p._$$RegularModule);
 
-        _pro.__init = function(){
+        _pro.__init = function(options){
             this.__umiAlias = _umiAlias;
             this._$$InnerModule = _$$InnerModule;
-            this.__super();
+            this.__super(options);
         }
 
         _v._$addEvent(document, 'templateready', function(){
