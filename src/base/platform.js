@@ -145,7 +145,15 @@ NEJ.define([
     if (_kernel.browser=='unknow'){
         var _test = ['chrome','maxthon','safari'];
         for(var i=0,l=_test.length,_name;i<l;i++){
-            _name = _test[i]=='safari'?'version':_test[i];
+
+            if (_test[i] === 'safari') {
+                _name = 'version';
+            } else if (_test[i] === 'chrome') {
+                _name = '[chrome|CriOS]'; // CriOS is Google Chrome for iOS
+            } else {
+                _name = _test[i];
+            }
+
             if (new RegExp(_name+'/(.*?)(?=\\s|$)','i').test(_useragent)){
                 _kernel.browser = _test[i];
                 _kernel.version = RegExp.$1.trim();
