@@ -212,6 +212,20 @@ NEJ.define([
             }
             return null;
         };
+        // parse module url
+        // config - ver,root,mode
+        var _doParseModuleURL = function (module, config) {
+            var url = (config.root||'')+module,
+                version = (config.ver||_o)[module];
+            // convert xxx.html to xxx_ver.html
+            if (!!config.mode&&!!version){
+                return url.replace(
+                    /(\.[^.\/]*?)$/,
+                    '_'+version+'$1'
+                );
+            }
+            return url;
+        };
         return function(_node,_name){
             if (!_t2._$isNode(_node)){
                 return;
@@ -266,8 +280,12 @@ NEJ.define([
                     if (!!_element){
                         _t1._$parseTemplate(_element);
                     }else{
-                        var _config = location.config||_o;
-                        _j._$loadHtml((_config.root||'')+_module,{
+                        // support xxx_23423423.html mode
+                        var _config = location.config||_o,
+                            _url = _doParseModuleURL(
+                                _module, _config
+                            );
+                        _j._$loadHtml(_url,{
                             version:(_config.ver||_o)[_module],
                             onload:_t1._$parseTemplate
                         });
