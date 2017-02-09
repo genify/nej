@@ -36,7 +36,11 @@ NEJ.define([
             target:_element,
             width:'100%',height:'100%',
             src:_c._$get('clipboard.swf'),
-            params:{wmode:'transparent',flashvars:_vars}
+            params:{
+                flashvars: _vars,
+                wmode: 'transparent',
+                allowscriptaccess: 'always'
+            }
         },_options));
         return _box;
     };
