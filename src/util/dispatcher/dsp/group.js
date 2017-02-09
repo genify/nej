@@ -215,16 +215,19 @@ NEJ.define([
         // parse module url
         // config - ver,root,mode
         var _doParseModuleURL = function (module, config) {
-            var url = (config.root||'')+module,
-                version = (config.ver||_o)[module];
+            var ret = {
+                url: (config.root||'')+module,
+                version: (config.ver||_o)[module]
+            };
             // convert xxx.html to xxx_ver.html
-            if (!!config.mode&&!!version){
-                return url.replace(
+            if (!!config.mode&&!!ret.version){
+                ret.url = ret.url.replace(
                     /(\.[^.\/]*?)$/,
-                    '_'+version+'$1'
+                    '_'+ret.version+'$1'
                 );
+                ret.version = null;
             }
-            return url;
+            return ret;
         };
         return function(_node,_name){
             if (!_t2._$isNode(_node)){
@@ -282,11 +285,11 @@ NEJ.define([
                     }else{
                         // support xxx_23423423.html mode
                         var _config = location.config||_o,
-                            _url = _doParseModuleURL(
+                            ret = _doParseModuleURL(
                                 _module, _config
                             );
-                        _j._$loadHtml(_url,{
-                            version:(_config.ver||_o)[_module],
+                        _j._$loadHtml(ret.url,{
+                            version:ret.version,
                             onload:_t1._$parseTemplate
                         });
                     }
