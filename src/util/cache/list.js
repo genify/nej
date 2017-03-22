@@ -853,7 +853,7 @@ NEJ.define([
      */
     _pro._$getItem = function(_options){
         _options = _options||_o;
-        var _id = _options[this.__key],
+        var _id = _options[this.__key]||_options.id,
             _ropt = {
                 id:_id,
                 ext:_options.ext,
