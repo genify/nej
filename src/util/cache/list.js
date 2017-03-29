@@ -1007,6 +1007,7 @@ NEJ.define([
         var _event = {
             key:_key,
             data:_item,
+            result:_isok,
             action:'delete',
             ext:_options.ext
         };
