@@ -135,7 +135,8 @@ NEJ.define([
                 _flash = _arr[_index],
                 _ctkey = _id+'-count';
             _cache[_ctkey]++;
-            if (!!_flash||_cache[_ctkey]>100){
+            // remove count check for chrome bug
+            if (!!_flash){ // ||_cache[_ctkey]>100
                 if (!!_title){
                     document.title = _title;
                     _title = null;
