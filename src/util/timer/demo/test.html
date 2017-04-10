@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>klass demo</title>
+    <meta charset="utf-8" />
+    <script>
+        function log(m){
+            var p = document.createElement('p');
+            p.innerHTML = m;
+            document.body.appendChild(p);
+        }
+    </script>
+</head>
+<body>
+<script src="../../../define.js"></script>
+<script>
+    NEJ.define([
+        'util/timer/animation'
+    ],function(p){
+        var abc = function () {
+            log(+new Date);
+            p.requestAnimationFrame(abc);
+        };
+        p.requestAnimationFrame(abc);
+    });
+</script>
+</body>
+</html>
