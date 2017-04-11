@@ -14,7 +14,10 @@
         "framework"
     ],
     "ignore": [
-        ".*"
+        ".*",
+        "**/test/",
+        "doc",
+        "res"
     ],
     "license": "MIT"
 }
