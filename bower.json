@@ -16,6 +16,7 @@
     "ignore": [
         ".*",
         "**/test/",
+        "**/demo/",
         "doc",
         "res"
     ],
