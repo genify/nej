@@ -147,15 +147,19 @@ NEJ.define([
         return function(_url,_options){
             _options = _u._$merge({},_options);
             var _exist = {},
-                _param = _options.param||_o;
+                _param = _options.param||_o,
+                _data  = _options.data||{};
             // parse uri template
             _url = _url.replace(_reg0,function($1,$2){
                 var _value = _param[$2];
-                if (_value!=null) _exist[$2] = !0;
+                if (_value!=null){
+                    _exist[$2] = !0;
+                }else{
+                    _value = _data[$2];
+                }
                 return encodeURIComponent(_value||'')||$1;
             });
             // parse remain param
-            var _data = _options.data||{};
             _u._$loop(
                 _param,function(_value,_key){
                     if (!_exist[_key]){
