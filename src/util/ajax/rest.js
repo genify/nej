@@ -75,7 +75,8 @@ NEJ.define([
      */
     _p._$request = (function(){
         var _cache = {},  // request cache - sn:{s:funciton(){},f:function(){}}
-            _reg0 = /\{(.*?)\}/gi,
+            _reg0 = /\{(.*?)\}/gi, // /api/{appid}/question/{id}
+            _reg2 = /\/:([\w]+?)(?=\/|$)/gi, // /api/:appid/question/:id
             _reg1 = /^get|delete|head$/i,
             _jsn = /json/i,
             _xml = /xml/i;
@@ -144,21 +145,35 @@ NEJ.define([
                 _map[_key] = JSON.stringify(_data);
             }
         };
+        // format rest url
+        var _doFormatURL = function(url, param, data){
+            var getVal = function(key){
+                var _value = param[key];
+                if (_value!=null){
+                    _exist[key] = !0;
+                }else{
+                    _value = data[key];
+                }
+                return encodeURIComponent(_value||'');
+            };
+            var ret = url.replace(_reg0,function($1,$2){
+                    return getVal($2)||$1;
+                }),
+                ret = ret.replace(_reg2,function($1,$2){
+                    var val = getVal($2);
+                    return !val?$1:('/'+val);
+                });
+            return ret;
+        };
         return function(_url,_options){
             _options = _u._$merge({},_options);
             var _exist = {},
                 _param = _options.param||_o,
                 _data  = _options.data||{};
             // parse uri template
-            _url = _url.replace(_reg0,function($1,$2){
-                var _value = _param[$2];
-                if (_value!=null){
-                    _exist[$2] = !0;
-                }else{
-                    _value = _data[$2];
-                }
-                return encodeURIComponent(_value||'')||$1;
-            });
+            _url = _doFormatURL(
+                _url,_param,_data
+            );
             // parse remain param
             _u._$loop(
                 _param,function(_value,_key){

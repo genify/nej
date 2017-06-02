@@ -30,6 +30,17 @@
                 log(JSON.stringify(error));
             }
         });
+        _j._$request('/:aid/:bid/cid',{
+            type:'json',
+            method:'GET',
+            data:{aid:1,bid:2,cid:3},
+            onload:function(result){
+                log(JSON.stringify(result));
+            },
+            onerror:function(error){
+                log(JSON.stringify(error));
+            }
+        });
     });
 </script>
 </body>
