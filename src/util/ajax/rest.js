@@ -146,11 +146,11 @@ NEJ.define([
             }
         };
         // format rest url
-        var _doFormatURL = function(url, param, data){
+        var _doFormatURL = function(url, param, data, exist){
             var getVal = function(key){
                 var _value = param[key];
                 if (_value!=null){
-                    _exist[key] = !0;
+                    exist[key] = !0;
                 }else{
                     _value = data[key];
                 }
@@ -172,7 +172,8 @@ NEJ.define([
                 _data  = _options.data||{};
             // parse uri template
             _url = _doFormatURL(
-                _url,_param,_data
+                _url,_param,
+                _data,_exist
             );
             // parse remain param
             _u._$loop(
