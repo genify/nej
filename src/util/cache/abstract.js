@@ -263,7 +263,8 @@ NEJ.define([
         var event = {
             url:conf.url||options.url,
             req:options,
-            cnf:conf
+            cnf:conf,
+            key:key
         };
         dispatch.call(this,'filter',event);
         if (_u._$isFunction(conf.filter)){
