@@ -206,6 +206,7 @@ NEJ.define([
         // onerror event
         var onerror = function(error){
             var event = {
+                key:key,
                 cnf:conf,
                 req:options,
                 error:error||{}
@@ -228,7 +229,8 @@ NEJ.define([
             var event = {
                 req:options,
                 res:result,
-                cnf:conf
+                cnf:conf,
+                key:key
             };
             // check post handler
             if (_u._$isFunction(conf.post)){
