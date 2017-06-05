@@ -31,7 +31,9 @@ NEJ.define([
      * @return {Array} 子节点列表
      */
     _p.__getChildren = function(_element){
-        return _u._$object2array(_element.children);
+        return _u._$object2array(
+            _element.children||_element.childNodes
+        );
     };
     /**
      * 根据类名取节点列表
