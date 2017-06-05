@@ -1,9 +1,10 @@
-0.4.2
+0.4.2   (2017-06-05)
 --------------------------------------------------------
 - 功能变化
   * util/ajax/rest 支持从输入的data中解析地址上的rest变量
   * util/ajax/rest 支持 :PARAM 的地址变量格式
   * util/cache/abstract 支持在 __doSendRequest 的hook接口中传入当前请求key
+  * base/element getChildren接口兼容IOS8的XML DOM
 
 
 0.4.1   (2017-06-01)
