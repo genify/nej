@@ -1245,11 +1245,28 @@ NEJ.define([
     };
     /**
      * 获取对应UMI配置的标题信息
-     * @param umi
-     * @private
+     *
+     * @method module:util/dispatcher/dispatcher._$$Dispatcher#_$getTitle
+     * @param  {String} umi - 模块 UMI 标识
+     * @return {String} 模块标题
      */
     _pro._$getTitle = function(umi){
         return this.__getModuleConf(umi,'title');
+    };
+    /**
+     * 获取对应UMI配置的标题信息
+     *
+     * @method module:util/dispatcher/dispatcher._$$Dispatcher#_$getUMIByAlias
+     * @param  {String} alias - 别名
+     * @param  {Number} index - 多个 UMI 指定索引值
+     * @return {String} 别名对应的 UMI 值
+     */
+    _pro._$getUMIByAlias = function(alias, index){
+        var umi = this.__config.al[alias];
+        if (_u._$isArray(umi)){
+            return umi[index||0];
+        }
+        return umi;
     };
     /**
      * 启动调度系统
