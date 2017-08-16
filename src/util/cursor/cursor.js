@@ -113,7 +113,7 @@ NEJ.define([
      * NEJ.define([
      *     'util/cursor/cursor'
      * ],function(_e){
-     *     // 返回 0
+     *     // 返回 1
      *     var lineno = _e._$lineno('input-id');
      *
      *     // 返回 10
@@ -123,7 +123,7 @@ NEJ.define([
      *
      * @method module:util/cursor/cursor._$lineno
      * @param  {Node|String} arg0 - 输入节点
-     * @return {Number}             光标所在的行号
+     * @return {Number}             光标所在的行号，行号从 1 开始
      */
     /**
      * @method CHAINABLE._$lineno
