@@ -105,6 +105,40 @@ NEJ.define([
         }
         return _h.__getCursorPXPosition(_input);
     };
+    /**
+     * 取输入框光标所在的行号
+     *
+     * 脚本举例
+     * ```javascript
+     * NEJ.define([
+     *     'util/cursor/cursor'
+     * ],function(_e){
+     *     // 返回 0
+     *     var lineno = _e._$lineno('input-id');
+     *
+     *     // 返回 10
+     *     var lineno = _e._$lineno('textarea-id');
+     * });
+     * ``
+     *
+     * @method module:util/cursor/cursor._$lineno
+     * @param  {Node|String} arg0 - 输入节点
+     * @return {Number}             光标所在的行号
+     */
+    /**
+     * @method CHAINABLE._$lineno
+     * @see module:util/cursor/cursor._$lineno
+     */
+    _p._$lineno =
+    _y._$lineno = function(_input){
+        var ipt = _e._$get(_input),
+            ret = _p._$cursor(ipt);
+        if (!ipt||!ret){
+            return 0;
+        }
+        return (ipt.value||'').substr(0,ret.start).split(/\r\n|\r|\n/).length;
+    };
+
     // for chainable
     _x._$merge(_y);
     

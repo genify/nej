@@ -3,9 +3,16 @@
   <head>
     <title>NEJ实例 - 计数器</title>
     <meta charset="utf-8" />
+    <script>
+      function log(msg){
+          var div = document.createElement('div');
+          div.innerHTML = msg;
+          document.body.appendChild(div);
+      }
+    </script>
   </head>
   <body>
-    <textarea id="abc" style="width:300px;height:200px"></textarea>
+    <textarea id="abc" style="width:300px;height:200px" onclick="b();"></textarea>
     <input type="button" value="show" onclick="a();"/>
     
     <script src="../../../define.js"></script>
@@ -25,7 +32,10 @@
                 tx.value = v.substr(0, p.start)+t+ v.substring(p.end);
                 _e._$cursor(tx,p.start+ t.length);
                 xx = null;
-            }
+            };
+            window.b = function(){
+                log(_e._$lineno(tx));
+            };
         });
     </script>
   </body>
