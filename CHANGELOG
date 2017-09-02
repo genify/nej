@@ -4,6 +4,9 @@
   * util/dispatcher/dispatcher 增加根据别名取模块 UMI 接口 _$getUMIByAlias
   * util/cursor/cursor 增加 _$lineno 支持获取当前光标所在的行
 
+- 功能变化
+  * util/cache/list _$addItem 接口支持批量添加列表项
+
 0.4.3   (2017-06-26)
 --------------------------------------------------------
 - 功能支持
