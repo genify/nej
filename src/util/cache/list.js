@@ -959,11 +959,11 @@ NEJ.define([
         if (_u._$isArray(_item)){
             var ret = [];
             _u._$forEach(_item,function(it){
-                ret.push(addOneItem(it));
-            });
+                ret.push(addOneItem.call(this,it));
+            },this);
             _item = ret;
         }else{
-            _item = addOneItem(_item);
+            _item = addOneItem.call(this,_item);
         }
 
         // callback
