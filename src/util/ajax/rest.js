@@ -77,7 +77,7 @@ NEJ.define([
         var _cache = {},  // request cache - sn:{s:funciton(){},f:function(){}}
             _reg0 = /\{(.*?)\}/gi, // /api/{appid}/question/{id}
             _reg2 = /\/:([\w]+?)(?=\/|$)/gi, // /api/:appid/question/:id
-            _reg1 = /^get|delete|head$/i,
+            _reg1 = /^get|head$/i,
             _jsn = /json/i,
             _xml = /xml/i;
         // clear request
