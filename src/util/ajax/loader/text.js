@@ -31,6 +31,7 @@ NEJ.define([
      * @return {Node} 控件节点
      */
     _pro.__getRequest = function(){
+        this.__doRequest();
         return null;
     };
     /**

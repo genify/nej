@@ -8,11 +8,13 @@
 /** @module util/ajax/tag */
 NEJ.define([
     'base/global',
+    'base/element',
+    'base/util',
     './loader/text.js',
     './loader/html.js',
     './loader/style.js',
     './loader/script.js'
-],function(NEJ,_t0,_t1,_t2,_t3,_p,_o,_f,_r){
+],function(NEJ,e,u,_t0,_t1,_t2,_t3,_p,_o,_f,_r){
     /**
      * 载入完成回调函数
      *
@@ -190,7 +192,17 @@ NEJ.define([
      * @return   {Void}
      */
     _p._$loadHtml = function(_url,_options){
-        _t1._$$LoaderHtml._$allocate(_options)._$load(_url);
+        var org1 = u._$url2origin(_url),
+            org2 = u._$url2origin(location.href);
+        if (!org1||org1==org2){
+            _t1._$$LoaderHtml._$allocate(_options)._$load(_url);
+        }else{
+            var callback = _options.onload;
+            _options.onload = function(event){
+                callback(e._$html2node(event.content));
+            };
+            _p._$loadText(_url, _options);
+        }
     };
     /**
      * 载入HTML文件

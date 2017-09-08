@@ -6,7 +6,7 @@
   </head>
   <body>
     
-    <script src="../../../../define.js"></script>
+    <script src="../../../define.js"></script>
     <script>
       define([
           '../tag.js'
@@ -14,7 +14,22 @@
           
           _j._$loadHtml('./b.html',{
               onload:function(result){
-                  console.log(result.getElementsByTagName('script')[0]);
+                  console.log('same domain');
+                  console.log(result);
+              }
+          });
+
+          _j._$loadHtml('http://localhost:8080/nej/src/util/ajax/demo/b.html',{
+              onload: function(result){
+                  console.log('same domain');
+                  console.log(result);
+              }
+          });
+
+          _j._$loadHtml('http://a.b.com:8080/nej/src/util/ajax/demo/b.html',{
+              onload: function(result){
+                  console.log('cross domain');
+                  console.log(result);
               }
           });
           
