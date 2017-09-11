@@ -6,7 +6,6 @@
 
 - 功能变化
   * util/cache/list _$addItem 接口支持批量添加列表项
-  * util/ajax/rest 对于 DELETE 方式的请求支持消息体传参数
   * util/ajax/tag 模块 _$loadHtml 接口需要跨域载入的时候采用 ajax 先加载文本再解析内容
 
 0.4.3   (2017-06-26)
