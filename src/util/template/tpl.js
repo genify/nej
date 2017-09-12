@@ -328,7 +328,7 @@ NEJ.define([
                     _list.push.apply(_list, doDumpScript(_element))
                 }
                 _u._$forEach(_list,function(_node){
-                    console.log(_node);
+                    // console.log(_node);
                     _doAddTemplate(_node,_options);
                 });
                 _e._$remove(_element,!0);
