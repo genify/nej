@@ -5,17 +5,29 @@
       <meta charset="utf-8" />
   </head>
   <body>
+    <p class="aa">11111111111111111111<a class="a">4444444</a></p>
+    <div id="xyz">
+        <textarea name="css" id="ta-css-0">.a{color:#dcc}</textarea>
+        <textarea name="css" data-src="./a.css"></textarea>
+        <textarea name="js" id="ta-js-0">console.log('textarea inline script')</textarea>
+        <textarea name="js" data-src="./a.js"></textarea>
+        <textarea name="html" data-src="./a.html"></textarea>
+    </div>
+    <p class="bb">22222222222222222<a class="b">55555</a></p>
+    <div id="uvw">
+        <script type="nej/css" id="sc-css-0">.b{color:#fdc}</script>
+        <script type="nej/css" data-src="./b.css"></script>
+        <script type="nej/js" id="sc-js-0">console.log('script inline script')</script>
+        <script type="nej/js" data-src="./b.js"></script>
+        <script type="html" data-src="./b.html"></script>
+    </div>
     <script src="../../../define.js"></script>
     <script>
         NEJ.define([
-            '../tpl.js',
-            'text!./a.html'
-        ],function(_l,_html){
-            var _sn = _l._$addNodeTemplate(_html);
-            document.body.appendChild(_l._$getNodeTemplate(_sn));
-            document.body.appendChild(_l._$getNodeTemplate(_sn));
-            document.body.appendChild(_l._$getNodeTemplate(_sn));
-            document.body.appendChild(_l._$getNodeTemplate(_sn));
+            '../tpl.js'
+        ],function(_l){
+            _l._$parseTemplate('xyz');
+            _l._$parseTemplate('uvw');
         });
     </script>
   </body>

@@ -3,6 +3,7 @@
 - 功能支持
   * util/dispatcher/dispatcher 增加根据别名取模块 UMI 接口 _$getUMIByAlias
   * util/cursor/cursor 增加 _$lineno 支持获取当前光标所在的行
+  * util/template/tpl _$parseTemplate 支持 type 为 nej/* 的 script 标签解析
 
 - 功能变化
   * util/cache/list _$addItem 接口支持批量添加列表项

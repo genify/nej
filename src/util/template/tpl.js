@@ -92,6 +92,33 @@ NEJ.define([
      * @see module:util/template/tpl._$parseTemplate
      */
     _p._$parseTemplate = (function(){
+        // support textarea/script tag for template
+        var fmap = {
+            text: 'txt',
+            plain: 'txt',
+            javascript:'js'
+        };
+        var nmap = {
+            textarea: {
+                getType: function (node){
+                    var type = node.name.toLowerCase();
+                    return fmap[type]||type;
+                },
+                getContent: function (node){
+                    return node.value||node.innerText||'';
+                }
+            },
+            script: {
+                getType: function (node) {
+                    var type = (node.type||'').toLowerCase().replace(/^nej\//i,'');
+                    return fmap[type]||type;
+                },
+                getContent: function (node){
+                    return node.innerText||node.innerHTML||'';
+                }
+            }
+        };
+        // support template ready event
         var _count = 0;
         var _doCheckReady = function(){
             if (_count>0) return;
@@ -115,14 +142,7 @@ NEJ.define([
             });
             return _src;
         };
-        var _doDumpContent = function(_node){
-            // bugfix textarea content not corrent for safari in mac 
-            if (_b._$is('mac')&&_b._$KERNEL.browser==='safari'){
-                return _u._$unescape(_node.innerHTML);
-            }else{
-                return _node.value||_node.innerText||'';
-            }
-        };
+
         var _doAddStyle = function(_textarea,_options){
             if (!_textarea) return;
             var _src = _doParseSrc(_textarea,_options);
@@ -131,7 +151,8 @@ NEJ.define([
                     version:_e._$dataset(_textarea,'version')
                 });
             }
-            _e._$addStyle(_textarea.value);
+            var tag = _textarea.tagName.toLowerCase();
+            _e._$addStyle(nmap[tag].getContent(_textarea));
         };
         var _onAddScript = function(_value){
             _count--;
@@ -141,7 +162,8 @@ NEJ.define([
         var _doAddScript = function(_textarea,_options){
             if (!_textarea) return;
             var _src = _doParseSrc(_textarea,_options),
-                _val = _textarea.value;
+                _tag = _textarea.tagName.toLowerCase(),
+                _val = nmap[_tag].getContent(_textarea);
             if (!!_src){
                 _count++;
                 var _options = {
@@ -203,8 +225,17 @@ NEJ.define([
                 );
             }
         };
+        var _doDumpContent = function(_node){
+            // bugfix textarea content not corrent for safari in mac
+            if (_b._$is('mac')&&_b._$KERNEL.browser==='safari'){
+                return _u._$unescape(_node.innerHTML);
+            }else{
+                return nmap[_node.tagName.toLowerCase()].getContent(_node);
+            }
+        };
         var _doAddTemplate = function(_node,_options){
-            var _type = _node.name.toLowerCase();
+            var conf = nmap[_node.tagName.toLowerCase()],
+                _type = conf.getType(_node);
             //console.debug(_type+'<'+_node.id+'> : '+_node.value.replace(/\n/g,' '));
             switch(_type){
                 case 'jst':
@@ -229,6 +260,17 @@ NEJ.define([
                     _doAddTextResource(_node,_options);
                 return;
             }
+        };
+        // dump script support
+        var doDumpScript = function (node) {
+            var ret = [],
+                list = node.getElementsByTagName('script');
+            _u._$forEach(list,function (it) {
+                if (it.type.search(/^nej\//i)===0){
+                    ret.push(it);
+                }
+            });
+            return ret;
         };
         /**
          * 模版准备完毕触发事件，包括所有外联模版载入完成
@@ -275,11 +317,18 @@ NEJ.define([
         return function(_element,_options){
             _element = _e._$get(_element);
             if (!!_element){
-                var _list = _element.tagName=='TEXTAREA' ? [_element]
-                          : _u._$object2array(
-                                _element.getElementsByTagName('textarea')
-                            );
+                var _list,
+                    _tag = _element.tagName;
+                if (_tag==='TEXTAREA'||_tag==='SCRIPT'){
+                    _list = [_element];
+                }else{
+                    _list = _u._$object2array(
+                        _element.getElementsByTagName('textarea')
+                    );
+                    _list.push.apply(_list, doDumpScript(_element))
+                }
                 _u._$forEach(_list,function(_node){
+                    console.log(_node);
                     _doAddTemplate(_node,_options);
                 });
                 _e._$remove(_element,!0);
