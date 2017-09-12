@@ -265,6 +265,10 @@ NEJ.define([
         var doDumpScript = function (node) {
             var ret = [],
                 list = node.getElementsByTagName('script');
+            // try dump from head
+            if ((!list||!list.length)&&node.tagName==='BODY'){
+                list = node.ownerDocument.getElementsByTagName('script');
+            }
             _u._$forEach(list,function (it) {
                 if (it.type.search(/^nej\//i)===0){
                     ret.push(it);
