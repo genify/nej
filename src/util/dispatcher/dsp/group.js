@@ -288,7 +288,7 @@ NEJ.define([
                             ret = _doParseModuleURL(
                                 _module, _config
                             );
-                        _j._$loadHtml(ret.url,{
+                        _j._$loadTemplate(ret.url,{
                             version:ret.version,
                             onload:_t1._$parseTemplate
                         });

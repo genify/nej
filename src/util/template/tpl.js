@@ -194,7 +194,7 @@ NEJ.define([
                     onload:_onAddHtml
                 };
                 window.setTimeout(
-                    _j0._$loadHtml._$bind(
+                    _j0._$loadTemplate._$bind(
                         _j0,_src,_options
                     ),0
                 );

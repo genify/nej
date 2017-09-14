@@ -192,10 +192,40 @@ NEJ.define([
      * @return   {Void}
      */
     _p._$loadHtml = function(_url,_options){
+        _t1._$$LoaderHtml._$allocate(_options)._$load(_url);
+    };
+    /**
+     * 载入NEJ模板文件
+     *
+     * 脚本举例
+     * ```javascript
+     * NEJ.define([
+     *     'util/ajax/tag'
+     * ],function(_j){
+     *     _j._$loadTemplate('http://123.163.com/a.html',{
+     *         onload:function(){
+     *             // 载入成功的回调方法
+     *         },
+     *         onerror:function(_error){
+     *             // 异常回调方法
+     *         }
+     *     });
+     * });
+     * ```
+     *
+     * @method   module:util/ajax/tag._$loadTemplate
+     * @param    {String} arg0    - 文件地址
+     * @param    {Object} arg1    - 可选配置参数
+     * @property {String} version - 版本信息
+     * @property {module:util/ajax/tag.onload}  onload  - 载入回调
+     * @property {module:util/ajax/tag.onerror} onerror - 异常回调
+     * @return   {Void}
+     */
+    _p._$loadTemplate = function(_url,_options){
         var org1 = u._$url2origin(_url),
             org2 = u._$url2origin(location.href);
         if (!org1||org1==org2){
-            _t1._$$LoaderHtml._$allocate(_options)._$load(_url);
+            _p._$loadHtml(_url, _options);
         }else{
             var callback = _options.onload;
             _options.onload = function(event){

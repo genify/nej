@@ -12,21 +12,21 @@
           '../tag.js'
       ],function(_j){
           
-          _j._$loadHtml('./b.html',{
+          _j._$loadTemplate('./b.html',{
               onload:function(result){
                   console.log('same domain');
                   console.log(result);
               }
           });
 
-          _j._$loadHtml('http://localhost:8080/nej/src/util/ajax/demo/b.html',{
+          _j._$loadTemplate('http://localhost:8080/nej/src/util/ajax/demo/b.html',{
               onload: function(result){
                   console.log('same domain');
                   console.log(result);
               }
           });
 
-          _j._$loadHtml('http://a.b.com:8080/nej/src/util/ajax/demo/b.html',{
+          _j._$loadTemplate('http://a.b.com:8080/nej/src/util/ajax/demo/b.html',{
               onload: function(result){
                   console.log('cross domain');
                   console.log(result);
