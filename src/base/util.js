@@ -766,7 +766,13 @@ NEJ.define([
     _p._$url2origin = (function(){
         var _reg = /^([\w]+?:\/\/.*?(?=\/|$))/i;
         return function(_url){
-            if (_reg.test(_url||''))
+            _url = _url||'';
+            // fix relative protocol
+            if (_url.indexOf('//')===0){
+                _url = location.protocol+_url;
+            }
+            // dump origin
+            if (_reg.test(_url))
                 return RegExp.$1.toLowerCase();
             return '';
         };
