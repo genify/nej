@@ -35,6 +35,17 @@ NEJ.define([
         return null;
     };
     /**
+     * 执行清理任务
+     *
+     * @protected
+     * @method module:util/ajax/loader/style._$$LoaderText#__doClear
+     * @return {Void}
+     */
+    _pro.__doClear = function(){
+        this.__super();
+        this.__getLoadData('loaded')[this.__url] = !1;
+    };
+    /**
      * 资源载入
      *
      * @protected

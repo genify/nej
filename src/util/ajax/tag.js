@@ -229,7 +229,9 @@ NEJ.define([
         }else{
             var callback = _options.onload;
             _options.onload = function(event){
-                callback(e._$html2node(event.content));
+                if (!!event){
+                    callback(e._$html2node(event.content));
+                }
             };
             _p._$loadText(_url, _options);
         }
