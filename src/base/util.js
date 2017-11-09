@@ -743,7 +743,7 @@ NEJ.define([
                 _anchor.getAttribute('href',4); // ie6/7
             // fix relative protocol error
             if (_uri.indexOf('//')===0){
-                _uri = _uri.replace('//',location.protocol);
+                _uri = location.protocol+_uri;
             }
             return _uri;
         };
