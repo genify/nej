@@ -739,8 +739,13 @@ NEJ.define([
             _uri = _doMergeURI(_uri,_root);
             _anchor.href = _uri;
             _uri = _anchor.href;
-            return _isAbsolute(_uri) ? _uri :
-                   _anchor.getAttribute('href',4); // ie6/7
+            _uri = _isAbsolute(_uri) ? _uri :
+                _anchor.getAttribute('href',4); // ie6/7
+            // fix relative protocol error
+            if (_uri.indexOf('//')===0){
+                _uri = _uri.replace('//',location.protocol);
+            }
+            return _uri;
         };
     })();
     /**
