@@ -731,14 +731,15 @@ NEJ.define([
         _base = _doFormat(_base);
         return function(_uri,_root){
             _uri = (_uri||'').trim();
-            // fix relative protocol error
-            if (_uri.indexOf('//')===0){
-                _uri = location.protocol+_uri;
-            }
             // check url
             if (!_isAbsolute(_root))
                 _root = _base;
             if (!_uri) return _root;
+            // fix relative protocol error
+            if (_uri.indexOf('//')===0){
+                var arr = _root.split(':');
+                _uri = arr[0]+':'+_uri;
+            }
             if (_isAbsolute(_uri))
                 return _uri;
             _uri = _doMergeURI(_uri,_root);
