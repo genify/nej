@@ -32,7 +32,7 @@ NEJ.define([
      * @return {String}          动画标识
      */
     _p.requestAnimationFrame = function(){
-        _h.__requestAnimationFrame.apply(null,arguments);
+        return _h.__requestAnimationFrame.apply(null,arguments);
     };
     /**
      * 取消动画
