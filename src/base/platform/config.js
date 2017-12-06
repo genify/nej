@@ -20,6 +20,10 @@ NEJ.define([
         var _reg = /^([\w]+?:\/\/.*?(?=\/|$))/i;
         return function(_url){
             _url = _url||'';
+            // fix relative protocol url
+            if (_url.indexOf('//')===0){
+                _url = location.protocol+_url;
+            }
             if (_reg.test(_url))
                 return RegExp.$1;
             return location.protocol+'//'+location.host;
