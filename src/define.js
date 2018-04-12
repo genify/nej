@@ -167,6 +167,11 @@
             },
             css:function (_uri) {
                 _doLoadStyle(_uri);
+            },
+            uri:function(_uri) {
+                __scache[_uri] = 2;
+                __rcache[_uri] = _uri;
+                _doCheckLoading();
             }
         };
         return function(_uri){
