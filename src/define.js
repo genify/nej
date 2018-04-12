@@ -168,7 +168,7 @@
             css:function (_uri) {
                 _doLoadStyle(_uri);
             },
-            uri:function(_uri) {
+            res:function(_uri) {
                 __scache[_uri] = 2;
                 __rcache[_uri] = _uri;
                 _doCheckLoading();
