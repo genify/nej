@@ -19,10 +19,12 @@
           'pro/a',
           'base/element',
           'json!abc/define/a.json',
-          'res!./a/b/c.swf'
-      ],function(a,e,json,swf){
+          'res!./a/b/c.swf',
+          'res!/a/c.swf'
+      ],function(a,e,json,swf,xx){
           log('a:'+json.a);
           log(swf);
+          log(xx);
       });
     </script>
   </body>
