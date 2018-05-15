@@ -763,7 +763,9 @@ NEJ.define([
             if (_u._$isString(_key)){
                 // clear one list
                 var _list = this._$getListInCache(_key);
-                _u._$reverseEach(_list,_doClear);
+                // fix GC bug
+                _list.splice(0, _list.length);
+                // _u._$reverseEach(_list,_doClear);
                 this._$setLoaded(_key,!1);
                 if (this.__auto){
                     this.__doGCSchedule();
