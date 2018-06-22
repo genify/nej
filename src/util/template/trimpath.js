@@ -49,6 +49,8 @@
         TrimPath = {};
         if (typeof exports!=='undefined')
             TrimPath = exports;
+    }else{
+        return;
     }
     // variable declaration
     var _tcache = {}, // jst string cache

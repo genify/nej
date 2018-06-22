@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NEJ实例 - JSON接口</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <script src="../../../define.js"></script>
+    <script>
+        NEJ.define([
+            'util/encode/md5'
+        ],function(u){
+            var x = u._$str2hex('{"a":"中文"}',false);
+            console.log(x);
+
+        });
+    </script>
+  </body>
+</html>
