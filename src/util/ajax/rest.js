@@ -201,8 +201,10 @@ NEJ.define([
                 f:_options.onerror||_f
             };
             // add params to url with GET/HEAD/DELETE method
+            // fix rest can't send null bug
             _options.method = _options.method||'GET';
-            if (_reg1.test(_options.method.trim())){
+            if (_reg1.test(_options.method.trim())||
+                _options.data==null){
                 _u._$forIn(_data,_doCheckData);
                 _options.query = _data;
                 _data = null;
