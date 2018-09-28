@@ -125,9 +125,14 @@ NEJ.define([
      */
     _pro.__onAnimationFrame = function(_time){
         if (!this.__begin) return;
-        if ((''+_time).indexOf('.')>=0){
+        // fix safari12 without "." for performance.now()
+        var ts = ''+Math.floor(_time);
+        if (ts.length<13){
             _time = +new Date;
         }
+        // if ((''+_time).indexOf('.')>=0){
+        //     _time = +new Date;
+        // }
         if (this.__doAnimationFrame(_time)){
             this._$stop();
             return;
