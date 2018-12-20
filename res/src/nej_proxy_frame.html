@@ -137,10 +137,28 @@
                       return !0;
               }
               return !1;
-          }
+          };
           if (!_hasPermission()) return;
           // ajax request implementation
           var f = function(){};
+          var _isTypeOf = function(_data,_type){
+              try{
+                  _type = _type.toLowerCase();
+                  if (_data===null) return _type=='null';
+                  if (_data===undefined) return _type=='undefined';
+                  return Object.prototype.toString.call(_data).toLowerCase()=='[object '+_type+']';
+              }catch(e){
+                  return !1;
+              }
+          };
+          var _obj2str = function (obj) {
+              var ret = [];
+              for(var x in obj){
+                  if (!obj.hasOwnProperty(x)) continue;
+                  ret.push(encodeURIComponent(x)+'='+encodeURIComponent(obj[x]));
+              }
+              return ret.join('&');
+          };
           /*
            * 发送请求
            * @param  {Object} 请求信息
@@ -205,7 +223,12 @@
                   var _headers = _options.headers||{};
                   for(var x in _headers)
                       _xhr.setRequestHeader(x,_headers[x]);
-                  _xhr.send(_options.data);
+                  // fix object to query string
+                  var dat = _options.data;
+                  if (_isTypeOf(dat,'object')){
+                      dat = _obj2str(dat);
+                  }
+                  _xhr.send(dat);
               };
           })();
           /*
