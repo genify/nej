@@ -862,7 +862,7 @@ NEJ.define([
                 data:_options.data||{},
                 key:(''+_options.key)||''
             };
-        _item = this._$getItemInCache(_id);
+        var _item = this._$getItemInCache(_id);
         _ropt.data[this.__key] = _id;
         // hit in memory
         if (!!_item&&
