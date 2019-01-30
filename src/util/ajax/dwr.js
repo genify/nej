@@ -499,6 +499,7 @@ NEJ.define([
         try{
             (_batch.h[_cid].c||f)(_data);
         }catch(ex){
+            console.log(_batch);
             __onError(
                 _bid,_cid,{
                     code:_g._$CODE_ERRCABK,
